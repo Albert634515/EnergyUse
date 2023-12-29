@@ -1,0 +1,739 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema 
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing"">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>132, 19</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>817, 27</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="toolStrip1.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="tsbAdd.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tsbAdd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 24</value>
+  </data>
+  <data name="tsbAdd.Text" xml:space="preserve">
+    <value>&amp;Add</value>
+  </data>
+  <data name="tsbEdit.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tsbEdit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 24</value>
+  </data>
+  <data name="tsbEdit.Text" xml:space="preserve">
+    <value>&amp;Edit</value>
+  </data>
+  <data name="tsbDelete.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tsbDelete.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 24</value>
+  </data>
+  <data name="tsbDelete.Text" xml:space="preserve">
+    <value>&amp;Delete</value>
+  </data>
+  <data name="tsbRefresh.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tsbRefresh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 24</value>
+  </data>
+  <data name="tsbRefresh.Text" xml:space="preserve">
+    <value>&amp;Refresh</value>
+  </data>
+  <data name="lblTill.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lblTill.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblTill.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 73</value>
+  </data>
+  <data name="lblTill.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 20</value>
+  </data>
+  <data name="lblTill.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="lblTill.Text" xml:space="preserve">
+    <value>Till:</value>
+  </data>
+  <data name="&gt;&gt;lblTill.Name" xml:space="preserve">
+    <value>lblTill</value>
+  </data>
+  <data name="&gt;&gt;lblTill.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblTill.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lblTill.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="dtpTill.Location" type="System.Drawing.Point, System.Drawing">
+    <value>75, 69</value>
+  </data>
+  <data name="dtpTill.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 27</value>
+  </data>
+  <data name="dtpTill.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="&gt;&gt;dtpTill.Name" xml:space="preserve">
+    <value>dtpTill</value>
+  </data>
+  <data name="&gt;&gt;dtpTill.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dtpTill.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;dtpTill.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="dtpFrom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>75, 37</value>
+  </data>
+  <data name="dtpFrom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 27</value>
+  </data>
+  <data name="dtpFrom.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="&gt;&gt;dtpFrom.Name" xml:space="preserve">
+    <value>dtpFrom</value>
+  </data>
+  <data name="&gt;&gt;dtpFrom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dtpFrom.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;dtpFrom.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lblFrom.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblFrom.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblFrom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 40</value>
+  </data>
+  <data name="lblFrom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 20</value>
+  </data>
+  <data name="lblFrom.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="lblFrom.Text" xml:space="preserve">
+    <value>Range:</value>
+  </data>
+  <data name="&gt;&gt;lblFrom.Name" xml:space="preserve">
+    <value>lblFrom</value>
+  </data>
+  <data name="&gt;&gt;lblFrom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblFrom.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lblFrom.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbl.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>235, 43</value>
+  </data>
+  <data name="lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 20</value>
+  </data>
+  <data name="lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="lbl.Text" xml:space="preserve">
+    <value>Cumulative:</value>
+  </data>
+  <data name="&gt;&gt;lbl.Name" xml:space="preserve">
+    <value>lbl</value>
+  </data>
+  <data name="&gt;&gt;lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbl.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeNo.Name" xml:space="preserve">
+    <value>rbAccumulativeNo</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeNo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeNo.Parent" xml:space="preserve">
+    <value>pnAccumulative</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeNo.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeYes.Name" xml:space="preserve">
+    <value>rbAccumulativeYes</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeYes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeYes.Parent" xml:space="preserve">
+    <value>pnAccumulative</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeYes.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="pnAccumulative.Location" type="System.Drawing.Point, System.Drawing">
+    <value>323, 35</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="pnAccumulative.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="pnAccumulative.Size" type="System.Drawing.Size, System.Drawing">
+    <value>123, 37</value>
+  </data>
+  <data name="pnAccumulative.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="&gt;&gt;pnAccumulative.Name" xml:space="preserve">
+    <value>pnAccumulative</value>
+  </data>
+  <data name="&gt;&gt;pnAccumulative.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pnAccumulative.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pnAccumulative.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="rbAccumulativeNo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rbAccumulativeNo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rbAccumulativeNo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>62, 8</value>
+  </data>
+  <data name="rbAccumulativeNo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="rbAccumulativeNo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 24</value>
+  </data>
+  <data name="rbAccumulativeNo.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="rbAccumulativeNo.Text" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeNo.Name" xml:space="preserve">
+    <value>rbAccumulativeNo</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeNo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeNo.Parent" xml:space="preserve">
+    <value>pnAccumulative</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeNo.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="rbAccumulativeYes.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rbAccumulativeYes.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rbAccumulativeYes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 8</value>
+  </data>
+  <data name="rbAccumulativeYes.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="rbAccumulativeYes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 24</value>
+  </data>
+  <data name="rbAccumulativeYes.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="rbAccumulativeYes.Text" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeYes.Name" xml:space="preserve">
+    <value>rbAccumulativeYes</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeYes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeYes.Parent" xml:space="preserve">
+    <value>pnAccumulative</value>
+  </data>
+  <data name="&gt;&gt;rbAccumulativeYes.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <metadata name="RegistrationDate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="RateNormal.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="RateLow.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ReturnDeliveryNormal.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ReturnDeliveryLow.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="DeltaNormal.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="DeltaLow.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ReturnDeliveryDeltaNormal.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ReturnDeliveryDeltaLow.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="bsMeterReadings.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>249, 18</value>
+  </metadata>
+  <data name="dgMeterReadings.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="dgMeterReadings.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 109</value>
+  </data>
+  <data name="dgMeterReadings.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="dgMeterReadings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>813, 601</value>
+  </data>
+  <data name="dgMeterReadings.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="&gt;&gt;dgMeterReadings.Name" xml:space="preserve">
+    <value>dgMeterReadings</value>
+  </data>
+  <data name="&gt;&gt;dgMeterReadings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dgMeterReadings.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;dgMeterReadings.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="RegistrationDate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="RegistrationDate.HeaderText" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="RegistrationDate.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="RegistrationDate.Width" type="System.Int32, mscorlib">
+    <value>90</value>
+  </data>
+  <metadata name="RateNormal.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="RateNormal.HeaderText" xml:space="preserve">
+    <value>Rate Normal</value>
+  </data>
+  <data name="RateNormal.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="RateNormal.Width" type="System.Int32, mscorlib">
+    <value>65</value>
+  </data>
+  <metadata name="RateLow.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="RateLow.HeaderText" xml:space="preserve">
+    <value>Rate Low</value>
+  </data>
+  <data name="RateLow.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="RateLow.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <metadata name="ReturnDeliveryNormal.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="ReturnDeliveryNormal.HeaderText" xml:space="preserve">
+    <value>Return Delivery Normal</value>
+  </data>
+  <data name="ReturnDeliveryNormal.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="ReturnDeliveryNormal.Width" type="System.Int32, mscorlib">
+    <value>65</value>
+  </data>
+  <metadata name="ReturnDeliveryLow.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="ReturnDeliveryLow.HeaderText" xml:space="preserve">
+    <value>Return Delivery Low</value>
+  </data>
+  <data name="ReturnDeliveryLow.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="ReturnDeliveryLow.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <metadata name="DeltaNormal.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="DeltaNormal.HeaderText" xml:space="preserve">
+    <value>Delta Normal</value>
+  </data>
+  <data name="DeltaNormal.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="DeltaNormal.Width" type="System.Int32, mscorlib">
+    <value>65</value>
+  </data>
+  <metadata name="DeltaLow.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="DeltaLow.HeaderText" xml:space="preserve">
+    <value>Delta Low</value>
+  </data>
+  <data name="DeltaLow.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="DeltaLow.Width" type="System.Int32, mscorlib">
+    <value>65</value>
+  </data>
+  <metadata name="ReturnDeliveryDeltaNormal.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="ReturnDeliveryDeltaNormal.HeaderText" xml:space="preserve">
+    <value>Return Delivery Delta Normal</value>
+  </data>
+  <data name="ReturnDeliveryDeltaNormal.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="ReturnDeliveryDeltaNormal.Width" type="System.Int32, mscorlib">
+    <value>65</value>
+  </data>
+  <metadata name="ReturnDeliveryDeltaLow.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="ReturnDeliveryDeltaLow.HeaderText" xml:space="preserve">
+    <value>Return Delivery Delta Low</value>
+  </data>
+  <data name="ReturnDeliveryDeltaLow.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="ReturnDeliveryDeltaLow.Width" type="System.Int32, mscorlib">
+    <value>65</value>
+  </data>
+  <data name="idDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="idDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="idDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="idDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <metadata name="bsMeterReadings.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>249, 18</value>
+  </metadata>
+  <metadata name="bsEnergyTypes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>434, 18</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 20</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>817, 712</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbAdd.Name" xml:space="preserve">
+    <value>tsbAdd</value>
+  </data>
+  <data name="&gt;&gt;tsbAdd.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbEdit.Name" xml:space="preserve">
+    <value>tsbEdit</value>
+  </data>
+  <data name="&gt;&gt;tsbEdit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbDelete.Name" xml:space="preserve">
+    <value>tsbDelete</value>
+  </data>
+  <data name="&gt;&gt;tsbDelete.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbRefresh.Name" xml:space="preserve">
+    <value>tsbRefresh</value>
+  </data>
+  <data name="&gt;&gt;tsbRefresh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RegistrationDate.Name" xml:space="preserve">
+    <value>RegistrationDate</value>
+  </data>
+  <data name="&gt;&gt;RegistrationDate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RateNormal.Name" xml:space="preserve">
+    <value>RateNormal</value>
+  </data>
+  <data name="&gt;&gt;RateNormal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RateLow.Name" xml:space="preserve">
+    <value>RateLow</value>
+  </data>
+  <data name="&gt;&gt;RateLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ReturnDeliveryNormal.Name" xml:space="preserve">
+    <value>ReturnDeliveryNormal</value>
+  </data>
+  <data name="&gt;&gt;ReturnDeliveryNormal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ReturnDeliveryLow.Name" xml:space="preserve">
+    <value>ReturnDeliveryLow</value>
+  </data>
+  <data name="&gt;&gt;ReturnDeliveryLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DeltaNormal.Name" xml:space="preserve">
+    <value>DeltaNormal</value>
+  </data>
+  <data name="&gt;&gt;DeltaNormal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DeltaLow.Name" xml:space="preserve">
+    <value>DeltaLow</value>
+  </data>
+  <data name="&gt;&gt;DeltaLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ReturnDeliveryDeltaNormal.Name" xml:space="preserve">
+    <value>ReturnDeliveryDeltaNormal</value>
+  </data>
+  <data name="&gt;&gt;ReturnDeliveryDeltaNormal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ReturnDeliveryDeltaLow.Name" xml:space="preserve">
+    <value>ReturnDeliveryDeltaLow</value>
+  </data>
+  <data name="&gt;&gt;ReturnDeliveryDeltaLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;idDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>idDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;idDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsMeterReadings.Name" xml:space="preserve">
+    <value>bsMeterReadings</value>
+  </data>
+  <data name="&gt;&gt;bsMeterReadings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsEnergyTypes.Name" xml:space="preserve">
+    <value>bsEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;bsEnergyTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ucData</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddressWithDescription" xml:space="preserve">
+    <value>There already is an address with description %s</value>
+  </data>
+  <data name="BackUpAndRestoreCreated" xml:space="preserve">
+    <value>Back-up gemaakt</value>
+  </data>
+  <data name="BackUpAndRestoreNoRestoreFileExist" xml:space="preserve">
+    <value>Herstelbestand niet gevonden</value>
+  </data>
+  <data name="BackUpAndRestoreNoRestoreFileSelected" xml:space="preserve">
+    <value>Geen herstelbestand geselecteerd</value>
+  </data>
+  <data name="BackUpAndRestoreRestoreFile" xml:space="preserve">
+    <value>Herstel db-bestand</value>
+  </data>
+  <data name="BackUpAndRestoreSelectFile" xml:space="preserve">
+    <value>Selecteer eerst een exportmap</value>
+  </data>
+  <data name="CalculatedUnitPriceAskDelete" xml:space="preserve">
+    <value>Weet u zeker dat u deze prijs per eenheid wilt verwijderen?</value>
+  </data>
+  <data name="ChartCompareTitle" xml:space="preserve">
+    <value>Vergelijk data per %s</value>
+  </data>
+  <data name="ChartCompareTitleMonth" xml:space="preserve">
+    <value>Vergelijk data per %s voor %m</value>
+  </data>
+  <data name="ChartDefaultTitle" xml:space="preserve">
+    <value>Gegevens per</value>
+  </data>
+  <data name="ChartRatesTitle" xml:space="preserve">
+    <value>Tarieven</value>
+  </data>
+  <data name="DataSaved" xml:space="preserve">
+    <value>Gegevens zijn opgeslagen</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>Dag</value>
+  </data>
+  <data name="DeleteTitle" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DescriptionIsRequired" xml:space="preserve">
+    <value>Beschrijving is een verplicht veld</value>
+  </data>
+  <data name="FileAlreadyExists" xml:space="preserve">
+    <value>Bestand bestaat al</value>
+  </data>
+  <data name="FileExistsOverWrite" xml:space="preserve">
+    <value>Bestand bestaat al, wilt u overschrijven?</value>
+  </data>
+  <data name="FixedPrice" xml:space="preserve">
+    <value>Vast prijs</value>
+  </data>
+  <data name="ImportBrowseFiles" xml:space="preserve">
+    <value>Blader door importbestand</value>
+  </data>
+  <data name="ImportSelectedFileNotExist" xml:space="preserve">
+    <value>Geselecteerd bestand bestaat niet of is niet toegankelijk</value>
+  </data>
+  <data name="ImportSelectFile" xml:space="preserve">
+    <value>Selecteer een bestand in om te importeren</value>
+  </data>
+  <data name="MainErrorDbNotExist" xml:space="preserve">
+    <value>De huidige geselecteerde database in de configuratie bestaat niet of is niet toegankelijk, de database moet worden ingesteld voordat dit programma kan worden gebruikt.</value>
+  </data>
+  <data name="MainErrorDbNotSetup" xml:space="preserve">
+    <value>Database niet opgezet of niet toegankelijk, applicatie wordt gesloten.</value>
+  </data>
+  <data name="MainRecalculate" xml:space="preserve">
+    <value>Wilt u alle gegevens voor energietype '%s' opnieuw berekenen</value>
+  </data>
+  <data name="MainRecalculateAll" xml:space="preserve">
+    <value>Alles opnieuw berekenen</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Maand</value>
+  </data>
+  <data name="Newaddress" xml:space="preserve">
+    <value>Nieuw adres</value>
+  </data>
+  <data name="Newcategory" xml:space="preserve">
+    <value>Nieuwe categorie</value>
+  </data>
+  <data name="Newenergytype" xml:space="preserve">
+    <value>Nieuw energie type</value>
+  </data>
+  <data name="Newmeter" xml:space="preserve">
+    <value>Nieuwe meter</value>
+  </data>
+  <data name="Newperiod" xml:space="preserve">
+    <value>Nieuwe periode</value>
+  </data>
+  <data name="NoDataToExport" xml:space="preserve">
+    <value>Er is geen data om te exporteren</value>
+  </data>
+  <data name="PayBackTimeGreaterZero" xml:space="preserve">
+    <value>Aankoopbedrag moet groter zijn dan nul</value>
+  </data>
+  <data name="PayBackTimeNoPricePerUnit" xml:space="preserve">
+    <value>Er is geen prijs per eenheid voor jaar %s</value>
+  </data>
+  <data name="PayBackTimeNoReturns" xml:space="preserve">
+    <value>Er zijn geen energietypes die energie teruggeven</value>
+  </data>
+  <data name="PayBackTimeShouldBeNumeric" xml:space="preserve">
+    <value>Het aankoopbedrag moet een numerieke waarde zijn</value>
+  </data>
+  <data name="PayBackTimeSubsidyShouldBeNumeric" xml:space="preserve">
+    <value>Het subsidiebedrag moet een numerieke waarde zijn</value>
+  </data>
+  <data name="PaymentAskDelete" xml:space="preserve">
+    <value>Weet je zeker dat je deze betaling wilt verwijderen?</value>
+  </data>
+  <data name="PredefinedDates" xml:space="preserve">
+    <value>Voor gedefinieerde periodes</value>
+  </data>
+  <data name="Progress" xml:space="preserve">
+    <value>Voortgang</value>
+  </data>
+  <data name="RatesAlwaysCalculatedWith" xml:space="preserve">
+    <value>Categorie wordt altijd berekend met tariefgroep: %s</value>
+  </data>
+  <data name="RatesAskDelete" xml:space="preserve">
+    <value>Weet u zeker dat u dit tarief wilt verwijderen?</value>
+  </data>
+  <data name="SelectAddress" xml:space="preserve">
+    <value>Selecteer een adres</value>
+  </data>
+  <data name="SelectCategory" xml:space="preserve">
+    <value>Selecteer eerst een categorie</value>
+  </data>
+  <data name="SelectEnergyType" xml:space="preserve">
+    <value>Selecteer een energietype</value>
+  </data>
+  <data name="SelectMeter" xml:space="preserve">
+    <value>Selecteer een meter</value>
+  </data>
+  <data name="SelectParametersEndDateLarger" xml:space="preserve">
+    <value>Einddatum moet groot of gelijk zijn aan startdatum</value>
+  </data>
+  <data name="SelectParametersSelectAddress" xml:space="preserve">
+    <value>Selecteer een adres om de afrekening voor te berekenen</value>
+  </data>
+  <data name="SelectTarifGroup" xml:space="preserve">
+    <value>Selecteer een tariefgroep</value>
+  </data>
+  <data name="Staffel" xml:space="preserve">
+    <value>Staffel</value>
+  </data>
+  <data name="TariffGroupsAskDelete" xml:space="preserve">
+    <value>Weet u zeker dat u deze tariefgroep wilt verwijderen?</value>
+  </data>
+  <data name="TarifGroupNewGroup" xml:space="preserve">
+    <value>Nieuwe group</value>
+  </data>
+  <data name="ucDataDeleteRate" xml:space="preserve">
+    <value>Weet u zeker dat u dit tarief wilt verwijderen?</value>
+  </data>
+  <data name="ucDataNoMeter" xml:space="preserve">
+    <value>Het huidige adres heeft geen meter voor %e.%nVoeg eerst een %e toe voordat u nieuwe meterregistraties registreert</value>
+  </data>
+  <data name="ucDataRecalculate" xml:space="preserve">
+    <value>Wilt u het huidige geselecteerde bereik voor energietype '%s' opnieuw berekenen?</value>
+  </data>
+  <data name="UnsavedChanges" xml:space="preserve">
+    <value>Er zijn niet-opgeslagen wijzigingen. Weet u zeker dat u dit formulier wilt sluiten?</value>
+  </data>
+  <data name="UnsavedChangesTitle" xml:space="preserve">
+    <value>Niet-opgeslagen wijzigingen</value>
+  </data>
+  <data name="Week" xml:space="preserve">
+    <value>Week</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Jaar</value>
+  </data>
+</root>

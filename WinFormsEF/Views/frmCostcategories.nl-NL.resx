@@ -1,0 +1,277 @@
+﻿<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tsbAddCostCategory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 24</value>
+  </data>
+  <data name="tsbAddCostCategory.Text" xml:space="preserve">
+    <value>&amp;Toevoegen</value>
+  </data>
+  <data name="tsbSaveCostCategory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 24</value>
+  </data>
+  <data name="tsbSaveCostCategory.Text" xml:space="preserve">
+    <value>&amp;Opslaan</value>
+  </data>
+  <data name="tbsCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 24</value>
+  </data>
+  <data name="tbsCancel.Text" xml:space="preserve">
+    <value>&amp;Annuleren</value>
+  </data>
+  <data name="tsbDeleteCostCategory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>111, 24</value>
+  </data>
+  <data name="tsbDeleteCostCategory.Text" xml:space="preserve">
+    <value>&amp;Verwijderen</value>
+  </data>
+  <data name="tsbRefreshCostCategory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 24</value>
+  </data>
+  <data name="tsbRefreshCostCategory.Text" xml:space="preserve">
+    <value>&amp;Verversen</value>
+  </data>
+  <data name="tsbCloseCostCategory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 24</value>
+  </data>
+  <data name="tsbCloseCostCategory.Text" xml:space="preserve">
+    <value>&amp;Sluiten</value>
+  </data>
+  <data name="toolStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="statusStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboEnergyType.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblEnergyType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 20</value>
+  </data>
+  <data name="lblEnergyType.Text" xml:space="preserve">
+    <value>Energie type:</value>
+  </data>
+  <data name="lblEnergyType.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dgCostCategories.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gbCostCategory.Text" xml:space="preserve">
+    <value>Kostencategorie</value>
+  </data>
+  <data name="gbCostCategory.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkNotCalculateOverReturnValue.Location" type="System.Drawing.Point, System.Drawing">
+    <value>131, 313</value>
+  </data>
+  <data name="chkNotCalculateOverReturnValue.Size" type="System.Drawing.Size, System.Drawing">
+    <value>265, 24</value>
+  </data>
+  <data name="chkNotCalculateOverReturnValue.Text" xml:space="preserve">
+    <value>Niet berekenen over retour waarde:</value>
+  </data>
+  <data name="chkNotCalculateOverReturnValue.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>400, 282</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 20</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>(Calculatie resultaat)</value>
+  </data>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkCanBeNegative.Location" type="System.Drawing.Point, System.Drawing">
+    <value>222, 281</value>
+  </data>
+  <data name="chkCanBeNegative.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 24</value>
+  </data>
+  <data name="chkCanBeNegative.Text" xml:space="preserve">
+    <value>Kan niet negatief zijn:</value>
+  </data>
+  <data name="chkCanBeNegative.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkCalculateVat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>280, 245</value>
+  </data>
+  <data name="chkCalculateVat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 24</value>
+  </data>
+  <data name="chkCalculateVat.Text" xml:space="preserve">
+    <value>Bereken btw:</value>
+  </data>
+  <data name="chkCalculateVat.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>294, 20</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>(Altijd rekenen met tarieven in deze groep)</value>
+  </data>
+  <data name="label4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>84, 20</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Tarif groep:</value>
+  </data>
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboTariffGroup.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboUnit.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblUnit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>253, 101</value>
+  </data>
+  <data name="lblUnit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 20</value>
+  </data>
+  <data name="lblUnit.Text" xml:space="preserve">
+    <value>Eenheid:</value>
+  </data>
+  <data name="lblUnit.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblSubType.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboEnergySubType.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblCalculationType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 101</value>
+  </data>
+  <data name="lblCalculationType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 20</value>
+  </data>
+  <data name="lblCalculationType.Text" xml:space="preserve">
+    <value>Calculatie type:</value>
+  </data>
+  <data name="lblCalculationType.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboCalculationType.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtColor.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>272, 65</value>
+  </data>
+  <data name="lblColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 20</value>
+  </data>
+  <data name="lblColor.Text" xml:space="preserve">
+    <value>Kleur:</value>
+  </data>
+  <data name="lblColor.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>52, 65</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 20</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Sortering:</value>
+  </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtSortOrder.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtDescription.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>73, 30</value>
+  </data>
+  <data name="lblDescription.Text" xml:space="preserve">
+    <value>Naam:</value>
+  </data>
+  <data name="lblDescription.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Kostencategorieën</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+</root>

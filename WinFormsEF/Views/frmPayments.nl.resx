@@ -1,0 +1,157 @@
+﻿<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="lblAddress.Location" type="System.Drawing.Point, System.Drawing">
+    <value>153, 61</value>
+  </data>
+  <data name="lblAddress.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="lblAddress.Text" xml:space="preserve">
+    <value>Adres:</value>
+  </data>
+  <data name="LblPeriod.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 99</value>
+  </data>
+  <data name="LblPeriod.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 20</value>
+  </data>
+  <data name="LblPeriod.Text" xml:space="preserve">
+    <value>Voor geselecteerde periode:</value>
+  </data>
+  <data name="tsbAdd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 24</value>
+  </data>
+  <data name="tsbAdd.Text" xml:space="preserve">
+    <value>&amp;Toevoegen</value>
+  </data>
+  <data name="tsbSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 24</value>
+  </data>
+  <data name="tsbSave.Text" xml:space="preserve">
+    <value>&amp;Bewaren</value>
+  </data>
+  <data name="tbsCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 24</value>
+  </data>
+  <data name="tbsCancel.Text" xml:space="preserve">
+    <value>&amp;Annuleren</value>
+  </data>
+  <data name="tsbDelete.Size" type="System.Drawing.Size, System.Drawing">
+    <value>111, 24</value>
+  </data>
+  <data name="tsbDelete.Text" xml:space="preserve">
+    <value>&amp;Verwijderen</value>
+  </data>
+  <data name="tsbRefresh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 24</value>
+  </data>
+  <data name="tsbRefresh.Text" xml:space="preserve">
+    <value>&amp;Verversen</value>
+  </data>
+  <data name="tbsClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 24</value>
+  </data>
+  <data name="tbsClose.Text" xml:space="preserve">
+    <value>&amp;Sluiten</value>
+  </data>
+  <data name="descriptionDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Omschrijving</value>
+  </data>
+  <data name="payDateDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Betaal datum</value>
+  </data>
+  <data name="amountDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Bedrag</value>
+  </data>
+  <data name="GbPayment.Text" xml:space="preserve">
+    <value>Betaling</value>
+  </data>
+  <data name="LblAmount.Location" type="System.Drawing.Point, System.Drawing">
+    <value>68, 110</value>
+  </data>
+  <data name="LblAmount.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 20</value>
+  </data>
+  <data name="LblAmount.Text" xml:space="preserve">
+    <value>Bedrag:</value>
+  </data>
+  <data name="LblPayDate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>27, 74</value>
+  </data>
+  <data name="LblPayDate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>101, 20</value>
+  </data>
+  <data name="LblPayDate.Text" xml:space="preserve">
+    <value>Betaal datum:</value>
+  </data>
+  <data name="LblDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>30, 39</value>
+  </data>
+  <data name="LblDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>98, 20</value>
+  </data>
+  <data name="LblDescription.Text" xml:space="preserve">
+    <value>Omschrijving:</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Betalingen</value>
+  </data>
+</root>

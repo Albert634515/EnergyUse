@@ -1,0 +1,1522 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema 
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>25, 22</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>817, 27</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="toolStrip1.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="tsbClose.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tsbClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 24</value>
+  </data>
+  <data name="tsbClose.Text" xml:space="preserve">
+    <value>&amp;Close</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tsbClose.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>TextBeforeImage</value>
+  </data>
+  <data name="tsbResetAllSettings.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tsbResetAllSettings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 24</value>
+  </data>
+  <data name="tsbResetAllSettings.Text" xml:space="preserve">
+    <value>&amp;Reset all</value>
+  </data>
+  <data name="tsbResetAllSettings.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="tsbResetAllSettings.ToolTipText" xml:space="preserve">
+    <value>Reset all settings</value>
+  </data>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>144, 21</value>
+  </metadata>
+  <data name="statusStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 729</value>
+  </data>
+  <data name="statusStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>817, 22</value>
+  </data>
+  <data name="statusStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="statusStrip1.Text" xml:space="preserve">
+    <value>statusStrip1</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.Name" xml:space="preserve">
+    <value>statusStrip1</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="gbGeneral.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;lblLanguage.Name" xml:space="preserve">
+    <value>lblLanguage</value>
+  </data>
+  <data name="&gt;&gt;lblLanguage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblLanguage.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;lblLanguage.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;txtCurrency.Name" xml:space="preserve">
+    <value>txtCurrency</value>
+  </data>
+  <data name="&gt;&gt;txtCurrency.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtCurrency.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;txtCurrency.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;cboLanguage.Name" xml:space="preserve">
+    <value>cboLanguage</value>
+  </data>
+  <data name="&gt;&gt;cboLanguage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboLanguage.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;cboLanguage.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;lblCurrency.Name" xml:space="preserve">
+    <value>lblCurrency</value>
+  </data>
+  <data name="&gt;&gt;lblCurrency.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblCurrency.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;lblCurrency.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectImportDir.Name" xml:space="preserve">
+    <value>cmdSelectImportDir</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectImportDir.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectImportDir.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectImportDir.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;txtImportDirectory.Name" xml:space="preserve">
+    <value>txtImportDirectory</value>
+  </data>
+  <data name="&gt;&gt;txtImportDirectory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtImportDirectory.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;txtImportDirectory.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;lblImportDirectory.Name" xml:space="preserve">
+    <value>lblImportDirectory</value>
+  </data>
+  <data name="&gt;&gt;lblImportDirectory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblImportDirectory.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;lblImportDirectory.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectExportDir.Name" xml:space="preserve">
+    <value>cmdSelectExportDir</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectExportDir.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectExportDir.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectExportDir.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;txtExportDirectory.Name" xml:space="preserve">
+    <value>txtExportDirectory</value>
+  </data>
+  <data name="&gt;&gt;txtExportDirectory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtExportDirectory.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;txtExportDirectory.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;lblExportDirectory.Name" xml:space="preserve">
+    <value>lblExportDirectory</value>
+  </data>
+  <data name="&gt;&gt;lblExportDirectory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblExportDirectory.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;lblExportDirectory.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="gbGeneral.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 31</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="gbGeneral.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="gbGeneral.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="gbGeneral.Size" type="System.Drawing.Size, System.Drawing">
+    <value>793, 173</value>
+  </data>
+  <data name="gbGeneral.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="gbGeneral.Text" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="&gt;&gt;gbGeneral.Name" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;gbGeneral.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gbGeneral.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;gbGeneral.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lblLanguage.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblLanguage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblLanguage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1, 135</value>
+  </data>
+  <data name="lblLanguage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 20</value>
+  </data>
+  <data name="lblLanguage.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="lblLanguage.Text" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="&gt;&gt;lblLanguage.Name" xml:space="preserve">
+    <value>lblLanguage</value>
+  </data>
+  <data name="&gt;&gt;lblLanguage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblLanguage.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;lblLanguage.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txtCurrency.Location" type="System.Drawing.Point, System.Drawing">
+    <value>301, 96</value>
+  </data>
+  <data name="txtCurrency.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtCurrency.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 27</value>
+  </data>
+  <data name="txtCurrency.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;txtCurrency.Name" xml:space="preserve">
+    <value>txtCurrency</value>
+  </data>
+  <data name="&gt;&gt;txtCurrency.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtCurrency.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;txtCurrency.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cboLanguage.Items" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="cboLanguage.Items1" xml:space="preserve">
+    <value>Nederlands</value>
+  </data>
+  <data name="cboLanguage.Items2" xml:space="preserve">
+    <value>Polski</value>
+  </data>
+  <data name="cboLanguage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>302, 132</value>
+  </data>
+  <data name="cboLanguage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="cboLanguage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 28</value>
+  </data>
+  <data name="cboLanguage.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;cboLanguage.Name" xml:space="preserve">
+    <value>cboLanguage</value>
+  </data>
+  <data name="&gt;&gt;cboLanguage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboLanguage.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;cboLanguage.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblCurrency.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblCurrency.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblCurrency.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1, 100</value>
+  </data>
+  <data name="lblCurrency.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 20</value>
+  </data>
+  <data name="lblCurrency.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="lblCurrency.Text" xml:space="preserve">
+    <value>Currency:</value>
+  </data>
+  <data name="&gt;&gt;lblCurrency.Name" xml:space="preserve">
+    <value>lblCurrency</value>
+  </data>
+  <data name="&gt;&gt;lblCurrency.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblCurrency.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;lblCurrency.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="cmdSelectImportDir.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="cmdSelectImportDir.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdSelectImportDir.Location" type="System.Drawing.Point, System.Drawing">
+    <value>654, 59</value>
+  </data>
+  <data name="cmdSelectImportDir.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="cmdSelectImportDir.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 31</value>
+  </data>
+  <data name="cmdSelectImportDir.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="cmdSelectImportDir.Text" xml:space="preserve">
+    <value>Select dir</value>
+  </data>
+  <data name="cmdSelectImportDir.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectImportDir.Name" xml:space="preserve">
+    <value>cmdSelectImportDir</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectImportDir.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectImportDir.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectImportDir.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="txtImportDirectory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>306, 61</value>
+  </data>
+  <data name="txtImportDirectory.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtImportDirectory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>339, 27</value>
+  </data>
+  <data name="txtImportDirectory.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;txtImportDirectory.Name" xml:space="preserve">
+    <value>txtImportDirectory</value>
+  </data>
+  <data name="&gt;&gt;txtImportDirectory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtImportDirectory.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;txtImportDirectory.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="lblImportDirectory.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblImportDirectory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblImportDirectory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 64</value>
+  </data>
+  <data name="lblImportDirectory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 20</value>
+  </data>
+  <data name="lblImportDirectory.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="lblImportDirectory.Text" xml:space="preserve">
+    <value>Import directory:</value>
+  </data>
+  <data name="&gt;&gt;lblImportDirectory.Name" xml:space="preserve">
+    <value>lblImportDirectory</value>
+  </data>
+  <data name="&gt;&gt;lblImportDirectory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblImportDirectory.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;lblImportDirectory.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="cmdSelectExportDir.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="cmdSelectExportDir.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdSelectExportDir.Location" type="System.Drawing.Point, System.Drawing">
+    <value>655, 23</value>
+  </data>
+  <data name="cmdSelectExportDir.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="cmdSelectExportDir.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 31</value>
+  </data>
+  <data name="cmdSelectExportDir.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="cmdSelectExportDir.Text" xml:space="preserve">
+    <value>Select dir</value>
+  </data>
+  <data name="cmdSelectExportDir.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectExportDir.Name" xml:space="preserve">
+    <value>cmdSelectExportDir</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectExportDir.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectExportDir.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;cmdSelectExportDir.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="txtExportDirectory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>306, 26</value>
+  </data>
+  <data name="txtExportDirectory.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtExportDirectory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>339, 27</value>
+  </data>
+  <data name="txtExportDirectory.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;txtExportDirectory.Name" xml:space="preserve">
+    <value>txtExportDirectory</value>
+  </data>
+  <data name="&gt;&gt;txtExportDirectory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtExportDirectory.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;txtExportDirectory.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="lblExportDirectory.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblExportDirectory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblExportDirectory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 29</value>
+  </data>
+  <data name="lblExportDirectory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 20</value>
+  </data>
+  <data name="lblExportDirectory.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lblExportDirectory.Text" xml:space="preserve">
+    <value>Export directory:</value>
+  </data>
+  <data name="&gt;&gt;lblExportDirectory.Name" xml:space="preserve">
+    <value>lblExportDirectory</value>
+  </data>
+  <data name="&gt;&gt;lblExportDirectory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblExportDirectory.Parent" xml:space="preserve">
+    <value>gbGeneral</value>
+  </data>
+  <data name="&gt;&gt;lblExportDirectory.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="gbColorsAndLayout.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;cmdResetColorsAndLayout.Name" xml:space="preserve">
+    <value>cmdResetColorsAndLayout</value>
+  </data>
+  <data name="&gt;&gt;cmdResetColorsAndLayout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdResetColorsAndLayout.Parent" xml:space="preserve">
+    <value>gbColorsAndLayout</value>
+  </data>
+  <data name="&gt;&gt;cmdResetColorsAndLayout.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;lblSliderColor.Name" xml:space="preserve">
+    <value>lblSliderColor</value>
+  </data>
+  <data name="&gt;&gt;lblSliderColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblSliderColor.Parent" xml:space="preserve">
+    <value>gbColorsAndLayout</value>
+  </data>
+  <data name="&gt;&gt;lblSliderColor.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;txtSliderColor.Name" xml:space="preserve">
+    <value>txtSliderColor</value>
+  </data>
+  <data name="&gt;&gt;txtSliderColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtSliderColor.Parent" xml:space="preserve">
+    <value>gbColorsAndLayout</value>
+  </data>
+  <data name="&gt;&gt;txtSliderColor.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;lblFormBackColor.Name" xml:space="preserve">
+    <value>lblFormBackColor</value>
+  </data>
+  <data name="&gt;&gt;lblFormBackColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblFormBackColor.Parent" xml:space="preserve">
+    <value>gbColorsAndLayout</value>
+  </data>
+  <data name="&gt;&gt;lblFormBackColor.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;txtFormBackGroundColor.Name" xml:space="preserve">
+    <value>txtFormBackGroundColor</value>
+  </data>
+  <data name="&gt;&gt;txtFormBackGroundColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtFormBackGroundColor.Parent" xml:space="preserve">
+    <value>gbColorsAndLayout</value>
+  </data>
+  <data name="&gt;&gt;txtFormBackGroundColor.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="gbColorsAndLayout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 212</value>
+  </data>
+  <data name="gbColorsAndLayout.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="gbColorsAndLayout.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="gbColorsAndLayout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>792, 105</value>
+  </data>
+  <data name="gbColorsAndLayout.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="gbColorsAndLayout.Text" xml:space="preserve">
+    <value>Colors and layout</value>
+  </data>
+  <data name="&gt;&gt;gbColorsAndLayout.Name" xml:space="preserve">
+    <value>gbColorsAndLayout</value>
+  </data>
+  <data name="&gt;&gt;gbColorsAndLayout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gbColorsAndLayout.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;gbColorsAndLayout.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cmdResetColorsAndLayout.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="cmdResetColorsAndLayout.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="cmdResetColorsAndLayout.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdResetColorsAndLayout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>680, 66</value>
+  </data>
+  <data name="cmdResetColorsAndLayout.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="cmdResetColorsAndLayout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 31</value>
+  </data>
+  <data name="cmdResetColorsAndLayout.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="cmdResetColorsAndLayout.Text" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="cmdResetColorsAndLayout.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;cmdResetColorsAndLayout.Name" xml:space="preserve">
+    <value>cmdResetColorsAndLayout</value>
+  </data>
+  <data name="&gt;&gt;cmdResetColorsAndLayout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdResetColorsAndLayout.Parent" xml:space="preserve">
+    <value>gbColorsAndLayout</value>
+  </data>
+  <data name="&gt;&gt;cmdResetColorsAndLayout.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblSliderColor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblSliderColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblSliderColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 68</value>
+  </data>
+  <data name="lblSliderColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 20</value>
+  </data>
+  <data name="lblSliderColor.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="lblSliderColor.Text" xml:space="preserve">
+    <value>Slider color:</value>
+  </data>
+  <data name="&gt;&gt;lblSliderColor.Name" xml:space="preserve">
+    <value>lblSliderColor</value>
+  </data>
+  <data name="&gt;&gt;lblSliderColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblSliderColor.Parent" xml:space="preserve">
+    <value>gbColorsAndLayout</value>
+  </data>
+  <data name="&gt;&gt;lblSliderColor.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="txtSliderColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>305, 61</value>
+  </data>
+  <data name="txtSliderColor.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtSliderColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 27</value>
+  </data>
+  <data name="txtSliderColor.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;txtSliderColor.Name" xml:space="preserve">
+    <value>txtSliderColor</value>
+  </data>
+  <data name="&gt;&gt;txtSliderColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtSliderColor.Parent" xml:space="preserve">
+    <value>gbColorsAndLayout</value>
+  </data>
+  <data name="&gt;&gt;txtSliderColor.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblFormBackColor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblFormBackColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblFormBackColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 32</value>
+  </data>
+  <data name="lblFormBackColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 20</value>
+  </data>
+  <data name="lblFormBackColor.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="lblFormBackColor.Text" xml:space="preserve">
+    <value>Form background color:</value>
+  </data>
+  <data name="&gt;&gt;lblFormBackColor.Name" xml:space="preserve">
+    <value>lblFormBackColor</value>
+  </data>
+  <data name="&gt;&gt;lblFormBackColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblFormBackColor.Parent" xml:space="preserve">
+    <value>gbColorsAndLayout</value>
+  </data>
+  <data name="&gt;&gt;lblFormBackColor.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="txtFormBackGroundColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>305, 26</value>
+  </data>
+  <data name="txtFormBackGroundColor.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtFormBackGroundColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 27</value>
+  </data>
+  <data name="txtFormBackGroundColor.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;txtFormBackGroundColor.Name" xml:space="preserve">
+    <value>txtFormBackGroundColor</value>
+  </data>
+  <data name="&gt;&gt;txtFormBackGroundColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtFormBackGroundColor.Parent" xml:space="preserve">
+    <value>gbColorsAndLayout</value>
+  </data>
+  <data name="&gt;&gt;txtFormBackGroundColor.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="gbChart.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLabelColor.Name" xml:space="preserve">
+    <value>lblGraphLabelColor</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLabelColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLabelColor.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLabelColor.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;txtLabelsYColorChart.Name" xml:space="preserve">
+    <value>txtLabelsYColorChart</value>
+  </data>
+  <data name="&gt;&gt;txtLabelsYColorChart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtLabelsYColorChart.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;txtLabelsYColorChart.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;lblGraphForeColor.Name" xml:space="preserve">
+    <value>lblGraphForeColor</value>
+  </data>
+  <data name="&gt;&gt;lblGraphForeColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblGraphForeColor.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;lblGraphForeColor.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;txtLineColorChart.Name" xml:space="preserve">
+    <value>txtLineColorChart</value>
+  </data>
+  <data name="&gt;&gt;txtLineColorChart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtLineColorChart.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;txtLineColorChart.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLines.Name" xml:space="preserve">
+    <value>lblGraphLines</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLines.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLines.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLines.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;cmdResetChart.Name" xml:space="preserve">
+    <value>cmdResetChart</value>
+  </data>
+  <data name="&gt;&gt;cmdResetChart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdResetChart.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;cmdResetChart.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;txtForeColorChart.Name" xml:space="preserve">
+    <value>txtForeColorChart</value>
+  </data>
+  <data name="&gt;&gt;txtForeColorChart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtForeColorChart.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;txtForeColorChart.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;txtBackgroundColorChart.Name" xml:space="preserve">
+    <value>txtBackgroundColorChart</value>
+  </data>
+  <data name="&gt;&gt;txtBackgroundColorChart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtBackgroundColorChart.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;txtBackgroundColorChart.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;lblGraphBackGround.Name" xml:space="preserve">
+    <value>lblGraphBackGround</value>
+  </data>
+  <data name="&gt;&gt;lblGraphBackGround.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblGraphBackGround.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;lblGraphBackGround.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="gbChart.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 325</value>
+  </data>
+  <data name="gbChart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="gbChart.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="gbChart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>800, 179</value>
+  </data>
+  <data name="gbChart.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="gbChart.Text" xml:space="preserve">
+    <value>Chart</value>
+  </data>
+  <data name="&gt;&gt;gbChart.Name" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;gbChart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gbChart.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;gbChart.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblGraphLabelColor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblGraphLabelColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblGraphLabelColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 136</value>
+  </data>
+  <data name="lblGraphLabelColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 20</value>
+  </data>
+  <data name="lblGraphLabelColor.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="lblGraphLabelColor.Text" xml:space="preserve">
+    <value>Graph label color:</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLabelColor.Name" xml:space="preserve">
+    <value>lblGraphLabelColor</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLabelColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLabelColor.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLabelColor.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txtLabelsYColorChart.Location" type="System.Drawing.Point, System.Drawing">
+    <value>304, 133</value>
+  </data>
+  <data name="txtLabelsYColorChart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtLabelsYColorChart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 27</value>
+  </data>
+  <data name="txtLabelsYColorChart.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;txtLabelsYColorChart.Name" xml:space="preserve">
+    <value>txtLabelsYColorChart</value>
+  </data>
+  <data name="&gt;&gt;txtLabelsYColorChart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtLabelsYColorChart.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;txtLabelsYColorChart.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblGraphForeColor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblGraphForeColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblGraphForeColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 66</value>
+  </data>
+  <data name="lblGraphForeColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>79, 20</value>
+  </data>
+  <data name="lblGraphForeColor.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lblGraphForeColor.Text" xml:space="preserve">
+    <value>Fore color:</value>
+  </data>
+  <data name="&gt;&gt;lblGraphForeColor.Name" xml:space="preserve">
+    <value>lblGraphForeColor</value>
+  </data>
+  <data name="&gt;&gt;lblGraphForeColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblGraphForeColor.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;lblGraphForeColor.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="txtLineColorChart.Location" type="System.Drawing.Point, System.Drawing">
+    <value>305, 98</value>
+  </data>
+  <data name="txtLineColorChart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtLineColorChart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 27</value>
+  </data>
+  <data name="txtLineColorChart.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;txtLineColorChart.Name" xml:space="preserve">
+    <value>txtLineColorChart</value>
+  </data>
+  <data name="&gt;&gt;txtLineColorChart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtLineColorChart.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;txtLineColorChart.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lblGraphLines.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblGraphLines.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblGraphLines.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 101</value>
+  </data>
+  <data name="lblGraphLines.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 20</value>
+  </data>
+  <data name="lblGraphLines.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="lblGraphLines.Text" xml:space="preserve">
+    <value>Line color:</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLines.Name" xml:space="preserve">
+    <value>lblGraphLines</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLines.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLines.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;lblGraphLines.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="cmdResetChart.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="cmdResetChart.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="cmdResetChart.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdResetChart.Location" type="System.Drawing.Point, System.Drawing">
+    <value>687, 140</value>
+  </data>
+  <data name="cmdResetChart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="cmdResetChart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>105, 31</value>
+  </data>
+  <data name="cmdResetChart.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="cmdResetChart.Text" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="cmdResetChart.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;cmdResetChart.Name" xml:space="preserve">
+    <value>cmdResetChart</value>
+  </data>
+  <data name="&gt;&gt;cmdResetChart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdResetChart.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;cmdResetChart.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="txtForeColorChart.Location" type="System.Drawing.Point, System.Drawing">
+    <value>305, 63</value>
+  </data>
+  <data name="txtForeColorChart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtForeColorChart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 27</value>
+  </data>
+  <data name="txtForeColorChart.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;txtForeColorChart.Name" xml:space="preserve">
+    <value>txtForeColorChart</value>
+  </data>
+  <data name="&gt;&gt;txtForeColorChart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtForeColorChart.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;txtForeColorChart.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="txtBackgroundColorChart.Location" type="System.Drawing.Point, System.Drawing">
+    <value>305, 28</value>
+  </data>
+  <data name="txtBackgroundColorChart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtBackgroundColorChart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 27</value>
+  </data>
+  <data name="txtBackgroundColorChart.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;txtBackgroundColorChart.Name" xml:space="preserve">
+    <value>txtBackgroundColorChart</value>
+  </data>
+  <data name="&gt;&gt;txtBackgroundColorChart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtBackgroundColorChart.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;txtBackgroundColorChart.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="lblGraphBackGround.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblGraphBackGround.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblGraphBackGround.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 31</value>
+  </data>
+  <data name="lblGraphBackGround.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 20</value>
+  </data>
+  <data name="lblGraphBackGround.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lblGraphBackGround.Text" xml:space="preserve">
+    <value>Background color:</value>
+  </data>
+  <data name="&gt;&gt;lblGraphBackGround.Name" xml:space="preserve">
+    <value>lblGraphBackGround</value>
+  </data>
+  <data name="&gt;&gt;lblGraphBackGround.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblGraphBackGround.Parent" xml:space="preserve">
+    <value>gbChart</value>
+  </data>
+  <data name="&gt;&gt;lblGraphBackGround.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <metadata name="colorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>277, 17</value>
+  </metadata>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>421, 17</value>
+  </metadata>
+  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="AvgCorrectionPercentageReturnTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>305, 59</value>
+  </data>
+  <data name="AvgCorrectionPercentageReturnTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="AvgCorrectionPercentageReturnTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 27</value>
+  </data>
+  <data name="AvgCorrectionPercentageReturnTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;AvgCorrectionPercentageReturnTextBox.Name" xml:space="preserve">
+    <value>AvgCorrectionPercentageReturnTextBox</value>
+  </data>
+  <data name="&gt;&gt;AvgCorrectionPercentageReturnTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AvgCorrectionPercentageReturnTextBox.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;AvgCorrectionPercentageReturnTextBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="AvgCorrectionPercentageTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>306, 24</value>
+  </data>
+  <data name="AvgCorrectionPercentageTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="AvgCorrectionPercentageTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 27</value>
+  </data>
+  <data name="AvgCorrectionPercentageTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;AvgCorrectionPercentageTextBox.Name" xml:space="preserve">
+    <value>AvgCorrectionPercentageTextBox</value>
+  </data>
+  <data name="&gt;&gt;AvgCorrectionPercentageTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AvgCorrectionPercentageTextBox.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;AvgCorrectionPercentageTextBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 66</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 20</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Avg correction percentage return:</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="ResetDataPredictionButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="ResetDataPredictionButton.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="ResetDataPredictionButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ResetDataPredictionButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>687, 158</value>
+  </data>
+  <data name="ResetDataPredictionButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="ResetDataPredictionButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>105, 31</value>
+  </data>
+  <data name="ResetDataPredictionButton.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="ResetDataPredictionButton.Text" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="ResetDataPredictionButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;ResetDataPredictionButton.Name" xml:space="preserve">
+    <value>ResetDataPredictionButton</value>
+  </data>
+  <data name="&gt;&gt;ResetDataPredictionButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ResetDataPredictionButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;ResetDataPredictionButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 31</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 20</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Avg correction percentage:</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 512</value>
+  </data>
+  <data name="groupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>800, 197</value>
+  </data>
+  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Data prediction</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 20</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>817, 751</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="&gt;&gt;tsbClose.Name" xml:space="preserve">
+    <value>tsbClose</value>
+  </data>
+  <data name="&gt;&gt;tsbClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbResetAllSettings.Name" xml:space="preserve">
+    <value>tsbResetAllSettings</value>
+  </data>
+  <data name="&gt;&gt;tsbResetAllSettings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colorDialog1.Name" xml:space="preserve">
+    <value>colorDialog1</value>
+  </data>
+  <data name="&gt;&gt;colorDialog1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColorDialog, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>frmSettings</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

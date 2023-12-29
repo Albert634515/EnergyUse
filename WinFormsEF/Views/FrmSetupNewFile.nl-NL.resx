@@ -1,0 +1,637 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema 
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="StatusStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="StatusStrip1.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabControl.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabControl.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabPageSelectFile.Text" xml:space="preserve">
+    <value>Selecteer bestand</value>
+  </data>
+  <data name="TabPageSelectFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabPageSelectFile.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="CmdSelectExportDirectory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>610, 139</value>
+  </data>
+  <data name="CmdSelectExportDirectory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 34</value>
+  </data>
+  <data name="CmdSelectExportDirectory.Text" xml:space="preserve">
+    <value>Selecteer Directory</value>
+  </data>
+  <data name="CmdSelectExportDirectory.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CmdSelectExportDirectory.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtTargetDirectory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>153, 141</value>
+  </data>
+  <data name="txtTargetDirectory.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtTargetDirectory.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>76, 144</value>
+  </data>
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label3.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblIntro.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 19</value>
+  </data>
+  <data name="LblIntro.Size" type="System.Drawing.Size, System.Drawing">
+    <value>538, 20</value>
+  </data>
+  <data name="LblIntro.Text" xml:space="preserve">
+    <value>Selecteer een nieuw of bestaand bestand om te gebruiken en druk op volgende.</value>
+  </data>
+  <data name="LblIntro.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblIntro.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PnFileTypeSelection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 51</value>
+  </data>
+  <data name="PnFileTypeSelection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>339, 65</value>
+  </data>
+  <data name="PnFileTypeSelection.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PnFileTypeSelection.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RbExistingFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>203, 24</value>
+  </data>
+  <data name="RbExistingFile.Text" xml:space="preserve">
+    <value>Gebruik bestaand bestand</value>
+  </data>
+  <data name="RbExistingFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RbExistingFile.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RbNewFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 24</value>
+  </data>
+  <data name="RbNewFile.Text" xml:space="preserve">
+    <value>Nieuw bestand maken</value>
+  </data>
+  <data name="RbNewFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RbNewFile.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CmdNextSelectFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2284, 1019</value>
+  </data>
+  <data name="CmdNextSelectFile.Text" xml:space="preserve">
+    <value>&amp;Volgende</value>
+  </data>
+  <data name="CmdNextSelectFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CmdNextSelectFile.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblAddBaseData.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 271</value>
+  </data>
+  <data name="LblAddBaseData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 20</value>
+  </data>
+  <data name="LblAddBaseData.Text" xml:space="preserve">
+    <value>Basisgegevens toevoegen:</value>
+  </data>
+  <data name="LblAddBaseData.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblAddBaseData.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ChkAddBaseData.Location" type="System.Drawing.Point, System.Drawing">
+    <value>236, 269</value>
+  </data>
+  <data name="ChkAddBaseData.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ChkAddBaseData.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblSetAsDefaultFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 233</value>
+  </data>
+  <data name="LblSetAsDefaultFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>212, 20</value>
+  </data>
+  <data name="LblSetAsDefaultFile.Text" xml:space="preserve">
+    <value>Instellen als standaardbestand:</value>
+  </data>
+  <data name="LblSetAsDefaultFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblSetAsDefaultFile.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ChkSetAsDefaultFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>236, 233</value>
+  </data>
+  <data name="ChkSetAsDefaultFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ChkSetAsDefaultFile.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CmdSelectExportFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>610, 181</value>
+  </data>
+  <data name="CmdSelectExportFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 34</value>
+  </data>
+  <data name="CmdSelectExportFile.Text" xml:space="preserve">
+    <value>Selecteer bestand</value>
+  </data>
+  <data name="CmdSelectExportFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CmdSelectExportFile.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TxtNewDbFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>153, 183</value>
+  </data>
+  <data name="TxtNewDbFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TxtNewDbFile.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblDbFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 186</value>
+  </data>
+  <data name="LblDbFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>132, 20</value>
+  </data>
+  <data name="LblDbFile.Text" xml:space="preserve">
+    <value>Database bestand:</value>
+  </data>
+  <data name="LblDbFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblDbFile.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabPageNewAddress.Text" xml:space="preserve">
+    <value>Nieuw adres</value>
+  </data>
+  <data name="TabPageNewAddress.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabPageNewAddress.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gbNewAddress.Size" type="System.Drawing.Size, System.Drawing">
+    <value>2372, 1007</value>
+  </data>
+  <data name="gbNewAddress.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gbNewAddress.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkDefaultAddress.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkDefaultAddress.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gbAddress.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gbAddress.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtPostcalCode.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtPostcalCode.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPostcalCode.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPostcalCode.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label1.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtCity.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtCity.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtHouseNo.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtHouseNo.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtStreet.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtStreet.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblCity.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblCity.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblStreet.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblStreet.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gbSolar.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gbSolar.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblHasSolarpanels.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblHasSolarpanels.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblSubsidy.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblSubsidy.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtSubsidyAmount.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtSubsidyAmount.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPurchaseAmount.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPurchaseAmount.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtPurchaseAmount.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtPurchaseAmount.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label6.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label4.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkSolarPanelsAvailable.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkSolarPanelsAvailable.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label2.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtTotalCapacitySolarPanels.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtTotalCapacitySolarPanels.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtQualityReductionSolarPanels.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtQualityReductionSolarPanels.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblTotalCapacity.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblTotalCapacity.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblRate.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblRate.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtDescription.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtDescription.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CmdNextNewAddress.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2284, 1019</value>
+  </data>
+  <data name="CmdNextNewAddress.Text" xml:space="preserve">
+    <value>&amp;Volgende</value>
+  </data>
+  <data name="CmdNextNewAddress.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CmdNextNewAddress.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CmPreviousTabNewAddress.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 1019</value>
+  </data>
+  <data name="CmPreviousTabNewAddress.Text" xml:space="preserve">
+    <value>&amp;Terug</value>
+  </data>
+  <data name="CmPreviousTabNewAddress.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CmPreviousTabNewAddress.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabPageSelectEnergyTypes.Text" xml:space="preserve">
+    <value>Energie typen</value>
+  </data>
+  <data name="TabPageSelectEnergyTypes.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabPageSelectEnergyTypes.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CmdPreviousEnergyTypes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 1019</value>
+  </data>
+  <data name="CmdPreviousEnergyTypes.Text" xml:space="preserve">
+    <value>&amp;Terug</value>
+  </data>
+  <data name="CmdPreviousEnergyTypes.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CmdPreviousEnergyTypes.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GbNewEnergyTypes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>2369, 969</value>
+  </data>
+  <data name="GbNewEnergyTypes.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GbNewEnergyTypes.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdNextNewEnergyTypes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2284, 1019</value>
+  </data>
+  <data name="cmdNextNewEnergyTypes.Text" xml:space="preserve">
+    <value>&amp;Volgende</value>
+  </data>
+  <data name="cmdNextNewEnergyTypes.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdNextNewEnergyTypes.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblHelpNewEnergyTypes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>348, 20</value>
+  </data>
+  <data name="LblHelpNewEnergyTypes.Text" xml:space="preserve">
+    <value>Deze standaard energie types worden toegevoegd:</value>
+  </data>
+  <data name="LblHelpNewEnergyTypes.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblHelpNewEnergyTypes.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabPageSetupFile.Text" xml:space="preserve">
+    <value>Bestand instellen</value>
+  </data>
+  <data name="TabPageSetupFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TabPageSetupFile.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblSetupFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>476, 20</value>
+  </data>
+  <data name="lblSetupFile.Text" xml:space="preserve">
+    <value>Om het geselecteerde bestand te gebruiken drukt u op 'Setup bestand'</value>
+  </data>
+  <data name="lblSetupFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblSetupFile.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdPreviousSetupFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 1019</value>
+  </data>
+  <data name="cmdPreviousSetupFile.Text" xml:space="preserve">
+    <value>&amp;Terug</value>
+  </data>
+  <data name="cmdPreviousSetupFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdPreviousSetupFile.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblSetupNewFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>703, 20</value>
+  </data>
+  <data name="LblSetupNewFile.Text" xml:space="preserve">
+    <value>Om het nieuwe bestand in te stellen en de basisdatum aan te maken, drukt u op 'Nieuw bestand instellen'</value>
+  </data>
+  <data name="LblSetupNewFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblSetupNewFile.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CmdCreateDb.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2253, 1019</value>
+  </data>
+  <data name="CmdCreateDb.Text" xml:space="preserve">
+    <value>Setup bestand</value>
+  </data>
+  <data name="CmdCreateDb.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CmdCreateDb.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Setup nieuw bestand</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+</root>

@@ -1,0 +1,84 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>Resources\EnergyUse.ico</ApplicationIcon>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <StartupObject>WinFormsEF.Program</StartupObject>
+    <PackageIcon>EnergyUse.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Languages\Lang_en.resx" />
+    <EmbeddedResource Remove="Languages\Lang_nl.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Languages\Lang_en.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>Lang_en.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </Content>
+    <Content Include="Languages\Lang_nl.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>Lang_nl.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WinForms" Version="2.0.0-rc2" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\EnergyUse.Common\EnergyUse.Common.csproj" />
+    <ProjectReference Include="..\EnergyUse.Models\EnergyUse.Models.csproj" />
+    <ProjectReference Include="..\EnergyUse.Repository\EnergyUse.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Languages\Lang_en.Designer.cs">
+      <DependentUpon>Lang_en.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Languages\Lang_nl.Designer.cs">
+      <DependentUpon>Lang_nl.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>

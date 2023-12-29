@@ -1,0 +1,217 @@
+﻿<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1006, 103</value>
+  </data>
+  <data name="txtTotalCapacitySolarPanels.Location" type="System.Drawing.Point, System.Drawing">
+    <value>922, 100</value>
+  </data>
+  <data name="lblTotalCapacity.Location" type="System.Drawing.Point, System.Drawing">
+    <value>796, 103</value>
+  </data>
+  <data name="lblTotalCapacity.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 20</value>
+  </data>
+  <data name="lblTotalCapacity.Text" xml:space="preserve">
+    <value>Totale capaciteit:</value>
+  </data>
+  <data name="lblEnergyType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>511, 35</value>
+  </data>
+  <data name="lblEnergyType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 20</value>
+  </data>
+  <data name="lblEnergyType.Text" xml:space="preserve">
+    <value>Energie type:</value>
+  </data>
+  <data name="cboEnergyType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>613, 31</value>
+  </data>
+  <data name="lblAddress.Location" type="System.Drawing.Point, System.Drawing">
+    <value>128, 35</value>
+  </data>
+  <data name="lblAddress.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="lblAddress.Text" xml:space="preserve">
+    <value>Adres:</value>
+  </data>
+  <data name="cmbAddress.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 31</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>968, 68</value>
+  </data>
+  <data name="txtQualityReductionSolarPanels.Location" type="System.Drawing.Point, System.Drawing">
+    <value>922, 65</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>755, 68</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 20</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Kwaliteitsvermindering:</value>
+  </data>
+  <data name="lblMaxYears.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 103</value>
+  </data>
+  <data name="lblMaxYears.Size" type="System.Drawing.Size, System.Drawing">
+    <value>212, 20</value>
+  </data>
+  <data name="lblMaxYears.Text" xml:space="preserve">
+    <value>Max aantal jaren te berekenen:</value>
+  </data>
+  <data name="nudMaxYears.Location" type="System.Drawing.Point, System.Drawing">
+    <value>233, 100</value>
+  </data>
+  <data name="lblSubsidy.Location" type="System.Drawing.Point, System.Drawing">
+    <value>541, 103</value>
+  </data>
+  <data name="lblSubsidy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 20</value>
+  </data>
+  <data name="lblSubsidy.Text" xml:space="preserve">
+    <value>Subsidie</value>
+  </data>
+  <data name="txtSubsidyAmount.Location" type="System.Drawing.Point, System.Drawing">
+    <value>613, 100</value>
+  </data>
+  <data name="lblPurchaseAmount.Location" type="System.Drawing.Point, System.Drawing">
+    <value>482, 68</value>
+  </data>
+  <data name="lblPurchaseAmount.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 20</value>
+  </data>
+  <data name="lblPurchaseAmount.Text" xml:space="preserve">
+    <value>Aankoop bedrag:</value>
+  </data>
+  <data name="txtPurchaseAmount.Location" type="System.Drawing.Point, System.Drawing">
+    <value>613, 65</value>
+  </data>
+  <data name="dtpPurchaseDate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 65</value>
+  </data>
+  <data name="lblDateOrPurchase.Location" type="System.Drawing.Point, System.Drawing">
+    <value>59, 68</value>
+  </data>
+  <data name="lblDateOrPurchase.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 20</value>
+  </data>
+  <data name="lblDateOrPurchase.Text" xml:space="preserve">
+    <value>Aankoop datum:</value>
+  </data>
+  <data name="tsbCalculate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 24</value>
+  </data>
+  <data name="tsbCalculate.Text" xml:space="preserve">
+    <value>&amp;Berekenen</value>
+  </data>
+  <data name="tsbClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 24</value>
+  </data>
+  <data name="tsbClose.Text" xml:space="preserve">
+    <value>&amp;Sluiten</value>
+  </data>
+  <data name="periodIdDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Periode</value>
+  </data>
+  <data name="endPeriodDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Einde</value>
+  </data>
+  <data name="ReturnOnInvestment.HeaderText" xml:space="preserve">
+    <value>Rendement op investering</value>
+  </data>
+  <data name="ReturnOnInvestment.ToolTipText" xml:space="preserve">
+    <value>ROI</value>
+  </data>
+  <data name="ReturnOnInvestmentTotal.HeaderText" xml:space="preserve">
+    <value>ROI Totaal</value>
+  </data>
+  <data name="Return.HeaderText" xml:space="preserve">
+    <value>Terug in %</value>
+  </data>
+  <data name="valueProducedDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Waarde geproduceerd</value>
+  </data>
+  <data name="valueConsumedDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Waarde geconsumeerd</value>
+  </data>
+  <data name="ValueProducedAndConsumed.HeaderText" xml:space="preserve">
+    <value>Waarde geproduceerd en geconsumeerd</value>
+  </data>
+  <data name="MonetaryValueProduced.HeaderText" xml:space="preserve">
+    <value>Geproduceerde monetaire waarde</value>
+  </data>
+  <data name="MonetaryValueConsumed.HeaderText" xml:space="preserve">
+    <value>Verbruikte geldwaarde</value>
+  </data>
+  <data name="MonetaryValueProducedAndConsumed.HeaderText" xml:space="preserve">
+    <value>Geproduceerde en geconsumeerde monetaire waarde</value>
+  </data>
+  <data name="OtherCostProduced.HeaderText" xml:space="preserve">
+    <value>Overige kosten productie</value>
+  </data>
+  <data name="OtherCostConsumed.HeaderText" xml:space="preserve">
+    <value>Overige kosten consumptie</value>
+  </data>
+</root>

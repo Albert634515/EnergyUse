@@ -1,0 +1,979 @@
+﻿<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="&gt;&gt;txtColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="txtName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>215, 27</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="txtReturnDeliveryLow.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="tsbDelete.Text" xml:space="preserve">
+    <value>&amp;Delete</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="gbEnergyType.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="statusStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 585</value>
+  </data>
+  <data name="lblColorHigh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 20</value>
+  </data>
+  <data name="&gt;&gt;lblName.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="txtColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 20</value>
+  </data>
+  <data name="tsbDelete.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 24</value>
+  </data>
+  <data name="&gt;&gt;dgEnergyTypes.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="gbColors.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;chkHasNormalAndLow.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lblReturnDeliveryHigh.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;lblName.Name" xml:space="preserve">
+    <value>lblName</value>
+  </data>
+  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="UnitName.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="&gt;&gt;txtColorLow.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="tbsCancel.Text" xml:space="preserve">
+    <value>&amp;Cancel</value>
+  </data>
+  <data name="lblReturnDeliveryHigh.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;chkHasEnergyReturn.Name" xml:space="preserve">
+    <value>chkHasEnergyReturn</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="chkDefaultType.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="tbsCancel.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="lblName.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="txtReturnDeliveryHigh.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="lblColorHigh.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblUnit.Text" xml:space="preserve">
+    <value>Unit:</value>
+  </data>
+  <data name="gbEnergyType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>437, 32</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryHigh.Parent" xml:space="preserve">
+    <value>gbColors</value>
+  </data>
+  <data name="lblName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>52, 20</value>
+  </data>
+  <data name="txtColorHigh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 27</value>
+  </data>
+  <data name="chkHasNormalAndLow.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkHasNormalAndLow.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="tsbSave.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="chkDefaultType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 24</value>
+  </data>
+  <data name="lblReturnDeliveryLow.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkHasNormalAndLow.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="EnergyTypeName.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="&gt;&gt;txtColorLow.Name" xml:space="preserve">
+    <value>txtColorLow</value>
+  </data>
+  <data name="chkHasEnergyReturn.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="txtReturnDeliveryLow.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tsbClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 24</value>
+  </data>
+  <data name="tsbAdd.Text" xml:space="preserve">
+    <value>&amp;Add</value>
+  </data>
+  <data name="&gt;&gt;gbColors.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="txtColorHigh.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="&gt;&gt;tsbClose.Name" xml:space="preserve">
+    <value>tsbClose</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryLow.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;bsUnits.Name" xml:space="preserve">
+    <value>bsUnits</value>
+  </data>
+  <data name="chkHasNormalAndLow.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="&gt;&gt;chkDefaultType.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;cboUnit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chkHasEnergyReturn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 132</value>
+  </data>
+  <data name="txtColorHigh.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtName.MaxLength" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="txtColor.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;txtName.Name" xml:space="preserve">
+    <value>txtName</value>
+  </data>
+  <data name="&gt;&gt;UnitName.Name" xml:space="preserve">
+    <value>UnitName</value>
+  </data>
+  <data name="txtReturnDeliveryHigh.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 125</value>
+  </data>
+  <data name="lblReturnDeliveryLow.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;EnergyTypeName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chkHasNormalAndLow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 98</value>
+  </data>
+  <data name="&gt;&gt;tsbDelete.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tsbRefresh.Text" xml:space="preserve">
+    <value>&amp;Refresh</value>
+  </data>
+  <data name="dgEnergyTypes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 30</value>
+  </data>
+  <data name="txtColorLow.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="&gt;&gt;tsbSave.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryHigh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tsbRefresh.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;nameDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>nameDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="txtColor.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="chkHasNormalAndLow.Text" xml:space="preserve">
+    <value>Has normal and low:</value>
+  </data>
+  <data name="&gt;&gt;bsEnergyTypes.Name" xml:space="preserve">
+    <value>bsEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;cboUnit.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tbsCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 24</value>
+  </data>
+  <data name="lblReturnDeliveryLow.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="tsbAdd.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="chkDefaultType.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="chkHasEnergyReturn.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblName.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gbEnergyType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>570, 204</value>
+  </data>
+  <data name="lblReturnDeliveryHigh.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 128</value>
+  </data>
+  <data name="lblName.Text" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="toolStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;chkHasNormalAndLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="txtReturnDeliveryHigh.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;statusStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="txtName.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;chkHasEnergyReturn.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cboUnit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>161, 165</value>
+  </data>
+  <data name="chkHasNormalAndLow.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblColorHigh.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;chkHasNormalAndLow.Parent" xml:space="preserve">
+    <value>gbEnergyType</value>
+  </data>
+  <data name="lblColorLow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 93</value>
+  </data>
+  <data name="statusStrip1.Text" xml:space="preserve">
+    <value>statusStrip1</value>
+  </data>
+  <data name="chkDefaultType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblColorLow.Text" xml:space="preserve">
+    <value>Color rate low:</value>
+  </data>
+  <data name="nameDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>200</value>
+  </data>
+  <data name="&gt;&gt;lblUnit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="txtName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="&gt;&gt;lblUnit.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblColorHigh.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;dgEnergyTypes.Name" xml:space="preserve">
+    <value>dgEnergyTypes</value>
+  </data>
+  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="lblColor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 20</value>
+  </data>
+  <data name="UnitName.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;chkDefaultType.Parent" xml:space="preserve">
+    <value>gbEnergyType</value>
+  </data>
+  <data name="lblColorHigh.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lblReturnDeliveryLow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 20</value>
+  </data>
+  <data name="txtReturnDeliveryLow.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="chkHasEnergyReturn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkHasNormalAndLow.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblColorLow.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;statusStrip1.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="chkDefaultType.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1018, 607</value>
+  </data>
+  <data name="lblReturnDeliveryHigh.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryLow.Parent" xml:space="preserve">
+    <value>gbColors</value>
+  </data>
+  <data name="txtReturnDeliveryLow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 160</value>
+  </data>
+  <data name="lblColorLow.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryHigh.Parent" xml:space="preserve">
+    <value>gbColors</value>
+  </data>
+  <data name="chkDefaultType.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtReturnDeliveryHigh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 27</value>
+  </data>
+  <data name="gbColors.Size" type="System.Drawing.Size, System.Drawing">
+    <value>570, 195</value>
+  </data>
+  <data name="lblReturnDeliveryLow.Text" xml:space="preserve">
+    <value>Color return delivery low:</value>
+  </data>
+  <data name="&gt;&gt;lblColor.Parent" xml:space="preserve">
+    <value>gbColors</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chkHasEnergyReturn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="chkHasEnergyReturn.Text" xml:space="preserve">
+    <value>Has energy return:</value>
+  </data>
+  <data name="&gt;&gt;txtName.Parent" xml:space="preserve">
+    <value>gbEnergyType</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="tsbAdd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 24</value>
+  </data>
+  <data name="txtReturnDeliveryLow.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="chkDefaultType.Text" xml:space="preserve">
+    <value>Default type:</value>
+  </data>
+  <data name="tsbRefresh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 24</value>
+  </data>
+  <data name="gbColors.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="txtColorLow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 90</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblName.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;UnitName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gbEnergyType.Name" xml:space="preserve">
+    <value>gbEnergyType</value>
+  </data>
+  <data name="txtColorHigh.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryHigh.Name" xml:space="preserve">
+    <value>lblReturnDeliveryHigh</value>
+  </data>
+  <data name="tsbClose.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lblColorHigh.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 58</value>
+  </data>
+  <data name="lblColorLow.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkHasNormalAndLow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 24</value>
+  </data>
+  <data name="txtReturnDeliveryHigh.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="lblReturnDeliveryLow.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;tsbRefresh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtColor.Parent" xml:space="preserve">
+    <value>gbColors</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryHigh.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;txtColorLow.Parent" xml:space="preserve">
+    <value>gbColors</value>
+  </data>
+  <data name="EnergyTypeName.HeaderText" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="&gt;&gt;bsUnits.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblUnit.Parent" xml:space="preserve">
+    <value>gbEnergyType</value>
+  </data>
+  <data name="chkDefaultType.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblUnit.Name" xml:space="preserve">
+    <value>lblUnit</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Energy types</value>
+  </data>
+  <data name="&gt;&gt;txtColorHigh.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;tsbDelete.Name" xml:space="preserve">
+    <value>tsbDelete</value>
+  </data>
+  <data name="&gt;&gt;lblColorLow.Name" xml:space="preserve">
+    <value>lblColorLow</value>
+  </data>
+  <data name="txtReturnDeliveryHigh.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;gbColors.Name" xml:space="preserve">
+    <value>gbColors</value>
+  </data>
+  <data name="lblColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;tsbSave.Name" xml:space="preserve">
+    <value>tsbSave</value>
+  </data>
+  <data name="txtColorLow.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblColorHigh.Text" xml:space="preserve">
+    <value>Color rate normal:</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryHigh.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="txtColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 27</value>
+  </data>
+  <data name="cboUnit.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtReturnDeliveryLow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 27</value>
+  </data>
+  <data name="&gt;&gt;tsbRefresh.Name" xml:space="preserve">
+    <value>tsbRefresh</value>
+  </data>
+  <data name="&gt;&gt;chkDefaultType.Name" xml:space="preserve">
+    <value>chkDefaultType</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryLow.Name" xml:space="preserve">
+    <value>txtReturnDeliveryLow</value>
+  </data>
+  <data name="tsbDelete.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="cboUnit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="&gt;&gt;gbEnergyType.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="txtColorHigh.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 55</value>
+  </data>
+  <data name="lblColorLow.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkHasEnergyReturn.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="chkHasEnergyReturn.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="lblColorLow.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="dgEnergyTypes.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="&gt;&gt;cboUnit.Name" xml:space="preserve">
+    <value>cboUnit</value>
+  </data>
+  <data name="&gt;&gt;txtName.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="tsbSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 24</value>
+  </data>
+  <data name="&gt;&gt;nameDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 20</value>
+  </data>
+  <data name="&gt;&gt;chkHasEnergyReturn.Parent" xml:space="preserve">
+    <value>gbEnergyType</value>
+  </data>
+  <data name="&gt;&gt;lblColorLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblUnit.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tsbClose.Text" xml:space="preserve">
+    <value>&amp;Close</value>
+  </data>
+  <data name="gbColors.Text" xml:space="preserve">
+    <value>Colors</value>
+  </data>
+  <data name="&gt;&gt;lblColorHigh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UnitName.HeaderText" xml:space="preserve">
+    <value>Unit Name</value>
+  </data>
+  <data name="dgEnergyTypes.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lblReturnDeliveryHigh.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryLow.Parent" xml:space="preserve">
+    <value>gbColors</value>
+  </data>
+  <data name="lblColor.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;chkHasNormalAndLow.Name" xml:space="preserve">
+    <value>chkHasNormalAndLow</value>
+  </data>
+  <data name="&gt;&gt;chkDefaultType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblReturnDeliveryLow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 163</value>
+  </data>
+  <data name="lblColorHigh.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkDefaultType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>61, 63</value>
+  </data>
+  <data name="&gt;&gt;bsEnergyTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtColorHigh.Name" xml:space="preserve">
+    <value>txtColorHigh</value>
+  </data>
+  <data name="&gt;&gt;txtColorHigh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblReturnDeliveryHigh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 20</value>
+  </data>
+  <data name="txtName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>161, 27</value>
+  </data>
+  <data name="statusStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;txtName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblName.Parent" xml:space="preserve">
+    <value>gbEnergyType</value>
+  </data>
+  <data name="EnergyTypeName.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;lblColorHigh.Parent" xml:space="preserve">
+    <value>gbColors</value>
+  </data>
+  <data name="tsbSave.Text" xml:space="preserve">
+    <value>&amp;Save</value>
+  </data>
+  <data name="&gt;&gt;gbEnergyType.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="dgEnergyTypes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>408, 297</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryHigh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1018, 27</value>
+  </data>
+  <data name="&gt;&gt;dgEnergyTypes.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblUnit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 20</value>
+  </data>
+  <data name="lblReturnDeliveryHigh.Text" xml:space="preserve">
+    <value>Color return delivery normal:</value>
+  </data>
+  <data name="gbEnergyType.Text" xml:space="preserve">
+    <value>Energy type</value>
+  </data>
+  <data name="&gt;&gt;tsbAdd.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dgEnergyTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gbColors.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="txtColorLow.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;txtColorHigh.Parent" xml:space="preserve">
+    <value>gbColors</value>
+  </data>
+  <data name="&gt;&gt;tbsCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colorDialog1.Name" xml:space="preserve">
+    <value>colorDialog1</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblReturnDeliveryHigh.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>frmEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;cboUnit.Parent" xml:space="preserve">
+    <value>gbEnergyType</value>
+  </data>
+  <data name="&gt;&gt;tsbClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="txtColorLow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 27</value>
+  </data>
+  <data name="lblUnit.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gbEnergyType.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="lblColor.Text" xml:space="preserve">
+    <value>Color:</value>
+  </data>
+  <data name="&gt;&gt;lblColorHigh.Name" xml:space="preserve">
+    <value>lblColorHigh</value>
+  </data>
+  <data name="txtColorLow.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="lblColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 23</value>
+  </data>
+  <data name="gbColors.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="lblColor.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="nameDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryHigh.Name" xml:space="preserve">
+    <value>txtReturnDeliveryHigh</value>
+  </data>
+  <data name="gbColors.Location" type="System.Drawing.Point, System.Drawing">
+    <value>437, 242</value>
+  </data>
+  <data name="tsbClose.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>TextBeforeImage</value>
+  </data>
+  <data name="lblUnit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>112, 169</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryLow.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;lblColorLow.Parent" xml:space="preserve">
+    <value>gbColors</value>
+  </data>
+  <data name="lblUnit.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;gbColors.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblColorLow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 20</value>
+  </data>
+  <data name="&gt;&gt;tsbAdd.Name" xml:space="preserve">
+    <value>tsbAdd</value>
+  </data>
+  <data name="&gt;&gt;tbsCancel.Name" xml:space="preserve">
+    <value>tbsCancel</value>
+  </data>
+  <data name="&gt;&gt;txtColor.Name" xml:space="preserve">
+    <value>txtColor</value>
+  </data>
+  <data name="&gt;&gt;colorDialog1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColorDialog, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="statusStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblUnit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="dgEnergyTypes.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;chkHasEnergyReturn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.Name" xml:space="preserve">
+    <value>statusStrip1</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryLow.Name" xml:space="preserve">
+    <value>lblReturnDeliveryLow</value>
+  </data>
+  <data name="cboUnit.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="nameDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="lblName.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="txtColorHigh.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;lblColorLow.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;lblColorHigh.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="cboUnit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 28</value>
+  </data>
+  <data name="chkHasEnergyReturn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 24</value>
+  </data>
+  <data name="&gt;&gt;gbEnergyType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblColor.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;lblColor.Name" xml:space="preserve">
+    <value>lblColor</value>
+  </data>
+  <data name="lblName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>99, 30</value>
+  </data>
+  <data name="txtName.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblReturnDeliveryLow.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="txtColor.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;lblColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;txtColor.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;EnergyTypeName.Name" xml:space="preserve">
+    <value>EnergyTypeName</value>
+  </data>
+  <data name="toolStrip1.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="statusStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1018, 22</value>
+  </data>
+  <data name="&gt;&gt;txtColorLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gbEnergyType.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>278, 17</value>
+  </metadata>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="bsUnits.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>549, 17</value>
+  </metadata>
+  <metadata name="UnitName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>656, 17</value>
+  </metadata>
+  <metadata name="bsEnergyTypes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>391, 17</value>
+  </metadata>
+  <metadata name="EnergyTypeName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>154, 17</value>
+  </metadata>
+</root>

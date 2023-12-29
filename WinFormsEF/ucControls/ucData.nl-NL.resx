@@ -1,0 +1,175 @@
+﻿<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tsbAdd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 24</value>
+  </data>
+  <data name="tsbAdd.Text" xml:space="preserve">
+    <value>&amp;Toevoegen</value>
+  </data>
+  <data name="tsbEdit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 24</value>
+  </data>
+  <data name="tsbEdit.Text" xml:space="preserve">
+    <value>&amp;Bewerken</value>
+  </data>
+  <data name="tsbDelete.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 24</value>
+  </data>
+  <data name="tsbDelete.Text" xml:space="preserve">
+    <value>&amp;Verwijderen</value>
+  </data>
+  <data name="tsbRefresh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>81, 24</value>
+  </data>
+  <data name="tsbRefresh.Text" xml:space="preserve">
+    <value>Verversen</value>
+  </data>
+  <data name="toolStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblTill.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 15</value>
+  </data>
+  <data name="lblTill.Text" xml:space="preserve">
+    <value>T/m:</value>
+  </data>
+  <data name="lblTill.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dtpTill.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dtpFrom.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblFrom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 15</value>
+  </data>
+  <data name="lblFrom.Text" xml:space="preserve">
+    <value>Van:</value>
+  </data>
+  <data name="lblFrom.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 15</value>
+  </data>
+  <data name="lbl.Text" xml:space="preserve">
+    <value>Cumulatief:</value>
+  </data>
+  <data name="lbl.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnAccumulative.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbAccumulativeNo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 19</value>
+  </data>
+  <data name="rbAccumulativeNo.Text" xml:space="preserve">
+    <value>Nee</value>
+  </data>
+  <data name="rbAccumulativeNo.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbAccumulativeYes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 19</value>
+  </data>
+  <data name="rbAccumulativeYes.Text" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="rbAccumulativeYes.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dgMeterReadings.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RegistrationDate.HeaderText" xml:space="preserve">
+    <value>Datum</value>
+  </data>
+  <data name="RateNormal.HeaderText" xml:space="preserve">
+    <value>Tarief Normal</value>
+  </data>
+  <data name="RateLow.HeaderText" xml:space="preserve">
+    <value>Tarief Low</value>
+  </data>
+  <data name="ReturnDeliveryNormal.HeaderText" xml:space="preserve">
+    <value>Retour Levering Normaal</value>
+  </data>
+  <data name="ReturnDeliveryLow.HeaderText" xml:space="preserve">
+    <value>Retourlevering laag</value>
+  </data>
+  <data name="DeltaNormal.HeaderText" xml:space="preserve">
+    <value>Delta Normaal</value>
+  </data>
+  <data name="DeltaLow.HeaderText" xml:space="preserve">
+    <value>Delta Laag</value>
+  </data>
+  <data name="ReturnDeliveryDeltaNormal.HeaderText" xml:space="preserve">
+    <value>Retour levering Delta Normaal</value>
+  </data>
+  <data name="ReturnDeliveryDeltaLow.HeaderText" xml:space="preserve">
+    <value>Retour levering Delta laag</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+</root>

@@ -1,0 +1,175 @@
+﻿<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tsbAddPredefinedPeriods.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 24</value>
+  </data>
+  <data name="tsbAddPredefinedPeriods.Text" xml:space="preserve">
+    <value>&amp;Toevoegen</value>
+  </data>
+  <data name="tsbSavePredefinedPeriod.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 24</value>
+  </data>
+  <data name="tsbSavePredefinedPeriod.Text" xml:space="preserve">
+    <value>&amp;Bewaren</value>
+  </data>
+  <data name="tbsCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 24</value>
+  </data>
+  <data name="tbsCancel.Text" xml:space="preserve">
+    <value>&amp;Annuleren</value>
+  </data>
+  <data name="tsbDeletePredefinedPeriods.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 24</value>
+  </data>
+  <data name="tsbDeletePredefinedPeriods.Text" xml:space="preserve">
+    <value>&amp;Verwijderen</value>
+  </data>
+  <data name="tsbRefeshPredefinedPeriods.Size" type="System.Drawing.Size, System.Drawing">
+    <value>81, 24</value>
+  </data>
+  <data name="tsbRefeshPredefinedPeriods.Text" xml:space="preserve">
+    <value>&amp;Verversen</value>
+  </data>
+  <data name="toolStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dgPredefinedPeriodDates.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gbPeriodDate.Text" xml:space="preserve">
+    <value>Periode datum</value>
+  </data>
+  <data name="gbPeriodDate.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboTarifGroup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>100, 84</value>
+  </data>
+  <data name="cboTarifGroup.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 88</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 15</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Tarief groep:</value>
+  </data>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboEnergyType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>100, 111</value>
+  </data>
+  <data name="cboEnergyType.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 115</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 15</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Energie type:</value>
+  </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblEndDate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 61</value>
+  </data>
+  <data name="lblEndDate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 15</value>
+  </data>
+  <data name="lblEndDate.Text" xml:space="preserve">
+    <value>Eind datum:</value>
+  </data>
+  <data name="lblEndDate.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dtEndDate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>100, 57</value>
+  </data>
+  <data name="dtEndDate.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblStartDate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 34</value>
+  </data>
+  <data name="lblStartDate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 15</value>
+  </data>
+  <data name="lblStartDate.Text" xml:space="preserve">
+    <value>Start datum:</value>
+  </data>
+  <data name="lblStartDate.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dtStartDate.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+</root>

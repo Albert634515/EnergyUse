@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EnergyUse.Common\EnergyUse.Common.csproj" />
+    <ProjectReference Include="..\EnergyUse.Models\EnergyUse.Models.csproj" />
+    <ProjectReference Include="..\EnergyUse.Repository\EnergyUse.Dal.csproj" />
+  </ItemGroup>
+
+</Project>

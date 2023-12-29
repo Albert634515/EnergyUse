@@ -1,0 +1,181 @@
+﻿<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tsbClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 24</value>
+  </data>
+  <data name="tsbClose.Text" xml:space="preserve">
+    <value>&amp;Sluiten</value>
+  </data>
+  <data name="tsbResetAllSettings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 24</value>
+  </data>
+  <data name="tsbResetAllSettings.Text" xml:space="preserve">
+    <value>&amp;Alles resetten</value>
+  </data>
+  <data name="gbGeneral.Text" xml:space="preserve">
+    <value>Algemeen</value>
+  </data>
+  <data name="lblLanguage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 20</value>
+  </data>
+  <data name="lblLanguage.Text" xml:space="preserve">
+    <value>Taal:</value>
+  </data>
+  <data name="lblCurrency.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 20</value>
+  </data>
+  <data name="lblCurrency.Text" xml:space="preserve">
+    <value>Valuta:</value>
+  </data>
+  <data name="cmdSelectImportDir.Location" type="System.Drawing.Point, System.Drawing">
+    <value>650, 59</value>
+  </data>
+  <data name="cmdSelectImportDir.Size" type="System.Drawing.Size, System.Drawing">
+    <value>133, 31</value>
+  </data>
+  <data name="cmdSelectImportDir.Text" xml:space="preserve">
+    <value>Selecteer map</value>
+  </data>
+  <data name="lblImportDirectory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 20</value>
+  </data>
+  <data name="lblImportDirectory.Text" xml:space="preserve">
+    <value>Import map:</value>
+  </data>
+  <data name="cmdSelectExportDir.Location" type="System.Drawing.Point, System.Drawing">
+    <value>651, 23</value>
+  </data>
+  <data name="cmdSelectExportDir.Size" type="System.Drawing.Size, System.Drawing">
+    <value>132, 31</value>
+  </data>
+  <data name="cmdSelectExportDir.Text" xml:space="preserve">
+    <value>Selecteer map</value>
+  </data>
+  <data name="lblExportDirectory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 20</value>
+  </data>
+  <data name="lblExportDirectory.Text" xml:space="preserve">
+    <value>Export map:</value>
+  </data>
+  <data name="gbColorsAndLayout.Text" xml:space="preserve">
+    <value>Kleuren en layout</value>
+  </data>
+  <data name="cmdResetColorsAndLayout.Text" xml:space="preserve">
+    <value>Resetten</value>
+  </data>
+  <data name="lblSliderColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 20</value>
+  </data>
+  <data name="lblSliderColor.Text" xml:space="preserve">
+    <value>Schuifregelaar kleur:</value>
+  </data>
+  <data name="lblFormBackColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>192, 20</value>
+  </data>
+  <data name="lblFormBackColor.Text" xml:space="preserve">
+    <value>Achtergrondkleur formulier:</value>
+  </data>
+  <data name="gbChart.Text" xml:space="preserve">
+    <value>Grafiek</value>
+  </data>
+  <data name="lblGraphLabelColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>132, 20</value>
+  </data>
+  <data name="lblGraphLabelColor.Text" xml:space="preserve">
+    <value>Grafiek label kleur:</value>
+  </data>
+  <data name="lblGraphForeColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 20</value>
+  </data>
+  <data name="lblGraphForeColor.Text" xml:space="preserve">
+    <value>Voorgrond-kleur:</value>
+  </data>
+  <data name="lblGraphLines.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 20</value>
+  </data>
+  <data name="lblGraphLines.Text" xml:space="preserve">
+    <value>Lijnkleur:</value>
+  </data>
+  <data name="lblGraphType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 20</value>
+  </data>
+  <data name="lblGraphType.Text" xml:space="preserve">
+    <value>Grafiektype:</value>
+  </data>
+  <data name="cmdResetChart.Text" xml:space="preserve">
+    <value>Resetten</value>
+  </data>
+  <data name="lblGraphBackGround.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 20</value>
+  </data>
+  <data name="lblGraphBackGround.Text" xml:space="preserve">
+    <value>Achtergrond kleur:</value>
+  </data>
+  <data name="gbReporting.Text" xml:space="preserve">
+    <value>Rapportages</value>
+  </data>
+  <data name="lblDefaultNumberOfEnergyTypes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>290, 20</value>
+  </data>
+  <data name="lblDefaultNumberOfEnergyTypes.Text" xml:space="preserve">
+    <value>Standaard aantal energietypes op rapport:</value>
+  </data>
+</root>

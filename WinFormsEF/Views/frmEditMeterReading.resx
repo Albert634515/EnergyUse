@@ -1,0 +1,826 @@
+﻿<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="lblReturnDeliveryLow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>34, 201</value>
+  </data>
+  <data name="txtRateNormal.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryNormal.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="txtReturnDeliveryDeltaLow.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Meter:</value>
+  </data>
+  <data name="lblDeltaNormal.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="lblRateLow.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtRateNormal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 27</value>
+  </data>
+  <data name="dtpFrom.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="txtDeltaNormal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>335, 92</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="txtDeltaNormal.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="&gt;&gt;cboMeters.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;cmdClose.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="cboMeters.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryNormal.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;dtpFrom.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lblRateLow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 20</value>
+  </data>
+  <data name="txtRateLow.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;txtRateLow.Name" xml:space="preserve">
+    <value>txtRateLow</value>
+  </data>
+  <data name="&gt;&gt;lblRateNormal.Name" xml:space="preserve">
+    <value>lblRateNormal</value>
+  </data>
+  <data name="lblReturnDeliveryNormal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>162, 20</value>
+  </data>
+  <data name="cmdSave.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lblReturnDeliveryNormal.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;txtDeltaLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtDeltaNormal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="txtReturnDeliveryLow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>178, 197</value>
+  </data>
+  <data name="txtReturnDeliveryDeltaNormal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 27</value>
+  </data>
+  <data name="&gt;&gt;txtDeltaLow.Name" xml:space="preserve">
+    <value>txtDeltaLow</value>
+  </data>
+  <data name="&gt;&gt;lblRange.ZOrder" xml:space="preserve">
+    <value>21</value>
+  </data>
+  <data name="txtReturnDeliveryNormal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 27</value>
+  </data>
+  <data name="lblRange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 20</value>
+  </data>
+  <data name="&gt;&gt;txtDeltaLow.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;txtDeltaNormal.Name" xml:space="preserve">
+    <value>txtDeltaNormal</value>
+  </data>
+  <data name="lblReturnDeliveryDeltaNormal.ToolTip" xml:space="preserve">
+    <value>Return Delivery Delta Normal</value>
+  </data>
+  <data name="dtpFrom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 27</value>
+  </data>
+  <data name="txtReturnDeliveryNormal.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="&gt;&gt;lblDeltaLow.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lblRateLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryLow.Name" xml:space="preserve">
+    <value>lblReturnDeliveryLow</value>
+  </data>
+  <data name="txtRateLow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>178, 128</value>
+  </data>
+  <data name="lblReturnDeliveryNormal.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblRange.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.ZOrder" xml:space="preserve">
+    <value>22</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>586, 324</value>
+  </data>
+  <data name="&gt;&gt;lblRateNormal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblReturnDeliveryDeltaNormal.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblRateLow.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="dtpFrom.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="lblDeltaLow.Text" xml:space="preserve">
+    <value>Delta:</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 20</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryDeltaNormal.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="txtReturnDeliveryDeltaNormal.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="txtReturnDeliveryDeltaLow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>335, 198</value>
+  </data>
+  <data name="&gt;&gt;cmdClose.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="statusStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="lblRateNormal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>77, 96</value>
+  </data>
+  <data name="&gt;&gt;dtpFrom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblReturnDeliveryDeltaLow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 201</value>
+  </data>
+  <data name="lblDeltaLow.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="&gt;&gt;lblRange.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Edit Meter Reading</value>
+  </data>
+  <data name="txtRateLow.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="lblRateLow.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="txtReturnDeliveryNormal.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtDeltaLow.ToolTip" xml:space="preserve">
+    <value>Delta Low</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryNormal.Name" xml:space="preserve">
+    <value>lblReturnDeliveryNormal</value>
+  </data>
+  <data name="&gt;&gt;lblRange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblDeltaNormal.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblRateNormal.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cmdSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>345, 241</value>
+  </data>
+  <data name="txtReturnDeliveryDeltaNormal.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="&gt;&gt;cmdSave.Name" xml:space="preserve">
+    <value>cmdSave</value>
+  </data>
+  <data name="txtDeltaNormal.ToolTip" xml:space="preserve">
+    <value>Delta Normal</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryLow.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="lblReturnDeliveryNormal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 166</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblDeltaLow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 131</value>
+  </data>
+  <data name="lblReturnDeliveryNormal.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblRange.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cboMeters.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="lblDeltaNormal.ToolTip" xml:space="preserve">
+    <value>Delta Normal</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryDeltaLow.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;txtRateLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblRateLow.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryDeltaLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdSave.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblDeltaNormal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 20</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryDeltaLow.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cmdSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 50</value>
+  </data>
+  <data name="txtDeltaNormal.TabIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="lblReturnDeliveryDeltaNormal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 166</value>
+  </data>
+  <data name="txtReturnDeliveryLow.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="&gt;&gt;cmdSave.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryDeltaLow.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 20</value>
+  </data>
+  <data name="&gt;&gt;lblRateNormal.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="txtDeltaLow.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="&gt;&gt;dtpFrom.Name" xml:space="preserve">
+    <value>dtpFrom</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryLow.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lblReturnDeliveryNormal.Text" xml:space="preserve">
+    <value>Return delivery normal:</value>
+  </data>
+  <data name="txtRateLow.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="lblReturnDeliveryLow.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtReturnDeliveryLow.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="&gt;&gt;txtRateNormal.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="txtReturnDeliveryDeltaLow.ToolTip" xml:space="preserve">
+    <value>Return Delivery Delta Low</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.Name" xml:space="preserve">
+    <value>statusStrip1</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryNormal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="txtReturnDeliveryDeltaLow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 27</value>
+  </data>
+  <data name="txtReturnDeliveryDeltaNormal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>335, 162</value>
+  </data>
+  <data name="lblRateNormal.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;lblRateLow.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;bsMeters.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="txtReturnDeliveryLow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 27</value>
+  </data>
+  <data name="txtReturnDeliveryLow.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="statusStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 302</value>
+  </data>
+  <data name="lblReturnDeliveryLow.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="lblDeltaLow.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryNormal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryDeltaNormal.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cmdClose.Text" xml:space="preserve">
+    <value>&amp;Close</value>
+  </data>
+  <data name="lblRateLow.Text" xml:space="preserve">
+    <value>Rate low:</value>
+  </data>
+  <data name="dtpFrom.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;cboMeters.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="txtRateNormal.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="&gt;&gt;bsMeters.Name" xml:space="preserve">
+    <value>bsMeters</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtRateNormal.Name" xml:space="preserve">
+    <value>txtRateNormal</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="lblReturnDeliveryDeltaLow.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cboMeters.Size" type="System.Drawing.Size, System.Drawing">
+    <value>396, 28</value>
+  </data>
+  <data name="lblDeltaLow.ToolTip" xml:space="preserve">
+    <value>Delta Low</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryDeltaLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblRange.Text" xml:space="preserve">
+    <value>Date:</value>
+  </data>
+  <data name="cmdSave.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="lblReturnDeliveryLow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>139, 20</value>
+  </data>
+  <data name="lblRateNormal.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="&gt;&gt;lblDeltaNormal.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="cmdSave.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;bsMeterReading.Name" xml:space="preserve">
+    <value>bsMeterReading</value>
+  </data>
+  <data name="&gt;&gt;lblDeltaLow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cmdClose.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="txtDeltaLow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 27</value>
+  </data>
+  <data name="lblReturnDeliveryDeltaNormal.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryDeltaLow.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="txtReturnDeliveryNormal.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryDeltaNormal.Name" xml:space="preserve">
+    <value>txtReturnDeliveryDeltaNormal</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryDeltaNormal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblDeltaNormal.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;txtRateNormal.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="lblRange.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;dtpFrom.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="lblRange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>124, 62</value>
+  </data>
+  <data name="cmdClose.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;lblDeltaNormal.Name" xml:space="preserve">
+    <value>lblDeltaNormal</value>
+  </data>
+  <data name="lblDeltaLow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 20</value>
+  </data>
+  <data name="lblReturnDeliveryLow.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;cboMeters.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="cmdSave.Text" xml:space="preserve">
+    <value>&amp;Save</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryDeltaLow.Name" xml:space="preserve">
+    <value>lblReturnDeliveryDeltaLow</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryNormal.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="cmdClose.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="cmdClose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>461, 241</value>
+  </data>
+  <data name="&gt;&gt;txtRateNormal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryDeltaNormal.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>118, 28</value>
+  </data>
+  <data name="lblDeltaNormal.Text" xml:space="preserve">
+    <value>Delta:</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryLow.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lblReturnDeliveryNormal.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="cmdSave.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="txtDeltaLow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>335, 128</value>
+  </data>
+  <data name="txtReturnDeliveryDeltaLow.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="cmdClose.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="statusStrip1.Text" xml:space="preserve">
+    <value>statusStrip1</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryDeltaLow.Name" xml:space="preserve">
+    <value>txtReturnDeliveryDeltaLow</value>
+  </data>
+  <data name="lblReturnDeliveryLow.Text" xml:space="preserve">
+    <value>Return delivery low:</value>
+  </data>
+  <data name="cboMeters.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblRateNormal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>93, 20</value>
+  </data>
+  <data name="&gt;&gt;txtDeltaNormal.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>frmEditMeterReading</value>
+  </data>
+  <data name="&gt;&gt;txtRateLow.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="cmdSave.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblRange.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="cmdClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 50</value>
+  </data>
+  <data name="&gt;&gt;lblRateNormal.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lblReturnDeliveryDeltaNormal.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="lblDeltaNormal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 96</value>
+  </data>
+  <data name="&gt;&gt;lblDeltaNormal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cmdClose.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdSave.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="txtRateNormal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>178, 93</value>
+  </data>
+  <data name="lblRateNormal.Text" xml:space="preserve">
+    <value>Rate normal:</value>
+  </data>
+  <data name="txtReturnDeliveryNormal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>178, 162</value>
+  </data>
+  <data name="cboMeters.Location" type="System.Drawing.Point, System.Drawing">
+    <value>178, 23</value>
+  </data>
+  <data name="&gt;&gt;lblDeltaNormal.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lblRange.Name" xml:space="preserve">
+    <value>lblRange</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryDeltaNormal.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;lblDeltaLow.Name" xml:space="preserve">
+    <value>lblDeltaLow</value>
+  </data>
+  <data name="&gt;&gt;lblRateLow.Name" xml:space="preserve">
+    <value>lblRateLow</value>
+  </data>
+  <data name="txtRateNormal.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtRateLow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 27</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryNormal.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="cmdClose.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="lblReturnDeliveryDeltaLow.Text" xml:space="preserve">
+    <value>Delta:</value>
+  </data>
+  <data name="cmdSave.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;lblRateLow.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;cmdClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryLow.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryLow.Name" xml:space="preserve">
+    <value>txtReturnDeliveryLow</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cmdClose.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;cmdClose.Name" xml:space="preserve">
+    <value>cmdClose</value>
+  </data>
+  <data name="lblReturnDeliveryDeltaLow.ToolTip" xml:space="preserve">
+    <value>Delta Normal</value>
+  </data>
+  <data name="lblDeltaLow.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblReturnDeliveryDeltaLow.TabIndex" type="System.Int32, mscorlib">
+    <value>42</value>
+  </data>
+  <data name="&gt;&gt;bsMeterReading.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtRateLow.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="txtDeltaNormal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 27</value>
+  </data>
+  <data name="statusStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>586, 22</value>
+  </data>
+  <data name="&gt;&gt;cmdSave.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;txtDeltaNormal.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="lblReturnDeliveryDeltaLow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 20</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryNormal.Name" xml:space="preserve">
+    <value>txtReturnDeliveryNormal</value>
+  </data>
+  <data name="&gt;&gt;txtReturnDeliveryDeltaNormal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dtpFrom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>178, 60</value>
+  </data>
+  <data name="&gt;&gt;cboMeters.Name" xml:space="preserve">
+    <value>cboMeters</value>
+  </data>
+  <data name="lblRateLow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>100, 131</value>
+  </data>
+  <data name="statusStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;lblDeltaLow.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="lblReturnDeliveryDeltaLow.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblReturnDeliveryDeltaNormal.Text" xml:space="preserve">
+    <value>Delta:</value>
+  </data>
+  <data name="&gt;&gt;lblReturnDeliveryDeltaNormal.Name" xml:space="preserve">
+    <value>lblReturnDeliveryDeltaNormal</value>
+  </data>
+  <data name="lblReturnDeliveryLow.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="txtDeltaLow.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="lblReturnDeliveryDeltaNormal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 20</value>
+  </data>
+  <data name="&gt;&gt;txtDeltaLow.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="txtReturnDeliveryDeltaNormal.ToolTip" xml:space="preserve">
+    <value>Return Delivery Delta Normal</value>
+  </data>
+  <data name="lblRateNormal.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="bsMeterReading.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>265, 21</value>
+  </metadata>
+  <metadata name="bsMeters.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>434, 21</value>
+  </metadata>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>126, 19</value>
+  </metadata>
+</root>

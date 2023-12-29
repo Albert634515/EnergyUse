@@ -1,0 +1,1435 @@
+﻿<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>23, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1089, 27</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="toolStrip1.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="tsbAddCostCategory.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tsbAddCostCategory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 24</value>
+  </data>
+  <data name="tsbAddCostCategory.Text" xml:space="preserve">
+    <value>&amp;Add</value>
+  </data>
+  <data name="tsbSaveCostCategory.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tsbSaveCostCategory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 24</value>
+  </data>
+  <data name="tsbSaveCostCategory.Text" xml:space="preserve">
+    <value>&amp;Save</value>
+  </data>
+  <data name="tbsCancel.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tbsCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 24</value>
+  </data>
+  <data name="tbsCancel.Text" xml:space="preserve">
+    <value>&amp;Cancel</value>
+  </data>
+  <data name="tsbDeleteCostCategory.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tsbDeleteCostCategory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 24</value>
+  </data>
+  <data name="tsbDeleteCostCategory.Text" xml:space="preserve">
+    <value>&amp;Delete</value>
+  </data>
+  <data name="tsbRefreshCostCategory.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tsbRefreshCostCategory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 24</value>
+  </data>
+  <data name="tsbRefreshCostCategory.Text" xml:space="preserve">
+    <value>&amp;Refresh</value>
+  </data>
+  <data name="tsbCloseCostCategory.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tsbCloseCostCategory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 24</value>
+  </data>
+  <data name="tsbCloseCostCategory.Text" xml:space="preserve">
+    <value>&amp;Close</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tsbCloseCostCategory.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>TextBeforeImage</value>
+  </data>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>147, 17</value>
+  </metadata>
+  <data name="statusStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 509</value>
+  </data>
+  <data name="statusStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1089, 22</value>
+  </data>
+  <data name="statusStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="statusStrip1.Text" xml:space="preserve">
+    <value>statusStrip1</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.Name" xml:space="preserve">
+    <value>statusStrip1</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <metadata name="bsEnergyTypes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1165, 19</value>
+  </metadata>
+  <data name="cboEnergyType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 40</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="cboEnergyType.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="cboEnergyType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 28</value>
+  </data>
+  <data name="cboEnergyType.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="&gt;&gt;cboEnergyType.Name" xml:space="preserve">
+    <value>cboEnergyType</value>
+  </data>
+  <data name="&gt;&gt;cboEnergyType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboEnergyType.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;cboEnergyType.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <metadata name="bsEnergyTypes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1165, 19</value>
+  </metadata>
+  <data name="lblEnergyType.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblEnergyType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblEnergyType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 43</value>
+  </data>
+  <data name="lblEnergyType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 20</value>
+  </data>
+  <data name="lblEnergyType.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="lblEnergyType.Text" xml:space="preserve">
+    <value>Energy type:</value>
+  </data>
+  <data name="&gt;&gt;lblEnergyType.Name" xml:space="preserve">
+    <value>lblEnergyType</value>
+  </data>
+  <data name="&gt;&gt;lblEnergyType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblEnergyType.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lblEnergyType.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>284, 17</value>
+  </metadata>
+  <metadata name="UnitName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="bsCostCategories.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>520, 16</value>
+  </metadata>
+  <data name="dgCostCategories.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 73</value>
+  </data>
+  <data name="dgCostCategories.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="dgCostCategories.Size" type="System.Drawing.Size, System.Drawing">
+    <value>504, 433</value>
+  </data>
+  <data name="dgCostCategories.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="&gt;&gt;dgCostCategories.Name" xml:space="preserve">
+    <value>dgCostCategories</value>
+  </data>
+  <data name="&gt;&gt;dgCostCategories.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dgCostCategories.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;dgCostCategories.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="idDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="idDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="idDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="idDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="nameDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="nameDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="nameDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>220</value>
+  </data>
+  <data name="sortOrderDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Sort Order</value>
+  </data>
+  <data name="sortOrderDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="sortOrderDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>70</value>
+  </data>
+  <metadata name="UnitName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="UnitName.HeaderText" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="UnitName.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="UnitName.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <metadata name="bsCostCategories.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>520, 16</value>
+  </metadata>
+  <data name="gbCostCategory.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;lblEndDate.Name" xml:space="preserve">
+    <value>lblEndDate</value>
+  </data>
+  <data name="&gt;&gt;lblEndDate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblEndDate.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;lblEndDate.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;dtEndDate.Name" xml:space="preserve">
+    <value>dtEndDate</value>
+  </data>
+  <data name="&gt;&gt;dtEndDate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dtEndDate.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;dtEndDate.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;lblStartDate.Name" xml:space="preserve">
+    <value>lblStartDate</value>
+  </data>
+  <data name="&gt;&gt;lblStartDate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblStartDate.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;lblStartDate.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;dtStartDate.Name" xml:space="preserve">
+    <value>dtStartDate</value>
+  </data>
+  <data name="&gt;&gt;dtStartDate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dtStartDate.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;dtStartDate.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;chkNotCalculateOverReturnValue.Name" xml:space="preserve">
+    <value>chkNotCalculateOverReturnValue</value>
+  </data>
+  <data name="&gt;&gt;chkNotCalculateOverReturnValue.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkNotCalculateOverReturnValue.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;chkNotCalculateOverReturnValue.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;chkCanBeNegative.Name" xml:space="preserve">
+    <value>chkCanBeNegative</value>
+  </data>
+  <data name="&gt;&gt;chkCanBeNegative.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkCanBeNegative.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;chkCanBeNegative.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;chkCalculateVat.Name" xml:space="preserve">
+    <value>chkCalculateVat</value>
+  </data>
+  <data name="&gt;&gt;chkCalculateVat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkCalculateVat.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;chkCalculateVat.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;cboTariffGroup.Name" xml:space="preserve">
+    <value>cboTariffGroup</value>
+  </data>
+  <data name="&gt;&gt;cboTariffGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboTariffGroup.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;cboTariffGroup.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;cboUnit.Name" xml:space="preserve">
+    <value>cboUnit</value>
+  </data>
+  <data name="&gt;&gt;cboUnit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboUnit.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;cboUnit.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;lblUnit.Name" xml:space="preserve">
+    <value>lblUnit</value>
+  </data>
+  <data name="&gt;&gt;lblUnit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblUnit.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;lblUnit.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;lblSubType.Name" xml:space="preserve">
+    <value>lblSubType</value>
+  </data>
+  <data name="&gt;&gt;lblSubType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblSubType.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;lblSubType.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;cboEnergySubType.Name" xml:space="preserve">
+    <value>cboEnergySubType</value>
+  </data>
+  <data name="&gt;&gt;cboEnergySubType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboEnergySubType.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;cboEnergySubType.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;lblCalculationType.Name" xml:space="preserve">
+    <value>lblCalculationType</value>
+  </data>
+  <data name="&gt;&gt;lblCalculationType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblCalculationType.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;lblCalculationType.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;cboCalculationType.Name" xml:space="preserve">
+    <value>cboCalculationType</value>
+  </data>
+  <data name="&gt;&gt;cboCalculationType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboCalculationType.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;cboCalculationType.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;txtColor.Name" xml:space="preserve">
+    <value>txtColor</value>
+  </data>
+  <data name="&gt;&gt;txtColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtColor.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;txtColor.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;lblColor.Name" xml:space="preserve">
+    <value>lblColor</value>
+  </data>
+  <data name="&gt;&gt;lblColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblColor.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;lblColor.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;txtSortOrder.Name" xml:space="preserve">
+    <value>txtSortOrder</value>
+  </data>
+  <data name="&gt;&gt;txtSortOrder.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtSortOrder.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;txtSortOrder.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.Name" xml:space="preserve">
+    <value>txtDescription</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.ZOrder" xml:space="preserve">
+    <value>21</value>
+  </data>
+  <data name="&gt;&gt;lblDescription.Name" xml:space="preserve">
+    <value>lblDescription</value>
+  </data>
+  <data name="&gt;&gt;lblDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblDescription.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;lblDescription.ZOrder" xml:space="preserve">
+    <value>22</value>
+  </data>
+  <data name="gbCostCategory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>528, 104</value>
+  </data>
+  <data name="gbCostCategory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>549, 402</value>
+  </data>
+  <data name="gbCostCategory.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="gbCostCategory.Text" xml:space="preserve">
+    <value>Cost Category</value>
+  </data>
+  <data name="&gt;&gt;gbCostCategory.Name" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;gbCostCategory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gbCostCategory.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;gbCostCategory.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblEndDate.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblEndDate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblEndDate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>292, 138</value>
+  </data>
+  <data name="lblEndDate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 20</value>
+  </data>
+  <data name="lblEndDate.TabIndex" type="System.Int32, mscorlib">
+    <value>54</value>
+  </data>
+  <data name="lblEndDate.Text" xml:space="preserve">
+    <value>End date:</value>
+  </data>
+  <data name="&gt;&gt;lblEndDate.Name" xml:space="preserve">
+    <value>lblEndDate</value>
+  </data>
+  <data name="&gt;&gt;lblEndDate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblEndDate.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;lblEndDate.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="dtEndDate.CustomFormat" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="dtEndDate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>370, 135</value>
+  </data>
+  <data name="dtEndDate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 27</value>
+  </data>
+  <data name="dtEndDate.TabIndex" type="System.Int32, mscorlib">
+    <value>53</value>
+  </data>
+  <data name="&gt;&gt;dtEndDate.Name" xml:space="preserve">
+    <value>dtEndDate</value>
+  </data>
+  <data name="&gt;&gt;dtEndDate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dtEndDate.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;dtEndDate.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblStartDate.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblStartDate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblStartDate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>45, 138</value>
+  </data>
+  <data name="lblStartDate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 20</value>
+  </data>
+  <data name="lblStartDate.TabIndex" type="System.Int32, mscorlib">
+    <value>52</value>
+  </data>
+  <data name="lblStartDate.Text" xml:space="preserve">
+    <value>Start date:</value>
+  </data>
+  <data name="&gt;&gt;lblStartDate.Name" xml:space="preserve">
+    <value>lblStartDate</value>
+  </data>
+  <data name="&gt;&gt;lblStartDate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblStartDate.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;lblStartDate.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="dtStartDate.CustomFormat" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="dtStartDate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>134, 135</value>
+  </data>
+  <data name="dtStartDate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 27</value>
+  </data>
+  <data name="dtStartDate.TabIndex" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="&gt;&gt;dtStartDate.Name" xml:space="preserve">
+    <value>dtStartDate</value>
+  </data>
+  <data name="&gt;&gt;dtStartDate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dtStartDate.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;dtStartDate.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="chkNotCalculateOverReturnValue.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkNotCalculateOverReturnValue.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="chkNotCalculateOverReturnValue.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkNotCalculateOverReturnValue.Location" type="System.Drawing.Point, System.Drawing">
+    <value>164, 344</value>
+  </data>
+  <data name="chkNotCalculateOverReturnValue.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="chkNotCalculateOverReturnValue.Size" type="System.Drawing.Size, System.Drawing">
+    <value>246, 24</value>
+  </data>
+  <data name="chkNotCalculateOverReturnValue.TabIndex" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="chkNotCalculateOverReturnValue.Text" xml:space="preserve">
+    <value>Not Calculate Over Return Value:</value>
+  </data>
+  <data name="&gt;&gt;chkNotCalculateOverReturnValue.Name" xml:space="preserve">
+    <value>chkNotCalculateOverReturnValue</value>
+  </data>
+  <data name="&gt;&gt;chkNotCalculateOverReturnValue.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkNotCalculateOverReturnValue.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;chkNotCalculateOverReturnValue.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>409, 310</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>133, 20</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>49</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>(Calculation result)</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="chkCanBeNegative.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkCanBeNegative.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="chkCanBeNegative.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkCanBeNegative.Location" type="System.Drawing.Point, System.Drawing">
+    <value>243, 309</value>
+  </data>
+  <data name="chkCanBeNegative.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="chkCanBeNegative.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 24</value>
+  </data>
+  <data name="chkCanBeNegative.TabIndex" type="System.Int32, mscorlib">
+    <value>48</value>
+  </data>
+  <data name="chkCanBeNegative.Text" xml:space="preserve">
+    <value>Can not be negative:</value>
+  </data>
+  <data name="&gt;&gt;chkCanBeNegative.Name" xml:space="preserve">
+    <value>chkCanBeNegative</value>
+  </data>
+  <data name="&gt;&gt;chkCanBeNegative.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkCanBeNegative.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;chkCanBeNegative.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="chkCalculateVat.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkCalculateVat.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="chkCalculateVat.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkCalculateVat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>289, 273</value>
+  </data>
+  <data name="chkCalculateVat.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="chkCalculateVat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 24</value>
+  </data>
+  <data name="chkCalculateVat.TabIndex" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
+  <data name="chkCalculateVat.Text" xml:space="preserve">
+    <value>Calculate vat:</value>
+  </data>
+  <data name="&gt;&gt;chkCalculateVat.Name" xml:space="preserve">
+    <value>chkCalculateVat</value>
+  </data>
+  <data name="&gt;&gt;chkCalculateVat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkCalculateVat.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;chkCalculateVat.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>130, 240</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>284, 20</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>(Always calculate with tarifs in this group)</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 209</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 20</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Tariff group:</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <metadata name="bsTariffGroups.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1165, 65</value>
+  </metadata>
+  <data name="cboTariffGroup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>134, 205</value>
+  </data>
+  <data name="cboTariffGroup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="cboTariffGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>305, 28</value>
+  </data>
+  <data name="cboTariffGroup.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="&gt;&gt;cboTariffGroup.Name" xml:space="preserve">
+    <value>cboTariffGroup</value>
+  </data>
+  <data name="&gt;&gt;cboTariffGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboTariffGroup.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;cboTariffGroup.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <metadata name="bsTariffGroups.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1165, 65</value>
+  </metadata>
+  <metadata name="bsUnits.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1057, 17</value>
+  </metadata>
+  <data name="cboUnit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>370, 100</value>
+  </data>
+  <data name="cboUnit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="cboUnit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 28</value>
+  </data>
+  <data name="cboUnit.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="&gt;&gt;cboUnit.Name" xml:space="preserve">
+    <value>cboUnit</value>
+  </data>
+  <data name="&gt;&gt;cboUnit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboUnit.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;cboUnit.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <metadata name="bsUnits.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1057, 17</value>
+  </metadata>
+  <data name="lblUnit.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblUnit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblUnit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>324, 104</value>
+  </data>
+  <data name="lblUnit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 20</value>
+  </data>
+  <data name="lblUnit.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="lblUnit.Text" xml:space="preserve">
+    <value>Unit:</value>
+  </data>
+  <data name="&gt;&gt;lblUnit.Name" xml:space="preserve">
+    <value>lblUnit</value>
+  </data>
+  <data name="&gt;&gt;lblUnit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblUnit.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;lblUnit.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="lblSubType.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblSubType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblSubType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>54, 173</value>
+  </data>
+  <data name="lblSubType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 20</value>
+  </data>
+  <data name="lblSubType.TabIndex" type="System.Int32, mscorlib">
+    <value>42</value>
+  </data>
+  <data name="lblSubType.Text" xml:space="preserve">
+    <value>Sub type:</value>
+  </data>
+  <data name="&gt;&gt;lblSubType.Name" xml:space="preserve">
+    <value>lblSubType</value>
+  </data>
+  <data name="&gt;&gt;lblSubType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblSubType.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;lblSubType.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <metadata name="bsEnergySubType.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>880, 17</value>
+  </metadata>
+  <data name="cboEnergySubType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>134, 169</value>
+  </data>
+  <data name="cboEnergySubType.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="cboEnergySubType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 28</value>
+  </data>
+  <data name="cboEnergySubType.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="&gt;&gt;cboEnergySubType.Name" xml:space="preserve">
+    <value>cboEnergySubType</value>
+  </data>
+  <data name="&gt;&gt;cboEnergySubType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboEnergySubType.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;cboEnergySubType.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <metadata name="bsEnergySubType.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>880, 17</value>
+  </metadata>
+  <data name="lblCalculationType.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblCalculationType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblCalculationType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 101</value>
+  </data>
+  <data name="lblCalculationType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 20</value>
+  </data>
+  <data name="lblCalculationType.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="lblCalculationType.Text" xml:space="preserve">
+    <value>Calculation type:</value>
+  </data>
+  <data name="&gt;&gt;lblCalculationType.Name" xml:space="preserve">
+    <value>lblCalculationType</value>
+  </data>
+  <data name="&gt;&gt;lblCalculationType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblCalculationType.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;lblCalculationType.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <metadata name="bsCalculationType.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>700, 17</value>
+  </metadata>
+  <data name="cboCalculationType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>134, 97</value>
+  </data>
+  <data name="cboCalculationType.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="cboCalculationType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 28</value>
+  </data>
+  <data name="cboCalculationType.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="&gt;&gt;cboCalculationType.Name" xml:space="preserve">
+    <value>cboCalculationType</value>
+  </data>
+  <data name="&gt;&gt;cboCalculationType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboCalculationType.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;cboCalculationType.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <metadata name="bsCalculationType.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>700, 17</value>
+  </metadata>
+  <data name="txtColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>369, 65</value>
+  </data>
+  <data name="txtColor.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>136, 27</value>
+  </data>
+  <data name="txtColor.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="&gt;&gt;txtColor.Name" xml:space="preserve">
+    <value>txtColor</value>
+  </data>
+  <data name="&gt;&gt;txtColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtColor.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;txtColor.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="lblColor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>315, 68</value>
+  </data>
+  <data name="lblColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 20</value>
+  </data>
+  <data name="lblColor.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="lblColor.Text" xml:space="preserve">
+    <value>Color:</value>
+  </data>
+  <data name="&gt;&gt;lblColor.Name" xml:space="preserve">
+    <value>lblColor</value>
+  </data>
+  <data name="&gt;&gt;lblColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblColor.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;lblColor.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>46, 65</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>79, 20</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Sort order:</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="txtSortOrder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>134, 62</value>
+  </data>
+  <data name="txtSortOrder.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtSortOrder.MaxLength" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="txtSortOrder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>52, 27</value>
+  </data>
+  <data name="txtSortOrder.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="&gt;&gt;txtSortOrder.Name" xml:space="preserve">
+    <value>txtSortOrder</value>
+  </data>
+  <data name="&gt;&gt;txtSortOrder.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtSortOrder.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;txtSortOrder.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="txtDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>134, 27</value>
+  </data>
+  <data name="txtDescription.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtDescription.MaxLength" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="txtDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>374, 27</value>
+  </data>
+  <data name="txtDescription.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.Name" xml:space="preserve">
+    <value>txtDescription</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.ZOrder" xml:space="preserve">
+    <value>21</value>
+  </data>
+  <data name="lblDescription.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblDescription.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>37, 30</value>
+  </data>
+  <data name="lblDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>52, 20</value>
+  </data>
+  <data name="lblDescription.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="lblDescription.Text" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="&gt;&gt;lblDescription.Name" xml:space="preserve">
+    <value>lblDescription</value>
+  </data>
+  <data name="&gt;&gt;lblDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblDescription.Parent" xml:space="preserve">
+    <value>gbCostCategory</value>
+  </data>
+  <data name="&gt;&gt;lblDescription.ZOrder" xml:space="preserve">
+    <value>22</value>
+  </data>
+  <metadata name="colorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>389, 17</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>118</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 20</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1089, 531</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Cost categories</value>
+  </data>
+  <data name="&gt;&gt;tsbAddCostCategory.Name" xml:space="preserve">
+    <value>tsbAddCostCategory</value>
+  </data>
+  <data name="&gt;&gt;tsbAddCostCategory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbSaveCostCategory.Name" xml:space="preserve">
+    <value>tsbSaveCostCategory</value>
+  </data>
+  <data name="&gt;&gt;tsbSaveCostCategory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbsCancel.Name" xml:space="preserve">
+    <value>tbsCancel</value>
+  </data>
+  <data name="&gt;&gt;tbsCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbDeleteCostCategory.Name" xml:space="preserve">
+    <value>tsbDeleteCostCategory</value>
+  </data>
+  <data name="&gt;&gt;tsbDeleteCostCategory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbRefreshCostCategory.Name" xml:space="preserve">
+    <value>tsbRefreshCostCategory</value>
+  </data>
+  <data name="&gt;&gt;tsbRefreshCostCategory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbCloseCostCategory.Name" xml:space="preserve">
+    <value>tsbCloseCostCategory</value>
+  </data>
+  <data name="&gt;&gt;tsbCloseCostCategory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsEnergyTypes.Name" xml:space="preserve">
+    <value>bsEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;bsEnergyTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;idDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>idDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;idDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;nameDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>nameDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;nameDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;sortOrderDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>sortOrderDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;sortOrderDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;UnitName.Name" xml:space="preserve">
+    <value>UnitName</value>
+  </data>
+  <data name="&gt;&gt;UnitName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsCostCategories.Name" xml:space="preserve">
+    <value>bsCostCategories</value>
+  </data>
+  <data name="&gt;&gt;bsCostCategories.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsTariffGroups.Name" xml:space="preserve">
+    <value>bsTariffGroups</value>
+  </data>
+  <data name="&gt;&gt;bsTariffGroups.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsUnits.Name" xml:space="preserve">
+    <value>bsUnits</value>
+  </data>
+  <data name="&gt;&gt;bsUnits.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsEnergySubType.Name" xml:space="preserve">
+    <value>bsEnergySubType</value>
+  </data>
+  <data name="&gt;&gt;bsEnergySubType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsCalculationType.Name" xml:space="preserve">
+    <value>bsCalculationType</value>
+  </data>
+  <data name="&gt;&gt;bsCalculationType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colorDialog1.Name" xml:space="preserve">
+    <value>colorDialog1</value>
+  </data>
+  <data name="&gt;&gt;colorDialog1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColorDialog, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>frmCostcategories</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

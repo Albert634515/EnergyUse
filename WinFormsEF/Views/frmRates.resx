@@ -1,0 +1,1189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema 
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing"">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="ToolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>23, 26</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="TsbAdd.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="TsbAdd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 24</value>
+  </data>
+  <data name="TsbAdd.Text" xml:space="preserve">
+    <value>&amp;Add</value>
+  </data>
+  <data name="TsbSave.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="TsbSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 24</value>
+  </data>
+  <data name="TsbSave.Text" xml:space="preserve">
+    <value>&amp;Save</value>
+  </data>
+  <data name="TbsCancel.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="TbsCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 24</value>
+  </data>
+  <data name="TbsCancel.Text" xml:space="preserve">
+    <value>&amp;Cancel</value>
+  </data>
+  <data name="TsbDelete.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="TsbDelete.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 24</value>
+  </data>
+  <data name="TsbDelete.Text" xml:space="preserve">
+    <value>&amp;Delete</value>
+  </data>
+  <data name="TsbRefresh.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="TsbRefresh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 24</value>
+  </data>
+  <data name="TsbRefresh.Text" xml:space="preserve">
+    <value>&amp;Refresh</value>
+  </data>
+  <data name="TbsClose.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="TbsClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 24</value>
+  </data>
+  <data name="TbsClose.Text" xml:space="preserve">
+    <value>&amp;Close</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="TbsClose.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>TextBeforeImage</value>
+  </data>
+  <data name="ToolStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="ToolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1315, 27</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ToolStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="ToolStrip1.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;ToolStrip1.Name" xml:space="preserve">
+    <value>ToolStrip1</value>
+  </data>
+  <data name="&gt;&gt;ToolStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;ToolStrip1.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <metadata name="StatusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>147, 26</value>
+  </metadata>
+  <data name="StatusStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 693</value>
+  </data>
+  <data name="StatusStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1315, 22</value>
+  </data>
+  <data name="StatusStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="StatusStrip1.Text" xml:space="preserve">
+    <value>statusStrip1</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.Name" xml:space="preserve">
+    <value>StatusStrip1</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <metadata name="bsRates.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>294, 29</value>
+  </metadata>
+  <metadata name="bsAdditionalCategoryAndGroupInfo.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>749, 32</value>
+  </metadata>
+  <metadata name="bsEnergyTypes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>296, 71</value>
+  </metadata>
+  <data name="CboEnergyType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>130, 49</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="CboEnergyType.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="CboEnergyType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>210, 28</value>
+  </data>
+  <data name="CboEnergyType.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;CboEnergyType.Name" xml:space="preserve">
+    <value>CboEnergyType</value>
+  </data>
+  <data name="&gt;&gt;CboEnergyType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CboEnergyType.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;CboEnergyType.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="LblEnergyType.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblEnergyType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblEnergyType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>28, 52</value>
+  </data>
+  <data name="LblEnergyType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 20</value>
+  </data>
+  <data name="LblEnergyType.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="LblEnergyType.Text" xml:space="preserve">
+    <value>Energy type:</value>
+  </data>
+  <data name="&gt;&gt;LblEnergyType.Name" xml:space="preserve">
+    <value>LblEnergyType</value>
+  </data>
+  <data name="&gt;&gt;LblEnergyType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblEnergyType.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;LblEnergyType.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <metadata name="bsCostCategories.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>579, 29</value>
+  </metadata>
+  <data name="CboCostCategory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>130, 84</value>
+  </data>
+  <data name="CboCostCategory.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="CboCostCategory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>210, 28</value>
+  </data>
+  <data name="CboCostCategory.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;CboCostCategory.Name" xml:space="preserve">
+    <value>CboCostCategory</value>
+  </data>
+  <data name="&gt;&gt;CboCostCategory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CboCostCategory.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;CboCostCategory.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="LblCostCategory.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblCostCategory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblCostCategory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 87</value>
+  </data>
+  <data name="LblCostCategory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 20</value>
+  </data>
+  <data name="LblCostCategory.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="LblCostCategory.Text" xml:space="preserve">
+    <value>Cost category:</value>
+  </data>
+  <data name="&gt;&gt;LblCostCategory.Name" xml:space="preserve">
+    <value>LblCostCategory</value>
+  </data>
+  <data name="&gt;&gt;LblCostCategory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblCostCategory.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;LblCostCategory.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <metadata name="bsTarifGroups.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>405, 29</value>
+  </metadata>
+  <data name="CboTarifGroup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>130, 120</value>
+  </data>
+  <data name="CboTarifGroup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="CboTarifGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>210, 28</value>
+  </data>
+  <data name="CboTarifGroup.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;CboTarifGroup.Name" xml:space="preserve">
+    <value>CboTarifGroup</value>
+  </data>
+  <data name="&gt;&gt;CboTarifGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CboTarifGroup.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;CboTarifGroup.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="LblTarifGroup.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblTarifGroup.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblTarifGroup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>34, 123</value>
+  </data>
+  <data name="LblTarifGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>84, 20</value>
+  </data>
+  <data name="LblTarifGroup.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="LblTarifGroup.Text" xml:space="preserve">
+    <value>Tarif group:</value>
+  </data>
+  <data name="&gt;&gt;LblTarifGroup.Name" xml:space="preserve">
+    <value>LblTarifGroup</value>
+  </data>
+  <data name="&gt;&gt;LblTarifGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblTarifGroup.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;LblTarifGroup.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="LblRateSource.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblRateSource.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblRateSource.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 172</value>
+  </data>
+  <data name="LblRateSource.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 20</value>
+  </data>
+  <data name="LblRateSource.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="LblRateSource.Text" xml:space="preserve">
+    <value>Rate source:</value>
+  </data>
+  <data name="&gt;&gt;LblRateSource.Name" xml:space="preserve">
+    <value>LblRateSource</value>
+  </data>
+  <data name="&gt;&gt;LblRateSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblRateSource.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;LblRateSource.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="TxtDescription.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="TxtDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>130, 169</value>
+  </data>
+  <data name="TxtDescription.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="TxtDescription.MaxLength" type="System.Int32, mscorlib">
+    <value>255</value>
+  </data>
+  <data name="TxtDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1175, 27</value>
+  </data>
+  <data name="TxtDescription.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;TxtDescription.Name" xml:space="preserve">
+    <value>TxtDescription</value>
+  </data>
+  <data name="&gt;&gt;TxtDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TxtDescription.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;TxtDescription.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="DgRates.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="idDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="idDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="idDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="idDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="startRateDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Start Rate</value>
+  </data>
+  <data name="startRateDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="startRateDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>120</value>
+  </data>
+  <data name="endRateDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>End Rate</value>
+  </data>
+  <data name="endRateDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="endRateDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>120</value>
+  </data>
+  <data name="rateValueDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Rate Value</value>
+  </data>
+  <data name="rateValueDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="rateValueDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>120</value>
+  </data>
+  <data name="expectedPriceChangeDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Expected Price Change %</value>
+  </data>
+  <data name="expectedPriceChangeDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="expectedPriceChangeDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>135</value>
+  </data>
+  <data name="priceChangeDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Price change %</value>
+  </data>
+  <data name="priceChangeDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="priceChangeDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>135</value>
+  </data>
+  <data name="descriptionDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="descriptionDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="descriptionDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="DgRates.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 219</value>
+  </data>
+  <data name="DgRates.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="DgRates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>840, 462</value>
+  </data>
+  <data name="DgRates.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;DgRates.Name" xml:space="preserve">
+    <value>DgRates</value>
+  </data>
+  <data name="&gt;&gt;DgRates.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DgRates.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;DgRates.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="GbRate.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="LblRate.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblRate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblRate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>90, 133</value>
+  </data>
+  <data name="LblRate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 20</value>
+  </data>
+  <data name="LblRate.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="LblRate.Text" xml:space="preserve">
+    <value>Rate:</value>
+  </data>
+  <data name="&gt;&gt;LblRate.Name" xml:space="preserve">
+    <value>LblRate</value>
+  </data>
+  <data name="&gt;&gt;LblRate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblRate.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;LblRate.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="bsRateType.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>463, 66</value>
+  </metadata>
+  <data name="CboRateType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 27</value>
+  </data>
+  <data name="CboRateType.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="CboRateType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>254, 28</value>
+  </data>
+  <data name="CboRateType.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;CboRateType.Name" xml:space="preserve">
+    <value>CboRateType</value>
+  </data>
+  <data name="&gt;&gt;CboRateType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CboRateType.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;CboRateType.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="LblRateType.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblRateType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblRateType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>51, 30</value>
+  </data>
+  <data name="LblRateType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="LblRateType.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="LblRateType.Text" xml:space="preserve">
+    <value>Rate type:</value>
+  </data>
+  <data name="&gt;&gt;LblRateType.Name" xml:space="preserve">
+    <value>LblRateType</value>
+  </data>
+  <data name="&gt;&gt;LblRateType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblRateType.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;LblRateType.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="LblPriceChangeHint.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblPriceChangeHint.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblPriceChangeHint.Location" type="System.Drawing.Point, System.Drawing">
+    <value>242, 202</value>
+  </data>
+  <data name="LblPriceChangeHint.Size" type="System.Drawing.Size, System.Drawing">
+    <value>21, 20</value>
+  </data>
+  <data name="LblPriceChangeHint.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="LblPriceChangeHint.Text" xml:space="preserve">
+    <value>%</value>
+  </data>
+  <data name="&gt;&gt;LblPriceChangeHint.Name" xml:space="preserve">
+    <value>LblPriceChangeHint</value>
+  </data>
+  <data name="&gt;&gt;LblPriceChangeHint.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblPriceChangeHint.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;LblPriceChangeHint.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="LblPriceChange.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblPriceChange.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblPriceChange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>36, 202</value>
+  </data>
+  <data name="LblPriceChange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 20</value>
+  </data>
+  <data name="LblPriceChange.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="LblPriceChange.Text" xml:space="preserve">
+    <value>Price change:</value>
+  </data>
+  <data name="&gt;&gt;LblPriceChange.Name" xml:space="preserve">
+    <value>LblPriceChange</value>
+  </data>
+  <data name="&gt;&gt;LblPriceChange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblPriceChange.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;LblPriceChange.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="TxtPriceChange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 199</value>
+  </data>
+  <data name="TxtPriceChange.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="TxtPriceChange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 27</value>
+  </data>
+  <data name="TxtPriceChange.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;TxtPriceChange.Name" xml:space="preserve">
+    <value>TxtPriceChange</value>
+  </data>
+  <data name="&gt;&gt;TxtPriceChange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TxtPriceChange.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;TxtPriceChange.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="LblExpectedPriceChangeHint.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblExpectedPriceChangeHint.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblExpectedPriceChangeHint.Location" type="System.Drawing.Point, System.Drawing">
+    <value>242, 167</value>
+  </data>
+  <data name="LblExpectedPriceChangeHint.Size" type="System.Drawing.Size, System.Drawing">
+    <value>21, 20</value>
+  </data>
+  <data name="LblExpectedPriceChangeHint.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="LblExpectedPriceChangeHint.Text" xml:space="preserve">
+    <value>%</value>
+  </data>
+  <data name="&gt;&gt;LblExpectedPriceChangeHint.Name" xml:space="preserve">
+    <value>LblExpectedPriceChangeHint</value>
+  </data>
+  <data name="&gt;&gt;LblExpectedPriceChangeHint.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblExpectedPriceChangeHint.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;LblExpectedPriceChangeHint.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="LblExchangeRate.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblExchangeRate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblExchangeRate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 167</value>
+  </data>
+  <data name="LblExchangeRate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 20</value>
+  </data>
+  <data name="LblExchangeRate.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="LblExchangeRate.Text" xml:space="preserve">
+    <value>Expected change:</value>
+  </data>
+  <data name="&gt;&gt;LblExchangeRate.Name" xml:space="preserve">
+    <value>LblExchangeRate</value>
+  </data>
+  <data name="&gt;&gt;LblExchangeRate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblExchangeRate.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;LblExchangeRate.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="TxtExpectedPriceChange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 164</value>
+  </data>
+  <data name="TxtExpectedPriceChange.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="TxtExpectedPriceChange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 27</value>
+  </data>
+  <data name="TxtExpectedPriceChange.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 69</value>
+  </metadata>
+  <data name="TxtExpectedPriceChange.ToolTip" xml:space="preserve">
+    <value>Expected price change</value>
+  </data>
+  <data name="&gt;&gt;TxtExpectedPriceChange.Name" xml:space="preserve">
+    <value>TxtExpectedPriceChange</value>
+  </data>
+  <data name="&gt;&gt;TxtExpectedPriceChange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TxtExpectedPriceChange.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;TxtExpectedPriceChange.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="TxtRate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 129</value>
+  </data>
+  <data name="TxtRate.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="TxtRate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 27</value>
+  </data>
+  <data name="TxtRate.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;TxtRate.Name" xml:space="preserve">
+    <value>TxtRate</value>
+  </data>
+  <data name="&gt;&gt;TxtRate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TxtRate.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;TxtRate.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="LblDescription.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblDescription.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>44, 97</value>
+  </data>
+  <data name="LblDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 20</value>
+  </data>
+  <data name="LblDescription.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="LblDescription.Text" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="&gt;&gt;LblDescription.Name" xml:space="preserve">
+    <value>LblDescription</value>
+  </data>
+  <data name="&gt;&gt;LblDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblDescription.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;LblDescription.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="TxtRateDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 94</value>
+  </data>
+  <data name="TxtRateDescription.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="TxtRateDescription.MaxLength" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="TxtRateDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>254, 27</value>
+  </data>
+  <data name="TxtRateDescription.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;TxtRateDescription.Name" xml:space="preserve">
+    <value>TxtRateDescription</value>
+  </data>
+  <data name="&gt;&gt;TxtRateDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TxtRateDescription.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;TxtRateDescription.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="DtpEndRate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>277, 61</value>
+  </data>
+  <data name="DtpEndRate.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="DtpEndRate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 27</value>
+  </data>
+  <data name="DtpEndRate.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;DtpEndRate.Name" xml:space="preserve">
+    <value>DtpEndRate</value>
+  </data>
+  <data name="&gt;&gt;DtpEndRate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DtpEndRate.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;DtpEndRate.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="DtpStartRate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 61</value>
+  </data>
+  <data name="DtpStartRate.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="DtpStartRate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 27</value>
+  </data>
+  <data name="DtpStartRate.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;DtpStartRate.Name" xml:space="preserve">
+    <value>DtpStartRate</value>
+  </data>
+  <data name="&gt;&gt;DtpStartRate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DtpStartRate.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;DtpStartRate.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="LblRange.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblRange.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblRange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>88, 64</value>
+  </data>
+  <data name="LblRange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 20</value>
+  </data>
+  <data name="LblRange.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="LblRange.Text" xml:space="preserve">
+    <value>Date:</value>
+  </data>
+  <data name="&gt;&gt;LblRange.Name" xml:space="preserve">
+    <value>LblRange</value>
+  </data>
+  <data name="&gt;&gt;LblRange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblRange.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;LblRange.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="GbRate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>873, 272</value>
+  </data>
+  <data name="GbRate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>432, 409</value>
+  </data>
+  <data name="GbRate.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="GbRate.Text" xml:space="preserve">
+    <value>Rate</value>
+  </data>
+  <data name="&gt;&gt;GbRate.Name" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;GbRate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GbRate.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GbRate.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="LblAlwaysCalculatedWith.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblAlwaysCalculatedWith.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblAlwaysCalculatedWith.Location" type="System.Drawing.Point, System.Drawing">
+    <value>357, 88</value>
+  </data>
+  <data name="LblAlwaysCalculatedWith.Size" type="System.Drawing.Size, System.Drawing">
+    <value>15, 20</value>
+  </data>
+  <data name="LblAlwaysCalculatedWith.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="LblAlwaysCalculatedWith.Text" xml:space="preserve">
+    <value>_</value>
+  </data>
+  <data name="LblAlwaysCalculatedWith.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;LblAlwaysCalculatedWith.Name" xml:space="preserve">
+    <value>LblAlwaysCalculatedWith</value>
+  </data>
+  <data name="&gt;&gt;LblAlwaysCalculatedWith.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblAlwaysCalculatedWith.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;LblAlwaysCalculatedWith.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>105</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 20</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1315, 715</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Rates</value>
+  </data>
+  <data name="&gt;&gt;TsbAdd.Name" xml:space="preserve">
+    <value>TsbAdd</value>
+  </data>
+  <data name="&gt;&gt;TsbAdd.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TsbSave.Name" xml:space="preserve">
+    <value>TsbSave</value>
+  </data>
+  <data name="&gt;&gt;TsbSave.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TbsCancel.Name" xml:space="preserve">
+    <value>TbsCancel</value>
+  </data>
+  <data name="&gt;&gt;TbsCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TsbDelete.Name" xml:space="preserve">
+    <value>TsbDelete</value>
+  </data>
+  <data name="&gt;&gt;TsbDelete.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TsbRefresh.Name" xml:space="preserve">
+    <value>TsbRefresh</value>
+  </data>
+  <data name="&gt;&gt;TsbRefresh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TbsClose.Name" xml:space="preserve">
+    <value>TbsClose</value>
+  </data>
+  <data name="&gt;&gt;TbsClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsRates.Name" xml:space="preserve">
+    <value>bsRates</value>
+  </data>
+  <data name="&gt;&gt;bsRates.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsAdditionalCategoryAndGroupInfo.Name" xml:space="preserve">
+    <value>bsAdditionalCategoryAndGroupInfo</value>
+  </data>
+  <data name="&gt;&gt;bsAdditionalCategoryAndGroupInfo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsEnergyTypes.Name" xml:space="preserve">
+    <value>bsEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;bsEnergyTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsCostCategories.Name" xml:space="preserve">
+    <value>bsCostCategories</value>
+  </data>
+  <data name="&gt;&gt;bsCostCategories.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsTarifGroups.Name" xml:space="preserve">
+    <value>bsTarifGroups</value>
+  </data>
+  <data name="&gt;&gt;bsTarifGroups.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;idDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>idDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;idDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;startRateDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>startRateDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;startRateDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;endRateDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>endRateDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;endRateDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rateValueDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>rateValueDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;rateValueDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;expectedPriceChangeDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>expectedPriceChangeDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;expectedPriceChangeDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;priceChangeDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>priceChangeDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;priceChangeDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;descriptionDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>descriptionDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;descriptionDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsRateType.Name" xml:space="preserve">
+    <value>bsRateType</value>
+  </data>
+  <data name="&gt;&gt;bsRateType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FrmRates</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>
