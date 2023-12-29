@@ -18,6 +18,6 @@
 
         public virtual TariffGroup? TariffGroup { get; set; }
         public virtual ICollection<Meter> Meters { get; set; }
-        public virtual ICollection<Payment> Payments { get; set; }
+        public virtual ICollection<Payment>? Payments { get; set; }
     }
 }

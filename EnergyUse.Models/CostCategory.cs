@@ -10,7 +10,7 @@
         }
 
         public long Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public int SortOrder { get; set; }
         public bool CalculateVat { get; set; }
         public bool CanNotBeNegative { get; set; }
@@ -29,10 +29,10 @@
         public virtual EnergySubType EnergySubType { get; set; }
         public virtual EnergyType EnergyType { get; set; }
         public virtual TariffGroup? TariffGroup { get; set; }
-        public virtual ICollection<AdditionalCategoryAndGroupInfo> AdditionalCategoryAndGroupInfos { get; set; }
         public virtual ICollection<CostType> CostTypes { get; set; }
         public virtual ICollection<Rate> Rates { get; set; }
         public virtual ICollection<VatTarif> VatTarifs { get; set; }
+        public virtual ICollection<AdditionalCategoryAndGroupInfo>? AdditionalCategoryAndGroupInfos { get; set; }
 
         // Readonly props
         public string UnitName

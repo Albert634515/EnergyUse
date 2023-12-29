@@ -12,13 +12,13 @@
         }
 
         public long Id { get; set; }
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
-        public virtual ICollection<AdditionalCategoryAndGroupInfo> AdditionalCategoryAndGroupInfos { get; set; }
-        public virtual ICollection<Address> Addresses { get; set; }
-        public virtual ICollection<CostCategory> CostCategories { get; set; }
-        public virtual ICollection<PreDefinedPeriodDate> PreDefinedPeriodDates { get; set; }
-        public virtual ICollection<Rate> Rates { get; set; }
-        public virtual ICollection<CalculatedUnitPrice> CalculatedUnitPrices { get; set; }
+        public virtual ICollection<AdditionalCategoryAndGroupInfo>? AdditionalCategoryAndGroupInfos { get; set; }
+        public virtual ICollection<Address>? Addresses { get; set; }
+        public virtual ICollection<CostCategory>? CostCategories { get; set; }
+        public virtual ICollection<PreDefinedPeriodDate>? PreDefinedPeriodDates { get; set; }
+        public virtual ICollection<Rate>? Rates { get; set; }
+        public virtual ICollection<CalculatedUnitPrice>? CalculatedUnitPrices { get; set; }
     }
 }

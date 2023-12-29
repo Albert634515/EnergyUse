@@ -8,8 +8,8 @@
         }
 
         public long Id { get; set; }
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
-        public virtual ICollection<CostCategory> CostCategories { get; set; }
+        public virtual ICollection<CostCategory>? CostCategories { get; set; }
     }
 }
