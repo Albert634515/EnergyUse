@@ -85,7 +85,9 @@ namespace WinFormsEF.Views
         private void cmdRemove_Click(object sender, EventArgs e)
         {
             ucControls.ucDateSelection ucDateSelectionLast;
-            ucDateSelectionLast = (ucControls.ucDateSelection)FindControl(this, $"ucDateSelection{_selectionLineCount}");
+            var lastdateSelectionName = getLastSelectedKey();
+
+            ucDateSelectionLast = (ucControls.ucDateSelection)FindControl(this, lastdateSelectionName);
             Controls.Remove(ucDateSelectionLast);
             ucDateSelectionLast.Dispose();
 
@@ -95,7 +97,7 @@ namespace WinFormsEF.Views
 
             if (_selectionLineCount != 1)
             {
-                ucDateSelectionLast = (ucControls.ucDateSelection)FindControl(this, $"ucDateSelection{_selectionLineCount}");
+                ucDateSelectionLast = (ucControls.ucDateSelection)FindControl(this, lastdateSelectionName);
                 ucDateSelectionLast.SetRemoveButtonVisibilty(true);
             }
         }
@@ -107,11 +109,11 @@ namespace WinFormsEF.Views
         private void cmdAdd_Click(object sender, EventArgs e)
         {
             Point location;
-            EnergyUse.Models.Address address;
+            EnergyUse.Models.Address address = (EnergyUse.Models.Address)CboAddress.SelectedItem;
             ucControls.ucDateSelection ucDateSelectionLast;
 
-            ucDateSelectionLast = (ucControls.ucDateSelection)FindControl(this, $"ucDateSelection{_selectionLineCount}");
-            address = (EnergyUse.Models.Address)CboAddress.SelectedItem;
+            var lastdateSelectionName = getLastSelectedKey();
+            ucDateSelectionLast = (ucControls.ucDateSelection)FindControl(this, lastdateSelectionName);
             location = ChkpredictMissingData.Location;
             location.X -= 72;
             location.Y = ucDateSelectionLast.Location.Y;
@@ -288,6 +290,12 @@ namespace WinFormsEF.Views
         private string getDateSelectionKey(int lineCount, long addressId)
         {
             return $"ucDateSelection{lineCount}_A{addressId}";
+        }
+
+        private string getLastSelectedKey()
+        {
+            EnergyUse.Models.Address address = (EnergyUse.Models.Address)CboAddress.SelectedItem;
+            return $"ucDateSelection{_selectionLineCount}_A{address.Id}";
         }
 
         private void setRemoveButtonVisibity(long addressId)
