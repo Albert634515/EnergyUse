@@ -125,8 +125,8 @@ namespace WinFormsEF.Views
                 // Set as current in app config during creation to add new data
                 setAsDefaultFile(targetFile);
 
-                SetUpNewAddress();
-                SetUpNewMeters();
+                setUpNewAddress();
+                setUpNewMeters();
 
                 if (ChkAddBaseData.Checked)
                     setUpCostCategory();
@@ -219,6 +219,8 @@ namespace WinFormsEF.Views
             var currentFile = Managers.Config.GetDbFileName();
             if (!string.IsNullOrWhiteSpace(currentFile))
                 txtTargetDirectory.Text = Path.GetDirectoryName(LibGeneral.GetDefaultDataFile(currentFile));
+            else
+                txtTargetDirectory.Text = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "EnergyUse");
         }
 
         private void setDefaultDataFile()
@@ -226,6 +228,8 @@ namespace WinFormsEF.Views
             var currentFile = Managers.Config.GetDbFileName();
             if (!string.IsNullOrWhiteSpace(currentFile))
                 TxtNewDbFile.Text = Path.GetFileName(LibGeneral.GetDefaultDataFile(currentFile));
+            else
+                TxtNewDbFile.Text = "EnergyUse.db";
         }
 
         private bool validateNewSetup()
@@ -280,7 +284,7 @@ namespace WinFormsEF.Views
             RbNewFile.Checked = true;
             setDefaultDataDirectory();
             setDefaultDataFile();
-            SetAddressSettingsTags();
+            setAddressSettingsTags();
             addDefaultEnergyTypes();
         }
 
@@ -304,7 +308,7 @@ namespace WinFormsEF.Views
 
         private void setUpCostCategory()
         {
-            var costCategories = GetListOfNewCostCategories();
+            var costCategories = getListOfNewCostCategories();
             var tmpCostCategoryId = 0;
             foreach (var costCategory in costCategories)
             {
@@ -317,7 +321,7 @@ namespace WinFormsEF.Views
             _unitOfWork.Complete();
         }
 
-        private void SetUpNewAddress()
+        private void setUpNewAddress()
         {
             var address = (Address)bsAddress.Current;
             var tarifGroupDefault = _unitOfWork.TarifGroupRepo.SelectByDescription("Default");
@@ -328,7 +332,7 @@ namespace WinFormsEF.Views
             _unitOfWork.Complete();
         }
 
-        private void SetupMeter(EnergyType energyType, long addressId)
+        private void setupMeter(EnergyType energyType, long addressId)
         {
             Meter meter = new Meter();
             meter.Description = $"{energyType.Name} meter";
@@ -339,17 +343,17 @@ namespace WinFormsEF.Views
             _unitOfWork.Complete();
         }
 
-        private void SetUpNewMeters()
+        private void setUpNewMeters()
         {
             var energyTypeList = (List<EnergyType>)bsEnergyTypes.DataSource;
             var address = (Address)bsAddress.Current;
             foreach (var energyType in energyTypeList)
             {
-                SetupMeter(energyType, address.Id);
+                setupMeter(energyType, address.Id);
             }
         }
 
-        private List<CostCategory> GetListOfNewCostCategories()
+        private List<CostCategory> getListOfNewCostCategories()
         {
             var costCategories = new List<CostCategory>();
             var calTypePU = _unitOfWork.CalculationTypeRepo.SelectByDescription("Per Unit");
@@ -545,7 +549,7 @@ namespace WinFormsEF.Views
             return costCategories;
         }
 
-        private void SetAddressSettingsTags()
+        private void setAddressSettingsTags()
         {
             var address = (Address)bsAddresss.Current;
 

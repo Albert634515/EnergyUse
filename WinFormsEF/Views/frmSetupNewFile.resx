@@ -117,1530 +117,1248 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="CmdSelectExportDirectory.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
+  <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="StatusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>153, 17</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="chkDefaultAddress.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 24</value>
+  <data name="StatusStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 493</value>
   </data>
-  <data name="lblCity.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label6.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="CmdNextSelectFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 29</value>
-  </data>
-  <data name="&gt;&gt;TxtNewDbFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="LblIntro.Text" xml:space="preserve">
-    <value>Select a new or existing file to use and press next.</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lblSubsidy.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="GbNewEnergyTypes.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ChkSetAsDefaultFile.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;chkSolarPanelsAvailable.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="chkSolarPanelsAvailable.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;lblPostcalCode.Parent" xml:space="preserve">
-    <value>gbAddress</value>
-  </data>
-  <data name="PnFileTypeSelection.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 51</value>
-  </data>
-  <data name="LblIntro.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txtPurchaseAmount.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="lblSubsidy.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="gbNewAddress.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1646, 691</value>
-  </data>
-  <data name="lblPostcalCode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="StatusStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>958, 22</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="chkDefaultAddress.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+  <data name="StatusStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
   </data>
-  <data name="txtCity.ToolTip" xml:space="preserve">
-    <value />
+  <data name="StatusStrip1.Text" xml:space="preserve">
+    <value>statusStrip1</value>
   </data>
-  <data name="&gt;&gt;CmdSelectExportDirectory.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;StatusStrip1.Name" xml:space="preserve">
+    <value>StatusStrip1</value>
   </data>
-  <data name="&gt;&gt;CmPreviousTabNewAddress.Parent" xml:space="preserve">
-    <value>TabPageNewAddress</value>
-  </data>
-  <data name="LblAddBaseData.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;CmdNextSelectFile.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="gbNewAddress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 6</value>
-  </data>
-  <data name="txtSubsidyAmount.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="&gt;&gt;TabPageSetupFile.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;toolTip2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lblPurchaseAmount.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;gbAddress.Name" xml:space="preserve">
-    <value>gbAddress</value>
+  <data name="&gt;&gt;StatusStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;StatusStrip1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;RbNewFile.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;StatusStrip1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="TabControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="&gt;&gt;gbAddress.Parent" xml:space="preserve">
-    <value>gbNewAddress</value>
-  </data>
-  <data name="&gt;&gt;txtQualityReductionSolarPanels.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LblIntro.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="CmdPreviousEnergyTypes.Text" xml:space="preserve">
-    <value>&amp;Previous</value>
-  </data>
-  <data name="lblRate.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="LblIntro.TabIndex" type="System.Int32, mscorlib">
-    <value>26</value>
-  </data>
-  <data name="CmdSelectExportFile.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblSetupFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 48</value>
-  </data>
-  <data name="&gt;&gt;txtHouseNo.Parent" xml:space="preserve">
-    <value>gbAddress</value>
-  </data>
-  <data name="CmdNextSelectFile.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="txtHouseNo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="label3.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="LblAddBaseData.Text" xml:space="preserve">
-    <value>Add base data:</value>
-  </data>
-  <data name="LblHelpNewEnergyTypes.Size" type="System.Drawing.Size, System.Drawing">
-    <value>319, 20</value>
-  </data>
-  <data name="&gt;&gt;txtStreet.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;lblRate.Name" xml:space="preserve">
-    <value>lblRate</value>
-  </data>
-  <data name="label3.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;lblStreet.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="CmdNextSelectFile.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GbNewEnergyTypes.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1643, 653</value>
-  </data>
-  <data name="LblAddBaseData.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="CmdSelectExportFile.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="txtStreet.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
-    <value>TabPageSelectFile</value>
-  </data>
-  <data name="&gt;&gt;lblHasSolarpanels.Parent" xml:space="preserve">
-    <value>gbSolar</value>
-  </data>
-  <data name="LblSetAsDefaultFile.Text" xml:space="preserve">
-    <value>Set as default file:</value>
-  </data>
-  <data name="txtQualityReductionSolarPanels.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 27</value>
-  </data>
-  <data name="txtSubsidyAmount.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 27</value>
-  </data>
-  <data name="&gt;&gt;TabPageSelectEnergyTypes.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="lblPostcalCode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>37, 24</value>
-  </data>
-  <data name="&gt;&gt;TabControl.Name" xml:space="preserve">
-    <value>TabControl</value>
-  </data>
-  <data name="TabControl.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TabPageSelectEnergyTypes.Size" type="System.Drawing.Size, System.Drawing">
-    <value>932, 422</value>
-  </data>
-  <data name="&gt;&gt;TabPageSelectFile.Parent" xml:space="preserve">
-    <value>TabControl</value>
-  </data>
-  <data name="lblHasSolarpanels.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPurchaseAmount.Location" type="System.Drawing.Point, System.Drawing">
-    <value>276, 66</value>
-  </data>
-  <data name="gbAddress.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="StatusStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="txtPostcalCode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 19</value>
-  </data>
-  <data name="&gt;&gt;lblCity.Name" xml:space="preserve">
-    <value>lblCity</value>
-  </data>
-  <data name="&gt;&gt;txtHouseNo.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="ChkAddBaseData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>151, 273</value>
-  </data>
-  <data name="LblSetupNewFile.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;label4.Name" xml:space="preserve">
-    <value>label4</value>
-  </data>
-  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>215, 58</value>
-  </data>
-  <data name="TabPageNewAddress.Size" type="System.Drawing.Size, System.Drawing">
-    <value>932, 422</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>House no.:</value>
-  </data>
-  <data name="TabPageNewAddress.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="chkSolarPanelsAvailable.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 32</value>
-  </data>
-  <data name="LblHelpNewEnergyTypes.TabIndex" type="System.Int32, mscorlib">
-    <value>28</value>
-  </data>
-  <data name="CmdCreateDb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 29</value>
+  <data name="CmdSelectExportDirectory.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
   <data name="CmdSelectExportDirectory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="LblHelpNewEnergyTypes.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="CmdSelectExportDirectory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>554, 139</value>
   </data>
-  <data name="txtPostcalCode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="CmdSelectExportDirectory.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
   </data>
-  <data name="lblCity.Text" xml:space="preserve">
-    <value>City:</value>
+  <data name="CmdSelectExportDirectory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 34</value>
   </data>
-  <data name="lblHasSolarpanels.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 20</value>
-  </data>
-  <data name="&gt;&gt;TabPageSelectFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lblStreet.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txtTotalCapacitySolarPanels.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="TabPageSetupFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 29</value>
-  </data>
-  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label4.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="lblTotalCapacity.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;txtStreet.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TabPageNewAddress.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="lblSetupFile.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="CmdNextNewAddress.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="lblStreet.Text" xml:space="preserve">
-    <value>Street:</value>
-  </data>
-  <data name="CmdSelectExportFile.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TabPageSelectFile.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="txtPurchaseAmount.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Right</value>
-  </data>
-  <data name="txtDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 27</value>
-  </data>
-  <data name="ChkSetAsDefaultFile.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="StatusStrip1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="CmdSelectExportFile.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="lblSetupFile.Text" xml:space="preserve">
-    <value>To use the selected file press 'Setup file'</value>
-  </data>
-  <data name="&gt;&gt;CmdNextNewAddress.Parent" xml:space="preserve">
-    <value>TabPageNewAddress</value>
-  </data>
-  <data name="cmdNextNewEnergyTypes.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
-  </data>
-  <data name="&gt;&gt;TabPageSetupFile.Name" xml:space="preserve">
-    <value>TabPageSetupFile</value>
-  </data>
-  <data name="TabPageSetupFile.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="lblStreet.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;CmdPreviousEnergyTypes.Parent" xml:space="preserve">
-    <value>TabPageSelectEnergyTypes</value>
-  </data>
-  <data name="CmPreviousTabNewAddress.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="LblSetupNewFile.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="LblIntro.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;RbNewFile.Parent" xml:space="preserve">
-    <value>PnFileTypeSelection</value>
-  </data>
-  <data name="CmdNextNewAddress.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;TabControl.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="PnFileTypeSelection.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 65</value>
-  </data>
-  <data name="&gt;&gt;ChkSetAsDefaultFile.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>Directory:</value>
-  </data>
-  <data name="LblSetAsDefaultFile.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txtTotalCapacitySolarPanels.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 56</value>
-  </data>
-  <data name="&gt;&gt;gbAddress.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="label4.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="LblSetAsDefaultFile.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txtTargetDirectory.TabIndex" type="System.Int32, mscorlib">
-    <value>28</value>
-  </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;txtTotalCapacitySolarPanels.Parent" xml:space="preserve">
-    <value>gbSolar</value>
-  </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
-  </data>
-  <data name="&gt;&gt;TabPageSelectFile.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="label6.Text" xml:space="preserve">
-    <value>kWh</value>
-  </data>
-  <data name="LblIntro.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 19</value>
+  <data name="CmdSelectExportDirectory.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
   </data>
   <data name="CmdSelectExportDirectory.Text" xml:space="preserve">
     <value>Select Directory</value>
   </data>
-  <data name="TabPageSelectFile.ToolTip" xml:space="preserve">
-    <value />
+  <data name="CmdSelectExportDirectory.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
   </data>
-  <data name="TabPageSelectEnergyTypes.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;CmdSelectExportDirectory.Name" xml:space="preserve">
+    <value>CmdSelectExportDirectory</value>
   </data>
-  <data name="lblPurchaseAmount.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;lblSetupFile.Parent" xml:space="preserve">
-    <value>TabPageSetupFile</value>
-  </data>
-  <data name="TabPageSelectEnergyTypes.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="chkSolarPanelsAvailable.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="&gt;&gt;TabControl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="lblRate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 28</value>
-  </data>
-  <data name="TxtNewDbFile.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="txtDescription.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>73, 20</value>
-  </data>
-  <data name="&gt;&gt;CmdCreateDb.Type" xml:space="preserve">
+  <data name="&gt;&gt;CmdSelectExportDirectory.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="LblHelpNewEnergyTypes.Text" xml:space="preserve">
-    <value>The following default energies type are added:</value>
+  <data name="&gt;&gt;CmdSelectExportDirectory.Parent" xml:space="preserve">
+    <value>TabPageSelectFile</value>
   </data>
-  <data name="lblPostcalCode.Text" xml:space="preserve">
-    <value>Postcal code:</value>
-  </data>
-  <data name="&gt;&gt;txtDescription.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;ChkAddBaseData.Name" xml:space="preserve">
-    <value>ChkAddBaseData</value>
-  </data>
-  <data name="RbExistingFile.Text" xml:space="preserve">
-    <value>Use existing file</value>
-  </data>
-  <data name="RbNewFile.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="gbNewAddress.TabIndex" type="System.Int32, mscorlib">
-    <value>28</value>
-  </data>
-  <data name="&gt;&gt;txtDescription.Name" xml:space="preserve">
-    <value>txtDescription</value>
-  </data>
-  <data name="lblTotalCapacity.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 20</value>
-  </data>
-  <data name="lblStreet.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;gbNewAddress.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;CmdSelectExportDirectory.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="gbAddress.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="TxtNewDbFile.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;StatusStrip1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;lblStreet.Parent" xml:space="preserve">
-    <value>gbAddress</value>
-  </data>
-  <data name="$this.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;chkDefaultAddress.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="CmdPreviousEnergyTypes.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TabPageSelectEnergyTypes.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="cmdNextNewEnergyTypes.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 29</value>
-  </data>
-  <data name="label4.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;CmdCreateDb.Parent" xml:space="preserve">
-    <value>TabPageSetupFile</value>
-  </data>
-  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>188, 96</value>
-  </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 96</value>
-  </data>
-  <data name="txtPurchaseAmount.Text" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="LblSetAsDefaultFile.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblSetupFile.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;lblHasSolarpanels.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;bsEnergyTypes.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lblStreet.Location" type="System.Drawing.Point, System.Drawing">
-    <value>81, 94</value>
-  </data>
-  <data name="&gt;&gt;LblIntro.Name" xml:space="preserve">
-    <value>LblIntro</value>
-  </data>
-  <data name="TxtNewDbFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>97, 183</value>
-  </data>
-  <data name="&gt;&gt;RbNewFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label6.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;gbAddress.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="txtTargetDirectory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>97, 141</value>
   </data>
   <data name="txtTargetDirectory.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
   </data>
-  <data name="txtDescription.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="txtTargetDirectory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>450, 27</value>
+  </data>
+  <data name="txtTargetDirectory.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="&gt;&gt;txtTargetDirectory.Name" xml:space="preserve">
+    <value>txtTargetDirectory</value>
+  </data>
+  <data name="&gt;&gt;txtTargetDirectory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtTargetDirectory.Parent" xml:space="preserve">
+    <value>TabPageSelectFile</value>
+  </data>
+  <data name="&gt;&gt;txtTargetDirectory.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 144</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 20</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Directory:</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>TabPageSelectFile</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="LblIntro.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblIntro.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblIntro.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 19</value>
+  </data>
+  <data name="LblIntro.Size" type="System.Drawing.Size, System.Drawing">
+    <value>336, 20</value>
+  </data>
+  <data name="LblIntro.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="LblIntro.Text" xml:space="preserve">
+    <value>Select a new or existing file to use and press next.</value>
+  </data>
+  <data name="&gt;&gt;LblIntro.Name" xml:space="preserve">
+    <value>LblIntro</value>
+  </data>
+  <data name="&gt;&gt;LblIntro.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblIntro.Parent" xml:space="preserve">
+    <value>TabPageSelectFile</value>
+  </data>
+  <data name="&gt;&gt;LblIntro.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="RbExistingFile.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RbExistingFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 33</value>
+  </data>
+  <data name="RbExistingFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 24</value>
+  </data>
+  <data name="RbExistingFile.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="RbExistingFile.Text" xml:space="preserve">
+    <value>Use existing file</value>
+  </data>
+  <data name="&gt;&gt;RbExistingFile.Name" xml:space="preserve">
+    <value>RbExistingFile</value>
+  </data>
+  <data name="&gt;&gt;RbExistingFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RbExistingFile.Parent" xml:space="preserve">
+    <value>PnFileTypeSelection</value>
+  </data>
+  <data name="&gt;&gt;RbExistingFile.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="RbNewFile.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RbNewFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 3</value>
+  </data>
+  <data name="RbNewFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 24</value>
+  </data>
+  <data name="RbNewFile.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="RbNewFile.Text" xml:space="preserve">
+    <value>Create new file</value>
+  </data>
+  <data name="&gt;&gt;RbNewFile.Name" xml:space="preserve">
+    <value>RbNewFile</value>
+  </data>
+  <data name="&gt;&gt;RbNewFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RbNewFile.Parent" xml:space="preserve">
+    <value>PnFileTypeSelection</value>
+  </data>
+  <data name="&gt;&gt;RbNewFile.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="PnFileTypeSelection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 51</value>
+  </data>
+  <data name="PnFileTypeSelection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 65</value>
+  </data>
+  <data name="PnFileTypeSelection.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="&gt;&gt;PnFileTypeSelection.Name" xml:space="preserve">
+    <value>PnFileTypeSelection</value>
+  </data>
+  <data name="&gt;&gt;PnFileTypeSelection.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PnFileTypeSelection.Parent" xml:space="preserve">
+    <value>TabPageSelectFile</value>
+  </data>
+  <data name="&gt;&gt;PnFileTypeSelection.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="CmdNextSelectFile.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="CmdNextSelectFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>832, 387</value>
+  </data>
+  <data name="CmdNextSelectFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 29</value>
+  </data>
+  <data name="CmdNextSelectFile.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="CmdNextSelectFile.Text" xml:space="preserve">
+    <value>&amp;Next</value>
+  </data>
+  <data name="&gt;&gt;CmdNextSelectFile.Name" xml:space="preserve">
+    <value>CmdNextSelectFile</value>
+  </data>
+  <data name="&gt;&gt;CmdNextSelectFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CmdNextSelectFile.Parent" xml:space="preserve">
+    <value>TabPageSelectFile</value>
+  </data>
+  <data name="&gt;&gt;CmdNextSelectFile.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="LblAddBaseData.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblAddBaseData.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblAddBaseData.Location" type="System.Drawing.Point, System.Drawing">
+    <value>35, 271</value>
+  </data>
+  <data name="LblAddBaseData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 20</value>
+  </data>
+  <data name="LblAddBaseData.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="LblAddBaseData.Text" xml:space="preserve">
+    <value>Add base data:</value>
+  </data>
+  <data name="&gt;&gt;LblAddBaseData.Name" xml:space="preserve">
+    <value>LblAddBaseData</value>
+  </data>
+  <data name="&gt;&gt;LblAddBaseData.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblAddBaseData.Parent" xml:space="preserve">
+    <value>TabPageSelectFile</value>
+  </data>
+  <data name="&gt;&gt;LblAddBaseData.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="ChkAddBaseData.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ChkAddBaseData.Location" type="System.Drawing.Point, System.Drawing">
+    <value>151, 273</value>
+  </data>
+  <data name="ChkAddBaseData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>18, 17</value>
+  </data>
+  <data name="ChkAddBaseData.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;ChkAddBaseData.Name" xml:space="preserve">
+    <value>ChkAddBaseData</value>
+  </data>
+  <data name="&gt;&gt;ChkAddBaseData.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ChkAddBaseData.Parent" xml:space="preserve">
+    <value>TabPageSelectFile</value>
+  </data>
+  <data name="&gt;&gt;ChkAddBaseData.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="LblSetAsDefaultFile.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblSetAsDefaultFile.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblSetAsDefaultFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 232</value>
+  </data>
+  <data name="LblSetAsDefaultFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 20</value>
+  </data>
+  <data name="LblSetAsDefaultFile.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="LblSetAsDefaultFile.Text" xml:space="preserve">
+    <value>Set as default file:</value>
+  </data>
+  <data name="&gt;&gt;LblSetAsDefaultFile.Name" xml:space="preserve">
+    <value>LblSetAsDefaultFile</value>
+  </data>
+  <data name="&gt;&gt;LblSetAsDefaultFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblSetAsDefaultFile.Parent" xml:space="preserve">
+    <value>TabPageSelectFile</value>
+  </data>
+  <data name="&gt;&gt;LblSetAsDefaultFile.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="ChkSetAsDefaultFile.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ChkSetAsDefaultFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>151, 234</value>
+  </data>
+  <data name="ChkSetAsDefaultFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>18, 17</value>
+  </data>
+  <data name="ChkSetAsDefaultFile.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;ChkSetAsDefaultFile.Name" xml:space="preserve">
+    <value>ChkSetAsDefaultFile</value>
+  </data>
+  <data name="&gt;&gt;ChkSetAsDefaultFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ChkSetAsDefaultFile.Parent" xml:space="preserve">
+    <value>TabPageSelectFile</value>
+  </data>
+  <data name="&gt;&gt;ChkSetAsDefaultFile.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="CmdSelectExportFile.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="CmdSelectExportFile.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="CmdSelectExportFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>554, 181</value>
+  </data>
+  <data name="CmdSelectExportFile.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="CmdSelectExportFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 34</value>
+  </data>
+  <data name="CmdSelectExportFile.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="CmdSelectExportFile.Text" xml:space="preserve">
+    <value>Select file</value>
+  </data>
+  <data name="CmdSelectExportFile.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;CmdSelectExportFile.Name" xml:space="preserve">
+    <value>CmdSelectExportFile</value>
+  </data>
+  <data name="&gt;&gt;CmdSelectExportFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CmdSelectExportFile.Parent" xml:space="preserve">
+    <value>TabPageSelectFile</value>
+  </data>
+  <data name="&gt;&gt;CmdSelectExportFile.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="TxtNewDbFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>97, 183</value>
+  </data>
+  <data name="TxtNewDbFile.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="TxtNewDbFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>450, 27</value>
+  </data>
+  <data name="TxtNewDbFile.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;TxtNewDbFile.Name" xml:space="preserve">
+    <value>TxtNewDbFile</value>
+  </data>
+  <data name="&gt;&gt;TxtNewDbFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TxtNewDbFile.Parent" xml:space="preserve">
+    <value>TabPageSelectFile</value>
+  </data>
+  <data name="&gt;&gt;TxtNewDbFile.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="LblDbFile.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblDbFile.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblDbFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>36, 186</value>
+  </data>
+  <data name="LblDbFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 20</value>
+  </data>
+  <data name="LblDbFile.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="LblDbFile.Text" xml:space="preserve">
+    <value>Db file:</value>
+  </data>
+  <data name="&gt;&gt;LblDbFile.Name" xml:space="preserve">
+    <value>LblDbFile</value>
+  </data>
+  <data name="&gt;&gt;LblDbFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblDbFile.Parent" xml:space="preserve">
+    <value>TabPageSelectFile</value>
+  </data>
+  <data name="&gt;&gt;LblDbFile.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="TabPageSelectFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 29</value>
+  </data>
+  <data name="TabPageSelectFile.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="TabPageSelectFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>932, 422</value>
+  </data>
+  <data name="TabPageSelectFile.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="TabPageSelectFile.Text" xml:space="preserve">
+    <value>SelectFile</value>
+  </data>
+  <data name="&gt;&gt;TabPageSelectFile.Name" xml:space="preserve">
+    <value>TabPageSelectFile</value>
+  </data>
+  <data name="&gt;&gt;TabPageSelectFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TabPageSelectFile.Parent" xml:space="preserve">
+    <value>TabControl</value>
+  </data>
+  <data name="&gt;&gt;TabPageSelectFile.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="gbNewAddress.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="chkDefaultAddress.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkDefaultAddress.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <metadata name="bsAddress.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>291, 17</value>
+  </metadata>
+  <data name="chkDefaultAddress.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkDefaultAddress.Location" type="System.Drawing.Point, System.Drawing">
+    <value>452, 31</value>
+  </data>
+  <data name="chkDefaultAddress.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="chkDefaultAddress.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 24</value>
+  </data>
+  <data name="chkDefaultAddress.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="chkDefaultAddress.Text" xml:space="preserve">
+    <value>Default address:</value>
+  </data>
+  <data name="&gt;&gt;chkDefaultAddress.Name" xml:space="preserve">
+    <value>chkDefaultAddress</value>
+  </data>
+  <data name="&gt;&gt;chkDefaultAddress.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkDefaultAddress.Parent" xml:space="preserve">
+    <value>gbNewAddress</value>
+  </data>
+  <data name="&gt;&gt;chkDefaultAddress.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txtPostcalCode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>136, 19</value>
+  </data>
+  <data name="txtPostcalCode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtPostcalCode.MaxLength" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="txtPostcalCode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 27</value>
+  </data>
+  <data name="txtPostcalCode.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;txtPostcalCode.Name" xml:space="preserve">
+    <value>txtPostcalCode</value>
+  </data>
+  <data name="&gt;&gt;txtPostcalCode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtPostcalCode.Parent" xml:space="preserve">
+    <value>gbAddress</value>
+  </data>
+  <data name="&gt;&gt;txtPostcalCode.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblPostcalCode.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblPostcalCode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblPostcalCode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>37, 24</value>
+  </data>
+  <data name="lblPostcalCode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 20</value>
+  </data>
+  <data name="lblPostcalCode.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lblPostcalCode.Text" xml:space="preserve">
+    <value>Postcal code:</value>
+  </data>
+  <data name="&gt;&gt;lblPostcalCode.Name" xml:space="preserve">
+    <value>lblPostcalCode</value>
+  </data>
+  <data name="&gt;&gt;lblPostcalCode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblPostcalCode.Parent" xml:space="preserve">
+    <value>gbAddress</value>
+  </data>
+  <data name="&gt;&gt;lblPostcalCode.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>54, 126</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 20</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>House no.:</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>gbAddress</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="txtCity.Location" type="System.Drawing.Point, System.Drawing">
+    <value>136, 54</value>
+  </data>
+  <data name="txtCity.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtCity.MaxLength" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
+  <data name="txtCity.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 27</value>
+  </data>
+  <data name="txtCity.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;txtCity.Name" xml:space="preserve">
+    <value>txtCity</value>
+  </data>
+  <data name="&gt;&gt;txtCity.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtCity.Parent" xml:space="preserve">
+    <value>gbAddress</value>
+  </data>
+  <data name="&gt;&gt;txtCity.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="txtHouseNo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>136, 121</value>
+  </data>
+  <data name="txtHouseNo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtHouseNo.MaxLength" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="txtHouseNo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 27</value>
+  </data>
+  <data name="txtHouseNo.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;txtHouseNo.Name" xml:space="preserve">
+    <value>txtHouseNo</value>
+  </data>
+  <data name="&gt;&gt;txtHouseNo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtHouseNo.Parent" xml:space="preserve">
+    <value>gbAddress</value>
+  </data>
+  <data name="&gt;&gt;txtHouseNo.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="txtStreet.Location" type="System.Drawing.Point, System.Drawing">
+    <value>136, 89</value>
+  </data>
+  <data name="txtStreet.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtStreet.MaxLength" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
+  <data name="txtStreet.Size" type="System.Drawing.Size, System.Drawing">
+    <value>324, 27</value>
+  </data>
+  <data name="txtStreet.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;txtStreet.Name" xml:space="preserve">
+    <value>txtStreet</value>
+  </data>
+  <data name="&gt;&gt;txtStreet.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtStreet.Parent" xml:space="preserve">
+    <value>gbAddress</value>
+  </data>
+  <data name="&gt;&gt;txtStreet.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="lblCity.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblCity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblCity.Location" type="System.Drawing.Point, System.Drawing">
+    <value>95, 59</value>
+  </data>
+  <data name="lblCity.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
+  </data>
+  <data name="lblCity.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lblCity.Text" xml:space="preserve">
+    <value>City:</value>
+  </data>
+  <data name="&gt;&gt;lblCity.Name" xml:space="preserve">
+    <value>lblCity</value>
+  </data>
+  <data name="&gt;&gt;lblCity.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblCity.Parent" xml:space="preserve">
+    <value>gbAddress</value>
+  </data>
+  <data name="&gt;&gt;lblCity.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="lblStreet.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblStreet.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblStreet.Location" type="System.Drawing.Point, System.Drawing">
+    <value>81, 94</value>
+  </data>
+  <data name="lblStreet.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 20</value>
+  </data>
+  <data name="lblStreet.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="lblStreet.Text" xml:space="preserve">
+    <value>Street:</value>
+  </data>
+  <data name="&gt;&gt;lblStreet.Name" xml:space="preserve">
+    <value>lblStreet</value>
+  </data>
+  <data name="&gt;&gt;lblStreet.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblStreet.Parent" xml:space="preserve">
+    <value>gbAddress</value>
+  </data>
+  <data name="&gt;&gt;lblStreet.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="gbAddress.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 63</value>
+  </data>
+  <data name="gbAddress.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="gbAddress.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
   </data>
   <data name="gbAddress.Size" type="System.Drawing.Size, System.Drawing">
     <value>908, 165</value>
   </data>
-  <data name="&gt;&gt;ToolTip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LblHelpNewEnergyTypes.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="txtPurchaseAmount.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;StatusStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="CmdSelectExportFile.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="LblIntro.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cmdPreviousSetupFile.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;lblSubsidy.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;CmdPreviousEnergyTypes.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;CmdNextNewAddress.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TabPageSetupFile.Text" xml:space="preserve">
-    <value>Setup file</value>
-  </data>
-  <data name="CmdSelectExportFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>554, 181</value>
-  </data>
-  <data name="&gt;&gt;txtPostcalCode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="StatusStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>958, 22</value>
-  </data>
-  <data name="gbSolar.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPostcalCode.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="StatusStrip1.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TxtNewDbFile.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;GbNewEnergyTypes.Name" xml:space="preserve">
-    <value>GbNewEnergyTypes</value>
-  </data>
-  <data name="lblSubsidy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>337, 96</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>gbAddress</value>
-  </data>
-  <data name="txtCity.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterParent</value>
-  </data>
-  <data name="lblStreet.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="cmdPreviousSetupFile.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
-  </data>
-  <data name="&gt;&gt;CmdSelectExportFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LblDbFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="gbSolar.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="&gt;&gt;TabPageNewAddress.Name" xml:space="preserve">
-    <value>TabPageNewAddress</value>
-  </data>
-  <data name="CmdPreviousEnergyTypes.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 29</value>
-  </data>
-  <data name="LblAddBaseData.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;CmdNextNewAddress.Name" xml:space="preserve">
-    <value>CmdNextNewAddress</value>
-  </data>
-  <data name="lblSetupFile.TabIndex" type="System.Int32, mscorlib">
-    <value>23</value>
-  </data>
-  <data name="txtCity.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 54</value>
-  </data>
-  <data name="&gt;&gt;CmdPreviousEnergyTypes.Name" xml:space="preserve">
-    <value>CmdPreviousEnergyTypes</value>
-  </data>
-  <data name="&gt;&gt;lblPurchaseAmount.Name" xml:space="preserve">
-    <value>lblPurchaseAmount</value>
-  </data>
-  <data name="&gt;&gt;lblPurchaseAmount.Parent" xml:space="preserve">
-    <value>gbSolar</value>
-  </data>
-  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
-    <value>gbSolar</value>
-  </data>
-  <data name="&gt;&gt;txtCity.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="StatusStrip1.Text" xml:space="preserve">
-    <value>statusStrip1</value>
-  </data>
-  <data name="cmdPreviousSetupFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 29</value>
-  </data>
-  <data name="&gt;&gt;lblSubsidy.Name" xml:space="preserve">
-    <value>lblSubsidy</value>
-  </data>
-  <data name="CmdNextSelectFile.Text" xml:space="preserve">
-    <value>&amp;Next</value>
-  </data>
-  <data name="lblSubsidy.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;txtStreet.Name" xml:space="preserve">
-    <value>txtStreet</value>
-  </data>
-  <data name="&gt;&gt;ChkSetAsDefaultFile.Parent" xml:space="preserve">
-    <value>TabPageSelectFile</value>
-  </data>
-  <data name="&gt;&gt;txtTargetDirectory.Parent" xml:space="preserve">
-    <value>TabPageSelectFile</value>
-  </data>
-  <data name="gbSolar.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="RbExistingFile.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="RbNewFile.Text" xml:space="preserve">
-    <value>Create new file</value>
-  </data>
-  <data name="txtQualityReductionSolarPanels.MaxLength" type="System.Int32, mscorlib">
-    <value>100</value>
-  </data>
-  <data name="chkDefaultAddress.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;gbSolar.Parent" xml:space="preserve">
-    <value>gbNewAddress</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>8, 20</value>
-  </data>
-  <data name="cmdNextNewEnergyTypes.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;PnFileTypeSelection.Parent" xml:space="preserve">
-    <value>TabPageSelectFile</value>
-  </data>
-  <data name="&gt;&gt;LblHelpNewEnergyTypes.Name" xml:space="preserve">
-    <value>LblHelpNewEnergyTypes</value>
-  </data>
-  <data name="&gt;&gt;CmPreviousTabNewAddress.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="txtTargetDirectory.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="LblAddBaseData.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="CmPreviousTabNewAddress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 703</value>
-  </data>
-  <data name="lblSetupFile.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txtSubsidyAmount.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;bsAddress.Name" xml:space="preserve">
-    <value>bsAddress</value>
-  </data>
-  <data name="ChkAddBaseData.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
-  </data>
-  <data name="&gt;&gt;lblPurchaseAmount.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="chkDefaultAddress.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;LblAddBaseData.Parent" xml:space="preserve">
-    <value>TabPageSelectFile</value>
-  </data>
-  <data name="&gt;&gt;CmdCreateDb.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="ChkSetAsDefaultFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>151, 234</value>
-  </data>
-  <data name="TabPageSelectEnergyTypes.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 29</value>
-  </data>
-  <data name="&gt;&gt;txtPostcalCode.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="LblDbFile.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="CmdSelectExportDirectory.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="LblHelpNewEnergyTypes.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="gbAddress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 63</value>
-  </data>
-  <data name="txtDescription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>138, 28</value>
-  </data>
-  <data name="&gt;&gt;TabPageSelectEnergyTypes.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ChkAddBaseData.Parent" xml:space="preserve">
-    <value>TabPageSelectFile</value>
-  </data>
-  <data name="txtPostcalCode.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txtSubsidyAmount.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Right</value>
-  </data>
-  <data name="LblSetupNewFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 15</value>
-  </data>
-  <data name="CmdSelectExportDirectory.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="lblPurchaseAmount.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="CmdNextNewAddress.Text" xml:space="preserve">
-    <value>&amp;Next</value>
-  </data>
-  <data name="gbSolar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>908, 144</value>
-  </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>54, 126</value>
-  </data>
-  <data name="&gt;&gt;LblSetAsDefaultFile.Parent" xml:space="preserve">
-    <value>TabPageSelectFile</value>
-  </data>
-  <data name="&gt;&gt;LblSetAsDefaultFile.Name" xml:space="preserve">
-    <value>LblSetAsDefaultFile</value>
-  </data>
-  <data name="PnFileTypeSelection.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;LblSetupNewFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txtStreet.Size" type="System.Drawing.Size, System.Drawing">
-    <value>324, 27</value>
-  </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>%</value>
-  </data>
-  <data name="&gt;&gt;LblIntro.Parent" xml:space="preserve">
-    <value>TabPageSelectFile</value>
-  </data>
-  <data name="&gt;&gt;txtPurchaseAmount.Parent" xml:space="preserve">
-    <value>gbSolar</value>
-  </data>
-  <data name="TabControl.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
-  </data>
-  <data name="ChkAddBaseData.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cmdNextNewEnergyTypes.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="RbExistingFile.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;txtCity.Parent" xml:space="preserve">
-    <value>gbAddress</value>
-  </data>
-  <data name="&gt;&gt;lblCity.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblHasSolarpanels.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="CmdCreateDb.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="label6.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TabPageNewAddress.Text" xml:space="preserve">
-    <value>New address</value>
-  </data>
-  <data name="&gt;&gt;ChkSetAsDefaultFile.Name" xml:space="preserve">
-    <value>ChkSetAsDefaultFile</value>
-  </data>
-  <data name="txtTotalCapacitySolarPanels.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txtStreet.MaxLength" type="System.Int32, mscorlib">
-    <value>100</value>
-  </data>
-  <data name="lblHasSolarpanels.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 30</value>
-  </data>
-  <data name="LblDbFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>36, 186</value>
-  </data>
-  <data name="TabControl.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txtTargetDirectory.Size" type="System.Drawing.Size, System.Drawing">
-    <value>450, 27</value>
-  </data>
-  <data name="StatusStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 493</value>
-  </data>
-  <data name="&gt;&gt;RbNewFile.Name" xml:space="preserve">
-    <value>RbNewFile</value>
-  </data>
-  <data name="lblSubsidy.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="ChkSetAsDefaultFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>18, 17</value>
-  </data>
-  <data name="&gt;&gt;LblSetupNewFile.Parent" xml:space="preserve">
-    <value>TabPageSetupFile</value>
-  </data>
-  <data name="&gt;&gt;txtDescription.Parent" xml:space="preserve">
-    <value>gbNewAddress</value>
-  </data>
-  <data name="&gt;&gt;RbExistingFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TabPageSetupFile.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;cmdPreviousSetupFile.Name" xml:space="preserve">
-    <value>cmdPreviousSetupFile</value>
-  </data>
-  <data name="&gt;&gt;txtQualityReductionSolarPanels.Name" xml:space="preserve">
-    <value>txtQualityReductionSolarPanels</value>
-  </data>
-  <data name="&gt;&gt;TxtNewDbFile.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="TxtNewDbFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>450, 27</value>
-  </data>
-  <data name="lblRate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;TabPageSetupFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtSubsidyAmount.Name" xml:space="preserve">
-    <value>txtSubsidyAmount</value>
-  </data>
-  <data name="&gt;&gt;LblIntro.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ChkSetAsDefaultFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lblCity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkSolarPanelsAvailable.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;bsAddresss.Name" xml:space="preserve">
-    <value>bsAddresss</value>
-  </data>
-  <data name="chkDefaultAddress.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;chkSolarPanelsAvailable.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtSubsidyAmount.Parent" xml:space="preserve">
-    <value>gbSolar</value>
-  </data>
-  <data name="&gt;&gt;lblSetupFile.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;CmdSelectExportFile.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;LblAddBaseData.Name" xml:space="preserve">
-    <value>LblAddBaseData</value>
-  </data>
-  <data name="&gt;&gt;LblDbFile.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="&gt;&gt;TabPageNewAddress.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;txtTotalCapacitySolarPanels.Name" xml:space="preserve">
-    <value>txtTotalCapacitySolarPanels</value>
-  </data>
-  <data name="LblSetupNewFile.Text" xml:space="preserve">
-    <value>To set up the new file and create the base date press 'Setup new file'</value>
-  </data>
-  <data name="&gt;&gt;GbNewEnergyTypes.Parent" xml:space="preserve">
-    <value>TabPageSelectEnergyTypes</value>
-  </data>
-  <data name="lblPurchaseAmount.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;CmPreviousTabNewAddress.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RbExistingFile.Name" xml:space="preserve">
-    <value>RbExistingFile</value>
-  </data>
-  <data name="LblSetupNewFile.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;toolTip2.Name" xml:space="preserve">
-    <value>toolTip2</value>
-  </data>
-  <data name="&gt;&gt;CmdCreateDb.Name" xml:space="preserve">
-    <value>CmdCreateDb</value>
-  </data>
-  <data name="gbSolar.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="CmdSelectExportDirectory.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 34</value>
-  </data>
-  <data name="&gt;&gt;lblTotalCapacity.Parent" xml:space="preserve">
-    <value>gbSolar</value>
-  </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>21, 20</value>
-  </data>
-  <data name="RbExistingFile.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TabPageSetupFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>932, 422</value>
-  </data>
-  <data name="CmdSelectExportFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 34</value>
-  </data>
-  <data name="&gt;&gt;lblTotalCapacity.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LblSetupNewFile.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;RbExistingFile.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="CmdCreateDb.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;LblHelpNewEnergyTypes.Parent" xml:space="preserve">
-    <value>TabPageSelectEnergyTypes</value>
-  </data>
-  <data name="&gt;&gt;cmdNextNewEnergyTypes.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;CmdSelectExportFile.Name" xml:space="preserve">
-    <value>CmdSelectExportFile</value>
-  </data>
-  <data name="LblAddBaseData.TabIndex" type="System.Int32, mscorlib">
-    <value>23</value>
-  </data>
-  <data name="TabPageNewAddress.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="&gt;&gt;lblSubsidy.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="gbNewAddress.Text" xml:space="preserve">
-    <value>Enter the values for the default address to use:</value>
-  </data>
-  <data name="ChkSetAsDefaultFile.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblCity.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="gbAddress.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblCity.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;lblStreet.Name" xml:space="preserve">
-    <value>lblStreet</value>
-  </data>
-  <data name="chkDefaultAddress.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblRate.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txtPostcalCode.MaxLength" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="TabPageSetupFile.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="gbSolar.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="txtQualityReductionSolarPanels.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="CmdSelectExportDirectory.TabIndex" type="System.Int32, mscorlib">
-    <value>29</value>
-  </data>
-  <data name="&gt;&gt;RbExistingFile.Parent" xml:space="preserve">
-    <value>PnFileTypeSelection</value>
-  </data>
-  <data name="&gt;&gt;cmdNextNewEnergyTypes.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PnFileTypeSelection.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TxtNewDbFile.Name" xml:space="preserve">
-    <value>TxtNewDbFile</value>
-  </data>
-  <data name="CmdPreviousEnergyTypes.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 703</value>
-  </data>
-  <data name="&gt;&gt;LblDbFile.Parent" xml:space="preserve">
-    <value>TabPageSelectFile</value>
-  </data>
-  <data name="&gt;&gt;lblCity.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="LblHelpNewEnergyTypes.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 16</value>
-  </data>
-  <data name="chkDefaultAddress.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GbNewEnergyTypes.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;bsAddress.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="RbExistingFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 24</value>
-  </data>
-  <data name="&gt;&gt;StatusStrip1.Name" xml:space="preserve">
-    <value>StatusStrip1</value>
-  </data>
-  <data name="chkDefaultAddress.Text" xml:space="preserve">
-    <value>Default address:</value>
-  </data>
-  <data name="lblHasSolarpanels.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="chkSolarPanelsAvailable.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cmdPreviousSetupFile.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="LblAddBaseData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 271</value>
-  </data>
-  <data name="LblSetAsDefaultFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 232</value>
-  </data>
-  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="lblStreet.Size" type="System.Drawing.Size, System.Drawing">
-    <value>51, 20</value>
-  </data>
-  <data name="CmdSelectExportDirectory.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 144</value>
-  </data>
-  <data name="txtQualityReductionSolarPanels.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblTotalCapacity.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;ChkAddBaseData.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;bsAddresss.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txtSubsidyAmount.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="CmdNextSelectFile.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="chkSolarPanelsAvailable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>18, 17</value>
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;TxtNewDbFile.Parent" xml:space="preserve">
-    <value>TabPageSelectFile</value>
-  </data>
-  <data name="lblSubsidy.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txtQualityReductionSolarPanels.Parent" xml:space="preserve">
-    <value>gbSolar</value>
-  </data>
-  <data name="&gt;&gt;CmdPreviousEnergyTypes.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;lblRate.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="LblDbFile.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txtPurchaseAmount.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="lblPurchaseAmount.Text" xml:space="preserve">
-    <value>Purchase amount:</value>
-  </data>
-  <data name="&gt;&gt;label4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lblTotalCapacity.Text" xml:space="preserve">
-    <value>Total Capacity:</value>
-  </data>
-  <data name="ChkAddBaseData.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;lblSetupFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lblHasSolarpanels.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="CmPreviousTabNewAddress.Text" xml:space="preserve">
-    <value>&amp;Previous</value>
-  </data>
-  <data name="gbAddress.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="RbNewFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>129, 24</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>Quality reduction:</value>
-  </data>
-  <data name="txtPurchaseAmount.Location" type="System.Drawing.Point, System.Drawing">
-    <value>405, 60</value>
-  </data>
-  <data name="LblHelpNewEnergyTypes.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="cmdNextNewEnergyTypes.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1558, 703</value>
-  </data>
-  <data name="label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Setup New File</value>
-  </data>
-  <data name="LblDbFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 20</value>
-  </data>
-  <data name="txtCity.MaxLength" type="System.Int32, mscorlib">
-    <value>100</value>
-  </data>
-  <data name="CmPreviousTabNewAddress.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="TabPageNewAddress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 29</value>
-  </data>
-  <data name="&gt;&gt;cmdPreviousSetupFile.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="txtSubsidyAmount.Text" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="label3.TabIndex" type="System.Int32, mscorlib">
-    <value>27</value>
-  </data>
-  <data name="CmdCreateDb.Text" xml:space="preserve">
-    <value>Setup file</value>
-  </data>
-  <data name="txtDescription.MaxLength" type="System.Int32, mscorlib">
-    <value>100</value>
-  </data>
-  <data name="TabPageSelectFile.Text" xml:space="preserve">
-    <value>SelectFile</value>
-  </data>
-  <data name="&gt;&gt;CmdSelectExportDirectory.Name" xml:space="preserve">
-    <value>CmdSelectExportDirectory</value>
-  </data>
-  <data name="&gt;&gt;txtPostcalCode.Name" xml:space="preserve">
-    <value>txtPostcalCode</value>
-  </data>
-  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
-    <value>gbSolar</value>
-  </data>
-  <data name="label2.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cmdNextNewEnergyTypes.Text" xml:space="preserve">
-    <value>&amp;Next</value>
+  <data name="gbAddress.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
   </data>
   <data name="gbAddress.Text" xml:space="preserve">
     <value>Address</value>
   </data>
-  <data name="&gt;&gt;txtHouseNo.Name" xml:space="preserve">
-    <value>txtHouseNo</value>
+  <data name="&gt;&gt;gbAddress.Name" xml:space="preserve">
+    <value>gbAddress</value>
   </data>
-  <data name="gbSolar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 230</value>
-  </data>
-  <data name="&gt;&gt;lblPurchaseAmount.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lblSubsidy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 20</value>
-  </data>
-  <data name="GbNewEnergyTypes.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="CmPreviousTabNewAddress.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblSubsidy.Text" xml:space="preserve">
-    <value>Subsidy:</value>
-  </data>
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblCity.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 59</value>
-  </data>
-  <data name="TabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 30</value>
-  </data>
-  <data name="LblHelpNewEnergyTypes.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txtQualityReductionSolarPanels.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 91</value>
-  </data>
-  <data name="txtTotalCapacitySolarPanels.Size" type="System.Drawing.Size, System.Drawing">
-    <value>73, 27</value>
-  </data>
-  <data name="lblRate.Text" xml:space="preserve">
-    <value>Description:</value>
-  </data>
-  <data name="&gt;&gt;cmdNextNewEnergyTypes.Name" xml:space="preserve">
-    <value>cmdNextNewEnergyTypes</value>
-  </data>
-  <data name="&gt;&gt;txtDescription.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkDefaultAddress.Name" xml:space="preserve">
-    <value>chkDefaultAddress</value>
-  </data>
-  <data name="&gt;&gt;chkSolarPanelsAvailable.Parent" xml:space="preserve">
-    <value>gbSolar</value>
-  </data>
-  <data name="CmdNextSelectFile.TabIndex" type="System.Int32, mscorlib">
-    <value>24</value>
-  </data>
-  <data name="&gt;&gt;lblPostcalCode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ChkSetAsDefaultFile.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="label2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label6.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="gbAddress.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;lblRate.Parent" xml:space="preserve">
-    <value>gbNewAddress</value>
-  </data>
-  <data name="&gt;&gt;GbNewEnergyTypes.Type" xml:space="preserve">
+  <data name="&gt;&gt;gbAddress.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="txtQualityReductionSolarPanels.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+  <data name="&gt;&gt;gbAddress.Parent" xml:space="preserve">
+    <value>gbNewAddress</value>
   </data>
-  <data name="CmdSelectExportDirectory.ToolTip1" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;gbAddress.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="TabPageSelectEnergyTypes.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="&gt;&gt;CmdNextSelectFile.Parent" xml:space="preserve">
-    <value>TabPageSelectFile</value>
-  </data>
-  <data name="lblPostcalCode.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lblHasSolarpanels.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </data>
-  <data name="txtHouseNo.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;lblSetupFile.Name" xml:space="preserve">
-    <value>lblSetupFile</value>
-  </data>
-  <data name="label1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txtTargetDirectory.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="cmdPreviousSetupFile.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="CmdNextNewAddress.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="LblDbFile.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
-    <value>gbSolar</value>
   </data>
   <data name="lblHasSolarpanels.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="lblTotalCapacity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="lblHasSolarpanels.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 30</value>
   </data>
-  <data name="ChkAddBaseData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>18, 17</value>
+  <data name="lblHasSolarpanels.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 20</value>
   </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>126, 20</value>
-  </data>
-  <data name="CmPreviousTabNewAddress.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 29</value>
-  </data>
-  <data name="&gt;&gt;TabPageSetupFile.Parent" xml:space="preserve">
-    <value>TabControl</value>
-  </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="txtTotalCapacitySolarPanels.MaxLength" type="System.Int32, mscorlib">
-    <value>100</value>
-  </data>
-  <data name="&gt;&gt;CmdNextSelectFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LblHelpNewEnergyTypes.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TabPageSelectEnergyTypes.Text" xml:space="preserve">
-    <value>New Energy types</value>
-  </data>
-  <data name="&gt;&gt;txtQualityReductionSolarPanels.ZOrder" xml:space="preserve">
-    <value>10</value>
+  <data name="lblHasSolarpanels.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="lblHasSolarpanels.Text" xml:space="preserve">
     <value>Has Solar panels:</value>
   </data>
+  <data name="&gt;&gt;lblHasSolarpanels.Name" xml:space="preserve">
+    <value>lblHasSolarpanels</value>
+  </data>
+  <data name="&gt;&gt;lblHasSolarpanels.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblHasSolarpanels.Parent" xml:space="preserve">
+    <value>gbSolar</value>
+  </data>
+  <data name="&gt;&gt;lblHasSolarpanels.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblSubsidy.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblSubsidy.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblSubsidy.Location" type="System.Drawing.Point, System.Drawing">
+    <value>337, 96</value>
+  </data>
+  <data name="lblSubsidy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 20</value>
+  </data>
+  <data name="lblSubsidy.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="lblSubsidy.Text" xml:space="preserve">
+    <value>Subsidy:</value>
+  </data>
+  <data name="&gt;&gt;lblSubsidy.Name" xml:space="preserve">
+    <value>lblSubsidy</value>
+  </data>
+  <data name="&gt;&gt;lblSubsidy.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;lblSubsidy.Parent" xml:space="preserve">
     <value>gbSolar</value>
   </data>
-  <data name="txtHouseNo.MaxLength" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;txtCity.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TabControl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;lblSubsidy.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="txtSubsidyAmount.Location" type="System.Drawing.Point, System.Drawing">
     <value>405, 91</value>
   </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 20</value>
+  <data name="txtSubsidyAmount.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
-  <data name="txtStreet.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 89</value>
+  <data name="txtSubsidyAmount.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 27</value>
   </data>
-  <data name="TabPageSelectFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 29</value>
+  <data name="txtSubsidyAmount.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
   </data>
-  <data name="&gt;&gt;txtPostcalCode.Parent" xml:space="preserve">
-    <value>gbAddress</value>
+  <data name="txtSubsidyAmount.Text" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="RbExistingFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 33</value>
+  <data name="txtSubsidyAmount.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
   </data>
-  <data name="gbNewAddress.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
+  <data name="&gt;&gt;txtSubsidyAmount.Name" xml:space="preserve">
+    <value>txtSubsidyAmount</value>
+  </data>
+  <data name="&gt;&gt;txtSubsidyAmount.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtSubsidyAmount.Parent" xml:space="preserve">
+    <value>gbSolar</value>
+  </data>
+  <data name="&gt;&gt;txtSubsidyAmount.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblPurchaseAmount.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblPurchaseAmount.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblPurchaseAmount.Location" type="System.Drawing.Point, System.Drawing">
+    <value>276, 66</value>
+  </data>
+  <data name="lblPurchaseAmount.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 20</value>
+  </data>
+  <data name="lblPurchaseAmount.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="lblPurchaseAmount.Text" xml:space="preserve">
+    <value>Purchase amount:</value>
+  </data>
+  <data name="&gt;&gt;lblPurchaseAmount.Name" xml:space="preserve">
+    <value>lblPurchaseAmount</value>
+  </data>
+  <data name="&gt;&gt;lblPurchaseAmount.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblPurchaseAmount.Parent" xml:space="preserve">
+    <value>gbSolar</value>
+  </data>
+  <data name="&gt;&gt;lblPurchaseAmount.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="txtPurchaseAmount.Location" type="System.Drawing.Point, System.Drawing">
+    <value>405, 60</value>
+  </data>
+  <data name="txtPurchaseAmount.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtPurchaseAmount.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 27</value>
+  </data>
+  <data name="txtPurchaseAmount.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="txtPurchaseAmount.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txtPurchaseAmount.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="&gt;&gt;txtPurchaseAmount.Name" xml:space="preserve">
+    <value>txtPurchaseAmount</value>
+  </data>
+  <data name="&gt;&gt;txtPurchaseAmount.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtPurchaseAmount.Parent" xml:space="preserve">
+    <value>gbSolar</value>
+  </data>
+  <data name="&gt;&gt;txtPurchaseAmount.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="label6.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>215, 58</value>
+  </data>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 20</value>
+  </data>
+  <data name="label6.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>kWh</value>
+  </data>
+  <data name="&gt;&gt;label6.Name" xml:space="preserve">
+    <value>label6</value>
+  </data>
+  <data name="&gt;&gt;label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
+    <value>gbSolar</value>
+  </data>
+  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>188, 96</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>21, 20</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>%</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>gbSolar</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="chkSolarPanelsAvailable.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkSolarPanelsAvailable.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="chkSolarPanelsAvailable.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkSolarPanelsAvailable.Location" type="System.Drawing.Point, System.Drawing">
+    <value>136, 32</value>
+  </data>
+  <data name="chkSolarPanelsAvailable.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="chkSolarPanelsAvailable.Size" type="System.Drawing.Size, System.Drawing">
+    <value>18, 17</value>
+  </data>
+  <data name="chkSolarPanelsAvailable.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;chkSolarPanelsAvailable.Name" xml:space="preserve">
+    <value>chkSolarPanelsAvailable</value>
+  </data>
+  <data name="&gt;&gt;chkSolarPanelsAvailable.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkSolarPanelsAvailable.Parent" xml:space="preserve">
+    <value>gbSolar</value>
+  </data>
+  <data name="&gt;&gt;chkSolarPanelsAvailable.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 96</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>126, 20</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Quality reduction:</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>gbSolar</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="txtTotalCapacitySolarPanels.Location" type="System.Drawing.Point, System.Drawing">
+    <value>136, 56</value>
+  </data>
+  <data name="txtTotalCapacitySolarPanels.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtTotalCapacitySolarPanels.MaxLength" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
+  <data name="txtTotalCapacitySolarPanels.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 27</value>
+  </data>
+  <data name="txtTotalCapacitySolarPanels.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;txtTotalCapacitySolarPanels.Name" xml:space="preserve">
+    <value>txtTotalCapacitySolarPanels</value>
+  </data>
+  <data name="&gt;&gt;txtTotalCapacitySolarPanels.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtTotalCapacitySolarPanels.Parent" xml:space="preserve">
+    <value>gbSolar</value>
+  </data>
+  <data name="&gt;&gt;txtTotalCapacitySolarPanels.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="txtQualityReductionSolarPanels.Location" type="System.Drawing.Point, System.Drawing">
+    <value>136, 91</value>
+  </data>
+  <data name="txtQualityReductionSolarPanels.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtQualityReductionSolarPanels.MaxLength" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
+  <data name="txtQualityReductionSolarPanels.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 27</value>
+  </data>
+  <data name="txtQualityReductionSolarPanels.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;txtQualityReductionSolarPanels.Name" xml:space="preserve">
+    <value>txtQualityReductionSolarPanels</value>
+  </data>
+  <data name="&gt;&gt;txtQualityReductionSolarPanels.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtQualityReductionSolarPanels.Parent" xml:space="preserve">
+    <value>gbSolar</value>
+  </data>
+  <data name="&gt;&gt;txtQualityReductionSolarPanels.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="lblTotalCapacity.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblTotalCapacity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblTotalCapacity.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 62</value>
+  </data>
+  <data name="lblTotalCapacity.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 20</value>
+  </data>
+  <data name="lblTotalCapacity.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lblTotalCapacity.Text" xml:space="preserve">
+    <value>Total Capacity:</value>
+  </data>
+  <data name="&gt;&gt;lblTotalCapacity.Name" xml:space="preserve">
+    <value>lblTotalCapacity</value>
+  </data>
+  <data name="&gt;&gt;lblTotalCapacity.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblTotalCapacity.Parent" xml:space="preserve">
+    <value>gbSolar</value>
+  </data>
+  <data name="&gt;&gt;lblTotalCapacity.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="gbSolar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 230</value>
+  </data>
+  <data name="gbSolar.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="gbSolar.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="gbSolar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>908, 144</value>
+  </data>
+  <data name="gbSolar.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="gbSolar.Text" xml:space="preserve">
+    <value>Solar</value>
+  </data>
+  <data name="&gt;&gt;gbSolar.Name" xml:space="preserve">
+    <value>gbSolar</value>
+  </data>
+  <data name="&gt;&gt;gbSolar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gbSolar.Parent" xml:space="preserve">
+    <value>gbNewAddress</value>
+  </data>
+  <data name="&gt;&gt;gbSolar.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblRate.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblRate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblRate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 28</value>
+  </data>
+  <data name="lblRate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 20</value>
+  </data>
+  <data name="lblRate.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="lblRate.Text" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="&gt;&gt;lblRate.Name" xml:space="preserve">
+    <value>lblRate</value>
+  </data>
+  <data name="&gt;&gt;lblRate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblRate.Parent" xml:space="preserve">
+    <value>gbNewAddress</value>
+  </data>
+  <data name="&gt;&gt;lblRate.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="txtDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>138, 28</value>
+  </data>
+  <data name="txtDescription.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtDescription.MaxLength" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
+  <data name="txtDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>308, 27</value>
+  </data>
+  <data name="txtDescription.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.Name" xml:space="preserve">
+    <value>txtDescription</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.Parent" xml:space="preserve">
+    <value>gbNewAddress</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="gbNewAddress.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 6</value>
+  </data>
+  <data name="gbNewAddress.Size" type="System.Drawing.Size, System.Drawing">
+    <value>920, 375</value>
+  </data>
+  <data name="gbNewAddress.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="gbNewAddress.Text" xml:space="preserve">
+    <value>Enter the values for the default address to use:</value>
+  </data>
+  <data name="&gt;&gt;gbNewAddress.Name" xml:space="preserve">
+    <value>gbNewAddress</value>
   </data>
   <data name="&gt;&gt;gbNewAddress.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1648,511 +1366,445 @@
   <data name="&gt;&gt;gbNewAddress.Parent" xml:space="preserve">
     <value>TabPageNewAddress</value>
   </data>
-  <data name="&gt;&gt;txtPurchaseAmount.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lblRate.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;CmdSelectExportDirectory.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;gbNewAddress.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="txtPurchaseAmount.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;gbSolar.Name" xml:space="preserve">
-    <value>gbSolar</value>
-  </data>
-  <data name="CmdPreviousEnergyTypes.TabIndex" type="System.Int32, mscorlib">
-    <value>23</value>
-  </data>
-  <data name="&gt;&gt;LblSetupNewFile.Name" xml:space="preserve">
-    <value>LblSetupNewFile</value>
-  </data>
-  <data name="lblRate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>88, 20</value>
-  </data>
-  <data name="chkDefaultAddress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>452, 31</value>
-  </data>
-  <data name="&gt;&gt;gbNewAddress.Name" xml:space="preserve">
-    <value>gbNewAddress</value>
-  </data>
-  <data name="lblPostcalCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 20</value>
-  </data>
-  <data name="lblStreet.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txtTargetDirectory.Location" type="System.Drawing.Point, System.Drawing">
-    <value>97, 141</value>
-  </data>
-  <data name="lblCity.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 20</value>
-  </data>
-  <data name="lblTotalCapacity.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="cmdNextNewEnergyTypes.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txtStreet.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPostcalCode.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txtCity.Name" xml:space="preserve">
-    <value>txtCity</value>
-  </data>
-  <data name="&gt;&gt;label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="CmdNextNewAddress.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;chkSolarPanelsAvailable.Name" xml:space="preserve">
-    <value>chkSolarPanelsAvailable</value>
-  </data>
-  <data name="RbNewFile.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="CmdNextNewAddress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1558, 703</value>
-  </data>
-  <data name="CmdSelectExportFile.Text" xml:space="preserve">
-    <value>Select file</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="RbNewFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 3</value>
-  </data>
-  <data name="txtTargetDirectory.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cmdPreviousSetupFile.Text" xml:space="preserve">
-    <value>&amp;Previous</value>
-  </data>
-  <data name="TabControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;CmdSelectExportFile.Parent" xml:space="preserve">
-    <value>TabPageSelectFile</value>
-  </data>
-  <data name="&gt;&gt;cmdPreviousSetupFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="CmdCreateDb.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="CmdNextNewAddress.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
-  <data name="CmdPreviousEnergyTypes.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="txtQualityReductionSolarPanels.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="&gt;&gt;GbNewEnergyTypes.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;txtTotalCapacitySolarPanels.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="lblSetupFile.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblPostcalCode.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="gbNewAddress.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="LblIntro.Size" type="System.Drawing.Size, System.Drawing">
-    <value>336, 20</value>
-  </data>
-  <data name="&gt;&gt;TabPageNewAddress.Parent" xml:space="preserve">
-    <value>TabControl</value>
-  </data>
-  <data name="&gt;&gt;chkDefaultAddress.Parent" xml:space="preserve">
-    <value>gbNewAddress</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>958, 515</value>
-  </data>
-  <data name="txtSubsidyAmount.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txtTotalCapacitySolarPanels.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;lblTotalCapacity.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="CmdSelectExportFile.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;lblHasSolarpanels.Name" xml:space="preserve">
-    <value>lblHasSolarpanels</value>
-  </data>
-  <data name="&gt;&gt;cmdPreviousSetupFile.Parent" xml:space="preserve">
-    <value>TabPageSetupFile</value>
-  </data>
-  <data name="chkSolarPanelsAvailable.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;lblPostcalCode.Name" xml:space="preserve">
-    <value>lblPostcalCode</value>
-  </data>
-  <data name="chkSolarPanelsAvailable.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;PnFileTypeSelection.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="CmdSelectExportDirectory.Location" type="System.Drawing.Point, System.Drawing">
-    <value>554, 139</value>
-  </data>
-  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;lblRate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblStreet.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txtStreet.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txtHouseNo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 121</value>
-  </data>
-  <data name="txtDescription.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="&gt;&gt;txtTotalCapacitySolarPanels.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="gbSolar.Text" xml:space="preserve">
-    <value>Solar</value>
-  </data>
-  <data name="&gt;&gt;CmdSelectExportDirectory.Parent" xml:space="preserve">
-    <value>TabPageSelectFile</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="TabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>940, 455</value>
-  </data>
-  <data name="txtCity.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FrmSetupNewFile</value>
-  </data>
-  <data name="PnFileTypeSelection.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txtCity.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="txtCity.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 27</value>
-  </data>
-  <data name="LblDbFile.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;label6.Name" xml:space="preserve">
-    <value>label6</value>
-  </data>
-  <data name="&gt;&gt;cmdNextNewEnergyTypes.Parent" xml:space="preserve">
-    <value>TabPageSelectEnergyTypes</value>
-  </data>
-  <data name="CmdSelectExportFile.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="&gt;&gt;LblAddBaseData.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="lblTotalCapacity.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ChkAddBaseData.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txtPostcalCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 27</value>
-  </data>
-  <data name="&gt;&gt;lblPostcalCode.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;TabPageSelectFile.Name" xml:space="preserve">
-    <value>TabPageSelectFile</value>
-  </data>
-  <data name="TabPageSelectFile.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 20</value>
-  </data>
-  <data name="LblSetupNewFile.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+  <data name="CmdNextNewAddress.Location" type="System.Drawing.Point, System.Drawing">
+    <value>832, 387</value>
   </data>
   <data name="CmdNextNewAddress.Size" type="System.Drawing.Size, System.Drawing">
     <value>94, 29</value>
   </data>
-  <data name="&gt;&gt;LblAddBaseData.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="CmdNextNewAddress.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
   </data>
-  <data name="lblSetupFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>271, 20</value>
+  <data name="CmdNextNewAddress.Text" xml:space="preserve">
+    <value>&amp;Next</value>
   </data>
-  <data name="TabPageNewAddress.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;CmdNextNewAddress.Name" xml:space="preserve">
+    <value>CmdNextNewAddress</value>
   </data>
-  <data name="RbNewFile.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;CmdNextNewAddress.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;txtTargetDirectory.Name" xml:space="preserve">
-    <value>txtTargetDirectory</value>
-  </data>
-  <data name="TabPageSelectFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>932, 422</value>
-  </data>
-  <data name="CmdNextSelectFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1558, 703</value>
-  </data>
-  <data name="txtTotalCapacitySolarPanels.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;TabPageSelectEnergyTypes.Name" xml:space="preserve">
-    <value>TabPageSelectEnergyTypes</value>
-  </data>
-  <data name="txtPostcalCode.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txtTargetDirectory.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="txtStreet.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="lblRate.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;chkDefaultAddress.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="txtHouseNo.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="txtPostcalCode.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;PnFileTypeSelection.Name" xml:space="preserve">
-    <value>PnFileTypeSelection</value>
-  </data>
-  <data name="label1.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;gbSolar.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="GbNewEnergyTypes.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 44</value>
-  </data>
-  <data name="cmdPreviousSetupFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 703</value>
-  </data>
-  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;lblTotalCapacity.Name" xml:space="preserve">
-    <value>lblTotalCapacity</value>
-  </data>
-  <data name="LblSetupNewFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>460, 20</value>
-  </data>
-  <data name="&gt;&gt;label6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="LblDbFile.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="&gt;&gt;txtStreet.Parent" xml:space="preserve">
-    <value>gbAddress</value>
-  </data>
-  <data name="&gt;&gt;LblSetAsDefaultFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="CmdCreateDb.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblHasSolarpanels.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="TabPageSetupFile.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;ChkAddBaseData.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="RbExistingFile.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txtPurchaseAmount.Name" xml:space="preserve">
-    <value>txtPurchaseAmount</value>
-  </data>
-  <data name="LblAddBaseData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 20</value>
-  </data>
-  <data name="CmPreviousTabNewAddress.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="txtPurchaseAmount.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 27</value>
-  </data>
-  <data name="&gt;&gt;ToolTip1.Name" xml:space="preserve">
-    <value>ToolTip1</value>
-  </data>
-  <data name="LblSetupNewFile.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="LblSetAsDefaultFile.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;txtHouseNo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;CmPreviousTabNewAddress.Name" xml:space="preserve">
-    <value>CmPreviousTabNewAddress</value>
-  </data>
-  <data name="&gt;&gt;CmdNextSelectFile.Name" xml:space="preserve">
-    <value>CmdNextSelectFile</value>
-  </data>
-  <data name="&gt;&gt;gbSolar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="PnFileTypeSelection.TabIndex" type="System.Int32, mscorlib">
-    <value>25</value>
-  </data>
-  <data name="&gt;&gt;TabPageNewAddress.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="chkSolarPanelsAvailable.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;TabPageSelectEnergyTypes.Parent" xml:space="preserve">
-    <value>TabControl</value>
-  </data>
-  <data name="chkDefaultAddress.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="lblCity.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="LblIntro.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txtPurchaseAmount.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txtSubsidyAmount.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="CmdCreateDb.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1527, 703</value>
-  </data>
-  <data name="LblSetAsDefaultFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 20</value>
-  </data>
-  <data name="txtHouseNo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 27</value>
-  </data>
-  <data name="GbNewEnergyTypes.TabIndex" type="System.Int32, mscorlib">
-    <value>29</value>
-  </data>
-  <data name="LblDbFile.Text" xml:space="preserve">
-    <value>Db file:</value>
-  </data>
-  <data name="&gt;&gt;lblCity.Parent" xml:space="preserve">
-    <value>gbAddress</value>
-  </data>
-  <data name="RbNewFile.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="TabPageSelectFile.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="TxtNewDbFile.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="lblPurchaseAmount.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 20</value>
-  </data>
-  <data name="&gt;&gt;LblDbFile.Name" xml:space="preserve">
-    <value>LblDbFile</value>
-  </data>
-  <data name="CmdPreviousEnergyTypes.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="txtHouseNo.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="LblSetAsDefaultFile.ToolTip1" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;CmdNextNewAddress.Parent" xml:space="preserve">
+    <value>TabPageNewAddress</value>
   </data>
   <data name="&gt;&gt;CmdNextNewAddress.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="txtDescription.ToolTip" xml:space="preserve">
-    <value />
+  <data name="CmPreviousTabNewAddress.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
   </data>
-  <data name="&gt;&gt;txtSubsidyAmount.ZOrder" xml:space="preserve">
+  <data name="CmPreviousTabNewAddress.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 387</value>
+  </data>
+  <data name="CmPreviousTabNewAddress.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 29</value>
+  </data>
+  <data name="CmPreviousTabNewAddress.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="CmPreviousTabNewAddress.Text" xml:space="preserve">
+    <value>&amp;Previous</value>
+  </data>
+  <data name="&gt;&gt;CmPreviousTabNewAddress.Name" xml:space="preserve">
+    <value>CmPreviousTabNewAddress</value>
+  </data>
+  <data name="&gt;&gt;CmPreviousTabNewAddress.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CmPreviousTabNewAddress.Parent" xml:space="preserve">
+    <value>TabPageNewAddress</value>
+  </data>
+  <data name="&gt;&gt;CmPreviousTabNewAddress.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;LblSetAsDefaultFile.ZOrder" xml:space="preserve">
-    <value>8</value>
+  <data name="TabPageNewAddress.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 29</value>
   </data>
-  <data name="lblPurchaseAmount.AutoSize" type="System.Boolean, mscorlib">
+  <data name="TabPageNewAddress.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="TabPageNewAddress.Size" type="System.Drawing.Size, System.Drawing">
+    <value>932, 422</value>
+  </data>
+  <data name="TabPageNewAddress.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="TabPageNewAddress.Text" xml:space="preserve">
+    <value>New address</value>
+  </data>
+  <data name="&gt;&gt;TabPageNewAddress.Name" xml:space="preserve">
+    <value>TabPageNewAddress</value>
+  </data>
+  <data name="&gt;&gt;TabPageNewAddress.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TabPageNewAddress.Parent" xml:space="preserve">
+    <value>TabControl</value>
+  </data>
+  <data name="&gt;&gt;TabPageNewAddress.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cmdNextNewEnergyTypes.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="cmdNextNewEnergyTypes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>832, 387</value>
+  </data>
+  <data name="cmdNextNewEnergyTypes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 29</value>
+  </data>
+  <data name="cmdNextNewEnergyTypes.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="cmdNextNewEnergyTypes.Text" xml:space="preserve">
+    <value>&amp;Next</value>
+  </data>
+  <data name="&gt;&gt;cmdNextNewEnergyTypes.Name" xml:space="preserve">
+    <value>cmdNextNewEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;cmdNextNewEnergyTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdNextNewEnergyTypes.Parent" xml:space="preserve">
+    <value>TabPageSelectEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;cmdNextNewEnergyTypes.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="CmdPreviousEnergyTypes.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="CmdPreviousEnergyTypes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 387</value>
+  </data>
+  <data name="CmdPreviousEnergyTypes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 29</value>
+  </data>
+  <data name="CmdPreviousEnergyTypes.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="CmdPreviousEnergyTypes.Text" xml:space="preserve">
+    <value>&amp;Previous</value>
+  </data>
+  <data name="&gt;&gt;CmdPreviousEnergyTypes.Name" xml:space="preserve">
+    <value>CmdPreviousEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;CmdPreviousEnergyTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CmdPreviousEnergyTypes.Parent" xml:space="preserve">
+    <value>TabPageSelectEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;CmdPreviousEnergyTypes.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="GbNewEnergyTypes.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="GbNewEnergyTypes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 44</value>
+  </data>
+  <data name="GbNewEnergyTypes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>920, 337</value>
+  </data>
+  <data name="GbNewEnergyTypes.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="&gt;&gt;GbNewEnergyTypes.Name" xml:space="preserve">
+    <value>GbNewEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;GbNewEnergyTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GbNewEnergyTypes.Parent" xml:space="preserve">
+    <value>TabPageSelectEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;GbNewEnergyTypes.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="LblHelpNewEnergyTypes.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="gbNewAddress.ToolTip1" xml:space="preserve">
-    <value />
+  <data name="LblHelpNewEnergyTypes.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;bsEnergyTypes.Name" xml:space="preserve">
-    <value>bsEnergyTypes</value>
+  <data name="LblHelpNewEnergyTypes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 16</value>
   </data>
-  <data name="lblTotalCapacity.Location" type="System.Drawing.Point, System.Drawing">
-    <value>26, 62</value>
+  <data name="LblHelpNewEnergyTypes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>319, 20</value>
   </data>
+  <data name="LblHelpNewEnergyTypes.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="LblHelpNewEnergyTypes.Text" xml:space="preserve">
+    <value>The following default energies type are added:</value>
+  </data>
+  <data name="&gt;&gt;LblHelpNewEnergyTypes.Name" xml:space="preserve">
+    <value>LblHelpNewEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;LblHelpNewEnergyTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblHelpNewEnergyTypes.Parent" xml:space="preserve">
+    <value>TabPageSelectEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;LblHelpNewEnergyTypes.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="TabPageSelectEnergyTypes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 29</value>
+  </data>
+  <data name="TabPageSelectEnergyTypes.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="TabPageSelectEnergyTypes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>932, 422</value>
+  </data>
+  <data name="TabPageSelectEnergyTypes.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="TabPageSelectEnergyTypes.Text" xml:space="preserve">
+    <value>New Energy types</value>
+  </data>
+  <data name="&gt;&gt;TabPageSelectEnergyTypes.Name" xml:space="preserve">
+    <value>TabPageSelectEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;TabPageSelectEnergyTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TabPageSelectEnergyTypes.Parent" xml:space="preserve">
+    <value>TabControl</value>
+  </data>
+  <data name="&gt;&gt;TabPageSelectEnergyTypes.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblSetupFile.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblSetupFile.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblSetupFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 48</value>
+  </data>
+  <data name="lblSetupFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>271, 20</value>
+  </data>
+  <data name="lblSetupFile.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="lblSetupFile.Text" xml:space="preserve">
+    <value>To use the selected file press 'Setup file'</value>
+  </data>
+  <data name="&gt;&gt;lblSetupFile.Name" xml:space="preserve">
+    <value>lblSetupFile</value>
+  </data>
+  <data name="&gt;&gt;lblSetupFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblSetupFile.Parent" xml:space="preserve">
+    <value>TabPageSetupFile</value>
+  </data>
+  <data name="&gt;&gt;lblSetupFile.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cmdPreviousSetupFile.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="cmdPreviousSetupFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 387</value>
+  </data>
+  <data name="cmdPreviousSetupFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 29</value>
+  </data>
+  <data name="cmdPreviousSetupFile.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="cmdPreviousSetupFile.Text" xml:space="preserve">
+    <value>&amp;Previous</value>
+  </data>
+  <data name="&gt;&gt;cmdPreviousSetupFile.Name" xml:space="preserve">
+    <value>cmdPreviousSetupFile</value>
+  </data>
+  <data name="&gt;&gt;cmdPreviousSetupFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdPreviousSetupFile.Parent" xml:space="preserve">
+    <value>TabPageSetupFile</value>
+  </data>
+  <data name="&gt;&gt;cmdPreviousSetupFile.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="LblSetupNewFile.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblSetupNewFile.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblSetupNewFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 15</value>
+  </data>
+  <data name="LblSetupNewFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>460, 20</value>
+  </data>
+  <data name="LblSetupNewFile.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="LblSetupNewFile.Text" xml:space="preserve">
+    <value>To set up the new file and create the base date press 'Setup new file'</value>
+  </data>
+  <data name="&gt;&gt;LblSetupNewFile.Name" xml:space="preserve">
+    <value>LblSetupNewFile</value>
+  </data>
+  <data name="&gt;&gt;LblSetupNewFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblSetupNewFile.Parent" xml:space="preserve">
+    <value>TabPageSetupFile</value>
+  </data>
+  <data name="&gt;&gt;LblSetupNewFile.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="CmdCreateDb.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="CmdCreateDb.Location" type="System.Drawing.Point, System.Drawing">
+    <value>801, 387</value>
+  </data>
+  <data name="CmdCreateDb.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 29</value>
+  </data>
+  <data name="CmdCreateDb.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="CmdCreateDb.Text" xml:space="preserve">
+    <value>Setup file</value>
+  </data>
+  <data name="&gt;&gt;CmdCreateDb.Name" xml:space="preserve">
+    <value>CmdCreateDb</value>
+  </data>
+  <data name="&gt;&gt;CmdCreateDb.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CmdCreateDb.Parent" xml:space="preserve">
+    <value>TabPageSetupFile</value>
+  </data>
+  <data name="&gt;&gt;CmdCreateDb.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="TabPageSetupFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 29</value>
+  </data>
+  <data name="TabPageSetupFile.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="TabPageSetupFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>932, 422</value>
+  </data>
+  <data name="TabPageSetupFile.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="TabPageSetupFile.Text" xml:space="preserve">
+    <value>Setup file</value>
+  </data>
+  <data name="&gt;&gt;TabPageSetupFile.Name" xml:space="preserve">
+    <value>TabPageSetupFile</value>
+  </data>
+  <data name="&gt;&gt;TabPageSetupFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TabPageSetupFile.Parent" xml:space="preserve">
+    <value>TabControl</value>
+  </data>
+  <data name="&gt;&gt;TabPageSetupFile.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="TabControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 30</value>
+  </data>
+  <data name="TabControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>940, 455</value>
+  </data>
+  <data name="TabControl.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;TabControl.Name" xml:space="preserve">
+    <value>TabControl</value>
+  </data>
+  <data name="&gt;&gt;TabControl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TabControl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;TabControl.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="bsAddresss.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>130, 19</value>
+  </metadata>
   <metadata name="toolTip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>23, 17</value>
   </metadata>
   <metadata name="bsEnergyTypes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>416, 18</value>
   </metadata>
-  <metadata name="bsAddress.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>291, 17</value>
-  </metadata>
-  <metadata name="bsAddresss.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>130, 19</value>
-  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="StatusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>153, 17</value>
-  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 20</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>958, 515</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Setup New File</value>
+  </data>
+  <data name="&gt;&gt;ToolTip1.Name" xml:space="preserve">
+    <value>ToolTip1</value>
+  </data>
+  <data name="&gt;&gt;ToolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsAddress.Name" xml:space="preserve">
+    <value>bsAddress</value>
+  </data>
+  <data name="&gt;&gt;bsAddress.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsAddresss.Name" xml:space="preserve">
+    <value>bsAddresss</value>
+  </data>
+  <data name="&gt;&gt;bsAddresss.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolTip2.Name" xml:space="preserve">
+    <value>toolTip2</value>
+  </data>
+  <data name="&gt;&gt;toolTip2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsEnergyTypes.Name" xml:space="preserve">
+    <value>bsEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;bsEnergyTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FrmSetupNewFile</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
