@@ -98,11 +98,6 @@ namespace WinFormsEF.ucControls
             _dtp.Visible = false;
         }
 
-        private void dgvMeterReadings_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            dgMeterReadings.Rows[e.RowIndex].Cells[0].Value = DateTime.Now.ToShortDateString();
-        }
-
         #endregion
 
         #region Toolbar

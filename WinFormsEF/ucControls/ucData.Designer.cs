@@ -164,7 +164,6 @@
             dgMeterReadings.RowTemplate.Height = 24;
             dgMeterReadings.CellClick += dgvMeterReadings_CellClick;
             dgMeterReadings.ColumnWidthChanged += dgvMeterReadings_ColumnWidthChanged;
-            dgMeterReadings.RowsAdded += dgvMeterReadings_RowsAdded;
             dgMeterReadings.Scroll += dgvMeterReadings_Scroll;
             // 
             // RegistrationDate
