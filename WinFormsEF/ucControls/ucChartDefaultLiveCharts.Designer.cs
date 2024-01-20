@@ -56,10 +56,10 @@
             bsPeriodType = new BindingSource(components);
             LblPeriod = new Label();
             toolTip1 = new ToolTip(components);
-            CboEnergyType = new ComboBox();
+            CboCompareWith = new ComboBox();
+            bsEnergyTypes = new BindingSource(components);
             EnergyTypeLabel = new Label();
             PeriodEndLabel = new Label();
-            bsEnergyTypes = new BindingSource(components);
             plShowBy.SuspendLayout();
             pnlType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bsPeriodType).BeginInit();
@@ -72,6 +72,7 @@
             chkShowStacked.Checked = true;
             chkShowStacked.CheckState = CheckState.Checked;
             chkShowStacked.Name = "chkShowStacked";
+            chkShowStacked.Tag = "DefaultChartPeriodShowStacked";
             chkShowStacked.UseVisualStyleBackColor = true;
             chkShowStacked.CheckedChanged += chkShowStacked_CheckedChanged;
             // 
@@ -111,6 +112,7 @@
             chkShowAvg.Checked = true;
             chkShowAvg.CheckState = CheckState.Checked;
             chkShowAvg.Name = "chkShowAvg";
+            chkShowAvg.Tag = "DefaultChartPeriodShowAverage";
             chkShowAvg.UseVisualStyleBackColor = true;
             chkShowAvg.CheckedChanged += chkShowAvg_CheckedChanged;
             // 
@@ -120,6 +122,7 @@
             chkPredictMissingData.Checked = true;
             chkPredictMissingData.CheckState = CheckState.Checked;
             chkPredictMissingData.Name = "chkPredictMissingData";
+            chkPredictMissingData.Tag = "DefaultChartPeriodPredictMissing";
             chkPredictMissingData.UseVisualStyleBackColor = true;
             chkPredictMissingData.CheckedChanged += chkPredictMissingData_CheckedChanged;
             // 
@@ -192,6 +195,7 @@
             plShowBy.Controls.Add(rbCategory);
             resources.ApplyResources(plShowBy, "plShowBy");
             plShowBy.Name = "plShowBy";
+            plShowBy.Tag = "DefaultChartPeriodShowBy";
             // 
             // pnlType
             // 
@@ -200,18 +204,23 @@
             pnlType.Controls.Add(rbRate);
             resources.ApplyResources(pnlType, "pnlType");
             pnlType.Name = "pnlType";
+            pnlType.Tag = "DefaultChartPeriodType";
             // 
             // DtpTill
             // 
             DtpTill.Format = DateTimePickerFormat.Short;
             resources.ApplyResources(DtpTill, "DtpTill");
             DtpTill.Name = "DtpTill";
+            DtpTill.Tag = "DefaultChartPeriodPeriodEnd";
+            DtpTill.ValueChanged += DtpTill_ValueChanged;
             // 
             // DtpFrom
             // 
             DtpFrom.Format = DateTimePickerFormat.Short;
             resources.ApplyResources(DtpFrom, "DtpFrom");
             DtpFrom.Name = "DtpFrom";
+            DtpFrom.Tag = "DefaultChartPeriodPeriodStart";
+            DtpFrom.ValueChanged += DtpFrom_ValueChanged;
             // 
             // PeriodStartLabel
             // 
@@ -225,6 +234,7 @@
             CboPeriodType.FormattingEnabled = true;
             resources.ApplyResources(CboPeriodType, "CboPeriodType");
             CboPeriodType.Name = "CboPeriodType";
+            CboPeriodType.Tag = "DefaultChartPeriodType";
             CboPeriodType.ValueMember = "Key";
             CboPeriodType.SelectedIndexChanged += cboPeriodType_SelectedIndexChanged;
             // 
@@ -237,14 +247,20 @@
             resources.ApplyResources(LblPeriod, "LblPeriod");
             LblPeriod.Name = "LblPeriod";
             // 
-            // CboEnergyType
+            // CboCompareWith
             // 
-            CboEnergyType.DataSource = bsEnergyTypes;
-            CboEnergyType.DisplayMember = "Name";
-            CboEnergyType.FormattingEnabled = true;
-            resources.ApplyResources(CboEnergyType, "CboEnergyType");
-            CboEnergyType.Name = "CboEnergyType";
-            CboEnergyType.ValueMember = "Id";
+            CboCompareWith.DataSource = bsEnergyTypes;
+            CboCompareWith.DisplayMember = "Name";
+            CboCompareWith.FormattingEnabled = true;
+            resources.ApplyResources(CboCompareWith, "CboCompareWith");
+            CboCompareWith.Name = "CboCompareWith";
+            CboCompareWith.Tag = "DefaultChartPeriodCompareWith";
+            CboCompareWith.ValueMember = "Id";
+            CboCompareWith.SelectedIndexChanged += CboCompareWith_SelectedIndexChanged;
+            // 
+            // bsEnergyTypes
+            // 
+            bsEnergyTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
             // 
             // EnergyTypeLabel
             // 
@@ -256,16 +272,12 @@
             resources.ApplyResources(PeriodEndLabel, "PeriodEndLabel");
             PeriodEndLabel.Name = "PeriodEndLabel";
             // 
-            // bsEnergyTypes
-            // 
-            bsEnergyTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
-            // 
             // ucChartDefaultLiveCharts
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(PeriodEndLabel);
-            Controls.Add(CboEnergyType);
+            Controls.Add(CboCompareWith);
             Controls.Add(EnergyTypeLabel);
             Controls.Add(chkShowStacked);
             Controls.Add(lblNetto);
@@ -324,7 +336,7 @@
         private Label LblPeriod;
         private BindingSource bsPeriodType;
         private ToolTip toolTip1;
-        private ComboBox CboEnergyType;
+        private ComboBox CboCompareWith;
         private Label EnergyTypeLabel;
         private Label PeriodEndLabel;
         private BindingSource bsEnergyTypes;

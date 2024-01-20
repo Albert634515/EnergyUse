@@ -6,6 +6,7 @@ using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView.WinForms;
 using OfficeOpenXml;
 using System.Data;
+using System.Windows.Forms;
 
 namespace WinFormsEF.ucControls
 {
@@ -13,7 +14,7 @@ namespace WinFormsEF.ucControls
     {
         #region ChartProperties
 
-        private bool InitSettings { get; set; }
+        private bool _InitSettings { get; set; }
         private EnergyUse.Core.Graphs.LiveCharts.Default _chartDefaultPerPeriod { get; set; }
         private EnergyUse.Models.Address CurrentAddress { get; set; }
         private EnergyUse.Models.EnergyType CurrentEnergyType { get; set; }
@@ -26,25 +27,40 @@ namespace WinFormsEF.ucControls
         public ucChartDefaultLiveCharts(EnergyUse.Models.Address selectedAddress, EnergyUse.Models.EnergyType selectedEnergyType, List<EnergyUse.Models.EnergyType> energyTypes)
         {
             InitializeComponent();
+            initializeChart(selectedAddress, selectedEnergyType, energyTypes);
+        }
 
-            InitSettings = true;
+        private void initializeChart(EnergyUse.Models.Address selectedAddress, EnergyUse.Models.EnergyType selectedEnergyType, List<EnergyUse.Models.EnergyType> energyTypes)
+        {
+            _InitSettings = true;
 
             CurrentAddress = selectedAddress;
             CurrentEnergyType = selectedEnergyType;
 
-            setComboPeriodTypes();
-            setComboEnergyTypes(energyTypes);
+            setComboPeriodTypes(getCurrentSetting(CboPeriodType.Tag.ToString()));
+            setComboCompareWith(energyTypes);
             resetChart();
 
-            InitSettings = false;
+            _InitSettings = false;
         }
 
-        private void setComboPeriodTypes()
+        private void setComboPeriodTypes(string currentValue)
         {
             var periodTypes = WinFormsEF.Managers.SelectionItemList.GetPeriodList();
             bsPeriodType.DataSource = periodTypes;
 
-            CboPeriodType.SelectedIndex = CboPeriodType.FindString("Year");
+            if (currentValue == null)
+                currentValue = "Year";
+
+            CboPeriodType.SelectedIndex = CboPeriodType.FindString(currentValue);
+        }
+
+        private void setComboCompareWith(List<EnergyUse.Models.EnergyType> energyTypes)
+        {
+            bsEnergyTypes.DataSource = energyTypes;
+            CboCompareWith.SelectedIndex = -1;
+            CboCompareWith.SelectedItem = null;
+            CboCompareWith.ResetText();
         }
 
         #endregion
@@ -67,8 +83,24 @@ namespace WinFormsEF.ucControls
 
         private void cboPeriodType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            setCurrentPeriodType();
             setDefaultPeriodSettings();
             LoadChart();
+        }
+
+        private void CboCompareWith_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            setCurrentCompareWithType();
+        }
+
+        private void DtpFrom_ValueChanged(object sender, EventArgs e)
+        {
+            setCurrentDtpTag(DtpFrom);
+        }
+
+        private void DtpTill_ValueChanged(object sender, EventArgs e)
+        {
+            setCurrentDtpTag(DtpTill);
         }
 
         private void rbType_CheckedChanged(object sender, EventArgs e)
@@ -102,7 +134,7 @@ namespace WinFormsEF.ucControls
 
         public void LoadChart()
         {
-            if (InitSettings == true) return;
+            if (_InitSettings == true) return;
 
             if (CurrentEnergyType == null)
                 return;
@@ -149,8 +181,8 @@ namespace WinFormsEF.ucControls
         {
             var selectedTypes = new List<EnergyUse.Models.EnergyType>() { CurrentEnergyType };
 
-            if (CboEnergyType.SelectedIndex != -1)
-                selectedTypes.Add((EnergyUse.Models.EnergyType)CboEnergyType.SelectedItem);
+            if (CboCompareWith.SelectedIndex != -1)
+                selectedTypes.Add((EnergyUse.Models.EnergyType)CboCompareWith.SelectedItem);
 
             return selectedTypes;
         }
@@ -270,9 +302,9 @@ namespace WinFormsEF.ucControls
 
         private void resetChart()
         {
-            InitSettings = true;
+            _InitSettings = true;
             setDefaultPeriodSettings();
-            InitSettings = false;
+            _InitSettings = false;
 
             if (CurrentEnergyType != null)
             {
@@ -295,46 +327,77 @@ namespace WinFormsEF.ucControls
             }
         }
 
-        private void setComboEnergyTypes(List<EnergyUse.Models.EnergyType> energyTypes)
-        {
-            bsEnergyTypes.DataSource = energyTypes;
-            CboEnergyType.SelectedIndex = -1;
-            CboEnergyType.SelectedItem = null;
-            CboEnergyType.ResetText();
-        }
-
         private void setDefaultPeriodSettings()
         {
-            Period periodType = getSelectedPeriodType();
+            Period periodType = getSelectedPeriodType();            
+
+            var currentDateFrom = getCurrentDateByDatePicker(DtpFrom);
+            if (currentDateFrom == DateTime.MinValue)
+                currentDateFrom = getDefaulStartDateByPeriod(periodType);
+
+            var currentDateTill = getCurrentDateByDatePicker(DtpTill);
+            if (currentDateTill == DateTime.MinValue)
+                currentDateTill = getDefaulTillDateByPeriod(periodType);
+
+            DtpFrom.Value = currentDateFrom;
+            DtpTill.Value = currentDateTill;
+        }
+
+        private DateTime getDefaulStartDateByPeriod(Period periodType)
+        {
+            DateTime defaultStartDate;
             var startYear = LibGraphGeneral.GetStartPeriod(periodType);
-            var endYear = LibGraphGeneral.GetEndPeriod(periodType);
 
-            var daysInMonth = DateTime.DaysInMonth(endYear, DateTime.Now.Month);
-
-            switch (CboPeriodType.Text.ToUpper())
+            switch (periodType)
             {
-                case "DAY":
-                    DtpFrom.Value = new DateTime(startYear, DateTime.Now.Month, 1);
-                    DtpTill.Value = new DateTime(endYear, DateTime.Now.Month, DateTime.Now.Day);
+                case Period.Day:
+                    defaultStartDate = new DateTime(startYear, DateTime.Now.Month, 1);
                     break;
-                case "WEEK":
-                    DtpFrom.Value = new DateTime(startYear, DateTime.Now.Month, 1).AddMonths(-12);
-                    DtpTill.Value = new DateTime(endYear, DateTime.Now.Month, daysInMonth);
+                case Period.Week:
+                    defaultStartDate = new DateTime(startYear, DateTime.Now.Month, 1).AddMonths(-12);
                     break;
-                case "MONTH":
-                    DtpFrom.Value = new DateTime(startYear, DateTime.Now.Month, 1).AddMonths(-12);
-                    DtpTill.Value = new DateTime(endYear, DateTime.Now.Month, daysInMonth);
+                case Period.Month:
+                    defaultStartDate = new DateTime(startYear, DateTime.Now.Month, 1).AddMonths(-12);
                     break;
-                case "YEAR":
-                    DtpFrom.Value = new DateTime(startYear, DateTime.Now.Month, 1).AddYears(-10);
-                    DtpTill.Value = new DateTime(endYear, 12, 31);
+                case Period.Year:
+                    defaultStartDate = new DateTime(startYear, DateTime.Now.Month, 1).AddYears(-10);
                     break;
                 default:
-                    DtpFrom.Value = new DateTime(startYear, DateTime.Now.Month, 1);
-                    DtpTill.Value = new DateTime(endYear, DateTime.Now.Month, daysInMonth);
+                    defaultStartDate =  new DateTime(startYear, DateTime.Now.Month, 1);
                     break;
             }
+
+            return defaultStartDate;
         }
+
+        private DateTime getDefaulTillDateByPeriod(Period periodType)
+        {
+            var defaultTillDate = DateTime.MinValue;
+            var endYear = LibGraphGeneral.GetEndPeriod(periodType);
+            var daysInMonth = DateTime.DaysInMonth(endYear, DateTime.Now.Month);
+
+            switch (periodType)
+            {
+                case Period.Day:
+                     defaultTillDate = new DateTime(endYear, DateTime.Now.Month, DateTime.Now.Day);
+                    break;
+                case Period.Week:
+                    defaultTillDate = new DateTime(endYear, DateTime.Now.Month, daysInMonth);
+                    break;
+                case Period.Month:
+                    defaultTillDate = new DateTime(endYear, DateTime.Now.Month, daysInMonth);
+                    break;
+                case Period.Year:
+                    defaultTillDate = new DateTime(endYear, 12, 31);
+                    break;
+                default:
+                    defaultTillDate = new DateTime(endYear, DateTime.Now.Month, daysInMonth);
+                    break;
+            }
+
+            return defaultTillDate;
+        }
+
 
         private ShowType getSelectedShowType()
         {
@@ -379,6 +442,79 @@ namespace WinFormsEF.ucControls
                 selectedItem = (SelectionItem)CboPeriodType.SelectedItem;
 
             return LibGraphGeneral.GetPeriodType(selectedItem.Key);
+        }
+
+        /// <summary>
+        /// Store current period type to settings table
+        /// </summary>
+        /// <param name="periodType">Current selected period type</param>
+        private void setCurrentPeriodType()
+        {
+            var currentValue = CboPeriodType.Text.ToUpper();
+            var currentSettingId = CboPeriodType.Tag.ToString();
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+
+            if (!string.IsNullOrWhiteSpace(currentValue))
+                libSettings.SaveSetting(currentSettingId, currentValue);
+        }
+
+        private string getCurrentSetting(string settingId)
+        {
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            var setting = libSettings.GetKey(settingId);
+            if (setting != null)
+                return setting.KeyValue;
+            else
+                return "";
+        }
+
+        /// <summary>
+        /// Store value compare with
+        /// </summary>
+        /// <param name="periodType">Current selected compare type</param>
+        private void setCurrentCompareWithType()
+        {
+            var currentValue = CboCompareWith.Text.ToUpper();
+            var currentSettingId = CboCompareWith.Tag.ToString();
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+
+            if (!string.IsNullOrWhiteSpace(currentValue))
+               libSettings.SaveSetting(currentSettingId, currentValue);
+        }
+
+        private DateTime getCurrentDateByDatePicker(DateTimePicker dateTimePicker)
+        {
+            var currentSettingId = getCurrentDtpTag(dateTimePicker);
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            var setting = libSettings.GetKey(currentSettingId);
+            if (setting != null)
+            {
+                var year = int.Parse(setting.KeyValue.Substring(0, 4));
+                var month = int.Parse(setting.KeyValue.Substring(4, 2));
+                var day = int.Parse(setting.KeyValue.Substring(6, 2));
+
+                return new DateTime(year, month, day);
+            }
+            else
+                return DateTime.MinValue;
+        }
+
+        private void setCurrentDtpTag(DateTimePicker dtp)
+        {
+            var currentValue = dtp.Value.ToString("yyyyMMdd");
+            var currentSettingId = getCurrentDtpTag(dtp);
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            libSettings.SaveSetting(currentSettingId, currentValue);
+        }
+
+        private string getCurrentDtpTag(DateTimePicker dtp)
+        {
+            var currentPeriodType = CboPeriodType.Text.ToUpper();
+            var currentSettingId = dtp.Tag.ToString();
+            if (!string.IsNullOrWhiteSpace(currentPeriodType))
+                currentSettingId += $"_{currentPeriodType}";
+
+            return currentSettingId;
         }
 
         private void exportToExcel(EnergyUse.Models.EnergyType energyType)
