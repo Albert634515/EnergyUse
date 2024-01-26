@@ -31,8 +31,4 @@
     <ProjectReference Include="..\EnergyUse.Models\EnergyUse.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

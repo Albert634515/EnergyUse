@@ -1,5 +1,7 @@
+using EnergyUse.Core.Controllers;
 using EnergyUse.Models;
 using System.Data;
+using System.Windows.Forms;
 using WinFormsEF.Views;
 
 namespace WinFormsEF
@@ -9,18 +11,31 @@ namespace WinFormsEF
         #region FormProperties
 
         private bool _initSettings;
-        private EnergyUse.Core.UnitOfWork.MainForm _unitOfWork;
+
+        private MainController _controller;
 
         #endregion
 
         public MainForm()
         {
-            initializeDb();
-            setBaseSettings();
-            InitializeComponent();
-            setBaseFormSettings();
-            setComboAddresses();
-            setComboEnergyTypes();
+            _controller = new MainController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
+            try
+            {
+                initializeDb(this);
+
+                Managers.Settings.SetLanguage();
+                InitializeComponent();
+                setBaseFormSettings();
+                setComboAddresses();
+                setComboEnergyTypes();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message);
+                Environment.Exit(0);
+            }
         }
 
         #region LoadForm
@@ -275,8 +290,7 @@ namespace WinFormsEF
             if (MessageBox.Show(this, message, message2, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 Cursor = Cursors.WaitCursor;
-                var libMeterReading = new EnergyUse.Core.Manager.LibMeterReading(Managers.Config.GetDbFileName());
-                libMeterReading.RecalculateReadingsDiffPreviousDay(DateTime.MinValue, DateTime.MinValue, energyType.Id, address.Id);
+                _controller.RecalculateReadingsDiffPreviousDay(DateTime.MinValue, DateTime.MinValue, energyType.Id, address.Id);
                 RefreshPanel(splitContainer1.Panel1, false, false);
                 Cursor = Cursors.Default;
             }
@@ -328,11 +342,15 @@ namespace WinFormsEF
 
         #endregion
 
+        #region Info
+
         private void infoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using frmInfo frmInfo = new();
             _ = frmInfo.ShowDialog();
         }
+
+        #endregion
 
         #endregion
 
@@ -352,8 +370,7 @@ namespace WinFormsEF
             }
 
             Cursor = Cursors.WaitCursor;
-            var LibSettlement = new EnergyUse.Core.Reports.Settlement(Managers.Config.GetDbFileName());
-            var fileName = LibSettlement.GetSettlementPdf(parameterSelection);
+            var fileName = _controller.GetSettlementPdf(parameterSelection);
             Cursor = Cursors.Default;
 
             if (!string.IsNullOrWhiteSpace(fileName))
@@ -373,9 +390,8 @@ namespace WinFormsEF
                     parameterSelection = frmSelectParameters.GetSelectedParameters();
             }
 
-            Cursor = Cursors.WaitCursor;
-            var LibSettlement = new EnergyUse.Core.Reports.RatingReport(Managers.Config.GetDbFileName());
-            var fileName = LibSettlement.GetRatingReportPdf(address, parameterSelection);
+            Cursor = Cursors.WaitCursor; ;
+            var fileName = _controller.GetRatingReportPdf(address, parameterSelection);
             Cursor = Cursors.Default;
 
             if (!string.IsNullOrWhiteSpace(fileName))
@@ -384,7 +400,7 @@ namespace WinFormsEF
 
         private void setComboAddresses()
         {
-            var addressList = _unitOfWork.AddressRepo.GetAll().ToList();
+            var addressList = _controller.GetAllAddresses();
             bsAddresses.DataSource = addressList;
 
             var defaultAddress = addressList.Where(x => x.DefaultAddress == true).FirstOrDefault();
@@ -402,10 +418,11 @@ namespace WinFormsEF
             CboEnergyType.SelectedItem = null;
             CboEnergyType.ResetText();
 
-            var address = (EnergyUse.Models.Address)CboAddress.SelectedItem;
+            var address = (Address)CboAddress.SelectedItem;
             if (address != null)
             {
-                var energyTypes = _unitOfWork.EnergyTypeRepo.SelectByAddressId(address.Id).ToList();
+                var energyTypes = _controller.getEnergyTypesByAddressId(address.Id);
+
                 bsEnergyTypes.DataSource = energyTypes;
                 bsEnergyTypes.ResetBindings(false);
 
@@ -419,28 +436,13 @@ namespace WinFormsEF
         {
             var lastUcLoaded = string.Empty;
 
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetKey($"LastUcLoaded_{targetPanel.Tag}");
+            var setting = _controller.GetKey($"LastUcLoaded_{targetPanel.Tag}");
             if (setting != null)
                 lastUcLoaded = setting.KeyValue;
-
-            if (string.IsNullOrWhiteSpace(lastUcLoaded))
+            else if (string.IsNullOrWhiteSpace(lastUcLoaded))
                 lastUcLoaded = defaulUc;
 
             getControl(lastUcLoaded, targetPanel);
-        }
-
-        private void getChartControl(string controlName, SplitterPanel targetPanel)
-        {
-            EnergyUse.Common.Enums.GraphType graphType;
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetKey("GraphType");
-            if (setting == null)
-                graphType = EnergyUse.Common.Enums.GraphType.LiveCharts;
-            else
-                graphType = (EnergyUse.Common.Enums.GraphType)Enum.Parse(typeof(EnergyUse.Common.Enums.GraphType), setting.KeyValue, true);
-
-            getControl($"{controlName}{graphType}", targetPanel);
         }
 
         private void getControl(string controlName, SplitterPanel targetPanel)
@@ -448,8 +450,6 @@ namespace WinFormsEF
             string splitterName = string.Empty;
             Address address = (Address)CboAddress.SelectedItem;
             EnergyType energyType = (EnergyType)CboEnergyType.SelectedItem;
-
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
 
             targetPanel.Controls.Clear();
 
@@ -487,17 +487,28 @@ namespace WinFormsEF
                     ucControls.ucChartRatesLiveCharts ucChartRatesLiveCharts = new(address, energyType);
                     ucChartRatesLiveCharts.Dock = DockStyle.Fill;
 
-                    targetPanel.Controls.Add(ucChartRatesLiveCharts);                    
+                    targetPanel.Controls.Add(ucChartRatesLiveCharts);
                     break;
                 default:
                     break;
             }
 
             if (!string.IsNullOrWhiteSpace(splitterName))
-                splitContainer1.SplitterDistance = libSettings.GetMainSpitterDistance(splitterName);
+                splitContainer1.SplitterDistance = _controller.GetMainSpitterDistance(splitterName);
 
+            _controller.SaveSetting($"LastUcLoaded_{targetPanel.Tag}", controlName);
+        }
 
-            libSettings.SaveSetting($"LastUcLoaded_{targetPanel.Tag}", controlName);
+        private void getChartControl(string controlName, SplitterPanel targetPanel)
+        {
+            EnergyUse.Common.Enums.GraphType graphType;
+            var setting = _controller.GetKey("GraphType");
+            if (setting == null)
+                graphType = EnergyUse.Common.Enums.GraphType.LiveCharts;
+            else
+                graphType = (EnergyUse.Common.Enums.GraphType)Enum.Parse(typeof(EnergyUse.Common.Enums.GraphType), setting.KeyValue, true);
+
+            getControl($"{controlName}{graphType}", targetPanel);
         }
 
         private void RefreshPanel(SplitterPanel panel, bool addressChanged, bool energyTypeChanged)
@@ -579,18 +590,6 @@ namespace WinFormsEF
             return null;
         }
 
-        private void removeControl(Control parent, Control control) 
-        {
-            parent.Controls.Remove(control);
-            //control.Dispose();
-        }
-
-        private void setBaseSettings()
-        {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.MainForm(Managers.Config.GetDbFileName());
-            Managers.Settings.SetLanguage();
-        }
-
         private void setBaseFormSettings()
         {
             Managers.Settings.SetBaseFormSettings(this);
@@ -598,31 +597,33 @@ namespace WinFormsEF
                 splitContainer1.BackColor = BackColor;
         }
 
-        private void initializeDb()
+        private void initializeDb(IWin32Window owner)
         {
             var sourceDb = Managers.Config.GetDbFileName();
             string message;
 
             if (string.IsNullOrWhiteSpace(sourceDb))
             {
-                using FrmSetupNewFile frmSetupNewFile = new();
-                _ = frmSetupNewFile.ShowDialog();
+                setDbSetup();
             }
             else if (!File.Exists(sourceDb))
             {
                 message = Managers.Languages.GetResourceString("MainErrorDbNotExist", "Current selected database in the config does not exist or is not accessible, the database needs to be set up before this program can be used.");
-                MessageBox.Show(this, message);
-                using FrmSetupNewFile frmSetupNewFile = new();
-                _ = frmSetupNewFile.ShowDialog();
+                MessageBox.Show(owner, message);
+                setDbSetup();
             }
 
             sourceDb = Managers.Config.GetDbFileName();
             if (string.IsNullOrWhiteSpace(sourceDb) || !File.Exists(sourceDb))
             {
-                message = Managers.Languages.GetResourceString("MainErrorDbNotSetup", "Database not set up or not accessible, application will be closed.");
-                MessageBox.Show(this, message);
-                Environment.Exit(0);
+                throw new Exception(Managers.Languages.GetResourceString("MainErrorDbNotSetup", "Database not set up or not accessible, application will be closed."));
             }
+        }
+
+        private void setDbSetup()
+        {
+            using FrmSetupNewFile frmSetupNewFile = new();
+            _ = frmSetupNewFile.ShowDialog();
         }
 
         #endregion
