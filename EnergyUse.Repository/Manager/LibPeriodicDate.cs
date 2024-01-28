@@ -4,6 +4,7 @@ using EnergyUse.Common.Libs;
 using EnergyUse.Core.Context;
 using EnergyUse.Models;
 using EnergyUse.Models.Common;
+using System.Globalization;
 
 namespace EnergyUse.Core.Manager
 {
@@ -54,7 +55,7 @@ namespace EnergyUse.Core.Manager
         {
             var meterReadingRepo = new Repositories.RepoMeterReading(_context);
 
-            //Retreive data per day
+            //Retrieve data per day
             _meterReading = meterReadingRepo.SelectByRange(parameterPeriod.StartRange, parameterPeriod.EndRange, parameterPeriod.EnergyType.Id, parameterPeriod.AddressId, parameterPeriod.Month, parameterPeriod.Week, parameterPeriod.Day).ToList();
 
             convertReadingToPeriodicData();
@@ -234,7 +235,7 @@ namespace EnergyUse.Core.Manager
 
                 if (lastDate < _parameterPeriod.EndRange)
                 {
-                    List<AvgMeterRate> avgByPeriodList = _avgRepo.SelectByAddressAndEnergyTypePerPeriod(_parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId).ToList();
+                    List<AvgMeterRate> avgByPeriodList = getAvgByPeriodList(_parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId).ToList();
 
                     for (var day = lastDate.AddDays(1); day.Date <= _parameterPeriod.EndRange; day = day.AddDays(1))
                     {
@@ -291,6 +292,27 @@ namespace EnergyUse.Core.Manager
                     }
                 }
             }
+        }
+
+        private List<AvgMeterRate> getAvgByPeriodList(long energyTypeId, long addressId)
+        {
+            var setting = _settingsRepo.GetByKey("UseAllDataForAvg");
+            if (setting != null && setting.KeyValue == "Yes")
+            {
+                return _avgRepo.SelectByAddressAndEnergyTypePerPeriod(energyTypeId, addressId).ToList();
+            }
+            else
+            {
+                // Calculate averageFrom
+                var defaultFromValue = DateTime.Now.AddYears(-2);
+                setting = _settingsRepo.GetByKey("AvgDateFromDate");
+                if (setting != null && !string.IsNullOrWhiteSpace(setting.KeyValue))
+                {
+                    defaultFromValue = DateTime.ParseExact(setting.KeyValue, "yyyyMMdd", CultureInfo.InvariantCulture);
+                }
+
+                return _avgRepo.SelectByAddressAndEnergyTypePerPeriodFromDate(energyTypeId, addressId, defaultFromValue).ToList();
+            }            
         }
 
         private AvgMeterRate? getAvgGeneral()

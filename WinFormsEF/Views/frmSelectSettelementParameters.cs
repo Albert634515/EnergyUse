@@ -381,7 +381,7 @@ namespace WinFormsEF.Views
 
             var fileKey = getKeyForLastLastSelectedPeriod();
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetKey(fileKey);
+            var setting = libSettings.GetSetting(fileKey);
             if (setting != null && setting.Id > 0)
                 lastSelectedPeriod = Convert.ToInt64(setting.KeyValue);
 

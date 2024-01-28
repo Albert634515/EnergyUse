@@ -57,7 +57,7 @@ namespace WinFormsEF
         private void MainForm_Shown(object sender, EventArgs e)
         {
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetKey("HideInfoFormOnStart");
+            var setting = libSettings.GetSetting("HideInfoFormOnStart");
             if (setting == null || !(setting.KeyValue.ToUpper() == "YES"))
             {
                 using frmInfo frmInfo = new();

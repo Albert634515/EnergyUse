@@ -62,7 +62,7 @@ namespace WinFormsEF.Views
         private void setGeneralSettings()
         {
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetKey(nudMaxYears.Tag.ToString());
+            var setting = libSettings.GetSetting(nudMaxYears.Tag.ToString());
             if (setting != null && !string.IsNullOrWhiteSpace(setting.KeyValue))
                 nudMaxYears.Value = int.Parse(setting.KeyValue);
         }
@@ -94,7 +94,7 @@ namespace WinFormsEF.Views
                 if (string.IsNullOrWhiteSpace(txtSubsidyAmount.Text))
                     txtSubsidyAmount.Text = "0";
 
-                Managers.Settings.LoadSettingDateBox(dtpPurchaseDate);
+                Managers.Settings.LoadSettingDateBox(dtpPurchaseDate, DateTime.Now);
             }
         }
 

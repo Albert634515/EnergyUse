@@ -107,7 +107,7 @@ namespace WinFormsEF.Views
             string initialDirectory;
 
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetKey("ExportDirectory");
+            var setting = libSettings.GetSetting("ExportDirectory");
             if (setting != null && setting.Id > 0)
                 initialDirectory = setting.KeyValue;
             else

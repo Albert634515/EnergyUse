@@ -1,4 +1,5 @@
 ﻿using EnergyUse.Common.Enums;
+using EnergyUse.Core.Controllers;
 
 namespace WinFormsEF.Views
 {
@@ -6,8 +7,7 @@ namespace WinFormsEF.Views
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.Setting _unitOfWork;
-        private bool initSettings;
+        private SettingsController _controller;
 
         #endregion
 
@@ -15,6 +15,9 @@ namespace WinFormsEF.Views
 
         public frmSettings()
         {
+            _controller = new SettingsController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
             loadSettings();
@@ -32,7 +35,6 @@ namespace WinFormsEF.Views
                 setBaseFormSettings();
             }
         }
-
         private void txtSliderColor_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
@@ -42,37 +44,78 @@ namespace WinFormsEF.Views
         private void txtBackgroundColorChart_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
                 setColorSetting((TextBox)sender);
+            }
         }
 
         private void txtForeColorChart_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
                 setColorSetting((TextBox)sender);
+            }
         }
 
         private void txtLineColorChart_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
                 setColorSetting((TextBox)sender);
+            }
         }
 
         private void txtLabelsYColorChart_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
                 setColorSetting((TextBox)sender);
+            }
         }
 
         private void txtCurrency_TextChanged(object sender, EventArgs e)
         {
-            if (initSettings == false)
-                Managers.Settings.SaveSettingTextBox((TextBox)sender);
+            if (_controller.InitSettings == false)
+            {
+                var settingValue = Managers.Settings.GetSetting((TextBox)sender);
+                _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
+            }
         }
 
         private void cboLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (initSettings == false)
-                Managers.Settings.SaveSettingComboBox((ComboBox)sender);
+            if (_controller.InitSettings == false)
+            {
+                var settingValue = Managers.Settings.GetSetting((ComboBox)sender);
+                _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
+            }
+        }
+
+        private void useAllDataForAvgRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_controller.InitSettings == false)
+            {
+                var settingValue = Managers.Settings.GetSetting((RadioButton)sender);
+                _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
+            }
+        }
+
+        private void useDataFromForAvgRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_controller.InitSettings == false)
+            {
+                var settingValue = Managers.Settings.GetSetting((RadioButton)sender);
+                _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
+            }
+        }
+
+        private void avgDateFromDateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            if (_controller.InitSettings == false)
+            {
+                var settingValues = Managers.Settings.GetSetting((DateTimePicker)sender);
+                _controller.SaveSetting(settingValues.Item1, settingValues.Item2);
+            }
         }
 
         #endregion
@@ -88,9 +131,7 @@ namespace WinFormsEF.Views
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
                     txtExportDirectory.Text = fbd.SelectedPath;
-
-                    var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-                    libSettings.SaveSetting(txtExportDirectory.Tag.ToString(), fbd.SelectedPath);
+                    _controller.SaveSetting(txtExportDirectory.Tag.ToString(), fbd.SelectedPath);
                 }
             }
         }
@@ -104,9 +145,7 @@ namespace WinFormsEF.Views
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
                     txtImportDirectory.Text = fbd.SelectedPath;
-
-                    var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-                    libSettings.SaveSetting(txtImportDirectory.Tag.ToString(), fbd.SelectedPath);
+                    _controller.SaveSetting(txtImportDirectory.Tag.ToString(), fbd.SelectedPath);
                 }
             }
         }
@@ -121,21 +160,27 @@ namespace WinFormsEF.Views
             resetChartSettings();
         }
 
-        private void ResetDataPredictionButton_Click(object sender, EventArgs e)
+        private void resetDataPredictionButton_Click(object sender, EventArgs e)
         {
             resetDataPredictionSettings();
         }
 
-        private void AvgCorrectionPercentageTextBox_TextChanged(object sender, EventArgs e)
+        private void avgCorrectionPercentageTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (initSettings == false)
-                Managers.Settings.SaveSettingTextBox((TextBox)sender);
+            if (_controller.InitSettings == false)
+            {
+                var settingValue = Managers.Settings.GetSetting((TextBox)sender);
+                _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
+            }
         }
 
         private void AvgCorrectionPercentageReturnTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (initSettings == false)
-                Managers.Settings.SaveSettingTextBox((TextBox)sender);
+            if (_controller.InitSettings == false)
+            {
+                var settingValue = Managers.Settings.GetSetting((TextBox)sender);
+                _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
+            }
         }
 
         #endregion
@@ -144,12 +189,10 @@ namespace WinFormsEF.Views
 
         private void tsbResetAllSettings_Click(object sender, EventArgs e)
         {
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-
-            libSettings.DeleteSetting("ExportDirectory");
-            libSettings.DeleteSetting("ImportDirectory");
-            libSettings.DeleteSetting("VatPerc");
-            libSettings.DeleteSetting("Currency");
+            _controller.DeleteSetting("ExportDirectory");
+            _controller.DeleteSetting("ImportDirectory");
+            _controller.DeleteSetting("VatPerc");
+            _controller.DeleteSetting("Currency");
 
             resetColorsAndLayout();
             resetChartSettings();
@@ -169,59 +212,102 @@ namespace WinFormsEF.Views
 
         private void resetColorsAndLayout()
         {
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-
-            libSettings.DeleteSetting("BackgroundColorForms");
-            libSettings.DeleteSetting("SliderColor");
+            _controller.DeleteSetting("BackgroundColorForms");
+            _controller.DeleteSetting("SliderColor");
         }
 
         private void resetChartSettings()
         {
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-
-            libSettings.DeleteSetting("BackgroundColorChart");
-            libSettings.DeleteSetting("ForeColorChart");
-            libSettings.DeleteSetting("LineColorChart");
-            libSettings.DeleteSetting("LabelsYColorChart");
-            libSettings.DeleteSetting("GraphType");
+            _controller.DeleteSetting("BackgroundColorChart");
+            _controller.DeleteSetting("ForeColorChart");
+            _controller.DeleteSetting("LineColorChart");
+            _controller.DeleteSetting("LabelsYColorChart");
+            _controller.DeleteSetting("GraphType");
+            _controller.DeleteSetting("UseAllDataForAvg");
         }
 
         private void resetDataPredictionSettings()
         {
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            _controller.DeleteSetting("AvgCorrectionPercentage");
+            _controller.DeleteSetting("AvgCorrectionPercentageReturn");
 
-            libSettings.DeleteSetting("AvgCorrectionPercentage");
-            libSettings.DeleteSetting("AvgCorrectionPercentageReturn");
+            _controller.DeleteSetting("UseAllDataForAvg");
+            _controller.DeleteSetting("CalculateAvgDateFrom");
+            _controller.DeleteSetting("AvgDateFromDate");
         }
 
         private void loadSettings()
         {
-            initSettings = true;
+            _controller.InitSettings = true;
 
-            Managers.Settings.LoadSettingTextBox(txtExportDirectory);
-            Managers.Settings.LoadSettingTextBox(txtImportDirectory);
-            Managers.Settings.LoadSettingTextBox(txtCurrency);
-            Managers.Settings.LoadSettingCombo(cboLanguage, Language.English.ToString());
+            setTextBoxSetting(txtExportDirectory);
+            setTextBoxSetting(txtImportDirectory);
+            setTextBoxSetting(txtCurrency);
+            setComboSetting(cboLanguage, Language.English.ToString());
 
-            Managers.Settings.LoadColorSetting(txtBackgroundColorChart);
-            Managers.Settings.LoadColorSetting(txtForeColorChart);
-            Managers.Settings.LoadColorSetting(txtLineColorChart);
-            Managers.Settings.LoadColorSetting(txtLabelsYColorChart);
-            Managers.Settings.LoadColorSetting(txtFormBackGroundColor);
-            Managers.Settings.LoadColorSetting(txtSliderColor);
+            setTextBoxColorSetting(txtBackgroundColorChart);
+            setTextBoxColorSetting(txtForeColorChart);
+            setTextBoxColorSetting(txtLineColorChart);
+            setTextBoxColorSetting(txtLabelsYColorChart);
+            setTextBoxColorSetting(txtFormBackGroundColor);
+            setTextBoxColorSetting(txtSliderColor);
 
-            Managers.Settings.LoadSettingTextBox(AvgCorrectionPercentageTextBox);
-            Managers.Settings.LoadSettingTextBox(AvgCorrectionPercentageReturnTextBox);
+            setTextBoxSetting(AvgCorrectionPercentageTextBox);
+            setTextBoxSetting(AvgCorrectionPercentageReturnTextBox);
 
-            initSettings = false;
+            setAvgRadioButtons();
+
+            setDateTimeSetting(avgDateFromDateTimePicker, DateTime.Now.AddYears(-2));
+
+            _controller.InitSettings = false;
         }
 
-        private void setColorSetting(TextBox textBox)
+        private void setAvgRadioButtons()
         {
-            textBox.BackColor = colorDialog1.Color;
+            setRadioButtonSetting(useAllDataForAvgRadioButton);
+            setRadioButtonSetting(useDataFromForAvgRadioButton);
 
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            libSettings.SaveColorSetting(textBox.Tag.ToString(), colorDialog1.Color);
+            if (useAllDataForAvgRadioButton.Checked == false && useDataFromForAvgRadioButton.Checked == false)
+                useAllDataForAvgRadioButton.Checked = true;
+        }
+
+        private void setColorSetting(TextBox sender)
+        {
+            sender.BackColor = colorDialog1.Color;
+            _controller.SetColorSetting(sender.Tag.ToString(), colorDialog1.Color);
+        }
+
+        private void setTextBoxSetting(TextBox sender)
+        {
+            sender.Text = string.Empty;
+
+            var setting = _controller.GetSetting(sender.Tag.ToString());
+            Managers.Settings.setTextBox(sender, setting);
+        }
+
+        private void setRadioButtonSetting(RadioButton sender)
+        {
+            EnergyUse.Models.Setting setting = _controller.GetSetting(sender.Tag.ToString());
+            Managers.Settings.setRadioButtonSetting(sender, setting);
+        }
+
+        private void setTextBoxColorSetting(TextBox sender)
+        {
+            sender.BackColor = Color.Empty;            
+            var setting = _controller.GetSetting(sender.Tag.ToString());
+            Managers.Settings.setTextBoxColor(sender, setting);
+        }
+
+        private void setComboSetting(ComboBox sender, string defaultValue)
+        {
+            var setting = _controller.GetSetting(sender.Tag.ToString());
+            Managers.Settings.setSettingCombo(sender, setting, defaultValue);
+        }
+
+        private void setDateTimeSetting(DateTimePicker sender, DateTime defaultValue)
+        {
+            var setting = _controller.GetSetting(sender.Tag.ToString());
+            Managers.Settings.setSettingDateTimePicker(sender, setting, defaultValue);
         }
 
         private void CloseSettings()
@@ -231,11 +317,10 @@ namespace WinFormsEF.Views
 
         private void setBaseFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.Setting(Managers.Config.GetDbFileName());
-
             Managers.Settings.SetBaseFormSettings(this);
         }
 
         #endregion
+
     }
 }

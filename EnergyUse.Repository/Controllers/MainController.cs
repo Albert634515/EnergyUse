@@ -81,7 +81,7 @@ namespace EnergyUse.Core.Controllers
 
         public Models.Setting GetKey(string key)
         {
-            return _libSettings.GetKey(key);
+            return _libSettings.GetSetting(key);
         }
 
         #endregion

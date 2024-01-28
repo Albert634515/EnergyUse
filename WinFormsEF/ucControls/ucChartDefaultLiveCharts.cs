@@ -461,7 +461,7 @@ namespace WinFormsEF.ucControls
         private string getCurrentSetting(string settingId)
         {
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetKey(settingId);
+            var setting = libSettings.GetSetting(settingId);
             if (setting != null)
                 return setting.KeyValue;
             else
@@ -486,7 +486,7 @@ namespace WinFormsEF.ucControls
         {
             var currentSettingId = getCurrentDtpTag(dateTimePicker);
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetKey(currentSettingId);
+            var setting = libSettings.GetSetting(currentSettingId);
             if (setting != null)
             {
                 var year = int.Parse(setting.KeyValue.Substring(0, 4));

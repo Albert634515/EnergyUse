@@ -172,5 +172,29 @@ namespace EnergyUse.Core.Repositories
 
             return avgList;
         }
+
+        public IEnumerable<Models.AvgMeterRate> SelectByAddressAndEnergyTypePerPeriodFromDate(long energyTypeId, long addressId, DateTime fromDate)
+        {
+            var avgList = _context.MeterReadings
+                        .Include(e => e.EnergyType)
+                        .Include(a => a.Meter)
+                        .Include(a => a.Meter.Address)
+                        .Where(w => w.EnergyType.Id == energyTypeId && w.Meter.Address.Id == addressId && w.RegistrationDate.Date >= fromDate.Date).ToList()
+                        .GroupBy(g => new { EnergyType = g.EnergyType, AddressId = g.Meter.Address.Id, Month = g.RegistrationDate.Month, Day = g.RegistrationDate.Date.Day })
+                        .Select(x => new Models.AvgMeterRate
+                        {
+                            AddressId = x.Key.AddressId,
+                            EnergyType = x.Key.EnergyType,
+                            Month = x.Key.Month,
+                            Day = x.Key.Day,
+                            AvgLow = x.Average(t => t.DeltaLow),
+                            AvgNormal = x.Average(t => t.DeltaNormal),
+                            AvgReturnDeliveryLow = x.Average(t => t.ReturnDeliveryDeltaLow),
+                            AvgReturnDeliveryNormal = x.Average(t => t.ReturnDeliveryDeltaNormal)
+                        })
+                        .OrderBy(o => o.Month).ThenBy(o => o.Day);
+
+            return avgList;
+        }
     }
 }

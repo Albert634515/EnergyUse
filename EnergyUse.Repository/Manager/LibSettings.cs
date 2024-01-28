@@ -29,7 +29,7 @@ namespace EnergyUse.Core.Manager
             var lastUsedImportFile = string.Empty;
             if (!string.IsNullOrWhiteSpace(fileKey))
             {
-                var setting = GetKey(fileKey);
+                var setting = GetSetting(fileKey);
                 if (setting != null && setting.Id > 0)
                     lastUsedImportFile = setting.KeyValue;
             }
@@ -40,7 +40,7 @@ namespace EnergyUse.Core.Manager
         public string GetLastImportDirectory()
         {
             string lastImportDirectory;
-            Models.Setting setting = GetKey("ImportDirectory");
+            Models.Setting setting = GetSetting("ImportDirectory");
             if (setting != null && setting.Id > 0)
                 lastImportDirectory = setting.KeyValue;
             else
@@ -53,7 +53,7 @@ namespace EnergyUse.Core.Manager
         {
             int numberOfEnergyTypesOnReport = 0;
 
-            var setting = GetKey($"NumberOfEnergyTypesOnReport_A{addressId}");
+            var setting = GetSetting($"NumberOfEnergyTypesOnReport_A{addressId}");
             if (setting != null && !string.IsNullOrWhiteSpace(setting.KeyValue))
             {
                 _ = int.TryParse(setting.KeyValue, out numberOfEnergyTypesOnReport);
@@ -68,7 +68,7 @@ namespace EnergyUse.Core.Manager
 
             if (!string.IsNullOrWhiteSpace(splitterName))
             {
-                var setting = GetKey(splitterName);
+                var setting = GetSetting(splitterName);
                 if (setting != null && !string.IsNullOrWhiteSpace(setting.KeyValue))
                 {
                     _ = int.TryParse(setting.KeyValue, out splitterDistance);
@@ -104,7 +104,7 @@ namespace EnergyUse.Core.Manager
             if (color == null)
                 color = Color.Empty;
 
-            var setting = GetKey(settingKey);
+            var setting = GetSetting(settingKey);
             if (setting != null && setting.KeyValue != null)
             {
                 color = ColorTranslator.FromWin32(int.Parse(setting.KeyValue));
@@ -116,7 +116,7 @@ namespace EnergyUse.Core.Manager
         public string GetCurrentLanguage()
         {
             string language = "en-US";
-            var setting = GetKey("Language");
+            var setting = GetSetting("Language");
             if (setting != null && setting.KeyValue != null)
             {
                 language = setting.KeyValue switch
@@ -131,7 +131,7 @@ namespace EnergyUse.Core.Manager
             return language;
         }
 
-        public Models.Setting GetKey(string key)
+        public Models.Setting GetSetting(string key)
         {
             var repo = new Repositories.RepoSettings(_context);
             return repo.GetByKey(key);

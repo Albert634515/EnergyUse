@@ -40,7 +40,7 @@
         {
             FolderBrowserDialog folderDialog = new FolderBrowserDialog();
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetKey("BackUpDirectory");
+            var setting = libSettings.GetSetting("BackUpDirectory");
             if (setting != null && setting.Id > 0)
             {
                 folderDialog.SelectedPath = setting.KeyValue;
@@ -61,7 +61,7 @@
             {
                 OpenFileDialog openFileDialog1 = new OpenFileDialog();
                 var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-                var setting = libSettings.GetKey("RestoreDirectory");
+                var setting = libSettings.GetSetting("RestoreDirectory");
                 if (setting != null && setting.Id > 0)
                 {
                     openFileDialog1.InitialDirectory = setting.KeyValue;
@@ -139,7 +139,7 @@
             string settingValue;
 
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetKey(txtBackUpDir.Tag.ToString());
+            var setting = libSettings.GetSetting(txtBackUpDir.Tag.ToString());
             if ((setting == null || (setting != null && string.IsNullOrWhiteSpace(setting.KeyValue))) || !Directory.Exists(setting.KeyValue))
                 settingValue = getDefaultBackUpDir();
             else

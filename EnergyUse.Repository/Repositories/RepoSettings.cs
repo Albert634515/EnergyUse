@@ -11,7 +11,7 @@ namespace EnergyUse.Core.Repositories
             _context = dbContext;
         }
 
-        public Models.Setting GetByKey(string key)
+        public Models.Setting? GetByKey(string key)
         {
             return _context.Set<Models.Setting>().Where(s => s.Key == key).FirstOrDefault();
         }

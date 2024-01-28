@@ -64,6 +64,10 @@
             colorDialog1 = new ColorDialog();
             toolTip1 = new ToolTip(components);
             groupBox1 = new GroupBox();
+            avgChoiceGroupBox = new GroupBox();
+            useDataFromForAvgRadioButton = new RadioButton();
+            useAllDataForAvgRadioButton = new RadioButton();
+            avgDateFromDateTimePicker = new DateTimePicker();
             AvgCorrectionPercentageReturnTextBox = new TextBox();
             AvgCorrectionPercentageTextBox = new TextBox();
             label2 = new Label();
@@ -74,6 +78,7 @@
             gbColorsAndLayout.SuspendLayout();
             gbChart.SuspendLayout();
             groupBox1.SuspendLayout();
+            avgChoiceGroupBox.SuspendLayout();
             SuspendLayout();
             // 
             // toolStrip1
@@ -309,6 +314,8 @@
             // groupBox1
             // 
             resources.ApplyResources(groupBox1, "groupBox1");
+            groupBox1.Controls.Add(avgChoiceGroupBox);
+            groupBox1.Controls.Add(avgDateFromDateTimePicker);
             groupBox1.Controls.Add(AvgCorrectionPercentageReturnTextBox);
             groupBox1.Controls.Add(AvgCorrectionPercentageTextBox);
             groupBox1.Controls.Add(label2);
@@ -316,6 +323,40 @@
             groupBox1.Controls.Add(label4);
             groupBox1.Name = "groupBox1";
             groupBox1.TabStop = false;
+            // 
+            // avgChoiceGroupBox
+            // 
+            avgChoiceGroupBox.Controls.Add(useDataFromForAvgRadioButton);
+            avgChoiceGroupBox.Controls.Add(useAllDataForAvgRadioButton);
+            resources.ApplyResources(avgChoiceGroupBox, "avgChoiceGroupBox");
+            avgChoiceGroupBox.Name = "avgChoiceGroupBox";
+            avgChoiceGroupBox.TabStop = false;
+            // 
+            // useDataFromForAvgRadioButton
+            // 
+            resources.ApplyResources(useDataFromForAvgRadioButton, "useDataFromForAvgRadioButton");
+            useDataFromForAvgRadioButton.Name = "useDataFromForAvgRadioButton";
+            useDataFromForAvgRadioButton.Tag = "CalculateAvgDateFrom";
+            useDataFromForAvgRadioButton.UseVisualStyleBackColor = true;
+            useDataFromForAvgRadioButton.CheckedChanged += useDataFromForAvgRadioButton_CheckedChanged;
+            // 
+            // useAllDataForAvgRadioButton
+            // 
+            resources.ApplyResources(useAllDataForAvgRadioButton, "useAllDataForAvgRadioButton");
+            useAllDataForAvgRadioButton.Checked = true;
+            useAllDataForAvgRadioButton.Name = "useAllDataForAvgRadioButton";
+            useAllDataForAvgRadioButton.TabStop = true;
+            useAllDataForAvgRadioButton.Tag = "UseAllDataForAvg";
+            useAllDataForAvgRadioButton.UseVisualStyleBackColor = true;
+            useAllDataForAvgRadioButton.CheckedChanged += useAllDataForAvgRadioButton_CheckedChanged;
+            // 
+            // avgDateFromDateTimePicker
+            // 
+            avgDateFromDateTimePicker.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(avgDateFromDateTimePicker, "avgDateFromDateTimePicker");
+            avgDateFromDateTimePicker.Name = "avgDateFromDateTimePicker";
+            avgDateFromDateTimePicker.Tag = "AvgDateFromDate";
+            avgDateFromDateTimePicker.ValueChanged += avgDateFromDateTimePicker_ValueChanged;
             // 
             // AvgCorrectionPercentageReturnTextBox
             // 
@@ -329,7 +370,7 @@
             resources.ApplyResources(AvgCorrectionPercentageTextBox, "AvgCorrectionPercentageTextBox");
             AvgCorrectionPercentageTextBox.Name = "AvgCorrectionPercentageTextBox";
             AvgCorrectionPercentageTextBox.Tag = "AvgCorrectionPercentage";
-            AvgCorrectionPercentageTextBox.TextChanged += AvgCorrectionPercentageTextBox_TextChanged;
+            AvgCorrectionPercentageTextBox.TextChanged += avgCorrectionPercentageTextBox_TextChanged;
             // 
             // label2
             // 
@@ -342,7 +383,7 @@
             ResetDataPredictionButton.Image = WinFormsUI.Properties.Resources.switch_24x24;
             ResetDataPredictionButton.Name = "ResetDataPredictionButton";
             ResetDataPredictionButton.UseVisualStyleBackColor = true;
-            ResetDataPredictionButton.Click += ResetDataPredictionButton_Click;
+            ResetDataPredictionButton.Click += resetDataPredictionButton_Click;
             // 
             // label4
             // 
@@ -372,6 +413,8 @@
             gbChart.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            avgChoiceGroupBox.ResumeLayout(false);
+            avgChoiceGroupBox.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -417,5 +460,9 @@
         private Label label2;
         private Button ResetDataPredictionButton;
         private Label label4;
+        private DateTimePicker avgDateFromDateTimePicker;
+        private GroupBox avgChoiceGroupBox;
+        private RadioButton useDataFromForAvgRadioButton;
+        private RadioButton useAllDataForAvgRadioButton;
     }
 }

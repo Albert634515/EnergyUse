@@ -6,22 +6,22 @@ namespace WinFormsEF.Managers
     {
         public static void SetBaseFormSettings(Form frmBaseForm, string settingsKey = "BackgroundColorForms")
         {
-            Color formBackgroundColor;
-
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Config.GetDbFileName());
-            formBackgroundColor = libSettings.GetChartColor(settingsKey);
+            var formBackgroundColor = GetColorSetting(settingsKey);
             if (formBackgroundColor != Color.Empty)
                 frmBaseForm.BackColor = formBackgroundColor;
         }
 
         public static void SetBaseUserControlSettings(UserControl userControl, string settingsKey = "BackgroundColorForms")
         {
-            Color formBackgroundColor;
-
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Config.GetDbFileName());
-            formBackgroundColor = libSettings.GetChartColor(settingsKey);
+            var formBackgroundColor = GetColorSetting(settingsKey);
             if (formBackgroundColor != Color.Empty)
                 userControl.BackColor = formBackgroundColor;
+        }
+
+        public static Color GetColorSetting(string key)
+        {
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Config.GetDbFileName());
+            return libSettings.GetChartColor(key);
         }
 
         public static void SetLanguage()
@@ -31,71 +31,55 @@ namespace WinFormsEF.Managers
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(language);
         }
 
-        public static void SaveSettingComboBox(ComboBox txtSettingsComboBox)
+
+        /// <summary>
+        /// Returns setting object from a TextBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <returns>Settings model</returns>
+        public static Tuple<string, string> GetSetting(TextBox sender)
         {
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            libSettings.SaveSetting(txtSettingsComboBox.Tag.ToString().Trim(), txtSettingsComboBox.Text.Trim());
+            return new(sender.Tag.ToString(), sender.Text);
         }
 
-        public static void SaveSettingTextBox(TextBox txtSettingsTextBox)
+        /// <summary>
+        /// Returns setting object from a ComboBoxs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <returns>Settings model</returns>
+        public static Tuple<string, string> GetSetting(ComboBox sender)
         {
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            libSettings.SaveSetting(txtSettingsTextBox.Tag.ToString().Trim(), txtSettingsTextBox.Text.Trim());
+            return new(sender.Tag.ToString(), sender.Text);
         }
 
-        public static void SaveSettingCheckBox(CheckBox checkBox)
+        /// <summary>
+        /// Returns setting object from a RadioButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <returns>Settings model</returns>
+        public static Tuple<string, string> GetSetting(RadioButton sender)
         {
-            string settingValue;
+            string settingValue = "No";
 
-            if (checkBox.Checked)
+            if (sender.Checked)
                 settingValue = "Yes";
-            else
-                settingValue = "No";
 
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            libSettings.SaveSetting(checkBox.Tag.ToString().Trim(), settingValue);
+            return new(sender.Tag.ToString(), settingValue);
         }
 
-        public static void LoadSettingTextBox(TextBox textBox)
+        public static Tuple<string, string> GetSetting(DateTimePicker sender)
         {
-            textBox.Text = string.Empty;
-
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            EnergyUse.Models.Setting setting = libSettings.GetKey(textBox.Tag.ToString());
-            if (setting != null && setting.Id > 0)
-            {
-                if (!string.IsNullOrWhiteSpace(setting.KeyValue))
-                    textBox.Text = setting.KeyValue;                   
-            }
+            return new(sender.Tag.ToString(), sender.Value.ToString("yyyyMMdd"));
         }
 
-        public static void DeleteSettingTextBox(TextBox textBox)
-        {
-            textBox.Text = string.Empty;
-
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            EnergyUse.Models.Setting setting = libSettings.GetKey(textBox.Tag.ToString());
-            if (setting != null && setting.Id > 0)
-                libSettings.DeleteSetting(textBox.Tag.ToString());
-        }
-
-        public static void LoadSettingCheckBox(CheckBox checkbox)
-        {
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            EnergyUse.Models.Setting setting = libSettings.GetKey(checkbox.Tag.ToString());
-            if (setting != null && setting.Id > 0)
-            {
-                if (!string.IsNullOrWhiteSpace(setting.KeyValue))
-                    checkbox.Checked = (setting.KeyValue == "Yes");
-            }
-        }
+        #region LoadSettings
 
         public static void LoadColorSetting(TextBox textBox)
         {
             textBox.BackColor = Color.Empty;
 
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetKey(textBox.Tag.ToString());
+            var setting = libSettings.GetSetting(textBox.Tag.ToString());
             if (setting != null && setting.Id > 0)
             {
                 if (!string.IsNullOrWhiteSpace(setting.KeyValue))
@@ -103,16 +87,51 @@ namespace WinFormsEF.Managers
             }
         }
 
-        public static void SaveColorSetting(TextBox textBox, Color color)
+        public static void LoadSettingDateBox(DateTimePicker dateTimePicker, DateTime defaultValue)
         {
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            libSettings.SaveColorSetting(textBox.Tag.ToString(), color);
+            var setting = libSettings.GetSetting(dateTimePicker.Tag.ToString());
+            setSettingDateTimePicker(dateTimePicker, setting, defaultValue);
         }
 
-        public static void LoadSettingCombo(ComboBox comboBox, string defaultValue)
+        public static void LoadSettingTextBox(TextBox textBox)
         {
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetKey(comboBox.Tag.ToString());
+            EnergyUse.Models.Setting setting = libSettings.GetSetting(textBox.Tag.ToString());
+            setTextBox(textBox, setting);
+        }
+
+        public static void setTextBox(TextBox textBox, EnergyUse.Models.Setting setting)
+        {
+            textBox.Text = string.Empty;
+            if (setting != null && setting.Id > 0)
+            {
+                if (!string.IsNullOrWhiteSpace(setting.KeyValue))
+                    textBox.Text = setting.KeyValue;
+            }
+        }
+
+        public static void setTextBoxColor(TextBox textBox, EnergyUse.Models.Setting setting)
+        {
+            textBox.BackColor = Color.Empty;
+            if (setting != null && setting.Id > 0)
+            {
+                if (!string.IsNullOrWhiteSpace(setting.KeyValue))
+                    textBox.BackColor = System.Drawing.ColorTranslator.FromWin32(int.Parse(setting.KeyValue));
+            }
+        }
+
+        public static void setRadioButtonSetting(RadioButton sender, EnergyUse.Models.Setting setting)
+        {
+            if (setting != null && setting.Id > 0)
+            {
+                if (!string.IsNullOrWhiteSpace(setting.KeyValue))
+                    sender.Checked = (setting.KeyValue == "Yes");
+            }
+        }
+
+        public static void setSettingCombo(ComboBox comboBox, EnergyUse.Models.Setting setting, string defaultValue)
+        {
             if (setting != null && setting.Id > 0)
             {
                 if (!string.IsNullOrWhiteSpace(setting.KeyValue))
@@ -123,15 +142,85 @@ namespace WinFormsEF.Managers
                 comboBox.SelectedIndex = comboBox.FindString(defaultValue);
         }
 
-        public static void LoadSettingDateBox(DateTimePicker dateTimePicker)
+        public static void setSettingDateTimePicker(DateTimePicker dateTimePicker, EnergyUse.Models.Setting setting, DateTime defaultValue)
         {
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetKey(dateTimePicker.Tag.ToString());
+            // If no value found, use default value
+            var settingVaue = defaultValue.ToString("yyyyMMdd");
+
+            if (setting != null && setting.Id > 0)
+                settingVaue = setting.KeyValue;
+
+            if (!string.IsNullOrWhiteSpace(settingVaue))
+                dateTimePicker.Value = DateTime.ParseExact(settingVaue, "yyyyMMdd", CultureInfo.InvariantCulture);
+        }
+
+        public static void LoadSettingCheckBox(CheckBox checkbox)
+        {
+            EnergyUse.Models.Setting setting = GetSetting(checkbox.Tag.ToString());
             if (setting != null && setting.Id > 0)
             {
                 if (!string.IsNullOrWhiteSpace(setting.KeyValue))
-                    dateTimePicker.Value = DateTime.ParseExact(setting.KeyValue, "yyyyMMdd", CultureInfo.InvariantCulture);
+                    checkbox.Checked = (setting.KeyValue == "Yes");
             }
         }
+
+        public static EnergyUse.Models.Setting GetSetting(string key)
+        {
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            return libSettings.GetSetting(key);
+        }
+
+        #endregion
+
+        #region SaveSettings
+
+        public static void SaveSettingTextBox(TextBox sender)
+        {
+            SaveSetting(sender.Tag.ToString().Trim(), sender.Text.Trim());
+        }
+
+        public static void SaveSettingCheckBox(CheckBox sender)
+        {
+            string settingValue;
+
+            if (sender.Checked)
+                settingValue = "Yes";
+            else
+                settingValue = "No";
+
+            SaveSetting(sender.Tag.ToString().Trim(), settingValue);
+        }
+
+        public static void SaveColorSetting(TextBox sender, Color color)
+        {
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            libSettings.SaveColorSetting(sender.Tag.ToString(), color);
+        }
+
+        public static void SaveSetting(string key, string settingValue)
+        {
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            libSettings.SaveSetting(key.Trim(), settingValue);
+        }
+
+        #endregion
+
+        #region DeleteSettings
+
+        public static void DeleteSettingTextBox(TextBox textBox)
+        {
+            textBox.Text = string.Empty;
+            DeleteSetting(textBox.Tag.ToString());
+        }
+
+        public static void DeleteSetting(string key)
+        {
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            EnergyUse.Models.Setting setting = libSettings.GetSetting(key);
+            if (setting != null && setting.Id > 0)
+                libSettings.DeleteSetting(key);
+        }
+
+        #endregion
     }
 }

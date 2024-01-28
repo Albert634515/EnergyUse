@@ -23,7 +23,7 @@ namespace WinFormsEF.Managers
                     break;
                 case ShowType.Value:
                     var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-                    var currency = libSettings.GetKey("Currency");
+                    var currency = libSettings.GetSetting("Currency");
                     yAxisLabel = currency.KeyValue;
                     break;
                 case ShowType.AvgRate:
