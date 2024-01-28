@@ -47,6 +47,8 @@ namespace EnergyUse.Core.Controllers
             return _dbFileName;
         }
 
+        #region Settings
+
         public void SaveSetting(string key, string settingValue)
         {
             if (_libSettings != null)
@@ -79,5 +81,37 @@ namespace EnergyUse.Core.Controllers
             if (_libSettings != null)
                 _libSettings.DeleteSetting(key);
         }
+
+        #endregion
+
+        #region Methods
+
+        public void resetColorsAndLayout()
+        {
+            DeleteSetting("BackgroundColorForms");
+            DeleteSetting("SliderColor");
+        }
+
+        public void resetChartSettings()
+        {
+            DeleteSetting("BackgroundColorChart");
+            DeleteSetting("ForeColorChart");
+            DeleteSetting("LineColorChart");
+            DeleteSetting("LabelsYColorChart");
+            DeleteSetting("GraphType");
+            DeleteSetting("UseAllDataForAvg");
+        }
+
+        public void resetDataPredictionSettings()
+        {
+            DeleteSetting("AvgCorrectionPercentage");
+            DeleteSetting("AvgCorrectionPercentageReturn");
+
+            DeleteSetting("UseAllDataForAvg");
+            DeleteSetting("CalculateAvgDateFrom");
+            DeleteSetting("AvgDateFromDate");
+        }
+
+        #endregion
     }
 }

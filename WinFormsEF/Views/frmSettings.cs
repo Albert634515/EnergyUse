@@ -152,17 +152,17 @@ namespace WinFormsEF.Views
 
         private void cmdResetColorsAndLayout_Click(object sender, EventArgs e)
         {
-            resetColorsAndLayout();
+            _controller.resetColorsAndLayout();
         }
 
         private void cmdResetChart_Click(object sender, EventArgs e)
         {
-            resetChartSettings();
+            _controller.resetChartSettings();
         }
 
         private void resetDataPredictionButton_Click(object sender, EventArgs e)
         {
-            resetDataPredictionSettings();
+            _controller.resetDataPredictionSettings();
         }
 
         private void avgCorrectionPercentageTextBox_TextChanged(object sender, EventArgs e)
@@ -194,9 +194,9 @@ namespace WinFormsEF.Views
             _controller.DeleteSetting("VatPerc");
             _controller.DeleteSetting("Currency");
 
-            resetColorsAndLayout();
-            resetChartSettings();
-            resetDataPredictionSettings();
+            _controller.resetColorsAndLayout();
+            _controller.resetChartSettings();
+            _controller.resetDataPredictionSettings();
 
             loadSettings();
         }
@@ -209,32 +209,6 @@ namespace WinFormsEF.Views
         #endregion
 
         #region Methods
-
-        private void resetColorsAndLayout()
-        {
-            _controller.DeleteSetting("BackgroundColorForms");
-            _controller.DeleteSetting("SliderColor");
-        }
-
-        private void resetChartSettings()
-        {
-            _controller.DeleteSetting("BackgroundColorChart");
-            _controller.DeleteSetting("ForeColorChart");
-            _controller.DeleteSetting("LineColorChart");
-            _controller.DeleteSetting("LabelsYColorChart");
-            _controller.DeleteSetting("GraphType");
-            _controller.DeleteSetting("UseAllDataForAvg");
-        }
-
-        private void resetDataPredictionSettings()
-        {
-            _controller.DeleteSetting("AvgCorrectionPercentage");
-            _controller.DeleteSetting("AvgCorrectionPercentageReturn");
-
-            _controller.DeleteSetting("UseAllDataForAvg");
-            _controller.DeleteSetting("CalculateAvgDateFrom");
-            _controller.DeleteSetting("AvgDateFromDate");
-        }
 
         private void loadSettings()
         {
@@ -321,6 +295,5 @@ namespace WinFormsEF.Views
         }
 
         #endregion
-
     }
 }
