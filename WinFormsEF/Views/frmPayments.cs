@@ -1,10 +1,12 @@
-﻿namespace WinFormsEF.Views
+﻿using EnergyUse.Core.Controllers;
+
+namespace WinFormsEF.Views
 {
     public partial class frmPayments : Form
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.Payment _unitOfWork;
+        private PaymentsController _controller;
 
         #endregion
 
@@ -12,6 +14,9 @@
 
         public frmPayments()
         {
+            _controller = new PaymentsController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
 
@@ -21,9 +26,9 @@
 
         private void LoadComboAddresses()
         {
-            var addressList = _unitOfWork.AddressRepo.GetAll().ToList();
+            var addressList = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
             bsAddresses.DataSource = addressList;
-            
+
             var defaultAddress = addressList.Where(x => x.DefaultAddress == true).FirstOrDefault();
             if (defaultAddress != null)
                 CboAddress.SelectedItem = defaultAddress;
@@ -33,7 +38,7 @@
 
         private void LoadPreSelectePeriods()
         {
-            var PreDefinedPeriods = _unitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
+            var PreDefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
 
             CboPreSelectedPeriods.DataSource = PreDefinedPeriods;
             CboPreSelectedPeriods.DisplayMember = "Description";
@@ -98,12 +103,12 @@
             if (preDefinedPeriod == null)
                 return;
 
-            _unitOfWork.Payments = new List<EnergyUse.Models.Payment>();
+            _controller.UnitOfWork.Payments = new List<EnergyUse.Models.Payment>();
 
-            _unitOfWork.Payments = _unitOfWork.PaymentRepo.SelectByAddressAndPeriod(address.Id, preDefinedPeriod.Id).ToList();
+            _controller.UnitOfWork.Payments = _controller.UnitOfWork.PaymentRepo.SelectByAddressAndPeriod(address.Id, preDefinedPeriod.Id).ToList();
 
-            _unitOfWork.SetListSorted();
-            bsPayments.DataSource = _unitOfWork.Payments;
+            _controller.UnitOfWork.SetListSorted();
+            bsPayments.DataSource = _controller.UnitOfWork.Payments;
             bsPayments.ResetBindings(false);
         }
 
@@ -115,12 +120,12 @@
             EnergyUse.Models.Address address = (EnergyUse.Models.Address)CboAddress.SelectedItem;
             EnergyUse.Models.PreDefinedPeriod preDefinedPeriod = (EnergyUse.Models.PreDefinedPeriod)CboPreSelectedPeriods.SelectedItem;
 
-            var entity = _unitOfWork.AddDefaultEntity("", address.Id, preDefinedPeriod.Id);
+            var entity = _controller.UnitOfWork.AddDefaultEntity("", address.Id, preDefinedPeriod.Id);
 
-            bsPayments.DataSource = _unitOfWork.Payments;
+            bsPayments.DataSource = _controller.UnitOfWork.Payments;
             bsPayments.ResetBindings(false);
 
-            bsPayments.Position = _unitOfWork.GetPosition(entity);
+            bsPayments.Position = _controller.UnitOfWork.GetPosition(entity);
         }
 
         private void setPayment()
@@ -130,12 +135,12 @@
 
             //var payment = (EnergyUse.Models.Payment)bsPayments.Current;
 
-            _unitOfWork.Complete();
+            _controller.UnitOfWork.Complete();
         }
 
         private void cancelPayment()
         {
-            _unitOfWork.CancelChanges();
+            _controller.UnitOfWork.CancelChanges();
         }
 
         private void deletePayment()
@@ -147,9 +152,9 @@
                 if (MessageBox.Show(message, message2, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     var entity = (EnergyUse.Models.Payment)bsPayments.Current;
-                    _unitOfWork.Delete(entity);
+                    _controller.UnitOfWork.Delete(entity);
 
-                    bsPayments.DataSource = _unitOfWork.Payments;
+                    bsPayments.DataSource = _controller.UnitOfWork.Payments;
                     bsPayments.ResetBindings(false);
                 }
             }
@@ -191,7 +196,7 @@
 
         private void setBaseFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.Payment(Managers.Config.GetDbFileName());
+            _controller.UnitOfWork = new EnergyUse.Core.UnitOfWork.Payment(Managers.Config.GetDbFileName());
 
             Managers.Settings.SetBaseFormSettings(this);
             if (this.BackColor != Color.Empty)
