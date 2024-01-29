@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using EnergyUse.Common.Extensions;
 using EnergyUse.Common.Libs;
+using EnergyUse.Core.Controllers;
 using EnergyUse.Models.Common;
 
 namespace WinFormsEF.Views
@@ -9,7 +10,7 @@ namespace WinFormsEF.Views
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.PayBackTime _unitOfWork;
+        private PayBackTimeController _controller;
         private List<PayBackTime> _payBackTimeList = new();
 
         #endregion
@@ -18,6 +19,9 @@ namespace WinFormsEF.Views
 
         public frmPayBackTime()
         {
+            _controller = new PayBackTimeController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setFormSettings();
             setComboAddresses();
@@ -27,7 +31,7 @@ namespace WinFormsEF.Views
 
         private void setComboAddresses()
         {
-            var addressList = _unitOfWork.AddressRepo.GetAll().ToList();
+            var addressList = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
             bsAddresses.DataSource = addressList;
 
             var defaultAddress = addressList.Where(x => x.DefaultAddress == true).FirstOrDefault();
@@ -43,7 +47,7 @@ namespace WinFormsEF.Views
             if (cmbAddress.SelectedIndex > -1)
             {
                 address = (EnergyUse.Models.Address)cmbAddress.SelectedItem;
-                energyTypes = _unitOfWork.EnergyTypeRepo.SelectByAddressId(address.Id).ToList();
+                energyTypes = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(address.Id).ToList();
                 energyTypes = energyTypes.Where(x => x.HasEnergyReturn == true).ToList();
                 bsEnergyTypes.DataSource = energyTypes;
 
@@ -169,9 +173,12 @@ namespace WinFormsEF.Views
                 return;
 
             Cursor = Cursors.WaitCursor;
+
             EnergyUse.Models.Address address = (EnergyUse.Models.Address)cmbAddress.SelectedItem;
             EnergyUse.Models.EnergyType energyType = (EnergyUse.Models.EnergyType)cboEnergyType.SelectedItem;
+
             calculatePayBackTime(energyType, address);
+
             Cursor = Cursors.Default;
         }
 
@@ -193,7 +200,7 @@ namespace WinFormsEF.Views
             List<SettlementData> settlementDataList = new();
             _payBackTimeList = new List<PayBackTime>();
             DateTime lastPeriodStart = dtpPurchaseDate.Value;
-            int startYear = dtpPurchaseDate.Value.Year -1;
+            int startYear = dtpPurchaseDate.Value.Year - 1;
             decimal initialInvestment = getInitialInvestement();
             decimal lastRoi = 1 - Math.Abs(initialInvestment); //Initial value
             toolStripProgressBar1.Visible = true;
@@ -218,7 +225,7 @@ namespace WinFormsEF.Views
 
                 settlementDataList = new List<SettlementData>();
                 List<PeriodicData> periodicData = new();
-           
+
                 long tarifGroupId = address.TariffGroup.Id;
 
                 if (payBackTime.StartPeriod >= DateTime.Now)
@@ -238,7 +245,7 @@ namespace WinFormsEF.Views
                 parameterPeriod.PredictMissingData = true;
                 parameterPeriod.TarifGroupId = tarifGroupId;
                 parameterPeriod.QuantityReduction = quantityReduction / 100;
-                                
+
                 periodicData = libPeriodicDate.GetRange(parameterPeriod);
                 payBackTime.ValueConsumed = Math.Round(periodicData.Sum(s => s.ValueYNormal + s.ValueYLow), 2);
                 payBackTime.ValueProduced = Math.Round(periodicData.Sum(s => s.ValueYReturnNormal + s.ValueYReturnLow), 2);
@@ -250,7 +257,7 @@ namespace WinFormsEF.Views
                 payBackTime.MonetaryValueProduced = Math.Round(periodicData.Sum(s => (s.ValueYReturnNormal * s.RateReturnNormal) + (s.ValueYReturnLow * s.RateReturnLow)), 2);
 
                 // Voor alle cost category met te betalen waarden
-                List<EnergyUse.Models.CostCategory> costCategories = _unitOfWork.CostCategoryRepo.SelectByEnergyTypeAndUntit(energyType.Id, "kWh").ToList();
+                List<EnergyUse.Models.CostCategory> costCategories = _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeAndUntit(energyType.Id, "kWh").ToList();
                 costCategories = costCategories.Where(x => x.EnergySubType.Id == 5).ToList();
                 foreach (EnergyUse.Models.CostCategory costCategory in costCategories)
                 {
@@ -318,7 +325,7 @@ namespace WinFormsEF.Views
             int startYear = dtpPurchaseDate.Value.Year;
             for (int i = startYear; i <= nudMaxYears.Value; i++)
             {
-               var pricePerUnit = getPricePerUnitPerYear(i, address.TariffGroup.Id);
+                var pricePerUnit = getPricePerUnitPerYear(i, address.TariffGroup.Id);
                 if (pricePerUnit < 0)
                 {
                     var message = Managers.Languages.GetResourceString("PayBackTimeNoPricePerUnit", "There is no price unit for year %s");
@@ -344,14 +351,14 @@ namespace WinFormsEF.Views
 
             if (year <= DateTime.Now.Year)
             {
-                var calculatedUnitPrice = _unitOfWork.CalculatedUnitPriceRepo.GetByYear(year, energyType.Id, (long)address.TariffGroupId);
+                var calculatedUnitPrice = _controller.UnitOfWork.CalculatedUnitPriceRepo.GetByYear(year, energyType.Id, (long)address.TariffGroupId);
                 if (calculatedUnitPrice != null)
                     price = calculatedUnitPrice.Price;
             }
 
             if (price == 0)
             {
-                price = _unitOfWork.CalculatedUnitPriceRepo.GetByAverage(energyType.Id, (long)address.TariffGroupId);
+                price = _controller.UnitOfWork.CalculatedUnitPriceRepo.GetByAverage(energyType.Id, (long)address.TariffGroupId);
             }
 
             return price;
@@ -359,8 +366,6 @@ namespace WinFormsEF.Views
 
         private void setFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.PayBackTime(Managers.Config.GetDbFileName());
-
             Managers.Settings.SetBaseFormSettings(this);
             if (BackColor != Color.Empty)
                 dgPayBackTime.BackgroundColor = BackColor;
