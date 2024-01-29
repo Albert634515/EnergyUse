@@ -1,10 +1,13 @@
-﻿namespace WinFormsEF.Views
+﻿using EnergyUse.Core.Controllers;
+using EnergyUse.Core.Interfaces;
+
+namespace WinFormsEF.Views
 {
     public partial class frmCostcategories : Form
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.CostCategory _unitOfWork;
+        private CostcategoriesController _controller;
 
         #endregion
 
@@ -12,6 +15,9 @@
 
         public frmCostcategories()
         {
+            _controller = new CostcategoriesController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
 
@@ -20,11 +26,11 @@
 
         private void LoadComboData()
         {
-            bsEnergyTypes.DataSource = _unitOfWork.EnergyTypeRepo.GetAll();
-            bsCalculationType.DataSource = _unitOfWork.CalculationTypeRepo.GetAll();
-            bsEnergySubType.DataSource = _unitOfWork.EnergySubTypeRepo.GetAll();
-            bsTariffGroups.DataSource = _unitOfWork.TariffGroupRepo.GetAll();
-            bsUnits.DataSource = _unitOfWork.UnitRepo.GetAll();
+            bsEnergyTypes.DataSource = _controller.UnitOfWork.EnergyTypeRepo.GetAll();
+            bsCalculationType.DataSource = _controller.UnitOfWork.CalculationTypeRepo.GetAll();
+            bsEnergySubType.DataSource = _controller.UnitOfWork.EnergySubTypeRepo.GetAll();
+            bsTariffGroups.DataSource = _controller.UnitOfWork.TariffGroupRepo.GetAll();
+            bsUnits.DataSource = _controller.UnitOfWork.UnitRepo.GetAll();
 
             cboCalculationType.SelectedIndex = -1;
             cboUnit.SelectedIndex = -1;
@@ -32,16 +38,6 @@
             cboTariffGroup.SelectedIndex = -1;
             cboEnergyType.SelectedIndex = -1;
         }
-
-        //private void SetCurrentCostCategory(int energyTypeId, long costCategoryId)
-        //{
-        //    if (costCategoryId == 0)
-        //        _unitOfWork.CostCategories.Add(_unitOfWork.CostCategoryRepo.GetDefault(energyTypeId));
-        //    else
-        //        _unitOfWork.CostCategories.Add(_unitOfWork.CostCategoryRepo.Get(costCategoryId));
-
-        //    bsCostCategories.DataSource = _unitOfWork.CostCategories;
-        //}
 
         #endregion
 
@@ -75,7 +71,7 @@
         {
             _ = dgCostCategories.Focus();
 
-            if (_unitOfWork.HasChanges())
+            if (_controller.UnitOfWork.HasChanges())
                 e.Cancel = Managers.General.WarningUnsavedChanges(this);
         }
 
@@ -140,12 +136,12 @@
         private void addCostCategory()
         {
             var currentEnergyType = (EnergyUse.Models.EnergyType)bsEnergyTypes.Current;
-            var entity = _unitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("Newcategory", "New category"), currentEnergyType.Id);
+            var entity = _controller.UnitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("Newcategory", "New category"), currentEnergyType.Id);
 
-            bsCostCategories.DataSource = _unitOfWork.CostCategories;
+            bsCostCategories.DataSource = _controller.UnitOfWork.CostCategories;
             bsCostCategories.ResetBindings(false);
 
-            bsCostCategories.Position = _unitOfWork.GetPosition(entity);
+            bsCostCategories.Position = _controller.UnitOfWork.GetPosition(entity);
         }
 
         private void saveCategories()
@@ -166,20 +162,20 @@
                     libSettings.SaveColorSetting(txtColor.Tag.ToString(), txtColor.BackColor);
             }
 
-            _unitOfWork.Complete();
+            _controller.UnitOfWork.Complete();
         }
 
         private void cancelCategories()
         {
-            _unitOfWork.CancelChanges();
+            _controller.UnitOfWork.CancelChanges();
             refreshCostCategory();
         }
 
         private void deleteCategory()
         {
             var entity = (EnergyUse.Models.CostCategory)bsCostCategories.Current;
-            _unitOfWork.Delete(entity);
-            bsCostCategories.DataSource = _unitOfWork.CostCategories;
+            _controller.UnitOfWork.Delete(entity);
+            bsCostCategories.DataSource = _controller.UnitOfWork.CostCategories;
             bsEnergyTypes.ResetBindings(false);
         }
 
@@ -199,18 +195,18 @@
 
         private void initCostCategories(int energyTypeId)
         {
-            _unitOfWork.CostCategories = new List<EnergyUse.Models.CostCategory>();
+            _controller.UnitOfWork.CostCategories = new List<EnergyUse.Models.CostCategory>();
 
             if (energyTypeId > 0)
-                _unitOfWork.CostCategories = _unitOfWork.CostCategoryRepo.SelectByEnergyTypeId(energyTypeId).ToList();
+                _controller.UnitOfWork.CostCategories = _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeId(energyTypeId).ToList();
 
-            bsCostCategories.DataSource = _unitOfWork.CostCategories;
+            bsCostCategories.DataSource = _controller.UnitOfWork.CostCategories;
             bsCostCategories.ResetBindings(false);
         }
 
         private void setBaseFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.CostCategory(Managers.Config.GetDbFileName());
+            _controller.UnitOfWork = new EnergyUse.Core.UnitOfWork.CostCategory(Managers.Config.GetDbFileName());
 
             Managers.Settings.SetBaseFormSettings(this);
             if (BackColor != Color.Empty)
