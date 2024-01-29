@@ -1,10 +1,12 @@
-﻿namespace WinFormsEF.Views
+﻿using EnergyUse.Core.Controllers;
+
+namespace WinFormsEF.Views
 {
     public partial class frmMeters : Form
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.Meter _unitOfWork;
+        private MeterController _controller;
 
         #endregion
 
@@ -12,6 +14,9 @@
 
         public frmMeters()
         {
+            _controller = new MeterController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
             setComboEnergyTypes();
@@ -20,15 +25,13 @@
 
         private void setComboEnergyTypes()
         {
-            bsEnergyTypes.DataSource = _unitOfWork.EnergyTypeRepo.GetAll();
-            //bsEnergyTypes.ResetBindings(false);
+            bsEnergyTypes.DataSource = _controller.UnitOfWork.EnergyTypeRepo.GetAll();
             cboEnergyType.SelectedIndex = -1;
         }
 
         private void setComboAddresses()
         {
-            bsAddresses.DataSource = _unitOfWork.AddressRepo.GetAll();
-            //bsAddresses.ResetBindings(false);
+            bsAddresses.DataSource = _controller.UnitOfWork.AddressRepo.GetAll();
             cboAddress.SelectedIndex = -1;
         }
 
@@ -45,7 +48,7 @@
         {
             _ = dgMeters.Focus();
 
-            if (_unitOfWork.HasChanges())
+            if (_controller.UnitOfWork.HasChanges())
                 e.Cancel = Managers.General.WarningUnsavedChanges(this);
         }
 
@@ -89,12 +92,12 @@
 
         private void addMeter()
         {
-            var entity = _unitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("Newmeter", "New meter"));
+            var entity = _controller.UnitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("Newmeter", "New meter"));
 
-            bsMeters.DataSource = _unitOfWork.Meters;
+            bsMeters.DataSource = _controller.UnitOfWork.Meters;
             bsMeters.ResetBindings(false);
 
-            bsMeters.Position = _unitOfWork.GetPosition(entity);
+            bsMeters.Position = _controller.UnitOfWork.GetPosition(entity);
         }
 
         private void setMeter()
@@ -102,19 +105,19 @@
             // Set focus on grid to force valdition and update of bindingsource form interfaces
             dgMeters.Focus();
 
-            _unitOfWork.Complete();
+            _controller.UnitOfWork.Complete();
         }
 
         private void cancelMeter()
         {
-            _unitOfWork.CancelChanges();
+            _controller.UnitOfWork.CancelChanges();
         }
 
         private void deleteMeter()
         {
             var entity = (EnergyUse.Models.Meter)bsMeters.Current;
-            _unitOfWork.Delete(entity);
-            bsMeters.DataSource = _unitOfWork.Meters;
+            _controller.UnitOfWork.Delete(entity);
+            bsMeters.DataSource = _controller.UnitOfWork.Meters;
             bsMeters.ResetBindings(false);
         }
 
@@ -136,13 +139,13 @@
 
         private void getMeters()
         {
-            _unitOfWork.Meters = _unitOfWork.MeterRepo.GetAll().ToList();
-            bsMeters.DataSource = _unitOfWork.Meters;
+            _controller.UnitOfWork.Meters = _controller.UnitOfWork.MeterRepo.GetAll().ToList();
+            bsMeters.DataSource = _controller.UnitOfWork.Meters;
         }
 
         private void setBaseFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.Meter(Managers.Config.GetDbFileName());
+            _controller.UnitOfWork = new EnergyUse.Core.UnitOfWork.Meter(Managers.Config.GetDbFileName());
 
             Managers.Settings.SetBaseFormSettings(this);
             if (this.BackColor != Color.Empty)
