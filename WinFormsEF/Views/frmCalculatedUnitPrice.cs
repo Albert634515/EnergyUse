@@ -1,10 +1,12 @@
-﻿namespace WinFormsEF.Views
+﻿using EnergyUse.Core.Controllers;
+
+namespace WinFormsEF.Views
 {
     public partial class frmCalculatedUnitPrice : Form
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.CalculatedUnitPrice _unitOfWork;
+        private CalculatedUnitPrice _controller;
 
         #endregion
 
@@ -12,6 +14,9 @@
 
         public frmCalculatedUnitPrice()
         {
+            _controller = new CalculatedUnitPrice(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
             LoadComboEnergyTypes();
@@ -20,7 +25,7 @@
 
         private void LoadComboEnergyTypes()
         {
-            var energyTypes = _unitOfWork.EnergyTypeRepo.GetAll().ToList();
+            var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
             bsEnergyTypes.DataSource = energyTypes;
 
             cboEnergyType.SelectedIndex = -1;
@@ -28,7 +33,7 @@
 
         private void LoadComboTarifGroups()
         {
-            var tarifGroups = _unitOfWork.TarifGroupRepo.GetAll().ToList();
+            var tarifGroups = _controller.UnitOfWork.TarifGroupRepo.GetAll().ToList();
             bsTarifGroups.DataSource = tarifGroups;
 
             cboTarifGroup.SelectedIndex = -1;
@@ -42,7 +47,7 @@
         {
             _ = dgCalculatedUnitPrice.Focus();
 
-            if (_unitOfWork.HasChanges())
+            if (_controller.UnitOfWork.HasChanges())
                 e.Cancel = Managers.General.WarningUnsavedChanges(this);
         }
 
@@ -99,13 +104,13 @@
             var energyType = (EnergyUse.Models.EnergyType)cboEnergyType.SelectedItem;
             var tarifGroup = (EnergyUse.Models.TariffGroup)cboTarifGroup.SelectedItem;
 
-            _unitOfWork.CalculatedUnitPrices = new List<EnergyUse.Models.CalculatedUnitPrice>();
+            _controller.UnitOfWork.CalculatedUnitPrices = new List<EnergyUse.Models.CalculatedUnitPrice>();
 
            if (energyType != null && tarifGroup != null)
-                _unitOfWork.CalculatedUnitPrices = _unitOfWork.CalculatedUnitPriceRepo.SelectByEnergyTypeAndTarifGroup(energyType.Id, tarifGroup.Id).ToList();
+                _controller.UnitOfWork.CalculatedUnitPrices = _controller.UnitOfWork.CalculatedUnitPriceRepo.SelectByEnergyTypeAndTarifGroup(energyType.Id, tarifGroup.Id).ToList();
 
-            _unitOfWork.SetListSorted();
-            bsCalculatedUnitPrice.DataSource = _unitOfWork.CalculatedUnitPrices;
+            _controller.UnitOfWork.SetListSorted();
+            bsCalculatedUnitPrice.DataSource = _controller.UnitOfWork.CalculatedUnitPrices;
         }
 
         private void addCalculatedUnitPrice()
@@ -116,12 +121,12 @@
             EnergyUse.Models.EnergyType energyType = (EnergyUse.Models.EnergyType)cboEnergyType.SelectedItem;
             EnergyUse.Models.TariffGroup tariffGroup = (EnergyUse.Models.TariffGroup)cboTarifGroup.SelectedItem;
 
-            var entity = _unitOfWork.AddDefaultEntity(energyType.Id, tariffGroup.Id);
+            var entity = _controller.UnitOfWork.AddDefaultEntity(energyType.Id, tariffGroup.Id);
 
-            bsCalculatedUnitPrice.DataSource = _unitOfWork.CalculatedUnitPrices;
+            bsCalculatedUnitPrice.DataSource = _controller.UnitOfWork.CalculatedUnitPrices;
             bsCalculatedUnitPrice.ResetBindings(false);
 
-            bsCalculatedUnitPrice.Position = _unitOfWork.GetPosition(entity);
+            bsCalculatedUnitPrice.Position = _controller.UnitOfWork.GetPosition(entity);
         }
 
         private void setCalculatedUnitPrice()
@@ -129,12 +134,12 @@
             // Set focus on grid to force valdition and update of bindingsource form interfaces
             dgCalculatedUnitPrice.Focus();
 
-            _unitOfWork.Complete();
+            _controller.UnitOfWork.Complete();
         }
 
         private void cancelCalculatedUnitPrice()
         {
-            _unitOfWork.CancelChanges();
+            _controller.UnitOfWork.CancelChanges();
         }
 
         private void deleteCalculatedUnitPrice()
@@ -146,9 +151,9 @@
                 if (MessageBox.Show(message, message2, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     var entity = (EnergyUse.Models.CalculatedUnitPrice)bsCalculatedUnitPrice.Current;
-                    _unitOfWork.Delete(entity);
+                    _controller.UnitOfWork.Delete(entity);
 
-                    bsCalculatedUnitPrice.DataSource = _unitOfWork.CalculatedUnitPrices;
+                    bsCalculatedUnitPrice.DataSource = _controller.UnitOfWork.CalculatedUnitPrices;
                     bsCalculatedUnitPrice.ResetBindings(false);
                 }
             }
@@ -190,8 +195,6 @@
 
         private void setBaseFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.CalculatedUnitPrice(Managers.Config.GetDbFileName());
-
             Managers.Settings.SetBaseFormSettings(this);
             if (this.BackColor != Color.Empty)
                 dgCalculatedUnitPrice.BackgroundColor = this.BackColor;
