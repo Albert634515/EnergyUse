@@ -1,10 +1,12 @@
-﻿namespace WinFormsEF.Views
+﻿using EnergyUse.Core.Controllers;
+
+namespace WinFormsEF.Views
 {
     public partial class frmCreateDemoData : Form
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.DemoData _unitOfWork;
+        private DemoDataController _controller;
 
         #endregion
 
@@ -12,6 +14,9 @@
 
         public frmCreateDemoData()
         {
+            _controller = new DemoDataController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
             LoadComboEnergyTypes();
@@ -21,7 +26,7 @@
 
         private void LoadComboSourceAddresses()
         {
-            var addressList = _unitOfWork.AddressRepo.GetAll().ToList();
+            var addressList = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
             cboSourceAddress.DataSource = addressList;
             cboSourceAddress.DisplayMember = "Description";
             cboSourceAddress.ValueMember = "Id";
@@ -31,7 +36,7 @@
 
         private void LoadComboTargetAddresses()
         {
-            var addressList = _unitOfWork.AddressRepo.GetAll().ToList();
+            var addressList = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
             cboTargetAddress.DataSource = addressList;
             cboTargetAddress.DisplayMember = "Description";
             cboTargetAddress.ValueMember = "Id";
@@ -41,7 +46,7 @@
 
         private void LoadComboEnergyTypes()
         {
-            var energyTypes = _unitOfWork.EnergyTypeRepo.GetAll().ToList();
+            var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
             cboEnergyType.DataSource = energyTypes;
             cboEnergyType.DisplayMember = "Name";
             cboEnergyType.ValueMember = "Id";
@@ -64,8 +69,6 @@
         private void setBaseFormSettings()
         {
             Managers.Settings.SetBaseFormSettings(this);
-
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.DemoData(Managers.Config.GetDbFileName());            
         }
 
         #endregion
