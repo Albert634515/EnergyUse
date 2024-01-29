@@ -1,4 +1,5 @@
 ﻿using EnergyUse.Common.Enums;
+using EnergyUse.Core.Controllers;
 
 namespace WinFormsEF.Views
 {
@@ -6,14 +7,17 @@ namespace WinFormsEF.Views
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.EnergyType _unitOfWork;
-       
+        private EnergyTypesController _controller;
+
         #endregion
 
         #region InitForm
 
         public frmEnergyTypes()
         {
+            _controller = new EnergyTypesController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
             LoadForm();
@@ -27,14 +31,14 @@ namespace WinFormsEF.Views
 
         private void LoadEnergyTypes()
         {
-            _unitOfWork.EnergyTypes = _unitOfWork.EnergyTypeRepo.GetAll().ToList();
-            bsEnergyTypes.DataSource = _unitOfWork.EnergyTypes;
+            _controller.UnitOfWork.EnergyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
+            bsEnergyTypes.DataSource = _controller.UnitOfWork.EnergyTypes;
         }
 
         private void LoadUnitList()
         {
-            _unitOfWork.Units = _unitOfWork.UnitRepo.GetAll().ToList();
-            bsUnits.DataSource = _unitOfWork.Units;
+            _controller.UnitOfWork.Units = _controller.UnitOfWork.UnitRepo.GetAll().ToList();
+            bsUnits.DataSource = _controller.UnitOfWork.Units;
         }
 
         #endregion
@@ -50,7 +54,7 @@ namespace WinFormsEF.Views
         {
             _ = dgEnergyTypes.Focus();
 
-            if (_unitOfWork.HasChanges())
+            if (_controller.UnitOfWork.HasChanges())
                 e.Cancel = Managers.General.WarningUnsavedChanges(this);
         }
 
@@ -199,10 +203,10 @@ namespace WinFormsEF.Views
 
         private void addEnergyType()
         {
-            var entity = _unitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("Newenergytype", "New energy type"));
+            var entity = _controller.UnitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("Newenergytype", "New energy type"));
 
-            bsEnergyTypes.DataSource = _unitOfWork.EnergyTypes;
-            bsEnergyTypes.Position = _unitOfWork.GetPosition(entity);
+            bsEnergyTypes.DataSource = _controller.UnitOfWork.EnergyTypes;
+            bsEnergyTypes.Position = _controller.UnitOfWork.GetPosition(entity);
         }
 
         private void setEnergyType()
@@ -210,12 +214,12 @@ namespace WinFormsEF.Views
             // Set focus on grid to force valdition and update of bindingsource form interfaces
             dgEnergyTypes.Focus();
 
-            _unitOfWork.Complete();
+            _controller.UnitOfWork.Complete();
         }
 
         private void cancelEnergyType()
         {
-            _unitOfWork.CancelChanges();
+            _controller.UnitOfWork.CancelChanges();
             LoadEnergyTypes();
         }
 
@@ -228,16 +232,16 @@ namespace WinFormsEF.Views
             Managers.Settings.DeleteSettingTextBox(txtColorHigh);
             Managers.Settings.DeleteSettingTextBox(txtReturnDeliveryLow);
             Managers.Settings.DeleteSettingTextBox(txtReturnDeliveryHigh);
-            
-            _unitOfWork.Delete(entity);
 
-            bsEnergyTypes.DataSource = _unitOfWork.EnergyTypes;
+            _controller.UnitOfWork.Delete(entity);
+
+            bsEnergyTypes.DataSource = _controller.UnitOfWork.EnergyTypes;
             bsEnergyTypes.ResetBindings(false);
         }
 
         private void setBaseFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.EnergyType(Managers.Config.GetDbFileName());
+            _controller.UnitOfWork = new EnergyUse.Core.UnitOfWork.EnergyType(Managers.Config.GetDbFileName());
 
             Managers.Settings.SetBaseFormSettings(this);
             if (this.BackColor != Color.Empty)
