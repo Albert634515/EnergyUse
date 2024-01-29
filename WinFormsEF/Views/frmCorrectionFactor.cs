@@ -1,17 +1,22 @@
-﻿namespace WinFormsEF.Views
+﻿using EnergyUse.Core.Controllers;
+
+namespace WinFormsEF.Views
 {
     public partial class frmCorrectionFactor : Form
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.CorrectionFactor _unitOfWork;
-        
+        private CorrectionFactorController _controller;
+
         #endregion
 
         #region InitForm
 
         public frmCorrectionFactor()
         {
+            _controller = new CorrectionFactorController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
             LoadComboEnergyTypes();
@@ -19,7 +24,7 @@
 
         private void LoadComboEnergyTypes()
         {
-            var energyTypes = _unitOfWork.EnergyTypeRepo.GetAll().ToList();
+            var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
             cboEnergyType.DataSource = energyTypes;
             cboEnergyType.DisplayMember = "Name";
             cboEnergyType.ValueMember = "Id";
@@ -29,8 +34,8 @@
 
         private void LoadCorrectionFactors(long energyTypeId)
         {
-            _unitOfWork.CorrectionFactors = _unitOfWork.CorrectionFactorRepo.SelectByEnergyType(energyTypeId).ToList();
-            bsCorrectionFactors.DataSource = _unitOfWork.CorrectionFactors;
+            _controller.UnitOfWork.CorrectionFactors = _controller.UnitOfWork.CorrectionFactorRepo.SelectByEnergyType(energyTypeId).ToList();
+            bsCorrectionFactors.DataSource = _controller.UnitOfWork.CorrectionFactors;
         }
 
         #endregion
@@ -51,7 +56,7 @@
         {
             _ = dgCorrectionFactor.Focus();
 
-            if (_unitOfWork.HasChanges())
+            if (_controller.UnitOfWork.HasChanges())
                 e.Cancel = Managers.General.WarningUnsavedChanges(this);
         }
 
@@ -95,12 +100,12 @@
 
         private void addCorrectionFactor()
         {
-            var entity = _unitOfWork.AddDefaultEntity(getCurrentEnergyType().Id);
+            var entity = _controller.UnitOfWork.AddDefaultEntity(getCurrentEnergyType().Id);
            
-            bsCorrectionFactors.DataSource = _unitOfWork.CorrectionFactors;
+            bsCorrectionFactors.DataSource = _controller.UnitOfWork.CorrectionFactors;
             bsCorrectionFactors.ResetBindings(false);
 
-            bsCorrectionFactors.Position = _unitOfWork.GetPosition(entity);
+            bsCorrectionFactors.Position = _controller.UnitOfWork.GetPosition(entity);
         }
 
         private void setCorrectionFactor()
@@ -108,20 +113,20 @@
             // Set focus on grid to force valdition and update of bindingsource form interfaces
             dgCorrectionFactor.Focus();
 
-            _unitOfWork.Complete();
+            _controller.UnitOfWork.Complete();
         }
 
         private void cancelCorrectionFactor()
         {
-            _unitOfWork.CancelChanges();
+            _controller.UnitOfWork.CancelChanges();
             LoadCorrectionFactors(getCurrentEnergyType().Id);
         }
 
         private void deleteCorrectionFactor()
         {
             var entity = (EnergyUse.Models.CorrectionFactor)bsCorrectionFactors.Current;
-            _unitOfWork.Delete(entity);
-            bsCorrectionFactors.DataSource = _unitOfWork.CorrectionFactors;
+            _controller.UnitOfWork.Delete(entity);
+            bsCorrectionFactors.DataSource = _controller.UnitOfWork.CorrectionFactors;
             bsCorrectionFactors.ResetBindings(false);
         }
 
@@ -144,7 +149,7 @@
 
         private void setBaseFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.CorrectionFactor(Managers.Config.GetDbFileName());
+            _controller.UnitOfWork = new EnergyUse.Core.UnitOfWork.CorrectionFactor(Managers.Config.GetDbFileName());
 
             Managers.Settings.SetBaseFormSettings(this);
             if (this.BackColor != Color.Empty)

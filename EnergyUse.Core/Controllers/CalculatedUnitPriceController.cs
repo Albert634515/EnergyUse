@@ -2,7 +2,7 @@
 
 namespace EnergyUse.Core.Controllers
 {
-    public class CalculatedUnitPrice : IController
+    public class CalculatedUnitPriceController : IController
     {
         #region ControlerProperties
 
@@ -16,7 +16,7 @@ namespace EnergyUse.Core.Controllers
 
         #region InitControler
 
-        public CalculatedUnitPrice(string dbFileName)
+        public CalculatedUnitPriceController(string dbFileName)
         {
             _dbFileName = dbFileName;
         }

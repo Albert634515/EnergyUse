@@ -6,7 +6,7 @@ namespace WinFormsEF.Views
     {
         #region FormProperties
 
-        private CalculatedUnitPrice _controller;
+        private CalculatedUnitPriceController _controller;
 
         #endregion
 
@@ -14,7 +14,7 @@ namespace WinFormsEF.Views
 
         public frmCalculatedUnitPrice()
         {
-            _controller = new CalculatedUnitPrice(Managers.Config.GetDbFileName());
+            _controller = new CalculatedUnitPriceController(Managers.Config.GetDbFileName());
             _controller.Initialize();
 
             InitializeComponent();
