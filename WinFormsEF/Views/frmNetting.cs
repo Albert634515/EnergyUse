@@ -1,25 +1,35 @@
-﻿namespace WinFormsEF.Views
+﻿using EnergyUse.Core.Controllers;
+using EnergyUse.Core.Interfaces;
+
+namespace WinFormsEF.Views
 {
     public partial class frmNetting : Form
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.Netting _unitOfWork;
-        
+        private NettingController _controller;
+
         #endregion
 
         #region InitForm
 
         public frmNetting()
         {
+            _controller = new NettingController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
+            _controller.InitSettings = true;
+
             InitializeComponent();
             SetBaseFormSettings();
             LoadComboEnergyTypes();
+
+            _controller.InitSettings = false;
         }
 
         private void LoadComboEnergyTypes()
         {
-            var energyTypes = _unitOfWork.EnergyTypeRepo.GetAll().ToList();
+            var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
             cboEnergyType.DataSource = energyTypes;
             cboEnergyType.DisplayMember = "Name";
             cboEnergyType.ValueMember = "Id";
@@ -35,7 +45,7 @@
         {
             _ = dgNetting.Focus();
 
-            if (_unitOfWork.HasChanges())
+            if (_controller.UnitOfWork.HasChanges())
                 e.Cancel = Managers.General.WarningUnsavedChanges(this);
         }
 
@@ -75,14 +85,24 @@
 
         #endregion
 
+        #region Events
+
+        private void cboEnergyType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_controller.InitSettings == false)
+                RefreshNetting();
+        }
+
+        #endregion
+
         #region Methods
 
         private void AddNetting()
         {
-            var entity = _unitOfWork.AddDefaultEntity();
+            var entity = _controller.UnitOfWork.AddDefaultEntity();
 
-            bsNetting.DataSource = _unitOfWork.Nettings;
-            bsNetting.Position = _unitOfWork.GetPosition(entity);
+            bsNetting.DataSource = _controller.UnitOfWork.Nettings;
+            bsNetting.Position = _controller.UnitOfWork.GetPosition(entity);
         }
 
         private void SaveNetting()
@@ -90,20 +110,20 @@
             // Set focus on grid to force valdition and update of bindingsource form interfaces
             dgNetting.Focus();
 
-            _unitOfWork.Complete();
+            _controller.UnitOfWork.Complete();
         }
 
         private void CancelNetting()
         {
-            _unitOfWork.CancelChanges();
+            _controller.UnitOfWork.CancelChanges();
             RefreshNetting();
         }
 
         private void DeleteNetting()
         {
             EnergyUse.Models.Netting entity = (EnergyUse.Models.Netting)bsNetting.Current;
-            _unitOfWork.Delete(entity);
-            bsNetting.DataSource = _unitOfWork.Nettings;
+            _controller.UnitOfWork.Delete(entity);
+            bsNetting.DataSource = _controller.UnitOfWork.Nettings;
             bsNetting.ResetBindings(false);
         }
 
@@ -137,20 +157,18 @@
         private void InitNetting(long energyTypeId)
         {
             if (energyTypeId == 0)
-                _unitOfWork.Nettings = new List<EnergyUse.Models.Netting>();
+                _controller.UnitOfWork.Nettings = new List<EnergyUse.Models.Netting>();
             else
-                _unitOfWork.Nettings = _unitOfWork.NettingRepo.SelectByEnergyType(energyTypeId).ToList();
+                _controller.UnitOfWork.Nettings = _controller.UnitOfWork.NettingRepo.SelectByEnergyType(energyTypeId).ToList();
 
-            _unitOfWork.SetListSorted();
+            _controller.UnitOfWork.SetListSorted();
 
-            bsNetting.DataSource = _unitOfWork.Nettings;
+            bsNetting.DataSource = _controller.UnitOfWork.Nettings;
             bsNetting.ResetBindings(false);
         }
 
         private void SetBaseFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.Netting(Managers.Config.GetDbFileName());
-
             Managers.Settings.SetBaseFormSettings(this);
             if (this.BackColor != Color.Empty)
                 dgNetting.BackgroundColor = this.BackColor;
