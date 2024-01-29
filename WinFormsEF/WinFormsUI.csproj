@@ -38,7 +38,6 @@
   <ItemGroup>
     <ProjectReference Include="..\EnergyUse.Common\EnergyUse.Common.csproj" />
     <ProjectReference Include="..\EnergyUse.Models\EnergyUse.Models.csproj" />
-    <ProjectReference Include="..\EnergyUse.Repository\EnergyUse.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
