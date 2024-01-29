@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using EnergyUse.Core.Controllers;
+using System.Data;
 
 namespace WinFormsEF.Views
 {
@@ -6,7 +7,7 @@ namespace WinFormsEF.Views
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.Export _unitOfWork;
+        private ExportController _controller;
 
         #endregion
 
@@ -14,6 +15,9 @@ namespace WinFormsEF.Views
 
         public frmExport()
         {
+            _controller = new ExportController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
             setDefaultExportFile();
@@ -23,7 +27,7 @@ namespace WinFormsEF.Views
 
         private void LoadComboAddresses()
         {
-            var addressList = _unitOfWork.AddressRepo.GetAll();
+            var addressList = _controller.UnitOfWork.AddressRepo.GetAll();
             bsAddresses.DataSource = addressList;
             cmbAddress.DataSource = bsAddresses;
 
@@ -42,7 +46,7 @@ namespace WinFormsEF.Views
             if (cmbAddress.SelectedIndex > -1)
             {
                 address = (EnergyUse.Models.Address)cmbAddress.SelectedItem;
-                energyTypes = _unitOfWork.EnergyTypeRepo.SelectByAddressId(address.Id).ToList();
+                energyTypes = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(address.Id).ToList();
                 bsEnergyTypes.DataSource = energyTypes;
                 cboEnergyType.DataSource = bsEnergyTypes;
 
@@ -133,8 +137,6 @@ namespace WinFormsEF.Views
 
         private void setBaseFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.Export(Managers.Config.GetDbFileName());
-
             Managers.Settings.SetBaseFormSettings(this);
         }
 
