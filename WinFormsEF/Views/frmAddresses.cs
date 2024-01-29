@@ -1,17 +1,23 @@
-﻿namespace WinFormsEF.Views
+﻿using EnergyUse.Core.Controllers;
+using EnergyUse.Core.Interfaces;
+
+namespace WinFormsEF.Views
 {
     public partial class frmAddresses : Form
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.Address _unitOfWork;
-        
+        private AddressController _controller;
+
         #endregion
 
         #region InitForm
 
         public frmAddresses()
         {
+            _controller = new AddressController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
             LoadForm();
@@ -24,8 +30,8 @@
 
         private void LoadAddresses()
         {
-            _unitOfWork.Addresses = _unitOfWork.AddressRepo.GetAll().ToList();
-            bsAddresses.DataSource = _unitOfWork.Addresses;
+            _controller.UnitOfWork.Addresses = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
+            bsAddresses.DataSource = _controller.UnitOfWork.Addresses;
         }
 
         #endregion
@@ -41,7 +47,7 @@
         {
             _ = dgAddresses.Focus();
 
-            if (_unitOfWork.HasChanges())
+            if (_controller.UnitOfWork.HasChanges())
                 e.Cancel = Managers.General.WarningUnsavedChanges(this);
         }
 
@@ -93,7 +99,7 @@
                 return false;
             }
 
-            int addressCount = _unitOfWork.AddressRepo.GetExistsByDescription(currentAddress.Description.Trim(), currentAddress.Id);
+            int addressCount = _controller.UnitOfWork.AddressRepo.GetExistsByDescription(currentAddress.Description.Trim(), currentAddress.Id);
             if (addressCount > 0)
             {
                 var message = Managers.Languages.GetResourceString("AddressWithDescription", "There already is an address with description %s");
@@ -107,12 +113,13 @@
 
         private void addAddress()
         {
-            var entity = _unitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("Newaddress", "New address"));
+            //var entity = _controller.UnitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("Newaddress", "New address"));
+            var entity = _controller.AddDefaultEntity(Managers.Languages.GetResourceString("Newaddress", "New address"));
 
-            bsAddresses.DataSource = _unitOfWork.Addresses;
+            bsAddresses.DataSource = _controller.UnitOfWork.Addresses;
             bsAddresses.ResetBindings(false);
 
-            var index = _unitOfWork.Addresses.IndexOf(entity);
+            var index = _controller.UnitOfWork.Addresses.IndexOf(entity);
             bsAddresses.Position = index;
         }
 
@@ -126,32 +133,41 @@
 
             if (bsAddresses.Current != null)
             {
-                _unitOfWork.Complete();
+                _controller.UnitOfWork.Complete();
 
+                //Reload saved address
                 EnergyUse.Models.Address address = (EnergyUse.Models.Address)bsAddresses.Current;
                 if (address.Id == 0)
-                    address = _unitOfWork.AddressRepo.GetByDescription(address.Description);
+                    address = _controller.UnitOfWork.AddressRepo.GetByDescription(address.Description);
 
                 setAddressSettingsTags(address);
 
-                Managers.Settings.SaveSettingTextBox(txtPurchaseAmount);
-                Managers.Settings.SaveSettingTextBox(txtSubsidyAmount);
-                Managers.Settings.SaveSettingTextBox(txtQualityReductionSolarPanels);
-                Managers.Settings.SaveSettingTextBox(txtTotalCapacitySolarPanels);
+                //Save additional address data to general settings table
+                saveSettingTextBox(txtPurchaseAmount);
+                saveSettingTextBox(txtSubsidyAmount);
+                saveSettingTextBox(txtQualityReductionSolarPanels);
+                saveSettingTextBox(txtTotalCapacitySolarPanels);
             }
+        }
+
+        private void saveSettingTextBox(TextBox sender)
+
+        {
+            var settingValue = Managers.Settings.GetSetting((TextBox)sender);
+            _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
         }
 
         private void cancelAddress()
         {
-            _unitOfWork.CancelChanges();
+            _controller.UnitOfWork.CancelChanges();
             LoadAddresses();
         }
 
         private void deleteAddress()
         {
             EnergyUse.Models.Address entity = (EnergyUse.Models.Address)bsAddresses.Current;
-            _unitOfWork.Delete(entity);
-            bsAddresses.DataSource = _unitOfWork.Addresses;
+            _controller.UnitOfWork.Delete(entity);
+            bsAddresses.DataSource = _controller.UnitOfWork.Addresses;
             bsAddresses.ResetBindings(false);
         }
 
@@ -191,11 +207,11 @@
 
         private void setBaseFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.Address(Managers.Config.GetDbFileName());
+            _controller.UnitOfWork = new EnergyUse.Core.UnitOfWork.Address(Managers.Config.GetDbFileName());
 
             Managers.Settings.SetBaseFormSettings(this);
             if (BackColor != Color.Empty)
-                dgAddresses.BackgroundColor = BackColor;            
+                dgAddresses.BackgroundColor = BackColor;
         }
 
         #endregion

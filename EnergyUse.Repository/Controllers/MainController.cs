@@ -11,12 +11,12 @@ namespace EnergyUse.Core.Controllers
         private EnergyUse.Core.UnitOfWork.MainForm? _unitOfWork { get; set; } = null;
         private EnergyUse.Core.Manager.LibSettings? _libSettings { get; set; } = null;
 
+        #endregion
+
         public MainController(string dbFileName)
         {
             _dbFileName = dbFileName;
         }
-
-        #endregion
 
         public void Initialize()
         {

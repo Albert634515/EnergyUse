@@ -1,8 +1,12 @@
-﻿namespace WinFormsEF.Views
+﻿using EnergyUse.Core.Controllers;
+
+namespace WinFormsEF.Views
 {
     public partial class frmBackUpAndRestore : Form
     {
         #region FormProperties
+
+        private BackUpAndRestoreController _controller;
 
         #endregion
 
@@ -10,6 +14,9 @@
 
         public frmBackUpAndRestore()
         {
+            _controller = new BackUpAndRestoreController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
         }
@@ -20,7 +27,9 @@
 
         private void frmBackUpAndRestore_Load(object sender, EventArgs e)
         {
-            getSettingBackUpDir();
+            var settingValue = _controller.getSettingBackUpDir(txtBackUpDir.Tag.ToString());
+            if (!string.IsNullOrWhiteSpace(settingValue))
+                txtBackUpDir.Text = settingValue;
         }
 
         #endregion
@@ -52,7 +61,7 @@
 
         private void cmdCreateBackup_Click(object sender, EventArgs e)
         {
-            createBackUpFile();
+            createBackUpFile(this, txtBackUpDir.Text.Trim());
         }
 
         private void cmdSelectRestoreFile_Click(object sender, EventArgs e)
@@ -84,25 +93,28 @@
         private void cmdRestoreBackUp_Click(object sender, EventArgs e)
         {
             if (chkBackUpBeforeRestore.Checked)
-                createBackUpFile();
+                createBackUpFile(this, txtBackUpDir.Text.Trim());
 
-            restoreBackUpFile();
+            restoreBackUpFile(this, txtRestoreFile.Text);
         }
 
         #endregion
 
         #region Methods
 
-        private void createBackUpFile()
+        private void createBackUpFile(IWin32Window owner, string backupDir)
         {
-            var targetPath = txtBackUpDir.Text.Trim();
-            var sourceFile = getSourceDbFile();
-            var message = "";
+            if (string.IsNullOrWhiteSpace(backupDir))
+                throw new Exception("No back-up directory");
+
+            var targetPath = backupDir;
+            var sourceFile = _controller.GetSourceDbFile();
+            string message;
 
             if (string.IsNullOrWhiteSpace(targetPath))
             {
                 message = Managers.Languages.GetResourceString("BackUpAndRestoreSelectFile", "Please first select an export directory");
-                MessageBox.Show(this, message);
+                MessageBox.Show(owner, message);
                 return;
             }
 
@@ -117,49 +129,21 @@
             MessageBox.Show(this, message);
         }
 
-        private void restoreBackUpFile()
+        private void restoreBackUpFile(IWin32Window owner, string restoreFile)
         {
-            if (string.IsNullOrWhiteSpace(txtRestoreFile.Text))
+            if (string.IsNullOrWhiteSpace(restoreFile))
             {
                 var message = Managers.Languages.GetResourceString("BackUpAndRestoreNoRestoreFileSelected", "No restore file selected");
-                MessageBox.Show(this, message);
+                MessageBox.Show(owner, message);
                 return;
             }
 
-            if (!File.Exists(txtRestoreFile.Text))
+            if (!File.Exists(restoreFile))
             {
                 var message = Managers.Languages.GetResourceString("BackUpAndRestoreNoRestoreFileExist", "No restore file does not exist");
-                MessageBox.Show(this, message);
+                MessageBox.Show(owner, message);
                 return;
             }
-        }
-
-        private void getSettingBackUpDir()
-        {
-            string settingValue;
-
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetSetting(txtBackUpDir.Tag.ToString());
-            if ((setting == null || (setting != null && string.IsNullOrWhiteSpace(setting.KeyValue))) || !Directory.Exists(setting.KeyValue))
-                settingValue = getDefaultBackUpDir();
-            else
-                settingValue = setting.KeyValue;
-
-            txtBackUpDir.Text = settingValue;
-        }
-
-        private string getSourceDbFile()
-        {
-            string dbFile;
-
-            dbFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "EnergyUse.db");
-
-            return dbFile;
-        }
-
-        private string getDefaultBackUpDir()
-        {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BackUp");
         }
 
         private void setBaseFormSettings()

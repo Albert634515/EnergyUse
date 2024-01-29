@@ -19,12 +19,14 @@ namespace EnergyUse.Core.Controllers
 
         public bool InitSettings { get; set; } = false;
 
+        #endregion
+
+        #region InitControler
+
         public SettingsController(string dbFileName)
         {
             _dbFileName = dbFileName;
         }
-
-        #endregion
 
         public void Initialize()
         {
@@ -46,6 +48,8 @@ namespace EnergyUse.Core.Controllers
         {
             return _dbFileName;
         }
+
+        #endregion
 
         #region Settings
 
