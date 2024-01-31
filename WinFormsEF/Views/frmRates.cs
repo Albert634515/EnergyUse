@@ -1,4 +1,5 @@
 ﻿using EnergyUse.Common.Enums;
+using EnergyUse.Core.Controllers;
 
 namespace WinFormsEF.Views
 {
@@ -6,7 +7,7 @@ namespace WinFormsEF.Views
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.Rate _unitOfWork;
+        private RateController _controller;
 
         #endregion
 
@@ -28,7 +29,7 @@ namespace WinFormsEF.Views
 
         private void LoadCostCategories(long eneryTypeId)
         {
-            var costCategories = _unitOfWork.CostCategoryRepo.SelectByEnergyTypeId(eneryTypeId).ToList();
+            var costCategories = _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeId(eneryTypeId).ToList();
             bsCostCategories.DataSource = costCategories;
             CboCostCategory.DataSource = costCategories;
 
@@ -37,7 +38,7 @@ namespace WinFormsEF.Views
 
         private void LoadComboEnergyTypes()
         {
-            var energyTypes = _unitOfWork.EnergyTypeRepo.GetAll().ToList();
+            var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
             bsEnergyTypes.DataSource = energyTypes;
 
             CboEnergyType.SelectedIndex = -1;
@@ -45,7 +46,7 @@ namespace WinFormsEF.Views
 
         private void LoadComboTarifGroups()
         {
-            var tarifGroups = _unitOfWork.TarifGroupRepo.GetAll().ToList();
+            var tarifGroups = _controller.UnitOfWork.TarifGroupRepo.GetAll().ToList();
             bsTarifGroups.DataSource = tarifGroups;
 
             CboTarifGroup.SelectedIndex = -1;
@@ -124,7 +125,7 @@ namespace WinFormsEF.Views
         {
             _ = DgRates.Focus();
 
-            if (_unitOfWork.HasChanges())
+            if (_controller.UnitOfWork.HasChanges())
                 e.Cancel = Managers.General.WarningUnsavedChanges(this);
         }
 
@@ -182,11 +183,11 @@ namespace WinFormsEF.Views
             //if rate != staffel, check staffel exist and ask to delete
             if (rateType != RateType.Staffel && rate != null)
             {
-                var staffelList = _unitOfWork.StaffelRepo.SelectByRateId(rate.Id);
+                var staffelList = _controller.UnitOfWork.StaffelRepo.SelectByRateId(rate.Id);
                 if (staffelList != null && staffelList.Any())
                 {
                     if (MessageBox.Show("", "There are still staffel records for current rate, but type is no longer of type staffel. Do you want to delete the staffel records?", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                        _unitOfWork.StaffelRepo.DeleteByRateId(rate.Id);
+                        _controller.UnitOfWork.StaffelRepo.DeleteByRateId(rate.Id);
                 }
             }
 
@@ -199,7 +200,7 @@ namespace WinFormsEF.Views
             if (additionalCategoryAndGroupInfo != null)
             {
                 if (additionalCategoryAndGroupInfo.Id == 0)
-                    _unitOfWork.AdditionalCategoryAndGroupInfoRepo.Add(additionalCategoryAndGroupInfo);
+                    _controller.UnitOfWork.AdditionalCategoryAndGroupInfoRepo.Add(additionalCategoryAndGroupInfo);
             }
         }
 
@@ -209,15 +210,15 @@ namespace WinFormsEF.Views
             var energyType = (EnergyUse.Models.EnergyType)CboEnergyType.SelectedItem;
             var tarifGroup = (EnergyUse.Models.TariffGroup)CboTarifGroup.SelectedItem;
 
-            _unitOfWork.RateList = new List<EnergyUse.Models.Rate>();
+            _controller.UnitOfWork.RateList = new List<EnergyUse.Models.Rate>();
 
             if (costCategory != null && costCategory.TariffGroup != null && costCategory.TariffGroup.Id > 0)
-                _unitOfWork.RateList = _unitOfWork.RateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, costCategory.TariffGroup.Id).ToList();
+                _controller.UnitOfWork.RateList = _controller.UnitOfWork.RateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, costCategory.TariffGroup.Id).ToList();
             else if (costCategory != null && tarifGroup != null && tarifGroup.Id > 0)
-                _unitOfWork.RateList = _unitOfWork.RateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, tarifGroup.Id).ToList();
+                _controller.UnitOfWork.RateList = _controller.UnitOfWork.RateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, tarifGroup.Id).ToList();
 
-            _unitOfWork.SetListSorted();
-            bsRates.DataSource = _unitOfWork.RateList;
+            _controller.UnitOfWork.SetListSorted();
+            bsRates.DataSource = _controller.UnitOfWork.RateList;
             bsRates.ResetBindings(false);
         }
 
@@ -231,7 +232,7 @@ namespace WinFormsEF.Views
                 && costCategory != null && costCategory.Id > 0
                 && tarifGroup != null && tarifGroup.Id > 0)
             {
-                var entity = _unitOfWork.AdditionalCategoryAndGroupInfoRepo.SelectByPrimaryKey(energyType.Id, costCategory.Id, tarifGroup.Id);
+                var entity = _controller.UnitOfWork.AdditionalCategoryAndGroupInfoRepo.SelectByPrimaryKey(energyType.Id, costCategory.Id, tarifGroup.Id);
                 if (entity == null)
                 {
                     entity = new EnergyUse.Models.AdditionalCategoryAndGroupInfo
@@ -240,7 +241,7 @@ namespace WinFormsEF.Views
                         CostCategory = costCategory,
                         TariffGroup = tarifGroup
                     };
-                    _unitOfWork.AdditionalCategoryAndGroupInfoRepo.Add(entity);
+                    _controller.UnitOfWork.AdditionalCategoryAndGroupInfoRepo.Add(entity);
                 }
 
                 bsAdditionalCategoryAndGroupInfo.DataSource = entity;
@@ -281,12 +282,12 @@ namespace WinFormsEF.Views
             EnergyUse.Models.EnergyType energyType = (EnergyUse.Models.EnergyType)CboEnergyType.SelectedItem;
             var tarifGroup = getCurrentTarifGroup();
 
-            EnergyUse.Models.Rate entity = _unitOfWork.AddDefaultEntity(energyType.Id, costCategory.Id, tarifGroup.Id);
+            EnergyUse.Models.Rate entity = _controller.UnitOfWork.AddDefaultEntity(energyType.Id, costCategory.Id, tarifGroup.Id);
 
-            bsRates.DataSource = _unitOfWork.RateList;
+            bsRates.DataSource = _controller.UnitOfWork.RateList;
             bsRates.ResetBindings(false);
 
-            bsRates.Position = _unitOfWork.GetPosition(entity);
+            bsRates.Position = _controller.UnitOfWork.GetPosition(entity);
         }
 
         private void saveRate()
@@ -299,18 +300,18 @@ namespace WinFormsEF.Views
 
             // Save additional groep info
 
-            _unitOfWork.Complete();
+            _controller.UnitOfWork.Complete();
         }
 
         private void cancelRate()
         {
-            _unitOfWork.CancelChanges();
+            _controller.UnitOfWork.CancelChanges();
         }
 
         private decimal getPriceChange(EnergyUse.Models.Rate rate)
         {
             decimal priceChange = 0;
-            var previousRate = _unitOfWork.RateRepo.SelectLastRateByDate(rate.EnergyType.Id, rate.CostCategory.Id, rate.StartRate.AddDays(-1), rate.TariffGroup.Id);
+            var previousRate = _controller.UnitOfWork.RateRepo.SelectLastRateByDate(rate.EnergyType.Id, rate.CostCategory.Id, rate.StartRate.AddDays(-1), rate.TariffGroup.Id);
             if (previousRate != null && previousRate.Id > 0)
                 priceChange = Math.Round(((rate.RateValue - previousRate.RateValue) / previousRate.RateValue) * 100, 2);
 
@@ -339,9 +340,9 @@ namespace WinFormsEF.Views
                 if (MessageBox.Show(message, message2, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     var entity = (EnergyUse.Models.Rate)bsRates.Current;
-                    _unitOfWork.Delete(entity);
+                    _controller.UnitOfWork.Delete(entity);
 
-                    bsRates.DataSource = _unitOfWork.RateList;
+                    bsRates.DataSource = _controller.UnitOfWork.RateList;
                     bsRates.ResetBindings(false);
                 }
             }
@@ -383,8 +384,6 @@ namespace WinFormsEF.Views
 
         private void setBaseFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.Rate(Managers.Config.GetDbFileName());
-
             Managers.Settings.SetBaseFormSettings(this);
             if (this.BackColor != Color.Empty)
                 DgRates.BackgroundColor = this.BackColor;
