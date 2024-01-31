@@ -1,11 +1,13 @@
-﻿namespace WinFormsEF.Views
+﻿using EnergyUse.Core.Controllers;
+
+namespace WinFormsEF.Views
 {
     public partial class frmPreDefinedPeriod : Form
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.PreDefinedPeriod _unitOfWork;
-        
+        private PreDefinedPeriodController _controller;
+
         #endregion
 
         #region InitForm
@@ -18,15 +20,15 @@
 
         private void LoadPreDefinedPeriods()
         {
-            _unitOfWork.PreDefinedPeriods = _unitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
-            bsPreDefinedPeriod.DataSource = _unitOfWork.PreDefinedPeriods;
+            _controller.UnitOfWork.PreDefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
+            bsPreDefinedPeriod.DataSource = _controller.UnitOfWork.PreDefinedPeriods;
         }
 
         private void frmPreDefinedPeriod_FormClosing(object sender, FormClosingEventArgs e)
         {
             _ = dgPeriods.Focus();
 
-            if (_unitOfWork.HasChanges())
+            if (_controller.UnitOfWork.HasChanges())
                 e.Cancel = Managers.General.WarningUnsavedChanges(this);
 
             if (ucDatePredefined1.HasChanges())
@@ -93,11 +95,11 @@
 
         private void addPredefinedPeriod()
         {           
-            var entity = _unitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("Newperiod", "New period"));
+            var entity = _controller.UnitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("Newperiod", "New period"));
 
-            bsPreDefinedPeriod.DataSource = _unitOfWork.PreDefinedPeriods;
+            bsPreDefinedPeriod.DataSource = _controller.UnitOfWork.PreDefinedPeriods;
             bsPreDefinedPeriod.ResetBindings(false);
-            bsPreDefinedPeriod.Position = _unitOfWork.PreDefinedPeriods.IndexOf(entity);
+            bsPreDefinedPeriod.Position = _controller.UnitOfWork.PreDefinedPeriods.IndexOf(entity);
         }
 
         private void setPredefinedPeriod()
@@ -106,12 +108,12 @@
             dgPeriods.Focus();
 
             ucDatePredefined1.SavePredefinedPeriodDate();
-            _unitOfWork.Complete();
+            _controller.UnitOfWork.Complete();
         }
 
         private void cancelPredefinedPeriod()
         {
-            _unitOfWork.CancelChanges();
+            _controller.UnitOfWork.CancelChanges();
             refreshDates();
         }
 
@@ -123,8 +125,8 @@
                 if (preDefinedPeriod.Id > 0)
                     ucDatePredefined1.DeletePredefinedPeriodByPeriodId(preDefinedPeriod.Id);
 
-                _unitOfWork.Delete(preDefinedPeriod);
-                bsPreDefinedPeriod.DataSource = _unitOfWork.PreDefinedPeriods;
+                _controller.UnitOfWork.Delete(preDefinedPeriod);
+                bsPreDefinedPeriod.DataSource = _controller.UnitOfWork.PreDefinedPeriods;
                 bsPreDefinedPeriod.ResetBindings(false);
             }
         }
@@ -145,8 +147,6 @@
 
         private void setBaseFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.PreDefinedPeriod(Managers.Config.GetDbFileName());
-
             Managers.Settings.SetBaseFormSettings(this);
             if (this.BackColor != Color.Empty)
                 dgPeriods.BackgroundColor = this.BackColor;
