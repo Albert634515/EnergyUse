@@ -15,6 +15,9 @@ namespace WinFormsEF.Views
 
         public FrmRates()
         {
+            _controller = new RateController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
             LoadComboEnergyTypes();

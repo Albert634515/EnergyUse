@@ -2,12 +2,12 @@
 
 namespace EnergyUse.Core.Controllers
 {
-    public class AddressController : IController
+    public class MeterReadingController : IController
     {
         #region ControlerProperties
 
         private string _dbFileName { get; set; } = string.Empty;
-        public EnergyUse.Core.UnitOfWork.Address? UnitOfWork { get; set; } = null;
+        public EnergyUse.Core.UnitOfWork.MeterReading? UnitOfWork { get; set; } = null;
         private EnergyUse.Core.Manager.LibSettings? _libSettings { get; set; } = null;
 
         public bool InitSettings { get; set; } = false;
@@ -16,7 +16,7 @@ namespace EnergyUse.Core.Controllers
 
         #region InitControler
 
-        public AddressController(string dbFileName)
+        public MeterReadingController(string dbFileName)
         {
             _dbFileName = dbFileName;
         }
@@ -29,7 +29,7 @@ namespace EnergyUse.Core.Controllers
 
         private void setUnitOfWork()
         {
-            UnitOfWork = new EnergyUse.Core.UnitOfWork.Address(_dbFileName);
+            UnitOfWork = new EnergyUse.Core.UnitOfWork.MeterReading(_dbFileName);
         }
 
         private void setSettingsManager()
@@ -65,22 +65,6 @@ namespace EnergyUse.Core.Controllers
                 setting = _libSettings.GetSetting(key.Trim());
 
             return setting;
-        }
-
-        #endregion
-
-        #region Data
-
-        public List<Models.Address> GetAllAdresses()
-        {
-            UnitOfWork.Addresses = UnitOfWork.AddressRepo.GetAll().ToList();
-            return UnitOfWork.Addresses;
-        }
-
-        
-        public Models.Address AddDefaultEntity(string defaultDescription)
-        {
-            return UnitOfWork.AddDefaultEntity(defaultDescription);
         }
 
         #endregion

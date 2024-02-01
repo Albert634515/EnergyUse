@@ -1,4 +1,6 @@
-﻿using EnergyUse.Core.Manager;
+﻿using EnergyUse.Core.Controllers;
+using EnergyUse.Core.Interfaces;
+using EnergyUse.Core.Manager;
 using System.Data;
 
 namespace WinFormsEF.Views
@@ -7,7 +9,7 @@ namespace WinFormsEF.Views
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.SelectParameter _unitOfWork;
+        private SelectSettelementParametersController _controller;
         public EnergyUse.Models.Address CurrentAddress { get; set; }
         public int ReturnValue { get; set; } = 0;
 
@@ -20,6 +22,9 @@ namespace WinFormsEF.Views
 
         public FrmSelectSettelementParameters(EnergyUse.Models.Address address)
         {
+            _controller = new SelectSettelementParametersController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
 
@@ -33,7 +38,7 @@ namespace WinFormsEF.Views
 
         private void setComboAddresses()
         {
-            var addressList = _unitOfWork.AddressRepo.GetAll().ToList();
+            var addressList = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
             bsAddresses.DataSource = addressList;
             CboAddress.SelectedIndex = -1;
 
@@ -53,7 +58,7 @@ namespace WinFormsEF.Views
 
         private void setPreSelectePeriods()
         {
-            _preDefinedPeriods = _unitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
+            _preDefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
 
             CboPreSelectedPeriods.DataSource = _preDefinedPeriods;
             CboPreSelectedPeriods.DisplayMember = "Description";
@@ -242,7 +247,7 @@ namespace WinFormsEF.Views
             int dateSelectionCount = libSettings.GetNumberOfEnergyTypesOnReport(addressId);
             if (dateSelectionCount == 0)
             {
-                var energyTypes = _unitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList();
+                var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList();
                 dateSelectionCount = energyTypes.Count;
                 libSettings.SaveSetting($"NumberOfEnergyTypesOnReport_A{addressId}", dateSelectionCount.ToString());
             }
@@ -259,8 +264,8 @@ namespace WinFormsEF.Views
         private ucControls.ucDateSelection addDateSelectionLine(int lineCount, long addressId, Point location)
         {
             ucControls.ucDateSelection ucDateSelection = new ucControls.ucDateSelection();
-            ucDateSelection.EnergyTypeList = _unitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList();
-            ucDateSelection.TarifGroupsList = _unitOfWork.TarifGroupRepo.GetAll().ToList();
+            ucDateSelection.EnergyTypeList = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList();
+            ucDateSelection.TarifGroupsList = _controller.UnitOfWork.TarifGroupRepo.GetAll().ToList();
             ucDateSelection.SetTarifGroups();
 
             ucDateSelection.Name = getDateSelectionKey(lineCount, addressId);
@@ -347,7 +352,7 @@ namespace WinFormsEF.Views
                 return;
 
             preDefinedPeriod = (EnergyUse.Models.PreDefinedPeriod)CboPreSelectedPeriods.SelectedItem;
-            preDefinedPeriodDateList = _unitOfWork.PreDefinedPeriodDateRepo.GetByPeriodId(preDefinedPeriod.Id).ToList();
+            preDefinedPeriodDateList = _controller.UnitOfWork.PreDefinedPeriodDateRepo.GetByPeriodId(preDefinedPeriod.Id).ToList();
 
             foreach (var preDefinedPeriodDate in preDefinedPeriodDateList)
             {
@@ -401,8 +406,6 @@ namespace WinFormsEF.Views
 
         private void setBaseFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.SelectParameter(Managers.Config.GetDbFileName());
-
             Managers.Settings.SetBaseFormSettings(this);
         }
 

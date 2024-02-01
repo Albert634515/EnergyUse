@@ -1,17 +1,22 @@
-﻿namespace WinFormsEF.Views
+﻿using EnergyUse.Core.Controllers;
+
+namespace WinFormsEF.Views
 {
     public partial class frmTariffGroups : Form
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.TariffGroup _unitOfWork;
-        
+        private TariffGroupController _controller;
+
         #endregion
 
         #region InitForm
 
         public frmTariffGroups()
         {
+            _controller = new TariffGroupController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
             setTarifGroups();
@@ -25,7 +30,7 @@
         {
             _ = DgTarifGroups.Focus();
 
-            if (_unitOfWork.HasChanges())
+            if (_controller.UnitOfWork.HasChanges())
                 e.Cancel = e.Cancel = Managers.General.WarningUnsavedChanges(this);
         }
 
@@ -69,25 +74,25 @@
 
         private void setTarifGroups()
         {
-            _unitOfWork.TariffGroups = _unitOfWork.TariffGroupRepo.GetAll().ToList();
+            _controller.UnitOfWork.TariffGroups = _controller.UnitOfWork.TariffGroupRepo.GetAll().ToList();
 
-            BsTarifGroups.DataSource = _unitOfWork.TariffGroups;
+            BsTarifGroups.DataSource = _controller.UnitOfWork.TariffGroups;
             BsTarifGroups.ResetBindings(false);
         }
 
         private void addTarifGroup()
         {
-            var entity = _unitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("TarifGroupNewGroup", "New group"));
+            var entity = _controller.UnitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("TarifGroupNewGroup", "New group"));
 
-            BsTarifGroups.DataSource = _unitOfWork.TariffGroups;
+            BsTarifGroups.DataSource = _controller.UnitOfWork.TariffGroups;
             BsTarifGroups.ResetBindings(false);
 
-            BsTarifGroups.Position = _unitOfWork.GetPosition(entity);
+            BsTarifGroups.Position = _controller.UnitOfWork.GetPosition(entity);
         }
 
         private void cancelTarifGroup()
         {
-            _unitOfWork.CancelChanges();
+            _controller.UnitOfWork.CancelChanges();
             setTarifGroups();
         }
 
@@ -96,7 +101,7 @@
             // Set focus on grid to force valdition and update of bindingsource form interfaces
             DgTarifGroups.Focus();
 
-            _unitOfWork.Complete();
+            _controller.UnitOfWork.Complete();
         }
 
         private void deleteTarifGroup()
@@ -108,9 +113,9 @@
                 if (MessageBox.Show(message, message2, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     var entity = (EnergyUse.Models.TariffGroup)BsTarifGroups.Current;
-                    _unitOfWork.Delete(entity);
+                    _controller.UnitOfWork.Delete(entity);
 
-                    BsTarifGroups.DataSource = _unitOfWork.TariffGroups;
+                    BsTarifGroups.DataSource = _controller.UnitOfWork.TariffGroups;
                     BsTarifGroups.ResetBindings(false);
                 }
             }
@@ -123,8 +128,6 @@
 
         private void setBaseFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.TariffGroup(Managers.Config.GetDbFileName());
-
             Managers.Settings.SetBaseFormSettings(this);
             if (BackColor != Color.Empty)
                 DgTarifGroups.BackgroundColor = BackColor;

@@ -13,6 +13,9 @@ namespace WinFormsEF.Views
         #region InitForm
         public frmPreDefinedPeriod()
         {
+            _controller = new PreDefinedPeriodController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
             LoadPreDefinedPeriods();

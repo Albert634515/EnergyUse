@@ -1,4 +1,6 @@
-﻿namespace WinFormsEF.Views
+﻿using EnergyUse.Core.Controllers;
+
+namespace WinFormsEF.Views
 {
     public partial class frmEditMeterReading : Form
     {
@@ -6,7 +8,7 @@
 
         public long ReturnValue = 0;
 
-        private EnergyUse.Core.UnitOfWork.MeterReading _unitOfWork;
+        private MeterReadingController _controller;
         private EnergyUse.Models.EnergyType _CurrentEnergyType;
         private long _CurrentAddressId;
 
@@ -16,6 +18,9 @@
 
         public frmEditMeterReading(EnergyUse.Models.EnergyType currentEnergyType, long addressId, long meterReadingId)
         {
+            _controller = new MeterReadingController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
 
@@ -28,18 +33,18 @@
 
         private void LoadMeters()
         {
-            bsMeters.DataSource = _unitOfWork.MeterRepo.SelectByAddressAndEnergyType(_CurrentAddressId, _CurrentEnergyType.Id).ToList();
+            bsMeters.DataSource = _controller.UnitOfWork.MeterRepo.SelectByAddressAndEnergyType(_CurrentAddressId, _CurrentEnergyType.Id).ToList();
             cboMeters.SelectedIndex = -1;
         }
 
         private void SetCurrentDataSource(EnergyUse.Models.EnergyType currentEnergyType, long addressId, long meterReadingId)
         {
             if (meterReadingId == 0)
-                 _unitOfWork.AddDefaultEntity(addressId, currentEnergyType.Id);
+                _controller.UnitOfWork.AddDefaultEntity(addressId, currentEnergyType.Id);
             else
-                 _unitOfWork.MeterReadingRepo.Get(meterReadingId);
+                _controller.UnitOfWork.MeterReadingRepo.Get(meterReadingId);
 
-            bsMeterReading.DataSource = _unitOfWork.MeterReadings;
+            bsMeterReading.DataSource = _controller.UnitOfWork.MeterReadings;
             bsMeterReading.ResetBindings(false);
             bsMeterReading.Position = 0;
         }
@@ -52,7 +57,7 @@
         {
             _ = statusStrip1.Focus();
 
-            if (_unitOfWork.HasChanges())
+            if (_controller.UnitOfWork.HasChanges())
                 e.Cancel = Managers.General.WarningUnsavedChanges(this);
         }
 
@@ -79,7 +84,7 @@
             // Set focus to force valdition and update of bindingsource form interfaces
             _ = statusStrip1.Focus();
 
-            _unitOfWork.Complete();
+            _controller.UnitOfWork.Complete();
             closeEditMeterReading();
         }
 
@@ -87,7 +92,7 @@
         {
             _ = statusStrip1.Focus();
 
-            if (_unitOfWork.HasChanges())
+            if (_controller.UnitOfWork.HasChanges())
             {
                 if (Managers.General.WarningUnsavedChanges(this))
                     return;
@@ -99,8 +104,6 @@
         private void setBaseFormSettings()
         {
             Managers.Settings.SetBaseFormSettings(this);
-
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.MeterReading(Managers.Config.GetDbFileName());            
         }
 
         #endregion

@@ -1,10 +1,12 @@
-﻿namespace WinFormsEF.Views
+﻿using EnergyUse.Core.Controllers;
+
+namespace WinFormsEF.Views
 {
     public partial class frmVatTariffs : Form
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.VatTarif _unitOfWork;
+        private VatTariffController _controller;
 
         #endregion
 
@@ -12,6 +14,9 @@
 
         public frmVatTariffs()
         {
+            _controller = new VatTariffController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
             LoadComboEnergyTypes();
@@ -19,7 +24,7 @@
 
         private void LoadComboEnergyTypes()
         {
-            var energyTypes = _unitOfWork.EnergyTypeRepo.GetAll().ToList();
+            var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
             bsEnergyTypes.DataSource = energyTypes;
 
             CboEnergyType.SelectedIndex = -1;
@@ -27,7 +32,7 @@
 
         private void LoadCostCategories(long eneryTypeId)
         {
-            var costCategories = _unitOfWork.CostCategoryRepo.SelectByEnergyTypeIdVatCalculated(eneryTypeId).ToList();
+            var costCategories = _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeIdVatCalculated(eneryTypeId).ToList();
             bsCostCategories.DataSource = costCategories;
             CboCostCategory.DataSource = costCategories;
 
@@ -60,7 +65,7 @@
         {
             _ = DgVatTarifs.Focus();
 
-            if (_unitOfWork.HasChanges())
+            if (_controller.UnitOfWork.HasChanges())
                 e.Cancel = e.Cancel = Managers.General.WarningUnsavedChanges(this);
         }
 
@@ -109,11 +114,11 @@
                 return;
 
             var costCategory = (EnergyUse.Models.CostCategory)CboCostCategory.SelectedItem;
-            var entity = _unitOfWork.AddDefaultEntity(costCategory.Id);
+            var entity = _controller.UnitOfWork.AddDefaultEntity(costCategory.Id);
 
-            bsVatTarif.DataSource = _unitOfWork.VatTarifs;
+            bsVatTarif.DataSource = _controller.UnitOfWork.VatTarifs;
 
-            bsVatTarif.Position = _unitOfWork.GetPosition(entity);
+            bsVatTarif.Position = _controller.UnitOfWork.GetPosition(entity);
 
             DtStartDate.Focus();
         }
@@ -132,21 +137,21 @@
                 return;
             }
 
-            _unitOfWork.Complete();
+            _controller.UnitOfWork.Complete();
             loadVatTarifs();
         }
 
         private void cancelVatTarif()
         {
-            _unitOfWork.CancelChanges();
+            _controller.UnitOfWork.CancelChanges();
         }
 
         private void deleteVatTarif()
         {
             var entity = (EnergyUse.Models.VatTarif)bsVatTarif.Current;
-            _unitOfWork.Delete(entity);
+            _controller.UnitOfWork.Delete(entity);
 
-            bsVatTarif.DataSource = _unitOfWork.VatTarifs;
+            bsVatTarif.DataSource = _controller.UnitOfWork.VatTarifs;
             bsVatTarif.ResetBindings(false);
         }
 
@@ -165,14 +170,14 @@
 
         private void loadVatTarifs()
         {
-            _unitOfWork.VatTarifs = new List<EnergyUse.Models.VatTarif>();
+            _controller.UnitOfWork.VatTarifs = new List<EnergyUse.Models.VatTarif>();
             var costCategory = (EnergyUse.Models.CostCategory)CboCostCategory.SelectedItem;
 
             if (costCategory != null)
-                _unitOfWork.VatTarifs = _unitOfWork.VatTarifRepo.GetByCostCategoryId(costCategory.Id).ToList();
+                _controller.UnitOfWork.VatTarifs = _controller.UnitOfWork.VatTarifRepo.GetByCostCategoryId(costCategory.Id).ToList();
 
-            _unitOfWork.SetListSorted();
-            bsVatTarif.DataSource = _unitOfWork.VatTarifs;
+            _controller.UnitOfWork.SetListSorted();
+            bsVatTarif.DataSource = _controller.UnitOfWork.VatTarifs;
         }
 
         private void closeVatTarifs()
@@ -182,8 +187,6 @@
 
         private void setBaseFormSettings()
         {
-            _unitOfWork = new EnergyUse.Core.UnitOfWork.VatTarif(Managers.Config.GetDbFileName());
-
             Managers.Settings.SetBaseFormSettings(this);
             if (BackColor != Color.Empty)
                 DgVatTarifs.BackgroundColor = BackColor;

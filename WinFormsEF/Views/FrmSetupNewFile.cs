@@ -1,4 +1,6 @@
 ﻿using EnergyUse.Common.Libs;
+using EnergyUse.Core.Controllers;
+using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
 
 namespace WinFormsEF.Views
@@ -7,7 +9,7 @@ namespace WinFormsEF.Views
     {
         #region FormProperties
 
-        private EnergyUse.Core.UnitOfWork.SetupNewFile _unitOfWork;
+        private SetupNewFileController _controller;
 
         #endregion
 
@@ -15,6 +17,9 @@ namespace WinFormsEF.Views
 
         public FrmSetupNewFile()
         {
+            _controller = new SetupNewFileController(Managers.Config.GetDbFileName());
+            _controller.Initialize();
+
             InitializeComponent();
             setBaseFormSettings();
         }
@@ -120,7 +125,7 @@ namespace WinFormsEF.Views
                 Managers.Config.SetDbFileName(targetFile);
 
                 //Reconnect
-                _unitOfWork = new EnergyUse.Core.UnitOfWork.SetupNewFile(targetFile);
+                _controller.UnitOfWork = new EnergyUse.Core.UnitOfWork.SetupNewFile(targetFile);
 
                 // Set as current in app config during creation to add new data
                 setAsDefaultFile(targetFile);
@@ -277,7 +282,7 @@ namespace WinFormsEF.Views
 
             if (!string.IsNullOrEmpty(sourceDb) && File.Exists(sourceDb))
             {
-                _unitOfWork = new EnergyUse.Core.UnitOfWork.SetupNewFile(Managers.Config.GetDbFileName());
+                _controller.UnitOfWork = new EnergyUse.Core.UnitOfWork.SetupNewFile(Managers.Config.GetDbFileName());
                 Managers.Settings.SetBaseFormSettings(this);
             }
 
@@ -302,7 +307,7 @@ namespace WinFormsEF.Views
                 newLabel.Font = new Font(Label.DefaultFont, FontStyle.Bold);
                 location.Y += newLabel.Height + 10;
 
-                GbNewEnergyTypes.Controls.Add(newLabel);                
+                GbNewEnergyTypes.Controls.Add(newLabel);
             }
         }
 
@@ -315,21 +320,21 @@ namespace WinFormsEF.Views
                 tmpCostCategoryId++;
 
                 costCategory.Id = tmpCostCategoryId;
-                _unitOfWork.CostCategoriesRepo.Add(costCategory);
+                _controller.UnitOfWork.CostCategoriesRepo.Add(costCategory);
             }
 
-            _unitOfWork.Complete();
+            _controller.UnitOfWork.Complete();
         }
 
         private void setUpNewAddress()
         {
             var address = (Address)bsAddress.Current;
-            var tarifGroupDefault = _unitOfWork.TarifGroupRepo.SelectByDescription("Default");
+            var tarifGroupDefault = _controller.UnitOfWork.TarifGroupRepo.SelectByDescription("Default");
 
             address.TariffGroupId = tarifGroupDefault.Id;
             address.DefaultAddress = true;
-            _unitOfWork.AddressRepo.Add(address);
-            _unitOfWork.Complete();
+            _controller.UnitOfWork.AddressRepo.Add(address);
+            _controller.UnitOfWork.Complete();
         }
 
         private void setupMeter(EnergyType energyType, long addressId)
@@ -339,8 +344,8 @@ namespace WinFormsEF.Views
             meter.Number = $"Meter no. for {energyType.Name}";
             meter.AddressId = addressId;
             meter.EnergyTypeId = energyType.Id;
-            _unitOfWork.MeterRepo.Add(meter);
-            _unitOfWork.Complete();
+            _controller.UnitOfWork.MeterRepo.Add(meter);
+            _controller.UnitOfWork.Complete();
         }
 
         private void setUpNewMeters()
@@ -356,13 +361,13 @@ namespace WinFormsEF.Views
         private List<CostCategory> getListOfNewCostCategories()
         {
             var costCategories = new List<CostCategory>();
-            var calTypePU = _unitOfWork.CalculationTypeRepo.SelectByDescription("Per Unit");
-            var calTypePd = _unitOfWork.CalculationTypeRepo.SelectByDescription("Per Day");
-            var energyTypeElectricity = _unitOfWork.EnergyTypeRepo.SelectByName("Electricity");
-            var energySubType = _unitOfWork.EnergySubTypeRepo.SelectByDescription("Normal");
-            var energySubTypeOther = _unitOfWork.EnergySubTypeRepo.SelectByDescription("Other");
-            var tarifGroupDefault = _unitOfWork.TarifGroupRepo.SelectByDescription("Default");
-            var tarifGroupGeneral = _unitOfWork.TarifGroupRepo.SelectByDescription("General");
+            var calTypePU = _controller.UnitOfWork.CalculationTypeRepo.SelectByDescription("Per Unit");
+            var calTypePd = _controller.UnitOfWork.CalculationTypeRepo.SelectByDescription("Per Day");
+            var energyTypeElectricity = _controller.UnitOfWork.EnergyTypeRepo.SelectByName("Electricity");
+            var energySubType = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Normal");
+            var energySubTypeOther = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Other");
+            var tarifGroupDefault = _controller.UnitOfWork.TarifGroupRepo.SelectByDescription("Default");
+            var tarifGroupGeneral = _controller.UnitOfWork.TarifGroupRepo.SelectByDescription("General");
 
             CostCategory costCategory;
             if (energyTypeElectricity != null)
@@ -377,7 +382,7 @@ namespace WinFormsEF.Views
                 costCategory.TariffGroupId = tarifGroupDefault.Id;
                 costCategories.Add(costCategory);
 
-                energySubType = _unitOfWork.EnergySubTypeRepo.SelectByDescription("Low");
+                energySubType = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Low");
                 costCategory = new CostCategory();
                 costCategory.Name = "Energy rate low";
                 costCategory.SortOrder = 2;
@@ -388,7 +393,7 @@ namespace WinFormsEF.Views
                 costCategory.TariffGroupId = tarifGroupDefault.Id;
                 costCategories.Add(costCategory);
 
-                energySubType = _unitOfWork.EnergySubTypeRepo.SelectByDescription("ReturnNormal");
+                energySubType = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("ReturnNormal");
                 costCategory = new CostCategory();
                 costCategory.Name = "Return delivery normal rate";
                 costCategory.SortOrder = 3;
@@ -399,7 +404,7 @@ namespace WinFormsEF.Views
                 costCategory.TariffGroupId = tarifGroupDefault.Id;
                 costCategories.Add(costCategory);
 
-                energySubType = _unitOfWork.EnergySubTypeRepo.SelectByDescription("ReturnLow");
+                energySubType = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("ReturnLow");
                 costCategory = new CostCategory();
                 costCategory.Name = "Return delivery low rate";
                 costCategory.SortOrder = 4;
@@ -457,10 +462,10 @@ namespace WinFormsEF.Views
                 costCategories.Add(costCategory);
             }
 
-            var energyTypeGas = _unitOfWork.EnergyTypeRepo.SelectByName("Gas");
+            var energyTypeGas = _controller.UnitOfWork.EnergyTypeRepo.SelectByName("Gas");
             if (energyTypeGas != null)
             {
-                energySubType = _unitOfWork.EnergySubTypeRepo.SelectByDescription("Normal");
+                energySubType = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Normal");
                 costCategory = new CostCategory();
                 costCategory.Name = "Energie tarief gas";
                 costCategory.SortOrder = 2;
@@ -530,10 +535,10 @@ namespace WinFormsEF.Views
                 costCategories.Add(costCategory);
             }
 
-            var energyTypeWater = _unitOfWork.EnergyTypeRepo.SelectByName("Water");
+            var energyTypeWater = _controller.UnitOfWork.EnergyTypeRepo.SelectByName("Water");
             if (energyTypeWater != null)
             {
-                energySubType = _unitOfWork.EnergySubTypeRepo.SelectByDescription("Normal");
+                energySubType = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Normal");
                 costCategory = new CostCategory();
                 costCategory.Name = "Energie tarief water";
                 costCategory.SortOrder = 3;

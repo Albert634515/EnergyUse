@@ -30,8 +30,7 @@ namespace WinFormsEF.Views
 
         private void LoadAddresses()
         {
-            _controller.UnitOfWork.Addresses = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
-            bsAddresses.DataSource = _controller.UnitOfWork.Addresses;
+            bsAddresses.DataSource = _controller.GetAllAdresses();
         }
 
         #endregion
@@ -113,7 +112,6 @@ namespace WinFormsEF.Views
 
         private void addAddress()
         {
-            //var entity = _controller.UnitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("Newaddress", "New address"));
             var entity = _controller.AddDefaultEntity(Managers.Languages.GetResourceString("Newaddress", "New address"));
 
             bsAddresses.DataSource = _controller.UnitOfWork.Addresses;
