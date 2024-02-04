@@ -143,30 +143,35 @@
             idDataGridViewTextBoxColumn.DataPropertyName = "Id";
             resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
             idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            idDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // startDateDataGridViewTextBoxColumn
             // 
             startDateDataGridViewTextBoxColumn.DataPropertyName = "StartDate";
             resources.ApplyResources(startDateDataGridViewTextBoxColumn, "startDateDataGridViewTextBoxColumn");
             startDateDataGridViewTextBoxColumn.Name = "startDateDataGridViewTextBoxColumn";
+            startDateDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // endDateDataGridViewTextBoxColumn
             // 
             endDateDataGridViewTextBoxColumn.DataPropertyName = "EndDate";
             resources.ApplyResources(endDateDataGridViewTextBoxColumn, "endDateDataGridViewTextBoxColumn");
             endDateDataGridViewTextBoxColumn.Name = "endDateDataGridViewTextBoxColumn";
+            endDateDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // rateDataGridViewTextBoxColumn
             // 
             rateDataGridViewTextBoxColumn.DataPropertyName = "Rate";
             resources.ApplyResources(rateDataGridViewTextBoxColumn, "rateDataGridViewTextBoxColumn");
             rateDataGridViewTextBoxColumn.Name = "rateDataGridViewTextBoxColumn";
+            rateDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // energyTypeDataGridViewTextBoxColumn
             // 
-            energyTypeDataGridViewTextBoxColumn.DataPropertyName = "EnergyType";
+            energyTypeDataGridViewTextBoxColumn.DataPropertyName = "EnergyTypeName";
             resources.ApplyResources(energyTypeDataGridViewTextBoxColumn, "energyTypeDataGridViewTextBoxColumn");
             energyTypeDataGridViewTextBoxColumn.Name = "energyTypeDataGridViewTextBoxColumn";
+            energyTypeDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // frmNetting
             // 

@@ -9,5 +9,17 @@
         public long? EnergyTypeId { get; set; }
 
         public virtual EnergyType EnergyType { get; set; }
+
+        // Readonly props
+        public string EnergyTypeName
+        {
+            get
+            {
+                if (EnergyType == null)
+                    return string.Empty;
+                else
+                    return EnergyType.Name;
+            }
+        }
     }
 }
