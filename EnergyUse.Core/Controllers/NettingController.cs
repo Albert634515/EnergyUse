@@ -43,5 +43,24 @@ namespace EnergyUse.Core.Controllers
         }
 
         #endregion
+
+        #region Settings
+
+        public Models.Setting? GetSetting(string key)
+        {
+            Models.Setting? setting = null;
+            if (_libSettings != null)
+                setting = _libSettings.GetSetting(key.Trim());
+
+            return setting;
+        }
+
+        public void SaveSetting(string key, string settingValue)
+        {
+            if (_libSettings != null)
+                _libSettings.SaveSetting(key.Trim(), settingValue);
+        }
+
+        #endregion
     }
 }

@@ -53,25 +53,19 @@ namespace EnergyUse.Core.Controllers
 
         #region Settings
 
-        public void SaveSetting(string key, string settingValue)
-        {
-            if (_libSettings != null)
-                _libSettings.SaveSetting(key.Trim(), settingValue);
-        }
-
-        public void SaveSetting(Models.Setting setting)
-        {
-            if (_libSettings != null && setting != null)
-                _libSettings.SaveSetting(setting.Key.Trim(), setting.KeyValue);
-        }
-
         public Models.Setting? GetSetting(string key)
         {
             Models.Setting? setting = null;
             if (_libSettings != null)
-                setting =_libSettings.GetSetting(key.Trim());
+                setting = _libSettings.GetSetting(key.Trim());
 
             return setting;
+        }
+
+        public void SaveSetting(string key, string settingValue)
+        {
+            if (_libSettings != null)
+                _libSettings.SaveSetting(key.Trim(), settingValue);
         }
 
         public void SetColorSetting(string key, System.Drawing.Color color)

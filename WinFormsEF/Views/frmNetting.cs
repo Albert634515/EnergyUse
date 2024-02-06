@@ -1,5 +1,6 @@
 ﻿using EnergyUse.Core.Controllers;
 using EnergyUse.Core.Interfaces;
+using EnergyUse.Core.Manager;
 
 namespace WinFormsEF.Views
 {
@@ -22,19 +23,23 @@ namespace WinFormsEF.Views
 
             InitializeComponent();
             SetBaseFormSettings();
-            LoadComboEnergyTypes();
+            setComboEnergyTypes();
 
             _controller.InitSettings = false;
         }
 
-        private void LoadComboEnergyTypes()
+        private void setComboEnergyTypes()
         {
             var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
             cboEnergyType.DataSource = energyTypes;
             cboEnergyType.DisplayMember = "Name";
             cboEnergyType.ValueMember = "Id";
 
-            cboEnergyType.SelectedIndex = -1;
+            var setting = _controller.GetSetting(cboEnergyType.Tag.ToString());
+            Managers.Settings.setSettingCombo(cboEnergyType, setting, "");
+
+            if (cboEnergyType.SelectedIndex != -1)
+                RefreshNetting();
         }
 
         #endregion
@@ -90,7 +95,12 @@ namespace WinFormsEF.Views
         private void cboEnergyType_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_controller.InitSettings == false)
+            {
                 RefreshNetting();
+
+                var settingValue = Managers.Settings.GetSetting((ComboBox)sender);
+                _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
+            }
         }
 
         #endregion
@@ -99,7 +109,11 @@ namespace WinFormsEF.Views
 
         private void AddNetting()
         {
-            var entity = _controller.UnitOfWork.AddDefaultEntity();
+            if (!validateInput())
+                return;
+
+            var energyType = (EnergyUse.Models.EnergyType)cboEnergyType.SelectedItem;
+            var entity = _controller.UnitOfWork.AddDefaultEntity(energyType.Id);
 
             bsNetting.DataSource = _controller.UnitOfWork.Nettings;
             bsNetting.Position = _controller.UnitOfWork.GetPosition(entity);

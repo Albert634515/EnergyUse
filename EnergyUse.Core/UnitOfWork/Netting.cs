@@ -43,9 +43,10 @@ namespace EnergyUse.Core.UnitOfWork
             Nettings.Remove(entity);
         }
 
-        public Models.Netting AddDefaultEntity()
+        public Models.Netting AddDefaultEntity(long energyTypeId)
         {
             var entity = new Models.Netting();
+            entity.EnergyTypeId = energyTypeId;
             entity.Rate = 0;
 
             NettingRepo.Add(entity);

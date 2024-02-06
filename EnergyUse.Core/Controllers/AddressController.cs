@@ -76,7 +76,6 @@ namespace EnergyUse.Core.Controllers
             UnitOfWork.Addresses = UnitOfWork.AddressRepo.GetAll().ToList();
             return UnitOfWork.Addresses;
         }
-
         
         public Models.Address AddDefaultEntity(string defaultDescription)
         {

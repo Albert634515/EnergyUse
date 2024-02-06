@@ -40,17 +40,25 @@
             statusStrip1 = new StatusStrip();
             toolTip1 = new ToolTip(components);
             dgNetting = new DataGridView();
-            bsNetting = new BindingSource(components);
-            cboEnergyType = new ComboBox();
-            lblEnergyType = new Label();
             idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             startDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             endDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             rateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             energyTypeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            bsNetting = new BindingSource(components);
+            cboEnergyType = new ComboBox();
+            lblEnergyType = new Label();
+            groupBox1 = new GroupBox();
+            txtRate = new TextBox();
+            lblFactor = new Label();
+            lblEndDate = new Label();
+            dtEndDate = new DateTimePicker();
+            lblStartDate = new Label();
+            dtStartDate = new DateTimePicker();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgNetting).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsNetting).BeginInit();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // toolStrip1
@@ -120,24 +128,6 @@
             dgNetting.DataSource = bsNetting;
             dgNetting.Name = "dgNetting";
             // 
-            // bsNetting
-            // 
-            bsNetting.DataSource = typeof(EnergyUse.Models.Netting);
-            // 
-            // cboEnergyType
-            // 
-            cboEnergyType.DisplayMember = "Name";
-            cboEnergyType.FormattingEnabled = true;
-            resources.ApplyResources(cboEnergyType, "cboEnergyType");
-            cboEnergyType.Name = "cboEnergyType";
-            cboEnergyType.ValueMember = "Id";
-            cboEnergyType.SelectedIndexChanged += cboEnergyType_SelectedIndexChanged;
-            // 
-            // lblEnergyType
-            // 
-            resources.ApplyResources(lblEnergyType, "lblEnergyType");
-            lblEnergyType.Name = "lblEnergyType";
-            // 
             // idDataGridViewTextBoxColumn
             // 
             idDataGridViewTextBoxColumn.DataPropertyName = "Id";
@@ -173,10 +163,79 @@
             energyTypeDataGridViewTextBoxColumn.Name = "energyTypeDataGridViewTextBoxColumn";
             energyTypeDataGridViewTextBoxColumn.ReadOnly = true;
             // 
+            // bsNetting
+            // 
+            bsNetting.DataSource = typeof(EnergyUse.Models.Netting);
+            // 
+            // cboEnergyType
+            // 
+            cboEnergyType.DisplayMember = "Name";
+            cboEnergyType.FormattingEnabled = true;
+            resources.ApplyResources(cboEnergyType, "cboEnergyType");
+            cboEnergyType.Name = "cboEnergyType";
+            cboEnergyType.Tag = "FrmNettingEnergyType";
+            cboEnergyType.ValueMember = "Id";
+            cboEnergyType.SelectedIndexChanged += cboEnergyType_SelectedIndexChanged;
+            // 
+            // lblEnergyType
+            // 
+            resources.ApplyResources(lblEnergyType, "lblEnergyType");
+            lblEnergyType.Name = "lblEnergyType";
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(txtRate);
+            groupBox1.Controls.Add(lblFactor);
+            groupBox1.Controls.Add(lblEndDate);
+            groupBox1.Controls.Add(dtEndDate);
+            groupBox1.Controls.Add(lblStartDate);
+            groupBox1.Controls.Add(dtStartDate);
+            resources.ApplyResources(groupBox1, "groupBox1");
+            groupBox1.Name = "groupBox1";
+            groupBox1.TabStop = false;
+            // 
+            // txtRate
+            // 
+            txtRate.DataBindings.Add(new Binding("Text", bsNetting, "Rate", true));
+            resources.ApplyResources(txtRate, "txtRate");
+            txtRate.Name = "txtRate";
+            // 
+            // lblFactor
+            // 
+            resources.ApplyResources(lblFactor, "lblFactor");
+            lblFactor.Name = "lblFactor";
+            // 
+            // lblEndDate
+            // 
+            resources.ApplyResources(lblEndDate, "lblEndDate");
+            lblEndDate.Name = "lblEndDate";
+            // 
+            // dtEndDate
+            // 
+            dtEndDate.DataBindings.Add(new Binding("Value", bsNetting, "EndDate", true));
+            dtEndDate.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(dtEndDate, "dtEndDate");
+            dtEndDate.Name = "dtEndDate";
+            dtEndDate.Value = new DateTime(2022, 10, 1, 0, 0, 0, 0);
+            // 
+            // lblStartDate
+            // 
+            resources.ApplyResources(lblStartDate, "lblStartDate");
+            lblStartDate.Name = "lblStartDate";
+            // 
+            // dtStartDate
+            // 
+            dtStartDate.DataBindings.Add(new Binding("Value", bsNetting, "StartDate", true));
+            dtStartDate.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(dtStartDate, "dtStartDate");
+            dtStartDate.Name = "dtStartDate";
+            dtStartDate.Value = new DateTime(2022, 10, 1, 0, 0, 0, 0);
+            // 
             // frmNetting
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(groupBox1);
             Controls.Add(cboEnergyType);
             Controls.Add(lblEnergyType);
             Controls.Add(dgNetting);
@@ -190,6 +249,8 @@
             toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgNetting).EndInit();
             ((System.ComponentModel.ISupportInitialize)bsNetting).EndInit();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -214,5 +275,12 @@
         private DataGridViewTextBoxColumn endDateDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn rateDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn energyTypeDataGridViewTextBoxColumn;
+        private GroupBox groupBox1;
+        private Label lblStartDate;
+        private DateTimePicker dtStartDate;
+        private TextBox txtRate;
+        private Label lblFactor;
+        private Label lblEndDate;
+        private DateTimePicker dtEndDate;
     }
 }
