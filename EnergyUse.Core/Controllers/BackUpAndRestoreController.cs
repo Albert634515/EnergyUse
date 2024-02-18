@@ -1,5 +1,5 @@
 ﻿using EnergyUse.Core.Interfaces;
-
+using System.Diagnostics;
 
 namespace EnergyUse.Core.Controllers
 {
@@ -69,6 +69,16 @@ namespace EnergyUse.Core.Controllers
         private string getDefaultBackUpDir()
         {
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BackUp");
+        }
+
+        public void CreateBackUpFile(string targetPath, string sourceFile)
+        {
+            if (!Directory.Exists(targetPath))
+                Directory.CreateDirectory(targetPath);
+
+            var fileName = $"EnergyUse_{DateTime.Now.ToString("yyyyMMddHHmmss")}.db";
+            var destFile = Path.Combine(targetPath, fileName);
+            File.Copy(sourceFile, destFile, true);
         }
 
         #endregion

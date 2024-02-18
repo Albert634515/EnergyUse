@@ -1,6 +1,4 @@
 ﻿using EnergyUse.Core.Controllers;
-using EnergyUse.Core.Interfaces;
-using EnergyUse.Core.Manager;
 
 namespace WinFormsEF.Views
 {

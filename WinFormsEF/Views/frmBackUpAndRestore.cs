@@ -48,12 +48,9 @@ namespace WinFormsEF.Views
         private void cmdSelectExportFile_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderDialog = new FolderBrowserDialog();
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetSetting("BackUpDirectory");
-            if (setting != null && setting.Id > 0)
-            {
-                folderDialog.SelectedPath = setting.KeyValue;
-            }
+            var setting = _controller.getSettingBackUpDir("BackUpDirectory");
+            if (! string.IsNullOrWhiteSpace(setting))
+                folderDialog.SelectedPath = setting;
 
             if (folderDialog.ShowDialog() == DialogResult.OK)
                 txtBackUpDir.Text = folderDialog.SelectedPath;
@@ -69,12 +66,9 @@ namespace WinFormsEF.Views
             try
             {
                 OpenFileDialog openFileDialog1 = new OpenFileDialog();
-                var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-                var setting = libSettings.GetSetting("RestoreDirectory");
-                if (setting != null && setting.Id > 0)
-                {
-                    openFileDialog1.InitialDirectory = setting.KeyValue;
-                }
+                var setting = _controller.getSettingBackUpDir("RestoreDirectory");
+                if (!string.IsNullOrWhiteSpace(setting))
+                    openFileDialog1.InitialDirectory = setting;
 
                 openFileDialog1.Title = Managers.Languages.GetResourceString("BackUpAndRestoreRestoreFile", "Restore db file");
                 openFileDialog1.Filter = "Database files|*.db";
@@ -118,12 +112,7 @@ namespace WinFormsEF.Views
                 return;
             }
 
-            if (!Directory.Exists(targetPath))
-                Directory.CreateDirectory(targetPath);
-
-            var fileName = $"EnergyUse_{DateTime.Now.ToString("yyyyMMddHHmmss")}.db";
-            var destFile = Path.Combine(targetPath, fileName);
-            File.Copy(sourceFile, destFile, true);
+            _controller.CreateBackUpFile(targetPath, sourceFile);
 
             message = Managers.Languages.GetResourceString("BackUpAndRestoreCreated", "Back-up created");
             MessageBox.Show(this, message);
@@ -144,6 +133,8 @@ namespace WinFormsEF.Views
                 MessageBox.Show(owner, message);
                 return;
             }
+
+            //Todo restore file
         }
 
         private void setBaseFormSettings()
