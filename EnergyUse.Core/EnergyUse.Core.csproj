@@ -11,7 +11,9 @@
     <PackageReference Include="EPPlus" Version="7.0.9">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
-    <PackageReference Include="itext7" Version="7.2.5">
+    <PackageReference Include="itext.bouncy-castle-adapter" Version="8.0.3" />
+    <PackageReference Include="itext.bouncy-castle-fips-adapter" Version="8.0.3" />
+    <PackageReference Include="itext7" Version="8.0.3">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
     <PackageReference Include="LiveChartsCore" Version="2.0.0-rc2" />
