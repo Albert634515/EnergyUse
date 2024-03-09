@@ -10,7 +10,7 @@ Data that the can be entered and the programs uses:
 - Tarif of enery
 - Tarifs for taxed over enery use
 - Payments made to an energy provider
-- 
+  
 Based on the the data the program can:
 - Show data per period
 - Compare energy by period
