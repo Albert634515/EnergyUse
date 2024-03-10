@@ -30,6 +30,9 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmRates));
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             ToolStrip1 = new ToolStrip();
             TsbAdd = new ToolStripButton();
             TsbSave = new ToolStripButton();
@@ -52,13 +55,6 @@
             LblRateSource = new Label();
             TxtDescription = new TextBox();
             DgRates = new DataGridView();
-            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            startRateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            endRateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            rateValueDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            expectedPriceChangeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            priceChangeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             GbRate = new GroupBox();
             LblRate = new Label();
             CboRateType = new ComboBox();
@@ -78,6 +74,13 @@
             LblRange = new Label();
             toolTip1 = new ToolTip(components);
             LblAlwaysCalculatedWith = new Label();
+            startRateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            endRateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            rateValueDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            expectedPriceChangeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            priceChangeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             ToolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bsRates).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsAdditionalCategoryAndGroupInfo).BeginInit();
@@ -229,52 +232,9 @@
             resources.ApplyResources(DgRates, "DgRates");
             DgRates.AutoGenerateColumns = false;
             DgRates.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DgRates.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, startRateDataGridViewTextBoxColumn, endRateDataGridViewTextBoxColumn, rateValueDataGridViewTextBoxColumn, expectedPriceChangeDataGridViewTextBoxColumn, priceChangeDataGridViewTextBoxColumn, descriptionDataGridViewTextBoxColumn });
+            DgRates.Columns.AddRange(new DataGridViewColumn[] { startRateDataGridViewTextBoxColumn, endRateDataGridViewTextBoxColumn, rateValueDataGridViewTextBoxColumn, expectedPriceChangeDataGridViewTextBoxColumn, priceChangeDataGridViewTextBoxColumn, descriptionDataGridViewTextBoxColumn, idDataGridViewTextBoxColumn });
             DgRates.DataSource = bsRates;
             DgRates.Name = "DgRates";
-            DgRates.RowTemplate.Height = 29;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
-            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            // 
-            // startRateDataGridViewTextBoxColumn
-            // 
-            startRateDataGridViewTextBoxColumn.DataPropertyName = "StartRate";
-            resources.ApplyResources(startRateDataGridViewTextBoxColumn, "startRateDataGridViewTextBoxColumn");
-            startRateDataGridViewTextBoxColumn.Name = "startRateDataGridViewTextBoxColumn";
-            // 
-            // endRateDataGridViewTextBoxColumn
-            // 
-            endRateDataGridViewTextBoxColumn.DataPropertyName = "EndRate";
-            resources.ApplyResources(endRateDataGridViewTextBoxColumn, "endRateDataGridViewTextBoxColumn");
-            endRateDataGridViewTextBoxColumn.Name = "endRateDataGridViewTextBoxColumn";
-            // 
-            // rateValueDataGridViewTextBoxColumn
-            // 
-            rateValueDataGridViewTextBoxColumn.DataPropertyName = "RateValue";
-            resources.ApplyResources(rateValueDataGridViewTextBoxColumn, "rateValueDataGridViewTextBoxColumn");
-            rateValueDataGridViewTextBoxColumn.Name = "rateValueDataGridViewTextBoxColumn";
-            // 
-            // expectedPriceChangeDataGridViewTextBoxColumn
-            // 
-            expectedPriceChangeDataGridViewTextBoxColumn.DataPropertyName = "ExpectedPriceChange";
-            resources.ApplyResources(expectedPriceChangeDataGridViewTextBoxColumn, "expectedPriceChangeDataGridViewTextBoxColumn");
-            expectedPriceChangeDataGridViewTextBoxColumn.Name = "expectedPriceChangeDataGridViewTextBoxColumn";
-            // 
-            // priceChangeDataGridViewTextBoxColumn
-            // 
-            priceChangeDataGridViewTextBoxColumn.DataPropertyName = "PriceChange";
-            resources.ApplyResources(priceChangeDataGridViewTextBoxColumn, "priceChangeDataGridViewTextBoxColumn");
-            priceChangeDataGridViewTextBoxColumn.Name = "priceChangeDataGridViewTextBoxColumn";
-            // 
-            // descriptionDataGridViewTextBoxColumn
-            // 
-            descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
-            resources.ApplyResources(descriptionDataGridViewTextBoxColumn, "descriptionDataGridViewTextBoxColumn");
-            descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
             // 
             // GbRate
             // 
@@ -399,6 +359,57 @@
             resources.ApplyResources(LblAlwaysCalculatedWith, "LblAlwaysCalculatedWith");
             LblAlwaysCalculatedWith.Name = "LblAlwaysCalculatedWith";
             // 
+            // startRateDataGridViewTextBoxColumn
+            // 
+            startRateDataGridViewTextBoxColumn.DataPropertyName = "StartRate";
+            resources.ApplyResources(startRateDataGridViewTextBoxColumn, "startRateDataGridViewTextBoxColumn");
+            startRateDataGridViewTextBoxColumn.Name = "startRateDataGridViewTextBoxColumn";
+            // 
+            // endRateDataGridViewTextBoxColumn
+            // 
+            endRateDataGridViewTextBoxColumn.DataPropertyName = "EndRate";
+            resources.ApplyResources(endRateDataGridViewTextBoxColumn, "endRateDataGridViewTextBoxColumn");
+            endRateDataGridViewTextBoxColumn.Name = "endRateDataGridViewTextBoxColumn";
+            // 
+            // rateValueDataGridViewTextBoxColumn
+            // 
+            rateValueDataGridViewTextBoxColumn.DataPropertyName = "RateValue";
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N5";
+            rateValueDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            resources.ApplyResources(rateValueDataGridViewTextBoxColumn, "rateValueDataGridViewTextBoxColumn");
+            rateValueDataGridViewTextBoxColumn.Name = "rateValueDataGridViewTextBoxColumn";
+            // 
+            // expectedPriceChangeDataGridViewTextBoxColumn
+            // 
+            expectedPriceChangeDataGridViewTextBoxColumn.DataPropertyName = "ExpectedPriceChange";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N3";
+            expectedPriceChangeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            resources.ApplyResources(expectedPriceChangeDataGridViewTextBoxColumn, "expectedPriceChangeDataGridViewTextBoxColumn");
+            expectedPriceChangeDataGridViewTextBoxColumn.Name = "expectedPriceChangeDataGridViewTextBoxColumn";
+            // 
+            // priceChangeDataGridViewTextBoxColumn
+            // 
+            priceChangeDataGridViewTextBoxColumn.DataPropertyName = "PriceChange";
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N3";
+            priceChangeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            resources.ApplyResources(priceChangeDataGridViewTextBoxColumn, "priceChangeDataGridViewTextBoxColumn");
+            priceChangeDataGridViewTextBoxColumn.Name = "priceChangeDataGridViewTextBoxColumn";
+            // 
+            // descriptionDataGridViewTextBoxColumn
+            // 
+            descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
+            resources.ApplyResources(descriptionDataGridViewTextBoxColumn, "descriptionDataGridViewTextBoxColumn");
+            descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            // 
             // FrmRates
             // 
             resources.ApplyResources(this, "$this");
@@ -476,16 +487,16 @@
         private ToolTip toolTip1;
         private Label LblAlwaysCalculatedWith;
         private ToolStripButton TbsCancel;
-        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private ComboBox CboRateType;
+        private Label LblRateType;
+        private BindingSource bsRateType;
+        private ucControls.ucStaffel ucStaffel1;
         private DataGridViewTextBoxColumn startRateDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn endRateDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn rateValueDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn expectedPriceChangeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn priceChangeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
-        private ComboBox CboRateType;
-        private Label LblRateType;
-        private BindingSource bsRateType;
-        private ucControls.ucStaffel ucStaffel1;
+        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
     }
 }

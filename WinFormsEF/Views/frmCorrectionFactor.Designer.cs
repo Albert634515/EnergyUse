@@ -28,245 +28,236 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCorrectionFactor));
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsbAdd = new System.Windows.Forms.ToolStripButton();
-            this.tsbSave = new System.Windows.Forms.ToolStripButton();
-            this.tbsCancel = new System.Windows.Forms.ToolStripButton();
-            this.tsbDelete = new System.Windows.Forms.ToolStripButton();
-            this.tsbRefresh = new System.Windows.Forms.ToolStripButton();
-            this.tsbClose = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.cboEnergyType = new System.Windows.Forms.ComboBox();
-            this.lblEnergyType = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.dgCorrectionFactor = new System.Windows.Forms.DataGridView();
-            this.startFactorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.endFactorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.factorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.energyTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bsCorrectionFactors = new System.Windows.Forms.BindingSource(this.components);
-            this.gbCorrectionFactor = new System.Windows.Forms.GroupBox();
-            this.txtFactor = new System.Windows.Forms.TextBox();
-            this.lblFactor = new System.Windows.Forms.Label();
-            this.lblEndDate = new System.Windows.Forms.Label();
-            this.dtEndDate = new System.Windows.Forms.DateTimePicker();
-            this.lblStartDate = new System.Windows.Forms.Label();
-            this.dtStartDate = new System.Windows.Forms.DateTimePicker();
-            this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgCorrectionFactor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsCorrectionFactors)).BeginInit();
-            this.gbCorrectionFactor.SuspendLayout();
-            this.SuspendLayout();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            toolStrip1 = new ToolStrip();
+            tsbAdd = new ToolStripButton();
+            tsbSave = new ToolStripButton();
+            tbsCancel = new ToolStripButton();
+            tsbDelete = new ToolStripButton();
+            tsbRefresh = new ToolStripButton();
+            tsbClose = new ToolStripButton();
+            statusStrip1 = new StatusStrip();
+            cboEnergyType = new ComboBox();
+            lblEnergyType = new Label();
+            toolTip1 = new ToolTip(components);
+            dgCorrectionFactor = new DataGridView();
+            bsCorrectionFactors = new BindingSource(components);
+            gbCorrectionFactor = new GroupBox();
+            txtFactor = new TextBox();
+            lblFactor = new Label();
+            lblEndDate = new Label();
+            dtEndDate = new DateTimePicker();
+            lblStartDate = new Label();
+            dtStartDate = new DateTimePicker();
+            startFactorDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            endFactorDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            factorDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            energyTypeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgCorrectionFactor).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsCorrectionFactors).BeginInit();
+            gbCorrectionFactor.SuspendLayout();
+            SuspendLayout();
             // 
             // toolStrip1
             // 
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbAdd,
-            this.tsbSave,
-            this.tbsCancel,
-            this.tsbDelete,
-            this.tsbRefresh,
-            this.tsbClose});
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
-            this.toolStrip1.Name = "toolStrip1";
+            toolStrip1.ImageScalingSize = new Size(20, 20);
+            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbAdd, tsbSave, tbsCancel, tsbDelete, tsbRefresh, tsbClose });
+            resources.ApplyResources(toolStrip1, "toolStrip1");
+            toolStrip1.Name = "toolStrip1";
             // 
             // tsbAdd
             // 
-            this.tsbAdd.Image = global::WinFormsUI.Properties.Resources.add_24x24;
-            resources.ApplyResources(this.tsbAdd, "tsbAdd");
-            this.tsbAdd.Name = "tsbAdd";
-            this.tsbAdd.Click += new System.EventHandler(this.tsbAdd_Click);
+            tsbAdd.Image = WinFormsUI.Properties.Resources.add_24x24;
+            resources.ApplyResources(tsbAdd, "tsbAdd");
+            tsbAdd.Name = "tsbAdd";
+            tsbAdd.Click += tsbAdd_Click;
             // 
             // tsbSave
             // 
-            this.tsbSave.Image = global::WinFormsUI.Properties.Resources.tick_mark_24x24;
-            resources.ApplyResources(this.tsbSave, "tsbSave");
-            this.tsbSave.Name = "tsbSave";
-            this.tsbSave.Click += new System.EventHandler(this.tsbSave_Click);
+            tsbSave.Image = WinFormsUI.Properties.Resources.tick_mark_24x24;
+            resources.ApplyResources(tsbSave, "tsbSave");
+            tsbSave.Name = "tsbSave";
+            tsbSave.Click += tsbSave_Click;
             // 
             // tbsCancel
             // 
-            this.tbsCancel.Image = global::WinFormsUI.Properties.Resources.clear_24x24;
-            resources.ApplyResources(this.tbsCancel, "tbsCancel");
-            this.tbsCancel.Name = "tbsCancel";
-            this.tbsCancel.Click += new System.EventHandler(this.tbsCancel_Click);
+            tbsCancel.Image = WinFormsUI.Properties.Resources.clear_24x24;
+            resources.ApplyResources(tbsCancel, "tbsCancel");
+            tbsCancel.Name = "tbsCancel";
+            tbsCancel.Click += tbsCancel_Click;
             // 
             // tsbDelete
             // 
-            this.tsbDelete.Image = global::WinFormsUI.Properties.Resources.delete_24x24;
-            resources.ApplyResources(this.tsbDelete, "tsbDelete");
-            this.tsbDelete.Name = "tsbDelete";
-            this.tsbDelete.Click += new System.EventHandler(this.tsbDelete_Click);
+            tsbDelete.Image = WinFormsUI.Properties.Resources.delete_24x24;
+            resources.ApplyResources(tsbDelete, "tsbDelete");
+            tsbDelete.Name = "tsbDelete";
+            tsbDelete.Click += tsbDelete_Click;
             // 
             // tsbRefresh
             // 
-            this.tsbRefresh.Image = global::WinFormsUI.Properties.Resources.clock_24x24;
-            resources.ApplyResources(this.tsbRefresh, "tsbRefresh");
-            this.tsbRefresh.Name = "tsbRefresh";
-            this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
+            tsbRefresh.Image = WinFormsUI.Properties.Resources.clock_24x24;
+            resources.ApplyResources(tsbRefresh, "tsbRefresh");
+            tsbRefresh.Name = "tsbRefresh";
+            tsbRefresh.Click += tsbRefresh_Click;
             // 
             // tsbClose
             // 
-            this.tsbClose.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsbClose.Image = global::WinFormsUI.Properties.Resources.crossed_24x24;
-            resources.ApplyResources(this.tsbClose, "tsbClose");
-            this.tsbClose.Name = "tsbClose";
-            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
+            tsbClose.Alignment = ToolStripItemAlignment.Right;
+            tsbClose.Image = WinFormsUI.Properties.Resources.crossed_24x24;
+            resources.ApplyResources(tsbClose, "tsbClose");
+            tsbClose.Name = "tsbClose";
+            tsbClose.Click += tsbClose_Click;
             // 
             // statusStrip1
             // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            resources.ApplyResources(this.statusStrip1, "statusStrip1");
-            this.statusStrip1.Name = "statusStrip1";
+            statusStrip1.ImageScalingSize = new Size(20, 20);
+            resources.ApplyResources(statusStrip1, "statusStrip1");
+            statusStrip1.Name = "statusStrip1";
             // 
             // cboEnergyType
             // 
-            this.cboEnergyType.DisplayMember = "Name";
-            this.cboEnergyType.FormattingEnabled = true;
-            resources.ApplyResources(this.cboEnergyType, "cboEnergyType");
-            this.cboEnergyType.Name = "cboEnergyType";
-            this.cboEnergyType.ValueMember = "Id";
-            this.cboEnergyType.SelectedIndexChanged += new System.EventHandler(this.cboEnergyType_SelectedIndexChanged);
+            cboEnergyType.DisplayMember = "Name";
+            cboEnergyType.FormattingEnabled = true;
+            resources.ApplyResources(cboEnergyType, "cboEnergyType");
+            cboEnergyType.Name = "cboEnergyType";
+            cboEnergyType.ValueMember = "Id";
+            cboEnergyType.SelectedIndexChanged += cboEnergyType_SelectedIndexChanged;
             // 
             // lblEnergyType
             // 
-            resources.ApplyResources(this.lblEnergyType, "lblEnergyType");
-            this.lblEnergyType.Name = "lblEnergyType";
+            resources.ApplyResources(lblEnergyType, "lblEnergyType");
+            lblEnergyType.Name = "lblEnergyType";
             // 
             // dgCorrectionFactor
             // 
-            this.dgCorrectionFactor.AllowUserToAddRows = false;
-            this.dgCorrectionFactor.AllowUserToDeleteRows = false;
-            resources.ApplyResources(this.dgCorrectionFactor, "dgCorrectionFactor");
-            this.dgCorrectionFactor.AutoGenerateColumns = false;
-            this.dgCorrectionFactor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgCorrectionFactor.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.startFactorDataGridViewTextBoxColumn,
-            this.endFactorDataGridViewTextBoxColumn,
-            this.factorDataGridViewTextBoxColumn,
-            this.energyTypeDataGridViewTextBoxColumn,
-            this.idDataGridViewTextBoxColumn});
-            this.dgCorrectionFactor.DataSource = this.bsCorrectionFactors;
-            this.dgCorrectionFactor.Name = "dgCorrectionFactor";
-            this.dgCorrectionFactor.ReadOnly = true;
-            this.dgCorrectionFactor.RowTemplate.Height = 29;
-            // 
-            // startFactorDataGridViewTextBoxColumn
-            // 
-            this.startFactorDataGridViewTextBoxColumn.DataPropertyName = "StartFactor";
-            resources.ApplyResources(this.startFactorDataGridViewTextBoxColumn, "startFactorDataGridViewTextBoxColumn");
-            this.startFactorDataGridViewTextBoxColumn.Name = "startFactorDataGridViewTextBoxColumn";
-            this.startFactorDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // endFactorDataGridViewTextBoxColumn
-            // 
-            this.endFactorDataGridViewTextBoxColumn.DataPropertyName = "EndFactor";
-            resources.ApplyResources(this.endFactorDataGridViewTextBoxColumn, "endFactorDataGridViewTextBoxColumn");
-            this.endFactorDataGridViewTextBoxColumn.Name = "endFactorDataGridViewTextBoxColumn";
-            this.endFactorDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // factorDataGridViewTextBoxColumn
-            // 
-            this.factorDataGridViewTextBoxColumn.DataPropertyName = "Factor";
-            resources.ApplyResources(this.factorDataGridViewTextBoxColumn, "factorDataGridViewTextBoxColumn");
-            this.factorDataGridViewTextBoxColumn.Name = "factorDataGridViewTextBoxColumn";
-            this.factorDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // energyTypeDataGridViewTextBoxColumn
-            // 
-            this.energyTypeDataGridViewTextBoxColumn.DataPropertyName = "EnergyType";
-            resources.ApplyResources(this.energyTypeDataGridViewTextBoxColumn, "energyTypeDataGridViewTextBoxColumn");
-            this.energyTypeDataGridViewTextBoxColumn.Name = "energyTypeDataGridViewTextBoxColumn";
-            this.energyTypeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            resources.ApplyResources(this.idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.ReadOnly = true;
+            dgCorrectionFactor.AllowUserToAddRows = false;
+            dgCorrectionFactor.AllowUserToDeleteRows = false;
+            resources.ApplyResources(dgCorrectionFactor, "dgCorrectionFactor");
+            dgCorrectionFactor.AutoGenerateColumns = false;
+            dgCorrectionFactor.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgCorrectionFactor.Columns.AddRange(new DataGridViewColumn[] { startFactorDataGridViewTextBoxColumn, endFactorDataGridViewTextBoxColumn, factorDataGridViewTextBoxColumn, energyTypeDataGridViewTextBoxColumn, idDataGridViewTextBoxColumn });
+            dgCorrectionFactor.DataSource = bsCorrectionFactors;
+            dgCorrectionFactor.Name = "dgCorrectionFactor";
+            dgCorrectionFactor.ReadOnly = true;
             // 
             // bsCorrectionFactors
             // 
-            this.bsCorrectionFactors.DataSource = typeof(EnergyUse.Models.CorrectionFactor);
+            bsCorrectionFactors.DataSource = typeof(EnergyUse.Models.CorrectionFactor);
             // 
             // gbCorrectionFactor
             // 
-            resources.ApplyResources(this.gbCorrectionFactor, "gbCorrectionFactor");
-            this.gbCorrectionFactor.Controls.Add(this.txtFactor);
-            this.gbCorrectionFactor.Controls.Add(this.lblFactor);
-            this.gbCorrectionFactor.Controls.Add(this.lblEndDate);
-            this.gbCorrectionFactor.Controls.Add(this.dtEndDate);
-            this.gbCorrectionFactor.Controls.Add(this.lblStartDate);
-            this.gbCorrectionFactor.Controls.Add(this.dtStartDate);
-            this.gbCorrectionFactor.Name = "gbCorrectionFactor";
-            this.gbCorrectionFactor.TabStop = false;
+            resources.ApplyResources(gbCorrectionFactor, "gbCorrectionFactor");
+            gbCorrectionFactor.Controls.Add(txtFactor);
+            gbCorrectionFactor.Controls.Add(lblFactor);
+            gbCorrectionFactor.Controls.Add(lblEndDate);
+            gbCorrectionFactor.Controls.Add(dtEndDate);
+            gbCorrectionFactor.Controls.Add(lblStartDate);
+            gbCorrectionFactor.Controls.Add(dtStartDate);
+            gbCorrectionFactor.Name = "gbCorrectionFactor";
+            gbCorrectionFactor.TabStop = false;
             // 
             // txtFactor
             // 
-            this.txtFactor.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsCorrectionFactors, "Factor", true));
-            resources.ApplyResources(this.txtFactor, "txtFactor");
-            this.txtFactor.Name = "txtFactor";
+            txtFactor.DataBindings.Add(new Binding("Text", bsCorrectionFactors, "Factor", true));
+            resources.ApplyResources(txtFactor, "txtFactor");
+            txtFactor.Name = "txtFactor";
             // 
             // lblFactor
             // 
-            resources.ApplyResources(this.lblFactor, "lblFactor");
-            this.lblFactor.Name = "lblFactor";
+            resources.ApplyResources(lblFactor, "lblFactor");
+            lblFactor.Name = "lblFactor";
             // 
             // lblEndDate
             // 
-            resources.ApplyResources(this.lblEndDate, "lblEndDate");
-            this.lblEndDate.Name = "lblEndDate";
+            resources.ApplyResources(lblEndDate, "lblEndDate");
+            lblEndDate.Name = "lblEndDate";
             // 
             // dtEndDate
             // 
-            this.dtEndDate.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bsCorrectionFactors, "EndFactor", true));
-            this.dtEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            resources.ApplyResources(this.dtEndDate, "dtEndDate");
-            this.dtEndDate.Name = "dtEndDate";
-            this.dtEndDate.Value = new System.DateTime(2022, 10, 1, 0, 0, 0, 0);
+            dtEndDate.DataBindings.Add(new Binding("Value", bsCorrectionFactors, "EndFactor", true));
+            dtEndDate.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(dtEndDate, "dtEndDate");
+            dtEndDate.Name = "dtEndDate";
+            dtEndDate.Value = new DateTime(2022, 10, 1, 0, 0, 0, 0);
             // 
             // lblStartDate
             // 
-            resources.ApplyResources(this.lblStartDate, "lblStartDate");
-            this.lblStartDate.Name = "lblStartDate";
+            resources.ApplyResources(lblStartDate, "lblStartDate");
+            lblStartDate.Name = "lblStartDate";
             // 
             // dtStartDate
             // 
-            this.dtStartDate.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bsCorrectionFactors, "StartFactor", true));
-            this.dtStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            resources.ApplyResources(this.dtStartDate, "dtStartDate");
-            this.dtStartDate.Name = "dtStartDate";
-            this.dtStartDate.Value = new System.DateTime(2022, 10, 1, 0, 0, 0, 0);
+            dtStartDate.DataBindings.Add(new Binding("Value", bsCorrectionFactors, "StartFactor", true));
+            dtStartDate.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(dtStartDate, "dtStartDate");
+            dtStartDate.Name = "dtStartDate";
+            dtStartDate.Value = new DateTime(2022, 10, 1, 0, 0, 0, 0);
+            // 
+            // startFactorDataGridViewTextBoxColumn
+            // 
+            startFactorDataGridViewTextBoxColumn.DataPropertyName = "StartFactor";
+            resources.ApplyResources(startFactorDataGridViewTextBoxColumn, "startFactorDataGridViewTextBoxColumn");
+            startFactorDataGridViewTextBoxColumn.Name = "startFactorDataGridViewTextBoxColumn";
+            startFactorDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // endFactorDataGridViewTextBoxColumn
+            // 
+            endFactorDataGridViewTextBoxColumn.DataPropertyName = "EndFactor";
+            resources.ApplyResources(endFactorDataGridViewTextBoxColumn, "endFactorDataGridViewTextBoxColumn");
+            endFactorDataGridViewTextBoxColumn.Name = "endFactorDataGridViewTextBoxColumn";
+            endFactorDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // factorDataGridViewTextBoxColumn
+            // 
+            factorDataGridViewTextBoxColumn.DataPropertyName = "Factor";
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N5";
+            factorDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            resources.ApplyResources(factorDataGridViewTextBoxColumn, "factorDataGridViewTextBoxColumn");
+            factorDataGridViewTextBoxColumn.Name = "factorDataGridViewTextBoxColumn";
+            factorDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // energyTypeDataGridViewTextBoxColumn
+            // 
+            energyTypeDataGridViewTextBoxColumn.DataPropertyName = "EnergyType";
+            resources.ApplyResources(energyTypeDataGridViewTextBoxColumn, "energyTypeDataGridViewTextBoxColumn");
+            energyTypeDataGridViewTextBoxColumn.Name = "energyTypeDataGridViewTextBoxColumn";
+            energyTypeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            idDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // frmCorrectionFactor
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.gbCorrectionFactor);
-            this.Controls.Add(this.dgCorrectionFactor);
-            this.Controls.Add(this.cboEnergyType);
-            this.Controls.Add(this.lblEnergyType);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.toolStrip1);
-            this.Name = "frmCorrectionFactor";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCorrectionFactor_FormClosing);
-            this.Load += new System.EventHandler(this.frmCorrectionFactor_Load);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgCorrectionFactor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsCorrectionFactors)).EndInit();
-            this.gbCorrectionFactor.ResumeLayout(false);
-            this.gbCorrectionFactor.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(gbCorrectionFactor);
+            Controls.Add(dgCorrectionFactor);
+            Controls.Add(cboEnergyType);
+            Controls.Add(lblEnergyType);
+            Controls.Add(statusStrip1);
+            Controls.Add(toolStrip1);
+            Name = "frmCorrectionFactor";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            FormClosing += frmCorrectionFactor_FormClosing;
+            Load += frmCorrectionFactor_Load;
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgCorrectionFactor).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsCorrectionFactors).EndInit();
+            gbCorrectionFactor.ResumeLayout(false);
+            gbCorrectionFactor.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

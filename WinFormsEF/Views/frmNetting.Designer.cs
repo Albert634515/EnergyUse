@@ -30,6 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmNetting));
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             toolStrip1 = new ToolStrip();
             tsbAddNetting = new ToolStripButton();
             tsbSave = new ToolStripButton();
@@ -40,11 +41,6 @@
             statusStrip1 = new StatusStrip();
             toolTip1 = new ToolTip(components);
             dgNetting = new DataGridView();
-            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            startDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            endDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            rateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            energyTypeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             bsNetting = new BindingSource(components);
             cboEnergyType = new ComboBox();
             lblEnergyType = new Label();
@@ -55,6 +51,11 @@
             dtEndDate = new DateTimePicker();
             lblStartDate = new Label();
             dtStartDate = new DateTimePicker();
+            startDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            endDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            rateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            energyTypeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgNetting).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsNetting).BeginInit();
@@ -124,44 +125,9 @@
             resources.ApplyResources(dgNetting, "dgNetting");
             dgNetting.AutoGenerateColumns = false;
             dgNetting.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgNetting.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, startDateDataGridViewTextBoxColumn, endDateDataGridViewTextBoxColumn, rateDataGridViewTextBoxColumn, energyTypeDataGridViewTextBoxColumn });
+            dgNetting.Columns.AddRange(new DataGridViewColumn[] { startDateDataGridViewTextBoxColumn, endDateDataGridViewTextBoxColumn, rateDataGridViewTextBoxColumn, energyTypeDataGridViewTextBoxColumn, idDataGridViewTextBoxColumn });
             dgNetting.DataSource = bsNetting;
             dgNetting.Name = "dgNetting";
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
-            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            idDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // startDateDataGridViewTextBoxColumn
-            // 
-            startDateDataGridViewTextBoxColumn.DataPropertyName = "StartDate";
-            resources.ApplyResources(startDateDataGridViewTextBoxColumn, "startDateDataGridViewTextBoxColumn");
-            startDateDataGridViewTextBoxColumn.Name = "startDateDataGridViewTextBoxColumn";
-            startDateDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // endDateDataGridViewTextBoxColumn
-            // 
-            endDateDataGridViewTextBoxColumn.DataPropertyName = "EndDate";
-            resources.ApplyResources(endDateDataGridViewTextBoxColumn, "endDateDataGridViewTextBoxColumn");
-            endDateDataGridViewTextBoxColumn.Name = "endDateDataGridViewTextBoxColumn";
-            endDateDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // rateDataGridViewTextBoxColumn
-            // 
-            rateDataGridViewTextBoxColumn.DataPropertyName = "Rate";
-            resources.ApplyResources(rateDataGridViewTextBoxColumn, "rateDataGridViewTextBoxColumn");
-            rateDataGridViewTextBoxColumn.Name = "rateDataGridViewTextBoxColumn";
-            rateDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // energyTypeDataGridViewTextBoxColumn
-            // 
-            energyTypeDataGridViewTextBoxColumn.DataPropertyName = "EnergyTypeName";
-            resources.ApplyResources(energyTypeDataGridViewTextBoxColumn, "energyTypeDataGridViewTextBoxColumn");
-            energyTypeDataGridViewTextBoxColumn.Name = "energyTypeDataGridViewTextBoxColumn";
-            energyTypeDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // bsNetting
             // 
@@ -231,6 +197,44 @@
             dtStartDate.Name = "dtStartDate";
             dtStartDate.Value = new DateTime(2022, 10, 1, 0, 0, 0, 0);
             // 
+            // startDateDataGridViewTextBoxColumn
+            // 
+            startDateDataGridViewTextBoxColumn.DataPropertyName = "StartDate";
+            resources.ApplyResources(startDateDataGridViewTextBoxColumn, "startDateDataGridViewTextBoxColumn");
+            startDateDataGridViewTextBoxColumn.Name = "startDateDataGridViewTextBoxColumn";
+            startDateDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // endDateDataGridViewTextBoxColumn
+            // 
+            endDateDataGridViewTextBoxColumn.DataPropertyName = "EndDate";
+            resources.ApplyResources(endDateDataGridViewTextBoxColumn, "endDateDataGridViewTextBoxColumn");
+            endDateDataGridViewTextBoxColumn.Name = "endDateDataGridViewTextBoxColumn";
+            endDateDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // rateDataGridViewTextBoxColumn
+            // 
+            rateDataGridViewTextBoxColumn.DataPropertyName = "Rate";
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N2";
+            rateDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            resources.ApplyResources(rateDataGridViewTextBoxColumn, "rateDataGridViewTextBoxColumn");
+            rateDataGridViewTextBoxColumn.Name = "rateDataGridViewTextBoxColumn";
+            rateDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // energyTypeDataGridViewTextBoxColumn
+            // 
+            energyTypeDataGridViewTextBoxColumn.DataPropertyName = "EnergyTypeName";
+            resources.ApplyResources(energyTypeDataGridViewTextBoxColumn, "energyTypeDataGridViewTextBoxColumn");
+            energyTypeDataGridViewTextBoxColumn.Name = "energyTypeDataGridViewTextBoxColumn";
+            energyTypeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            idDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
             // frmNetting
             // 
             resources.ApplyResources(this, "$this");
@@ -270,11 +274,6 @@
         private ComboBox cboEnergyType;
         private Label lblEnergyType;
         private ToolStripButton tbsCancel;
-        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn startDateDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn endDateDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn rateDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn energyTypeDataGridViewTextBoxColumn;
         private GroupBox groupBox1;
         private Label lblStartDate;
         private DateTimePicker dtStartDate;
@@ -282,5 +281,10 @@
         private Label lblFactor;
         private Label lblEndDate;
         private DateTimePicker dtEndDate;
+        private DataGridViewTextBoxColumn startDateDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn endDateDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn rateDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn energyTypeDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
     }
 }

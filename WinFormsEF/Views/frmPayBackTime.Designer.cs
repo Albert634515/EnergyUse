@@ -28,394 +28,416 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPayBackTime));
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtTotalCapacitySolarPanels = new System.Windows.Forms.TextBox();
-            this.lblTotalCapacity = new System.Windows.Forms.Label();
-            this.lblEnergyType = new System.Windows.Forms.Label();
-            this.cboEnergyType = new System.Windows.Forms.ComboBox();
-            this.bsEnergyTypes = new System.Windows.Forms.BindingSource(this.components);
-            this.lblAddress = new System.Windows.Forms.Label();
-            this.cmbAddress = new System.Windows.Forms.ComboBox();
-            this.bsAddresses = new System.Windows.Forms.BindingSource(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtQualityReductionSolarPanels = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lblMaxYears = new System.Windows.Forms.Label();
-            this.nudMaxYears = new System.Windows.Forms.NumericUpDown();
-            this.lblSubsidy = new System.Windows.Forms.Label();
-            this.txtSubsidyAmount = new System.Windows.Forms.TextBox();
-            this.lblPurchaseAmount = new System.Windows.Forms.Label();
-            this.txtPurchaseAmount = new System.Windows.Forms.TextBox();
-            this.dtpPurchaseDate = new System.Windows.Forms.DateTimePicker();
-            this.lblDateOrPurchase = new System.Windows.Forms.Label();
-            this.dgPayBackTime = new System.Windows.Forms.DataGridView();
-            this.periodIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.startPeriodDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.endPeriodDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ReturnOnInvestment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ReturnOnInvestmentTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Return = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valueProducedDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valueConsumedDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ValueProducedAndConsumed = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MonetaryValueProduced = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MonetaryValueConsumed = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MonetaryValueProducedAndConsumed = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OtherCostProduced = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OtherCostConsumed = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bsPayBackTimes = new System.Windows.Forms.BindingSource(this.components);
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsbCalculate = new System.Windows.Forms.ToolStripButton();
-            this.tsbClose = new System.Windows.Forms.ToolStripButton();
-            this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
-            this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsEnergyTypes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsAddresses)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudMaxYears)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgPayBackTime)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsPayBackTimes)).BeginInit();
-            this.toolStrip1.SuspendLayout();
-            this.SuspendLayout();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            toolTip1 = new ToolTip(components);
+            statusStrip1 = new StatusStrip();
+            toolStripProgressBar1 = new ToolStripProgressBar();
+            toolStripStatusLabel1 = new ToolStripStatusLabel();
+            label6 = new Label();
+            txtTotalCapacitySolarPanels = new TextBox();
+            lblTotalCapacity = new Label();
+            lblEnergyType = new Label();
+            cboEnergyType = new ComboBox();
+            bsEnergyTypes = new BindingSource(components);
+            lblAddress = new Label();
+            cmbAddress = new ComboBox();
+            bsAddresses = new BindingSource(components);
+            label1 = new Label();
+            txtQualityReductionSolarPanels = new TextBox();
+            label3 = new Label();
+            lblMaxYears = new Label();
+            nudMaxYears = new NumericUpDown();
+            lblSubsidy = new Label();
+            txtSubsidyAmount = new TextBox();
+            lblPurchaseAmount = new Label();
+            txtPurchaseAmount = new TextBox();
+            dtpPurchaseDate = new DateTimePicker();
+            lblDateOrPurchase = new Label();
+            dgPayBackTime = new DataGridView();
+            bsPayBackTimes = new BindingSource(components);
+            toolStrip1 = new ToolStrip();
+            tsbCalculate = new ToolStripButton();
+            tsbClose = new ToolStripButton();
+            toolTip2 = new ToolTip(components);
+            periodIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            startPeriodDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            endPeriodDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            ReturnOnInvestment = new DataGridViewTextBoxColumn();
+            ReturnOnInvestmentTotal = new DataGridViewTextBoxColumn();
+            Return = new DataGridViewTextBoxColumn();
+            valueProducedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            valueConsumedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            ValueProducedAndConsumed = new DataGridViewTextBoxColumn();
+            MonetaryValueProduced = new DataGridViewTextBoxColumn();
+            MonetaryValueConsumed = new DataGridViewTextBoxColumn();
+            MonetaryValueProducedAndConsumed = new DataGridViewTextBoxColumn();
+            OtherCostProduced = new DataGridViewTextBoxColumn();
+            OtherCostConsumed = new DataGridViewTextBoxColumn();
+            statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsAddresses).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudMaxYears).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgPayBackTime).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsPayBackTimes).BeginInit();
+            toolStrip1.SuspendLayout();
+            SuspendLayout();
             // 
             // statusStrip1
             // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar1,
-            this.toolStripStatusLabel1});
-            resources.ApplyResources(this.statusStrip1, "statusStrip1");
-            this.statusStrip1.Name = "statusStrip1";
+            statusStrip1.ImageScalingSize = new Size(20, 20);
+            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripProgressBar1, toolStripStatusLabel1 });
+            resources.ApplyResources(statusStrip1, "statusStrip1");
+            statusStrip1.Name = "statusStrip1";
             // 
             // toolStripProgressBar1
             // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            resources.ApplyResources(this.toolStripProgressBar1, "toolStripProgressBar1");
+            toolStripProgressBar1.Name = "toolStripProgressBar1";
+            resources.ApplyResources(toolStripProgressBar1, "toolStripProgressBar1");
             // 
             // toolStripStatusLabel1
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
+            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            resources.ApplyResources(toolStripStatusLabel1, "toolStripStatusLabel1");
             // 
             // label6
             // 
-            resources.ApplyResources(this.label6, "label6");
-            this.label6.Name = "label6";
+            resources.ApplyResources(label6, "label6");
+            label6.Name = "label6";
             // 
             // txtTotalCapacitySolarPanels
             // 
-            resources.ApplyResources(this.txtTotalCapacitySolarPanels, "txtTotalCapacitySolarPanels");
-            this.txtTotalCapacitySolarPanels.Name = "txtTotalCapacitySolarPanels";
-            this.txtTotalCapacitySolarPanels.ReadOnly = true;
-            this.txtTotalCapacitySolarPanels.Tag = "TotalCapacitySolarPanels";
+            resources.ApplyResources(txtTotalCapacitySolarPanels, "txtTotalCapacitySolarPanels");
+            txtTotalCapacitySolarPanels.Name = "txtTotalCapacitySolarPanels";
+            txtTotalCapacitySolarPanels.ReadOnly = true;
+            txtTotalCapacitySolarPanels.Tag = "TotalCapacitySolarPanels";
             // 
             // lblTotalCapacity
             // 
-            resources.ApplyResources(this.lblTotalCapacity, "lblTotalCapacity");
-            this.lblTotalCapacity.Name = "lblTotalCapacity";
+            resources.ApplyResources(lblTotalCapacity, "lblTotalCapacity");
+            lblTotalCapacity.Name = "lblTotalCapacity";
             // 
             // lblEnergyType
             // 
-            resources.ApplyResources(this.lblEnergyType, "lblEnergyType");
-            this.lblEnergyType.Name = "lblEnergyType";
+            resources.ApplyResources(lblEnergyType, "lblEnergyType");
+            lblEnergyType.Name = "lblEnergyType";
             // 
             // cboEnergyType
             // 
-            this.cboEnergyType.DataSource = this.bsEnergyTypes;
-            this.cboEnergyType.DisplayMember = "Name";
-            this.cboEnergyType.FormattingEnabled = true;
-            resources.ApplyResources(this.cboEnergyType, "cboEnergyType");
-            this.cboEnergyType.Name = "cboEnergyType";
+            cboEnergyType.DataSource = bsEnergyTypes;
+            cboEnergyType.DisplayMember = "Name";
+            cboEnergyType.FormattingEnabled = true;
+            resources.ApplyResources(cboEnergyType, "cboEnergyType");
+            cboEnergyType.Name = "cboEnergyType";
             // 
             // bsEnergyTypes
             // 
-            this.bsEnergyTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
+            bsEnergyTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
             // 
             // lblAddress
             // 
-            resources.ApplyResources(this.lblAddress, "lblAddress");
-            this.lblAddress.Name = "lblAddress";
+            resources.ApplyResources(lblAddress, "lblAddress");
+            lblAddress.Name = "lblAddress";
             // 
             // cmbAddress
             // 
-            this.cmbAddress.DataSource = this.bsAddresses;
-            this.cmbAddress.DisplayMember = "Description";
-            this.cmbAddress.FormattingEnabled = true;
-            resources.ApplyResources(this.cmbAddress, "cmbAddress");
-            this.cmbAddress.Name = "cmbAddress";
-            this.cmbAddress.ValueMember = "Id";
-            this.cmbAddress.SelectedIndexChanged += new System.EventHandler(this.cmbAddress_SelectedIndexChanged);
+            cmbAddress.DataSource = bsAddresses;
+            cmbAddress.DisplayMember = "Description";
+            cmbAddress.FormattingEnabled = true;
+            resources.ApplyResources(cmbAddress, "cmbAddress");
+            cmbAddress.Name = "cmbAddress";
+            cmbAddress.ValueMember = "Id";
+            cmbAddress.SelectedIndexChanged += cmbAddress_SelectedIndexChanged;
             // 
             // bsAddresses
             // 
-            this.bsAddresses.DataSource = typeof(EnergyUse.Models.Address);
+            bsAddresses.DataSource = typeof(EnergyUse.Models.Address);
             // 
             // label1
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
+            resources.ApplyResources(label1, "label1");
+            label1.Name = "label1";
             // 
             // txtQualityReductionSolarPanels
             // 
-            resources.ApplyResources(this.txtQualityReductionSolarPanels, "txtQualityReductionSolarPanels");
-            this.txtQualityReductionSolarPanels.Name = "txtQualityReductionSolarPanels";
-            this.txtQualityReductionSolarPanels.Tag = "QualityReductionSolarPanels";
-            this.txtQualityReductionSolarPanels.TextChanged += new System.EventHandler(this.txtQualityReductionSolarPanels_TextChanged);
+            resources.ApplyResources(txtQualityReductionSolarPanels, "txtQualityReductionSolarPanels");
+            txtQualityReductionSolarPanels.Name = "txtQualityReductionSolarPanels";
+            txtQualityReductionSolarPanels.Tag = "QualityReductionSolarPanels";
+            txtQualityReductionSolarPanels.TextChanged += txtQualityReductionSolarPanels_TextChanged;
             // 
             // label3
             // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
+            resources.ApplyResources(label3, "label3");
+            label3.Name = "label3";
             // 
             // lblMaxYears
             // 
-            resources.ApplyResources(this.lblMaxYears, "lblMaxYears");
-            this.lblMaxYears.Name = "lblMaxYears";
+            resources.ApplyResources(lblMaxYears, "lblMaxYears");
+            lblMaxYears.Name = "lblMaxYears";
             // 
             // nudMaxYears
             // 
-            resources.ApplyResources(this.nudMaxYears, "nudMaxYears");
-            this.nudMaxYears.Name = "nudMaxYears";
-            this.nudMaxYears.Tag = "PayBackMaxYearsToCalculate";
-            this.nudMaxYears.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.nudMaxYears.ValueChanged += new System.EventHandler(this.nudMaxYears_ValueChanged);
+            resources.ApplyResources(nudMaxYears, "nudMaxYears");
+            nudMaxYears.Name = "nudMaxYears";
+            nudMaxYears.Tag = "PayBackMaxYearsToCalculate";
+            nudMaxYears.Value = new decimal(new int[] { 5, 0, 0, 0 });
+            nudMaxYears.ValueChanged += nudMaxYears_ValueChanged;
             // 
             // lblSubsidy
             // 
-            resources.ApplyResources(this.lblSubsidy, "lblSubsidy");
-            this.lblSubsidy.Name = "lblSubsidy";
+            resources.ApplyResources(lblSubsidy, "lblSubsidy");
+            lblSubsidy.Name = "lblSubsidy";
             // 
             // txtSubsidyAmount
             // 
-            resources.ApplyResources(this.txtSubsidyAmount, "txtSubsidyAmount");
-            this.txtSubsidyAmount.Name = "txtSubsidyAmount";
-            this.txtSubsidyAmount.TextChanged += new System.EventHandler(this.txtSubsidyAmount_TextChanged);
+            resources.ApplyResources(txtSubsidyAmount, "txtSubsidyAmount");
+            txtSubsidyAmount.Name = "txtSubsidyAmount";
+            txtSubsidyAmount.TextChanged += txtSubsidyAmount_TextChanged;
             // 
             // lblPurchaseAmount
             // 
-            resources.ApplyResources(this.lblPurchaseAmount, "lblPurchaseAmount");
-            this.lblPurchaseAmount.Name = "lblPurchaseAmount";
+            resources.ApplyResources(lblPurchaseAmount, "lblPurchaseAmount");
+            lblPurchaseAmount.Name = "lblPurchaseAmount";
             // 
             // txtPurchaseAmount
             // 
-            resources.ApplyResources(this.txtPurchaseAmount, "txtPurchaseAmount");
-            this.txtPurchaseAmount.Name = "txtPurchaseAmount";
-            this.txtPurchaseAmount.TextChanged += new System.EventHandler(this.txtPurchaseAmount_TextChanged);
+            resources.ApplyResources(txtPurchaseAmount, "txtPurchaseAmount");
+            txtPurchaseAmount.Name = "txtPurchaseAmount";
+            txtPurchaseAmount.TextChanged += txtPurchaseAmount_TextChanged;
             // 
             // dtpPurchaseDate
             // 
-            this.dtpPurchaseDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            resources.ApplyResources(this.dtpPurchaseDate, "dtpPurchaseDate");
-            this.dtpPurchaseDate.Name = "dtpPurchaseDate";
+            dtpPurchaseDate.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(dtpPurchaseDate, "dtpPurchaseDate");
+            dtpPurchaseDate.Name = "dtpPurchaseDate";
             // 
             // lblDateOrPurchase
             // 
-            resources.ApplyResources(this.lblDateOrPurchase, "lblDateOrPurchase");
-            this.lblDateOrPurchase.Name = "lblDateOrPurchase";
+            resources.ApplyResources(lblDateOrPurchase, "lblDateOrPurchase");
+            lblDateOrPurchase.Name = "lblDateOrPurchase";
             // 
             // dgPayBackTime
             // 
-            this.dgPayBackTime.AllowUserToAddRows = false;
-            this.dgPayBackTime.AllowUserToDeleteRows = false;
-            resources.ApplyResources(this.dgPayBackTime, "dgPayBackTime");
-            this.dgPayBackTime.AutoGenerateColumns = false;
-            this.dgPayBackTime.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.periodIdDataGridViewTextBoxColumn,
-            this.startPeriodDataGridViewTextBoxColumn,
-            this.endPeriodDataGridViewTextBoxColumn,
-            this.ReturnOnInvestment,
-            this.ReturnOnInvestmentTotal,
-            this.Return,
-            this.valueProducedDataGridViewTextBoxColumn,
-            this.valueConsumedDataGridViewTextBoxColumn,
-            this.ValueProducedAndConsumed,
-            this.MonetaryValueProduced,
-            this.MonetaryValueConsumed,
-            this.MonetaryValueProducedAndConsumed,
-            this.OtherCostProduced,
-            this.OtherCostConsumed});
-            this.dgPayBackTime.DataSource = this.bsPayBackTimes;
-            this.dgPayBackTime.Name = "dgPayBackTime";
-            this.dgPayBackTime.ReadOnly = true;
-            this.dgPayBackTime.RowTemplate.Height = 24;
-            this.dgPayBackTime.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvPayBackTime_CellFormatting);
-            // 
-            // periodIdDataGridViewTextBoxColumn
-            // 
-            this.periodIdDataGridViewTextBoxColumn.DataPropertyName = "PeriodId";
-            resources.ApplyResources(this.periodIdDataGridViewTextBoxColumn, "periodIdDataGridViewTextBoxColumn");
-            this.periodIdDataGridViewTextBoxColumn.Name = "periodIdDataGridViewTextBoxColumn";
-            this.periodIdDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // startPeriodDataGridViewTextBoxColumn
-            // 
-            this.startPeriodDataGridViewTextBoxColumn.DataPropertyName = "StartPeriod";
-            resources.ApplyResources(this.startPeriodDataGridViewTextBoxColumn, "startPeriodDataGridViewTextBoxColumn");
-            this.startPeriodDataGridViewTextBoxColumn.Name = "startPeriodDataGridViewTextBoxColumn";
-            this.startPeriodDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // endPeriodDataGridViewTextBoxColumn
-            // 
-            this.endPeriodDataGridViewTextBoxColumn.DataPropertyName = "EndPeriod";
-            resources.ApplyResources(this.endPeriodDataGridViewTextBoxColumn, "endPeriodDataGridViewTextBoxColumn");
-            this.endPeriodDataGridViewTextBoxColumn.Name = "endPeriodDataGridViewTextBoxColumn";
-            this.endPeriodDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // ReturnOnInvestment
-            // 
-            this.ReturnOnInvestment.DataPropertyName = "ReturnOnInvestment";
-            resources.ApplyResources(this.ReturnOnInvestment, "ReturnOnInvestment");
-            this.ReturnOnInvestment.Name = "ReturnOnInvestment";
-            this.ReturnOnInvestment.ReadOnly = true;
-            // 
-            // ReturnOnInvestmentTotal
-            // 
-            this.ReturnOnInvestmentTotal.DataPropertyName = "ReturnOnInvestmentTotal";
-            resources.ApplyResources(this.ReturnOnInvestmentTotal, "ReturnOnInvestmentTotal");
-            this.ReturnOnInvestmentTotal.Name = "ReturnOnInvestmentTotal";
-            this.ReturnOnInvestmentTotal.ReadOnly = true;
-            // 
-            // Return
-            // 
-            this.Return.DataPropertyName = "Return";
-            resources.ApplyResources(this.Return, "Return");
-            this.Return.Name = "Return";
-            this.Return.ReadOnly = true;
-            // 
-            // valueProducedDataGridViewTextBoxColumn
-            // 
-            this.valueProducedDataGridViewTextBoxColumn.DataPropertyName = "ValueProduced";
-            resources.ApplyResources(this.valueProducedDataGridViewTextBoxColumn, "valueProducedDataGridViewTextBoxColumn");
-            this.valueProducedDataGridViewTextBoxColumn.Name = "valueProducedDataGridViewTextBoxColumn";
-            this.valueProducedDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // valueConsumedDataGridViewTextBoxColumn
-            // 
-            this.valueConsumedDataGridViewTextBoxColumn.DataPropertyName = "ValueConsumed";
-            resources.ApplyResources(this.valueConsumedDataGridViewTextBoxColumn, "valueConsumedDataGridViewTextBoxColumn");
-            this.valueConsumedDataGridViewTextBoxColumn.Name = "valueConsumedDataGridViewTextBoxColumn";
-            this.valueConsumedDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // ValueProducedAndConsumed
-            // 
-            this.ValueProducedAndConsumed.DataPropertyName = "ValueProducedAndConsumed";
-            resources.ApplyResources(this.ValueProducedAndConsumed, "ValueProducedAndConsumed");
-            this.ValueProducedAndConsumed.Name = "ValueProducedAndConsumed";
-            this.ValueProducedAndConsumed.ReadOnly = true;
-            // 
-            // MonetaryValueProduced
-            // 
-            this.MonetaryValueProduced.DataPropertyName = "MonetaryValueProduced";
-            resources.ApplyResources(this.MonetaryValueProduced, "MonetaryValueProduced");
-            this.MonetaryValueProduced.Name = "MonetaryValueProduced";
-            this.MonetaryValueProduced.ReadOnly = true;
-            // 
-            // MonetaryValueConsumed
-            // 
-            this.MonetaryValueConsumed.DataPropertyName = "MonetaryValueConsumed";
-            resources.ApplyResources(this.MonetaryValueConsumed, "MonetaryValueConsumed");
-            this.MonetaryValueConsumed.Name = "MonetaryValueConsumed";
-            this.MonetaryValueConsumed.ReadOnly = true;
-            // 
-            // MonetaryValueProducedAndConsumed
-            // 
-            this.MonetaryValueProducedAndConsumed.DataPropertyName = "MonetaryValueProducedAndConsumed";
-            resources.ApplyResources(this.MonetaryValueProducedAndConsumed, "MonetaryValueProducedAndConsumed");
-            this.MonetaryValueProducedAndConsumed.Name = "MonetaryValueProducedAndConsumed";
-            this.MonetaryValueProducedAndConsumed.ReadOnly = true;
-            // 
-            // OtherCostProduced
-            // 
-            this.OtherCostProduced.DataPropertyName = "OtherCostProduced";
-            resources.ApplyResources(this.OtherCostProduced, "OtherCostProduced");
-            this.OtherCostProduced.Name = "OtherCostProduced";
-            this.OtherCostProduced.ReadOnly = true;
-            // 
-            // OtherCostConsumed
-            // 
-            this.OtherCostConsumed.DataPropertyName = "OtherCostConsumed";
-            resources.ApplyResources(this.OtherCostConsumed, "OtherCostConsumed");
-            this.OtherCostConsumed.Name = "OtherCostConsumed";
-            this.OtherCostConsumed.ReadOnly = true;
+            dgPayBackTime.AllowUserToAddRows = false;
+            dgPayBackTime.AllowUserToDeleteRows = false;
+            resources.ApplyResources(dgPayBackTime, "dgPayBackTime");
+            dgPayBackTime.AutoGenerateColumns = false;
+            dgPayBackTime.Columns.AddRange(new DataGridViewColumn[] { periodIdDataGridViewTextBoxColumn, startPeriodDataGridViewTextBoxColumn, endPeriodDataGridViewTextBoxColumn, ReturnOnInvestment, ReturnOnInvestmentTotal, Return, valueProducedDataGridViewTextBoxColumn, valueConsumedDataGridViewTextBoxColumn, ValueProducedAndConsumed, MonetaryValueProduced, MonetaryValueConsumed, MonetaryValueProducedAndConsumed, OtherCostProduced, OtherCostConsumed });
+            dgPayBackTime.DataSource = bsPayBackTimes;
+            dgPayBackTime.Name = "dgPayBackTime";
+            dgPayBackTime.ReadOnly = true;
+            dgPayBackTime.RowTemplate.Height = 24;
+            dgPayBackTime.CellFormatting += dgvPayBackTime_CellFormatting;
             // 
             // bsPayBackTimes
             // 
-            this.bsPayBackTimes.DataSource = typeof(EnergyUse.Models.Common.PayBackTime);
+            bsPayBackTimes.DataSource = typeof(EnergyUse.Models.Common.PayBackTime);
             // 
             // toolStrip1
             // 
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbCalculate,
-            this.tsbClose});
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
-            this.toolStrip1.Name = "toolStrip1";
+            toolStrip1.ImageScalingSize = new Size(20, 20);
+            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbCalculate, tsbClose });
+            resources.ApplyResources(toolStrip1, "toolStrip1");
+            toolStrip1.Name = "toolStrip1";
             // 
             // tsbCalculate
             // 
-            this.tsbCalculate.Image = global::WinFormsUI.Properties.Resources.calculator_24x24;
-            resources.ApplyResources(this.tsbCalculate, "tsbCalculate");
-            this.tsbCalculate.Name = "tsbCalculate";
-            this.tsbCalculate.Click += new System.EventHandler(this.tsbCalculate_Click);
+            tsbCalculate.Image = WinFormsUI.Properties.Resources.calculator_24x24;
+            resources.ApplyResources(tsbCalculate, "tsbCalculate");
+            tsbCalculate.Name = "tsbCalculate";
+            tsbCalculate.Click += tsbCalculate_Click;
             // 
             // tsbClose
             // 
-            this.tsbClose.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsbClose.Image = global::WinFormsUI.Properties.Resources.crossed_24x24;
-            resources.ApplyResources(this.tsbClose, "tsbClose");
-            this.tsbClose.Name = "tsbClose";
-            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
+            tsbClose.Alignment = ToolStripItemAlignment.Right;
+            tsbClose.Image = WinFormsUI.Properties.Resources.crossed_24x24;
+            resources.ApplyResources(tsbClose, "tsbClose");
+            tsbClose.Name = "tsbClose";
+            tsbClose.Click += tsbClose_Click;
+            // 
+            // periodIdDataGridViewTextBoxColumn
+            // 
+            periodIdDataGridViewTextBoxColumn.DataPropertyName = "PeriodId";
+            resources.ApplyResources(periodIdDataGridViewTextBoxColumn, "periodIdDataGridViewTextBoxColumn");
+            periodIdDataGridViewTextBoxColumn.Name = "periodIdDataGridViewTextBoxColumn";
+            periodIdDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // startPeriodDataGridViewTextBoxColumn
+            // 
+            startPeriodDataGridViewTextBoxColumn.DataPropertyName = "StartPeriod";
+            resources.ApplyResources(startPeriodDataGridViewTextBoxColumn, "startPeriodDataGridViewTextBoxColumn");
+            startPeriodDataGridViewTextBoxColumn.Name = "startPeriodDataGridViewTextBoxColumn";
+            startPeriodDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // endPeriodDataGridViewTextBoxColumn
+            // 
+            endPeriodDataGridViewTextBoxColumn.DataPropertyName = "EndPeriod";
+            resources.ApplyResources(endPeriodDataGridViewTextBoxColumn, "endPeriodDataGridViewTextBoxColumn");
+            endPeriodDataGridViewTextBoxColumn.Name = "endPeriodDataGridViewTextBoxColumn";
+            endPeriodDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // ReturnOnInvestment
+            // 
+            ReturnOnInvestment.DataPropertyName = "ReturnOnInvestment";
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N2";
+            ReturnOnInvestment.DefaultCellStyle = dataGridViewCellStyle1;
+            resources.ApplyResources(ReturnOnInvestment, "ReturnOnInvestment");
+            ReturnOnInvestment.Name = "ReturnOnInvestment";
+            ReturnOnInvestment.ReadOnly = true;
+            // 
+            // ReturnOnInvestmentTotal
+            // 
+            ReturnOnInvestmentTotal.DataPropertyName = "ReturnOnInvestmentTotal";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N2";
+            ReturnOnInvestmentTotal.DefaultCellStyle = dataGridViewCellStyle2;
+            resources.ApplyResources(ReturnOnInvestmentTotal, "ReturnOnInvestmentTotal");
+            ReturnOnInvestmentTotal.Name = "ReturnOnInvestmentTotal";
+            ReturnOnInvestmentTotal.ReadOnly = true;
+            // 
+            // Return
+            // 
+            Return.DataPropertyName = "Return";
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N2";
+            Return.DefaultCellStyle = dataGridViewCellStyle3;
+            resources.ApplyResources(Return, "Return");
+            Return.Name = "Return";
+            Return.ReadOnly = true;
+            // 
+            // valueProducedDataGridViewTextBoxColumn
+            // 
+            valueProducedDataGridViewTextBoxColumn.DataPropertyName = "ValueProduced";
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "N2";
+            dataGridViewCellStyle4.NullValue = null;
+            valueProducedDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            resources.ApplyResources(valueProducedDataGridViewTextBoxColumn, "valueProducedDataGridViewTextBoxColumn");
+            valueProducedDataGridViewTextBoxColumn.Name = "valueProducedDataGridViewTextBoxColumn";
+            valueProducedDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // valueConsumedDataGridViewTextBoxColumn
+            // 
+            valueConsumedDataGridViewTextBoxColumn.DataPropertyName = "ValueConsumed";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "N2";
+            valueConsumedDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            resources.ApplyResources(valueConsumedDataGridViewTextBoxColumn, "valueConsumedDataGridViewTextBoxColumn");
+            valueConsumedDataGridViewTextBoxColumn.Name = "valueConsumedDataGridViewTextBoxColumn";
+            valueConsumedDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // ValueProducedAndConsumed
+            // 
+            ValueProducedAndConsumed.DataPropertyName = "ValueProducedAndConsumed";
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "N2";
+            ValueProducedAndConsumed.DefaultCellStyle = dataGridViewCellStyle6;
+            resources.ApplyResources(ValueProducedAndConsumed, "ValueProducedAndConsumed");
+            ValueProducedAndConsumed.Name = "ValueProducedAndConsumed";
+            ValueProducedAndConsumed.ReadOnly = true;
+            // 
+            // MonetaryValueProduced
+            // 
+            MonetaryValueProduced.DataPropertyName = "MonetaryValueProduced";
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "N2";
+            MonetaryValueProduced.DefaultCellStyle = dataGridViewCellStyle7;
+            resources.ApplyResources(MonetaryValueProduced, "MonetaryValueProduced");
+            MonetaryValueProduced.Name = "MonetaryValueProduced";
+            MonetaryValueProduced.ReadOnly = true;
+            // 
+            // MonetaryValueConsumed
+            // 
+            MonetaryValueConsumed.DataPropertyName = "MonetaryValueConsumed";
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "N2";
+            MonetaryValueConsumed.DefaultCellStyle = dataGridViewCellStyle8;
+            resources.ApplyResources(MonetaryValueConsumed, "MonetaryValueConsumed");
+            MonetaryValueConsumed.Name = "MonetaryValueConsumed";
+            MonetaryValueConsumed.ReadOnly = true;
+            // 
+            // MonetaryValueProducedAndConsumed
+            // 
+            MonetaryValueProducedAndConsumed.DataPropertyName = "MonetaryValueProducedAndConsumed";
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle9.Format = "N2";
+            MonetaryValueProducedAndConsumed.DefaultCellStyle = dataGridViewCellStyle9;
+            resources.ApplyResources(MonetaryValueProducedAndConsumed, "MonetaryValueProducedAndConsumed");
+            MonetaryValueProducedAndConsumed.Name = "MonetaryValueProducedAndConsumed";
+            MonetaryValueProducedAndConsumed.ReadOnly = true;
+            // 
+            // OtherCostProduced
+            // 
+            OtherCostProduced.DataPropertyName = "OtherCostProduced";
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle10.Format = "N2";
+            OtherCostProduced.DefaultCellStyle = dataGridViewCellStyle10;
+            resources.ApplyResources(OtherCostProduced, "OtherCostProduced");
+            OtherCostProduced.Name = "OtherCostProduced";
+            OtherCostProduced.ReadOnly = true;
+            // 
+            // OtherCostConsumed
+            // 
+            OtherCostConsumed.DataPropertyName = "OtherCostConsumed";
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle11.Format = "N2";
+            OtherCostConsumed.DefaultCellStyle = dataGridViewCellStyle11;
+            resources.ApplyResources(OtherCostConsumed, "OtherCostConsumed");
+            OtherCostConsumed.Name = "OtherCostConsumed";
+            OtherCostConsumed.ReadOnly = true;
             // 
             // frmPayBackTime
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.dgPayBackTime);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtTotalCapacitySolarPanels);
-            this.Controls.Add(this.lblTotalCapacity);
-            this.Controls.Add(this.lblEnergyType);
-            this.Controls.Add(this.cboEnergyType);
-            this.Controls.Add(this.lblAddress);
-            this.Controls.Add(this.cmbAddress);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtQualityReductionSolarPanels);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.lblMaxYears);
-            this.Controls.Add(this.nudMaxYears);
-            this.Controls.Add(this.lblSubsidy);
-            this.Controls.Add(this.txtSubsidyAmount);
-            this.Controls.Add(this.lblPurchaseAmount);
-            this.Controls.Add(this.txtPurchaseAmount);
-            this.Controls.Add(this.dtpPurchaseDate);
-            this.Controls.Add(this.lblDateOrPurchase);
-            this.Controls.Add(this.statusStrip1);
-            this.Name = "frmPayBackTime";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.Load += new System.EventHandler(this.frmPayBackTime_Load);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsEnergyTypes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsAddresses)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudMaxYears)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgPayBackTime)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsPayBackTimes)).EndInit();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(toolStrip1);
+            Controls.Add(dgPayBackTime);
+            Controls.Add(label6);
+            Controls.Add(txtTotalCapacitySolarPanels);
+            Controls.Add(lblTotalCapacity);
+            Controls.Add(lblEnergyType);
+            Controls.Add(cboEnergyType);
+            Controls.Add(lblAddress);
+            Controls.Add(cmbAddress);
+            Controls.Add(label1);
+            Controls.Add(txtQualityReductionSolarPanels);
+            Controls.Add(label3);
+            Controls.Add(lblMaxYears);
+            Controls.Add(nudMaxYears);
+            Controls.Add(lblSubsidy);
+            Controls.Add(txtSubsidyAmount);
+            Controls.Add(lblPurchaseAmount);
+            Controls.Add(txtPurchaseAmount);
+            Controls.Add(dtpPurchaseDate);
+            Controls.Add(lblDateOrPurchase);
+            Controls.Add(statusStrip1);
+            Name = "frmPayBackTime";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            Load += frmPayBackTime_Load;
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsAddresses).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudMaxYears).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgPayBackTime).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsPayBackTimes).EndInit();
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

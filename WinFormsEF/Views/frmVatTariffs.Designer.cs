@@ -28,261 +28,257 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmVatTariffs));
-            this.bsVatTarif = new System.Windows.Forms.BindingSource(this.components);
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.TsbAddVatTarif = new System.Windows.Forms.ToolStripButton();
-            this.TsbSaveVatTarif = new System.Windows.Forms.ToolStripButton();
-            this.TbsCancel = new System.Windows.Forms.ToolStripButton();
-            this.TsbDeleteVatTarif = new System.Windows.Forms.ToolStripButton();
-            this.TsbRefreshVatTarif = new System.Windows.Forms.ToolStripButton();
-            this.TsbCloseVatTarif = new System.Windows.Forms.ToolStripButton();
-            this.CboCostCategory = new System.Windows.Forms.ComboBox();
-            this.bsCostCategories = new System.Windows.Forms.BindingSource(this.components);
-            this.LblCostCategory = new System.Windows.Forms.Label();
-            this.CboEnergyType = new System.Windows.Forms.ComboBox();
-            this.bsEnergyTypes = new System.Windows.Forms.BindingSource(this.components);
-            this.LblEnergyType = new System.Windows.Forms.Label();
-            this.DgVatTarifs = new System.Windows.Forms.DataGridView();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.StartDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EndDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tarif = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GbTarif = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.TxtRateValue = new System.Windows.Forms.TextBox();
-            this.LblTarif = new System.Windows.Forms.Label();
-            this.LblEndDate = new System.Windows.Forms.Label();
-            this.DtEndDate = new System.Windows.Forms.DateTimePicker();
-            this.LblStartDate = new System.Windows.Forms.Label();
-            this.DtStartDate = new System.Windows.Forms.DateTimePicker();
-            ((System.ComponentModel.ISupportInitialize)(this.bsVatTarif)).BeginInit();
-            this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsCostCategories)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsEnergyTypes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DgVatTarifs)).BeginInit();
-            this.GbTarif.SuspendLayout();
-            this.SuspendLayout();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            bsVatTarif = new BindingSource(components);
+            toolTip1 = new ToolTip(components);
+            toolStrip1 = new ToolStrip();
+            TsbAddVatTarif = new ToolStripButton();
+            TsbSaveVatTarif = new ToolStripButton();
+            TbsCancel = new ToolStripButton();
+            TsbDeleteVatTarif = new ToolStripButton();
+            TsbRefreshVatTarif = new ToolStripButton();
+            TsbCloseVatTarif = new ToolStripButton();
+            CboCostCategory = new ComboBox();
+            bsCostCategories = new BindingSource(components);
+            LblCostCategory = new Label();
+            CboEnergyType = new ComboBox();
+            bsEnergyTypes = new BindingSource(components);
+            LblEnergyType = new Label();
+            DgVatTarifs = new DataGridView();
+            GbTarif = new GroupBox();
+            label2 = new Label();
+            TxtRateValue = new TextBox();
+            LblTarif = new Label();
+            LblEndDate = new Label();
+            DtEndDate = new DateTimePicker();
+            LblStartDate = new Label();
+            DtStartDate = new DateTimePicker();
+            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            StartDate = new DataGridViewTextBoxColumn();
+            EndDate = new DataGridViewTextBoxColumn();
+            Tarif = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)bsVatTarif).BeginInit();
+            toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)bsCostCategories).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DgVatTarifs).BeginInit();
+            GbTarif.SuspendLayout();
+            SuspendLayout();
             // 
             // bsVatTarif
             // 
-            this.bsVatTarif.DataSource = typeof(EnergyUse.Models.VatTarif);
+            bsVatTarif.DataSource = typeof(EnergyUse.Models.VatTarif);
             // 
             // toolStrip1
             // 
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TsbAddVatTarif,
-            this.TsbSaveVatTarif,
-            this.TbsCancel,
-            this.TsbDeleteVatTarif,
-            this.TsbRefreshVatTarif,
-            this.TsbCloseVatTarif});
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
-            this.toolStrip1.Name = "toolStrip1";
+            toolStrip1.ImageScalingSize = new Size(20, 20);
+            toolStrip1.Items.AddRange(new ToolStripItem[] { TsbAddVatTarif, TsbSaveVatTarif, TbsCancel, TsbDeleteVatTarif, TsbRefreshVatTarif, TsbCloseVatTarif });
+            resources.ApplyResources(toolStrip1, "toolStrip1");
+            toolStrip1.Name = "toolStrip1";
             // 
             // TsbAddVatTarif
             // 
-            this.TsbAddVatTarif.Image = global::WinFormsUI.Properties.Resources.add_24x24;
-            resources.ApplyResources(this.TsbAddVatTarif, "TsbAddVatTarif");
-            this.TsbAddVatTarif.Name = "TsbAddVatTarif";
-            this.TsbAddVatTarif.Click += new System.EventHandler(this.TsbAddVatTarif_Click);
+            TsbAddVatTarif.Image = WinFormsUI.Properties.Resources.add_24x24;
+            resources.ApplyResources(TsbAddVatTarif, "TsbAddVatTarif");
+            TsbAddVatTarif.Name = "TsbAddVatTarif";
+            TsbAddVatTarif.Click += TsbAddVatTarif_Click;
             // 
             // TsbSaveVatTarif
             // 
-            this.TsbSaveVatTarif.Image = global::WinFormsUI.Properties.Resources.tick_mark_24x24;
-            resources.ApplyResources(this.TsbSaveVatTarif, "TsbSaveVatTarif");
-            this.TsbSaveVatTarif.Name = "TsbSaveVatTarif";
-            this.TsbSaveVatTarif.Click += new System.EventHandler(this.TsbSaveVatTarif_Click);
+            TsbSaveVatTarif.Image = WinFormsUI.Properties.Resources.tick_mark_24x24;
+            resources.ApplyResources(TsbSaveVatTarif, "TsbSaveVatTarif");
+            TsbSaveVatTarif.Name = "TsbSaveVatTarif";
+            TsbSaveVatTarif.Click += TsbSaveVatTarif_Click;
             // 
             // TbsCancel
             // 
-            this.TbsCancel.Image = global::WinFormsUI.Properties.Resources.clear_24x24;
-            resources.ApplyResources(this.TbsCancel, "TbsCancel");
-            this.TbsCancel.Name = "TbsCancel";
-            this.TbsCancel.Click += new System.EventHandler(this.TbsCancel_Click);
+            TbsCancel.Image = WinFormsUI.Properties.Resources.clear_24x24;
+            resources.ApplyResources(TbsCancel, "TbsCancel");
+            TbsCancel.Name = "TbsCancel";
+            TbsCancel.Click += TbsCancel_Click;
             // 
             // TsbDeleteVatTarif
             // 
-            this.TsbDeleteVatTarif.Image = global::WinFormsUI.Properties.Resources.delete_24x24;
-            resources.ApplyResources(this.TsbDeleteVatTarif, "TsbDeleteVatTarif");
-            this.TsbDeleteVatTarif.Name = "TsbDeleteVatTarif";
-            this.TsbDeleteVatTarif.Click += new System.EventHandler(this.TsbDeleteVatTarif_Click);
+            TsbDeleteVatTarif.Image = WinFormsUI.Properties.Resources.delete_24x24;
+            resources.ApplyResources(TsbDeleteVatTarif, "TsbDeleteVatTarif");
+            TsbDeleteVatTarif.Name = "TsbDeleteVatTarif";
+            TsbDeleteVatTarif.Click += TsbDeleteVatTarif_Click;
             // 
             // TsbRefreshVatTarif
             // 
-            this.TsbRefreshVatTarif.Image = global::WinFormsUI.Properties.Resources.clock_24x24;
-            resources.ApplyResources(this.TsbRefreshVatTarif, "TsbRefreshVatTarif");
-            this.TsbRefreshVatTarif.Name = "TsbRefreshVatTarif";
-            this.TsbRefreshVatTarif.Click += new System.EventHandler(this.TsbRefreshVatTarif_Click);
+            TsbRefreshVatTarif.Image = WinFormsUI.Properties.Resources.clock_24x24;
+            resources.ApplyResources(TsbRefreshVatTarif, "TsbRefreshVatTarif");
+            TsbRefreshVatTarif.Name = "TsbRefreshVatTarif";
+            TsbRefreshVatTarif.Click += TsbRefreshVatTarif_Click;
             // 
             // TsbCloseVatTarif
             // 
-            this.TsbCloseVatTarif.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.TsbCloseVatTarif.Image = global::WinFormsUI.Properties.Resources.crossed_24x24;
-            resources.ApplyResources(this.TsbCloseVatTarif, "TsbCloseVatTarif");
-            this.TsbCloseVatTarif.Name = "TsbCloseVatTarif";
-            this.TsbCloseVatTarif.Click += new System.EventHandler(this.TsbCloseVatTarif_Click);
+            TsbCloseVatTarif.Alignment = ToolStripItemAlignment.Right;
+            TsbCloseVatTarif.Image = WinFormsUI.Properties.Resources.crossed_24x24;
+            resources.ApplyResources(TsbCloseVatTarif, "TsbCloseVatTarif");
+            TsbCloseVatTarif.Name = "TsbCloseVatTarif";
+            TsbCloseVatTarif.Click += TsbCloseVatTarif_Click;
             // 
             // CboCostCategory
             // 
-            this.CboCostCategory.DataSource = this.bsCostCategories;
-            this.CboCostCategory.DisplayMember = "Name";
-            this.CboCostCategory.FormattingEnabled = true;
-            resources.ApplyResources(this.CboCostCategory, "CboCostCategory");
-            this.CboCostCategory.Name = "CboCostCategory";
-            this.CboCostCategory.ValueMember = "Id";
-            this.CboCostCategory.SelectedIndexChanged += new System.EventHandler(this.CboCostCategory_SelectedIndexChanged);
+            CboCostCategory.DataSource = bsCostCategories;
+            CboCostCategory.DisplayMember = "Name";
+            CboCostCategory.FormattingEnabled = true;
+            resources.ApplyResources(CboCostCategory, "CboCostCategory");
+            CboCostCategory.Name = "CboCostCategory";
+            CboCostCategory.ValueMember = "Id";
+            CboCostCategory.SelectedIndexChanged += CboCostCategory_SelectedIndexChanged;
             // 
             // bsCostCategories
             // 
-            this.bsCostCategories.DataSource = typeof(EnergyUse.Models.CostCategory);
+            bsCostCategories.DataSource = typeof(EnergyUse.Models.CostCategory);
             // 
             // LblCostCategory
             // 
-            resources.ApplyResources(this.LblCostCategory, "LblCostCategory");
-            this.LblCostCategory.Name = "LblCostCategory";
+            resources.ApplyResources(LblCostCategory, "LblCostCategory");
+            LblCostCategory.Name = "LblCostCategory";
             // 
             // CboEnergyType
             // 
-            this.CboEnergyType.DataSource = this.bsEnergyTypes;
-            this.CboEnergyType.DisplayMember = "Name";
-            this.CboEnergyType.FormattingEnabled = true;
-            resources.ApplyResources(this.CboEnergyType, "CboEnergyType");
-            this.CboEnergyType.Name = "CboEnergyType";
-            this.CboEnergyType.ValueMember = "Id";
-            this.CboEnergyType.SelectedIndexChanged += new System.EventHandler(this.CboEnergyType_SelectedIndexChanged);
+            CboEnergyType.DataSource = bsEnergyTypes;
+            CboEnergyType.DisplayMember = "Name";
+            CboEnergyType.FormattingEnabled = true;
+            resources.ApplyResources(CboEnergyType, "CboEnergyType");
+            CboEnergyType.Name = "CboEnergyType";
+            CboEnergyType.ValueMember = "Id";
+            CboEnergyType.SelectedIndexChanged += CboEnergyType_SelectedIndexChanged;
             // 
             // bsEnergyTypes
             // 
-            this.bsEnergyTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
+            bsEnergyTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
             // 
             // LblEnergyType
             // 
-            resources.ApplyResources(this.LblEnergyType, "LblEnergyType");
-            this.LblEnergyType.Name = "LblEnergyType";
+            resources.ApplyResources(LblEnergyType, "LblEnergyType");
+            LblEnergyType.Name = "LblEnergyType";
             // 
             // DgVatTarifs
             // 
-            this.DgVatTarifs.AllowUserToAddRows = false;
-            this.DgVatTarifs.AllowUserToDeleteRows = false;
-            resources.ApplyResources(this.DgVatTarifs, "DgVatTarifs");
-            this.DgVatTarifs.AutoGenerateColumns = false;
-            this.DgVatTarifs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgVatTarifs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idDataGridViewTextBoxColumn,
-            this.StartDate,
-            this.EndDate,
-            this.Tarif});
-            this.DgVatTarifs.DataSource = this.bsVatTarif;
-            this.DgVatTarifs.Name = "DgVatTarifs";
-            this.DgVatTarifs.RowTemplate.Height = 29;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            resources.ApplyResources(this.idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            // 
-            // StartDate
-            // 
-            this.StartDate.DataPropertyName = "StartDate";
-            resources.ApplyResources(this.StartDate, "StartDate");
-            this.StartDate.Name = "StartDate";
-            // 
-            // EndDate
-            // 
-            this.EndDate.DataPropertyName = "EndDate";
-            resources.ApplyResources(this.EndDate, "EndDate");
-            this.EndDate.Name = "EndDate";
-            // 
-            // Tarif
-            // 
-            this.Tarif.DataPropertyName = "Tarif";
-            resources.ApplyResources(this.Tarif, "Tarif");
-            this.Tarif.Name = "Tarif";
+            DgVatTarifs.AllowUserToAddRows = false;
+            DgVatTarifs.AllowUserToDeleteRows = false;
+            resources.ApplyResources(DgVatTarifs, "DgVatTarifs");
+            DgVatTarifs.AutoGenerateColumns = false;
+            DgVatTarifs.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DgVatTarifs.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, StartDate, EndDate, Tarif });
+            DgVatTarifs.DataSource = bsVatTarif;
+            DgVatTarifs.Name = "DgVatTarifs";
             // 
             // GbTarif
             // 
-            this.GbTarif.Controls.Add(this.label2);
-            this.GbTarif.Controls.Add(this.TxtRateValue);
-            this.GbTarif.Controls.Add(this.LblTarif);
-            this.GbTarif.Controls.Add(this.LblEndDate);
-            this.GbTarif.Controls.Add(this.DtEndDate);
-            this.GbTarif.Controls.Add(this.LblStartDate);
-            this.GbTarif.Controls.Add(this.DtStartDate);
-            resources.ApplyResources(this.GbTarif, "GbTarif");
-            this.GbTarif.Name = "GbTarif";
-            this.GbTarif.TabStop = false;
+            GbTarif.Controls.Add(label2);
+            GbTarif.Controls.Add(TxtRateValue);
+            GbTarif.Controls.Add(LblTarif);
+            GbTarif.Controls.Add(LblEndDate);
+            GbTarif.Controls.Add(DtEndDate);
+            GbTarif.Controls.Add(LblStartDate);
+            GbTarif.Controls.Add(DtStartDate);
+            resources.ApplyResources(GbTarif, "GbTarif");
+            GbTarif.Name = "GbTarif";
+            GbTarif.TabStop = false;
             // 
             // label2
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
+            resources.ApplyResources(label2, "label2");
+            label2.Name = "label2";
             // 
             // TxtRateValue
             // 
-            this.TxtRateValue.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsVatTarif, "Tarif", true));
-            resources.ApplyResources(this.TxtRateValue, "TxtRateValue");
-            this.TxtRateValue.Name = "TxtRateValue";
+            TxtRateValue.DataBindings.Add(new Binding("Text", bsVatTarif, "Tarif", true));
+            resources.ApplyResources(TxtRateValue, "TxtRateValue");
+            TxtRateValue.Name = "TxtRateValue";
             // 
             // LblTarif
             // 
-            resources.ApplyResources(this.LblTarif, "LblTarif");
-            this.LblTarif.Name = "LblTarif";
+            resources.ApplyResources(LblTarif, "LblTarif");
+            LblTarif.Name = "LblTarif";
             // 
             // LblEndDate
             // 
-            resources.ApplyResources(this.LblEndDate, "LblEndDate");
-            this.LblEndDate.Name = "LblEndDate";
+            resources.ApplyResources(LblEndDate, "LblEndDate");
+            LblEndDate.Name = "LblEndDate";
             // 
             // DtEndDate
             // 
-            this.DtEndDate.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bsVatTarif, "EndDate", true));
-            this.DtEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            resources.ApplyResources(this.DtEndDate, "DtEndDate");
-            this.DtEndDate.Name = "DtEndDate";
+            DtEndDate.DataBindings.Add(new Binding("Value", bsVatTarif, "EndDate", true));
+            DtEndDate.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(DtEndDate, "DtEndDate");
+            DtEndDate.Name = "DtEndDate";
             // 
             // LblStartDate
             // 
-            resources.ApplyResources(this.LblStartDate, "LblStartDate");
-            this.LblStartDate.Name = "LblStartDate";
+            resources.ApplyResources(LblStartDate, "LblStartDate");
+            LblStartDate.Name = "LblStartDate";
             // 
             // DtStartDate
             // 
-            this.DtStartDate.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bsVatTarif, "StartDate", true));
-            this.DtStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            resources.ApplyResources(this.DtStartDate, "DtStartDate");
-            this.DtStartDate.Name = "DtStartDate";
+            DtStartDate.DataBindings.Add(new Binding("Value", bsVatTarif, "StartDate", true));
+            DtStartDate.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(DtStartDate, "DtStartDate");
+            DtStartDate.Name = "DtStartDate";
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            // 
+            // StartDate
+            // 
+            StartDate.DataPropertyName = "StartDate";
+            dataGridViewCellStyle1.Format = "dd/MM/yyyy";
+            dataGridViewCellStyle1.NullValue = null;
+            StartDate.DefaultCellStyle = dataGridViewCellStyle1;
+            resources.ApplyResources(StartDate, "StartDate");
+            StartDate.Name = "StartDate";
+            // 
+            // EndDate
+            // 
+            EndDate.DataPropertyName = "EndDate";
+            resources.ApplyResources(EndDate, "EndDate");
+            EndDate.Name = "EndDate";
+            // 
+            // Tarif
+            // 
+            Tarif.DataPropertyName = "Tarif";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N2";
+            Tarif.DefaultCellStyle = dataGridViewCellStyle2;
+            resources.ApplyResources(Tarif, "Tarif");
+            Tarif.Name = "Tarif";
             // 
             // frmVatTariffs
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.GbTarif);
-            this.Controls.Add(this.DgVatTarifs);
-            this.Controls.Add(this.CboCostCategory);
-            this.Controls.Add(this.LblCostCategory);
-            this.Controls.Add(this.CboEnergyType);
-            this.Controls.Add(this.LblEnergyType);
-            this.Controls.Add(this.toolStrip1);
-            this.Name = "frmVatTariffs";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmVatTarifs_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.bsVatTarif)).EndInit();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsCostCategories)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsEnergyTypes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DgVatTarifs)).EndInit();
-            this.GbTarif.ResumeLayout(false);
-            this.GbTarif.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(GbTarif);
+            Controls.Add(DgVatTarifs);
+            Controls.Add(CboCostCategory);
+            Controls.Add(LblCostCategory);
+            Controls.Add(CboEnergyType);
+            Controls.Add(LblEnergyType);
+            Controls.Add(toolStrip1);
+            Name = "frmVatTariffs";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            FormClosing += FrmVatTarifs_FormClosing;
+            ((System.ComponentModel.ISupportInitialize)bsVatTarif).EndInit();
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)bsCostCategories).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DgVatTarifs).EndInit();
+            GbTarif.ResumeLayout(false);
+            GbTarif.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
