@@ -30,7 +30,7 @@ jobs:
       - name: Create publish directory
         run: |
           mkdir -p publish
-          cp -r bin/Release/net6.0/* publish/
+          cp -r bin/Release/net8.0/* publish/
 
       - name: Create installer (e.g., using Inno Setup)
         run: |
