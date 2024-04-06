@@ -203,7 +203,7 @@ namespace WinFormsEF.ucControls
 
             var firstMeterReading = importedMeterReadings.OrderBy(o => o.RegistrationDate).FirstOrDefault();
             if (firstMeterReading != null)
-                lastMeterReading = _unitOfWork.MeterReadingRepo.SelectLastRow(firstMeterReading.RegistrationDate, firstMeterReading.EnergyType.Id, CurrentAddress.Id);
+                lastMeterReading = _unitOfWork.MeterReadingRepo.SelectLastRowFromDate(firstMeterReading.RegistrationDate, firstMeterReading.EnergyType.Id, CurrentAddress.Id);
 
             lastMeterReading ??= firstMeterReading;
 

@@ -69,7 +69,18 @@ namespace EnergyUse.Core.Repositories
                 .FirstOrDefault();
         }
 
-        public Models.MeterReading? SelectLastRow(DateTime registrationDate, long energyTypeId, long addressId)
+        public Models.MeterReading? SelectLastRow(long energyTypeId, long addressId)
+        {
+            return _context.MeterReadings
+                .Include(e => e.EnergyType)
+                .Include(t => t.Meter)
+                .Include(a => a.Meter.Address)
+                .Where(n => n.EnergyType.Id == energyTypeId && n.Meter.Address.Id == addressId)
+                .OrderByDescending(o => o.RegistrationDate)
+                .FirstOrDefault();
+        }
+
+        public Models.MeterReading? SelectLastRowFromDate(DateTime registrationDate, long energyTypeId, long addressId)
         {
             return _context.MeterReadings
                 .Include(e => e.EnergyType)

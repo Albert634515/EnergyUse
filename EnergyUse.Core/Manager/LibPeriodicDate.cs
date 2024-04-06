@@ -16,15 +16,16 @@ namespace EnergyUse.Core.Manager
         private readonly string _dbFileName;
         private Repositories.RepoAvgMeterRate _avgRepo;
         private Repositories.RepoSettings _settingsRepo;
+        private Repositories.RepoMeterReading _meterReadingRepo;
 
         private List<Models.MeterReading> _meterReading;
         private List<PeriodicDataPerDay> _periodicDataList = new();
-        
+
         private ParameterPeriod _parameterPeriod;
-        private AvgMeterRate? _avgGeneral;       
+        private AvgMeterRate? _avgGeneral;
         private decimal _avgCorrectionPercentage = 1;
         private decimal _avgCorrectionPercentageReturn = 1;
-
+        private MeterReading _lastrow;
         #endregion
 
         public LibPeriodicDate(string dbFileName)
@@ -34,6 +35,7 @@ namespace EnergyUse.Core.Manager
 
             _avgRepo = new Repositories.RepoAvgMeterRate(_context);
             _settingsRepo = new Repositories.RepoSettings(_context);
+            _meterReadingRepo = new Repositories.RepoMeterReading(_context);            
         }
 
         public List<PeriodicData> GetRange(ParameterPeriod parameterPeriod)
@@ -41,6 +43,7 @@ namespace EnergyUse.Core.Manager
             _parameterPeriod = parameterPeriod;
             _meterReading = new();
             _periodicDataList = new();
+            _lastrow = getLastRow();
 
             setAvgCorrectionFactor();
             setCorrectionFactorData();
@@ -51,12 +54,22 @@ namespace EnergyUse.Core.Manager
             return GetData();
         }
 
+        private MeterReading getLastRow()
+        {
+            var lastRow = _meterReadingRepo.SelectLastRow(_parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId);
+            if (lastRow == null)
+            {
+                lastRow = new MeterReading();
+                lastRow.RegistrationDate = DateTime.MinValue;
+            }
+
+            return lastRow;
+        }
+
         public void GetPeriodicData(ParameterPeriod parameterPeriod)
         {
-            var meterReadingRepo = new Repositories.RepoMeterReading(_context);
-
             //Retrieve data per day
-            _meterReading = meterReadingRepo.SelectByRange(parameterPeriod.StartRange, parameterPeriod.EndRange, parameterPeriod.EnergyType.Id, parameterPeriod.AddressId, parameterPeriod.Month, parameterPeriod.Week, parameterPeriod.Day).ToList();
+            _meterReading = _meterReadingRepo.SelectByRange(parameterPeriod.StartRange, parameterPeriod.EndRange, parameterPeriod.EnergyType.Id, parameterPeriod.AddressId, parameterPeriod.Month, parameterPeriod.Week, parameterPeriod.Day).ToList();
 
             convertReadingToPeriodicData();
 
@@ -221,12 +234,14 @@ namespace EnergyUse.Core.Manager
 
         private void addMissingData()
         {
-            AvgMeterRate? avgMeterRate;
+            AvgMeterRate? avgMeterRate = null;
             PeriodicDataPerDay periodicDataDay;
 
             // Add dataprediction for missing data
             if (_parameterPeriod.PredictMissingData)
             {
+                removeLastEmptyDay();
+
                 DateTime lastDate;
                 if (_periodicDataList.Count > 0)
                     lastDate = _periodicDataList.Max(x => x.ValueX);
@@ -240,7 +255,7 @@ namespace EnergyUse.Core.Manager
                     for (var day = lastDate.AddDays(1); day.Date <= _parameterPeriod.EndRange; day = day.AddDays(1))
                     {
                         // Check if day is missing
-                        var missingDay = _meterReading.Where(x => x.RegistrationDate == day).FirstOrDefault();
+                        var missingDay = _periodicDataList.Where(x => x.ValueX.Date == day.Date).FirstOrDefault();
                         if (missingDay != null)
                             continue;
 
@@ -251,7 +266,8 @@ namespace EnergyUse.Core.Manager
                         if (_parameterPeriod.Day > 0 && !(day.Month == _parameterPeriod.Month && day.Day == _parameterPeriod.Day))
                             continue;
 
-                        avgMeterRate = avgByPeriodList.Where(x => x.EnergyType.Id == _parameterPeriod.EnergyType.Id && x.Day == day.Day && x.Month == day.Month).FirstOrDefault();
+                        if (day.Date != _lastrow.RegistrationDate.Date)
+                            avgMeterRate = avgByPeriodList.Where(x => x.EnergyType.Id == _parameterPeriod.EnergyType.Id && x.Day == day.Day && x.Month == day.Month).FirstOrDefault();
 
                         // If not avg is found try general avg
                         if (avgMeterRate == null)
@@ -294,6 +310,25 @@ namespace EnergyUse.Core.Manager
             }
         }
 
+        /// <summary>
+        /// Last data in data set usualy does not have any calculated data
+        /// Data is calculate from last day minus previous day
+        /// </summary>
+        private void removeLastEmptyDay()
+        {
+            if (_periodicDataList != null && _periodicDataList.Count > 0)
+            {
+                _lastrow = _meterReadingRepo.SelectLastRow(_parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId);
+                if (_lastrow == null)
+                    return;
+
+                PeriodicDataPerDay lastSelectedDate = _periodicDataList.OrderByDescending(o => o.ValueX).FirstOrDefault();
+
+                if (_lastrow.RegistrationDate.Date == lastSelectedDate.ValueX.Date && lastSelectedDate != null && lastSelectedDate.ValueY == 0)
+                    _periodicDataList.Remove(lastSelectedDate);
+            }
+        }
+
         private List<AvgMeterRate> getAvgByPeriodList(long energyTypeId, long addressId)
         {
             var setting = _settingsRepo.GetByKey("UseAllDataForAvg");
@@ -312,7 +347,7 @@ namespace EnergyUse.Core.Manager
                 }
 
                 return _avgRepo.SelectByAddressAndEnergyTypePerPeriodFromDate(energyTypeId, addressId, defaultFromValue).ToList();
-            }            
+            }
         }
 
         private AvgMeterRate? getAvgGeneral()
@@ -449,7 +484,7 @@ namespace EnergyUse.Core.Manager
         private void setAvgCorrectionFactor()
         {
             var avgCorrectionPerc = _settingsRepo.GetByKey("AvgCorrectionPercentage");
-            if (avgCorrectionPerc != null && avgCorrectionPerc.KeyValue.IsNumeric()) 
+            if (avgCorrectionPerc != null && avgCorrectionPerc.KeyValue.IsNumeric())
             {
                 decimal.TryParse(avgCorrectionPerc.KeyValue, out _avgCorrectionPercentage);
                 if (_avgCorrectionPercentage == 0)

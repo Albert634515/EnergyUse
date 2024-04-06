@@ -72,7 +72,7 @@ namespace EnergyUse.Core.Manager
             if (meterReadings.Count > 0)
             {
                 var firstMeterReading = meterReadings.OrderBy(o => o.RegistrationDate).FirstOrDefault();
-                var lastMeterReading = repoMeterReading.SelectLastRow(firstMeterReading.RegistrationDate, firstMeterReading.EnergyType.Id, firstMeterReading.Meter.Address.Id);
+                var lastMeterReading = repoMeterReading.SelectLastRowFromDate(firstMeterReading.RegistrationDate, firstMeterReading.EnergyType.Id, firstMeterReading.Meter.Address.Id);
                 if (lastMeterReading == null)
                     lastMeterReading = firstMeterReading;
 
