@@ -6,7 +6,7 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
+        
         /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
@@ -213,6 +213,7 @@
             DtpTill.Name = "DtpTill";
             DtpTill.Tag = "DefaultChartPeriodPeriodEnd";
             DtpTill.ValueChanged += DtpTill_ValueChanged;
+
             // 
             // DtpFrom
             // 
@@ -221,6 +222,7 @@
             DtpFrom.Name = "DtpFrom";
             DtpFrom.Tag = "DefaultChartPeriodPeriodStart";
             DtpFrom.ValueChanged += DtpFrom_ValueChanged;
+
             // 
             // PeriodStartLabel
             // 

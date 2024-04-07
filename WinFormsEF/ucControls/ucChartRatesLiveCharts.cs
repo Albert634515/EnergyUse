@@ -1,8 +1,6 @@
 ﻿using System.Data;
 using EnergyUse.Common.Enums;
 using EnergyUse.Common.Libs;
-using EnergyUse.Core.UnitOfWork;
-using EnergyUse.Models;
 using EnergyUse.Models.Common;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView.WinForms;
@@ -14,13 +12,13 @@ namespace WinFormsEF.ucControls
     {
         #region ChartProperties
 
-        private bool initChart;
+        private bool _initSettings;
         private EnergyUse.Core.Graphs.LiveCharts.Rates _chartCompare { get; set; }
         private EnergyUse.Core.UnitOfWork.Graphs _unitOfWork { get; set; }
-        private EnergyUse.Models.Address CurrentAddress { get; set; }
-        private EnergyUse.Models.EnergyType CurrentEnergyType { get; set; }
+        private EnergyUse.Models.Address _currentAddress { get; set; }
+        private EnergyUse.Models.EnergyType _currentEnergyType { get; set; }
 
-        private CartesianChart cartesianChart;
+        private CartesianChart _cartesianChart;
 
         #endregion
 
@@ -28,13 +26,13 @@ namespace WinFormsEF.ucControls
         {
             InitializeComponent();
 
-            initChart = true;
+            _initSettings = true;
             _unitOfWork = new EnergyUse.Core.UnitOfWork.Graphs(Managers.Config.GetDbFileName());
-            CurrentAddress = selectedAddress;
-            CurrentEnergyType = selectedEnergyType;
+            _currentAddress = selectedAddress;
+            _currentEnergyType = selectedEnergyType;
 
-            ResetCostCategory(CurrentEnergyType);
-            initChart = false;
+            ResetCostCategory(_currentEnergyType);
+            _initSettings = false;
 
             ResetChart();
         }
@@ -48,7 +46,7 @@ namespace WinFormsEF.ucControls
 
         private void cmdExport_Click(object sender, EventArgs e)
         {
-            ExportToExcel(CurrentEnergyType);
+            ExportToExcel(_currentEnergyType);
         }
 
         #endregion
@@ -62,7 +60,7 @@ namespace WinFormsEF.ucControls
 
         private void chkListCostCategory_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (initChart == false)
+            if (_initSettings == false)
             {
                 CheckedListBox clb = (CheckedListBox)sender;
                 // Switch off event handler
@@ -71,30 +69,30 @@ namespace WinFormsEF.ucControls
                 // Switch on event handler
                 clb.ItemCheck += chkListCostCategory_ItemCheck;
 
-                LoadChart();
+                SetChart();
             }
         }
 
         private void rbType_CheckedChanged(object sender, EventArgs e)
         {
-            initChart = true;
-            ResetCostCategory(CurrentEnergyType);
-            initChart = false;
+            _initSettings = true;
+            ResetCostCategory(_currentEnergyType);
+            _initSettings = false;
 
-            LoadChart();
+            SetChart();
         }
 
         #endregion
 
         #region Methods
 
-        public void LoadChart()
+        public void SetChart()
         {
-            if (CurrentEnergyType != null)
+            if (_currentEnergyType != null)
             {
                 ParameterGraph graphParameter = new ParameterGraph();
-                graphParameter.Address = CurrentAddress;
-                graphParameter.EnergyTypeList = new() { CurrentEnergyType };
+                graphParameter.Address = _currentAddress;
+                graphParameter.EnergyTypeList = new() { _currentEnergyType };
                 graphParameter.DbName = Managers.Config.GetDbFileName();
                 graphParameter.ShowType = GetShowType();
                 graphParameter.From = dtpFrom.Value;
@@ -119,9 +117,9 @@ namespace WinFormsEF.ucControls
             string title = Managers.Languages.GetResourceString("ChartRatesTitle", "Rates");
 
             panel1.Controls.Clear();
-            cartesianChart = Managers.LiveCharts.GetDefaultChart(periodType, serieslist, title, !CurrentEnergyType.HasEnergyReturn);
+            _cartesianChart = Managers.LiveCharts.GetDefaultChart(periodType, serieslist, title, !_currentEnergyType.HasEnergyReturn);
 
-            panel1.Controls.Add(cartesianChart);
+            panel1.Controls.Add(_cartesianChart);
         }
 
         private void GetChartSeriesPerCostCategory(ParameterGraph graphParameter)
@@ -155,15 +153,15 @@ namespace WinFormsEF.ucControls
 
         public void ResetCurrentAddress(EnergyUse.Models.Address address, EnergyUse.Models.EnergyType energyType)
         {
-            CurrentAddress = address;
-            CurrentEnergyType = energyType;
+            _currentAddress = address;
+            _currentEnergyType = energyType;
             ResetChart();
         }
 
         public void ResetCurrentEnergyType(EnergyUse.Models.EnergyType energyType)
         {
-            CurrentEnergyType = energyType;
-            ResetCostCategory(CurrentEnergyType);
+            _currentEnergyType = energyType;
+            ResetCostCategory(_currentEnergyType);
             ResetChart();
         }
 
@@ -187,13 +185,13 @@ namespace WinFormsEF.ucControls
 
         public void ResetChart()
         {
-            if (initChart)
+            if (_initSettings)
                 return;
 
             dtpFrom.Value = new DateTime(DateTime.Now.AddYears(-4).Year, 1, 1); ;
             dtpTill.Value = new DateTime(DateTime.Now.Year, 12, 31);
 
-            LoadChart();
+            SetChart();
         }
 
         private void ExportToExcel(EnergyUse.Models.EnergyType energyType)

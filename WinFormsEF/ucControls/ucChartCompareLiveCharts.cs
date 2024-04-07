@@ -14,11 +14,11 @@ namespace WinFormsEF.ucControls
     {
         #region ChartProperties
 
-        private bool initSettings;
+        private bool _initSettings;
         private EnergyUse.Core.Graphs.LiveCharts.Compare _chartCompare { get; set; }
-        private EnergyUse.Models.Address CurrentAddress { get; set; }
-        private EnergyUse.Models.EnergyType CurrentEnergyType { get; set; }
-        private CartesianChart cartesianChart { get; set; }
+        private EnergyUse.Models.Address _currentAddress { get; set; }
+        private EnergyUse.Models.EnergyType _currentEnergyType { get; set; }
+        private CartesianChart _cartesianChart { get; set; }
 
         #endregion
 
@@ -28,14 +28,15 @@ namespace WinFormsEF.ucControls
         {
             InitializeComponent();
 
-            initSettings = true;
-            CurrentAddress = selectedAddress;
-            CurrentEnergyType = selectedEnergyType;
+            _initSettings = true;
+
+            _currentAddress = selectedAddress;
+            _currentEnergyType = selectedEnergyType;
 
             setComboPeriodTypes();
             ResetChart();
 
-            initSettings = false;            
+            _initSettings = false;
         }
 
         private void setComboPeriodTypes()
@@ -57,7 +58,7 @@ namespace WinFormsEF.ucControls
 
         private void cmdExport_Click(object sender, EventArgs e)
         {
-            ExportToExcel(CurrentEnergyType);
+            exportToExcel(_currentEnergyType);
         }
 
         #endregion
@@ -66,11 +67,11 @@ namespace WinFormsEF.ucControls
 
         private void cboPeriodType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            initSettings = true;
-            setDefaultPeriodSettings();
-            initSettings = false;
+            if (_initSettings) { return; }
 
-            LoadChart();
+            setDefaultPeriodSettings();
+
+            SetChart();
         }
 
         private void cboNumbers_SelectedValueChanged(object sender, EventArgs e)
@@ -82,75 +83,87 @@ namespace WinFormsEF.ucControls
             if (periodType.ToUpper() == "DAY")
                 setNumber2Combo(cboNumbers.SelectedIndex + 1);
 
-            LoadChart();
+            SetChart();
         }
 
         private void cboStartYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadChart();
+            if (_initSettings) { return; }
+
+            SetChart();
         }
 
         private void cboEndYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadChart();
+            if (_initSettings) { return; }
+
+            SetChart();
         }
 
         private void cboNumbers2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadChart();
+            if (_initSettings) { return; }
+
+            SetChart();
         }
 
         private void rbType_CheckedChanged(object sender, EventArgs e)
         {
-            LoadChart();
+            if (_initSettings) { return; }
+
+            SetChart();
         }
 
         private void rbShowType_CheckedChanged(object sender, EventArgs e)
         {
-            LoadChart();
+            if (_initSettings) { return; }
+
+            SetChart();
         }
 
         private void chkShowStacked_CheckedChanged(object sender, EventArgs e)
         {
-            LoadChart();
+            if (_initSettings) { return; }
+
+            SetChart();
         }
 
         #endregion
 
         #region GetChartSeriesPerPeriod
 
-        private void GetChartSeriesPerPeriod(ParameterGraph graphParameter)
+        private void getChartSeriesPerPeriod(ParameterGraph graphParameter)
         {
             _chartCompare = new EnergyUse.Core.Graphs.LiveCharts.Compare(graphParameter);
 
-            AddChart(graphParameter.PeriodType, graphParameter.ShowType, _chartCompare.GetSeries());
+            addChart(graphParameter.PeriodType, graphParameter.ShowType, _chartCompare.GetSeries());
 
-            SetLabels(_chartCompare.GetResultLabelsPerPeriod(CurrentEnergyType));
+            setLabels(_chartCompare.GetResultLabelsPerPeriod(_currentEnergyType));
         }
 
-        private void GetChartSeriesPerPeriodBySubCategory(ParameterGraph graphParameter)
+        private void getChartSeriesPerPeriodBySubCategory(ParameterGraph graphParameter)
         {
             _chartCompare = new EnergyUse.Core.Graphs.LiveCharts.Compare(graphParameter);
 
-            AddChart(graphParameter.PeriodType, graphParameter.ShowType, _chartCompare.GetSeries());
+            addChart(graphParameter.PeriodType, graphParameter.ShowType, _chartCompare.GetSeries());
 
-            SetLabels(_chartCompare.GetResultLabelsPerPeriod(CurrentEnergyType));
+            setLabels(_chartCompare.GetResultLabelsPerPeriod(_currentEnergyType));
         }
 
-        private void GetChartSeriesPerPeriodByTotal(ParameterGraph graphParameter)
+        private void getChartSeriesPerPeriodByTotal(ParameterGraph graphParameter)
         {
             _chartCompare = new EnergyUse.Core.Graphs.LiveCharts.Compare(graphParameter);
 
-            AddChart(graphParameter.PeriodType, graphParameter.ShowType, _chartCompare.GetSeries());
+            addChart(graphParameter.PeriodType, graphParameter.ShowType, _chartCompare.GetSeries());
 
-            SetLabels(_chartCompare.GetResultLabelsPerPeriod(CurrentEnergyType));
+            setLabels(_chartCompare.GetResultLabelsPerPeriod(_currentEnergyType));
         }
 
         #endregion
 
         #region Methods
 
-        private void SetLabels(Dictionary<string, ResultLabel> labels)
+        private void setLabels(Dictionary<string, ResultLabel> labels)
         {
             lblConsumption.Visible = false;
             lblProduction.Visible = false;
@@ -184,52 +197,52 @@ namespace WinFormsEF.ucControls
             lblNetto.Left = (lblProduction.Left + lblProduction.Width) + 10;
         }
 
-        private void AddChart(Period periodType, ShowType showType, List<ISeries> serieslist)
+        private void addChart(Period periodType, ShowType showType, List<ISeries> serieslist)
         {
             if (serieslist.Count == 0)
                 return;
 
-            string title = GetChartTitle(periodType, cboNumbers.SelectedIndex + 1);
+            string title = getChartTitle(periodType, cboNumbers.SelectedIndex + 1);
 
             pnChartContainer.Controls.Clear();
-            cartesianChart = Managers.LiveCharts.GetCompareChart(Period.Year, serieslist, title, Managers.LiveCharts.GetYaxisLabel(showType, CurrentEnergyType), !CurrentEnergyType.HasEnergyReturn);
-            
+            _cartesianChart = Managers.LiveCharts.GetCompareChart(Period.Year, serieslist, title, Managers.LiveCharts.GetYaxisLabel(showType, _currentEnergyType), !_currentEnergyType.HasEnergyReturn);
 
-            pnChartContainer.Controls.Add(cartesianChart);
+
+            pnChartContainer.Controls.Add(_cartesianChart);
         }
 
-        public void LoadChart()
+        public void SetChart()
         {
             int daysInMonth;
 
-            if (initSettings == true) return;
+            if (_initSettings == true) return;
 
             if (cboEndYear.SelectedIndex == -1 || cboStartYear.SelectedIndex == -1)
                 return;
 
             try
-            {         
+            {
                 daysInMonth = DateTime.DaysInMonth((int)cboEndYear.SelectedItem, DateTime.Now.Month);
 
                 ParameterGraph graphParameter = new();
-                graphParameter.Address = CurrentAddress;
-                graphParameter.EnergyTypeList = new() { CurrentEnergyType };
+                graphParameter.Address = _currentAddress;
+                graphParameter.EnergyTypeList = new() { _currentEnergyType };
                 graphParameter.DbName = Managers.Config.GetDbFileName();
                 graphParameter.ShowStacked = chkShowStacked.Checked;
                 graphParameter.PredictMissingData = chkPredictMissingData.Checked;
                 graphParameter.YearStart = (int)cboStartYear.SelectedItem;
                 graphParameter.YearEnd = (int)cboEndYear.SelectedItem;
-                graphParameter.PeriodType = GetSelectedPeriodType();
-                graphParameter.ShowBy = GetSelectedShowBy();
-                graphParameter.ShowType = GetSelectedShowType();
+                graphParameter.PeriodType = getSelectedPeriodType();
+                graphParameter.ShowBy = getSelectedShowBy();
+                graphParameter.ShowType = getSelectedShowType();
                 graphParameter.From = new DateTime((int)cboStartYear.SelectedItem, 1, 1);
-                graphParameter.Till = new DateTime((int)cboEndYear.SelectedItem, 12, daysInMonth);               
+                graphParameter.Till = new DateTime((int)cboEndYear.SelectedItem, 12, daysInMonth);
 
 
-                if (CurrentAddress != null)
-                    graphParameter.TarifGroupId = CurrentAddress.TariffGroup.Id;
+                if (_currentAddress != null)
+                    graphParameter.TarifGroupId = _currentAddress.TariffGroup.Id;
 
-                if (CurrentEnergyType != null)
+                if (_currentEnergyType != null)
                 {
                     Cursor = Cursors.WaitCursor;
 
@@ -241,11 +254,11 @@ namespace WinFormsEF.ucControls
                         graphParameter.Day = int.Parse(cboNumbers2.Text);
 
                     if (graphParameter.ShowBy == ShowBy.Category)
-                        GetChartSeriesPerPeriod(graphParameter);
+                        getChartSeriesPerPeriod(graphParameter);
                     else if (graphParameter.ShowBy == ShowBy.SubCategory)
-                        GetChartSeriesPerPeriodBySubCategory(graphParameter);
+                        getChartSeriesPerPeriodBySubCategory(graphParameter);
                     else if (graphParameter.ShowBy == ShowBy.Total)
-                        GetChartSeriesPerPeriodByTotal(graphParameter);
+                        getChartSeriesPerPeriodByTotal(graphParameter);
                 }
             }
             catch (Exception)
@@ -260,42 +273,42 @@ namespace WinFormsEF.ucControls
 
         public void ResetCurrentAddress(EnergyUse.Models.Address address, EnergyUse.Models.EnergyType energyType)
         {
-            CurrentAddress = address;
-            CurrentEnergyType = energyType;
-    
+            _currentAddress = address;
+            _currentEnergyType = energyType;
+
             ResetChart();
         }
 
         public void ResetCurrentEnergyType(EnergyUse.Models.EnergyType energyType)
         {
-            CurrentEnergyType = energyType;
-   
-            SetDefaultEnergyTypeSettings();
+            _currentEnergyType = energyType;
+
+            setDefaultEnergyTypeSettings();
             ResetChart();
         }
 
         public void ResetChart()
         {
-            initSettings = true;
+            _initSettings = true;
             setNumberCombo();
             setDefaultPeriodSettings();
-            initSettings = false;
+            _initSettings = false;
 
-            if (CurrentEnergyType != null)
+            if (_currentEnergyType != null)
             {
-                rbEfficiency.Visible = CurrentEnergyType.HasEnergyReturn;
+                rbEfficiency.Visible = _currentEnergyType.HasEnergyReturn;
                 if (rbEfficiency.Checked)
                     rbRate.Checked = true;
             }
 
-            LoadChart();
+            SetChart();
         }
 
         private void setNumberCombo()
         {
             int minRange, maxRange, selectedIndex;
 
-            Period periodType = GetSelectedPeriodType();
+            Period periodType = getSelectedPeriodType();
             selectedIndex = -1;
 
             lblNumber2.Visible = false;
@@ -443,12 +456,12 @@ namespace WinFormsEF.ucControls
             cboNumbers.SelectedIndex = selectedIndex - 1;
         }
 
-        private void SetDefaultEnergyTypeSettings()
+        private void setDefaultEnergyTypeSettings()
         {
-            if (CurrentEnergyType != null)
+            if (_currentEnergyType != null)
             {
-                rbEfficiency.Visible = CurrentEnergyType.HasEnergyReturn;
-                lblProduction.Visible = CurrentEnergyType.HasEnergyReturn;
+                rbEfficiency.Visible = _currentEnergyType.HasEnergyReturn;
+                lblProduction.Visible = _currentEnergyType.HasEnergyReturn;
                 if (rbEfficiency.Checked)
                     rbRate.Checked = true;
             }
@@ -456,7 +469,7 @@ namespace WinFormsEF.ucControls
 
         private void setDefaultPeriodSettings()
         {
-            Period periodType = GetSelectedPeriodType();
+            Period periodType = getSelectedPeriodType();
 
             switch (periodType)
             {
@@ -486,15 +499,15 @@ namespace WinFormsEF.ucControls
             setNumberCombo();
         }
 
-        private bool ValidateRefresh()
+        private bool validateRefresh()
         {
-            if (CurrentAddress == null)
+            if (_currentAddress == null)
             {
                 MessageBox.Show(this, "Please select an address");
                 return false;
             }
 
-            if (CurrentEnergyType == null)
+            if (_currentEnergyType == null)
             {
                 MessageBox.Show(this, "Please select an energy type");
                 return false;
@@ -503,7 +516,7 @@ namespace WinFormsEF.ucControls
             return true;
         }
 
-        private ShowType GetSelectedShowType()
+        private ShowType getSelectedShowType()
         {
             if (rbRate.Checked)
                 return ShowType.Rate;
@@ -515,7 +528,7 @@ namespace WinFormsEF.ucControls
                 return ShowType.Unknown;
         }
 
-        private ShowBy GetSelectedShowBy()
+        private ShowBy getSelectedShowBy()
         {
             if (rbCategory.Checked)
                 return ShowBy.Category;
@@ -525,7 +538,7 @@ namespace WinFormsEF.ucControls
                 return ShowBy.Total;
         }
 
-        private Period GetSelectedPeriodType()
+        private Period getSelectedPeriodType()
         {
             var selectedItem = new SelectionItem();
             if (CboPeriodType.SelectedIndex != -1)
@@ -534,7 +547,7 @@ namespace WinFormsEF.ucControls
             return LibGraphGeneral.GetPeriodType(selectedItem.Key);
         }
 
-        private string GetChartTitle(Period periodType, int index)
+        private string getChartTitle(Period periodType, int index)
         {
             string monthName, chartTitle;
 
@@ -547,12 +560,12 @@ namespace WinFormsEF.ucControls
             else
                 chartTitle = Managers.Languages.GetResourceString("ChartCompareTitle", "Compare data per %s");
 
-           chartTitle = chartTitle.Replace("%s", periodType.ToString());
+            chartTitle = chartTitle.Replace("%s", periodType.ToString());
 
             return chartTitle;
         }
 
-        private void ExportToExcel(EnergyUse.Models.EnergyType energyType)
+        private void exportToExcel(EnergyUse.Models.EnergyType energyType)
         {
             int totalCols;
             string message;

@@ -753,9 +753,6 @@
   <data name="&gt;&gt;CboPeriodType.ZOrder" xml:space="preserve">
     <value>19</value>
   </data>
-  <metadata name="bsPeriodType.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>136, 24</value>
-  </metadata>
   <data name="LblPeriod.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -814,9 +811,6 @@
   <data name="&gt;&gt;CboCompareWith.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <metadata name="bsEnergyTypes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>283, 22</value>
-  </metadata>
   <data name="EnergyTypeLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>

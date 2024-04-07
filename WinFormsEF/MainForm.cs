@@ -547,7 +547,7 @@ namespace WinFormsEF
                 else if (energyTypeChanged && energyType != null)
                     ((ucControls.ucChartDefaultLiveCharts)myControl1).ResetCurrentEnergyType(energyType);
                 else if (address != null && energyType != null)
-                    ((ucControls.ucChartDefaultLiveCharts)myControl1).LoadChart();
+                    ((ucControls.ucChartDefaultLiveCharts)myControl1).SetChart();
             }
 
             myControl1 = findControl(panel, "ucChartCompareLiveCharts");
@@ -558,7 +558,7 @@ namespace WinFormsEF
                 else if (energyTypeChanged && energyType != null)
                     ((ucControls.ucChartCompareLiveCharts)myControl1).ResetCurrentEnergyType(energyType);
                 else if (address != null && energyType != null)
-                    ((ucControls.ucChartCompareLiveCharts)myControl1).LoadChart();
+                    ((ucControls.ucChartCompareLiveCharts)myControl1).SetChart();
             }
 
             myControl1 = findControl(panel, "ucChartRatesLiveCharts");
@@ -569,7 +569,7 @@ namespace WinFormsEF
                 else if (energyTypeChanged && energyType != null)
                     ((ucControls.ucChartRatesLiveCharts)myControl1).ResetCurrentEnergyType(energyType);
                 else if (address != null && energyType != null)
-                    ((ucControls.ucChartRatesLiveCharts)myControl1).LoadChart();
+                    ((ucControls.ucChartRatesLiveCharts)myControl1).SetChart();
             }
         }
 

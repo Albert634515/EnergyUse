@@ -6,7 +6,6 @@ using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView.WinForms;
 using OfficeOpenXml;
 using System.Data;
-using System.Windows.Forms;
 
 namespace WinFormsEF.ucControls
 {
@@ -14,11 +13,12 @@ namespace WinFormsEF.ucControls
     {
         #region ChartProperties
 
-        private bool _InitSettings { get; set; }
+        private bool _initSettings { get; set; }
+        private List<EnergyUse.Models.EnergyType> _energyTypes { get; set; } = new();
         private EnergyUse.Core.Graphs.LiveCharts.Default _chartDefaultPerPeriod { get; set; }
-        private EnergyUse.Models.Address CurrentAddress { get; set; }
-        private EnergyUse.Models.EnergyType CurrentEnergyType { get; set; }
-        private CartesianChart CartesianChart { get; set; }
+        private EnergyUse.Models.Address _currentAddress { get; set; }
+        private EnergyUse.Models.EnergyType _currentEnergyType { get; set; }
+        private CartesianChart _cartesianChart { get; set; }
 
         #endregion
 
@@ -32,16 +32,19 @@ namespace WinFormsEF.ucControls
 
         private void initializeChart(EnergyUse.Models.Address selectedAddress, EnergyUse.Models.EnergyType selectedEnergyType, List<EnergyUse.Models.EnergyType> energyTypes)
         {
-            _InitSettings = true;
+            _initSettings = true;
 
-            CurrentAddress = selectedAddress;
-            CurrentEnergyType = selectedEnergyType;
+            _currentAddress = selectedAddress;
+            _currentEnergyType = selectedEnergyType;
+            _energyTypes = energyTypes;
 
             setComboPeriodTypes(getCurrentSetting(CboPeriodType.Tag.ToString()));
-            setComboCompareWith(energyTypes);
-            resetChart();
+            setComboCompareWith();
+            setDefaultPeriodSettings();
 
-            _InitSettings = false;
+            _initSettings = false;
+
+            resetChart();
         }
 
         private void setComboPeriodTypes(string currentValue)
@@ -55,12 +58,39 @@ namespace WinFormsEF.ucControls
             CboPeriodType.SelectedIndex = CboPeriodType.FindString(currentValue);
         }
 
-        private void setComboCompareWith(List<EnergyUse.Models.EnergyType> energyTypes)
+        private void setComboCompareWith()
         {
-            bsEnergyTypes.DataSource = energyTypes;
+            bsEnergyTypes.DataSource = _energyTypes;
             CboCompareWith.SelectedIndex = -1;
             CboCompareWith.SelectedItem = null;
             CboCompareWith.ResetText();
+        }
+
+        private void setDefaultEnergyTypeSettings()
+        {
+            if (_currentEnergyType != null)
+            {
+                rbEfficiency.Visible = _currentEnergyType.HasEnergyReturn;
+                lblProduction.Visible = _currentEnergyType.HasEnergyReturn;
+                if (rbEfficiency.Checked)
+                    rbRate.Checked = true;
+            }
+        }
+
+        private void setDefaultPeriodSettings()
+        {
+            Period periodType = getSelectedPeriodType();
+
+            var currentDateFrom = getCurrentDateByDatePicker(DtpFrom, periodType);
+            if (currentDateFrom == DateTime.MinValue)
+                currentDateFrom = getDefaulStartDateByPeriod(periodType);
+
+            var currentDateTill = getCurrentDateByDatePicker(DtpTill, periodType);
+            if (currentDateTill == DateTime.MinValue)
+                currentDateTill = getDefaulTillDateByPeriod(periodType);
+
+            DtpFrom.Value = currentDateFrom;
+            DtpTill.Value = currentDateTill;
         }
 
         #endregion
@@ -74,7 +104,7 @@ namespace WinFormsEF.ucControls
 
         private void CmdExport_Click(object sender, EventArgs e)
         {
-            exportToExcel(CurrentEnergyType);
+            exportToExcel(_currentEnergyType);
         }
 
         #endregion
@@ -83,64 +113,80 @@ namespace WinFormsEF.ucControls
 
         private void cboPeriodType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (_initSettings == true) { return; }
+
             setCurrentPeriodType();
             setDefaultPeriodSettings();
-            LoadChart();
+            SetChart();
         }
 
         private void CboCompareWith_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (_initSettings == true) { return; }
+
             setCurrentCompareWithType();
         }
 
         private void DtpFrom_ValueChanged(object sender, EventArgs e)
         {
+            if (_initSettings == true) { return; }
+
             setCurrentDtpTag(DtpFrom);
         }
 
         private void DtpTill_ValueChanged(object sender, EventArgs e)
         {
+            if (_initSettings == true) { return; }
+
             setCurrentDtpTag(DtpTill);
         }
 
         private void rbType_CheckedChanged(object sender, EventArgs e)
         {
-            LoadChart();
+            if (_initSettings == true) { return; }
+
+            SetChart();
         }
 
         private void rbShowBy_CheckedChanged(object sender, EventArgs e)
         {
-            LoadChart();
+            if (_initSettings == true) { return; }
+
+            SetChart();
         }
 
         private void chkShowStacked_CheckedChanged(object sender, EventArgs e)
         {
-            LoadChart();
+            if (_initSettings == true) { return; }
+
+            SetChart();
         }
 
         private void chkShowAvg_CheckedChanged(object sender, EventArgs e)
         {
-            LoadChart();
+            if (_initSettings == true) { return; }
+
+            SetChart();
         }
 
         private void chkPredictMissingData_CheckedChanged(object sender, EventArgs e)
         {
-            LoadChart();
+            if (_initSettings == true) { return; }
+
+            SetChart();
         }
 
         #endregion
 
         #region Methods
 
-        public void LoadChart()
+        public void SetChart()
         {
-            if (_InitSettings == true) return;
-
-            if (CurrentEnergyType == null)
+            if (_currentEnergyType == null)
                 return;
 
             ParameterGraph graphParameter = new ParameterGraph();
-            graphParameter.Address = CurrentAddress;
+            graphParameter.Address = _currentAddress;
             graphParameter.EnergyTypeList = getSelectedTypes();
             graphParameter.DbName = Managers.Config.GetDbFileName();
             graphParameter.ShowStacked = chkShowStacked.Checked;
@@ -154,8 +200,8 @@ namespace WinFormsEF.ucControls
 
             try
             {
-                if (CurrentAddress != null && CurrentAddress.TariffGroup != null)
-                    graphParameter.TarifGroupId = CurrentAddress.TariffGroup.Id;
+                if (_currentAddress != null && _currentAddress.TariffGroup != null)
+                    graphParameter.TarifGroupId = _currentAddress.TariffGroup.Id;
 
                 Cursor = Cursors.WaitCursor;
 
@@ -177,9 +223,27 @@ namespace WinFormsEF.ucControls
             }
         }
 
+        private void resetChart()
+        {
+            _initSettings = true;
+            setComboPeriodTypes(getCurrentSetting(CboPeriodType.Tag.ToString()));
+
+            setDefaultPeriodSettings();
+            _initSettings = false;
+
+            if (_currentEnergyType != null)
+            {
+                rbEfficiency.Visible = _currentEnergyType.HasEnergyReturn;
+                if (rbEfficiency.Checked)
+                    rbRate.Checked = true;
+            }
+
+            SetChart();
+        }
+
         private List<EnergyUse.Models.EnergyType> getSelectedTypes()
         {
-            var selectedTypes = new List<EnergyUse.Models.EnergyType>() { CurrentEnergyType };
+            var selectedTypes = new List<EnergyUse.Models.EnergyType>() { _currentEnergyType };
 
             if (CboCompareWith.SelectedIndex != -1)
                 selectedTypes.Add((EnergyUse.Models.EnergyType)CboCompareWith.SelectedItem);
@@ -192,7 +256,7 @@ namespace WinFormsEF.ucControls
             _chartDefaultPerPeriod = new EnergyUse.Core.Graphs.LiveCharts.Default(graphParameter);
             List<LiveChartsCore.SkiaSharpView.Axis> axisList = getYAxis(graphParameter);
 
-            setLabels(_chartDefaultPerPeriod.GetResultLabelsPerPeriod(CurrentEnergyType));
+            setLabels(_chartDefaultPerPeriod.GetResultLabelsPerPeriod(_currentEnergyType));
             addChart(graphParameter.PeriodType, graphParameter.ShowType, _chartDefaultPerPeriod.GetSeries(), axisList);
         }
 
@@ -201,7 +265,7 @@ namespace WinFormsEF.ucControls
             _chartDefaultPerPeriod = new EnergyUse.Core.Graphs.LiveCharts.Default(graphParameter);
             List<LiveChartsCore.SkiaSharpView.Axis> axisList = getYAxis(graphParameter);
 
-            setLabels(_chartDefaultPerPeriod.GetResultLabelsPerPeriod(CurrentEnergyType));
+            setLabels(_chartDefaultPerPeriod.GetResultLabelsPerPeriod(_currentEnergyType));
             addChart(graphParameter.PeriodType, graphParameter.ShowType, _chartDefaultPerPeriod.GetSeries(), axisList);
         }
 
@@ -210,7 +274,7 @@ namespace WinFormsEF.ucControls
             _chartDefaultPerPeriod = new EnergyUse.Core.Graphs.LiveCharts.Default(graphParameter);
             List<LiveChartsCore.SkiaSharpView.Axis> axisList = getYAxis(graphParameter);
 
-            setLabels(_chartDefaultPerPeriod.GetResultLabelsPerPeriod(CurrentEnergyType));
+            setLabels(_chartDefaultPerPeriod.GetResultLabelsPerPeriod(_currentEnergyType));
             addChart(graphParameter.PeriodType, graphParameter.ShowType, _chartDefaultPerPeriod.GetSeries(), axisList);
         }
 
@@ -219,7 +283,7 @@ namespace WinFormsEF.ucControls
             _chartDefaultPerPeriod = new EnergyUse.Core.Graphs.LiveCharts.Default(graphParameter);
             List<LiveChartsCore.SkiaSharpView.Axis> axisList = getYAxis(graphParameter);
 
-            setLabels(_chartDefaultPerPeriod.GetResultLabelsPerPeriod(CurrentEnergyType));
+            setLabels(_chartDefaultPerPeriod.GetResultLabelsPerPeriod(_currentEnergyType));
             addChart(graphParameter.PeriodType, graphParameter.ShowType, new List<ISeries>(), axisList);
         }
 
@@ -279,68 +343,25 @@ namespace WinFormsEF.ucControls
             string title = $"{Managers.Languages.GetResourceString("ChartDefaultTitle", "Data per")} {periodType}";
 
             pnChartContainer.Controls.Clear();
-            CartesianChart = Managers.LiveCharts.GetDefaultChart(periodType, serieslist, axislist, title, !CurrentEnergyType.HasEnergyReturn, Managers.LiveCharts.GetYaxisLabel(showType, CurrentEnergyType));
+            _cartesianChart = Managers.LiveCharts.GetDefaultChart(periodType, serieslist, axislist, title, !_currentEnergyType.HasEnergyReturn, Managers.LiveCharts.GetYaxisLabel(showType, _currentEnergyType));
 
-            pnChartContainer.Controls.Add(CartesianChart);
+            pnChartContainer.Controls.Add(_cartesianChart);
         }
 
         public void ResetCurrentAddress(EnergyUse.Models.Address address, EnergyUse.Models.EnergyType energyType)
         {
-            CurrentAddress = address;
-            CurrentEnergyType = energyType;
+            _currentAddress = address;
+            _currentEnergyType = energyType;
 
             resetChart();
         }
 
         public void ResetCurrentEnergyType(EnergyUse.Models.EnergyType energyType)
         {
-            CurrentEnergyType = energyType;
+            _currentEnergyType = energyType;
 
             setDefaultEnergyTypeSettings();
             resetChart();
-        }
-
-        private void resetChart()
-        {
-            _InitSettings = true;
-            setDefaultPeriodSettings();
-            _InitSettings = false;
-
-            if (CurrentEnergyType != null)
-            {
-                rbEfficiency.Visible = CurrentEnergyType.HasEnergyReturn;
-                if (rbEfficiency.Checked)
-                    rbRate.Checked = true;
-            }
-
-            LoadChart();
-        }
-
-        private void setDefaultEnergyTypeSettings()
-        {
-            if (CurrentEnergyType != null)
-            {
-                rbEfficiency.Visible = CurrentEnergyType.HasEnergyReturn;
-                lblProduction.Visible = CurrentEnergyType.HasEnergyReturn;
-                if (rbEfficiency.Checked)
-                    rbRate.Checked = true;
-            }
-        }
-
-        private void setDefaultPeriodSettings()
-        {
-            Period periodType = getSelectedPeriodType();            
-
-            var currentDateFrom = getCurrentDateByDatePicker(DtpFrom);
-            if (currentDateFrom == DateTime.MinValue)
-                currentDateFrom = getDefaulStartDateByPeriod(periodType);
-
-            var currentDateTill = getCurrentDateByDatePicker(DtpTill);
-            if (currentDateTill == DateTime.MinValue)
-                currentDateTill = getDefaulTillDateByPeriod(periodType);
-
-            DtpFrom.Value = currentDateFrom;
-            DtpTill.Value = currentDateTill;
         }
 
         private DateTime getDefaulStartDateByPeriod(Period periodType)
@@ -363,7 +384,7 @@ namespace WinFormsEF.ucControls
                     defaultStartDate = new DateTime(startYear, DateTime.Now.Month, 1).AddYears(-10);
                     break;
                 default:
-                    defaultStartDate =  new DateTime(startYear, DateTime.Now.Month, 1);
+                    defaultStartDate = new DateTime(startYear, DateTime.Now.Month, 1);
                     break;
             }
 
@@ -379,7 +400,7 @@ namespace WinFormsEF.ucControls
             switch (periodType)
             {
                 case Period.Day:
-                     defaultTillDate = new DateTime(endYear, DateTime.Now.Month, DateTime.Now.Day);
+                    defaultTillDate = new DateTime(endYear, DateTime.Now.Month, DateTime.Now.Day);
                     break;
                 case Period.Week:
                     defaultTillDate = new DateTime(endYear, DateTime.Now.Month, daysInMonth);
@@ -479,12 +500,12 @@ namespace WinFormsEF.ucControls
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
 
             if (!string.IsNullOrWhiteSpace(currentValue))
-               libSettings.SaveSetting(currentSettingId, currentValue);
+                libSettings.SaveSetting(currentSettingId, currentValue);
         }
 
-        private DateTime getCurrentDateByDatePicker(DateTimePicker dateTimePicker)
+        private DateTime getCurrentDateByDatePicker(DateTimePicker dateTimePicker, Period periodType)
         {
-            var currentSettingId = getCurrentDtpTag(dateTimePicker);
+            var currentSettingId = getCurrentDtpTag(dateTimePicker, periodType);
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
             var setting = libSettings.GetSetting(currentSettingId);
             if (setting != null)
@@ -502,17 +523,17 @@ namespace WinFormsEF.ucControls
         private void setCurrentDtpTag(DateTimePicker dtp)
         {
             var currentValue = dtp.Value.ToString("yyyyMMdd");
-            var currentSettingId = getCurrentDtpTag(dtp);
+            var currentPeriodType = getSelectedPeriodType();
+            var currentSettingId = getCurrentDtpTag(dtp, currentPeriodType);
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
             libSettings.SaveSetting(currentSettingId, currentValue);
         }
 
-        private string getCurrentDtpTag(DateTimePicker dtp)
+        private string getCurrentDtpTag(DateTimePicker dtp, Period periodType)
         {
-            var currentPeriodType = CboPeriodType.Text.ToUpper();
             var currentSettingId = dtp.Tag.ToString();
-            if (!string.IsNullOrWhiteSpace(currentPeriodType))
-                currentSettingId += $"_{currentPeriodType}";
+            if (periodType != Period.Unknown)
+                currentSettingId += $"_{periodType.ToString().ToUpper()}";
 
             return currentSettingId;
         }
@@ -665,5 +686,17 @@ namespace WinFormsEF.ucControls
         }
 
         #endregion
+
+        //private void DtpFrom_ControlRemoved(object sender, ControlEventArgs e)
+        //{
+        //    // Disable the ValueChanged event during dropdown
+        //    DtpFrom.ValueChanged -= DtpFrom_ValueChanged;
+        //}
+
+        //private void DtpTill_ControlRemoved(object sender, ControlEventArgs e)
+        //{
+        //    // Disable the ValueChanged event during dropdown
+        //    DtpTill.ValueChanged -= DtpTill_ValueChanged;
+        //}
     }
 }
