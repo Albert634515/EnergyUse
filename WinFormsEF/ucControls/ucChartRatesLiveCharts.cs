@@ -46,7 +46,7 @@ namespace WinFormsEF.ucControls
 
         private void cmdExport_Click(object sender, EventArgs e)
         {
-            ExportToExcel(_currentEnergyType);
+            exportToExcel(_currentEnergyType);
         }
 
         #endregion
@@ -64,17 +64,16 @@ namespace WinFormsEF.ucControls
 
         private void chkListCostCategory_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (_initSettings == false)
-            {
-                CheckedListBox clb = (CheckedListBox)sender;
-                // Switch off event handler
-                clb.ItemCheck -= chkListCostCategory_ItemCheck;
-                clb.SetItemCheckState(e.Index, e.NewValue);
-                // Switch on event handler
-                clb.ItemCheck += chkListCostCategory_ItemCheck;
+            if (_initSettings == true) { return; }
 
-                SetChart();
-            }
+            CheckedListBox clb = (CheckedListBox)sender;
+            // Switch off event handler
+            clb.ItemCheck -= chkListCostCategory_ItemCheck;
+            clb.SetItemCheckState(e.Index, e.NewValue);
+            // Switch on event handler
+            clb.ItemCheck += chkListCostCategory_ItemCheck;
+
+            SetChart();
         }
 
         private void dtpFrom_ValueChanged(object sender, EventArgs e)
@@ -211,8 +210,7 @@ namespace WinFormsEF.ucControls
 
         public void ResetChart()
         {
-            if (_initSettings)
-                return;
+            if (_initSettings) { return; }
 
             setDefaultPeriodSettings();
 
@@ -237,6 +235,7 @@ namespace WinFormsEF.ucControls
         {
             var currentSettingId = dateTimePicker.Tag.ToString();
             var setting = getCurrentSetting(currentSettingId);
+
             if (setting != null)
             {
                 var year = int.Parse(setting.KeyValue.Substring(0, 4));
@@ -263,7 +262,7 @@ namespace WinFormsEF.ucControls
         private void setCurrentDtpTag(DateTimePicker dtp)
         {
             var currentSettingId = dtp.Tag.ToString();
-            var currentValue = dtp.Value.ToString("yyyyMMdd");            
+            var currentValue = dtp.Value.ToString("yyyyMMdd");
 
             setCurrentSetting(currentSettingId, currentValue);
         }
@@ -280,7 +279,7 @@ namespace WinFormsEF.ucControls
             libSettings.SaveSetting(settingId, currentValue);
         }
 
-        private void ExportToExcel(EnergyUse.Models.EnergyType energyType)
+        private void exportToExcel(EnergyUse.Models.EnergyType energyType)
         {
             string exportFileName, exportDirectory, message;
             int totalCols, totalRows;

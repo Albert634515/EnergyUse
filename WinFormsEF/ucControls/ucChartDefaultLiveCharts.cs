@@ -123,7 +123,7 @@ namespace WinFormsEF.ucControls
 
         private void cboPeriodType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_initSettings == true) { return; }
+            if (_initSettings) { return; }
 
             setCurrentComboValue(CboPeriodType);
             setDefaultPeriodSettings();
@@ -132,21 +132,21 @@ namespace WinFormsEF.ucControls
 
         private void cboCompareWith_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_initSettings == true) { return; }
+            if (_initSettings) { return; }
 
             setCurrentComboValue(CboCompareWith, CboPeriodType.Text);
         }
 
         private void dtpFrom_ValueChanged(object sender, EventArgs e)
         {
-            if (_initSettings == true) { return; }
+            if (_initSettings) { return; }
 
             setCurrentDateTimePicker(DtpFrom);
         }
 
         private void DtpTill_ValueChanged(object sender, EventArgs e)
         {
-            if (_initSettings == true) { return; }
+            if (_initSettings) { return; }
 
             setCurrentDateTimePicker(DtpTill);
         }
@@ -161,7 +161,7 @@ namespace WinFormsEF.ucControls
 
         private void valueRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (_initSettings == true) { return; }
+            if (_initSettings) { return; }
 
             setCurrentPanelValue(TypePanel, ValueRadioButton);
             SetChart();
@@ -169,7 +169,7 @@ namespace WinFormsEF.ucControls
 
         private void efficiencyRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (_initSettings == true) { return; }
+            if (_initSettings) { return; }
 
             setCurrentPanelValue(TypePanel, EfficiencyRadioButton);
             SetChart();
@@ -177,7 +177,7 @@ namespace WinFormsEF.ucControls
 
         private void categoryRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (_initSettings == true) { return; }
+            if (_initSettings) { return; }
 
             setCurrentPanelValue(ShowByPanel, CategoryRadioButton);
             SetChart();
@@ -185,7 +185,7 @@ namespace WinFormsEF.ucControls
 
         private void subCategoryRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (_initSettings == true) { return; }
+            if (_initSettings) { return; }
 
             setCurrentPanelValue(ShowByPanel, SubCategoryRadioButton);
             SetChart();
@@ -193,7 +193,7 @@ namespace WinFormsEF.ucControls
 
         private void totalsRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (_initSettings == true) { return; }
+            if (_initSettings) { return; }
 
             setCurrentPanelValue(ShowByPanel, TotalsRadioButton);
             SetChart();
@@ -201,7 +201,7 @@ namespace WinFormsEF.ucControls
 
         private void chkShowStacked_CheckedChanged(object sender, EventArgs e)
         {
-            if (_initSettings == true) { return; }
+            if (_initSettings) { return; }
 
             setCurrentCheckBox(chkShowStacked);
             SetChart();
@@ -209,7 +209,7 @@ namespace WinFormsEF.ucControls
 
         private void chkShowAvg_CheckedChanged(object sender, EventArgs e)
         {
-            if (_initSettings == true) { return; }
+            if (_initSettings) { return; }
 
             setCurrentCheckBox(chkShowAvg);
             SetChart();
@@ -217,7 +217,7 @@ namespace WinFormsEF.ucControls
 
         private void chkPredictMissingData_CheckedChanged(object sender, EventArgs e)
         {
-            if (_initSettings == true) { return; }
+            if (_initSettings) { return; }
 
             setCurrentCheckBox(chkPredictMissingData);
             SetChart();
