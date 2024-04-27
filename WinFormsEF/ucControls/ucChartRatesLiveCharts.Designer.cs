@@ -28,122 +28,127 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucChartRatesLiveCharts));
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pnlType = new System.Windows.Forms.Panel();
-            this.rbUnit = new System.Windows.Forms.RadioButton();
-            this.rbRate = new System.Windows.Forms.RadioButton();
-            this.dtpTill = new System.Windows.Forms.DateTimePicker();
-            this.dtpFrom = new System.Windows.Forms.DateTimePicker();
-            this.lblRange = new System.Windows.Forms.Label();
-            this.lblCostCategory = new System.Windows.Forms.Label();
-            this.chkListCostCategory = new System.Windows.Forms.CheckedListBox();
-            this.cmdExport = new System.Windows.Forms.Button();
-            this.cmdReset = new System.Windows.Forms.Button();
-            this.lblType = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.pnlType.SuspendLayout();
-            this.SuspendLayout();
+            panel1 = new Panel();
+            pnlType = new Panel();
+            rbUnit = new RadioButton();
+            rbRate = new RadioButton();
+            dtpTill = new DateTimePicker();
+            dtpFrom = new DateTimePicker();
+            lblRange = new Label();
+            lblCostCategory = new Label();
+            chkListCostCategory = new CheckedListBox();
+            cmdExport = new Button();
+            cmdReset = new Button();
+            lblType = new Label();
+            toolTip1 = new ToolTip(components);
+            pnlType.SuspendLayout();
+            SuspendLayout();
             // 
             // panel1
             // 
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Name = "panel1";
+            resources.ApplyResources(panel1, "panel1");
+            panel1.Name = "panel1";
             // 
             // pnlType
             // 
-            this.pnlType.Controls.Add(this.rbUnit);
-            this.pnlType.Controls.Add(this.rbRate);
-            resources.ApplyResources(this.pnlType, "pnlType");
-            this.pnlType.Name = "pnlType";
+            pnlType.Controls.Add(rbUnit);
+            pnlType.Controls.Add(rbRate);
+            resources.ApplyResources(pnlType, "pnlType");
+            pnlType.Name = "pnlType";
+            pnlType.Tag = "ChartRatesPeriodType";
             // 
             // rbUnit
             // 
-            resources.ApplyResources(this.rbUnit, "rbUnit");
-            this.rbUnit.Name = "rbUnit";
-            this.rbUnit.UseVisualStyleBackColor = true;
-            this.rbUnit.CheckedChanged += new System.EventHandler(this.rbType_CheckedChanged);
+            resources.ApplyResources(rbUnit, "rbUnit");
+            rbUnit.Name = "rbUnit";
+            rbUnit.UseVisualStyleBackColor = true;
+            rbUnit.CheckedChanged += rbType_CheckedChanged;
             // 
             // rbRate
             // 
-            resources.ApplyResources(this.rbRate, "rbRate");
-            this.rbRate.Checked = true;
-            this.rbRate.Name = "rbRate";
-            this.rbRate.TabStop = true;
-            this.rbRate.UseVisualStyleBackColor = true;
-            this.rbRate.CheckedChanged += new System.EventHandler(this.rbType_CheckedChanged);
+            resources.ApplyResources(rbRate, "rbRate");
+            rbRate.Checked = true;
+            rbRate.Name = "rbRate";
+            rbRate.TabStop = true;
+            rbRate.UseVisualStyleBackColor = true;
+            rbRate.CheckedChanged += rbType_CheckedChanged;
             // 
             // dtpTill
             // 
-            this.dtpTill.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            resources.ApplyResources(this.dtpTill, "dtpTill");
-            this.dtpTill.Name = "dtpTill";
+            dtpTill.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(dtpTill, "dtpTill");
+            dtpTill.Name = "dtpTill";
+            dtpTill.Tag = "ChartRatesPeriodEnd";
+            dtpTill.ValueChanged += dtpTill_ValueChanged;
             // 
             // dtpFrom
             // 
-            this.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            resources.ApplyResources(this.dtpFrom, "dtpFrom");
-            this.dtpFrom.Name = "dtpFrom";
+            dtpFrom.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(dtpFrom, "dtpFrom");
+            dtpFrom.Name = "dtpFrom";
+            dtpFrom.Tag = "ChartRatesPeriodStart";
+            dtpFrom.ValueChanged += dtpFrom_ValueChanged;
             // 
             // lblRange
             // 
-            resources.ApplyResources(this.lblRange, "lblRange");
-            this.lblRange.Name = "lblRange";
+            resources.ApplyResources(lblRange, "lblRange");
+            lblRange.Name = "lblRange";
             // 
             // lblCostCategory
             // 
-            resources.ApplyResources(this.lblCostCategory, "lblCostCategory");
-            this.lblCostCategory.Name = "lblCostCategory";
+            resources.ApplyResources(lblCostCategory, "lblCostCategory");
+            lblCostCategory.Name = "lblCostCategory";
             // 
             // chkListCostCategory
             // 
-            this.chkListCostCategory.CheckOnClick = true;
-            this.chkListCostCategory.FormattingEnabled = true;
-            resources.ApplyResources(this.chkListCostCategory, "chkListCostCategory");
-            this.chkListCostCategory.Name = "chkListCostCategory";
-            this.chkListCostCategory.SelectedIndexChanged += new System.EventHandler(this.cboPeriodType_SelectedIndexChanged);
+            chkListCostCategory.CheckOnClick = true;
+            chkListCostCategory.FormattingEnabled = true;
+            resources.ApplyResources(chkListCostCategory, "chkListCostCategory");
+            chkListCostCategory.Name = "chkListCostCategory";
+            chkListCostCategory.Tag = "ChartRatesPeriodCategories";
+            chkListCostCategory.SelectedIndexChanged += chkListCostCategory_SelectedIndexChanged;
             // 
             // cmdExport
             // 
-            this.cmdExport.Image = global::WinFormsUI.Properties.Resources.upload_16x16;
-            resources.ApplyResources(this.cmdExport, "cmdExport");
-            this.cmdExport.Name = "cmdExport";
-            this.cmdExport.UseVisualStyleBackColor = true;
-            this.cmdExport.Click += new System.EventHandler(this.cmdExport_Click);
+            cmdExport.Image = WinFormsUI.Properties.Resources.upload_16x16;
+            resources.ApplyResources(cmdExport, "cmdExport");
+            cmdExport.Name = "cmdExport";
+            cmdExport.UseVisualStyleBackColor = true;
+            cmdExport.Click += cmdExport_Click;
             // 
             // cmdReset
             // 
-            resources.ApplyResources(this.cmdReset, "cmdReset");
-            this.cmdReset.Name = "cmdReset";
-            this.cmdReset.UseVisualStyleBackColor = true;
-            this.cmdReset.Click += new System.EventHandler(this.cmdReset_Click);
+            resources.ApplyResources(cmdReset, "cmdReset");
+            cmdReset.Name = "cmdReset";
+            cmdReset.UseVisualStyleBackColor = true;
+            cmdReset.Click += cmdReset_Click;
             // 
             // lblType
             // 
-            resources.ApplyResources(this.lblType, "lblType");
-            this.lblType.Name = "lblType";
+            resources.ApplyResources(lblType, "lblType");
+            lblType.Name = "lblType";
             // 
             // ucChartRatesLiveCharts
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.pnlType);
-            this.Controls.Add(this.dtpTill);
-            this.Controls.Add(this.dtpFrom);
-            this.Controls.Add(this.lblRange);
-            this.Controls.Add(this.lblCostCategory);
-            this.Controls.Add(this.chkListCostCategory);
-            this.Controls.Add(this.cmdExport);
-            this.Controls.Add(this.cmdReset);
-            this.Controls.Add(this.lblType);
-            this.Name = "ucChartRatesLiveCharts";
-            this.pnlType.ResumeLayout(false);
-            this.pnlType.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(panel1);
+            Controls.Add(pnlType);
+            Controls.Add(dtpTill);
+            Controls.Add(dtpFrom);
+            Controls.Add(lblRange);
+            Controls.Add(lblCostCategory);
+            Controls.Add(chkListCostCategory);
+            Controls.Add(cmdExport);
+            Controls.Add(cmdReset);
+            Controls.Add(lblType);
+            Name = "ucChartRatesLiveCharts";
+            pnlType.ResumeLayout(false);
+            pnlType.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

@@ -432,166 +432,166 @@
   <data name="&gt;&gt;lblType.ZOrder" xml:space="preserve">
     <value>12</value>
   </data>
-  <data name="rbEfficiency.AutoSize" type="System.Boolean, mscorlib">
+  <data name="EfficiencyRadioButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="rbEfficiency.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="EfficiencyRadioButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>229, 4</value>
   </data>
-  <data name="rbEfficiency.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="EfficiencyRadioButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>93, 24</value>
   </data>
-  <data name="rbEfficiency.TabIndex" type="System.Int32, mscorlib">
+  <data name="EfficiencyRadioButton.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
   </data>
-  <data name="rbEfficiency.Text" xml:space="preserve">
+  <data name="EfficiencyRadioButton.Text" xml:space="preserve">
     <value>Efficiency</value>
   </data>
-  <data name="&gt;&gt;rbEfficiency.Name" xml:space="preserve">
-    <value>rbEfficiency</value>
+  <data name="&gt;&gt;EfficiencyRadioButton.Name" xml:space="preserve">
+    <value>EfficiencyRadioButton</value>
   </data>
-  <data name="&gt;&gt;rbEfficiency.Type" xml:space="preserve">
+  <data name="&gt;&gt;EfficiencyRadioButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;rbEfficiency.Parent" xml:space="preserve">
-    <value>pnlType</value>
+  <data name="&gt;&gt;EfficiencyRadioButton.Parent" xml:space="preserve">
+    <value>TypePanel</value>
   </data>
-  <data name="&gt;&gt;rbEfficiency.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;EfficiencyRadioButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="rbValue.AutoSize" type="System.Boolean, mscorlib">
+  <data name="ValueRadioButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="rbValue.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ValueRadioButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>101, 4</value>
   </data>
-  <data name="rbValue.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ValueRadioButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>66, 24</value>
   </data>
-  <data name="rbValue.TabIndex" type="System.Int32, mscorlib">
+  <data name="ValueRadioButton.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
   </data>
-  <data name="rbValue.Text" xml:space="preserve">
+  <data name="ValueRadioButton.Text" xml:space="preserve">
     <value>Value</value>
   </data>
-  <data name="&gt;&gt;rbValue.Name" xml:space="preserve">
-    <value>rbValue</value>
+  <data name="&gt;&gt;ValueRadioButton.Name" xml:space="preserve">
+    <value>ValueRadioButton</value>
   </data>
-  <data name="&gt;&gt;rbValue.Type" xml:space="preserve">
+  <data name="&gt;&gt;ValueRadioButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;rbValue.Parent" xml:space="preserve">
-    <value>pnlType</value>
+  <data name="&gt;&gt;ValueRadioButton.Parent" xml:space="preserve">
+    <value>TypePanel</value>
   </data>
-  <data name="&gt;&gt;rbValue.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ValueRadioButton.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="rbRate.AutoSize" type="System.Boolean, mscorlib">
+  <data name="RateRadioButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="rbRate.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="RateRadioButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 4</value>
   </data>
-  <data name="rbRate.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="RateRadioButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 24</value>
   </data>
-  <data name="rbRate.TabIndex" type="System.Int32, mscorlib">
+  <data name="RateRadioButton.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
   </data>
-  <data name="rbRate.Text" xml:space="preserve">
+  <data name="RateRadioButton.Text" xml:space="preserve">
     <value>Rate</value>
   </data>
-  <data name="&gt;&gt;rbRate.Name" xml:space="preserve">
-    <value>rbRate</value>
+  <data name="&gt;&gt;RateRadioButton.Name" xml:space="preserve">
+    <value>RateRadioButton</value>
   </data>
-  <data name="&gt;&gt;rbRate.Type" xml:space="preserve">
+  <data name="&gt;&gt;RateRadioButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;rbRate.Parent" xml:space="preserve">
-    <value>pnlType</value>
+  <data name="&gt;&gt;RateRadioButton.Parent" xml:space="preserve">
+    <value>TypePanel</value>
   </data>
-  <data name="&gt;&gt;rbRate.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;RateRadioButton.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="rbTotals.AutoSize" type="System.Boolean, mscorlib">
+  <data name="TotalsRadioButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="rbTotals.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="TotalsRadioButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>229, 3</value>
   </data>
-  <data name="rbTotals.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="TotalsRadioButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 24</value>
   </data>
-  <data name="rbTotals.TabIndex" type="System.Int32, mscorlib">
+  <data name="TotalsRadioButton.TabIndex" type="System.Int32, mscorlib">
     <value>23</value>
   </data>
-  <data name="rbTotals.Text" xml:space="preserve">
+  <data name="TotalsRadioButton.Text" xml:space="preserve">
     <value>Totals</value>
   </data>
-  <data name="&gt;&gt;rbTotals.Name" xml:space="preserve">
-    <value>rbTotals</value>
+  <data name="&gt;&gt;TotalsRadioButton.Name" xml:space="preserve">
+    <value>TotalsRadioButton</value>
   </data>
-  <data name="&gt;&gt;rbTotals.Type" xml:space="preserve">
+  <data name="&gt;&gt;TotalsRadioButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;rbTotals.Parent" xml:space="preserve">
-    <value>plShowBy</value>
+  <data name="&gt;&gt;TotalsRadioButton.Parent" xml:space="preserve">
+    <value>ShowByPanel</value>
   </data>
-  <data name="&gt;&gt;rbTotals.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;TotalsRadioButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="rbSubCategory.AutoSize" type="System.Boolean, mscorlib">
+  <data name="SubCategoryRadioButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="rbSubCategory.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="SubCategoryRadioButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>101, 3</value>
   </data>
-  <data name="rbSubCategory.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="SubCategoryRadioButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>117, 24</value>
   </data>
-  <data name="rbSubCategory.TabIndex" type="System.Int32, mscorlib">
+  <data name="SubCategoryRadioButton.TabIndex" type="System.Int32, mscorlib">
     <value>22</value>
   </data>
-  <data name="rbSubCategory.Text" xml:space="preserve">
+  <data name="SubCategoryRadioButton.Text" xml:space="preserve">
     <value>Sub category</value>
   </data>
-  <data name="&gt;&gt;rbSubCategory.Name" xml:space="preserve">
-    <value>rbSubCategory</value>
+  <data name="&gt;&gt;SubCategoryRadioButton.Name" xml:space="preserve">
+    <value>SubCategoryRadioButton</value>
   </data>
-  <data name="&gt;&gt;rbSubCategory.Type" xml:space="preserve">
+  <data name="&gt;&gt;SubCategoryRadioButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;rbSubCategory.Parent" xml:space="preserve">
-    <value>plShowBy</value>
+  <data name="&gt;&gt;SubCategoryRadioButton.Parent" xml:space="preserve">
+    <value>ShowByPanel</value>
   </data>
-  <data name="&gt;&gt;rbSubCategory.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;SubCategoryRadioButton.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="rbCategory.AutoSize" type="System.Boolean, mscorlib">
+  <data name="CategoryRadioButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="rbCategory.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="CategoryRadioButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
   </data>
-  <data name="rbCategory.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="CategoryRadioButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>90, 24</value>
   </data>
-  <data name="rbCategory.TabIndex" type="System.Int32, mscorlib">
+  <data name="CategoryRadioButton.TabIndex" type="System.Int32, mscorlib">
     <value>21</value>
   </data>
-  <data name="rbCategory.Text" xml:space="preserve">
+  <data name="CategoryRadioButton.Text" xml:space="preserve">
     <value>Category</value>
   </data>
-  <data name="&gt;&gt;rbCategory.Name" xml:space="preserve">
-    <value>rbCategory</value>
+  <data name="&gt;&gt;CategoryRadioButton.Name" xml:space="preserve">
+    <value>CategoryRadioButton</value>
   </data>
-  <data name="&gt;&gt;rbCategory.Type" xml:space="preserve">
+  <data name="&gt;&gt;CategoryRadioButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;rbCategory.Parent" xml:space="preserve">
-    <value>plShowBy</value>
+  <data name="&gt;&gt;CategoryRadioButton.Parent" xml:space="preserve">
+    <value>ShowByPanel</value>
   </data>
-  <data name="&gt;&gt;rbCategory.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;CategoryRadioButton.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="pnChartContainer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -618,46 +618,46 @@
   <data name="&gt;&gt;pnChartContainer.ZOrder" xml:space="preserve">
     <value>13</value>
   </data>
-  <data name="plShowBy.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ShowByPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>651, 34</value>
   </data>
-  <data name="plShowBy.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ShowByPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>326, 29</value>
   </data>
-  <data name="plShowBy.TabIndex" type="System.Int32, mscorlib">
+  <data name="ShowByPanel.TabIndex" type="System.Int32, mscorlib">
     <value>44</value>
   </data>
-  <data name="&gt;&gt;plShowBy.Name" xml:space="preserve">
-    <value>plShowBy</value>
+  <data name="&gt;&gt;ShowByPanel.Name" xml:space="preserve">
+    <value>ShowByPanel</value>
   </data>
-  <data name="&gt;&gt;plShowBy.Type" xml:space="preserve">
+  <data name="&gt;&gt;ShowByPanel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;plShowBy.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ShowByPanel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;plShowBy.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ShowByPanel.ZOrder" xml:space="preserve">
     <value>14</value>
   </data>
-  <data name="pnlType.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="TypePanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>651, 1</value>
   </data>
-  <data name="pnlType.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="TypePanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>326, 29</value>
   </data>
-  <data name="pnlType.TabIndex" type="System.Int32, mscorlib">
+  <data name="TypePanel.TabIndex" type="System.Int32, mscorlib">
     <value>43</value>
   </data>
-  <data name="&gt;&gt;pnlType.Name" xml:space="preserve">
-    <value>pnlType</value>
+  <data name="&gt;&gt;TypePanel.Name" xml:space="preserve">
+    <value>TypePanel</value>
   </data>
-  <data name="&gt;&gt;pnlType.Type" xml:space="preserve">
+  <data name="&gt;&gt;TypePanel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;pnlType.Parent" xml:space="preserve">
+  <data name="&gt;&gt;TypePanel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;pnlType.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;TypePanel.ZOrder" xml:space="preserve">
     <value>15</value>
   </data>
   <data name="DtpTill.Location" type="System.Drawing.Point, System.Drawing">
@@ -753,6 +753,9 @@
   <data name="&gt;&gt;CboPeriodType.ZOrder" xml:space="preserve">
     <value>19</value>
   </data>
+  <metadata name="bsPeriodType.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>136, 24</value>
+  </metadata>
   <data name="LblPeriod.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -811,6 +814,9 @@
   <data name="&gt;&gt;CboCompareWith.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <metadata name="bsEnergyTypes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>283, 22</value>
+  </metadata>
   <data name="EnergyTypeLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>

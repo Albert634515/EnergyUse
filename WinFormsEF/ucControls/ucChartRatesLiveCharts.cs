@@ -31,7 +31,7 @@ namespace WinFormsEF.ucControls
             _currentAddress = selectedAddress;
             _currentEnergyType = selectedEnergyType;
 
-            ResetCostCategory(_currentEnergyType);
+            setCostCategory(_currentEnergyType);
             _initSettings = false;
 
             ResetChart();
@@ -53,8 +53,12 @@ namespace WinFormsEF.ucControls
 
         #region Events
 
-        private void cboPeriodType_SelectedIndexChanged(object sender, EventArgs e)
+        private void chkListCostCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (_initSettings == true) { return; }
+
+            setCurrentCheckListBox(chkListCostCategory);
+
             ResetChart();
         }
 
@@ -73,10 +77,26 @@ namespace WinFormsEF.ucControls
             }
         }
 
+        private void dtpFrom_ValueChanged(object sender, EventArgs e)
+        {
+            if (_initSettings == true) { return; }
+
+            setCurrentDtpTag(dtpFrom);
+        }
+
+        private void dtpTill_ValueChanged(object sender, EventArgs e)
+        {
+            if (_initSettings == true) { return; }
+
+            setCurrentDtpTag(dtpTill);
+        }
+
         private void rbType_CheckedChanged(object sender, EventArgs e)
         {
+            if (_initSettings == true) { return; }
+
             _initSettings = true;
-            ResetCostCategory(_currentEnergyType);
+            setCostCategory(_currentEnergyType);
             _initSettings = false;
 
             SetChart();
@@ -97,19 +117,19 @@ namespace WinFormsEF.ucControls
                 graphParameter.ShowType = GetShowType();
                 graphParameter.From = dtpFrom.Value;
                 graphParameter.Till = dtpTill.Value;
-                graphParameter.CostCategoryList = GetSelecteCostCategories();
+                graphParameter.CostCategoryList = getSelectedCostCategories();
                 graphParameter.TarifGroupId = 1;
 
                 Cursor = Cursors.WaitCursor;
                 if (rbUnit.Checked)
-                    GetChartSeriesPerCostCategoryAndUnit(graphParameter);
+                    getChartSeriesPerCostCategoryAndUnit(graphParameter);
                 else
-                    GetChartSeriesPerCostCategory(graphParameter);
+                    getChartSeriesPerCostCategory(graphParameter);
                 Cursor = Cursors.Default;
             }
         }
 
-        private void AddChart(Period periodType, List<ISeries> serieslist)
+        private void addChart(Period periodType, List<ISeries> serieslist)
         {
             if (serieslist.Count == 0)
                 return;
@@ -122,21 +142,21 @@ namespace WinFormsEF.ucControls
             panel1.Controls.Add(_cartesianChart);
         }
 
-        private void GetChartSeriesPerCostCategory(ParameterGraph graphParameter)
+        private void getChartSeriesPerCostCategory(ParameterGraph graphParameter)
         {
             _chartCompare = new EnergyUse.Core.Graphs.LiveCharts.Rates(graphParameter);
 
-            AddChart(Period.Day, _chartCompare.GetSeries());
+            addChart(Period.Day, _chartCompare.GetSeries());
         }
 
-        private void GetChartSeriesPerCostCategoryAndUnit(ParameterGraph graphParameter)
+        private void getChartSeriesPerCostCategoryAndUnit(ParameterGraph graphParameter)
         {
             _chartCompare = new EnergyUse.Core.Graphs.LiveCharts.Rates(graphParameter);
 
-            AddChart(Period.Day, _chartCompare.GetSeries());
+            addChart(Period.Day, _chartCompare.GetSeries());
         }
 
-        private List<EnergyUse.Models.CostCategory> GetSelecteCostCategories()
+        private List<EnergyUse.Models.CostCategory> getSelectedCostCategories()
         {
             List<EnergyUse.Models.CostCategory> costCategories = new List<EnergyUse.Models.CostCategory>();
             for (int i = 0; i < chkListCostCategory.Items.Count; i++)
@@ -161,12 +181,14 @@ namespace WinFormsEF.ucControls
         public void ResetCurrentEnergyType(EnergyUse.Models.EnergyType energyType)
         {
             _currentEnergyType = energyType;
-            ResetCostCategory(_currentEnergyType);
+            setCostCategory(_currentEnergyType);
             ResetChart();
         }
 
-        private void ResetCostCategory(EnergyUse.Models.EnergyType energyType)
+        private void setCostCategory(EnergyUse.Models.EnergyType energyType)
         {
+            var currentSettingId = chkListCostCategory.Tag.ToString();
+            var setting = getCurrentSetting(currentSettingId);
             List<EnergyUse.Models.CostCategory> costCategories = new();
             if (energyType != null)
                 costCategories = _unitOfWork.CostCategoryRepo.SelectByEnergyTypeId(energyType.Id).ToList();
@@ -175,9 +197,13 @@ namespace WinFormsEF.ucControls
                 costCategories = costCategories.Where(x => x.EnergySubType.Id >= 1 && x.EnergySubType.Id <= 4).ToList();
 
             chkListCostCategory.Items.Clear();
-            foreach (var item in costCategories)
+            foreach (var costCategory in costCategories)
             {
-                chkListCostCategory.Items.Add(item, true);
+                var categoryChecked = true;
+                if (setting != null)
+                    categoryChecked = setting.KeyValue.Contains($"{costCategory.Id};");
+
+                chkListCostCategory.Items.Add(costCategory, categoryChecked);
             }
 
             ((ListBox)chkListCostCategory).DisplayMember = "Name";
@@ -188,10 +214,70 @@ namespace WinFormsEF.ucControls
             if (_initSettings)
                 return;
 
-            dtpFrom.Value = new DateTime(DateTime.Now.AddYears(-4).Year, 1, 1); ;
-            dtpTill.Value = new DateTime(DateTime.Now.Year, 12, 31);
+            setDefaultPeriodSettings();
 
             SetChart();
+        }
+
+        private void setDefaultPeriodSettings()
+        {
+            var currentDateFrom = getCurrentDateByDatePicker(dtpFrom);
+            if (currentDateFrom == DateTime.MinValue)
+                currentDateFrom = new DateTime(DateTime.Now.AddYears(-4).Year, 1, 1); ;
+
+            var currentDateTill = getCurrentDateByDatePicker(dtpTill);
+            if (currentDateTill == DateTime.MinValue)
+                currentDateTill = new DateTime(DateTime.Now.Year, 12, 31);
+
+            dtpFrom.Value = currentDateFrom;
+            dtpTill.Value = currentDateTill;
+        }
+
+        private DateTime getCurrentDateByDatePicker(DateTimePicker dateTimePicker)
+        {
+            var currentSettingId = dateTimePicker.Tag.ToString();
+            var setting = getCurrentSetting(currentSettingId);
+            if (setting != null)
+            {
+                var year = int.Parse(setting.KeyValue.Substring(0, 4));
+                var month = int.Parse(setting.KeyValue.Substring(4, 2));
+                var day = int.Parse(setting.KeyValue.Substring(6, 2));
+
+                return new DateTime(year, month, day);
+            }
+            else
+                return DateTime.MinValue;
+        }
+
+        private void setCurrentCheckListBox(CheckedListBox chkListCostCategory)
+        {
+            var currentSettingId = chkListCostCategory.Tag.ToString();
+            var currentValue = string.Empty;
+            var selectedCostCategories = getSelectedCostCategories();
+            foreach (var costCategory in selectedCostCategories)
+                currentValue += $"{costCategory.Id};";
+
+            setCurrentSetting(currentSettingId, currentValue);
+        }
+
+        private void setCurrentDtpTag(DateTimePicker dtp)
+        {
+            var currentSettingId = dtp.Tag.ToString();
+            var currentValue = dtp.Value.ToString("yyyyMMdd");            
+
+            setCurrentSetting(currentSettingId, currentValue);
+        }
+
+        private EnergyUse.Models.Setting getCurrentSetting(string settingId)
+        {
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            return libSettings.GetSetting(settingId);
+        }
+
+        private void setCurrentSetting(string settingId, string currentValue)
+        {
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            libSettings.SaveSetting(settingId, currentValue);
         }
 
         private void ExportToExcel(EnergyUse.Models.EnergyType energyType)

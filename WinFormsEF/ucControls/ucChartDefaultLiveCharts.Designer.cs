@@ -40,15 +40,15 @@
             chkPredictMissingData = new CheckBox();
             lblShowBy = new Label();
             lblType = new Label();
-            rbEfficiency = new RadioButton();
-            rbValue = new RadioButton();
-            rbRate = new RadioButton();
-            rbTotals = new RadioButton();
-            rbSubCategory = new RadioButton();
-            rbCategory = new RadioButton();
+            EfficiencyRadioButton = new RadioButton();
+            ValueRadioButton = new RadioButton();
+            RateRadioButton = new RadioButton();
+            TotalsRadioButton = new RadioButton();
+            SubCategoryRadioButton = new RadioButton();
+            CategoryRadioButton = new RadioButton();
             pnChartContainer = new Panel();
-            plShowBy = new Panel();
-            pnlType = new Panel();
+            ShowByPanel = new Panel();
+            TypePanel = new Panel();
             DtpTill = new DateTimePicker();
             DtpFrom = new DateTimePicker();
             PeriodStartLabel = new Label();
@@ -60,8 +60,8 @@
             bsEnergyTypes = new BindingSource(components);
             EnergyTypeLabel = new Label();
             PeriodEndLabel = new Label();
-            plShowBy.SuspendLayout();
-            pnlType.SuspendLayout();
+            ShowByPanel.SuspendLayout();
+            TypePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bsPeriodType).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).BeginInit();
             SuspendLayout();
@@ -136,51 +136,57 @@
             resources.ApplyResources(lblType, "lblType");
             lblType.Name = "lblType";
             // 
-            // rbEfficiency
+            // EfficiencyRadioButton
             // 
-            resources.ApplyResources(rbEfficiency, "rbEfficiency");
-            rbEfficiency.Name = "rbEfficiency";
-            rbEfficiency.UseVisualStyleBackColor = true;
-            rbEfficiency.CheckedChanged += rbType_CheckedChanged;
+            resources.ApplyResources(EfficiencyRadioButton, "EfficiencyRadioButton");
+            EfficiencyRadioButton.Name = "EfficiencyRadioButton";
+            EfficiencyRadioButton.Tag = "DefaultChartEfficiencyType";
+            EfficiencyRadioButton.UseVisualStyleBackColor = true;
+            EfficiencyRadioButton.CheckedChanged += efficiencyRadioButton_CheckedChanged;
             // 
-            // rbValue
+            // ValueRadioButton
             // 
-            resources.ApplyResources(rbValue, "rbValue");
-            rbValue.Name = "rbValue";
-            rbValue.UseVisualStyleBackColor = true;
-            rbValue.CheckedChanged += rbType_CheckedChanged;
+            resources.ApplyResources(ValueRadioButton, "ValueRadioButton");
+            ValueRadioButton.Name = "ValueRadioButton";
+            ValueRadioButton.Tag = "DefaultChartValueType";
+            ValueRadioButton.UseVisualStyleBackColor = true;
+            ValueRadioButton.CheckedChanged += valueRadioButton_CheckedChanged;
             // 
-            // rbRate
+            // RateRadioButton
             // 
-            resources.ApplyResources(rbRate, "rbRate");
-            rbRate.Checked = true;
-            rbRate.Name = "rbRate";
-            rbRate.TabStop = true;
-            rbRate.UseVisualStyleBackColor = true;
-            rbRate.CheckedChanged += rbType_CheckedChanged;
+            resources.ApplyResources(RateRadioButton, "RateRadioButton");
+            RateRadioButton.Checked = true;
+            RateRadioButton.Name = "RateRadioButton";
+            RateRadioButton.TabStop = true;
+            RateRadioButton.Tag = "DefaultChartRateType";
+            RateRadioButton.UseVisualStyleBackColor = true;
+            RateRadioButton.CheckedChanged += rateRadioButton_CheckedChanged;
             // 
-            // rbTotals
+            // TotalsRadioButton
             // 
-            resources.ApplyResources(rbTotals, "rbTotals");
-            rbTotals.Name = "rbTotals";
-            rbTotals.UseVisualStyleBackColor = true;
-            rbTotals.CheckedChanged += rbShowBy_CheckedChanged;
+            resources.ApplyResources(TotalsRadioButton, "TotalsRadioButton");
+            TotalsRadioButton.Name = "TotalsRadioButton";
+            TotalsRadioButton.Tag = "DefaultChartTotalsShowBy";
+            TotalsRadioButton.UseVisualStyleBackColor = true;
+            TotalsRadioButton.CheckedChanged += totalsRadioButton_CheckedChanged;
             // 
-            // rbSubCategory
+            // SubCategoryRadioButton
             // 
-            resources.ApplyResources(rbSubCategory, "rbSubCategory");
-            rbSubCategory.Name = "rbSubCategory";
-            rbSubCategory.UseVisualStyleBackColor = true;
-            rbSubCategory.CheckedChanged += rbShowBy_CheckedChanged;
+            resources.ApplyResources(SubCategoryRadioButton, "SubCategoryRadioButton");
+            SubCategoryRadioButton.Name = "SubCategoryRadioButton";
+            SubCategoryRadioButton.Tag = "DefaultChartSubCategoryShowBy";
+            SubCategoryRadioButton.UseVisualStyleBackColor = true;
+            SubCategoryRadioButton.CheckedChanged += subCategoryRadioButton_CheckedChanged;
             // 
-            // rbCategory
+            // CategoryRadioButton
             // 
-            resources.ApplyResources(rbCategory, "rbCategory");
-            rbCategory.Checked = true;
-            rbCategory.Name = "rbCategory";
-            rbCategory.TabStop = true;
-            rbCategory.UseVisualStyleBackColor = true;
-            rbCategory.CheckedChanged += rbShowBy_CheckedChanged;
+            resources.ApplyResources(CategoryRadioButton, "CategoryRadioButton");
+            CategoryRadioButton.Checked = true;
+            CategoryRadioButton.Name = "CategoryRadioButton";
+            CategoryRadioButton.TabStop = true;
+            CategoryRadioButton.Tag = "DefaultChartCategoryShowBy";
+            CategoryRadioButton.UseVisualStyleBackColor = true;
+            CategoryRadioButton.CheckedChanged += categoryRadioButton_CheckedChanged;
             // 
             // pnChartContainer
             // 
@@ -188,23 +194,23 @@
             pnChartContainer.BorderStyle = BorderStyle.Fixed3D;
             pnChartContainer.Name = "pnChartContainer";
             // 
-            // plShowBy
+            // ShowByPanel
             // 
-            plShowBy.Controls.Add(rbTotals);
-            plShowBy.Controls.Add(rbSubCategory);
-            plShowBy.Controls.Add(rbCategory);
-            resources.ApplyResources(plShowBy, "plShowBy");
-            plShowBy.Name = "plShowBy";
-            plShowBy.Tag = "DefaultChartPeriodShowBy";
+            ShowByPanel.Controls.Add(TotalsRadioButton);
+            ShowByPanel.Controls.Add(SubCategoryRadioButton);
+            ShowByPanel.Controls.Add(CategoryRadioButton);
+            resources.ApplyResources(ShowByPanel, "ShowByPanel");
+            ShowByPanel.Name = "ShowByPanel";
+            ShowByPanel.Tag = "DefaultChartPeriodShowBy";
             // 
-            // pnlType
+            // TypePanel
             // 
-            pnlType.Controls.Add(rbEfficiency);
-            pnlType.Controls.Add(rbValue);
-            pnlType.Controls.Add(rbRate);
-            resources.ApplyResources(pnlType, "pnlType");
-            pnlType.Name = "pnlType";
-            pnlType.Tag = "DefaultChartPeriodType";
+            TypePanel.Controls.Add(EfficiencyRadioButton);
+            TypePanel.Controls.Add(ValueRadioButton);
+            TypePanel.Controls.Add(RateRadioButton);
+            resources.ApplyResources(TypePanel, "TypePanel");
+            TypePanel.Name = "TypePanel";
+            TypePanel.Tag = "DefaultChartPeriodType";
             // 
             // DtpTill
             // 
@@ -213,7 +219,6 @@
             DtpTill.Name = "DtpTill";
             DtpTill.Tag = "DefaultChartPeriodPeriodEnd";
             DtpTill.ValueChanged += DtpTill_ValueChanged;
-
             // 
             // DtpFrom
             // 
@@ -221,8 +226,7 @@
             resources.ApplyResources(DtpFrom, "DtpFrom");
             DtpFrom.Name = "DtpFrom";
             DtpFrom.Tag = "DefaultChartPeriodPeriodStart";
-            DtpFrom.ValueChanged += DtpFrom_ValueChanged;
-
+            DtpFrom.ValueChanged += dtpFrom_ValueChanged;
             // 
             // PeriodStartLabel
             // 
@@ -236,7 +240,7 @@
             CboPeriodType.FormattingEnabled = true;
             resources.ApplyResources(CboPeriodType, "CboPeriodType");
             CboPeriodType.Name = "CboPeriodType";
-            CboPeriodType.Tag = "DefaultChartPeriodType";
+            CboPeriodType.Tag = "DefaultChartPeriodPeriodType";
             CboPeriodType.ValueMember = "Key";
             CboPeriodType.SelectedIndexChanged += cboPeriodType_SelectedIndexChanged;
             // 
@@ -258,7 +262,7 @@
             CboCompareWith.Name = "CboCompareWith";
             CboCompareWith.Tag = "DefaultChartPeriodCompareWith";
             CboCompareWith.ValueMember = "Id";
-            CboCompareWith.SelectedIndexChanged += CboCompareWith_SelectedIndexChanged;
+            CboCompareWith.SelectedIndexChanged += cboCompareWith_SelectedIndexChanged;
             // 
             // bsEnergyTypes
             // 
@@ -292,18 +296,18 @@
             Controls.Add(lblShowBy);
             Controls.Add(lblType);
             Controls.Add(pnChartContainer);
-            Controls.Add(plShowBy);
-            Controls.Add(pnlType);
+            Controls.Add(ShowByPanel);
+            Controls.Add(TypePanel);
             Controls.Add(DtpTill);
             Controls.Add(DtpFrom);
             Controls.Add(PeriodStartLabel);
             Controls.Add(CboPeriodType);
             Controls.Add(LblPeriod);
             Name = "ucChartDefaultLiveCharts";
-            plShowBy.ResumeLayout(false);
-            plShowBy.PerformLayout();
-            pnlType.ResumeLayout(false);
-            pnlType.PerformLayout();
+            ShowByPanel.ResumeLayout(false);
+            ShowByPanel.PerformLayout();
+            TypePanel.ResumeLayout(false);
+            TypePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)bsPeriodType).EndInit();
             ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).EndInit();
             ResumeLayout(false);
@@ -322,15 +326,15 @@
         private CheckBox chkPredictMissingData;
         private Label lblShowBy;
         private Label lblType;
-        private RadioButton rbEfficiency;
-        private RadioButton rbValue;
-        private RadioButton rbRate;
-        private RadioButton rbTotals;
-        private RadioButton rbSubCategory;
-        private RadioButton rbCategory;
+        private RadioButton EfficiencyRadioButton;
+        private RadioButton ValueRadioButton;
+        private RadioButton RateRadioButton;
+        private RadioButton TotalsRadioButton;
+        private RadioButton SubCategoryRadioButton;
+        private RadioButton CategoryRadioButton;
         private Panel pnChartContainer;
-        private Panel plShowBy;
-        private Panel pnlType;
+        private Panel ShowByPanel;
+        private Panel TypePanel;
         private DateTimePicker DtpTill;
         private DateTimePicker DtpFrom;
         private Label PeriodStartLabel;

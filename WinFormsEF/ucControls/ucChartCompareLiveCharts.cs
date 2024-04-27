@@ -33,18 +33,9 @@ namespace WinFormsEF.ucControls
             _currentAddress = selectedAddress;
             _currentEnergyType = selectedEnergyType;
 
-            setComboPeriodTypes();
             ResetChart();
 
             _initSettings = false;
-        }
-
-        private void setComboPeriodTypes()
-        {
-            var periodTypes = WinFormsEF.Managers.SelectionItemList.GetPeriodList();
-            bsPeriodType.DataSource = periodTypes;
-
-            CboPeriodType.SelectedIndex = CboPeriodType.FindString("Year");
         }
 
         #endregion
@@ -69,20 +60,7 @@ namespace WinFormsEF.ucControls
         {
             if (_initSettings) { return; }
 
-            setDefaultPeriodSettings();
-
-            SetChart();
-        }
-
-        private void cboNumbers_SelectedValueChanged(object sender, EventArgs e)
-        {
-            string periodType;
-
-            periodType = CboPeriodType.Text;
-
-            if (periodType.ToUpper() == "DAY")
-                setNumber2Combo(cboNumbers.SelectedIndex + 1);
-
+            setCurrentComboValue(CboPeriodType);
             SetChart();
         }
 
@@ -90,12 +68,28 @@ namespace WinFormsEF.ucControls
         {
             if (_initSettings) { return; }
 
+            setCurrentComboValue(cboStartYear, CboPeriodType.Text);
             SetChart();
         }
 
         private void cboEndYear_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_initSettings) { return; }
+
+            setCurrentComboValue(cboEndYear, CboPeriodType.Text);
+            SetChart();
+        }
+
+        private void cboNumbers_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (_initSettings) { return; }
+
+            setCurrentComboValue(cboNumbers, CboPeriodType.Text);
+
+            string periodType = CboPeriodType.Text;
+
+            if (periodType.ToUpper() == "DAY")
+                setNumber2Combo(cboNumbers.SelectedIndex + 1);
 
             SetChart();
         }
@@ -104,20 +98,64 @@ namespace WinFormsEF.ucControls
         {
             if (_initSettings) { return; }
 
+            setCurrentComboValue(cboNumbers2, CboPeriodType.Text);
             SetChart();
         }
 
-        private void rbType_CheckedChanged(object sender, EventArgs e)
+
+        private void rateRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (_initSettings) { return; }
 
+            setCurrentPanelValue(TypePanel, RateRadioButton);
             SetChart();
         }
 
-        private void rbShowType_CheckedChanged(object sender, EventArgs e)
+        private void valueRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (_initSettings) { return; }
 
+            setCurrentPanelValue(TypePanel, ValueRadioButton);
+            SetChart();
+        }
+
+        private void efficiencyRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initSettings) { return; }
+
+            setCurrentPanelValue(TypePanel, EfficiencyRadioButton);
+            SetChart();
+        }
+
+        private void categoryRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initSettings) { return; }
+
+            setCurrentPanelValue(ShowByPanel, CategoryRadioButton);
+            SetChart();
+        }
+
+        private void SubCategoryRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initSettings) { return; }
+
+            setCurrentPanelValue(ShowByPanel, SubCategoryRadioButton);
+            SetChart();
+        }
+
+        private void TotalsRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initSettings) { return; }
+
+            setCurrentPanelValue(ShowByPanel, TotalsRadioButton);
+            SetChart();
+        }
+
+        private void chkPredictMissingData_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initSettings) { return; }
+
+            setCurrentCheckBox(chkPredictMissingData);
             SetChart();
         }
 
@@ -125,6 +163,7 @@ namespace WinFormsEF.ucControls
         {
             if (_initSettings) { return; }
 
+            setCurrentCheckBox(chkShowStacked);
             SetChart();
         }
 
@@ -290,18 +329,76 @@ namespace WinFormsEF.ucControls
         public void ResetChart()
         {
             _initSettings = true;
+
+            setComboPeriodTypes(getCurrentSettingValue(CboPeriodType.Tag.ToString()));
             setNumberCombo();
             setDefaultPeriodSettings();
+
             _initSettings = false;
 
-            if (_currentEnergyType != null)
-            {
-                rbEfficiency.Visible = _currentEnergyType.HasEnergyReturn;
-                if (rbEfficiency.Checked)
-                    rbRate.Checked = true;
-            }
+            setDefaultPanelTypeValue();
+            setDefaultPanelShowByValue();
+            setDefaultCheckBoxSetting(chkPredictMissingData);
+            setDefaultCheckBoxSetting(chkShowStacked);
 
             SetChart();
+        }
+
+        private void setDefaultPanelTypeValue()
+        {
+            Period periodType = getSelectedPeriodType();
+            var currentSettingId = getCurrentSettingIdByPeriodType(TypePanel.Tag.ToString(), periodType);
+            var setting = getCurrentSetting(currentSettingId);
+
+            if (_currentEnergyType != null)
+                EfficiencyRadioButton.Visible = _currentEnergyType.HasEnergyReturn;
+
+            if (setting == null && EfficiencyRadioButton.Visible && EfficiencyRadioButton.Checked)
+                RateRadioButton.Checked = true;
+
+            if (setting != null && setting.KeyValue == RateRadioButton.Tag.ToString())
+                RateRadioButton.Checked = true;
+            else if (setting != null && setting.KeyValue == ValueRadioButton.Tag.ToString())
+                ValueRadioButton.Checked = true;
+            else if (setting != null && setting.KeyValue == EfficiencyRadioButton.Tag.ToString())
+                EfficiencyRadioButton.Checked = true;
+        }
+
+        private void setDefaultPanelShowByValue()
+        {
+            Period periodType = getSelectedPeriodType();
+            var currentSettingId = getCurrentSettingIdByPeriodType(ShowByPanel.Tag.ToString(), periodType);
+            var setting = getCurrentSetting(currentSettingId);
+
+            if (setting == null && EfficiencyRadioButton.Visible && EfficiencyRadioButton.Checked)
+                RateRadioButton.Checked = true;
+
+            if (setting != null && setting.KeyValue == CategoryRadioButton.Tag.ToString())
+                CategoryRadioButton.Checked = true;
+            else if (setting != null && setting.KeyValue == SubCategoryRadioButton.Tag.ToString())
+                SubCategoryRadioButton.Checked = true;
+            else if (setting != null && setting.KeyValue == TotalsRadioButton.Tag.ToString())
+                TotalsRadioButton.Checked = true;
+        }
+
+        private string getCurrentSettingValue(string settingId)
+        {
+            var setting = getCurrentSetting(settingId);
+            if (setting != null)
+                return setting.KeyValue;
+            else
+                return "";
+        }
+
+        private void setComboPeriodTypes(string currentValue)
+        {
+            var periodTypes = WinFormsEF.Managers.SelectionItemList.GetPeriodList();
+            bsPeriodType.DataSource = periodTypes;
+
+            if (currentValue == null)
+                currentValue = "Year";
+
+            CboPeriodType.SelectedIndex = CboPeriodType.FindString(currentValue);
         }
 
         private void setNumberCombo()
@@ -460,10 +557,10 @@ namespace WinFormsEF.ucControls
         {
             if (_currentEnergyType != null)
             {
-                rbEfficiency.Visible = _currentEnergyType.HasEnergyReturn;
+                EfficiencyRadioButton.Visible = _currentEnergyType.HasEnergyReturn;
                 lblProduction.Visible = _currentEnergyType.HasEnergyReturn;
-                if (rbEfficiency.Checked)
-                    rbRate.Checked = true;
+                if (EfficiencyRadioButton.Checked)
+                    RateRadioButton.Checked = true;
             }
         }
 
@@ -497,6 +594,87 @@ namespace WinFormsEF.ucControls
 
             setComboYears();
             setNumberCombo();
+
+            // Set last save defaults
+            setComboToDefault(cboStartYear);
+            setComboToDefault(cboEndYear);
+            setComboToDefault(cboNumbers);
+            setComboToDefault(cboNumbers2);
+        }
+
+        private void setDefaultCheckBoxSetting(CheckBox checkBox)
+        {
+            Period periodType = getSelectedPeriodType();
+            var currentSettingId = getCurrentSettingIdByPeriodType(checkBox.Tag.ToString(), periodType);
+            var setting = getCurrentSetting(currentSettingId);
+
+            if ((setting != null && setting.KeyValue.ToLower() == "true") || setting == null)
+                checkBox.Checked = true;
+            else
+                checkBox.Checked = false;
+        }
+
+        private void setComboToDefault(ComboBox comboBox)
+        {
+            if (comboBox.Visible)
+            {
+                var currentSetting = getCurrentSettingValue($"{comboBox.Tag.ToString()}{CboPeriodType.Text.ToUpper()}");
+                if (!string.IsNullOrWhiteSpace(currentSetting))
+                    comboBox.SelectedIndex = comboBox.FindString(currentSetting);
+            }
+        }
+
+        private void setCurrentPanelValue(Panel panel, RadioButton radioButton)
+        {
+            Period periodType = getSelectedPeriodType();
+            var currentSettingId = getCurrentSettingIdByPeriodType(panel.Tag.ToString(), periodType);
+            var currentValue = radioButton.Tag.ToString();
+
+            if (!string.IsNullOrWhiteSpace(currentValue))
+                setCurrentSetting(currentSettingId, currentValue);
+        }
+
+        /// <summary>
+        /// Store current combo value to settings table
+        /// </summary>
+        /// <param name="combobox">Current combo box</param>
+        private void setCurrentComboValue(ComboBox combobox, string periodType = "")
+        {
+            var currentSettingId = $"{combobox.Tag.ToString()}{periodType.ToUpper()}";
+            var currentValue = combobox.Text.ToUpper();
+
+            if (!string.IsNullOrWhiteSpace(currentValue))
+                setCurrentSetting(currentSettingId, currentValue);
+        }
+
+        private void setCurrentCheckBox(CheckBox checkBox)
+        {
+            var currentPeriodType = getSelectedPeriodType();
+            var currentSettingId = getCurrentSettingIdByPeriodType(checkBox.Tag.ToString(), currentPeriodType);
+            var currentValue = checkBox.Checked.ToString();
+
+            setCurrentSetting(currentSettingId, currentValue);
+        }
+
+        private string getCurrentSettingIdByPeriodType(string tag, Period periodType)
+        {
+            var currentSettingId = tag;
+            if (periodType != Period.Unknown)
+                currentSettingId += $"_{periodType.ToString().ToUpper()}";
+
+            return currentSettingId;
+        }
+
+        private EnergyUse.Models.Setting getCurrentSetting(string settingId)
+        {
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            return libSettings.GetSetting(settingId);
+        }
+
+        private void setCurrentSetting(string settingId, string currentValue)
+        {
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            libSettings.SaveSetting(settingId, currentValue);
         }
 
         private bool validateRefresh()
@@ -518,11 +696,11 @@ namespace WinFormsEF.ucControls
 
         private ShowType getSelectedShowType()
         {
-            if (rbRate.Checked)
+            if (RateRadioButton.Checked)
                 return ShowType.Rate;
-            else if (rbValue.Checked)
+            else if (ValueRadioButton.Checked)
                 return ShowType.Value;
-            else if (rbEfficiency.Checked)
+            else if (EfficiencyRadioButton.Checked)
                 return ShowType.Efficiency;
             else
                 return ShowType.Unknown;
@@ -530,9 +708,9 @@ namespace WinFormsEF.ucControls
 
         private ShowBy getSelectedShowBy()
         {
-            if (rbCategory.Checked)
+            if (CategoryRadioButton.Checked)
                 return ShowBy.Category;
-            else if (rbSubCategory.Checked)
+            else if (SubCategoryRadioButton.Checked)
                 return ShowBy.SubCategory;
             else
                 return ShowBy.Total;

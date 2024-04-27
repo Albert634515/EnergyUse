@@ -131,7 +131,7 @@ namespace EnergyUse.Core.Manager
             return language;
         }
 
-        public Models.Setting GetSetting(string key)
+        public Models.Setting? GetSetting(string key)
         {
             var repo = new Repositories.RepoSettings(_context);
             return repo.GetByKey(key);

@@ -38,9 +38,7 @@ namespace WinFormsEF.ucControls
             _currentEnergyType = selectedEnergyType;
             _energyTypes = energyTypes;
 
-            setComboPeriodTypes(getCurrentSetting(CboPeriodType.Tag.ToString()));
             setComboCompareWith();
-            setDefaultPeriodSettings();
 
             _initSettings = false;
 
@@ -70,10 +68,10 @@ namespace WinFormsEF.ucControls
         {
             if (_currentEnergyType != null)
             {
-                rbEfficiency.Visible = _currentEnergyType.HasEnergyReturn;
+                EfficiencyRadioButton.Visible = _currentEnergyType.HasEnergyReturn;
                 lblProduction.Visible = _currentEnergyType.HasEnergyReturn;
-                if (rbEfficiency.Checked)
-                    rbRate.Checked = true;
+                if (EfficiencyRadioButton.Checked)
+                    RateRadioButton.Checked = true;
             }
         }
 
@@ -91,6 +89,18 @@ namespace WinFormsEF.ucControls
 
             DtpFrom.Value = currentDateFrom;
             DtpTill.Value = currentDateTill;
+        }
+
+        private void setDefaultCheckBoxSetting(CheckBox checkBox)
+        {
+            Period periodType = getSelectedPeriodType();
+            var currentSettingId = getCurrentCheckBoxSettingIdByPeriodType(checkBox, periodType);
+            var setting = getCurrentSetting(currentSettingId);
+
+            if ((setting != null && setting.KeyValue.ToLower() == "true") || setting == null)
+                checkBox.Checked = true;
+            else
+                checkBox.Checked = false;
         }
 
         #endregion
@@ -115,43 +125,77 @@ namespace WinFormsEF.ucControls
         {
             if (_initSettings == true) { return; }
 
-            setCurrentPeriodType();
+            setCurrentComboValue(CboPeriodType);
             setDefaultPeriodSettings();
             SetChart();
         }
 
-        private void CboCompareWith_SelectedIndexChanged(object sender, EventArgs e)
+        private void cboCompareWith_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_initSettings == true) { return; }
 
-            setCurrentCompareWithType();
+            setCurrentComboValue(CboCompareWith, CboPeriodType.Text);
         }
 
-        private void DtpFrom_ValueChanged(object sender, EventArgs e)
+        private void dtpFrom_ValueChanged(object sender, EventArgs e)
         {
             if (_initSettings == true) { return; }
 
-            setCurrentDtpTag(DtpFrom);
+            setCurrentDateTimePicker(DtpFrom);
         }
 
         private void DtpTill_ValueChanged(object sender, EventArgs e)
         {
             if (_initSettings == true) { return; }
 
-            setCurrentDtpTag(DtpTill);
+            setCurrentDateTimePicker(DtpTill);
         }
 
-        private void rbType_CheckedChanged(object sender, EventArgs e)
+        private void rateRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (_initSettings == true) { return; }
 
+            setCurrentPanelValue(TypePanel, RateRadioButton);
             SetChart();
         }
 
-        private void rbShowBy_CheckedChanged(object sender, EventArgs e)
+        private void valueRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (_initSettings == true) { return; }
 
+            setCurrentPanelValue(TypePanel, ValueRadioButton);
+            SetChart();
+        }
+
+        private void efficiencyRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initSettings == true) { return; }
+
+            setCurrentPanelValue(TypePanel, EfficiencyRadioButton);
+            SetChart();
+        }
+
+        private void categoryRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initSettings == true) { return; }
+
+            setCurrentPanelValue(ShowByPanel, CategoryRadioButton);
+            SetChart();
+        }
+
+        private void subCategoryRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initSettings == true) { return; }
+
+            setCurrentPanelValue(ShowByPanel, SubCategoryRadioButton);
+            SetChart();
+        }
+
+        private void totalsRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initSettings == true) { return; }
+
+            setCurrentPanelValue(ShowByPanel, TotalsRadioButton);
             SetChart();
         }
 
@@ -159,6 +203,7 @@ namespace WinFormsEF.ucControls
         {
             if (_initSettings == true) { return; }
 
+            setCurrentCheckBox(chkShowStacked);
             SetChart();
         }
 
@@ -166,6 +211,7 @@ namespace WinFormsEF.ucControls
         {
             if (_initSettings == true) { return; }
 
+            setCurrentCheckBox(chkShowAvg);
             SetChart();
         }
 
@@ -173,6 +219,7 @@ namespace WinFormsEF.ucControls
         {
             if (_initSettings == true) { return; }
 
+            setCurrentCheckBox(chkPredictMissingData);
             SetChart();
         }
 
@@ -226,17 +273,24 @@ namespace WinFormsEF.ucControls
         private void resetChart()
         {
             _initSettings = true;
-            setComboPeriodTypes(getCurrentSetting(CboPeriodType.Tag.ToString()));
 
+            setComboPeriodTypes(getCurrentSettingValue(CboPeriodType.Tag.ToString()));
             setDefaultPeriodSettings();
-            _initSettings = false;
 
             if (_currentEnergyType != null)
             {
-                rbEfficiency.Visible = _currentEnergyType.HasEnergyReturn;
-                if (rbEfficiency.Checked)
-                    rbRate.Checked = true;
+                EfficiencyRadioButton.Visible = _currentEnergyType.HasEnergyReturn;
+                if (EfficiencyRadioButton.Checked)
+                    RateRadioButton.Checked = true;
             }
+
+            setDefaultPanelTypeValue();
+            setDefaultPanelShowByValue();
+            setDefaultCheckBoxSetting(chkPredictMissingData);
+            setDefaultCheckBoxSetting(chkShowStacked);
+            setDefaultCheckBoxSetting(chkShowAvg);
+
+            _initSettings = false;
 
             SetChart();
         }
@@ -422,15 +476,15 @@ namespace WinFormsEF.ucControls
 
         private ShowType getSelectedShowType()
         {
-            if (rbRate.Checked)
+            if (RateRadioButton.Checked)
             {
                 return ShowType.Rate;
             }
-            else if (rbValue.Checked)
+            else if (ValueRadioButton.Checked)
             {
                 return ShowType.Value;
             }
-            else if (rbEfficiency.Checked)
+            else if (EfficiencyRadioButton.Checked)
             {
                 return ShowType.Efficiency;
             }
@@ -442,11 +496,11 @@ namespace WinFormsEF.ucControls
 
         private ShowBy getSelectedShowBy()
         {
-            if (rbCategory.Checked)
+            if (CategoryRadioButton.Checked)
             {
                 return ShowBy.Category;
             }
-            else if (rbSubCategory.Checked)
+            else if (SubCategoryRadioButton.Checked)
             {
                 return ShowBy.SubCategory;
             }
@@ -465,49 +519,56 @@ namespace WinFormsEF.ucControls
             return LibGraphGeneral.GetPeriodType(selectedItem.Key);
         }
 
-        /// <summary>
-        /// Store current period type to settings table
-        /// </summary>
-        /// <param name="periodType">Current selected period type</param>
-        private void setCurrentPeriodType()
+        private void setDefaultPanelTypeValue()
         {
-            var currentValue = CboPeriodType.Text.ToUpper();
-            var currentSettingId = CboPeriodType.Tag.ToString();
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            Period periodType = getSelectedPeriodType();
+            var currentSettingId = getCurrentSettingIdByPeriodType(TypePanel.Tag.ToString(), periodType);
+            var setting = getCurrentSetting(currentSettingId);
 
-            if (!string.IsNullOrWhiteSpace(currentValue))
-                libSettings.SaveSetting(currentSettingId, currentValue);
+            if (_currentEnergyType != null)
+                EfficiencyRadioButton.Visible = _currentEnergyType.HasEnergyReturn;
+
+            if (setting == null && EfficiencyRadioButton.Visible && EfficiencyRadioButton.Checked)
+                RateRadioButton.Checked = true;
+
+            if (setting != null && setting.KeyValue == RateRadioButton.Tag.ToString())
+                RateRadioButton.Checked = true;
+            else if (setting != null && setting.KeyValue == ValueRadioButton.Tag.ToString())
+                ValueRadioButton.Checked = true;
+            else if (setting != null && setting.KeyValue == EfficiencyRadioButton.Tag.ToString())
+                EfficiencyRadioButton.Checked = true;
         }
 
-        private string getCurrentSetting(string settingId)
+        private void setDefaultPanelShowByValue()
         {
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetSetting(settingId);
+            Period periodType = getSelectedPeriodType();
+            var currentSettingId = getCurrentSettingIdByPeriodType(ShowByPanel.Tag.ToString(), periodType);
+            var setting = getCurrentSetting(currentSettingId);
+
+            if (setting == null && EfficiencyRadioButton.Visible && EfficiencyRadioButton.Checked)
+                RateRadioButton.Checked = true;
+
+            if (setting != null && setting.KeyValue == CategoryRadioButton.Tag.ToString())
+                CategoryRadioButton.Checked = true;
+            else if (setting != null && setting.KeyValue == SubCategoryRadioButton.Tag.ToString())
+                SubCategoryRadioButton.Checked = true;
+            else if (setting != null && setting.KeyValue == TotalsRadioButton.Tag.ToString())
+                TotalsRadioButton.Checked = true;
+        }
+
+        private string getCurrentSettingValue(string settingId)
+        {
+            var setting = getCurrentSetting(settingId);
             if (setting != null)
                 return setting.KeyValue;
             else
                 return "";
         }
 
-        /// <summary>
-        /// Store value compare with
-        /// </summary>
-        /// <param name="periodType">Current selected compare type</param>
-        private void setCurrentCompareWithType()
-        {
-            var currentValue = CboCompareWith.Text.ToUpper();
-            var currentSettingId = CboCompareWith.Tag.ToString();
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-
-            if (!string.IsNullOrWhiteSpace(currentValue))
-                libSettings.SaveSetting(currentSettingId, currentValue);
-        }
-
         private DateTime getCurrentDateByDatePicker(DateTimePicker dateTimePicker, Period periodType)
         {
-            var currentSettingId = getCurrentDtpTag(dateTimePicker, periodType);
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var setting = libSettings.GetSetting(currentSettingId);
+            var currentSettingId = getCurrentSettingIdByPeriodType(dateTimePicker.Tag.ToString(), periodType);
+            var setting = getCurrentSetting(currentSettingId);
             if (setting != null)
             {
                 var year = int.Parse(setting.KeyValue.Substring(0, 4));
@@ -520,22 +581,75 @@ namespace WinFormsEF.ucControls
                 return DateTime.MinValue;
         }
 
-        private void setCurrentDtpTag(DateTimePicker dtp)
+        private void setCurrentDateTimePicker(DateTimePicker dtp)
         {
             var currentValue = dtp.Value.ToString("yyyyMMdd");
             var currentPeriodType = getSelectedPeriodType();
-            var currentSettingId = getCurrentDtpTag(dtp, currentPeriodType);
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            libSettings.SaveSetting(currentSettingId, currentValue);
+            var currentSettingId = getCurrentSettingIdByPeriodType(dtp.Tag.ToString(), currentPeriodType);
+
+            setCurrentSetting(currentSettingId, currentValue);
         }
 
-        private string getCurrentDtpTag(DateTimePicker dtp, Period periodType)
+        private string getCurrentSettingIdByPeriodType(string tag, Period periodType)
         {
-            var currentSettingId = dtp.Tag.ToString();
+            var currentSettingId = tag;
             if (periodType != Period.Unknown)
                 currentSettingId += $"_{periodType.ToString().ToUpper()}";
 
             return currentSettingId;
+        }
+
+        private void setCurrentCheckBox(CheckBox checkBox)
+        {
+            var currentValue = checkBox.Checked.ToString();
+            var currentPeriodType = getSelectedPeriodType();
+            var currentSettingId = getCurrentCheckBoxSettingIdByPeriodType(checkBox, currentPeriodType);
+
+            setCurrentSetting(currentSettingId, currentValue);
+        }
+
+        private string getCurrentCheckBoxSettingIdByPeriodType(CheckBox checkBox, Period periodType)
+        {
+            var currentSettingId = checkBox.Tag.ToString();
+            if (periodType != Period.Unknown)
+                currentSettingId += $"_{periodType.ToString().ToUpper()}";
+
+            return currentSettingId;
+        }
+
+        /// <summary>
+        /// Store current combo value to settings table
+        /// </summary>
+        /// <param name="combobox">Current combo box</param>
+        private void setCurrentComboValue(ComboBox combobox, string periodType = "")
+        {
+            var currentValue = combobox.Text.ToUpper();
+            var currentSettingId = $"{combobox.Tag.ToString()}{periodType.ToUpper()}";
+
+            if (!string.IsNullOrWhiteSpace(currentValue))
+                setCurrentSetting(currentSettingId, currentValue);
+        }
+
+        private void setCurrentPanelValue(Panel panel, RadioButton radioButton)
+        {
+            Period periodType = getSelectedPeriodType();
+            var currentSettingId = getCurrentSettingIdByPeriodType(panel.Tag.ToString(), periodType);
+            var currentValue = radioButton.Tag.ToString();
+
+            if (!string.IsNullOrWhiteSpace(currentValue))
+                setCurrentSetting(currentSettingId, currentValue);
+        }
+
+        private EnergyUse.Models.Setting getCurrentSetting(string settingId)
+        {
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            return libSettings.GetSetting(settingId);
+        }
+
+        private void setCurrentSetting(string settingId, string currentValue)
+        {
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            libSettings.SaveSetting(settingId, currentValue);
         }
 
         private void exportToExcel(EnergyUse.Models.EnergyType energyType)
@@ -687,16 +801,5 @@ namespace WinFormsEF.ucControls
 
         #endregion
 
-        //private void DtpFrom_ControlRemoved(object sender, ControlEventArgs e)
-        //{
-        //    // Disable the ValueChanged event during dropdown
-        //    DtpFrom.ValueChanged -= DtpFrom_ValueChanged;
-        //}
-
-        //private void DtpTill_ControlRemoved(object sender, ControlEventArgs e)
-        //{
-        //    // Disable the ValueChanged event during dropdown
-        //    DtpTill.ValueChanged -= DtpTill_ValueChanged;
-        //}
     }
 }
