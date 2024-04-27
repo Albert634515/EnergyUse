@@ -48,7 +48,7 @@ namespace WinFormsEF.Views
             _ = dgCalculatedUnitPrice.Focus();
 
             if (_controller.UnitOfWork.HasChanges())
-                e.Cancel = Managers.General.WarningUnsavedChanges(this);
+                e.Cancel = Managers.GeneralDialogs.WarningUnsavedChanges(this);
         }
 
         private void cboEnergyType_SelectedIndexChanged(object sender, EventArgs e)

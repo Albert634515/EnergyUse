@@ -58,7 +58,7 @@ namespace WinFormsEF.Views
             _ = statusStrip1.Focus();
 
             if (_controller.UnitOfWork.HasChanges())
-                e.Cancel = Managers.General.WarningUnsavedChanges(this);
+                e.Cancel = Managers.GeneralDialogs.WarningUnsavedChanges(this);
         }
 
         #endregion
@@ -94,7 +94,7 @@ namespace WinFormsEF.Views
 
             if (_controller.UnitOfWork.HasChanges())
             {
-                if (Managers.General.WarningUnsavedChanges(this))
+                if (Managers.GeneralDialogs.WarningUnsavedChanges(this))
                     return;
             }
 

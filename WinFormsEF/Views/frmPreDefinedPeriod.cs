@@ -32,12 +32,12 @@ namespace WinFormsEF.Views
             _ = dgPeriods.Focus();
 
             if (_controller.UnitOfWork.HasChanges())
-                e.Cancel = Managers.General.WarningUnsavedChanges(this);
+                e.Cancel = Managers.GeneralDialogs.WarningUnsavedChanges(this);
 
             if (ucDatePredefined1.HasChanges())
             {
                 var unSavedIn = Managers.Languages.GetResourceString("PredefinedDates", " predefined dates");                
-                e.Cancel = e.Cancel = Managers.General.WarningUnsavedChangesIn(this, unSavedIn);
+                e.Cancel = e.Cancel = Managers.GeneralDialogs.WarningUnsavedChangesIn(this, unSavedIn);
             }
         }
 

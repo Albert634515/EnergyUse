@@ -31,7 +31,7 @@ namespace WinFormsEF.Views
             _ = DgTarifGroups.Focus();
 
             if (_controller.UnitOfWork.HasChanges())
-                e.Cancel = e.Cancel = Managers.General.WarningUnsavedChanges(this);
+                e.Cancel = e.Cancel = Managers.GeneralDialogs.WarningUnsavedChanges(this);
         }
 
         #endregion

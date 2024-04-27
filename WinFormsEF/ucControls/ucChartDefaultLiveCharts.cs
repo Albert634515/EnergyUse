@@ -4,8 +4,6 @@ using EnergyUse.Models.Common;
 using LiveChartsCore;
 using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView.WinForms;
-using OfficeOpenXml;
-using System.Data;
 
 namespace WinFormsEF.ucControls
 {
@@ -652,150 +650,20 @@ namespace WinFormsEF.ucControls
             libSettings.SaveSetting(settingId, currentValue);
         }
 
-        private void exportToExcel(EnergyUse.Models.EnergyType energyType)
+        private void exportToExcel(EnergyUse.Models.EnergyType currentEnergyType)
         {
-            int totalCols;
-            string message;
-
             if (_chartDefaultPerPeriod == null) return;
-
-            var exportFileName = $"ChartDefault_{DateTime.Now:yyyyMMddHHmmss}_{energyType.Name}.xlsx";
-            var exportDirectory = string.Empty;
 
             var dataList = _chartDefaultPerPeriod.GetDataList();
             if (dataList.Count == 0)
             {
-                message = Managers.Languages.GetResourceString("NoDataToExport", "No data to export");
+                var message = Managers.Languages.GetResourceString("NoDataToExport", "No data to export");
                 MessageBox.Show(this, message);
             }
             else
             {
-                SaveFileDialog sf = new SaveFileDialog();
-                sf.FileName = Path.Combine(exportDirectory, exportFileName);
-
-                if (sf.ShowDialog() == DialogResult.OK)
-                {
-                    // Now here's our save folder
-                    exportDirectory = Path.GetDirectoryName(sf.FileName);
-                    exportFileName = Path.GetFileName(sf.FileName);
-                }
-
-                if (string.IsNullOrWhiteSpace(exportDirectory))
-                    return;
-
-                if (!Directory.Exists(Path.GetDirectoryName(exportDirectory)))
-                    Directory.CreateDirectory(Path.GetDirectoryName(exportDirectory));
-
-                System.IO.FileInfo f = new System.IO.FileInfo(Path.Combine(exportDirectory, exportFileName));
-                if (f.Exists)
-                {
-                    message = Managers.Languages.GetResourceString("FileExistsOverWrite", "File already exists, do you want overwrite?");
-                    DialogResult dialogResult = MessageBox.Show(message, Managers.Languages.GetResourceString("FileAlreadyExists", "File already exists"), MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                        f.Delete();
-                    else
-                        return;
-                }
-
-                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
-                using (ExcelPackage excelPackage = new ExcelPackage())
-                {
-                    ExcelWorksheet energieExport = excelPackage.Workbook.Worksheets.Add("ChartDefaultData");
-
-                    if (energyType.HasEnergyReturn && energyType.HasNormalAndLow)
-                    {
-                        var exportResult = dataList
-                        .Select(s => new
-                        {
-                            s.PeriodType,
-                            Value_X = s.ValueX,
-                            Value_X_Date = s.ValueXDate.ToShortDateString(),
-                            Value_Y_Low = s.ValueYLow,
-                            Value_Y_Normal = s.ValueYNormal,
-                            Value_Y_Return_Low = s.ValueYReturnLow,
-                            Value_Y_Return_Normal = s.ValueYReturnNormal,
-                            Value_Y_Monetary = s.ValueMonetaryY,
-                            Value_Y_Monetary_Low = s.ValueYMonetaryLow,
-                            ValueY_Monetary_Normal = s.ValueYMonetaryNormal,
-                            Value_Y_Monetary_Return_Low = s.ValueYMonetaryReturnLow,
-                            Value_Y_Monetary_Return_Normal = s.ValueYMonetaryReturnNormal,
-                            Rate_Low = s.RateLow,
-                            Rate_Normal = s.RateNormal,
-                            Rate_ReturnLow = s.RateReturnLow,
-                            Rate_Return_Normal = s.RateReturnNormal,
-                            s.CorrectionFactor
-                        });
-                        energieExport.Cells[1, 1].LoadFromCollection(exportResult, true);
-                    }
-                    else if (energyType.HasEnergyReturn && !energyType.HasNormalAndLow)
-                    {
-                        var exportResult = dataList
-                        .Select(s => new
-                        {
-                            s.PeriodType,
-                            Value_X = s.ValueX,
-                            Value_Y_Normal = s.ValueYNormal,
-                            Value_Y_Return_Normal = s.ValueYReturnNormal,
-                            Value_Y_Monetary = s.ValueMonetaryY,
-                            ValueY_Monetary_Normal = s.ValueYMonetaryNormal,
-                            Value_Y_Monetary_Return_Normal = s.ValueYMonetaryReturnNormal,
-                            Rate_Normal = s.RateNormal,
-                            Rate_Return_Normal = s.RateReturnNormal,
-                            s.CorrectionFactor
-                        });
-                        energieExport.Cells[1, 1].LoadFromCollection(exportResult, true);
-                    }
-                    else if (!energyType.HasEnergyReturn && !energyType.HasNormalAndLow)
-                    {
-                        var exportResult = dataList
-                            .Select(s => new
-                            {
-                                s.PeriodType,
-                                Value_X = s.ValueX,
-                                Value_X_Date = s.ValueXDate,
-                                Value_Y_Normal = s.ValueYNormal,
-                                Value_Y_Monetary = s.ValueMonetaryY,
-                                ValueY_Monetary_Normal = s.ValueYMonetaryNormal,
-                                Rate_Normal = s.RateNormal,
-                                s.CorrectionFactor
-                            });
-                        energieExport.Cells[1, 1].LoadFromCollection(exportResult, true);
-                    }
-                    else if (!energyType.HasEnergyReturn && energyType.HasNormalAndLow)
-                    {
-                        var exportResult = dataList
-                        .Select(s => new
-                        {
-                            s.PeriodType,
-                            Value_X = s.ValueX,
-                            Value_X_Date = s.ValueXDate,
-                            Value_Y_Low = s.ValueYLow,
-                            Value_Y_Normal = s.ValueYNormal,
-                            Value_Y_Monetary = s.ValueMonetaryY,
-                            Value_Y_Monetary_Low = s.ValueYMonetaryLow,
-                            ValueY_Monetary_Normal = s.ValueYMonetaryNormal,
-                            Rate_Low = s.RateLow,
-                            Rate_Normal = s.RateNormal,
-                            s.CorrectionFactor
-                        });
-                        energieExport.Cells[1, 1].LoadFromCollection(exportResult, true);
-                    }
-                    else
-                    {
-                        var exportResult = dataList;
-                        energieExport.Cells[1, 1].LoadFromCollection(exportResult, true);
-                    }
-
-                    // Clean up column headers
-                    totalCols = energieExport.Dimension.End.Column;
-                    for (int i = 1; i <= totalCols; i++)
-                        energieExport.Cells[1, i].Value = energieExport.Cells[1, i].Value.ToString().Replace("_", " ");
-
-                    energieExport.Cells[energieExport.Dimension.Address].AutoFitColumns();
-                    excelPackage.SaveAs(f);
-
-                    EnergyUse.Common.Libs.LibGeneral.OpenCreatedFile(Path.Combine(exportDirectory, exportFileName));
-                }
+                var fileName = Managers.GeneralDialogs.GetExportFileName("ChartDefault", currentEnergyType);
+                EnergyUse.Core.Manager.LibExport.ExportDataDefaultLiveChartToExcel(fileName, currentEnergyType, dataList);
             }
         }
 

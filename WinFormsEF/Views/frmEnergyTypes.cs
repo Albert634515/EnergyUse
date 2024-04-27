@@ -55,7 +55,7 @@ namespace WinFormsEF.Views
             _ = dgEnergyTypes.Focus();
 
             if (_controller.UnitOfWork.HasChanges())
-                e.Cancel = Managers.General.WarningUnsavedChanges(this);
+                e.Cancel = Managers.GeneralDialogs.WarningUnsavedChanges(this);
         }
 
         private void chkHasNormalAndLow_CheckedChanged(object sender, EventArgs e)

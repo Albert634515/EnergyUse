@@ -129,7 +129,7 @@ namespace WinFormsEF.Views
             _ = DgRates.Focus();
 
             if (_controller.UnitOfWork.HasChanges())
-                e.Cancel = Managers.General.WarningUnsavedChanges(this);
+                e.Cancel = Managers.GeneralDialogs.WarningUnsavedChanges(this);
         }
 
         private void CboRateType_SelectedIndexChanged(object sender, EventArgs e)

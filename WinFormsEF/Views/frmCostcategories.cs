@@ -71,7 +71,7 @@ namespace WinFormsEF.Views
             _ = dgCostCategories.Focus();
 
             if (_controller.UnitOfWork.HasChanges())
-                e.Cancel = Managers.General.WarningUnsavedChanges(this);
+                e.Cancel = Managers.GeneralDialogs.WarningUnsavedChanges(this);
         }
 
         #endregion
