@@ -4,8 +4,6 @@ using EnergyUse.Core.Manager;
 using EnergyUse.Models.Common;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView.WinForms;
-using OfficeOpenXml;
-using System.Data;
 using System.Globalization;
 
 namespace WinFormsEF.ucControls
