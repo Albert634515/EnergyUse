@@ -210,8 +210,7 @@ namespace EnergyUse.Core.Manager
             {
                 ExcelWorksheet energyExport = excelPackage.Workbook.Worksheets.Add(sheetName);
                 energyExport.Cells[1, 1].LoadFromCollection(exportResult, true);
-
-                // Format columns
+                                
                 var firstResult = exportResult.FirstOrDefault();
                 List<System.Reflection.PropertyInfo> properties = firstResult.GetType().GetProperties().ToList();
 
@@ -222,6 +221,7 @@ namespace EnergyUse.Core.Manager
                     if (!string.IsNullOrWhiteSpace(energyExport.Cells[1, i].Value.ToString()))
                         energyExport.Cells[1, i].Value = energyExport.Cells[1, i].Value.ToString().Replace("_", " ");
 
+                    // Format columns
                     var property = properties[i-1];
                     if (property.PropertyType == typeof(DateTime))
                         energyExport.Column(i).Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
