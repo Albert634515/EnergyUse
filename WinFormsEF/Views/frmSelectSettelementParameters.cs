@@ -1,6 +1,4 @@
 ﻿using EnergyUse.Core.Controllers;
-using EnergyUse.Core.Interfaces;
-using EnergyUse.Core.Manager;
 using System.Data;
 
 namespace WinFormsEF.Views
@@ -28,19 +26,23 @@ namespace WinFormsEF.Views
             InitializeComponent();
             setBaseFormSettings();
 
+            _controller.InitSettings = true;
+
             CurrentAddress = address;
 
             setComboAddresses();
             setPreSelectePeriods();
             setEnergyTypeSelections(address.Id);
-            refreshEnergyTypeLists(address);
+            setEnergyTypeLists(address);
+
+            _controller.InitSettings = false;
         }
 
         private void setComboAddresses()
         {
             var addressList = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
             bsAddresses.DataSource = addressList;
-            CboAddress.SelectedIndex = -1;
+            addressComboBox.SelectedIndex = -1;
 
             if (CurrentAddress == null)
             {
@@ -52,7 +54,7 @@ namespace WinFormsEF.Views
             if (CurrentAddress != null)
             {
                 int position = addressList.IndexOf(addressList.Single(x => x.Description == CurrentAddress.Description));
-                CboAddress.SelectedIndex = position;
+                addressComboBox.SelectedIndex = position;
             }
         }
 
@@ -60,15 +62,15 @@ namespace WinFormsEF.Views
         {
             _preDefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
 
-            CboPreSelectedPeriods.DataSource = _preDefinedPeriods;
-            CboPreSelectedPeriods.DisplayMember = "Description";
-            CboPreSelectedPeriods.ValueMember = "Id";
+            preSelectedPeriodComboBox.DataSource = _preDefinedPeriods;
+            preSelectedPeriodComboBox.DisplayMember = "Description";
+            preSelectedPeriodComboBox.ValueMember = "Id";
 
             long lastSelectedPeriod = getSettingLastSelectedPeriod();
             if (lastSelectedPeriod > 0)
-                CboPreSelectedPeriods.SelectedIndex = _preDefinedPeriods.FindIndex(q => q.Id == lastSelectedPeriod);
+                preSelectedPeriodComboBox.SelectedIndex = _preDefinedPeriods.FindIndex(q => q.Id == lastSelectedPeriod);
             else
-                CboPreSelectedPeriods.SelectedIndex = -1;
+                preSelectedPeriodComboBox.SelectedIndex = -1;
         }
 
         #endregion
@@ -78,33 +80,23 @@ namespace WinFormsEF.Views
         private void cmbAddress_SelectedIndexChanged(object sender, EventArgs e)
         {
             var address = getSelectedAddress();
-            refreshEnergyTypeLists(address);
+            setEnergyTypeLists(address);
             setEnergyTypeSelections(address.Id);
         }
 
         private void cboPreSelectedPeriods_SelectedIndexChanged(object sender, EventArgs e)
         {
-            refreshSelectionPeriods();
+            setSelectionPeriods();
         }
 
         private void cmdRemove_Click(object sender, EventArgs e)
         {
-            ucControls.ucDateSelection ucDateSelectionLast;
-            var lastdateSelectionName = getLastSelectedKey();
+            removeDateSelectionLine();
+        }
 
-            ucDateSelectionLast = (ucControls.ucDateSelection)FindControl(this, lastdateSelectionName);
-            Controls.Remove(ucDateSelectionLast);
-            ucDateSelectionLast.Dispose();
-
-            setLocationAddRemoveButton(0 - ucDateSelectionLast.Height);
-            Height -= ucDateSelectionLast.Height;
-            _selectionLineCount--;
-
-            if (_selectionLineCount != 1)
-            {
-                ucDateSelectionLast = (ucControls.ucDateSelection)FindControl(this, lastdateSelectionName);
-                ucDateSelectionLast.SetRemoveButtonVisibilty(true);
-            }
+        private void clearPeriodButton_Click(object sender, EventArgs e)
+        {
+            preSelectedPeriodComboBox.SelectedIndex = -1;
         }
 
         #endregion
@@ -114,7 +106,7 @@ namespace WinFormsEF.Views
         private void cmdAdd_Click(object sender, EventArgs e)
         {
             Point location;
-            EnergyUse.Models.Address address = (EnergyUse.Models.Address)CboAddress.SelectedItem;
+            EnergyUse.Models.Address address = (EnergyUse.Models.Address)addressComboBox.SelectedItem;
             ucControls.ucDateSelection ucDateSelectionLast;
 
             var lastdateSelectionName = getLastSelectedKey();
@@ -125,7 +117,7 @@ namespace WinFormsEF.Views
 
             if (ucDateSelectionLast != null)
             {
-                addDateSelectionLine(_selectionLineCount + 1, address.Id, location);
+                setDateSelectionLine(_selectionLineCount + 1, address.Id, location);
             }
         }
 
@@ -139,7 +131,7 @@ namespace WinFormsEF.Views
         {
             if (validateInput() != false)
             {
-                saveSettingLastSelectedPeriod();
+                setSettingLastSelectedPeriod();
                 ReturnValue = 2;
                 Close();
             }
@@ -153,12 +145,12 @@ namespace WinFormsEF.Views
 
         #region Methods
 
-        private void saveSettingLastSelectedPeriod()
+        private void setSettingLastSelectedPeriod()
         {
-            if (CboPreSelectedPeriods.SelectedIndex != -1)
+            if (preSelectedPeriodComboBox.SelectedIndex != -1)
             {
                 string fileKey = getKeyForLastLastSelectedPeriod();
-                var preDefinedPeriod = (EnergyUse.Models.PreDefinedPeriod)CboPreSelectedPeriods.SelectedItem;
+                var preDefinedPeriod = (EnergyUse.Models.PreDefinedPeriod)preSelectedPeriodComboBox.SelectedItem;
 
                 var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
                 libSettings.SaveSetting(fileKey, preDefinedPeriod.Id.ToString());
@@ -170,13 +162,13 @@ namespace WinFormsEF.Views
             DateTime startDate, endDate;
             EnergyUse.Models.Address address;
 
-            address = (EnergyUse.Models.Address)CboAddress.SelectedItem;
+            address = (EnergyUse.Models.Address)addressComboBox.SelectedItem;
 
             if (address == null || address.Id == 0)
             {
                 var message = Managers.Languages.GetResourceString("SelectParametersSelectAddress", "Please select an address to calculate the settlement for");
                 MessageBox.Show(this, message);
-                CboAddress.Focus();
+                addressComboBox.Focus();
                 return false;
             }
 
@@ -235,8 +227,8 @@ namespace WinFormsEF.Views
 
             for (int i = 1; i <= dateSelectionCount; i++)
             {
-                ucDateSelection = addDateSelectionLine(i, addressId, location);
-                refreshSelectionPeriods();
+                ucDateSelection = setDateSelectionLine(i, addressId, location);
+                setSelectionPeriods();
                 location.Y += ucDateSelection.Height;
             }
         }
@@ -256,12 +248,12 @@ namespace WinFormsEF.Views
         }
         private void setLocationAddRemoveButton(int height)
         {
-            Point location = BtnAdd.Location;
+            Point location = addButton.Location;
             location.Y += height;
-            BtnAdd.Location = location;
+            addButton.Location = location;
         }
 
-        private ucControls.ucDateSelection addDateSelectionLine(int lineCount, long addressId, Point location)
+        private ucControls.ucDateSelection setDateSelectionLine(int lineCount, long addressId, Point location)
         {
             ucControls.ucDateSelection ucDateSelection = new ucControls.ucDateSelection();
             ucDateSelection.EnergyTypeList = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList();
@@ -292,6 +284,26 @@ namespace WinFormsEF.Views
             return ucDateSelection;
         }
 
+        private void removeDateSelectionLine()
+        {
+            ucControls.ucDateSelection ucDateSelectionLast;
+            var lastdateSelectionName = getLastSelectedKey();
+
+            ucDateSelectionLast = (ucControls.ucDateSelection)FindControl(this, lastdateSelectionName);
+            Controls.Remove(ucDateSelectionLast);
+            ucDateSelectionLast.Dispose();
+
+            setLocationAddRemoveButton(0 - ucDateSelectionLast.Height);
+            Height -= ucDateSelectionLast.Height;
+            _selectionLineCount--;
+
+            if (_selectionLineCount != 1)
+            {
+                ucDateSelectionLast = (ucControls.ucDateSelection)FindControl(this, lastdateSelectionName);
+                ucDateSelectionLast.SetRemoveButtonVisibilty(true);
+            }
+        }
+
         private string getDateSelectionKey(int lineCount, long addressId)
         {
             return $"ucDateSelection{lineCount}_A{addressId}";
@@ -299,7 +311,7 @@ namespace WinFormsEF.Views
 
         private string getLastSelectedKey()
         {
-            EnergyUse.Models.Address address = (EnergyUse.Models.Address)CboAddress.SelectedItem;
+            EnergyUse.Models.Address address = (EnergyUse.Models.Address)addressComboBox.SelectedItem;
             return $"ucDateSelection{_selectionLineCount}_A{address.Id}";
         }
 
@@ -313,7 +325,7 @@ namespace WinFormsEF.Views
             }
         }
 
-        private void refreshEnergyTypeLists(EnergyUse.Models.Address address)
+        private void setEnergyTypeLists(EnergyUse.Models.Address address)
         {
             bool dataselectionFound;
             int maxSelectionCount = getDateSelectionCount(address.Id);
@@ -323,7 +335,7 @@ namespace WinFormsEF.Views
             do
             {
                 dataselectionFound = false;
-                dateSelectionKey = getDateSelectionKey(lineCount,address.Id);
+                dateSelectionKey = getDateSelectionKey(lineCount, address.Id);
 
                 ucControls.ucDateSelection ucDateSelection = this.Controls.Find(dateSelectionKey, true).FirstOrDefault() as ucControls.ucDateSelection;
                 if (ucDateSelection != null)
@@ -341,17 +353,17 @@ namespace WinFormsEF.Views
             } while (dataselectionFound);
         }
 
-        private void refreshSelectionPeriods()
+        private void setSelectionPeriods()
         {
             EnergyUse.Models.PreDefinedPeriod preDefinedPeriod;
             List<EnergyUse.Models.PreDefinedPeriodDate> preDefinedPeriodDateList;
             EnergyUse.Models.Address address = getSelectedAddress();
             int lineCount = 1;
 
-            if (CboPreSelectedPeriods.SelectedIndex == -1)
+            if (preSelectedPeriodComboBox.SelectedIndex == -1)
                 return;
 
-            preDefinedPeriod = (EnergyUse.Models.PreDefinedPeriod)CboPreSelectedPeriods.SelectedItem;
+            preDefinedPeriod = (EnergyUse.Models.PreDefinedPeriod)preSelectedPeriodComboBox.SelectedItem;
             preDefinedPeriodDateList = _controller.UnitOfWork.PreDefinedPeriodDateRepo.GetByPeriodId(preDefinedPeriod.Id).ToList();
 
             foreach (var preDefinedPeriodDate in preDefinedPeriodDateList)
@@ -373,7 +385,7 @@ namespace WinFormsEF.Views
 
         private EnergyUse.Models.Address getSelectedAddress()
         {
-            var address = (EnergyUse.Models.Address)CboAddress.SelectedItem;
+            var address = (EnergyUse.Models.Address)addressComboBox.SelectedItem;
             if (address == null)
                 address = new EnergyUse.Models.Address();
 
@@ -395,11 +407,11 @@ namespace WinFormsEF.Views
 
         private string getKeyForLastLastSelectedPeriod()
         {
-            var currentAddress = (EnergyUse.Models.Address)CboAddress.SelectedItem;
+            var currentAddress = (EnergyUse.Models.Address)addressComboBox.SelectedItem;
             var fileKey = string.Empty;
 
             if (currentAddress != null && currentAddress.Id > 0)
-                fileKey = $"{currentAddress.Id}{CboPreSelectedPeriods.Tag}";
+                fileKey = $"{currentAddress.Id}{preSelectedPeriodComboBox.Tag}";
 
             return fileKey;
         }
@@ -437,10 +449,10 @@ namespace WinFormsEF.Views
             parameterSelection.StartRange = DateTime.Now.AddMonths(-6);
             parameterSelection.EndRange = parameterSelection.StartRange.AddMonths(6);
 
-            var address = (EnergyUse.Models.Address)CboAddress.SelectedItem;
+            var address = (EnergyUse.Models.Address)addressComboBox.SelectedItem;
             parameterSelection.AddressId = address.Id;
 
-            var preSelectedPeriod = (EnergyUse.Models.PreDefinedPeriod)CboPreSelectedPeriods.SelectedItem;
+            var preSelectedPeriod = (EnergyUse.Models.PreDefinedPeriod)preSelectedPeriodComboBox.SelectedItem;
             if (preSelectedPeriod != null)
                 parameterSelection.PreSelectedPeriodId = preSelectedPeriod.Id;
 

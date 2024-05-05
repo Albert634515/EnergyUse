@@ -32,16 +32,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSelectSettelementParameters));
             bsAddresses = new BindingSource(components);
             toolTip1 = new ToolTip(components);
-            BtnAdd = new Button();
+            addButton = new Button();
+            clearPeriodButton = new Button();
             statusStrip1 = new StatusStrip();
             lblAddress = new Label();
             ChkpredictMissingData = new CheckBox();
             ChkShowCalculatedData = new CheckBox();
-            BtnCancel = new Button();
-            BtnSelect = new Button();
-            CboPreSelectedPeriods = new ComboBox();
+            cancelParameterSelectionButton = new Button();
+            selectButton = new Button();
+            preSelectedPeriodComboBox = new ComboBox();
             label1 = new Label();
-            CboAddress = new ComboBox();
+            addressComboBox = new ComboBox();
             bsEnergyTypes = new BindingSource(components);
             ((System.ComponentModel.ISupportInitialize)bsAddresses).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).BeginInit();
@@ -51,14 +52,23 @@
             // 
             bsAddresses.DataSource = typeof(EnergyUse.Models.Address);
             // 
-            // BtnAdd
+            // addButton
             // 
-            BtnAdd.Image = WinFormsUI.Properties.Resources.add_24x24;
-            resources.ApplyResources(BtnAdd, "BtnAdd");
-            BtnAdd.Name = "BtnAdd";
-            toolTip1.SetToolTip(BtnAdd, resources.GetString("BtnAdd.ToolTip"));
-            BtnAdd.UseVisualStyleBackColor = true;
-            BtnAdd.Click += cmdAdd_Click;
+            addButton.Image = WinFormsUI.Properties.Resources.add_24x24;
+            resources.ApplyResources(addButton, "addButton");
+            addButton.Name = "addButton";
+            toolTip1.SetToolTip(addButton, resources.GetString("addButton.ToolTip"));
+            addButton.UseVisualStyleBackColor = true;
+            addButton.Click += cmdAdd_Click;
+            // 
+            // clearPeriodButton
+            // 
+            clearPeriodButton.Image = WinFormsUI.Properties.Resources.clear_24x24;
+            resources.ApplyResources(clearPeriodButton, "clearPeriodButton");
+            clearPeriodButton.Name = "clearPeriodButton";
+            toolTip1.SetToolTip(clearPeriodButton, resources.GetString("clearPeriodButton.ToolTip"));
+            clearPeriodButton.UseVisualStyleBackColor = true;
+            clearPeriodButton.Click += clearPeriodButton_Click;
             // 
             // statusStrip1
             // 
@@ -85,43 +95,43 @@
             ChkShowCalculatedData.Name = "ChkShowCalculatedData";
             ChkShowCalculatedData.UseVisualStyleBackColor = true;
             // 
-            // BtnCancel
+            // cancelParameterSelectionButton
             // 
-            resources.ApplyResources(BtnCancel, "BtnCancel");
-            BtnCancel.Image = WinFormsUI.Properties.Resources.crossed_24x24;
-            BtnCancel.Name = "BtnCancel";
-            BtnCancel.UseVisualStyleBackColor = true;
-            BtnCancel.Click += cmdCancel_Click;
+            resources.ApplyResources(cancelParameterSelectionButton, "cancelParameterSelectionButton");
+            cancelParameterSelectionButton.Image = WinFormsUI.Properties.Resources.crossed_24x24;
+            cancelParameterSelectionButton.Name = "cancelParameterSelectionButton";
+            cancelParameterSelectionButton.UseVisualStyleBackColor = true;
+            cancelParameterSelectionButton.Click += cmdCancel_Click;
             // 
-            // BtnSelect
+            // selectButton
             // 
-            resources.ApplyResources(BtnSelect, "BtnSelect");
-            BtnSelect.Name = "BtnSelect";
-            BtnSelect.UseVisualStyleBackColor = true;
-            BtnSelect.Click += cmdSelect_Click;
+            resources.ApplyResources(selectButton, "selectButton");
+            selectButton.Name = "selectButton";
+            selectButton.UseVisualStyleBackColor = true;
+            selectButton.Click += cmdSelect_Click;
             // 
-            // CboPreSelectedPeriods
+            // preSelectedPeriodComboBox
             // 
-            CboPreSelectedPeriods.FormattingEnabled = true;
-            resources.ApplyResources(CboPreSelectedPeriods, "CboPreSelectedPeriods");
-            CboPreSelectedPeriods.Name = "CboPreSelectedPeriods";
-            CboPreSelectedPeriods.Tag = "LastPreSelectedPeriod";
-            CboPreSelectedPeriods.SelectedIndexChanged += cboPreSelectedPeriods_SelectedIndexChanged;
+            preSelectedPeriodComboBox.FormattingEnabled = true;
+            resources.ApplyResources(preSelectedPeriodComboBox, "preSelectedPeriodComboBox");
+            preSelectedPeriodComboBox.Name = "preSelectedPeriodComboBox";
+            preSelectedPeriodComboBox.Tag = "LastPreSelectedPeriod";
+            preSelectedPeriodComboBox.SelectedIndexChanged += cboPreSelectedPeriods_SelectedIndexChanged;
             // 
             // label1
             // 
             resources.ApplyResources(label1, "label1");
             label1.Name = "label1";
             // 
-            // CboAddress
+            // addressComboBox
             // 
-            CboAddress.DataSource = bsAddresses;
-            CboAddress.DisplayMember = "Description";
-            CboAddress.FormattingEnabled = true;
-            resources.ApplyResources(CboAddress, "CboAddress");
-            CboAddress.Name = "CboAddress";
-            CboAddress.ValueMember = "Id";
-            CboAddress.SelectedIndexChanged += cmbAddress_SelectedIndexChanged;
+            addressComboBox.DataSource = bsAddresses;
+            addressComboBox.DisplayMember = "Description";
+            addressComboBox.FormattingEnabled = true;
+            resources.ApplyResources(addressComboBox, "addressComboBox");
+            addressComboBox.Name = "addressComboBox";
+            addressComboBox.ValueMember = "Id";
+            addressComboBox.SelectedIndexChanged += cmbAddress_SelectedIndexChanged;
             // 
             // bsEnergyTypes
             // 
@@ -131,16 +141,19 @@
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(CboAddress);
-            Controls.Add(BtnAdd);
+            Controls.Add(clearPeriodButton);
+            Controls.Add(addressComboBox);
+            Controls.Add(addButton);
             Controls.Add(lblAddress);
             Controls.Add(ChkpredictMissingData);
             Controls.Add(ChkShowCalculatedData);
-            Controls.Add(BtnCancel);
-            Controls.Add(BtnSelect);
-            Controls.Add(CboPreSelectedPeriods);
+            Controls.Add(cancelParameterSelectionButton);
+            Controls.Add(selectButton);
+            Controls.Add(preSelectedPeriodComboBox);
             Controls.Add(label1);
             Controls.Add(statusStrip1);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FrmSelectSettelementParameters";
             ShowIcon = false;
             ShowInTaskbar = false;
@@ -156,14 +169,15 @@
         private ToolTip toolTip1;
         private StatusStrip statusStrip1;
         private BindingSource bsEnergyTypes;
-        private Button BtnAdd;
+        private Button addButton;
         private Label lblAddress;
         public CheckBox ChkpredictMissingData;
         public CheckBox ChkShowCalculatedData;
-        private Button BtnCancel;
-        private Button BtnSelect;
-        private ComboBox CboPreSelectedPeriods;
+        private Button cancelParameterSelectionButton;
+        private Button selectButton;
+        private ComboBox preSelectedPeriodComboBox;
         private Label label1;
-        public ComboBox CboAddress;
+        public ComboBox addressComboBox;
+        private Button clearPeriodButton;
     }
 }
