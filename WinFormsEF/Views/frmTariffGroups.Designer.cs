@@ -28,140 +28,126 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTariffGroups));
-            this.ToolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.TsbAdd = new System.Windows.Forms.ToolStripButton();
-            this.TsbSave = new System.Windows.Forms.ToolStripButton();
-            this.TbsCancel = new System.Windows.Forms.ToolStripButton();
-            this.TsbDelete = new System.Windows.Forms.ToolStripButton();
-            this.TsbRefresh = new System.Windows.Forms.ToolStripButton();
-            this.TsbClose = new System.Windows.Forms.ToolStripButton();
-            this.StatusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.ToolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.BsTarifGroups = new System.Windows.Forms.BindingSource(this.components);
-            this.DgTarifGroups = new System.Windows.Forms.DataGridView();
-            this.IdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DescriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ToolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BsTarifGroups)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DgTarifGroups)).BeginInit();
-            this.SuspendLayout();
+            ToolStrip1 = new ToolStrip();
+            TsbAdd = new ToolStripButton();
+            TsbSave = new ToolStripButton();
+            TbsCancel = new ToolStripButton();
+            TsbDelete = new ToolStripButton();
+            TsbRefresh = new ToolStripButton();
+            TsbClose = new ToolStripButton();
+            StatusStrip1 = new StatusStrip();
+            ToolTip1 = new ToolTip(components);
+            DgTarifGroups = new DataGridView();
+            IdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            DescriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            BsTarifGroups = new BindingSource(components);
+            ToolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)DgTarifGroups).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)BsTarifGroups).BeginInit();
+            SuspendLayout();
             // 
             // ToolStrip1
             // 
-            resources.ApplyResources(this.ToolStrip1, "ToolStrip1");
-            this.ToolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.ToolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TsbAdd,
-            this.TsbSave,
-            this.TbsCancel,
-            this.TsbDelete,
-            this.TsbRefresh,
-            this.TsbClose});
-            this.ToolStrip1.Name = "ToolStrip1";
-            this.ToolTip1.SetToolTip(this.ToolStrip1, resources.GetString("ToolStrip1.ToolTip"));
+            ToolStrip1.ImageScalingSize = new Size(20, 20);
+            ToolStrip1.Items.AddRange(new ToolStripItem[] { TsbAdd, TsbSave, TbsCancel, TsbDelete, TsbRefresh, TsbClose });
+            resources.ApplyResources(ToolStrip1, "ToolStrip1");
+            ToolStrip1.Name = "ToolStrip1";
             // 
             // TsbAdd
             // 
-            resources.ApplyResources(this.TsbAdd, "TsbAdd");
-            this.TsbAdd.Image = global::WinFormsUI.Properties.Resources.add_24x24;
-            this.TsbAdd.Name = "TsbAdd";
-            this.TsbAdd.Click += new System.EventHandler(this.TsbAdd_Click);
+            TsbAdd.Image = WinFormsUI.Properties.Resources.add_24x24;
+            resources.ApplyResources(TsbAdd, "TsbAdd");
+            TsbAdd.Name = "TsbAdd";
+            TsbAdd.Click += TsbAdd_Click;
             // 
             // TsbSave
             // 
-            resources.ApplyResources(this.TsbSave, "TsbSave");
-            this.TsbSave.Image = global::WinFormsUI.Properties.Resources.tick_mark_24x24;
-            this.TsbSave.Name = "TsbSave";
-            this.TsbSave.Click += new System.EventHandler(this.TsbSave_Click);
+            TsbSave.Image = WinFormsUI.Properties.Resources.tick_mark_24x24;
+            resources.ApplyResources(TsbSave, "TsbSave");
+            TsbSave.Name = "TsbSave";
+            TsbSave.Click += TsbSave_Click;
             // 
             // TbsCancel
             // 
-            resources.ApplyResources(this.TbsCancel, "TbsCancel");
-            this.TbsCancel.Image = global::WinFormsUI.Properties.Resources.clear_24x24;
-            this.TbsCancel.Name = "TbsCancel";
-            this.TbsCancel.Click += new System.EventHandler(this.TbsCancel_Click);
+            TbsCancel.Image = WinFormsUI.Properties.Resources.clear_24x24;
+            resources.ApplyResources(TbsCancel, "TbsCancel");
+            TbsCancel.Name = "TbsCancel";
+            TbsCancel.Click += TbsCancel_Click;
             // 
             // TsbDelete
             // 
-            resources.ApplyResources(this.TsbDelete, "TsbDelete");
-            this.TsbDelete.Image = global::WinFormsUI.Properties.Resources.delete_24x24;
-            this.TsbDelete.Name = "TsbDelete";
-            this.TsbDelete.Click += new System.EventHandler(this.TsbDelete_Click);
+            TsbDelete.Image = WinFormsUI.Properties.Resources.delete_24x24;
+            resources.ApplyResources(TsbDelete, "TsbDelete");
+            TsbDelete.Name = "TsbDelete";
+            TsbDelete.Click += TsbDelete_Click;
             // 
             // TsbRefresh
             // 
-            resources.ApplyResources(this.TsbRefresh, "TsbRefresh");
-            this.TsbRefresh.Image = global::WinFormsUI.Properties.Resources.clock_24x24;
-            this.TsbRefresh.Name = "TsbRefresh";
-            this.TsbRefresh.Click += new System.EventHandler(this.TsbRefresh_Click);
+            TsbRefresh.Image = WinFormsUI.Properties.Resources.clock_24x24;
+            resources.ApplyResources(TsbRefresh, "TsbRefresh");
+            TsbRefresh.Name = "TsbRefresh";
+            TsbRefresh.Click += TsbRefresh_Click;
             // 
             // TsbClose
             // 
-            resources.ApplyResources(this.TsbClose, "TsbClose");
-            this.TsbClose.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.TsbClose.Image = global::WinFormsUI.Properties.Resources.crossed_24x24;
-            this.TsbClose.Name = "TsbClose";
-            this.TsbClose.Click += new System.EventHandler(this.TsbClose_Click);
+            TsbClose.Alignment = ToolStripItemAlignment.Right;
+            TsbClose.Image = WinFormsUI.Properties.Resources.crossed_24x24;
+            resources.ApplyResources(TsbClose, "TsbClose");
+            TsbClose.Name = "TsbClose";
+            TsbClose.Click += TsbClose_Click;
             // 
             // StatusStrip1
             // 
-            resources.ApplyResources(this.StatusStrip1, "StatusStrip1");
-            this.StatusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.StatusStrip1.Name = "StatusStrip1";
-            this.ToolTip1.SetToolTip(this.StatusStrip1, resources.GetString("StatusStrip1.ToolTip"));
-            // 
-            // BsTarifGroups
-            // 
-            this.BsTarifGroups.DataSource = typeof(EnergyUse.Models.TariffGroup);
+            StatusStrip1.ImageScalingSize = new Size(20, 20);
+            resources.ApplyResources(StatusStrip1, "StatusStrip1");
+            StatusStrip1.Name = "StatusStrip1";
             // 
             // DgTarifGroups
             // 
-            resources.ApplyResources(this.DgTarifGroups, "DgTarifGroups");
-            this.DgTarifGroups.AllowUserToAddRows = false;
-            this.DgTarifGroups.AllowUserToDeleteRows = false;
-            this.DgTarifGroups.AutoGenerateColumns = false;
-            this.DgTarifGroups.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgTarifGroups.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.IdDataGridViewTextBoxColumn,
-            this.DescriptionDataGridViewTextBoxColumn});
-            this.DgTarifGroups.DataSource = this.BsTarifGroups;
-            this.DgTarifGroups.Name = "DgTarifGroups";
-            this.DgTarifGroups.RowTemplate.Height = 29;
-            this.ToolTip1.SetToolTip(this.DgTarifGroups, resources.GetString("DgTarifGroups.ToolTip"));
+            DgTarifGroups.AllowUserToAddRows = false;
+            DgTarifGroups.AllowUserToDeleteRows = false;
+            resources.ApplyResources(DgTarifGroups, "DgTarifGroups");
+            DgTarifGroups.AutoGenerateColumns = false;
+            DgTarifGroups.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DgTarifGroups.Columns.AddRange(new DataGridViewColumn[] { IdDataGridViewTextBoxColumn, DescriptionDataGridViewTextBoxColumn });
+            DgTarifGroups.DataSource = BsTarifGroups;
+            DgTarifGroups.Name = "DgTarifGroups";
             // 
             // IdDataGridViewTextBoxColumn
             // 
-            this.IdDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            resources.ApplyResources(this.IdDataGridViewTextBoxColumn, "IdDataGridViewTextBoxColumn");
-            this.IdDataGridViewTextBoxColumn.Name = "IdDataGridViewTextBoxColumn";
+            IdDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            resources.ApplyResources(IdDataGridViewTextBoxColumn, "IdDataGridViewTextBoxColumn");
+            IdDataGridViewTextBoxColumn.Name = "IdDataGridViewTextBoxColumn";
             // 
             // DescriptionDataGridViewTextBoxColumn
             // 
-            this.DescriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
-            resources.ApplyResources(this.DescriptionDataGridViewTextBoxColumn, "DescriptionDataGridViewTextBoxColumn");
-            this.DescriptionDataGridViewTextBoxColumn.Name = "DescriptionDataGridViewTextBoxColumn";
+            DescriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
+            resources.ApplyResources(DescriptionDataGridViewTextBoxColumn, "DescriptionDataGridViewTextBoxColumn");
+            DescriptionDataGridViewTextBoxColumn.Name = "DescriptionDataGridViewTextBoxColumn";
+            // 
+            // BsTarifGroups
+            // 
+            BsTarifGroups.DataSource = typeof(EnergyUse.Models.TariffGroup);
             // 
             // frmTariffGroups
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.DgTarifGroups);
-            this.Controls.Add(this.StatusStrip1);
-            this.Controls.Add(this.ToolStrip1);
-            this.Name = "frmTariffGroups";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.ToolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmTarifGroups_FormClosing);
-            this.ToolStrip1.ResumeLayout(false);
-            this.ToolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BsTarifGroups)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DgTarifGroups)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(DgTarifGroups);
+            Controls.Add(StatusStrip1);
+            Controls.Add(ToolStrip1);
+            Name = "frmTariffGroups";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            FormClosing += FrmTarifGroups_FormClosing;
+            ToolStrip1.ResumeLayout(false);
+            ToolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)DgTarifGroups).EndInit();
+            ((System.ComponentModel.ISupportInitialize)BsTarifGroups).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

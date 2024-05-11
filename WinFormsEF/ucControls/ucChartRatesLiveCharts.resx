@@ -130,7 +130,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
-    <value>43</value>
+    <value>9</value>
   </data>
   <data name="&gt;&gt;panel1.Name" xml:space="preserve">
     <value>panel1</value>
@@ -154,7 +154,7 @@
     <value>57, 24</value>
   </data>
   <data name="rbUnit.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
+    <value>1</value>
   </data>
   <data name="rbUnit.Text" xml:space="preserve">
     <value>Unit</value>
@@ -181,7 +181,7 @@
     <value>60, 24</value>
   </data>
   <data name="rbRate.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
+    <value>0</value>
   </data>
   <data name="rbRate.Text" xml:space="preserve">
     <value>Rate</value>
@@ -205,7 +205,7 @@
     <value>145, 29</value>
   </data>
   <data name="pnlType.TabIndex" type="System.Int32, mscorlib">
-    <value>38</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;pnlType.Name" xml:space="preserve">
     <value>pnlType</value>
@@ -226,7 +226,7 @@
     <value>124, 27</value>
   </data>
   <data name="dtpTill.TabIndex" type="System.Int32, mscorlib">
-    <value>37</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;dtpTill.Name" xml:space="preserve">
     <value>dtpTill</value>
@@ -247,7 +247,7 @@
     <value>124, 27</value>
   </data>
   <data name="dtpFrom.TabIndex" type="System.Int32, mscorlib">
-    <value>36</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;dtpFrom.Name" xml:space="preserve">
     <value>dtpFrom</value>
@@ -271,7 +271,7 @@
     <value>54, 20</value>
   </data>
   <data name="lblRange.TabIndex" type="System.Int32, mscorlib">
-    <value>35</value>
+    <value>2</value>
   </data>
   <data name="lblRange.Text" xml:space="preserve">
     <value>Period:</value>
@@ -298,7 +298,7 @@
     <value>72, 20</value>
   </data>
   <data name="lblCostCategory.TabIndex" type="System.Int32, mscorlib">
-    <value>34</value>
+    <value>0</value>
   </data>
   <data name="lblCostCategory.Text" xml:space="preserve">
     <value>Category:</value>
@@ -322,7 +322,7 @@
     <value>300, 70</value>
   </data>
   <data name="chkListCostCategory.TabIndex" type="System.Int32, mscorlib">
-    <value>44</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;chkListCostCategory.Name" xml:space="preserve">
     <value>chkListCostCategory</value>
@@ -343,7 +343,7 @@
     <value>94, 29</value>
   </data>
   <data name="cmdExport.TabIndex" type="System.Int32, mscorlib">
-    <value>41</value>
+    <value>8</value>
   </data>
   <data name="cmdExport.Text" xml:space="preserve">
     <value>Export</value>
@@ -373,7 +373,7 @@
     <value>94, 29</value>
   </data>
   <data name="cmdReset.TabIndex" type="System.Int32, mscorlib">
-    <value>40</value>
+    <value>7</value>
   </data>
   <data name="cmdReset.Text" xml:space="preserve">
     <value>Reset</value>
@@ -406,7 +406,7 @@
     <value>43, 20</value>
   </data>
   <data name="lblType.TabIndex" type="System.Int32, mscorlib">
-    <value>39</value>
+    <value>5</value>
   </data>
   <data name="lblType.Text" xml:space="preserve">
     <value>Type:</value>

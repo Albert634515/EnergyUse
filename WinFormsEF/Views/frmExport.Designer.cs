@@ -28,191 +28,189 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmExport));
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsbCloseExport = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.lblAddress = new System.Windows.Forms.Label();
-            this.cmbAddress = new System.Windows.Forms.ComboBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.rbExportSelectedRange = new System.Windows.Forms.RadioButton();
-            this.rbExportAll = new System.Windows.Forms.RadioButton();
-            this.dtpTill = new System.Windows.Forms.DateTimePicker();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dtpFrom = new System.Windows.Forms.DateTimePicker();
-            this.lblRange = new System.Windows.Forms.Label();
-            this.cmdExport = new System.Windows.Forms.Button();
-            this.lblEnergyType = new System.Windows.Forms.Label();
-            this.cboEnergyType = new System.Windows.Forms.ComboBox();
-            this.cmdSelectExportFile = new System.Windows.Forms.Button();
-            this.txtExportFile = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.bsAddresses = new System.Windows.Forms.BindingSource(this.components);
-            this.bsEnergyTypes = new System.Windows.Forms.BindingSource(this.components);
-            this.toolStrip1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsAddresses)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsEnergyTypes)).BeginInit();
-            this.SuspendLayout();
+            toolStrip1 = new ToolStrip();
+            tsbCloseExport = new ToolStripButton();
+            statusStrip1 = new StatusStrip();
+            toolTip1 = new ToolTip(components);
+            lblAddress = new Label();
+            cmbAddress = new ComboBox();
+            panel1 = new Panel();
+            rbExportSelectedRange = new RadioButton();
+            rbExportAll = new RadioButton();
+            dtpTill = new DateTimePicker();
+            label2 = new Label();
+            dtpFrom = new DateTimePicker();
+            lblRange = new Label();
+            cmdExport = new Button();
+            lblEnergyType = new Label();
+            cboEnergyType = new ComboBox();
+            cmdSelectExportFile = new Button();
+            txtExportFile = new TextBox();
+            label1 = new Label();
+            bsAddresses = new BindingSource(components);
+            bsEnergyTypes = new BindingSource(components);
+            toolStrip1.SuspendLayout();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)bsAddresses).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).BeginInit();
+            SuspendLayout();
             // 
             // toolStrip1
             // 
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbCloseExport});
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
-            this.toolStrip1.Name = "toolStrip1";
+            toolStrip1.ImageScalingSize = new Size(20, 20);
+            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbCloseExport });
+            resources.ApplyResources(toolStrip1, "toolStrip1");
+            toolStrip1.Name = "toolStrip1";
             // 
             // tsbCloseExport
             // 
-            this.tsbCloseExport.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsbCloseExport.Image = global::WinFormsUI.Properties.Resources.crossed_24x24;
-            resources.ApplyResources(this.tsbCloseExport, "tsbCloseExport");
-            this.tsbCloseExport.Name = "tsbCloseExport";
-            this.tsbCloseExport.Click += new System.EventHandler(this.tsbCloseExport_Click);
+            tsbCloseExport.Alignment = ToolStripItemAlignment.Right;
+            tsbCloseExport.Image = WinFormsUI.Properties.Resources.crossed_24x24;
+            resources.ApplyResources(tsbCloseExport, "tsbCloseExport");
+            tsbCloseExport.Name = "tsbCloseExport";
+            tsbCloseExport.Click += tsbCloseExport_Click;
             // 
             // statusStrip1
             // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            resources.ApplyResources(this.statusStrip1, "statusStrip1");
-            this.statusStrip1.Name = "statusStrip1";
+            statusStrip1.ImageScalingSize = new Size(20, 20);
+            resources.ApplyResources(statusStrip1, "statusStrip1");
+            statusStrip1.Name = "statusStrip1";
             // 
             // lblAddress
             // 
-            resources.ApplyResources(this.lblAddress, "lblAddress");
-            this.lblAddress.Name = "lblAddress";
+            resources.ApplyResources(lblAddress, "lblAddress");
+            lblAddress.Name = "lblAddress";
             // 
             // cmbAddress
             // 
-            this.cmbAddress.DisplayMember = "Description";
-            this.cmbAddress.FormattingEnabled = true;
-            resources.ApplyResources(this.cmbAddress, "cmbAddress");
-            this.cmbAddress.Name = "cmbAddress";
-            this.cmbAddress.ValueMember = "Id";
+            cmbAddress.DisplayMember = "Description";
+            cmbAddress.FormattingEnabled = true;
+            resources.ApplyResources(cmbAddress, "cmbAddress");
+            cmbAddress.Name = "cmbAddress";
+            cmbAddress.ValueMember = "Id";
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.rbExportSelectedRange);
-            this.panel1.Controls.Add(this.rbExportAll);
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Name = "panel1";
+            panel1.Controls.Add(rbExportSelectedRange);
+            panel1.Controls.Add(rbExportAll);
+            resources.ApplyResources(panel1, "panel1");
+            panel1.Name = "panel1";
             // 
             // rbExportSelectedRange
             // 
-            resources.ApplyResources(this.rbExportSelectedRange, "rbExportSelectedRange");
-            this.rbExportSelectedRange.Name = "rbExportSelectedRange";
-            this.rbExportSelectedRange.UseVisualStyleBackColor = true;
+            resources.ApplyResources(rbExportSelectedRange, "rbExportSelectedRange");
+            rbExportSelectedRange.Name = "rbExportSelectedRange";
+            rbExportSelectedRange.UseVisualStyleBackColor = true;
             // 
             // rbExportAll
             // 
-            resources.ApplyResources(this.rbExportAll, "rbExportAll");
-            this.rbExportAll.Checked = true;
-            this.rbExportAll.Name = "rbExportAll";
-            this.rbExportAll.TabStop = true;
-            this.rbExportAll.UseVisualStyleBackColor = true;
+            resources.ApplyResources(rbExportAll, "rbExportAll");
+            rbExportAll.Checked = true;
+            rbExportAll.Name = "rbExportAll";
+            rbExportAll.TabStop = true;
+            rbExportAll.UseVisualStyleBackColor = true;
             // 
             // dtpTill
             // 
-            this.dtpTill.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            resources.ApplyResources(this.dtpTill, "dtpTill");
-            this.dtpTill.Name = "dtpTill";
+            dtpTill.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(dtpTill, "dtpTill");
+            dtpTill.Name = "dtpTill";
             // 
             // label2
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
+            resources.ApplyResources(label2, "label2");
+            label2.Name = "label2";
             // 
             // dtpFrom
             // 
-            this.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            resources.ApplyResources(this.dtpFrom, "dtpFrom");
-            this.dtpFrom.Name = "dtpFrom";
+            dtpFrom.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(dtpFrom, "dtpFrom");
+            dtpFrom.Name = "dtpFrom";
             // 
             // lblRange
             // 
-            resources.ApplyResources(this.lblRange, "lblRange");
-            this.lblRange.Name = "lblRange";
+            resources.ApplyResources(lblRange, "lblRange");
+            lblRange.Name = "lblRange";
             // 
             // cmdExport
             // 
-            resources.ApplyResources(this.cmdExport, "cmdExport");
-            this.cmdExport.Image = global::WinFormsUI.Properties.Resources.upload_24x24;
-            this.cmdExport.Name = "cmdExport";
-            this.cmdExport.UseVisualStyleBackColor = true;
-            this.cmdExport.Click += new System.EventHandler(this.cmdExport_Click);
+            resources.ApplyResources(cmdExport, "cmdExport");
+            cmdExport.Image = WinFormsUI.Properties.Resources.upload_24x24;
+            cmdExport.Name = "cmdExport";
+            cmdExport.UseVisualStyleBackColor = true;
+            cmdExport.Click += cmdExport_Click;
             // 
             // lblEnergyType
             // 
-            resources.ApplyResources(this.lblEnergyType, "lblEnergyType");
-            this.lblEnergyType.Name = "lblEnergyType";
+            resources.ApplyResources(lblEnergyType, "lblEnergyType");
+            lblEnergyType.Name = "lblEnergyType";
             // 
             // cboEnergyType
             // 
-            this.cboEnergyType.DisplayMember = "Name";
-            this.cboEnergyType.FormattingEnabled = true;
-            resources.ApplyResources(this.cboEnergyType, "cboEnergyType");
-            this.cboEnergyType.Name = "cboEnergyType";
-            this.cboEnergyType.ValueMember = "Id";
+            cboEnergyType.DisplayMember = "Name";
+            cboEnergyType.FormattingEnabled = true;
+            resources.ApplyResources(cboEnergyType, "cboEnergyType");
+            cboEnergyType.Name = "cboEnergyType";
+            cboEnergyType.ValueMember = "Id";
             // 
             // cmdSelectExportFile
             // 
-            this.cmdSelectExportFile.Image = global::WinFormsUI.Properties.Resources.open_file_icon;
-            resources.ApplyResources(this.cmdSelectExportFile, "cmdSelectExportFile");
-            this.cmdSelectExportFile.Name = "cmdSelectExportFile";
-            this.cmdSelectExportFile.UseVisualStyleBackColor = true;
-            this.cmdSelectExportFile.Click += new System.EventHandler(this.cmdSelectExportFile_Click);
+            cmdSelectExportFile.Image = WinFormsUI.Properties.Resources.open_file_icon;
+            resources.ApplyResources(cmdSelectExportFile, "cmdSelectExportFile");
+            cmdSelectExportFile.Name = "cmdSelectExportFile";
+            cmdSelectExportFile.UseVisualStyleBackColor = true;
+            cmdSelectExportFile.Click += cmdSelectExportFile_Click;
             // 
             // txtExportFile
             // 
-            resources.ApplyResources(this.txtExportFile, "txtExportFile");
-            this.txtExportFile.Name = "txtExportFile";
+            resources.ApplyResources(txtExportFile, "txtExportFile");
+            txtExportFile.Name = "txtExportFile";
             // 
             // label1
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
+            resources.ApplyResources(label1, "label1");
+            label1.Name = "label1";
             // 
             // bsAddresses
             // 
-            this.bsAddresses.DataSource = typeof(EnergyUse.Models.Address);
+            bsAddresses.DataSource = typeof(EnergyUse.Models.Address);
             // 
             // bsEnergyTypes
             // 
-            this.bsEnergyTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
+            bsEnergyTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
             // 
             // frmExport
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.lblAddress);
-            this.Controls.Add(this.cmbAddress);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.dtpTill);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.dtpFrom);
-            this.Controls.Add(this.lblRange);
-            this.Controls.Add(this.cmdExport);
-            this.Controls.Add(this.lblEnergyType);
-            this.Controls.Add(this.cboEnergyType);
-            this.Controls.Add(this.cmdSelectExportFile);
-            this.Controls.Add(this.txtExportFile);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.toolStrip1);
-            this.Name = "frmExport";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsAddresses)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsEnergyTypes)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lblAddress);
+            Controls.Add(cmbAddress);
+            Controls.Add(panel1);
+            Controls.Add(dtpTill);
+            Controls.Add(label2);
+            Controls.Add(dtpFrom);
+            Controls.Add(lblRange);
+            Controls.Add(cmdExport);
+            Controls.Add(lblEnergyType);
+            Controls.Add(cboEnergyType);
+            Controls.Add(cmdSelectExportFile);
+            Controls.Add(txtExportFile);
+            Controls.Add(label1);
+            Controls.Add(statusStrip1);
+            Controls.Add(toolStrip1);
+            Name = "frmExport";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)bsAddresses).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

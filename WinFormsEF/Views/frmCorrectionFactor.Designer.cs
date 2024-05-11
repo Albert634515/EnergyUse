@@ -30,7 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCorrectionFactor));
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             toolStrip1 = new ToolStrip();
             tsbAdd = new ToolStripButton();
             tsbSave = new ToolStripButton();
@@ -43,6 +43,11 @@
             lblEnergyType = new Label();
             toolTip1 = new ToolTip(components);
             dgCorrectionFactor = new DataGridView();
+            startFactorDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            endFactorDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            factorDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            energyTypeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             bsCorrectionFactors = new BindingSource(components);
             gbCorrectionFactor = new GroupBox();
             txtFactor = new TextBox();
@@ -51,11 +56,6 @@
             dtEndDate = new DateTimePicker();
             lblStartDate = new Label();
             dtStartDate = new DateTimePicker();
-            startFactorDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            endFactorDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            factorDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            energyTypeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgCorrectionFactor).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsCorrectionFactors).BeginInit();
@@ -144,6 +144,44 @@
             dgCorrectionFactor.Name = "dgCorrectionFactor";
             dgCorrectionFactor.ReadOnly = true;
             // 
+            // startFactorDataGridViewTextBoxColumn
+            // 
+            startFactorDataGridViewTextBoxColumn.DataPropertyName = "StartFactor";
+            resources.ApplyResources(startFactorDataGridViewTextBoxColumn, "startFactorDataGridViewTextBoxColumn");
+            startFactorDataGridViewTextBoxColumn.Name = "startFactorDataGridViewTextBoxColumn";
+            startFactorDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // endFactorDataGridViewTextBoxColumn
+            // 
+            endFactorDataGridViewTextBoxColumn.DataPropertyName = "EndFactor";
+            resources.ApplyResources(endFactorDataGridViewTextBoxColumn, "endFactorDataGridViewTextBoxColumn");
+            endFactorDataGridViewTextBoxColumn.Name = "endFactorDataGridViewTextBoxColumn";
+            endFactorDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // factorDataGridViewTextBoxColumn
+            // 
+            factorDataGridViewTextBoxColumn.DataPropertyName = "Factor";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N5";
+            factorDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            resources.ApplyResources(factorDataGridViewTextBoxColumn, "factorDataGridViewTextBoxColumn");
+            factorDataGridViewTextBoxColumn.Name = "factorDataGridViewTextBoxColumn";
+            factorDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // energyTypeDataGridViewTextBoxColumn
+            // 
+            energyTypeDataGridViewTextBoxColumn.DataPropertyName = "EnergyType";
+            resources.ApplyResources(energyTypeDataGridViewTextBoxColumn, "energyTypeDataGridViewTextBoxColumn");
+            energyTypeDataGridViewTextBoxColumn.Name = "energyTypeDataGridViewTextBoxColumn";
+            energyTypeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            idDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
             // bsCorrectionFactors
             // 
             bsCorrectionFactors.DataSource = typeof(EnergyUse.Models.CorrectionFactor);
@@ -196,44 +234,6 @@
             resources.ApplyResources(dtStartDate, "dtStartDate");
             dtStartDate.Name = "dtStartDate";
             dtStartDate.Value = new DateTime(2022, 10, 1, 0, 0, 0, 0);
-            // 
-            // startFactorDataGridViewTextBoxColumn
-            // 
-            startFactorDataGridViewTextBoxColumn.DataPropertyName = "StartFactor";
-            resources.ApplyResources(startFactorDataGridViewTextBoxColumn, "startFactorDataGridViewTextBoxColumn");
-            startFactorDataGridViewTextBoxColumn.Name = "startFactorDataGridViewTextBoxColumn";
-            startFactorDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // endFactorDataGridViewTextBoxColumn
-            // 
-            endFactorDataGridViewTextBoxColumn.DataPropertyName = "EndFactor";
-            resources.ApplyResources(endFactorDataGridViewTextBoxColumn, "endFactorDataGridViewTextBoxColumn");
-            endFactorDataGridViewTextBoxColumn.Name = "endFactorDataGridViewTextBoxColumn";
-            endFactorDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // factorDataGridViewTextBoxColumn
-            // 
-            factorDataGridViewTextBoxColumn.DataPropertyName = "Factor";
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "N5";
-            factorDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            resources.ApplyResources(factorDataGridViewTextBoxColumn, "factorDataGridViewTextBoxColumn");
-            factorDataGridViewTextBoxColumn.Name = "factorDataGridViewTextBoxColumn";
-            factorDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // energyTypeDataGridViewTextBoxColumn
-            // 
-            energyTypeDataGridViewTextBoxColumn.DataPropertyName = "EnergyType";
-            resources.ApplyResources(energyTypeDataGridViewTextBoxColumn, "energyTypeDataGridViewTextBoxColumn");
-            energyTypeDataGridViewTextBoxColumn.Name = "energyTypeDataGridViewTextBoxColumn";
-            energyTypeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
-            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            idDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // frmCorrectionFactor
             // 

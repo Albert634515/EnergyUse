@@ -28,334 +28,324 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAddresses));
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsbAdd = new System.Windows.Forms.ToolStripButton();
-            this.tsbSave = new System.Windows.Forms.ToolStripButton();
-            this.tbsCancel = new System.Windows.Forms.ToolStripButton();
-            this.tsbDelete = new System.Windows.Forms.ToolStripButton();
-            this.tsbRefresh = new System.Windows.Forms.ToolStripButton();
-            this.tsbClose = new System.Windows.Forms.ToolStripButton();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.dgAddresses = new System.Windows.Forms.DataGridView();
-            this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bsAddresses = new System.Windows.Forms.BindingSource(this.components);
-            this.lblRate = new System.Windows.Forms.Label();
-            this.txtDescription = new System.Windows.Forms.TextBox();
-            this.lblHasSolarpanels = new System.Windows.Forms.Label();
-            this.gbSolar = new System.Windows.Forms.GroupBox();
-            this.lblSubsidy = new System.Windows.Forms.Label();
-            this.txtSubsidyAmount = new System.Windows.Forms.TextBox();
-            this.lblPurchaseAmount = new System.Windows.Forms.Label();
-            this.txtPurchaseAmount = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.chkSolarPanelsAvailable = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtTotalCapacitySolarPanels = new System.Windows.Forms.TextBox();
-            this.txtQualityReductionSolarPanels = new System.Windows.Forms.TextBox();
-            this.lblTotalCapacity = new System.Windows.Forms.Label();
-            this.txtStreet = new System.Windows.Forms.TextBox();
-            this.lblCity = new System.Windows.Forms.Label();
-            this.lblStreet = new System.Windows.Forms.Label();
-            this.chkDefaultAddress = new System.Windows.Forms.CheckBox();
-            this.gbAddress = new System.Windows.Forms.GroupBox();
-            this.txtPostcalCode = new System.Windows.Forms.TextBox();
-            this.lblPostcalCode = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtCity = new System.Windows.Forms.TextBox();
-            this.txtHouseNo = new System.Windows.Forms.TextBox();
-            this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
-            this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgAddresses)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsAddresses)).BeginInit();
-            this.gbSolar.SuspendLayout();
-            this.gbAddress.SuspendLayout();
-            this.SuspendLayout();
+            statusStrip1 = new StatusStrip();
+            toolStrip1 = new ToolStrip();
+            tsbAdd = new ToolStripButton();
+            tsbSave = new ToolStripButton();
+            tbsCancel = new ToolStripButton();
+            tsbDelete = new ToolStripButton();
+            tsbRefresh = new ToolStripButton();
+            tsbClose = new ToolStripButton();
+            toolTip1 = new ToolTip(components);
+            dgAddresses = new DataGridView();
+            descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            bsAddresses = new BindingSource(components);
+            lblRate = new Label();
+            txtDescription = new TextBox();
+            lblHasSolarpanels = new Label();
+            gbSolar = new GroupBox();
+            lblSubsidy = new Label();
+            txtSubsidyAmount = new TextBox();
+            lblPurchaseAmount = new Label();
+            txtPurchaseAmount = new TextBox();
+            label6 = new Label();
+            label4 = new Label();
+            chkSolarPanelsAvailable = new CheckBox();
+            label2 = new Label();
+            txtTotalCapacitySolarPanels = new TextBox();
+            txtQualityReductionSolarPanels = new TextBox();
+            lblTotalCapacity = new Label();
+            txtStreet = new TextBox();
+            lblCity = new Label();
+            lblStreet = new Label();
+            chkDefaultAddress = new CheckBox();
+            gbAddress = new GroupBox();
+            txtPostcalCode = new TextBox();
+            lblPostcalCode = new Label();
+            label1 = new Label();
+            txtCity = new TextBox();
+            txtHouseNo = new TextBox();
+            toolTip2 = new ToolTip(components);
+            toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgAddresses).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsAddresses).BeginInit();
+            gbSolar.SuspendLayout();
+            gbAddress.SuspendLayout();
+            SuspendLayout();
             // 
             // statusStrip1
             // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            resources.ApplyResources(this.statusStrip1, "statusStrip1");
-            this.statusStrip1.Name = "statusStrip1";
+            statusStrip1.ImageScalingSize = new Size(20, 20);
+            resources.ApplyResources(statusStrip1, "statusStrip1");
+            statusStrip1.Name = "statusStrip1";
             // 
             // toolStrip1
             // 
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbAdd,
-            this.tsbSave,
-            this.tbsCancel,
-            this.tsbDelete,
-            this.tsbRefresh,
-            this.tsbClose});
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
-            this.toolStrip1.Name = "toolStrip1";
+            toolStrip1.ImageScalingSize = new Size(20, 20);
+            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbAdd, tsbSave, tbsCancel, tsbDelete, tsbRefresh, tsbClose });
+            resources.ApplyResources(toolStrip1, "toolStrip1");
+            toolStrip1.Name = "toolStrip1";
             // 
             // tsbAdd
             // 
-            this.tsbAdd.Image = global::WinFormsUI.Properties.Resources.add_24x24;
-            resources.ApplyResources(this.tsbAdd, "tsbAdd");
-            this.tsbAdd.Name = "tsbAdd";
-            this.tsbAdd.Click += new System.EventHandler(this.tsbAdd_Click);
+            tsbAdd.Image = WinFormsUI.Properties.Resources.add_24x24;
+            resources.ApplyResources(tsbAdd, "tsbAdd");
+            tsbAdd.Name = "tsbAdd";
+            tsbAdd.Click += tsbAdd_Click;
             // 
             // tsbSave
             // 
-            this.tsbSave.Image = global::WinFormsUI.Properties.Resources.tick_mark_24x24;
-            resources.ApplyResources(this.tsbSave, "tsbSave");
-            this.tsbSave.Name = "tsbSave";
-            this.tsbSave.Click += new System.EventHandler(this.tsbSave_Click);
+            tsbSave.Image = WinFormsUI.Properties.Resources.tick_mark_24x24;
+            resources.ApplyResources(tsbSave, "tsbSave");
+            tsbSave.Name = "tsbSave";
+            tsbSave.Click += tsbSave_Click;
             // 
             // tbsCancel
             // 
-            this.tbsCancel.Image = global::WinFormsUI.Properties.Resources.clear_24x24;
-            resources.ApplyResources(this.tbsCancel, "tbsCancel");
-            this.tbsCancel.Name = "tbsCancel";
-            this.tbsCancel.Click += new System.EventHandler(this.tbsCancel_Click);
+            tbsCancel.Image = WinFormsUI.Properties.Resources.clear_24x24;
+            resources.ApplyResources(tbsCancel, "tbsCancel");
+            tbsCancel.Name = "tbsCancel";
+            tbsCancel.Click += tbsCancel_Click;
             // 
             // tsbDelete
             // 
-            this.tsbDelete.Image = global::WinFormsUI.Properties.Resources.delete_24x24;
-            resources.ApplyResources(this.tsbDelete, "tsbDelete");
-            this.tsbDelete.Name = "tsbDelete";
-            this.tsbDelete.Click += new System.EventHandler(this.tsbDelete_Click);
+            tsbDelete.Image = WinFormsUI.Properties.Resources.delete_24x24;
+            resources.ApplyResources(tsbDelete, "tsbDelete");
+            tsbDelete.Name = "tsbDelete";
+            tsbDelete.Click += tsbDelete_Click;
             // 
             // tsbRefresh
             // 
-            this.tsbRefresh.Image = global::WinFormsUI.Properties.Resources.clock_24x24;
-            resources.ApplyResources(this.tsbRefresh, "tsbRefresh");
-            this.tsbRefresh.Name = "tsbRefresh";
-            this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
+            tsbRefresh.Image = WinFormsUI.Properties.Resources.clock_24x24;
+            resources.ApplyResources(tsbRefresh, "tsbRefresh");
+            tsbRefresh.Name = "tsbRefresh";
+            tsbRefresh.Click += tsbRefresh_Click;
             // 
             // tsbClose
             // 
-            this.tsbClose.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsbClose.Image = global::WinFormsUI.Properties.Resources.crossed_24x24;
-            resources.ApplyResources(this.tsbClose, "tsbClose");
-            this.tsbClose.Name = "tsbClose";
-            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
+            tsbClose.Alignment = ToolStripItemAlignment.Right;
+            tsbClose.Image = WinFormsUI.Properties.Resources.crossed_24x24;
+            resources.ApplyResources(tsbClose, "tsbClose");
+            tsbClose.Name = "tsbClose";
+            tsbClose.Click += tsbClose_Click;
             // 
             // dgAddresses
             // 
-            this.dgAddresses.AllowUserToAddRows = false;
-            this.dgAddresses.AllowUserToDeleteRows = false;
-            resources.ApplyResources(this.dgAddresses, "dgAddresses");
-            this.dgAddresses.AutoGenerateColumns = false;
-            this.dgAddresses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgAddresses.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.descriptionDataGridViewTextBoxColumn,
-            this.idDataGridViewTextBoxColumn});
-            this.dgAddresses.DataSource = this.bsAddresses;
-            this.dgAddresses.Name = "dgAddresses";
-            this.dgAddresses.RowTemplate.Height = 29;
+            dgAddresses.AllowUserToAddRows = false;
+            dgAddresses.AllowUserToDeleteRows = false;
+            resources.ApplyResources(dgAddresses, "dgAddresses");
+            dgAddresses.AutoGenerateColumns = false;
+            dgAddresses.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgAddresses.Columns.AddRange(new DataGridViewColumn[] { descriptionDataGridViewTextBoxColumn, idDataGridViewTextBoxColumn });
+            dgAddresses.DataSource = bsAddresses;
+            dgAddresses.Name = "dgAddresses";
             // 
             // descriptionDataGridViewTextBoxColumn
             // 
-            this.descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
-            resources.ApplyResources(this.descriptionDataGridViewTextBoxColumn, "descriptionDataGridViewTextBoxColumn");
-            this.descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
+            descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
+            resources.ApplyResources(descriptionDataGridViewTextBoxColumn, "descriptionDataGridViewTextBoxColumn");
+            descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
             // 
             // idDataGridViewTextBoxColumn
             // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            resources.ApplyResources(this.idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.ReadOnly = true;
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            idDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // bsAddresses
             // 
-            this.bsAddresses.DataSource = typeof(EnergyUse.Models.Address);
-            this.bsAddresses.CurrentChanged += new System.EventHandler(this.bsAddresses_CurrentChanged);
+            bsAddresses.DataSource = typeof(EnergyUse.Models.Address);
+            bsAddresses.CurrentChanged += bsAddresses_CurrentChanged;
             // 
             // lblRate
             // 
-            resources.ApplyResources(this.lblRate, "lblRate");
-            this.lblRate.Name = "lblRate";
+            resources.ApplyResources(lblRate, "lblRate");
+            lblRate.Name = "lblRate";
             // 
             // txtDescription
             // 
-            this.txtDescription.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsAddresses, "Description", true));
-            resources.ApplyResources(this.txtDescription, "txtDescription");
-            this.txtDescription.Name = "txtDescription";
+            txtDescription.DataBindings.Add(new Binding("Text", bsAddresses, "Description", true));
+            resources.ApplyResources(txtDescription, "txtDescription");
+            txtDescription.Name = "txtDescription";
             // 
             // lblHasSolarpanels
             // 
-            resources.ApplyResources(this.lblHasSolarpanels, "lblHasSolarpanels");
-            this.lblHasSolarpanels.Name = "lblHasSolarpanels";
+            resources.ApplyResources(lblHasSolarpanels, "lblHasSolarpanels");
+            lblHasSolarpanels.Name = "lblHasSolarpanels";
             // 
             // gbSolar
             // 
-            resources.ApplyResources(this.gbSolar, "gbSolar");
-            this.gbSolar.Controls.Add(this.lblHasSolarpanels);
-            this.gbSolar.Controls.Add(this.lblSubsidy);
-            this.gbSolar.Controls.Add(this.txtSubsidyAmount);
-            this.gbSolar.Controls.Add(this.lblPurchaseAmount);
-            this.gbSolar.Controls.Add(this.txtPurchaseAmount);
-            this.gbSolar.Controls.Add(this.label6);
-            this.gbSolar.Controls.Add(this.label4);
-            this.gbSolar.Controls.Add(this.chkSolarPanelsAvailable);
-            this.gbSolar.Controls.Add(this.label2);
-            this.gbSolar.Controls.Add(this.txtTotalCapacitySolarPanels);
-            this.gbSolar.Controls.Add(this.txtQualityReductionSolarPanels);
-            this.gbSolar.Controls.Add(this.lblTotalCapacity);
-            this.gbSolar.Name = "gbSolar";
-            this.gbSolar.TabStop = false;
+            resources.ApplyResources(gbSolar, "gbSolar");
+            gbSolar.Controls.Add(lblHasSolarpanels);
+            gbSolar.Controls.Add(lblSubsidy);
+            gbSolar.Controls.Add(txtSubsidyAmount);
+            gbSolar.Controls.Add(lblPurchaseAmount);
+            gbSolar.Controls.Add(txtPurchaseAmount);
+            gbSolar.Controls.Add(label6);
+            gbSolar.Controls.Add(label4);
+            gbSolar.Controls.Add(chkSolarPanelsAvailable);
+            gbSolar.Controls.Add(label2);
+            gbSolar.Controls.Add(txtTotalCapacitySolarPanels);
+            gbSolar.Controls.Add(txtQualityReductionSolarPanels);
+            gbSolar.Controls.Add(lblTotalCapacity);
+            gbSolar.Name = "gbSolar";
+            gbSolar.TabStop = false;
             // 
             // lblSubsidy
             // 
-            resources.ApplyResources(this.lblSubsidy, "lblSubsidy");
-            this.lblSubsidy.Name = "lblSubsidy";
+            resources.ApplyResources(lblSubsidy, "lblSubsidy");
+            lblSubsidy.Name = "lblSubsidy";
             // 
             // txtSubsidyAmount
             // 
-            resources.ApplyResources(this.txtSubsidyAmount, "txtSubsidyAmount");
-            this.txtSubsidyAmount.Name = "txtSubsidyAmount";
+            resources.ApplyResources(txtSubsidyAmount, "txtSubsidyAmount");
+            txtSubsidyAmount.Name = "txtSubsidyAmount";
             // 
             // lblPurchaseAmount
             // 
-            resources.ApplyResources(this.lblPurchaseAmount, "lblPurchaseAmount");
-            this.lblPurchaseAmount.Name = "lblPurchaseAmount";
+            resources.ApplyResources(lblPurchaseAmount, "lblPurchaseAmount");
+            lblPurchaseAmount.Name = "lblPurchaseAmount";
             // 
             // txtPurchaseAmount
             // 
-            resources.ApplyResources(this.txtPurchaseAmount, "txtPurchaseAmount");
-            this.txtPurchaseAmount.Name = "txtPurchaseAmount";
+            resources.ApplyResources(txtPurchaseAmount, "txtPurchaseAmount");
+            txtPurchaseAmount.Name = "txtPurchaseAmount";
             // 
             // label6
             // 
-            resources.ApplyResources(this.label6, "label6");
-            this.label6.Name = "label6";
+            resources.ApplyResources(label6, "label6");
+            label6.Name = "label6";
             // 
             // label4
             // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.Name = "label4";
+            resources.ApplyResources(label4, "label4");
+            label4.Name = "label4";
             // 
             // chkSolarPanelsAvailable
             // 
-            resources.ApplyResources(this.chkSolarPanelsAvailable, "chkSolarPanelsAvailable");
-            this.chkSolarPanelsAvailable.Name = "chkSolarPanelsAvailable";
-            this.chkSolarPanelsAvailable.Tag = "";
-            this.chkSolarPanelsAvailable.UseVisualStyleBackColor = true;
+            resources.ApplyResources(chkSolarPanelsAvailable, "chkSolarPanelsAvailable");
+            chkSolarPanelsAvailable.Name = "chkSolarPanelsAvailable";
+            chkSolarPanelsAvailable.Tag = "";
+            chkSolarPanelsAvailable.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
+            resources.ApplyResources(label2, "label2");
+            label2.Name = "label2";
             // 
             // txtTotalCapacitySolarPanels
             // 
-            this.txtTotalCapacitySolarPanels.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsAddresses, "TotalCapacity", true));
-            resources.ApplyResources(this.txtTotalCapacitySolarPanels, "txtTotalCapacitySolarPanels");
-            this.txtTotalCapacitySolarPanels.Name = "txtTotalCapacitySolarPanels";
-            this.txtTotalCapacitySolarPanels.Tag = "";
+            txtTotalCapacitySolarPanels.DataBindings.Add(new Binding("Text", bsAddresses, "TotalCapacity", true));
+            resources.ApplyResources(txtTotalCapacitySolarPanels, "txtTotalCapacitySolarPanels");
+            txtTotalCapacitySolarPanels.Name = "txtTotalCapacitySolarPanels";
+            txtTotalCapacitySolarPanels.Tag = "";
             // 
             // txtQualityReductionSolarPanels
             // 
-            resources.ApplyResources(this.txtQualityReductionSolarPanels, "txtQualityReductionSolarPanels");
-            this.txtQualityReductionSolarPanels.Name = "txtQualityReductionSolarPanels";
-            this.txtQualityReductionSolarPanels.Tag = "QualityReductionSolarPanels";
+            resources.ApplyResources(txtQualityReductionSolarPanels, "txtQualityReductionSolarPanels");
+            txtQualityReductionSolarPanels.Name = "txtQualityReductionSolarPanels";
+            txtQualityReductionSolarPanels.Tag = "QualityReductionSolarPanels";
             // 
             // lblTotalCapacity
             // 
-            resources.ApplyResources(this.lblTotalCapacity, "lblTotalCapacity");
-            this.lblTotalCapacity.Name = "lblTotalCapacity";
+            resources.ApplyResources(lblTotalCapacity, "lblTotalCapacity");
+            lblTotalCapacity.Name = "lblTotalCapacity";
             // 
             // txtStreet
             // 
-            this.txtStreet.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsAddresses, "Street", true));
-            resources.ApplyResources(this.txtStreet, "txtStreet");
-            this.txtStreet.Name = "txtStreet";
+            txtStreet.DataBindings.Add(new Binding("Text", bsAddresses, "Street", true));
+            resources.ApplyResources(txtStreet, "txtStreet");
+            txtStreet.Name = "txtStreet";
             // 
             // lblCity
             // 
-            resources.ApplyResources(this.lblCity, "lblCity");
-            this.lblCity.Name = "lblCity";
+            resources.ApplyResources(lblCity, "lblCity");
+            lblCity.Name = "lblCity";
             // 
             // lblStreet
             // 
-            resources.ApplyResources(this.lblStreet, "lblStreet");
-            this.lblStreet.Name = "lblStreet";
+            resources.ApplyResources(lblStreet, "lblStreet");
+            lblStreet.Name = "lblStreet";
             // 
             // chkDefaultAddress
             // 
-            resources.ApplyResources(this.chkDefaultAddress, "chkDefaultAddress");
-            this.chkDefaultAddress.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsAddresses, "DefaultAddress", true));
-            this.chkDefaultAddress.Name = "chkDefaultAddress";
-            this.chkDefaultAddress.UseVisualStyleBackColor = true;
+            resources.ApplyResources(chkDefaultAddress, "chkDefaultAddress");
+            chkDefaultAddress.DataBindings.Add(new Binding("Checked", bsAddresses, "DefaultAddress", true));
+            chkDefaultAddress.Name = "chkDefaultAddress";
+            chkDefaultAddress.UseVisualStyleBackColor = true;
             // 
             // gbAddress
             // 
-            resources.ApplyResources(this.gbAddress, "gbAddress");
-            this.gbAddress.Controls.Add(this.txtPostcalCode);
-            this.gbAddress.Controls.Add(this.lblPostcalCode);
-            this.gbAddress.Controls.Add(this.label1);
-            this.gbAddress.Controls.Add(this.txtCity);
-            this.gbAddress.Controls.Add(this.txtHouseNo);
-            this.gbAddress.Controls.Add(this.txtStreet);
-            this.gbAddress.Controls.Add(this.lblCity);
-            this.gbAddress.Controls.Add(this.lblStreet);
-            this.gbAddress.Name = "gbAddress";
-            this.gbAddress.TabStop = false;
+            resources.ApplyResources(gbAddress, "gbAddress");
+            gbAddress.Controls.Add(txtPostcalCode);
+            gbAddress.Controls.Add(lblPostcalCode);
+            gbAddress.Controls.Add(label1);
+            gbAddress.Controls.Add(txtCity);
+            gbAddress.Controls.Add(txtHouseNo);
+            gbAddress.Controls.Add(txtStreet);
+            gbAddress.Controls.Add(lblCity);
+            gbAddress.Controls.Add(lblStreet);
+            gbAddress.Name = "gbAddress";
+            gbAddress.TabStop = false;
             // 
             // txtPostcalCode
             // 
-            this.txtPostcalCode.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsAddresses, "PostalCode", true));
-            resources.ApplyResources(this.txtPostcalCode, "txtPostcalCode");
-            this.txtPostcalCode.Name = "txtPostcalCode";
+            txtPostcalCode.DataBindings.Add(new Binding("Text", bsAddresses, "PostalCode", true));
+            resources.ApplyResources(txtPostcalCode, "txtPostcalCode");
+            txtPostcalCode.Name = "txtPostcalCode";
             // 
             // lblPostcalCode
             // 
-            resources.ApplyResources(this.lblPostcalCode, "lblPostcalCode");
-            this.lblPostcalCode.Name = "lblPostcalCode";
+            resources.ApplyResources(lblPostcalCode, "lblPostcalCode");
+            lblPostcalCode.Name = "lblPostcalCode";
             // 
             // label1
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
+            resources.ApplyResources(label1, "label1");
+            label1.Name = "label1";
             // 
             // txtCity
             // 
-            this.txtCity.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsAddresses, "City", true));
-            resources.ApplyResources(this.txtCity, "txtCity");
-            this.txtCity.Name = "txtCity";
+            txtCity.DataBindings.Add(new Binding("Text", bsAddresses, "City", true));
+            resources.ApplyResources(txtCity, "txtCity");
+            txtCity.Name = "txtCity";
             // 
             // txtHouseNo
             // 
-            this.txtHouseNo.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsAddresses, "HouseNumber", true));
-            resources.ApplyResources(this.txtHouseNo, "txtHouseNo");
-            this.txtHouseNo.Name = "txtHouseNo";
+            txtHouseNo.DataBindings.Add(new Binding("Text", bsAddresses, "HouseNumber", true));
+            resources.ApplyResources(txtHouseNo, "txtHouseNo");
+            txtHouseNo.Name = "txtHouseNo";
             // 
             // frmAddresses
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.gbSolar);
-            this.Controls.Add(this.lblRate);
-            this.Controls.Add(this.gbAddress);
-            this.Controls.Add(this.txtDescription);
-            this.Controls.Add(this.dgAddresses);
-            this.Controls.Add(this.chkDefaultAddress);
-            this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.statusStrip1);
-            this.Name = "frmAddresses";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAddresses_FormClosing);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgAddresses)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsAddresses)).EndInit();
-            this.gbSolar.ResumeLayout(false);
-            this.gbSolar.PerformLayout();
-            this.gbAddress.ResumeLayout(false);
-            this.gbAddress.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(gbSolar);
+            Controls.Add(lblRate);
+            Controls.Add(gbAddress);
+            Controls.Add(txtDescription);
+            Controls.Add(dgAddresses);
+            Controls.Add(chkDefaultAddress);
+            Controls.Add(toolStrip1);
+            Controls.Add(statusStrip1);
+            Name = "frmAddresses";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            FormClosing += frmAddresses_FormClosing;
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgAddresses).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsAddresses).EndInit();
+            gbSolar.ResumeLayout(false);
+            gbSolar.PerformLayout();
+            gbAddress.ResumeLayout(false);
+            gbAddress.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

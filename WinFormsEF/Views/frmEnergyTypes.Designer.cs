@@ -28,346 +28,433 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEnergyTypes));
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsbAdd = new System.Windows.Forms.ToolStripButton();
-            this.tsbSave = new System.Windows.Forms.ToolStripButton();
-            this.tbsCancel = new System.Windows.Forms.ToolStripButton();
-            this.tsbDelete = new System.Windows.Forms.ToolStripButton();
-            this.tsbRefresh = new System.Windows.Forms.ToolStripButton();
-            this.tsbClose = new System.Windows.Forms.ToolStripButton();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.dgEnergyTypes = new System.Windows.Forms.DataGridView();
-            this.EnergyTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UnitName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bsEnergyTypes = new System.Windows.Forms.BindingSource(this.components);
-            this.gbEnergyType = new System.Windows.Forms.GroupBox();
-            this.lblUnit = new System.Windows.Forms.Label();
-            this.cboUnit = new System.Windows.Forms.ComboBox();
-            this.bsUnits = new System.Windows.Forms.BindingSource(this.components);
-            this.chkHasEnergyReturn = new System.Windows.Forms.CheckBox();
-            this.chkHasNormalAndLow = new System.Windows.Forms.CheckBox();
-            this.chkDefaultType = new System.Windows.Forms.CheckBox();
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.lblName = new System.Windows.Forms.Label();
-            this.gbColors = new System.Windows.Forms.GroupBox();
-            this.txtColor = new System.Windows.Forms.TextBox();
-            this.lblColor = new System.Windows.Forms.Label();
-            this.txtReturnDeliveryHigh = new System.Windows.Forms.TextBox();
-            this.txtReturnDeliveryLow = new System.Windows.Forms.TextBox();
-            this.txtColorHigh = new System.Windows.Forms.TextBox();
-            this.txtColorLow = new System.Windows.Forms.TextBox();
-            this.lblReturnDeliveryHigh = new System.Windows.Forms.Label();
-            this.lblReturnDeliveryLow = new System.Windows.Forms.Label();
-            this.lblColorHigh = new System.Windows.Forms.Label();
-            this.lblColorLow = new System.Windows.Forms.Label();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgEnergyTypes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsEnergyTypes)).BeginInit();
-            this.gbEnergyType.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsUnits)).BeginInit();
-            this.gbColors.SuspendLayout();
-            this.SuspendLayout();
+            statusStrip1 = new StatusStrip();
+            toolStrip1 = new ToolStrip();
+            tsbAdd = new ToolStripButton();
+            tsbSave = new ToolStripButton();
+            tbsCancel = new ToolStripButton();
+            tsbDelete = new ToolStripButton();
+            tsbRefresh = new ToolStripButton();
+            tsbClose = new ToolStripButton();
+            toolTip1 = new ToolTip(components);
+            dgEnergyTypes = new DataGridView();
+            EnergyTypeName = new DataGridViewTextBoxColumn();
+            UnitName = new DataGridViewTextBoxColumn();
+            bsEnergyTypes = new BindingSource(components);
+            gbEnergyType = new GroupBox();
+            lblUnit = new Label();
+            cboUnit = new ComboBox();
+            bsUnits = new BindingSource(components);
+            chkHasEnergyReturn = new CheckBox();
+            chkHasNormalAndLow = new CheckBox();
+            chkDefaultType = new CheckBox();
+            txtName = new TextBox();
+            lblName = new Label();
+            gbColors = new GroupBox();
+            txtColor = new TextBox();
+            lblColor = new Label();
+            txtReturnDeliveryHigh = new TextBox();
+            txtReturnDeliveryLow = new TextBox();
+            txtColorHigh = new TextBox();
+            txtColorLow = new TextBox();
+            lblReturnDeliveryHigh = new Label();
+            lblReturnDeliveryLow = new Label();
+            lblColorHigh = new Label();
+            lblColorLow = new Label();
+            nameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            colorDialog1 = new ColorDialog();
+            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            nameDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            hasNormalAndLowDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
+            hasEnergyReturnDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
+            defaultTypeDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
+            unitIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            unitDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            unitNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            additionalCategoryAndGroupInfosDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            correctionFactorsDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            costCategoriesDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            meterReadingsDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            metersDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            nettingsDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            preDefinedPeriodDatesDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            ratesDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            calculatedUnitPricesDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgEnergyTypes).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).BeginInit();
+            gbEnergyType.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)bsUnits).BeginInit();
+            gbColors.SuspendLayout();
+            SuspendLayout();
             // 
             // statusStrip1
             // 
-            resources.ApplyResources(this.statusStrip1, "statusStrip1");
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Name = "statusStrip1";
-            this.toolTip1.SetToolTip(this.statusStrip1, resources.GetString("statusStrip1.ToolTip"));
+            statusStrip1.ImageScalingSize = new Size(20, 20);
+            resources.ApplyResources(statusStrip1, "statusStrip1");
+            statusStrip1.Name = "statusStrip1";
             // 
             // toolStrip1
             // 
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbAdd,
-            this.tsbSave,
-            this.tbsCancel,
-            this.tsbDelete,
-            this.tsbRefresh,
-            this.tsbClose});
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolTip1.SetToolTip(this.toolStrip1, resources.GetString("toolStrip1.ToolTip"));
+            toolStrip1.ImageScalingSize = new Size(20, 20);
+            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbAdd, tsbSave, tbsCancel, tsbDelete, tsbRefresh, tsbClose });
+            resources.ApplyResources(toolStrip1, "toolStrip1");
+            toolStrip1.Name = "toolStrip1";
             // 
             // tsbAdd
             // 
-            resources.ApplyResources(this.tsbAdd, "tsbAdd");
-            this.tsbAdd.Image = global::WinFormsUI.Properties.Resources.add_24x24;
-            this.tsbAdd.Name = "tsbAdd";
-            this.tsbAdd.Click += new System.EventHandler(this.tsbAdd_Click);
+            tsbAdd.Image = WinFormsUI.Properties.Resources.add_24x24;
+            resources.ApplyResources(tsbAdd, "tsbAdd");
+            tsbAdd.Name = "tsbAdd";
+            tsbAdd.Click += tsbAdd_Click;
             // 
             // tsbSave
             // 
-            resources.ApplyResources(this.tsbSave, "tsbSave");
-            this.tsbSave.Image = global::WinFormsUI.Properties.Resources.tick_mark_24x24;
-            this.tsbSave.Name = "tsbSave";
-            this.tsbSave.Click += new System.EventHandler(this.tsbSave_Click);
+            tsbSave.Image = WinFormsUI.Properties.Resources.tick_mark_24x24;
+            resources.ApplyResources(tsbSave, "tsbSave");
+            tsbSave.Name = "tsbSave";
+            tsbSave.Click += tsbSave_Click;
             // 
             // tbsCancel
             // 
-            resources.ApplyResources(this.tbsCancel, "tbsCancel");
-            this.tbsCancel.Image = global::WinFormsUI.Properties.Resources.clear_24x24;
-            this.tbsCancel.Name = "tbsCancel";
-            this.tbsCancel.Click += new System.EventHandler(this.tbsCancel_Click);
+            tbsCancel.Image = WinFormsUI.Properties.Resources.clear_24x24;
+            resources.ApplyResources(tbsCancel, "tbsCancel");
+            tbsCancel.Name = "tbsCancel";
+            tbsCancel.Click += tbsCancel_Click;
             // 
             // tsbDelete
             // 
-            resources.ApplyResources(this.tsbDelete, "tsbDelete");
-            this.tsbDelete.Image = global::WinFormsUI.Properties.Resources.delete_24x24;
-            this.tsbDelete.Name = "tsbDelete";
-            this.tsbDelete.Click += new System.EventHandler(this.tsbDelete_Click);
+            tsbDelete.Image = WinFormsUI.Properties.Resources.delete_24x24;
+            resources.ApplyResources(tsbDelete, "tsbDelete");
+            tsbDelete.Name = "tsbDelete";
+            tsbDelete.Click += tsbDelete_Click;
             // 
             // tsbRefresh
             // 
-            resources.ApplyResources(this.tsbRefresh, "tsbRefresh");
-            this.tsbRefresh.Image = global::WinFormsUI.Properties.Resources.clock_24x24;
-            this.tsbRefresh.Name = "tsbRefresh";
-            this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
+            tsbRefresh.Image = WinFormsUI.Properties.Resources.clock_24x24;
+            resources.ApplyResources(tsbRefresh, "tsbRefresh");
+            tsbRefresh.Name = "tsbRefresh";
+            tsbRefresh.Click += tsbRefresh_Click;
             // 
             // tsbClose
             // 
-            resources.ApplyResources(this.tsbClose, "tsbClose");
-            this.tsbClose.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsbClose.Image = global::WinFormsUI.Properties.Resources.crossed_24x24;
-            this.tsbClose.Name = "tsbClose";
-            this.tsbClose.Click += new System.EventHandler(this.TsbClose_Click);
+            tsbClose.Alignment = ToolStripItemAlignment.Right;
+            tsbClose.Image = WinFormsUI.Properties.Resources.crossed_24x24;
+            resources.ApplyResources(tsbClose, "tsbClose");
+            tsbClose.Name = "tsbClose";
+            tsbClose.Click += TsbClose_Click;
             // 
             // dgEnergyTypes
             // 
-            resources.ApplyResources(this.dgEnergyTypes, "dgEnergyTypes");
-            this.dgEnergyTypes.AllowUserToAddRows = false;
-            this.dgEnergyTypes.AllowUserToDeleteRows = false;
-            this.dgEnergyTypes.AutoGenerateColumns = false;
-            this.dgEnergyTypes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgEnergyTypes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.EnergyTypeName,
-            this.UnitName});
-            this.dgEnergyTypes.DataSource = this.bsEnergyTypes;
-            this.dgEnergyTypes.Name = "dgEnergyTypes";
-            this.dgEnergyTypes.RowTemplate.Height = 29;
-            this.toolTip1.SetToolTip(this.dgEnergyTypes, resources.GetString("dgEnergyTypes.ToolTip"));
+            dgEnergyTypes.AllowUserToAddRows = false;
+            dgEnergyTypes.AllowUserToDeleteRows = false;
+            dgEnergyTypes.AutoGenerateColumns = false;
+            dgEnergyTypes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgEnergyTypes.Columns.AddRange(new DataGridViewColumn[] { EnergyTypeName, UnitName, idDataGridViewTextBoxColumn, nameDataGridViewTextBoxColumn1, hasNormalAndLowDataGridViewCheckBoxColumn, hasEnergyReturnDataGridViewCheckBoxColumn, defaultTypeDataGridViewCheckBoxColumn, unitIdDataGridViewTextBoxColumn, unitDataGridViewTextBoxColumn, unitNameDataGridViewTextBoxColumn, additionalCategoryAndGroupInfosDataGridViewTextBoxColumn, correctionFactorsDataGridViewTextBoxColumn, costCategoriesDataGridViewTextBoxColumn, meterReadingsDataGridViewTextBoxColumn, metersDataGridViewTextBoxColumn, nettingsDataGridViewTextBoxColumn, preDefinedPeriodDatesDataGridViewTextBoxColumn, ratesDataGridViewTextBoxColumn, calculatedUnitPricesDataGridViewTextBoxColumn });
+            dgEnergyTypes.DataSource = bsEnergyTypes;
+            resources.ApplyResources(dgEnergyTypes, "dgEnergyTypes");
+            dgEnergyTypes.Name = "dgEnergyTypes";
             // 
             // EnergyTypeName
             // 
-            this.EnergyTypeName.DataPropertyName = "Name";
-            resources.ApplyResources(this.EnergyTypeName, "EnergyTypeName");
-            this.EnergyTypeName.Name = "EnergyTypeName";
+            EnergyTypeName.DataPropertyName = "Name";
+            resources.ApplyResources(EnergyTypeName, "EnergyTypeName");
+            EnergyTypeName.Name = "EnergyTypeName";
             // 
             // UnitName
             // 
-            this.UnitName.DataPropertyName = "UnitName";
-            resources.ApplyResources(this.UnitName, "UnitName");
-            this.UnitName.Name = "UnitName";
-            this.UnitName.ReadOnly = true;
+            UnitName.DataPropertyName = "UnitName";
+            resources.ApplyResources(UnitName, "UnitName");
+            UnitName.Name = "UnitName";
+            UnitName.ReadOnly = true;
             // 
             // bsEnergyTypes
             // 
-            this.bsEnergyTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
-            this.bsEnergyTypes.CurrentChanged += new System.EventHandler(this.bsEnergyTypes_CurrentChanged);
+            bsEnergyTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
+            bsEnergyTypes.CurrentChanged += bsEnergyTypes_CurrentChanged;
             // 
             // gbEnergyType
             // 
-            resources.ApplyResources(this.gbEnergyType, "gbEnergyType");
-            this.gbEnergyType.Controls.Add(this.lblUnit);
-            this.gbEnergyType.Controls.Add(this.cboUnit);
-            this.gbEnergyType.Controls.Add(this.chkHasEnergyReturn);
-            this.gbEnergyType.Controls.Add(this.chkHasNormalAndLow);
-            this.gbEnergyType.Controls.Add(this.chkDefaultType);
-            this.gbEnergyType.Controls.Add(this.txtName);
-            this.gbEnergyType.Controls.Add(this.lblName);
-            this.gbEnergyType.Name = "gbEnergyType";
-            this.gbEnergyType.TabStop = false;
-            this.toolTip1.SetToolTip(this.gbEnergyType, resources.GetString("gbEnergyType.ToolTip"));
+            resources.ApplyResources(gbEnergyType, "gbEnergyType");
+            gbEnergyType.Controls.Add(lblUnit);
+            gbEnergyType.Controls.Add(cboUnit);
+            gbEnergyType.Controls.Add(chkHasEnergyReturn);
+            gbEnergyType.Controls.Add(chkHasNormalAndLow);
+            gbEnergyType.Controls.Add(chkDefaultType);
+            gbEnergyType.Controls.Add(txtName);
+            gbEnergyType.Controls.Add(lblName);
+            gbEnergyType.Name = "gbEnergyType";
+            gbEnergyType.TabStop = false;
             // 
             // lblUnit
             // 
-            resources.ApplyResources(this.lblUnit, "lblUnit");
-            this.lblUnit.Name = "lblUnit";
-            this.toolTip1.SetToolTip(this.lblUnit, resources.GetString("lblUnit.ToolTip"));
+            resources.ApplyResources(lblUnit, "lblUnit");
+            lblUnit.Name = "lblUnit";
             // 
             // cboUnit
             // 
-            resources.ApplyResources(this.cboUnit, "cboUnit");
-            this.cboUnit.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.bsEnergyTypes, "UnitId", true));
-            this.cboUnit.DataSource = this.bsUnits;
-            this.cboUnit.DisplayMember = "Description";
-            this.cboUnit.FormattingEnabled = true;
-            this.cboUnit.Name = "cboUnit";
-            this.toolTip1.SetToolTip(this.cboUnit, resources.GetString("cboUnit.ToolTip"));
-            this.cboUnit.ValueMember = "Id";
+            cboUnit.DataBindings.Add(new Binding("SelectedValue", bsEnergyTypes, "UnitId", true));
+            cboUnit.DataSource = bsUnits;
+            cboUnit.DisplayMember = "Description";
+            cboUnit.FormattingEnabled = true;
+            resources.ApplyResources(cboUnit, "cboUnit");
+            cboUnit.Name = "cboUnit";
+            cboUnit.ValueMember = "Id";
             // 
             // bsUnits
             // 
-            this.bsUnits.DataSource = typeof(EnergyUse.Models.Unit);
+            bsUnits.DataSource = typeof(EnergyUse.Models.Unit);
             // 
             // chkHasEnergyReturn
             // 
-            resources.ApplyResources(this.chkHasEnergyReturn, "chkHasEnergyReturn");
-            this.chkHasEnergyReturn.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsEnergyTypes, "HasEnergyReturn", true));
-            this.chkHasEnergyReturn.Name = "chkHasEnergyReturn";
-            this.toolTip1.SetToolTip(this.chkHasEnergyReturn, resources.GetString("chkHasEnergyReturn.ToolTip"));
-            this.chkHasEnergyReturn.UseVisualStyleBackColor = true;
-            this.chkHasEnergyReturn.CheckedChanged += new System.EventHandler(this.chkHasEnergyReturn_CheckedChanged);
+            resources.ApplyResources(chkHasEnergyReturn, "chkHasEnergyReturn");
+            chkHasEnergyReturn.DataBindings.Add(new Binding("Checked", bsEnergyTypes, "HasEnergyReturn", true));
+            chkHasEnergyReturn.Name = "chkHasEnergyReturn";
+            chkHasEnergyReturn.UseVisualStyleBackColor = true;
+            chkHasEnergyReturn.CheckedChanged += chkHasEnergyReturn_CheckedChanged;
             // 
             // chkHasNormalAndLow
             // 
-            resources.ApplyResources(this.chkHasNormalAndLow, "chkHasNormalAndLow");
-            this.chkHasNormalAndLow.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsEnergyTypes, "HasNormalAndLow", true));
-            this.chkHasNormalAndLow.Name = "chkHasNormalAndLow";
-            this.toolTip1.SetToolTip(this.chkHasNormalAndLow, resources.GetString("chkHasNormalAndLow.ToolTip"));
-            this.chkHasNormalAndLow.UseVisualStyleBackColor = true;
-            this.chkHasNormalAndLow.CheckedChanged += new System.EventHandler(this.chkHasNormalAndLow_CheckedChanged);
+            resources.ApplyResources(chkHasNormalAndLow, "chkHasNormalAndLow");
+            chkHasNormalAndLow.DataBindings.Add(new Binding("Checked", bsEnergyTypes, "HasNormalAndLow", true));
+            chkHasNormalAndLow.Name = "chkHasNormalAndLow";
+            chkHasNormalAndLow.UseVisualStyleBackColor = true;
+            chkHasNormalAndLow.CheckedChanged += chkHasNormalAndLow_CheckedChanged;
             // 
             // chkDefaultType
             // 
-            resources.ApplyResources(this.chkDefaultType, "chkDefaultType");
-            this.chkDefaultType.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsEnergyTypes, "DefaultType", true));
-            this.chkDefaultType.Name = "chkDefaultType";
-            this.toolTip1.SetToolTip(this.chkDefaultType, resources.GetString("chkDefaultType.ToolTip"));
-            this.chkDefaultType.UseVisualStyleBackColor = true;
+            resources.ApplyResources(chkDefaultType, "chkDefaultType");
+            chkDefaultType.DataBindings.Add(new Binding("Checked", bsEnergyTypes, "DefaultType", true));
+            chkDefaultType.Name = "chkDefaultType";
+            chkDefaultType.UseVisualStyleBackColor = true;
             // 
             // txtName
             // 
-            resources.ApplyResources(this.txtName, "txtName");
-            this.txtName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsEnergyTypes, "Name", true));
-            this.txtName.Name = "txtName";
-            this.toolTip1.SetToolTip(this.txtName, resources.GetString("txtName.ToolTip"));
+            txtName.DataBindings.Add(new Binding("Text", bsEnergyTypes, "Name", true));
+            resources.ApplyResources(txtName, "txtName");
+            txtName.Name = "txtName";
             // 
             // lblName
             // 
-            resources.ApplyResources(this.lblName, "lblName");
-            this.lblName.Name = "lblName";
-            this.toolTip1.SetToolTip(this.lblName, resources.GetString("lblName.ToolTip"));
+            resources.ApplyResources(lblName, "lblName");
+            lblName.Name = "lblName";
             // 
             // gbColors
             // 
-            resources.ApplyResources(this.gbColors, "gbColors");
-            this.gbColors.Controls.Add(this.txtColor);
-            this.gbColors.Controls.Add(this.lblColor);
-            this.gbColors.Controls.Add(this.txtReturnDeliveryHigh);
-            this.gbColors.Controls.Add(this.txtReturnDeliveryLow);
-            this.gbColors.Controls.Add(this.txtColorHigh);
-            this.gbColors.Controls.Add(this.txtColorLow);
-            this.gbColors.Controls.Add(this.lblReturnDeliveryHigh);
-            this.gbColors.Controls.Add(this.lblReturnDeliveryLow);
-            this.gbColors.Controls.Add(this.lblColorHigh);
-            this.gbColors.Controls.Add(this.lblColorLow);
-            this.gbColors.Name = "gbColors";
-            this.gbColors.TabStop = false;
-            this.toolTip1.SetToolTip(this.gbColors, resources.GetString("gbColors.ToolTip"));
+            resources.ApplyResources(gbColors, "gbColors");
+            gbColors.Controls.Add(txtColor);
+            gbColors.Controls.Add(lblColor);
+            gbColors.Controls.Add(txtReturnDeliveryHigh);
+            gbColors.Controls.Add(txtReturnDeliveryLow);
+            gbColors.Controls.Add(txtColorHigh);
+            gbColors.Controls.Add(txtColorLow);
+            gbColors.Controls.Add(lblReturnDeliveryHigh);
+            gbColors.Controls.Add(lblReturnDeliveryLow);
+            gbColors.Controls.Add(lblColorHigh);
+            gbColors.Controls.Add(lblColorLow);
+            gbColors.Name = "gbColors";
+            gbColors.TabStop = false;
             // 
             // txtColor
             // 
-            resources.ApplyResources(this.txtColor, "txtColor");
-            this.txtColor.Name = "txtColor";
-            this.txtColor.ReadOnly = true;
-            this.txtColor.Tag = "Color";
-            this.toolTip1.SetToolTip(this.txtColor, resources.GetString("txtColor.ToolTip"));
-            this.txtColor.Click += new System.EventHandler(this.txtColor_Click);
+            resources.ApplyResources(txtColor, "txtColor");
+            txtColor.Name = "txtColor";
+            txtColor.ReadOnly = true;
+            txtColor.Tag = "Color";
+            txtColor.Click += txtColor_Click;
             // 
             // lblColor
             // 
-            resources.ApplyResources(this.lblColor, "lblColor");
-            this.lblColor.Name = "lblColor";
-            this.toolTip1.SetToolTip(this.lblColor, resources.GetString("lblColor.ToolTip"));
+            resources.ApplyResources(lblColor, "lblColor");
+            lblColor.Name = "lblColor";
             // 
             // txtReturnDeliveryHigh
             // 
-            resources.ApplyResources(this.txtReturnDeliveryHigh, "txtReturnDeliveryHigh");
-            this.txtReturnDeliveryHigh.Name = "txtReturnDeliveryHigh";
-            this.txtReturnDeliveryHigh.ReadOnly = true;
-            this.txtReturnDeliveryHigh.Tag = "ReturnNormal";
-            this.toolTip1.SetToolTip(this.txtReturnDeliveryHigh, resources.GetString("txtReturnDeliveryHigh.ToolTip"));
-            this.txtReturnDeliveryHigh.Click += new System.EventHandler(this.txtReturnDeliveryHigh_Click);
+            resources.ApplyResources(txtReturnDeliveryHigh, "txtReturnDeliveryHigh");
+            txtReturnDeliveryHigh.Name = "txtReturnDeliveryHigh";
+            txtReturnDeliveryHigh.ReadOnly = true;
+            txtReturnDeliveryHigh.Tag = "ReturnNormal";
+            txtReturnDeliveryHigh.Click += txtReturnDeliveryHigh_Click;
             // 
             // txtReturnDeliveryLow
             // 
-            resources.ApplyResources(this.txtReturnDeliveryLow, "txtReturnDeliveryLow");
-            this.txtReturnDeliveryLow.Name = "txtReturnDeliveryLow";
-            this.txtReturnDeliveryLow.ReadOnly = true;
-            this.txtReturnDeliveryLow.Tag = "ReturnLow";
-            this.toolTip1.SetToolTip(this.txtReturnDeliveryLow, resources.GetString("txtReturnDeliveryLow.ToolTip"));
-            this.txtReturnDeliveryLow.Click += new System.EventHandler(this.txtReturnDeliveryLow_Click);
+            resources.ApplyResources(txtReturnDeliveryLow, "txtReturnDeliveryLow");
+            txtReturnDeliveryLow.Name = "txtReturnDeliveryLow";
+            txtReturnDeliveryLow.ReadOnly = true;
+            txtReturnDeliveryLow.Tag = "ReturnLow";
+            txtReturnDeliveryLow.Click += txtReturnDeliveryLow_Click;
             // 
             // txtColorHigh
             // 
-            resources.ApplyResources(this.txtColorHigh, "txtColorHigh");
-            this.txtColorHigh.Name = "txtColorHigh";
-            this.txtColorHigh.ReadOnly = true;
-            this.txtColorHigh.Tag = "ColorNormal";
-            this.toolTip1.SetToolTip(this.txtColorHigh, resources.GetString("txtColorHigh.ToolTip"));
-            this.txtColorHigh.Click += new System.EventHandler(this.txtColorHigh_Click);
+            resources.ApplyResources(txtColorHigh, "txtColorHigh");
+            txtColorHigh.Name = "txtColorHigh";
+            txtColorHigh.ReadOnly = true;
+            txtColorHigh.Tag = "ColorNormal";
+            txtColorHigh.Click += txtColorHigh_Click;
             // 
             // txtColorLow
             // 
-            resources.ApplyResources(this.txtColorLow, "txtColorLow");
-            this.txtColorLow.Name = "txtColorLow";
-            this.txtColorLow.ReadOnly = true;
-            this.txtColorLow.Tag = "ColorLow";
-            this.toolTip1.SetToolTip(this.txtColorLow, resources.GetString("txtColorLow.ToolTip"));
-            this.txtColorLow.Click += new System.EventHandler(this.txtColorLow_Click);
+            resources.ApplyResources(txtColorLow, "txtColorLow");
+            txtColorLow.Name = "txtColorLow";
+            txtColorLow.ReadOnly = true;
+            txtColorLow.Tag = "ColorLow";
+            txtColorLow.Click += txtColorLow_Click;
             // 
             // lblReturnDeliveryHigh
             // 
-            resources.ApplyResources(this.lblReturnDeliveryHigh, "lblReturnDeliveryHigh");
-            this.lblReturnDeliveryHigh.Name = "lblReturnDeliveryHigh";
-            this.toolTip1.SetToolTip(this.lblReturnDeliveryHigh, resources.GetString("lblReturnDeliveryHigh.ToolTip"));
+            resources.ApplyResources(lblReturnDeliveryHigh, "lblReturnDeliveryHigh");
+            lblReturnDeliveryHigh.Name = "lblReturnDeliveryHigh";
             // 
             // lblReturnDeliveryLow
             // 
-            resources.ApplyResources(this.lblReturnDeliveryLow, "lblReturnDeliveryLow");
-            this.lblReturnDeliveryLow.Name = "lblReturnDeliveryLow";
-            this.toolTip1.SetToolTip(this.lblReturnDeliveryLow, resources.GetString("lblReturnDeliveryLow.ToolTip"));
+            resources.ApplyResources(lblReturnDeliveryLow, "lblReturnDeliveryLow");
+            lblReturnDeliveryLow.Name = "lblReturnDeliveryLow";
             // 
             // lblColorHigh
             // 
-            resources.ApplyResources(this.lblColorHigh, "lblColorHigh");
-            this.lblColorHigh.Name = "lblColorHigh";
-            this.toolTip1.SetToolTip(this.lblColorHigh, resources.GetString("lblColorHigh.ToolTip"));
+            resources.ApplyResources(lblColorHigh, "lblColorHigh");
+            lblColorHigh.Name = "lblColorHigh";
             // 
             // lblColorLow
             // 
-            resources.ApplyResources(this.lblColorLow, "lblColorLow");
-            this.lblColorLow.Name = "lblColorLow";
-            this.toolTip1.SetToolTip(this.lblColorLow, resources.GetString("lblColorLow.ToolTip"));
+            resources.ApplyResources(lblColorLow, "lblColorLow");
+            lblColorLow.Name = "lblColorLow";
             // 
             // nameDataGridViewTextBoxColumn
             // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            resources.ApplyResources(this.nameDataGridViewTextBoxColumn, "nameDataGridViewTextBoxColumn");
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            resources.ApplyResources(nameDataGridViewTextBoxColumn, "nameDataGridViewTextBoxColumn");
+            nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            // 
+            // nameDataGridViewTextBoxColumn1
+            // 
+            nameDataGridViewTextBoxColumn1.DataPropertyName = "Name";
+            resources.ApplyResources(nameDataGridViewTextBoxColumn1, "nameDataGridViewTextBoxColumn1");
+            nameDataGridViewTextBoxColumn1.Name = "nameDataGridViewTextBoxColumn1";
+            // 
+            // hasNormalAndLowDataGridViewCheckBoxColumn
+            // 
+            hasNormalAndLowDataGridViewCheckBoxColumn.DataPropertyName = "HasNormalAndLow";
+            resources.ApplyResources(hasNormalAndLowDataGridViewCheckBoxColumn, "hasNormalAndLowDataGridViewCheckBoxColumn");
+            hasNormalAndLowDataGridViewCheckBoxColumn.Name = "hasNormalAndLowDataGridViewCheckBoxColumn";
+            // 
+            // hasEnergyReturnDataGridViewCheckBoxColumn
+            // 
+            hasEnergyReturnDataGridViewCheckBoxColumn.DataPropertyName = "HasEnergyReturn";
+            resources.ApplyResources(hasEnergyReturnDataGridViewCheckBoxColumn, "hasEnergyReturnDataGridViewCheckBoxColumn");
+            hasEnergyReturnDataGridViewCheckBoxColumn.Name = "hasEnergyReturnDataGridViewCheckBoxColumn";
+            // 
+            // defaultTypeDataGridViewCheckBoxColumn
+            // 
+            defaultTypeDataGridViewCheckBoxColumn.DataPropertyName = "DefaultType";
+            resources.ApplyResources(defaultTypeDataGridViewCheckBoxColumn, "defaultTypeDataGridViewCheckBoxColumn");
+            defaultTypeDataGridViewCheckBoxColumn.Name = "defaultTypeDataGridViewCheckBoxColumn";
+            // 
+            // unitIdDataGridViewTextBoxColumn
+            // 
+            unitIdDataGridViewTextBoxColumn.DataPropertyName = "UnitId";
+            resources.ApplyResources(unitIdDataGridViewTextBoxColumn, "unitIdDataGridViewTextBoxColumn");
+            unitIdDataGridViewTextBoxColumn.Name = "unitIdDataGridViewTextBoxColumn";
+            // 
+            // unitDataGridViewTextBoxColumn
+            // 
+            unitDataGridViewTextBoxColumn.DataPropertyName = "Unit";
+            resources.ApplyResources(unitDataGridViewTextBoxColumn, "unitDataGridViewTextBoxColumn");
+            unitDataGridViewTextBoxColumn.Name = "unitDataGridViewTextBoxColumn";
+            // 
+            // unitNameDataGridViewTextBoxColumn
+            // 
+            unitNameDataGridViewTextBoxColumn.DataPropertyName = "UnitName";
+            resources.ApplyResources(unitNameDataGridViewTextBoxColumn, "unitNameDataGridViewTextBoxColumn");
+            unitNameDataGridViewTextBoxColumn.Name = "unitNameDataGridViewTextBoxColumn";
+            unitNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // additionalCategoryAndGroupInfosDataGridViewTextBoxColumn
+            // 
+            additionalCategoryAndGroupInfosDataGridViewTextBoxColumn.DataPropertyName = "AdditionalCategoryAndGroupInfos";
+            resources.ApplyResources(additionalCategoryAndGroupInfosDataGridViewTextBoxColumn, "additionalCategoryAndGroupInfosDataGridViewTextBoxColumn");
+            additionalCategoryAndGroupInfosDataGridViewTextBoxColumn.Name = "additionalCategoryAndGroupInfosDataGridViewTextBoxColumn";
+            // 
+            // correctionFactorsDataGridViewTextBoxColumn
+            // 
+            correctionFactorsDataGridViewTextBoxColumn.DataPropertyName = "CorrectionFactors";
+            resources.ApplyResources(correctionFactorsDataGridViewTextBoxColumn, "correctionFactorsDataGridViewTextBoxColumn");
+            correctionFactorsDataGridViewTextBoxColumn.Name = "correctionFactorsDataGridViewTextBoxColumn";
+            // 
+            // costCategoriesDataGridViewTextBoxColumn
+            // 
+            costCategoriesDataGridViewTextBoxColumn.DataPropertyName = "CostCategories";
+            resources.ApplyResources(costCategoriesDataGridViewTextBoxColumn, "costCategoriesDataGridViewTextBoxColumn");
+            costCategoriesDataGridViewTextBoxColumn.Name = "costCategoriesDataGridViewTextBoxColumn";
+            // 
+            // meterReadingsDataGridViewTextBoxColumn
+            // 
+            meterReadingsDataGridViewTextBoxColumn.DataPropertyName = "MeterReadings";
+            resources.ApplyResources(meterReadingsDataGridViewTextBoxColumn, "meterReadingsDataGridViewTextBoxColumn");
+            meterReadingsDataGridViewTextBoxColumn.Name = "meterReadingsDataGridViewTextBoxColumn";
+            // 
+            // metersDataGridViewTextBoxColumn
+            // 
+            metersDataGridViewTextBoxColumn.DataPropertyName = "Meters";
+            resources.ApplyResources(metersDataGridViewTextBoxColumn, "metersDataGridViewTextBoxColumn");
+            metersDataGridViewTextBoxColumn.Name = "metersDataGridViewTextBoxColumn";
+            // 
+            // nettingsDataGridViewTextBoxColumn
+            // 
+            nettingsDataGridViewTextBoxColumn.DataPropertyName = "Nettings";
+            resources.ApplyResources(nettingsDataGridViewTextBoxColumn, "nettingsDataGridViewTextBoxColumn");
+            nettingsDataGridViewTextBoxColumn.Name = "nettingsDataGridViewTextBoxColumn";
+            // 
+            // preDefinedPeriodDatesDataGridViewTextBoxColumn
+            // 
+            preDefinedPeriodDatesDataGridViewTextBoxColumn.DataPropertyName = "PreDefinedPeriodDates";
+            resources.ApplyResources(preDefinedPeriodDatesDataGridViewTextBoxColumn, "preDefinedPeriodDatesDataGridViewTextBoxColumn");
+            preDefinedPeriodDatesDataGridViewTextBoxColumn.Name = "preDefinedPeriodDatesDataGridViewTextBoxColumn";
+            // 
+            // ratesDataGridViewTextBoxColumn
+            // 
+            ratesDataGridViewTextBoxColumn.DataPropertyName = "Rates";
+            resources.ApplyResources(ratesDataGridViewTextBoxColumn, "ratesDataGridViewTextBoxColumn");
+            ratesDataGridViewTextBoxColumn.Name = "ratesDataGridViewTextBoxColumn";
+            // 
+            // calculatedUnitPricesDataGridViewTextBoxColumn
+            // 
+            calculatedUnitPricesDataGridViewTextBoxColumn.DataPropertyName = "CalculatedUnitPrices";
+            resources.ApplyResources(calculatedUnitPricesDataGridViewTextBoxColumn, "calculatedUnitPricesDataGridViewTextBoxColumn");
+            calculatedUnitPricesDataGridViewTextBoxColumn.Name = "calculatedUnitPricesDataGridViewTextBoxColumn";
             // 
             // frmEnergyTypes
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.gbColors);
-            this.Controls.Add(this.gbEnergyType);
-            this.Controls.Add(this.dgEnergyTypes);
-            this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.statusStrip1);
-            this.Name = "frmEnergyTypes";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmEnergyTypes_FormClosing);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgEnergyTypes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsEnergyTypes)).EndInit();
-            this.gbEnergyType.ResumeLayout(false);
-            this.gbEnergyType.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsUnits)).EndInit();
-            this.gbColors.ResumeLayout(false);
-            this.gbColors.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(gbColors);
+            Controls.Add(gbEnergyType);
+            Controls.Add(dgEnergyTypes);
+            Controls.Add(toolStrip1);
+            Controls.Add(statusStrip1);
+            Name = "frmEnergyTypes";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            FormClosing += frmEnergyTypes_FormClosing;
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgEnergyTypes).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).EndInit();
+            gbEnergyType.ResumeLayout(false);
+            gbEnergyType.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)bsUnits).EndInit();
+            gbColors.ResumeLayout(false);
+            gbColors.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -407,5 +494,22 @@
         private ColorDialog colorDialog1;
         private DataGridViewTextBoxColumn EnergyTypeName;
         private DataGridViewTextBoxColumn UnitName;
+        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn1;
+        private DataGridViewCheckBoxColumn hasNormalAndLowDataGridViewCheckBoxColumn;
+        private DataGridViewCheckBoxColumn hasEnergyReturnDataGridViewCheckBoxColumn;
+        private DataGridViewCheckBoxColumn defaultTypeDataGridViewCheckBoxColumn;
+        private DataGridViewTextBoxColumn unitIdDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn unitDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn unitNameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn additionalCategoryAndGroupInfosDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn correctionFactorsDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn costCategoriesDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn meterReadingsDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn metersDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn nettingsDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn preDefinedPeriodDatesDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn ratesDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn calculatedUnitPricesDataGridViewTextBoxColumn;
     }
 }

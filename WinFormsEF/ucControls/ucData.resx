@@ -18,7 +18,7 @@
     <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
     <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
     <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing"">Blue</data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
     <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
         <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
@@ -124,31 +124,6 @@
     <value>132, 19</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>817, 27</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>31</value>
-  </data>
-  <data name="toolStrip1.Text" xml:space="preserve">
-    <value>toolStrip1</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
-    <value>toolStrip1</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
   <data name="tsbAdd.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
@@ -185,6 +160,31 @@
   <data name="tsbRefresh.Text" xml:space="preserve">
     <value>&amp;Refresh</value>
   </data>
+  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>817, 27</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="toolStrip1.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
   <data name="lblTill.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -199,7 +199,7 @@
     <value>32, 20</value>
   </data>
   <data name="lblTill.TabIndex" type="System.Int32, mscorlib">
-    <value>37</value>
+    <value>3</value>
   </data>
   <data name="lblTill.Text" xml:space="preserve">
     <value>Till:</value>
@@ -223,7 +223,7 @@
     <value>124, 27</value>
   </data>
   <data name="dtpTill.TabIndex" type="System.Int32, mscorlib">
-    <value>34</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;dtpTill.Name" xml:space="preserve">
     <value>dtpTill</value>
@@ -244,7 +244,7 @@
     <value>124, 27</value>
   </data>
   <data name="dtpFrom.TabIndex" type="System.Int32, mscorlib">
-    <value>33</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;dtpFrom.Name" xml:space="preserve">
     <value>dtpFrom</value>
@@ -271,7 +271,7 @@
     <value>54, 20</value>
   </data>
   <data name="lblFrom.TabIndex" type="System.Int32, mscorlib">
-    <value>32</value>
+    <value>1</value>
   </data>
   <data name="lblFrom.Text" xml:space="preserve">
     <value>Range:</value>
@@ -301,7 +301,7 @@
     <value>86, 20</value>
   </data>
   <data name="lbl.TabIndex" type="System.Int32, mscorlib">
-    <value>35</value>
+    <value>5</value>
   </data>
   <data name="lbl.Text" xml:space="preserve">
     <value>Cumulative:</value>
@@ -318,55 +318,6 @@
   <data name="&gt;&gt;lbl.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="&gt;&gt;rbAccumulativeNo.Name" xml:space="preserve">
-    <value>rbAccumulativeNo</value>
-  </data>
-  <data name="&gt;&gt;rbAccumulativeNo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;rbAccumulativeNo.Parent" xml:space="preserve">
-    <value>pnAccumulative</value>
-  </data>
-  <data name="&gt;&gt;rbAccumulativeNo.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;rbAccumulativeYes.Name" xml:space="preserve">
-    <value>rbAccumulativeYes</value>
-  </data>
-  <data name="&gt;&gt;rbAccumulativeYes.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;rbAccumulativeYes.Parent" xml:space="preserve">
-    <value>pnAccumulative</value>
-  </data>
-  <data name="&gt;&gt;rbAccumulativeYes.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="pnAccumulative.Location" type="System.Drawing.Point, System.Drawing">
-    <value>323, 35</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="pnAccumulative.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="pnAccumulative.Size" type="System.Drawing.Size, System.Drawing">
-    <value>123, 37</value>
-  </data>
-  <data name="pnAccumulative.TabIndex" type="System.Int32, mscorlib">
-    <value>36</value>
-  </data>
-  <data name="&gt;&gt;pnAccumulative.Name" xml:space="preserve">
-    <value>pnAccumulative</value>
-  </data>
-  <data name="&gt;&gt;pnAccumulative.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pnAccumulative.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pnAccumulative.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
   <data name="rbAccumulativeNo.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -376,6 +327,7 @@
   <data name="rbAccumulativeNo.Location" type="System.Drawing.Point, System.Drawing">
     <value>62, 8</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="rbAccumulativeNo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
   </data>
@@ -433,62 +385,32 @@
   <data name="&gt;&gt;rbAccumulativeYes.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <metadata name="RegistrationDate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="RateNormal.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="RateLow.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ReturnDeliveryNormal.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ReturnDeliveryLow.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="DeltaNormal.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="DeltaLow.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ReturnDeliveryDeltaNormal.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ReturnDeliveryDeltaLow.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="bsMeterReadings.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>249, 18</value>
-  </metadata>
-  <data name="dgMeterReadings.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
+  <data name="pnAccumulative.Location" type="System.Drawing.Point, System.Drawing">
+    <value>323, 35</value>
   </data>
-  <data name="dgMeterReadings.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 109</value>
+  <data name="pnAccumulative.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
-  <data name="dgMeterReadings.RowHeadersWidth" type="System.Int32, mscorlib">
-    <value>51</value>
+  <data name="pnAccumulative.Size" type="System.Drawing.Size, System.Drawing">
+    <value>123, 37</value>
   </data>
-  <data name="dgMeterReadings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>813, 601</value>
+  <data name="pnAccumulative.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
-  <data name="dgMeterReadings.TabIndex" type="System.Int32, mscorlib">
-    <value>38</value>
+  <data name="&gt;&gt;pnAccumulative.Name" xml:space="preserve">
+    <value>pnAccumulative</value>
   </data>
-  <data name="&gt;&gt;dgMeterReadings.Name" xml:space="preserve">
-    <value>dgMeterReadings</value>
+  <data name="&gt;&gt;pnAccumulative.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;dgMeterReadings.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dgMeterReadings.Parent" xml:space="preserve">
+  <data name="&gt;&gt;pnAccumulative.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;dgMeterReadings.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;pnAccumulative.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="dgMeterReadings.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
   <metadata name="RegistrationDate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -613,6 +535,30 @@
   <metadata name="bsMeterReadings.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>249, 18</value>
   </metadata>
+  <data name="dgMeterReadings.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 109</value>
+  </data>
+  <data name="dgMeterReadings.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="dgMeterReadings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>813, 601</value>
+  </data>
+  <data name="dgMeterReadings.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;dgMeterReadings.Name" xml:space="preserve">
+    <value>dgMeterReadings</value>
+  </data>
+  <data name="&gt;&gt;dgMeterReadings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dgMeterReadings.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;dgMeterReadings.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <metadata name="bsEnergyTypes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>434, 18</value>
   </metadata>

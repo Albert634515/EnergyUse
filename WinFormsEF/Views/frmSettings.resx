@@ -157,7 +157,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+    <value>0</value>
   </data>
   <data name="toolStrip1.Text" xml:space="preserve">
     <value>toolStrip1</value>
@@ -184,7 +184,7 @@
     <value>817, 22</value>
   </data>
   <data name="statusStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>5</value>
   </data>
   <data name="statusStrip1.Text" xml:space="preserve">
     <value>statusStrip1</value>
@@ -217,7 +217,7 @@
     <value>77, 20</value>
   </data>
   <data name="lblLanguage.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
+    <value>8</value>
   </data>
   <data name="lblLanguage.Text" xml:space="preserve">
     <value>Language:</value>
@@ -245,7 +245,7 @@
     <value>40, 27</value>
   </data>
   <data name="txtCurrency.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;txtCurrency.Name" xml:space="preserve">
     <value>txtCurrency</value>
@@ -278,7 +278,7 @@
     <value>121, 28</value>
   </data>
   <data name="cboLanguage.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
+    <value>9</value>
   </data>
   <data name="&gt;&gt;cboLanguage.Name" xml:space="preserve">
     <value>cboLanguage</value>
@@ -305,7 +305,7 @@
     <value>69, 20</value>
   </data>
   <data name="lblCurrency.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+    <value>6</value>
   </data>
   <data name="lblCurrency.Text" xml:space="preserve">
     <value>Currency:</value>
@@ -515,7 +515,7 @@
     <value>793, 173</value>
   </data>
   <data name="gbGeneral.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>1</value>
   </data>
   <data name="gbGeneral.Text" xml:space="preserve">
     <value>General</value>
@@ -554,7 +554,7 @@
     <value>106, 31</value>
   </data>
   <data name="cmdResetColorsAndLayout.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>4</value>
   </data>
   <data name="cmdResetColorsAndLayout.Text" xml:space="preserve">
     <value>Reset</value>
@@ -587,7 +587,7 @@
     <value>88, 20</value>
   </data>
   <data name="lblSliderColor.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>2</value>
   </data>
   <data name="lblSliderColor.Text" xml:space="preserve">
     <value>Slider color:</value>
@@ -614,7 +614,7 @@
     <value>40, 27</value>
   </data>
   <data name="txtSliderColor.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;txtSliderColor.Name" xml:space="preserve">
     <value>txtSliderColor</value>
@@ -641,7 +641,7 @@
     <value>167, 20</value>
   </data>
   <data name="lblFormBackColor.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>0</value>
   </data>
   <data name="lblFormBackColor.Text" xml:space="preserve">
     <value>Form background color:</value>
@@ -668,7 +668,7 @@
     <value>40, 27</value>
   </data>
   <data name="txtFormBackGroundColor.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;txtFormBackGroundColor.Name" xml:space="preserve">
     <value>txtFormBackGroundColor</value>
@@ -695,7 +695,7 @@
     <value>792, 105</value>
   </data>
   <data name="gbColorsAndLayout.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>2</value>
   </data>
   <data name="gbColorsAndLayout.Text" xml:space="preserve">
     <value>Colors and layout</value>
@@ -728,7 +728,7 @@
     <value>127, 20</value>
   </data>
   <data name="lblGraphLabelColor.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
+    <value>6</value>
   </data>
   <data name="lblGraphLabelColor.Text" xml:space="preserve">
     <value>Graph label color:</value>
@@ -755,7 +755,7 @@
     <value>41, 27</value>
   </data>
   <data name="txtLabelsYColorChart.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;txtLabelsYColorChart.Name" xml:space="preserve">
     <value>txtLabelsYColorChart</value>
@@ -809,7 +809,7 @@
     <value>40, 27</value>
   </data>
   <data name="txtLineColorChart.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;txtLineColorChart.Name" xml:space="preserve">
     <value>txtLineColorChart</value>
@@ -836,7 +836,7 @@
     <value>77, 20</value>
   </data>
   <data name="lblGraphLines.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
+    <value>4</value>
   </data>
   <data name="lblGraphLines.Text" xml:space="preserve">
     <value>Line color:</value>
@@ -872,7 +872,7 @@
     <value>105, 31</value>
   </data>
   <data name="cmdResetChart.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+    <value>8</value>
   </data>
   <data name="cmdResetChart.Text" xml:space="preserve">
     <value>Reset</value>
@@ -983,7 +983,7 @@
     <value>800, 179</value>
   </data>
   <data name="gbChart.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+    <value>3</value>
   </data>
   <data name="gbChart.Text" xml:space="preserve">
     <value>Chart</value>
@@ -1073,7 +1073,7 @@
     <value>250, 82</value>
   </data>
   <data name="avgChoiceGroupBox.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;avgChoiceGroupBox.Name" xml:space="preserve">
     <value>avgChoiceGroupBox</value>
@@ -1094,7 +1094,7 @@
     <value>126, 27</value>
   </data>
   <data name="avgDateFromDateTimePicker.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;avgDateFromDateTimePicker.Name" xml:space="preserve">
     <value>avgDateFromDateTimePicker</value>
@@ -1118,7 +1118,7 @@
     <value>40, 27</value>
   </data>
   <data name="AvgCorrectionPercentageReturnTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;AvgCorrectionPercentageReturnTextBox.Name" xml:space="preserve">
     <value>AvgCorrectionPercentageReturnTextBox</value>
@@ -1142,7 +1142,7 @@
     <value>40, 27</value>
   </data>
   <data name="AvgCorrectionPercentageTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;AvgCorrectionPercentageTextBox.Name" xml:space="preserve">
     <value>AvgCorrectionPercentageTextBox</value>
@@ -1205,7 +1205,7 @@
     <value>105, 31</value>
   </data>
   <data name="ResetDataPredictionButton.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+    <value>6</value>
   </data>
   <data name="ResetDataPredictionButton.Text" xml:space="preserve">
     <value>Reset</value>
@@ -1268,7 +1268,7 @@
     <value>800, 197</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
+    <value>4</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Data prediction</value>

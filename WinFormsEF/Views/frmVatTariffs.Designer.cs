@@ -48,6 +48,10 @@
             bsEnergyTypes = new BindingSource(components);
             LblEnergyType = new Label();
             DgVatTarifs = new DataGridView();
+            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            StartDate = new DataGridViewTextBoxColumn();
+            EndDate = new DataGridViewTextBoxColumn();
+            Tarif = new DataGridViewTextBoxColumn();
             GbTarif = new GroupBox();
             label2 = new Label();
             TxtRateValue = new TextBox();
@@ -56,10 +60,6 @@
             DtEndDate = new DateTimePicker();
             LblStartDate = new Label();
             DtStartDate = new DateTimePicker();
-            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            StartDate = new DataGridViewTextBoxColumn();
-            EndDate = new DataGridViewTextBoxColumn();
-            Tarif = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)bsVatTarif).BeginInit();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bsCostCategories).BeginInit();
@@ -171,6 +171,36 @@
             DgVatTarifs.DataSource = bsVatTarif;
             DgVatTarifs.Name = "DgVatTarifs";
             // 
+            // idDataGridViewTextBoxColumn
+            // 
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            // 
+            // StartDate
+            // 
+            StartDate.DataPropertyName = "StartDate";
+            dataGridViewCellStyle1.Format = "dd/MM/yyyy";
+            dataGridViewCellStyle1.NullValue = null;
+            StartDate.DefaultCellStyle = dataGridViewCellStyle1;
+            resources.ApplyResources(StartDate, "StartDate");
+            StartDate.Name = "StartDate";
+            // 
+            // EndDate
+            // 
+            EndDate.DataPropertyName = "EndDate";
+            resources.ApplyResources(EndDate, "EndDate");
+            EndDate.Name = "EndDate";
+            // 
+            // Tarif
+            // 
+            Tarif.DataPropertyName = "Tarif";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N2";
+            Tarif.DefaultCellStyle = dataGridViewCellStyle2;
+            resources.ApplyResources(Tarif, "Tarif");
+            Tarif.Name = "Tarif";
+            // 
             // GbTarif
             // 
             GbTarif.Controls.Add(label2);
@@ -223,36 +253,6 @@
             DtStartDate.Format = DateTimePickerFormat.Short;
             resources.ApplyResources(DtStartDate, "DtStartDate");
             DtStartDate.Name = "DtStartDate";
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
-            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            // 
-            // StartDate
-            // 
-            StartDate.DataPropertyName = "StartDate";
-            dataGridViewCellStyle1.Format = "dd/MM/yyyy";
-            dataGridViewCellStyle1.NullValue = null;
-            StartDate.DefaultCellStyle = dataGridViewCellStyle1;
-            resources.ApplyResources(StartDate, "StartDate");
-            StartDate.Name = "StartDate";
-            // 
-            // EndDate
-            // 
-            EndDate.DataPropertyName = "EndDate";
-            resources.ApplyResources(EndDate, "EndDate");
-            EndDate.Name = "EndDate";
-            // 
-            // Tarif
-            // 
-            Tarif.DataPropertyName = "Tarif";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "N2";
-            Tarif.DefaultCellStyle = dataGridViewCellStyle2;
-            resources.ApplyResources(Tarif, "Tarif");
-            Tarif.Name = "Tarif";
             // 
             // frmVatTariffs
             // 

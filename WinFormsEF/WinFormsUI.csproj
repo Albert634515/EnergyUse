@@ -10,6 +10,13 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <StartupObject>WinFormsEF.Program</StartupObject>
     <PackageIcon>EnergyUse.png</PackageIcon>
+    <AssemblyName>$(SolutionName)</AssemblyName>
+    <Title>Energy Use</Title>
+    <AssemblyVersion>0.1.0</AssemblyVersion>
+    <FileVersion>0.1.0</FileVersion>
+    <RepositoryUrl>https://github.com/Albert634515/EnergyUse</RepositoryUrl>
+    <Copyright>Albert634515</Copyright>
+    <PackageProjectUrl>https://github.com/Albert634515/EnergyUse</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

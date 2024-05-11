@@ -28,346 +28,318 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsbAdd = new System.Windows.Forms.ToolStripButton();
-            this.tsbSave = new System.Windows.Forms.ToolStripButton();
-            this.tbsCancel = new System.Windows.Forms.ToolStripButton();
-            this.tsbDelete = new System.Windows.Forms.ToolStripButton();
-            this.tsbRefresh = new System.Windows.Forms.ToolStripButton();
-            this.tsbClose = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.bsCalculatedUnitPrice = new System.Windows.Forms.BindingSource(this.components);
-            this.dgCalculatedUnitPrice = new System.Windows.Forms.DataGridView();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.energyTypeIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tariffGroupIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.yearDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cboEnergyType = new System.Windows.Forms.ComboBox();
-            this.bsEnergyTypes = new System.Windows.Forms.BindingSource(this.components);
-            this.lblEnergyType = new System.Windows.Forms.Label();
-            this.gbCalculatedUnitPrice = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.nudYear = new System.Windows.Forms.NumericUpDown();
-            this.txtPrice = new System.Windows.Forms.TextBox();
-            this.lblPrice = new System.Windows.Forms.Label();
-            this.cboTarifGroup = new System.Windows.Forms.ComboBox();
-            this.bsTarifGroups = new System.Windows.Forms.BindingSource(this.components);
-            this.lblTarifGroup = new System.Windows.Forms.Label();
-            this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsCalculatedUnitPrice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgCalculatedUnitPrice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsEnergyTypes)).BeginInit();
-            this.gbCalculatedUnitPrice.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudYear)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsTarifGroups)).BeginInit();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            toolStrip1 = new ToolStrip();
+            tsbAdd = new ToolStripButton();
+            tsbSave = new ToolStripButton();
+            tbsCancel = new ToolStripButton();
+            tsbDelete = new ToolStripButton();
+            tsbRefresh = new ToolStripButton();
+            tsbClose = new ToolStripButton();
+            statusStrip1 = new StatusStrip();
+            toolTip1 = new ToolTip(components);
+            bsCalculatedUnitPrice = new BindingSource(components);
+            dgCalculatedUnitPrice = new DataGridView();
+            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            energyTypeIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            tariffGroupIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            priceDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            yearDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            cboEnergyType = new ComboBox();
+            bsEnergyTypes = new BindingSource(components);
+            lblEnergyType = new Label();
+            gbCalculatedUnitPrice = new GroupBox();
+            label1 = new Label();
+            nudYear = new NumericUpDown();
+            txtPrice = new TextBox();
+            lblPrice = new Label();
+            cboTarifGroup = new ComboBox();
+            bsTarifGroups = new BindingSource(components);
+            lblTarifGroup = new Label();
+            toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)bsCalculatedUnitPrice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgCalculatedUnitPrice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).BeginInit();
+            gbCalculatedUnitPrice.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nudYear).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsTarifGroups).BeginInit();
+            SuspendLayout();
             // 
             // toolStrip1
             // 
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbAdd,
-            this.tsbSave,
-            this.tbsCancel,
-            this.tsbDelete,
-            this.tsbRefresh,
-            this.tsbClose});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(792, 27);
-            this.toolStrip1.TabIndex = 2;
-            this.toolStrip1.Text = "toolStrip1";
+            toolStrip1.ImageScalingSize = new Size(20, 20);
+            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbAdd, tsbSave, tbsCancel, tsbDelete, tsbRefresh, tsbClose });
+            toolStrip1.Location = new Point(0, 0);
+            toolStrip1.Name = "toolStrip1";
+            toolStrip1.Size = new Size(792, 27);
+            toolStrip1.TabIndex = 0;
+            toolStrip1.Text = "toolStrip1";
             // 
             // tsbAdd
             // 
-            this.tsbAdd.Image = global::WinFormsUI.Properties.Resources.add_24x24;
-            this.tsbAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbAdd.Name = "tsbAdd";
-            this.tsbAdd.Size = new System.Drawing.Size(61, 24);
-            this.tsbAdd.Text = "&Add";
-            this.tsbAdd.Click += new System.EventHandler(this.tsbAdd_Click);
+            tsbAdd.Image = WinFormsUI.Properties.Resources.add_24x24;
+            tsbAdd.ImageTransparentColor = Color.Magenta;
+            tsbAdd.Name = "tsbAdd";
+            tsbAdd.Size = new Size(61, 24);
+            tsbAdd.Text = "&Add";
+            tsbAdd.Click += tsbAdd_Click;
             // 
             // tsbSave
             // 
-            this.tsbSave.Image = global::WinFormsUI.Properties.Resources.tick_mark_24x24;
-            this.tsbSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbSave.Name = "tsbSave";
-            this.tsbSave.Size = new System.Drawing.Size(64, 24);
-            this.tsbSave.Text = "&Save";
-            this.tsbSave.Click += new System.EventHandler(this.tsbSave_Click);
+            tsbSave.Image = WinFormsUI.Properties.Resources.tick_mark_24x24;
+            tsbSave.ImageTransparentColor = Color.Magenta;
+            tsbSave.Name = "tsbSave";
+            tsbSave.Size = new Size(64, 24);
+            tsbSave.Text = "&Save";
+            tsbSave.Click += tsbSave_Click;
             // 
             // tbsCancel
             // 
-            this.tbsCancel.Image = global::WinFormsUI.Properties.Resources.clear_24x24;
-            this.tbsCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbsCancel.Name = "tbsCancel";
-            this.tbsCancel.Size = new System.Drawing.Size(77, 24);
-            this.tbsCancel.Text = "&Cancel";
-            this.tbsCancel.Click += new System.EventHandler(this.tbsCancel_Click);
+            tbsCancel.Image = WinFormsUI.Properties.Resources.clear_24x24;
+            tbsCancel.ImageTransparentColor = Color.Magenta;
+            tbsCancel.Name = "tbsCancel";
+            tbsCancel.Size = new Size(77, 24);
+            tbsCancel.Text = "&Cancel";
+            tbsCancel.Click += tbsCancel_Click;
             // 
             // tsbDelete
             // 
-            this.tsbDelete.Image = global::WinFormsUI.Properties.Resources.delete_24x24;
-            this.tsbDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbDelete.Name = "tsbDelete";
-            this.tsbDelete.Size = new System.Drawing.Size(77, 24);
-            this.tsbDelete.Text = "&Delete";
-            this.tsbDelete.Click += new System.EventHandler(this.tsbDelete_Click);
+            tsbDelete.Image = WinFormsUI.Properties.Resources.delete_24x24;
+            tsbDelete.ImageTransparentColor = Color.Magenta;
+            tsbDelete.Name = "tsbDelete";
+            tsbDelete.Size = new Size(77, 24);
+            tsbDelete.Text = "&Delete";
+            tsbDelete.Click += tsbDelete_Click;
             // 
             // tsbRefresh
             // 
-            this.tsbRefresh.Image = global::WinFormsUI.Properties.Resources.clock_24x24;
-            this.tsbRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbRefresh.Name = "tsbRefresh";
-            this.tsbRefresh.Size = new System.Drawing.Size(82, 24);
-            this.tsbRefresh.Text = "&Refresh";
-            this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
+            tsbRefresh.Image = WinFormsUI.Properties.Resources.clock_24x24;
+            tsbRefresh.ImageTransparentColor = Color.Magenta;
+            tsbRefresh.Name = "tsbRefresh";
+            tsbRefresh.Size = new Size(82, 24);
+            tsbRefresh.Text = "&Refresh";
+            tsbRefresh.Click += tsbRefresh_Click;
             // 
             // tsbClose
             // 
-            this.tsbClose.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsbClose.Image = global::WinFormsUI.Properties.Resources.crossed_24x24;
-            this.tsbClose.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbClose.Name = "tsbClose";
-            this.tsbClose.Size = new System.Drawing.Size(69, 24);
-            this.tsbClose.Text = "&Close";
-            this.tsbClose.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbClose.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
+            tsbClose.Alignment = ToolStripItemAlignment.Right;
+            tsbClose.Image = WinFormsUI.Properties.Resources.crossed_24x24;
+            tsbClose.ImageTransparentColor = Color.Magenta;
+            tsbClose.Name = "tsbClose";
+            tsbClose.Size = new Size(69, 24);
+            tsbClose.Text = "&Close";
+            tsbClose.TextAlign = ContentAlignment.MiddleLeft;
+            tsbClose.TextImageRelation = TextImageRelation.TextBeforeImage;
+            tsbClose.Click += tsbClose_Click;
             // 
             // statusStrip1
             // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 428);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(792, 22);
-            this.statusStrip1.TabIndex = 3;
-            this.statusStrip1.Text = "statusStrip1";
+            statusStrip1.ImageScalingSize = new Size(20, 20);
+            statusStrip1.Location = new Point(0, 428);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(792, 22);
+            statusStrip1.TabIndex = 3;
+            statusStrip1.Text = "statusStrip1";
             // 
             // bsCalculatedUnitPrice
             // 
-            this.bsCalculatedUnitPrice.DataSource = typeof(EnergyUse.Models.CalculatedUnitPrice);
+            bsCalculatedUnitPrice.DataSource = typeof(EnergyUse.Models.CalculatedUnitPrice);
             // 
             // dgCalculatedUnitPrice
             // 
-            this.dgCalculatedUnitPrice.AllowUserToAddRows = false;
-            this.dgCalculatedUnitPrice.AllowUserToDeleteRows = false;
-            this.dgCalculatedUnitPrice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.dgCalculatedUnitPrice.AutoGenerateColumns = false;
-            this.dgCalculatedUnitPrice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgCalculatedUnitPrice.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idDataGridViewTextBoxColumn,
-            this.energyTypeIdDataGridViewTextBoxColumn,
-            this.tariffGroupIdDataGridViewTextBoxColumn,
-            this.priceDataGridViewTextBoxColumn,
-            this.yearDataGridViewTextBoxColumn});
-            this.dgCalculatedUnitPrice.DataSource = this.bsCalculatedUnitPrice;
-            this.dgCalculatedUnitPrice.Location = new System.Drawing.Point(15, 127);
-            this.dgCalculatedUnitPrice.Name = "dgCalculatedUnitPrice";
-            this.dgCalculatedUnitPrice.RowHeadersWidth = 51;
-            this.dgCalculatedUnitPrice.RowTemplate.Height = 29;
-            this.dgCalculatedUnitPrice.Size = new System.Drawing.Size(504, 286);
-            this.dgCalculatedUnitPrice.TabIndex = 4;
+            dgCalculatedUnitPrice.AllowUserToAddRows = false;
+            dgCalculatedUnitPrice.AllowUserToDeleteRows = false;
+            dgCalculatedUnitPrice.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            dgCalculatedUnitPrice.AutoGenerateColumns = false;
+            dgCalculatedUnitPrice.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgCalculatedUnitPrice.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, energyTypeIdDataGridViewTextBoxColumn, tariffGroupIdDataGridViewTextBoxColumn, priceDataGridViewTextBoxColumn, yearDataGridViewTextBoxColumn });
+            dgCalculatedUnitPrice.DataSource = bsCalculatedUnitPrice;
+            dgCalculatedUnitPrice.Location = new Point(15, 127);
+            dgCalculatedUnitPrice.Name = "dgCalculatedUnitPrice";
+            dgCalculatedUnitPrice.RowHeadersWidth = 51;
+            dgCalculatedUnitPrice.Size = new Size(504, 286);
+            dgCalculatedUnitPrice.TabIndex = 5;
             // 
             // idDataGridViewTextBoxColumn
             // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.Visible = false;
-            this.idDataGridViewTextBoxColumn.Width = 125;
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            idDataGridViewTextBoxColumn.HeaderText = "Id";
+            idDataGridViewTextBoxColumn.MinimumWidth = 6;
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            idDataGridViewTextBoxColumn.Visible = false;
+            idDataGridViewTextBoxColumn.Width = 125;
             // 
             // energyTypeIdDataGridViewTextBoxColumn
             // 
-            this.energyTypeIdDataGridViewTextBoxColumn.DataPropertyName = "EnergyTypeId";
-            this.energyTypeIdDataGridViewTextBoxColumn.HeaderText = "EnergyTypeId";
-            this.energyTypeIdDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.energyTypeIdDataGridViewTextBoxColumn.Name = "energyTypeIdDataGridViewTextBoxColumn";
-            this.energyTypeIdDataGridViewTextBoxColumn.Visible = false;
-            this.energyTypeIdDataGridViewTextBoxColumn.Width = 125;
+            energyTypeIdDataGridViewTextBoxColumn.DataPropertyName = "EnergyTypeId";
+            energyTypeIdDataGridViewTextBoxColumn.HeaderText = "EnergyTypeId";
+            energyTypeIdDataGridViewTextBoxColumn.MinimumWidth = 6;
+            energyTypeIdDataGridViewTextBoxColumn.Name = "energyTypeIdDataGridViewTextBoxColumn";
+            energyTypeIdDataGridViewTextBoxColumn.Visible = false;
+            energyTypeIdDataGridViewTextBoxColumn.Width = 125;
             // 
             // tariffGroupIdDataGridViewTextBoxColumn
             // 
-            this.tariffGroupIdDataGridViewTextBoxColumn.DataPropertyName = "TariffGroupId";
-            this.tariffGroupIdDataGridViewTextBoxColumn.HeaderText = "TariffGroupId";
-            this.tariffGroupIdDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.tariffGroupIdDataGridViewTextBoxColumn.Name = "tariffGroupIdDataGridViewTextBoxColumn";
-            this.tariffGroupIdDataGridViewTextBoxColumn.Visible = false;
-            this.tariffGroupIdDataGridViewTextBoxColumn.Width = 125;
+            tariffGroupIdDataGridViewTextBoxColumn.DataPropertyName = "TariffGroupId";
+            tariffGroupIdDataGridViewTextBoxColumn.HeaderText = "TariffGroupId";
+            tariffGroupIdDataGridViewTextBoxColumn.MinimumWidth = 6;
+            tariffGroupIdDataGridViewTextBoxColumn.Name = "tariffGroupIdDataGridViewTextBoxColumn";
+            tariffGroupIdDataGridViewTextBoxColumn.Visible = false;
+            tariffGroupIdDataGridViewTextBoxColumn.Width = 125;
             // 
             // priceDataGridViewTextBoxColumn
             // 
-            this.priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
-            this.priceDataGridViewTextBoxColumn.HeaderText = "Price";
-            this.priceDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
-            this.priceDataGridViewTextBoxColumn.Width = 125;
+            priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
+            priceDataGridViewTextBoxColumn.HeaderText = "Price";
+            priceDataGridViewTextBoxColumn.MinimumWidth = 6;
+            priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
+            priceDataGridViewTextBoxColumn.Width = 125;
             // 
             // yearDataGridViewTextBoxColumn
             // 
-            this.yearDataGridViewTextBoxColumn.DataPropertyName = "Year";
-            this.yearDataGridViewTextBoxColumn.HeaderText = "Year";
-            this.yearDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.yearDataGridViewTextBoxColumn.Name = "yearDataGridViewTextBoxColumn";
-            this.yearDataGridViewTextBoxColumn.Width = 125;
+            yearDataGridViewTextBoxColumn.DataPropertyName = "Year";
+            yearDataGridViewTextBoxColumn.HeaderText = "Year";
+            yearDataGridViewTextBoxColumn.MinimumWidth = 6;
+            yearDataGridViewTextBoxColumn.Name = "yearDataGridViewTextBoxColumn";
+            yearDataGridViewTextBoxColumn.Width = 125;
             // 
             // cboEnergyType
             // 
-            this.cboEnergyType.DataSource = this.bsEnergyTypes;
-            this.cboEnergyType.DisplayMember = "Name";
-            this.cboEnergyType.FormattingEnabled = true;
-            this.cboEnergyType.Location = new System.Drawing.Point(130, 45);
-            this.cboEnergyType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cboEnergyType.Name = "cboEnergyType";
-            this.cboEnergyType.Size = new System.Drawing.Size(210, 28);
-            this.cboEnergyType.TabIndex = 27;
-            this.cboEnergyType.ValueMember = "Id";
-            this.cboEnergyType.SelectedIndexChanged += new System.EventHandler(this.cboEnergyType_SelectedIndexChanged);
+            cboEnergyType.DataSource = bsEnergyTypes;
+            cboEnergyType.DisplayMember = "Name";
+            cboEnergyType.FormattingEnabled = true;
+            cboEnergyType.Location = new Point(130, 45);
+            cboEnergyType.Margin = new Padding(3, 2, 3, 2);
+            cboEnergyType.Name = "cboEnergyType";
+            cboEnergyType.Size = new Size(210, 28);
+            cboEnergyType.TabIndex = 2;
+            cboEnergyType.ValueMember = "Id";
+            cboEnergyType.SelectedIndexChanged += cboEnergyType_SelectedIndexChanged;
             // 
             // bsEnergyTypes
             // 
-            this.bsEnergyTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
+            bsEnergyTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
             // 
             // lblEnergyType
             // 
-            this.lblEnergyType.AutoSize = true;
-            this.lblEnergyType.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblEnergyType.Location = new System.Drawing.Point(17, 48);
-            this.lblEnergyType.Name = "lblEnergyType";
-            this.lblEnergyType.Size = new System.Drawing.Size(90, 20);
-            this.lblEnergyType.TabIndex = 26;
-            this.lblEnergyType.Text = "Energy type:";
+            lblEnergyType.AutoSize = true;
+            lblEnergyType.ImeMode = ImeMode.NoControl;
+            lblEnergyType.Location = new Point(17, 48);
+            lblEnergyType.Name = "lblEnergyType";
+            lblEnergyType.Size = new Size(90, 20);
+            lblEnergyType.TabIndex = 1;
+            lblEnergyType.Text = "Energy type:";
             // 
             // gbCalculatedUnitPrice
             // 
-            this.gbCalculatedUnitPrice.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbCalculatedUnitPrice.Controls.Add(this.label1);
-            this.gbCalculatedUnitPrice.Controls.Add(this.nudYear);
-            this.gbCalculatedUnitPrice.Controls.Add(this.txtPrice);
-            this.gbCalculatedUnitPrice.Controls.Add(this.lblPrice);
-            this.gbCalculatedUnitPrice.Location = new System.Drawing.Point(525, 157);
-            this.gbCalculatedUnitPrice.Name = "gbCalculatedUnitPrice";
-            this.gbCalculatedUnitPrice.Size = new System.Drawing.Size(255, 256);
-            this.gbCalculatedUnitPrice.TabIndex = 28;
-            this.gbCalculatedUnitPrice.TabStop = false;
-            this.gbCalculatedUnitPrice.Text = "Calculated Unit Price";
+            gbCalculatedUnitPrice.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            gbCalculatedUnitPrice.Controls.Add(label1);
+            gbCalculatedUnitPrice.Controls.Add(nudYear);
+            gbCalculatedUnitPrice.Controls.Add(txtPrice);
+            gbCalculatedUnitPrice.Controls.Add(lblPrice);
+            gbCalculatedUnitPrice.Location = new Point(525, 157);
+            gbCalculatedUnitPrice.Name = "gbCalculatedUnitPrice";
+            gbCalculatedUnitPrice.Size = new Size(255, 256);
+            gbCalculatedUnitPrice.TabIndex = 6;
+            gbCalculatedUnitPrice.TabStop = false;
+            gbCalculatedUnitPrice.Text = "Calculated Unit Price";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label1.Location = new System.Drawing.Point(27, 42);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 20);
-            this.label1.TabIndex = 34;
-            this.label1.Text = "Year:";
+            label1.AutoSize = true;
+            label1.ImeMode = ImeMode.NoControl;
+            label1.Location = new Point(27, 42);
+            label1.Name = "label1";
+            label1.Size = new Size(40, 20);
+            label1.TabIndex = 0;
+            label1.Text = "Year:";
             // 
             // nudYear
             // 
-            this.nudYear.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bsCalculatedUnitPrice, "Year", true));
-            this.nudYear.Location = new System.Drawing.Point(89, 40);
-            this.nudYear.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.nudYear.Minimum = new decimal(new int[] {
-            1900,
-            0,
-            0,
-            0});
-            this.nudYear.Name = "nudYear";
-            this.nudYear.Size = new System.Drawing.Size(130, 27);
-            this.nudYear.TabIndex = 33;
-            this.nudYear.Value = new decimal(new int[] {
-            1900,
-            0,
-            0,
-            0});
+            nudYear.DataBindings.Add(new Binding("Value", bsCalculatedUnitPrice, "Year", true));
+            nudYear.Location = new Point(89, 40);
+            nudYear.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            nudYear.Minimum = new decimal(new int[] { 1900, 0, 0, 0 });
+            nudYear.Name = "nudYear";
+            nudYear.Size = new Size(130, 27);
+            nudYear.TabIndex = 1;
+            nudYear.Value = new decimal(new int[] { 1900, 0, 0, 0 });
             // 
             // txtPrice
             // 
-            this.txtPrice.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsCalculatedUnitPrice, "Price", true));
-            this.txtPrice.Location = new System.Drawing.Point(89, 73);
-            this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(130, 27);
-            this.txtPrice.TabIndex = 32;
+            txtPrice.DataBindings.Add(new Binding("Text", bsCalculatedUnitPrice, "Price", true));
+            txtPrice.Location = new Point(89, 73);
+            txtPrice.Name = "txtPrice";
+            txtPrice.Size = new Size(130, 27);
+            txtPrice.TabIndex = 3;
             // 
             // lblPrice
             // 
-            this.lblPrice.AutoSize = true;
-            this.lblPrice.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblPrice.Location = new System.Drawing.Point(27, 76);
-            this.lblPrice.Name = "lblPrice";
-            this.lblPrice.Size = new System.Drawing.Size(44, 20);
-            this.lblPrice.TabIndex = 31;
-            this.lblPrice.Text = "Price:";
+            lblPrice.AutoSize = true;
+            lblPrice.ImeMode = ImeMode.NoControl;
+            lblPrice.Location = new Point(27, 76);
+            lblPrice.Name = "lblPrice";
+            lblPrice.Size = new Size(44, 20);
+            lblPrice.TabIndex = 2;
+            lblPrice.Text = "Price:";
             // 
             // cboTarifGroup
             // 
-            this.cboTarifGroup.DataSource = this.bsTarifGroups;
-            this.cboTarifGroup.DisplayMember = "Description";
-            this.cboTarifGroup.FormattingEnabled = true;
-            this.cboTarifGroup.Location = new System.Drawing.Point(130, 79);
-            this.cboTarifGroup.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cboTarifGroup.Name = "cboTarifGroup";
-            this.cboTarifGroup.Size = new System.Drawing.Size(210, 28);
-            this.cboTarifGroup.TabIndex = 31;
-            this.cboTarifGroup.ValueMember = "Id";
-            this.cboTarifGroup.SelectedIndexChanged += new System.EventHandler(this.cboTarifGroup_SelectedIndexChanged);
+            cboTarifGroup.DataSource = bsTarifGroups;
+            cboTarifGroup.DisplayMember = "Description";
+            cboTarifGroup.FormattingEnabled = true;
+            cboTarifGroup.Location = new Point(130, 79);
+            cboTarifGroup.Margin = new Padding(3, 4, 3, 4);
+            cboTarifGroup.Name = "cboTarifGroup";
+            cboTarifGroup.Size = new Size(210, 28);
+            cboTarifGroup.TabIndex = 4;
+            cboTarifGroup.ValueMember = "Id";
+            cboTarifGroup.SelectedIndexChanged += cboTarifGroup_SelectedIndexChanged;
             // 
             // bsTarifGroups
             // 
-            this.bsTarifGroups.DataSource = typeof(EnergyUse.Models.TariffGroup);
+            bsTarifGroups.DataSource = typeof(EnergyUse.Models.TariffGroup);
             // 
             // lblTarifGroup
             // 
-            this.lblTarifGroup.AutoSize = true;
-            this.lblTarifGroup.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTarifGroup.Location = new System.Drawing.Point(17, 82);
-            this.lblTarifGroup.Name = "lblTarifGroup";
-            this.lblTarifGroup.Size = new System.Drawing.Size(84, 20);
-            this.lblTarifGroup.TabIndex = 30;
-            this.lblTarifGroup.Text = "Tarif group:";
+            lblTarifGroup.AutoSize = true;
+            lblTarifGroup.ImeMode = ImeMode.NoControl;
+            lblTarifGroup.Location = new Point(17, 82);
+            lblTarifGroup.Name = "lblTarifGroup";
+            lblTarifGroup.Size = new Size(84, 20);
+            lblTarifGroup.TabIndex = 3;
+            lblTarifGroup.Text = "Tarif group:";
             // 
             // frmCalculatedUnitPrice
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(792, 450);
-            this.Controls.Add(this.cboTarifGroup);
-            this.Controls.Add(this.lblTarifGroup);
-            this.Controls.Add(this.gbCalculatedUnitPrice);
-            this.Controls.Add(this.cboEnergyType);
-            this.Controls.Add(this.lblEnergyType);
-            this.Controls.Add(this.dgCalculatedUnitPrice);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.toolStrip1);
-            this.Name = "frmCalculatedUnitPrice";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Calculated Unit Price";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCalculatedUnitPrice_FormClosing);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsCalculatedUnitPrice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgCalculatedUnitPrice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsEnergyTypes)).EndInit();
-            this.gbCalculatedUnitPrice.ResumeLayout(false);
-            this.gbCalculatedUnitPrice.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudYear)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsTarifGroups)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(792, 450);
+            Controls.Add(cboTarifGroup);
+            Controls.Add(lblTarifGroup);
+            Controls.Add(gbCalculatedUnitPrice);
+            Controls.Add(cboEnergyType);
+            Controls.Add(lblEnergyType);
+            Controls.Add(dgCalculatedUnitPrice);
+            Controls.Add(statusStrip1);
+            Controls.Add(toolStrip1);
+            Name = "frmCalculatedUnitPrice";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Calculated Unit Price";
+            FormClosing += frmCalculatedUnitPrice_FormClosing;
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)bsCalculatedUnitPrice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgCalculatedUnitPrice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).EndInit();
+            gbCalculatedUnitPrice.ResumeLayout(false);
+            gbCalculatedUnitPrice.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)nudYear).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsTarifGroups).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

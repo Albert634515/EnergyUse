@@ -66,11 +66,6 @@
             dtpPurchaseDate = new DateTimePicker();
             lblDateOrPurchase = new Label();
             dgPayBackTime = new DataGridView();
-            bsPayBackTimes = new BindingSource(components);
-            toolStrip1 = new ToolStrip();
-            tsbCalculate = new ToolStripButton();
-            tsbClose = new ToolStripButton();
-            toolTip2 = new ToolTip(components);
             periodIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             startPeriodDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             endPeriodDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -85,6 +80,11 @@
             MonetaryValueProducedAndConsumed = new DataGridViewTextBoxColumn();
             OtherCostProduced = new DataGridViewTextBoxColumn();
             OtherCostConsumed = new DataGridViewTextBoxColumn();
+            bsPayBackTimes = new BindingSource(components);
+            toolStrip1 = new ToolStrip();
+            tsbCalculate = new ToolStripButton();
+            tsbClose = new ToolStripButton();
+            toolTip2 = new ToolTip(components);
             statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsAddresses).BeginInit();
@@ -240,32 +240,6 @@
             dgPayBackTime.RowTemplate.Height = 24;
             dgPayBackTime.CellFormatting += dgvPayBackTime_CellFormatting;
             // 
-            // bsPayBackTimes
-            // 
-            bsPayBackTimes.DataSource = typeof(EnergyUse.Models.Common.PayBackTime);
-            // 
-            // toolStrip1
-            // 
-            toolStrip1.ImageScalingSize = new Size(20, 20);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbCalculate, tsbClose });
-            resources.ApplyResources(toolStrip1, "toolStrip1");
-            toolStrip1.Name = "toolStrip1";
-            // 
-            // tsbCalculate
-            // 
-            tsbCalculate.Image = WinFormsUI.Properties.Resources.calculator_24x24;
-            resources.ApplyResources(tsbCalculate, "tsbCalculate");
-            tsbCalculate.Name = "tsbCalculate";
-            tsbCalculate.Click += tsbCalculate_Click;
-            // 
-            // tsbClose
-            // 
-            tsbClose.Alignment = ToolStripItemAlignment.Right;
-            tsbClose.Image = WinFormsUI.Properties.Resources.crossed_24x24;
-            resources.ApplyResources(tsbClose, "tsbClose");
-            tsbClose.Name = "tsbClose";
-            tsbClose.Click += tsbClose_Click;
-            // 
             // periodIdDataGridViewTextBoxColumn
             // 
             periodIdDataGridViewTextBoxColumn.DataPropertyName = "PeriodId";
@@ -397,6 +371,32 @@
             resources.ApplyResources(OtherCostConsumed, "OtherCostConsumed");
             OtherCostConsumed.Name = "OtherCostConsumed";
             OtherCostConsumed.ReadOnly = true;
+            // 
+            // bsPayBackTimes
+            // 
+            bsPayBackTimes.DataSource = typeof(EnergyUse.Models.Common.PayBackTime);
+            // 
+            // toolStrip1
+            // 
+            toolStrip1.ImageScalingSize = new Size(20, 20);
+            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbCalculate, tsbClose });
+            resources.ApplyResources(toolStrip1, "toolStrip1");
+            toolStrip1.Name = "toolStrip1";
+            // 
+            // tsbCalculate
+            // 
+            tsbCalculate.Image = WinFormsUI.Properties.Resources.calculator_24x24;
+            resources.ApplyResources(tsbCalculate, "tsbCalculate");
+            tsbCalculate.Name = "tsbCalculate";
+            tsbCalculate.Click += tsbCalculate_Click;
+            // 
+            // tsbClose
+            // 
+            tsbClose.Alignment = ToolStripItemAlignment.Right;
+            tsbClose.Image = WinFormsUI.Properties.Resources.crossed_24x24;
+            resources.ApplyResources(tsbClose, "tsbClose");
+            tsbClose.Name = "tsbClose";
+            tsbClose.Click += tsbClose_Click;
             // 
             // frmPayBackTime
             // 

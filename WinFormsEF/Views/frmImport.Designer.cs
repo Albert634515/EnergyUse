@@ -28,118 +28,106 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmImport));
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsbCloseImport = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.cboEnergyType = new System.Windows.Forms.ComboBox();
-            this.bsEnergyTypes = new System.Windows.Forms.BindingSource(this.components);
-            this.lblEnergyType = new System.Windows.Forms.Label();
-            this.cmbAddress = new System.Windows.Forms.ComboBox();
-            this.bsAddresses = new System.Windows.Forms.BindingSource(this.components);
-            this.lblAddress = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsEnergyTypes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsAddresses)).BeginInit();
-            this.SuspendLayout();
+            toolStrip1 = new ToolStrip();
+            tsbCloseImport = new ToolStripButton();
+            statusStrip1 = new StatusStrip();
+            toolTip1 = new ToolTip(components);
+            cboEnergyType = new ComboBox();
+            bsEnergyTypes = new BindingSource(components);
+            lblEnergyType = new Label();
+            cmbAddress = new ComboBox();
+            bsAddresses = new BindingSource(components);
+            lblAddress = new Label();
+            panel1 = new Panel();
+            toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsAddresses).BeginInit();
+            SuspendLayout();
             // 
             // toolStrip1
             // 
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbCloseImport});
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolTip1.SetToolTip(this.toolStrip1, resources.GetString("toolStrip1.ToolTip"));
+            toolStrip1.ImageScalingSize = new Size(20, 20);
+            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbCloseImport });
+            resources.ApplyResources(toolStrip1, "toolStrip1");
+            toolStrip1.Name = "toolStrip1";
             // 
             // tsbCloseImport
             // 
-            resources.ApplyResources(this.tsbCloseImport, "tsbCloseImport");
-            this.tsbCloseImport.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsbCloseImport.Image = 
-                
-                global::WinFormsUI.Properties.Resources.crossed_24x24;
-            this.tsbCloseImport.Name = "tsbCloseImport";
-            this.tsbCloseImport.Click += new System.EventHandler(this.tsbCloseImport_Click);
+            tsbCloseImport.Alignment = ToolStripItemAlignment.Right;
+            tsbCloseImport.Image = WinFormsUI.Properties.Resources.crossed_24x24;
+            resources.ApplyResources(tsbCloseImport, "tsbCloseImport");
+            tsbCloseImport.Name = "tsbCloseImport";
+            tsbCloseImport.Click += tsbCloseImport_Click;
             // 
             // statusStrip1
             // 
-            resources.ApplyResources(this.statusStrip1, "statusStrip1");
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Name = "statusStrip1";
-            this.toolTip1.SetToolTip(this.statusStrip1, resources.GetString("statusStrip1.ToolTip"));
+            statusStrip1.ImageScalingSize = new Size(20, 20);
+            resources.ApplyResources(statusStrip1, "statusStrip1");
+            statusStrip1.Name = "statusStrip1";
             // 
             // cboEnergyType
             // 
-            resources.ApplyResources(this.cboEnergyType, "cboEnergyType");
-            this.cboEnergyType.DataSource = this.bsEnergyTypes;
-            this.cboEnergyType.DisplayMember = "Name";
-            this.cboEnergyType.FormattingEnabled = true;
-            this.cboEnergyType.Name = "cboEnergyType";
-            this.toolTip1.SetToolTip(this.cboEnergyType, resources.GetString("cboEnergyType.ToolTip"));
-            this.cboEnergyType.ValueMember = "Id";
+            cboEnergyType.DataSource = bsEnergyTypes;
+            cboEnergyType.DisplayMember = "Name";
+            cboEnergyType.FormattingEnabled = true;
+            resources.ApplyResources(cboEnergyType, "cboEnergyType");
+            cboEnergyType.Name = "cboEnergyType";
+            cboEnergyType.ValueMember = "Id";
             // 
             // bsEnergyTypes
             // 
-            this.bsEnergyTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
+            bsEnergyTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
             // 
             // lblEnergyType
             // 
-            resources.ApplyResources(this.lblEnergyType, "lblEnergyType");
-            this.lblEnergyType.Name = "lblEnergyType";
-            this.toolTip1.SetToolTip(this.lblEnergyType, resources.GetString("lblEnergyType.ToolTip"));
+            resources.ApplyResources(lblEnergyType, "lblEnergyType");
+            lblEnergyType.Name = "lblEnergyType";
             // 
             // cmbAddress
             // 
-            resources.ApplyResources(this.cmbAddress, "cmbAddress");
-            this.cmbAddress.DataSource = this.bsAddresses;
-            this.cmbAddress.DisplayMember = "Description";
-            this.cmbAddress.FormattingEnabled = true;
-            this.cmbAddress.Name = "cmbAddress";
-            this.toolTip1.SetToolTip(this.cmbAddress, resources.GetString("cmbAddress.ToolTip"));
-            this.cmbAddress.ValueMember = "Id";
+            cmbAddress.DataSource = bsAddresses;
+            cmbAddress.DisplayMember = "Description";
+            cmbAddress.FormattingEnabled = true;
+            resources.ApplyResources(cmbAddress, "cmbAddress");
+            cmbAddress.Name = "cmbAddress";
+            cmbAddress.ValueMember = "Id";
             // 
             // bsAddresses
             // 
-            this.bsAddresses.DataSource = typeof(EnergyUse.Models.Address);
+            bsAddresses.DataSource = typeof(EnergyUse.Models.Address);
             // 
             // lblAddress
             // 
-            resources.ApplyResources(this.lblAddress, "lblAddress");
-            this.lblAddress.Name = "lblAddress";
-            this.toolTip1.SetToolTip(this.lblAddress, resources.GetString("lblAddress.ToolTip"));
+            resources.ApplyResources(lblAddress, "lblAddress");
+            lblAddress.Name = "lblAddress";
             // 
             // panel1
             // 
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Name = "panel1";
-            this.toolTip1.SetToolTip(this.panel1, resources.GetString("panel1.ToolTip"));
+            resources.ApplyResources(panel1, "panel1");
+            panel1.Name = "panel1";
             // 
             // frmImport
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.cboEnergyType);
-            this.Controls.Add(this.lblEnergyType);
-            this.Controls.Add(this.cmbAddress);
-            this.Controls.Add(this.lblAddress);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.toolStrip1);
-            this.Name = "frmImport";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsEnergyTypes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsAddresses)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(panel1);
+            Controls.Add(cboEnergyType);
+            Controls.Add(lblEnergyType);
+            Controls.Add(cmbAddress);
+            Controls.Add(lblAddress);
+            Controls.Add(statusStrip1);
+            Controls.Add(toolStrip1);
+            Name = "frmImport";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsAddresses).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

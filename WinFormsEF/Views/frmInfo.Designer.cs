@@ -29,63 +29,62 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInfo));
-            this.pbEnergyUseLogo = new System.Windows.Forms.PictureBox();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.chkHideInfoFormOnStart = new System.Windows.Forms.CheckBox();
-            this.lblInfo = new System.Windows.Forms.Label();
-            this.cmdClose = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pbEnergyUseLogo)).BeginInit();
-            this.SuspendLayout();
+            pbEnergyUseLogo = new PictureBox();
+            statusStrip1 = new StatusStrip();
+            chkHideInfoFormOnStart = new CheckBox();
+            lblInfo = new Label();
+            cmdClose = new Button();
+            ((System.ComponentModel.ISupportInitialize)pbEnergyUseLogo).BeginInit();
+            SuspendLayout();
             // 
             // pbEnergyUseLogo
             // 
-            this.pbEnergyUseLogo.Image = global::WinFormsUI.Properties.Resources.EnergyUse;
-            resources.ApplyResources(this.pbEnergyUseLogo, "pbEnergyUseLogo");
-            this.pbEnergyUseLogo.Name = "pbEnergyUseLogo";
-            this.pbEnergyUseLogo.TabStop = false;
+            pbEnergyUseLogo.Image = WinFormsUI.Properties.Resources.EnergyUse;
+            resources.ApplyResources(pbEnergyUseLogo, "pbEnergyUseLogo");
+            pbEnergyUseLogo.Name = "pbEnergyUseLogo";
+            pbEnergyUseLogo.TabStop = false;
             // 
             // statusStrip1
             // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            resources.ApplyResources(this.statusStrip1, "statusStrip1");
-            this.statusStrip1.Name = "statusStrip1";
+            statusStrip1.ImageScalingSize = new Size(20, 20);
+            resources.ApplyResources(statusStrip1, "statusStrip1");
+            statusStrip1.Name = "statusStrip1";
             // 
             // chkHideInfoFormOnStart
             // 
-            resources.ApplyResources(this.chkHideInfoFormOnStart, "chkHideInfoFormOnStart");
-            this.chkHideInfoFormOnStart.Name = "chkHideInfoFormOnStart";
-            this.chkHideInfoFormOnStart.Tag = "HideInfoFormOnStart";
-            this.chkHideInfoFormOnStart.UseVisualStyleBackColor = true;
-            this.chkHideInfoFormOnStart.CheckedChanged += new System.EventHandler(this.chkHideInfoFormOnStart_CheckedChanged);
+            resources.ApplyResources(chkHideInfoFormOnStart, "chkHideInfoFormOnStart");
+            chkHideInfoFormOnStart.Name = "chkHideInfoFormOnStart";
+            chkHideInfoFormOnStart.Tag = "HideInfoFormOnStart";
+            chkHideInfoFormOnStart.UseVisualStyleBackColor = true;
+            chkHideInfoFormOnStart.CheckedChanged += chkHideInfoFormOnStart_CheckedChanged;
             // 
             // lblInfo
             // 
-            resources.ApplyResources(this.lblInfo, "lblInfo");
-            this.lblInfo.Name = "lblInfo";
+            resources.ApplyResources(lblInfo, "lblInfo");
+            lblInfo.Name = "lblInfo";
             // 
             // cmdClose
             // 
-            resources.ApplyResources(this.cmdClose, "cmdClose");
-            this.cmdClose.Image = global::WinFormsUI.Properties.Resources.crossed_24x24;
-            this.cmdClose.Name = "cmdClose";
-            this.cmdClose.UseVisualStyleBackColor = true;
-            this.cmdClose.Click += new System.EventHandler(this.cmdClose_Click);
+            resources.ApplyResources(cmdClose, "cmdClose");
+            cmdClose.Image = WinFormsUI.Properties.Resources.crossed_24x24;
+            cmdClose.Name = "cmdClose";
+            cmdClose.UseVisualStyleBackColor = true;
+            cmdClose.Click += cmdClose_Click;
             // 
             // frmInfo
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.pbEnergyUseLogo);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.chkHideInfoFormOnStart);
-            this.Controls.Add(this.lblInfo);
-            this.Controls.Add(this.cmdClose);
-            this.Name = "frmInfo";
-            this.ShowInTaskbar = false;
-            ((System.ComponentModel.ISupportInitialize)(this.pbEnergyUseLogo)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(pbEnergyUseLogo);
+            Controls.Add(statusStrip1);
+            Controls.Add(chkHideInfoFormOnStart);
+            Controls.Add(lblInfo);
+            Controls.Add(cmdClose);
+            Name = "frmInfo";
+            ShowInTaskbar = false;
+            ((System.ComponentModel.ISupportInitialize)pbEnergyUseLogo).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

@@ -187,7 +187,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="toolStrip1.Text" xml:space="preserve">
     <value>toolStrip1</value>
@@ -214,7 +214,7 @@
     <value>995, 22</value>
   </data>
   <data name="statusStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>5</value>
   </data>
   <data name="statusStrip1.Text" xml:space="preserve">
     <value>statusStrip1</value>
@@ -298,7 +298,7 @@
     <value>696, 327</value>
   </data>
   <data name="dgNetting.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;dgNetting.Name" xml:space="preserve">
     <value>dgNetting</value>
@@ -323,7 +323,7 @@
     <value>124, 28</value>
   </data>
   <data name="cboEnergyType.TabIndex" type="System.Int32, mscorlib">
-    <value>27</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;cboEnergyType.Name" xml:space="preserve">
     <value>cboEnergyType</value>
@@ -350,7 +350,7 @@
     <value>90, 20</value>
   </data>
   <data name="lblEnergyType.TabIndex" type="System.Int32, mscorlib">
-    <value>26</value>
+    <value>1</value>
   </data>
   <data name="lblEnergyType.Text" xml:space="preserve">
     <value>Energy type:</value>
@@ -374,7 +374,7 @@
     <value>130, 27</value>
   </data>
   <data name="txtRate.TabIndex" type="System.Int32, mscorlib">
-    <value>36</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;txtRate.Name" xml:space="preserve">
     <value>txtRate</value>
@@ -401,7 +401,7 @@
     <value>42, 20</value>
   </data>
   <data name="lblFactor.TabIndex" type="System.Int32, mscorlib">
-    <value>35</value>
+    <value>4</value>
   </data>
   <data name="lblFactor.Text" xml:space="preserve">
     <value>Rate:</value>
@@ -431,7 +431,7 @@
     <value>71, 20</value>
   </data>
   <data name="lblEndDate.TabIndex" type="System.Int32, mscorlib">
-    <value>34</value>
+    <value>2</value>
   </data>
   <data name="lblEndDate.Text" xml:space="preserve">
     <value>End date:</value>
@@ -455,7 +455,7 @@
     <value>135, 27</value>
   </data>
   <data name="dtEndDate.TabIndex" type="System.Int32, mscorlib">
-    <value>33</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;dtEndDate.Name" xml:space="preserve">
     <value>dtEndDate</value>
@@ -482,7 +482,7 @@
     <value>77, 20</value>
   </data>
   <data name="lblStartDate.TabIndex" type="System.Int32, mscorlib">
-    <value>30</value>
+    <value>0</value>
   </data>
   <data name="lblStartDate.Text" xml:space="preserve">
     <value>Start date:</value>
@@ -506,7 +506,7 @@
     <value>135, 27</value>
   </data>
   <data name="dtStartDate.TabIndex" type="System.Int32, mscorlib">
-    <value>29</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;dtStartDate.Name" xml:space="preserve">
     <value>dtStartDate</value>
@@ -527,7 +527,7 @@
     <value>269, 326</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>28</value>
+    <value>4</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Netting</value>
@@ -601,12 +601,6 @@
   <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;bsNetting.Name" xml:space="preserve">
-    <value>bsNetting</value>
-  </data>
-  <data name="&gt;&gt;bsNetting.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;startDateDataGridViewTextBoxColumn.Name" xml:space="preserve">
     <value>startDateDataGridViewTextBoxColumn</value>
   </data>
@@ -636,6 +630,12 @@
   </data>
   <data name="&gt;&gt;idDataGridViewTextBoxColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsNetting.Name" xml:space="preserve">
+    <value>bsNetting</value>
+  </data>
+  <data name="&gt;&gt;bsNetting.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>frmNetting</value>

@@ -28,157 +28,141 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPreDefinedPeriod));
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsbAddPredefinedPeriods = new System.Windows.Forms.ToolStripButton();
-            this.tsbSavePredefinedPeriod = new System.Windows.Forms.ToolStripButton();
-            this.tbsCancel = new System.Windows.Forms.ToolStripButton();
-            this.tsbDeletePredefinedPeriods = new System.Windows.Forms.ToolStripButton();
-            this.tsbRefeshPredefinedPeriods = new System.Windows.Forms.ToolStripButton();
-            this.tbsClosePredefinedPeriods = new System.Windows.Forms.ToolStripButton();
-            this.bsPreDefinedPeriod = new System.Windows.Forms.BindingSource(this.components);
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.dgPeriods = new System.Windows.Forms.DataGridView();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label1 = new System.Windows.Forms.Label();
-            this.ucDatePredefined1 = new WinFormsEF.ucControls.ucDatePredefined();
-            this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsPreDefinedPeriod)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgPeriods)).BeginInit();
-            this.SuspendLayout();
+            statusStrip1 = new StatusStrip();
+            toolStrip1 = new ToolStrip();
+            tsbAddPredefinedPeriods = new ToolStripButton();
+            tsbSavePredefinedPeriod = new ToolStripButton();
+            tbsCancel = new ToolStripButton();
+            tsbDeletePredefinedPeriods = new ToolStripButton();
+            tsbRefeshPredefinedPeriods = new ToolStripButton();
+            tbsClosePredefinedPeriods = new ToolStripButton();
+            bsPreDefinedPeriod = new BindingSource(components);
+            toolTip1 = new ToolTip(components);
+            dgPeriods = new DataGridView();
+            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            label1 = new Label();
+            ucDatePredefined1 = new ucControls.ucDatePredefined();
+            toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)bsPreDefinedPeriod).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgPeriods).BeginInit();
+            SuspendLayout();
             // 
             // statusStrip1
             // 
-            resources.ApplyResources(this.statusStrip1, "statusStrip1");
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Name = "statusStrip1";
-            this.toolTip1.SetToolTip(this.statusStrip1, resources.GetString("statusStrip1.ToolTip"));
+            statusStrip1.ImageScalingSize = new Size(20, 20);
+            resources.ApplyResources(statusStrip1, "statusStrip1");
+            statusStrip1.Name = "statusStrip1";
             // 
             // toolStrip1
             // 
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbAddPredefinedPeriods,
-            this.tsbSavePredefinedPeriod,
-            this.tbsCancel,
-            this.tsbDeletePredefinedPeriods,
-            this.tsbRefeshPredefinedPeriods,
-            this.tbsClosePredefinedPeriods});
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolTip1.SetToolTip(this.toolStrip1, resources.GetString("toolStrip1.ToolTip"));
+            toolStrip1.ImageScalingSize = new Size(20, 20);
+            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbAddPredefinedPeriods, tsbSavePredefinedPeriod, tbsCancel, tsbDeletePredefinedPeriods, tsbRefeshPredefinedPeriods, tbsClosePredefinedPeriods });
+            resources.ApplyResources(toolStrip1, "toolStrip1");
+            toolStrip1.Name = "toolStrip1";
             // 
             // tsbAddPredefinedPeriods
             // 
-            resources.ApplyResources(this.tsbAddPredefinedPeriods, "tsbAddPredefinedPeriods");
-            this.tsbAddPredefinedPeriods.Image = global::WinFormsUI.Properties.Resources.add_24x24;
-            this.tsbAddPredefinedPeriods.Name = "tsbAddPredefinedPeriods";
-            this.tsbAddPredefinedPeriods.Click += new System.EventHandler(this.tsbAddPredefinedPeriods_Click);
+            tsbAddPredefinedPeriods.Image = WinFormsUI.Properties.Resources.add_24x24;
+            resources.ApplyResources(tsbAddPredefinedPeriods, "tsbAddPredefinedPeriods");
+            tsbAddPredefinedPeriods.Name = "tsbAddPredefinedPeriods";
+            tsbAddPredefinedPeriods.Click += tsbAddPredefinedPeriods_Click;
             // 
             // tsbSavePredefinedPeriod
             // 
-            resources.ApplyResources(this.tsbSavePredefinedPeriod, "tsbSavePredefinedPeriod");
-            this.tsbSavePredefinedPeriod.Image = global::WinFormsUI.Properties.Resources.tick_mark_24x24;
-            this.tsbSavePredefinedPeriod.Name = "tsbSavePredefinedPeriod";
-            this.tsbSavePredefinedPeriod.Click += new System.EventHandler(this.tsbSavePredefinedPeriod_Click);
+            tsbSavePredefinedPeriod.Image = WinFormsUI.Properties.Resources.tick_mark_24x24;
+            resources.ApplyResources(tsbSavePredefinedPeriod, "tsbSavePredefinedPeriod");
+            tsbSavePredefinedPeriod.Name = "tsbSavePredefinedPeriod";
+            tsbSavePredefinedPeriod.Click += tsbSavePredefinedPeriod_Click;
             // 
             // tbsCancel
             // 
-            resources.ApplyResources(this.tbsCancel, "tbsCancel");
-            this.tbsCancel.Image = global::WinFormsUI.Properties.Resources.clear_24x24;
-            this.tbsCancel.Name = "tbsCancel";
-            this.tbsCancel.Click += new System.EventHandler(this.tbsCancel_Click);
+            tbsCancel.Image = WinFormsUI.Properties.Resources.clear_24x24;
+            resources.ApplyResources(tbsCancel, "tbsCancel");
+            tbsCancel.Name = "tbsCancel";
+            tbsCancel.Click += tbsCancel_Click;
             // 
             // tsbDeletePredefinedPeriods
             // 
-            resources.ApplyResources(this.tsbDeletePredefinedPeriods, "tsbDeletePredefinedPeriods");
-            this.tsbDeletePredefinedPeriods.Image = global::WinFormsUI.Properties.Resources.delete_24x24;
-            this.tsbDeletePredefinedPeriods.Name = "tsbDeletePredefinedPeriods";
-            this.tsbDeletePredefinedPeriods.Click += new System.EventHandler(this.tsbDeletePredefinedPeriods_Click);
+            tsbDeletePredefinedPeriods.Image = WinFormsUI.Properties.Resources.delete_24x24;
+            resources.ApplyResources(tsbDeletePredefinedPeriods, "tsbDeletePredefinedPeriods");
+            tsbDeletePredefinedPeriods.Name = "tsbDeletePredefinedPeriods";
+            tsbDeletePredefinedPeriods.Click += tsbDeletePredefinedPeriods_Click;
             // 
             // tsbRefeshPredefinedPeriods
             // 
-            resources.ApplyResources(this.tsbRefeshPredefinedPeriods, "tsbRefeshPredefinedPeriods");
-            this.tsbRefeshPredefinedPeriods.Image = global::WinFormsUI.Properties.Resources.clock_24x24;
-            this.tsbRefeshPredefinedPeriods.Name = "tsbRefeshPredefinedPeriods";
-            this.tsbRefeshPredefinedPeriods.Click += new System.EventHandler(this.tsbRefeshPredefinedPeriods_Click);
+            tsbRefeshPredefinedPeriods.Image = WinFormsUI.Properties.Resources.clock_24x24;
+            resources.ApplyResources(tsbRefeshPredefinedPeriods, "tsbRefeshPredefinedPeriods");
+            tsbRefeshPredefinedPeriods.Name = "tsbRefeshPredefinedPeriods";
+            tsbRefeshPredefinedPeriods.Click += tsbRefeshPredefinedPeriods_Click;
             // 
             // tbsClosePredefinedPeriods
             // 
-            resources.ApplyResources(this.tbsClosePredefinedPeriods, "tbsClosePredefinedPeriods");
-            this.tbsClosePredefinedPeriods.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tbsClosePredefinedPeriods.Image = global::WinFormsUI.Properties.Resources.crossed_24x24;
-            this.tbsClosePredefinedPeriods.Name = "tbsClosePredefinedPeriods";
-            this.tbsClosePredefinedPeriods.Click += new System.EventHandler(this.tbsClosePredefinedPeriods_Click);
+            tbsClosePredefinedPeriods.Alignment = ToolStripItemAlignment.Right;
+            tbsClosePredefinedPeriods.Image = WinFormsUI.Properties.Resources.crossed_24x24;
+            resources.ApplyResources(tbsClosePredefinedPeriods, "tbsClosePredefinedPeriods");
+            tbsClosePredefinedPeriods.Name = "tbsClosePredefinedPeriods";
+            tbsClosePredefinedPeriods.Click += tbsClosePredefinedPeriods_Click;
             // 
             // bsPreDefinedPeriod
             // 
-            this.bsPreDefinedPeriod.DataSource = typeof(EnergyUse.Models.PreDefinedPeriod);
-            this.bsPreDefinedPeriod.CurrentChanged += new System.EventHandler(this.bsPreDefinedPeriod_CurrentChanged);
+            bsPreDefinedPeriod.DataSource = typeof(EnergyUse.Models.PreDefinedPeriod);
+            bsPreDefinedPeriod.CurrentChanged += bsPreDefinedPeriod_CurrentChanged;
             // 
             // dgPeriods
             // 
-            resources.ApplyResources(this.dgPeriods, "dgPeriods");
-            this.dgPeriods.AllowUserToAddRows = false;
-            this.dgPeriods.AllowUserToDeleteRows = false;
-            this.dgPeriods.AutoGenerateColumns = false;
-            this.dgPeriods.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgPeriods.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idDataGridViewTextBoxColumn,
-            this.descriptionDataGridViewTextBoxColumn});
-            this.dgPeriods.DataSource = this.bsPreDefinedPeriod;
-            this.dgPeriods.Name = "dgPeriods";
-            this.dgPeriods.RowTemplate.Height = 29;
-            this.toolTip1.SetToolTip(this.dgPeriods, resources.GetString("dgPeriods.ToolTip"));
+            dgPeriods.AllowUserToAddRows = false;
+            dgPeriods.AllowUserToDeleteRows = false;
+            dgPeriods.AutoGenerateColumns = false;
+            dgPeriods.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgPeriods.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, descriptionDataGridViewTextBoxColumn });
+            dgPeriods.DataSource = bsPreDefinedPeriod;
+            resources.ApplyResources(dgPeriods, "dgPeriods");
+            dgPeriods.Name = "dgPeriods";
             // 
             // idDataGridViewTextBoxColumn
             // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            resources.ApplyResources(this.idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
             // 
             // descriptionDataGridViewTextBoxColumn
             // 
-            this.descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
-            resources.ApplyResources(this.descriptionDataGridViewTextBoxColumn, "descriptionDataGridViewTextBoxColumn");
-            this.descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
+            descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
+            resources.ApplyResources(descriptionDataGridViewTextBoxColumn, "descriptionDataGridViewTextBoxColumn");
+            descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
             // 
             // label1
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
+            resources.ApplyResources(label1, "label1");
+            label1.Name = "label1";
             // 
             // ucDatePredefined1
             // 
-            resources.ApplyResources(this.ucDatePredefined1, "ucDatePredefined1");
-            this.ucDatePredefined1.Name = "ucDatePredefined1";
-            this.toolTip1.SetToolTip(this.ucDatePredefined1, resources.GetString("ucDatePredefined1.ToolTip"));
+            resources.ApplyResources(ucDatePredefined1, "ucDatePredefined1");
+            ucDatePredefined1.Name = "ucDatePredefined1";
             // 
             // frmPreDefinedPeriod
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.ucDatePredefined1);
-            this.Controls.Add(this.dgPeriods);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.toolStrip1);
-            this.Name = "frmPreDefinedPeriod";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmPreDefinedPeriod_FormClosing);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsPreDefinedPeriod)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgPeriods)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(ucDatePredefined1);
+            Controls.Add(dgPeriods);
+            Controls.Add(label1);
+            Controls.Add(statusStrip1);
+            Controls.Add(toolStrip1);
+            Name = "frmPreDefinedPeriod";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            FormClosing += frmPreDefinedPeriod_FormClosing;
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)bsPreDefinedPeriod).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgPeriods).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

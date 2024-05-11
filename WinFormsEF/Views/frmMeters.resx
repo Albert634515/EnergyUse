@@ -187,7 +187,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>0</value>
   </data>
   <data name="toolStrip1.Text" xml:space="preserve">
     <value>toolStrip1</value>
@@ -214,7 +214,7 @@
     <value>1079, 22</value>
   </data>
   <data name="statusStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="statusStrip1.Text" xml:space="preserve">
     <value>statusStrip1</value>
@@ -289,7 +289,7 @@
     <value>615, 391</value>
   </data>
   <data name="dgMeters.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;dgMeters.Name" xml:space="preserve">
     <value>dgMeters</value>
@@ -317,7 +317,7 @@
     <value>113, 27</value>
   </data>
   <data name="dtpFrom.TabIndex" type="System.Int32, mscorlib">
-    <value>41</value>
+    <value>11</value>
   </data>
   <data name="&gt;&gt;dtpFrom.Name" xml:space="preserve">
     <value>dtpFrom</value>
@@ -344,7 +344,7 @@
     <value>44, 20</value>
   </data>
   <data name="lblRange.TabIndex" type="System.Int32, mscorlib">
-    <value>40</value>
+    <value>10</value>
   </data>
   <data name="lblRange.Text" xml:space="preserve">
     <value>Date:</value>
@@ -374,7 +374,7 @@
     <value>65, 20</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>38</value>
+    <value>0</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Address:</value>
@@ -407,7 +407,7 @@
     <value>314, 28</value>
   </data>
   <data name="cboAddress.TabIndex" type="System.Int32, mscorlib">
-    <value>39</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;cboAddress.Name" xml:space="preserve">
     <value>cboAddress</value>
@@ -434,7 +434,7 @@
     <value>53, 20</value>
   </data>
   <data name="lblActive.TabIndex" type="System.Int32, mscorlib">
-    <value>37</value>
+    <value>8</value>
   </data>
   <data name="lblActive.Text" xml:space="preserve">
     <value>Active:</value>
@@ -467,7 +467,7 @@
     <value>18, 17</value>
   </data>
   <data name="chkActive.TabIndex" type="System.Int32, mscorlib">
-    <value>36</value>
+    <value>9</value>
   </data>
   <data name="&gt;&gt;chkActive.Name" xml:space="preserve">
     <value>chkActive</value>
@@ -494,7 +494,7 @@
     <value>90, 20</value>
   </data>
   <data name="lblEnergyType.TabIndex" type="System.Int32, mscorlib">
-    <value>34</value>
+    <value>6</value>
   </data>
   <data name="lblEnergyType.Text" xml:space="preserve">
     <value>Energy type:</value>
@@ -527,7 +527,7 @@
     <value>314, 28</value>
   </data>
   <data name="cboEnergyType.TabIndex" type="System.Int32, mscorlib">
-    <value>35</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;cboEnergyType.Name" xml:space="preserve">
     <value>cboEnergyType</value>
@@ -557,7 +557,7 @@
     <value>314, 27</value>
   </data>
   <data name="txtNumber.TabIndex" type="System.Int32, mscorlib">
-    <value>33</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;txtNumber.Name" xml:space="preserve">
     <value>txtNumber</value>
@@ -584,7 +584,7 @@
     <value>66, 20</value>
   </data>
   <data name="lblNumber.TabIndex" type="System.Int32, mscorlib">
-    <value>32</value>
+    <value>4</value>
   </data>
   <data name="lblNumber.Text" xml:space="preserve">
     <value>Number:</value>
@@ -617,7 +617,7 @@
     <value>314, 27</value>
   </data>
   <data name="txtDescription.TabIndex" type="System.Int32, mscorlib">
-    <value>31</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;txtDescription.Name" xml:space="preserve">
     <value>txtDescription</value>
@@ -644,7 +644,7 @@
     <value>88, 20</value>
   </data>
   <data name="lblDescription.TabIndex" type="System.Int32, mscorlib">
-    <value>30</value>
+    <value>2</value>
   </data>
   <data name="lblDescription.Text" xml:space="preserve">
     <value>Description:</value>
@@ -668,7 +668,7 @@
     <value>434, 359</value>
   </data>
   <data name="gbMeter.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+    <value>2</value>
   </data>
   <data name="gbMeter.Text" xml:space="preserve">
     <value>Meter</value>

@@ -29,133 +29,131 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBackUpAndRestore));
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsbCloseExport = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.cmdCreateBackup = new System.Windows.Forms.Button();
-            this.cmdSelectExportFile = new System.Windows.Forms.Button();
-            this.txtBackUpDir = new System.Windows.Forms.TextBox();
-            this.lblBackupDirectory = new System.Windows.Forms.Label();
-            this.lblBackUpBeforeRestore = new System.Windows.Forms.Label();
-            this.chkBackUpBeforeRestore = new System.Windows.Forms.CheckBox();
-            this.cmdRestoreBackUp = new System.Windows.Forms.Button();
-            this.cmdSelectRestoreFile = new System.Windows.Forms.Button();
-            this.txtRestoreFile = new System.Windows.Forms.TextBox();
-            this.lblRestoreFile = new System.Windows.Forms.Label();
-            this.toolStrip1.SuspendLayout();
-            this.SuspendLayout();
+            toolStrip1 = new ToolStrip();
+            tsbCloseExport = new ToolStripButton();
+            statusStrip1 = new StatusStrip();
+            cmdCreateBackup = new Button();
+            cmdSelectExportFile = new Button();
+            txtBackUpDir = new TextBox();
+            lblBackupDirectory = new Label();
+            lblBackUpBeforeRestore = new Label();
+            chkBackUpBeforeRestore = new CheckBox();
+            cmdRestoreBackUp = new Button();
+            cmdSelectRestoreFile = new Button();
+            txtRestoreFile = new TextBox();
+            lblRestoreFile = new Label();
+            toolStrip1.SuspendLayout();
+            SuspendLayout();
             // 
             // toolStrip1
             // 
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbCloseExport});
-            this.toolStrip1.Name = "toolStrip1";
+            toolStrip1.ImageScalingSize = new Size(20, 20);
+            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbCloseExport });
+            resources.ApplyResources(toolStrip1, "toolStrip1");
+            toolStrip1.Name = "toolStrip1";
             // 
             // tsbCloseExport
             // 
-            resources.ApplyResources(this.tsbCloseExport, "tsbCloseExport");
-            this.tsbCloseExport.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsbCloseExport.Image = global::WinFormsUI.Properties.Resources.crossed_24x24;
-            this.tsbCloseExport.Name = "tsbCloseExport";
-            this.tsbCloseExport.Click += new System.EventHandler(this.tsbCloseExport_Click);
+            tsbCloseExport.Alignment = ToolStripItemAlignment.Right;
+            tsbCloseExport.Image = WinFormsUI.Properties.Resources.crossed_24x24;
+            resources.ApplyResources(tsbCloseExport, "tsbCloseExport");
+            tsbCloseExport.Name = "tsbCloseExport";
+            tsbCloseExport.Click += tsbCloseExport_Click;
             // 
             // statusStrip1
             // 
-            resources.ApplyResources(this.statusStrip1, "statusStrip1");
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Name = "statusStrip1";
+            statusStrip1.ImageScalingSize = new Size(20, 20);
+            resources.ApplyResources(statusStrip1, "statusStrip1");
+            statusStrip1.Name = "statusStrip1";
             // 
             // cmdCreateBackup
             // 
-            resources.ApplyResources(this.cmdCreateBackup, "cmdCreateBackup");
-            this.cmdCreateBackup.Name = "cmdCreateBackup";
-            this.cmdCreateBackup.UseVisualStyleBackColor = true;
-            this.cmdCreateBackup.Click += new System.EventHandler(this.cmdCreateBackup_Click);
+            resources.ApplyResources(cmdCreateBackup, "cmdCreateBackup");
+            cmdCreateBackup.Name = "cmdCreateBackup";
+            cmdCreateBackup.UseVisualStyleBackColor = true;
+            cmdCreateBackup.Click += cmdCreateBackup_Click;
             // 
             // cmdSelectExportFile
             // 
-            resources.ApplyResources(this.cmdSelectExportFile, "cmdSelectExportFile");
-            this.cmdSelectExportFile.Image = global::WinFormsUI.Properties.Resources.open_file_folder_icon;
-            this.cmdSelectExportFile.Name = "cmdSelectExportFile";
-            this.cmdSelectExportFile.UseVisualStyleBackColor = true;
-            this.cmdSelectExportFile.Click += new System.EventHandler(this.cmdSelectExportFile_Click);
+            cmdSelectExportFile.Image = WinFormsUI.Properties.Resources.open_file_folder_icon;
+            resources.ApplyResources(cmdSelectExportFile, "cmdSelectExportFile");
+            cmdSelectExportFile.Name = "cmdSelectExportFile";
+            cmdSelectExportFile.UseVisualStyleBackColor = true;
+            cmdSelectExportFile.Click += cmdSelectExportFile_Click;
             // 
             // txtBackUpDir
             // 
-            resources.ApplyResources(this.txtBackUpDir, "txtBackUpDir");
-            this.txtBackUpDir.Name = "txtBackUpDir";
-            this.txtBackUpDir.Tag = "BackUpDir";
+            resources.ApplyResources(txtBackUpDir, "txtBackUpDir");
+            txtBackUpDir.Name = "txtBackUpDir";
+            txtBackUpDir.Tag = "BackUpDir";
             // 
             // lblBackupDirectory
             // 
-            resources.ApplyResources(this.lblBackupDirectory, "lblBackupDirectory");
-            this.lblBackupDirectory.Name = "lblBackupDirectory";
+            resources.ApplyResources(lblBackupDirectory, "lblBackupDirectory");
+            lblBackupDirectory.Name = "lblBackupDirectory";
             // 
             // lblBackUpBeforeRestore
             // 
-            resources.ApplyResources(this.lblBackUpBeforeRestore, "lblBackUpBeforeRestore");
-            this.lblBackUpBeforeRestore.Name = "lblBackUpBeforeRestore";
+            resources.ApplyResources(lblBackUpBeforeRestore, "lblBackUpBeforeRestore");
+            lblBackUpBeforeRestore.Name = "lblBackUpBeforeRestore";
             // 
             // chkBackUpBeforeRestore
             // 
-            resources.ApplyResources(this.chkBackUpBeforeRestore, "chkBackUpBeforeRestore");
-            this.chkBackUpBeforeRestore.Checked = true;
-            this.chkBackUpBeforeRestore.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkBackUpBeforeRestore.Name = "chkBackUpBeforeRestore";
-            this.chkBackUpBeforeRestore.UseVisualStyleBackColor = true;
+            resources.ApplyResources(chkBackUpBeforeRestore, "chkBackUpBeforeRestore");
+            chkBackUpBeforeRestore.Checked = true;
+            chkBackUpBeforeRestore.CheckState = CheckState.Checked;
+            chkBackUpBeforeRestore.Name = "chkBackUpBeforeRestore";
+            chkBackUpBeforeRestore.UseVisualStyleBackColor = true;
             // 
             // cmdRestoreBackUp
             // 
-            resources.ApplyResources(this.cmdRestoreBackUp, "cmdRestoreBackUp");
-            this.cmdRestoreBackUp.Name = "cmdRestoreBackUp";
-            this.cmdRestoreBackUp.UseVisualStyleBackColor = true;
-            this.cmdRestoreBackUp.Click += new System.EventHandler(this.cmdRestoreBackUp_Click);
+            resources.ApplyResources(cmdRestoreBackUp, "cmdRestoreBackUp");
+            cmdRestoreBackUp.Name = "cmdRestoreBackUp";
+            cmdRestoreBackUp.UseVisualStyleBackColor = true;
+            cmdRestoreBackUp.Click += cmdRestoreBackUp_Click;
             // 
             // cmdSelectRestoreFile
             // 
-            resources.ApplyResources(this.cmdSelectRestoreFile, "cmdSelectRestoreFile");
-            this.cmdSelectRestoreFile.Image = global::WinFormsUI.Properties.Resources.open_file_icon;
-            this.cmdSelectRestoreFile.Name = "cmdSelectRestoreFile";
-            this.cmdSelectRestoreFile.UseVisualStyleBackColor = true;
-            this.cmdSelectRestoreFile.Click += new System.EventHandler(this.cmdSelectRestoreFile_Click);
+            cmdSelectRestoreFile.Image = WinFormsUI.Properties.Resources.open_file_icon;
+            resources.ApplyResources(cmdSelectRestoreFile, "cmdSelectRestoreFile");
+            cmdSelectRestoreFile.Name = "cmdSelectRestoreFile";
+            cmdSelectRestoreFile.UseVisualStyleBackColor = true;
+            cmdSelectRestoreFile.Click += cmdSelectRestoreFile_Click;
             // 
             // txtRestoreFile
             // 
-            resources.ApplyResources(this.txtRestoreFile, "txtRestoreFile");
-            this.txtRestoreFile.Name = "txtRestoreFile";
+            resources.ApplyResources(txtRestoreFile, "txtRestoreFile");
+            txtRestoreFile.Name = "txtRestoreFile";
             // 
             // lblRestoreFile
             // 
-            resources.ApplyResources(this.lblRestoreFile, "lblRestoreFile");
-            this.lblRestoreFile.Name = "lblRestoreFile";
+            resources.ApplyResources(lblRestoreFile, "lblRestoreFile");
+            lblRestoreFile.Name = "lblRestoreFile";
             // 
             // frmBackUpAndRestore
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.lblBackUpBeforeRestore);
-            this.Controls.Add(this.chkBackUpBeforeRestore);
-            this.Controls.Add(this.cmdRestoreBackUp);
-            this.Controls.Add(this.cmdSelectRestoreFile);
-            this.Controls.Add(this.txtRestoreFile);
-            this.Controls.Add(this.lblRestoreFile);
-            this.Controls.Add(this.cmdCreateBackup);
-            this.Controls.Add(this.cmdSelectExportFile);
-            this.Controls.Add(this.txtBackUpDir);
-            this.Controls.Add(this.lblBackupDirectory);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.toolStrip1);
-            this.Name = "frmBackUpAndRestore";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.Load += new System.EventHandler(this.frmBackUpAndRestore_Load);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lblBackUpBeforeRestore);
+            Controls.Add(chkBackUpBeforeRestore);
+            Controls.Add(cmdRestoreBackUp);
+            Controls.Add(cmdSelectRestoreFile);
+            Controls.Add(txtRestoreFile);
+            Controls.Add(lblRestoreFile);
+            Controls.Add(cmdCreateBackup);
+            Controls.Add(cmdSelectExportFile);
+            Controls.Add(txtBackUpDir);
+            Controls.Add(lblBackupDirectory);
+            Controls.Add(statusStrip1);
+            Controls.Add(toolStrip1);
+            Name = "frmBackUpAndRestore";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            Load += frmBackUpAndRestore_Load;
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

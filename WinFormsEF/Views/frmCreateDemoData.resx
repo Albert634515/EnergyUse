@@ -1,4 +1,64 @@
-﻿<root>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema 
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -82,7 +142,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>0</value>
   </data>
   <data name="toolStrip1.Text" xml:space="preserve">
     <value>toolStrip1</value>
@@ -109,7 +169,7 @@
     <value>966, 22</value>
   </data>
   <data name="statusStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
+    <value>20</value>
   </data>
   <data name="statusStrip1.Text" xml:space="preserve">
     <value>statusStrip1</value>
@@ -146,7 +206,7 @@
     <value>110, 50</value>
   </data>
   <data name="cmdCreateDemoData.TabIndex" type="System.Int32, mscorlib">
-    <value>45</value>
+    <value>19</value>
   </data>
   <data name="cmdCreateDemoData.Text" xml:space="preserve">
     <value>C&amp;reate</value>
@@ -182,7 +242,7 @@
     <value>15, 20</value>
   </data>
   <data name="label7.TabIndex" type="System.Int32, mscorlib">
-    <value>44</value>
+    <value>12</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
     <value>-</value>
@@ -209,7 +269,7 @@
     <value>21, 20</value>
   </data>
   <data name="label6.TabIndex" type="System.Int32, mscorlib">
-    <value>43</value>
+    <value>14</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
     <value>%</value>
@@ -233,7 +293,7 @@
     <value>46, 27</value>
   </data>
   <data name="txtMaxRandomRange.TabIndex" type="System.Int32, mscorlib">
-    <value>42</value>
+    <value>13</value>
   </data>
   <data name="txtMaxRandomRange.Text" xml:space="preserve">
     <value>10</value>
@@ -260,7 +320,7 @@
     <value>21, 20</value>
   </data>
   <data name="lblMinRangePerc.TabIndex" type="System.Int32, mscorlib">
-    <value>41</value>
+    <value>11</value>
   </data>
   <data name="lblMinRangePerc.Text" xml:space="preserve">
     <value>%</value>
@@ -284,7 +344,7 @@
     <value>46, 27</value>
   </data>
   <data name="txtMinRandomRange.TabIndex" type="System.Int32, mscorlib">
-    <value>40</value>
+    <value>10</value>
   </data>
   <data name="txtMinRandomRange.Text" xml:space="preserve">
     <value>-10</value>
@@ -311,7 +371,7 @@
     <value>110, 20</value>
   </data>
   <data name="label5.TabIndex" type="System.Int32, mscorlib">
-    <value>39</value>
+    <value>9</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
     <value>Random range:</value>
@@ -338,7 +398,7 @@
     <value>432, 20</value>
   </data>
   <data name="lblRandomizerHelp.TabIndex" type="System.Int32, mscorlib">
-    <value>38</value>
+    <value>15</value>
   </data>
   <data name="lblRandomizerHelp.Text" xml:space="preserve">
     <value>(To anomize the data a range with which each value is adjusted)</value>
@@ -365,7 +425,7 @@
     <value>15, 20</value>
   </data>
   <data name="lblEndDay.TabIndex" type="System.Int32, mscorlib">
-    <value>37</value>
+    <value>7</value>
   </data>
   <data name="lblEndDay.Text" xml:space="preserve">
     <value>-</value>
@@ -389,7 +449,7 @@
     <value>129, 27</value>
   </data>
   <data name="dtpEndDay.TabIndex" type="System.Int32, mscorlib">
-    <value>36</value>
+    <value>8</value>
   </data>
   <data name="&gt;&gt;dtpEndDay.Name" xml:space="preserve">
     <value>dtpEndDay</value>
@@ -413,7 +473,7 @@
     <value>99, 20</value>
   </data>
   <data name="lblStartDay.TabIndex" type="System.Int32, mscorlib">
-    <value>35</value>
+    <value>5</value>
   </data>
   <data name="lblStartDay.Text" xml:space="preserve">
     <value>Source range:</value>
@@ -437,7 +497,7 @@
     <value>129, 27</value>
   </data>
   <data name="dtpStartDay.TabIndex" type="System.Int32, mscorlib">
-    <value>34</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;dtpStartDay.Name" xml:space="preserve">
     <value>dtpStartDay</value>
@@ -458,7 +518,7 @@
     <value>151, 28</value>
   </data>
   <data name="cboEnergyType.TabIndex" type="System.Int32, mscorlib">
-    <value>33</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;cboEnergyType.Name" xml:space="preserve">
     <value>cboEnergyType</value>
@@ -482,7 +542,7 @@
     <value>90, 20</value>
   </data>
   <data name="label4.TabIndex" type="System.Int32, mscorlib">
-    <value>32</value>
+    <value>3</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
     <value>Energy type:</value>
@@ -509,7 +569,7 @@
     <value>75, 20</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
-    <value>31</value>
+    <value>18</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
     <value>(optional)</value>
@@ -533,7 +593,7 @@
     <value>294, 28</value>
   </data>
   <data name="cboTargetAddress.TabIndex" type="System.Int32, mscorlib">
-    <value>30</value>
+    <value>17</value>
   </data>
   <data name="&gt;&gt;cboTargetAddress.Name" xml:space="preserve">
     <value>cboTargetAddress</value>
@@ -557,7 +617,7 @@
     <value>108, 20</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>29</value>
+    <value>16</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>Target address:</value>
@@ -581,7 +641,7 @@
     <value>294, 28</value>
   </data>
   <data name="cboSourceAddress.TabIndex" type="System.Int32, mscorlib">
-    <value>28</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;cboSourceAddress.Name" xml:space="preserve">
     <value>cboSourceAddress</value>
@@ -605,7 +665,7 @@
     <value>112, 20</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>27</value>
+    <value>1</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Source address:</value>

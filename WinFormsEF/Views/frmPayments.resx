@@ -133,7 +133,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="CboAddress.TabIndex" type="System.Int32, mscorlib">
-    <value>32</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;CboAddress.Name" xml:space="preserve">
     <value>CboAddress</value>
@@ -161,7 +161,7 @@
     <value>65, 20</value>
   </data>
   <data name="lblAddress.TabIndex" type="System.Int32, mscorlib">
-    <value>29</value>
+    <value>1</value>
   </data>
   <data name="lblAddress.Text" xml:space="preserve">
     <value>Address:</value>
@@ -191,7 +191,7 @@
     <value>277, 28</value>
   </data>
   <data name="CboPreSelectedPeriods.TabIndex" type="System.Int32, mscorlib">
-    <value>31</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;CboPreSelectedPeriods.Name" xml:space="preserve">
     <value>CboPreSelectedPeriods</value>
@@ -212,16 +212,16 @@
     <value>NoControl</value>
   </data>
   <data name="LblPeriod.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 95</value>
+    <value>151, 95</value>
   </data>
   <data name="LblPeriod.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 20</value>
+    <value>54, 20</value>
   </data>
   <data name="LblPeriod.TabIndex" type="System.Int32, mscorlib">
-    <value>30</value>
+    <value>3</value>
   </data>
   <data name="LblPeriod.Text" xml:space="preserve">
-    <value>Pre selected period:</value>
+    <value>Period:</value>
   </data>
   <data name="&gt;&gt;LblPeriod.Name" xml:space="preserve">
     <value>LblPeriod</value>
@@ -302,7 +302,7 @@
     <value>980, 27</value>
   </data>
   <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>33</value>
+    <value>0</value>
   </data>
   <data name="toolStrip1.Text" xml:space="preserve">
     <value>toolStrip1</value>
@@ -428,7 +428,7 @@
     <value>518, 281</value>
   </data>
   <data name="DgPayments.TabIndex" type="System.Int32, mscorlib">
-    <value>35</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;DgPayments.Name" xml:space="preserve">
     <value>DgPayments</value>
@@ -506,7 +506,7 @@
     <value>68, 20</value>
   </data>
   <data name="LblPayDate.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="LblPayDate.Text" xml:space="preserve">
     <value>Pay date:</value>
@@ -530,7 +530,7 @@
     <value>111, 27</value>
   </data>
   <data name="DtPayDate.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;DtPayDate.Name" xml:space="preserve">
     <value>DtPayDate</value>
@@ -602,7 +602,7 @@
     <value>434, 254</value>
   </data>
   <data name="GbPayment.TabIndex" type="System.Int32, mscorlib">
-    <value>36</value>
+    <value>6</value>
   </data>
   <data name="GbPayment.Text" xml:space="preserve">
     <value>Payment</value>
@@ -685,12 +685,6 @@
   <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;bsPayments.Name" xml:space="preserve">
-    <value>bsPayments</value>
-  </data>
-  <data name="&gt;&gt;bsPayments.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;idDataGridViewTextBoxColumn.Name" xml:space="preserve">
     <value>idDataGridViewTextBoxColumn</value>
   </data>
@@ -726,6 +720,12 @@
   </data>
   <data name="&gt;&gt;preDefinedPeriodIdDataGridViewTextBoxColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsPayments.Name" xml:space="preserve">
+    <value>bsPayments</value>
+  </data>
+  <data name="&gt;&gt;bsPayments.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>frmPayments</value>

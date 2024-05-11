@@ -28,168 +28,154 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.ToolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.TsbAdd = new System.Windows.Forms.ToolStripButton();
-            this.TsbSave = new System.Windows.Forms.ToolStripButton();
-            this.TbsCancel = new System.Windows.Forms.ToolStripButton();
-            this.TsbDelete = new System.Windows.Forms.ToolStripButton();
-            this.TsbRefresh = new System.Windows.Forms.ToolStripButton();
-            this.ToolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.DgStaffel = new System.Windows.Forms.DataGridView();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rateIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valueFromDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valueTillDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.staffelValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BsStaffel = new System.Windows.Forms.BindingSource(this.components);
-            this.ToolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgStaffel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BsStaffel)).BeginInit();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            ToolStrip1 = new ToolStrip();
+            TsbAdd = new ToolStripButton();
+            TsbSave = new ToolStripButton();
+            TbsCancel = new ToolStripButton();
+            TsbDelete = new ToolStripButton();
+            TsbRefresh = new ToolStripButton();
+            ToolTip1 = new ToolTip(components);
+            DgStaffel = new DataGridView();
+            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            rateIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            valueFromDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            valueTillDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            staffelValueDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            BsStaffel = new BindingSource(components);
+            ToolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)DgStaffel).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)BsStaffel).BeginInit();
+            SuspendLayout();
             // 
             // ToolStrip1
             // 
-            this.ToolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.ToolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TsbAdd,
-            this.TsbSave,
-            this.TbsCancel,
-            this.TsbDelete,
-            this.TsbRefresh});
-            this.ToolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.ToolStrip1.Name = "ToolStrip1";
-            this.ToolStrip1.Size = new System.Drawing.Size(487, 27);
-            this.ToolStrip1.TabIndex = 1;
-            this.ToolStrip1.Text = "toolStrip1";
+            ToolStrip1.ImageScalingSize = new Size(20, 20);
+            ToolStrip1.Items.AddRange(new ToolStripItem[] { TsbAdd, TsbSave, TbsCancel, TsbDelete, TsbRefresh });
+            ToolStrip1.Location = new Point(0, 0);
+            ToolStrip1.Name = "ToolStrip1";
+            ToolStrip1.Size = new Size(487, 27);
+            ToolStrip1.TabIndex = 0;
+            ToolStrip1.Text = "toolStrip1";
             // 
             // TsbAdd
             // 
-            this.TsbAdd.Image = global::WinFormsUI.Properties.Resources.add_24x24;
-            this.TsbAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TsbAdd.Name = "TsbAdd";
-            this.TsbAdd.Size = new System.Drawing.Size(61, 24);
-            this.TsbAdd.Text = "&Add";
-            this.TsbAdd.Click += new System.EventHandler(this.tsbAdd_Click);
+            TsbAdd.Image = WinFormsUI.Properties.Resources.add_24x24;
+            TsbAdd.ImageTransparentColor = Color.Magenta;
+            TsbAdd.Name = "TsbAdd";
+            TsbAdd.Size = new Size(61, 24);
+            TsbAdd.Text = "&Add";
+            TsbAdd.Click += tsbAdd_Click;
             // 
             // TsbSave
             // 
-            this.TsbSave.Image = global::WinFormsUI.Properties.Resources.tick_mark_24x24;
-            this.TsbSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TsbSave.Name = "TsbSave";
-            this.TsbSave.Size = new System.Drawing.Size(64, 24);
-            this.TsbSave.Text = "&Save";
-            this.TsbSave.Click += new System.EventHandler(this.tsbSave_Click);
+            TsbSave.Image = WinFormsUI.Properties.Resources.tick_mark_24x24;
+            TsbSave.ImageTransparentColor = Color.Magenta;
+            TsbSave.Name = "TsbSave";
+            TsbSave.Size = new Size(64, 24);
+            TsbSave.Text = "&Save";
+            TsbSave.Click += tsbSave_Click;
             // 
             // TbsCancel
             // 
-            this.TbsCancel.Image = global::WinFormsUI.Properties.Resources.clear_24x24;
-            this.TbsCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TbsCancel.Name = "TbsCancel";
-            this.TbsCancel.Size = new System.Drawing.Size(77, 24);
-            this.TbsCancel.Text = "&Cancel";
-            this.TbsCancel.Click += new System.EventHandler(this.tbsCancel_Click);
+            TbsCancel.Image = WinFormsUI.Properties.Resources.clear_24x24;
+            TbsCancel.ImageTransparentColor = Color.Magenta;
+            TbsCancel.Name = "TbsCancel";
+            TbsCancel.Size = new Size(77, 24);
+            TbsCancel.Text = "&Cancel";
+            TbsCancel.Click += tbsCancel_Click;
             // 
             // TsbDelete
             // 
-            this.TsbDelete.Image = global::WinFormsUI.Properties.Resources.delete_24x24;
-            this.TsbDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TsbDelete.Name = "TsbDelete";
-            this.TsbDelete.Size = new System.Drawing.Size(77, 24);
-            this.TsbDelete.Text = "&Delete";
-            this.TsbDelete.Click += new System.EventHandler(this.tsbDelete_Click);
+            TsbDelete.Image = WinFormsUI.Properties.Resources.delete_24x24;
+            TsbDelete.ImageTransparentColor = Color.Magenta;
+            TsbDelete.Name = "TsbDelete";
+            TsbDelete.Size = new Size(77, 24);
+            TsbDelete.Text = "&Delete";
+            TsbDelete.Click += tsbDelete_Click;
             // 
             // TsbRefresh
             // 
-            this.TsbRefresh.Image = global::WinFormsUI.Properties.Resources.clock_24x24;
-            this.TsbRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TsbRefresh.Name = "TsbRefresh";
-            this.TsbRefresh.Size = new System.Drawing.Size(82, 24);
-            this.TsbRefresh.Text = "&Refresh";
-            this.TsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
+            TsbRefresh.Image = WinFormsUI.Properties.Resources.clock_24x24;
+            TsbRefresh.ImageTransparentColor = Color.Magenta;
+            TsbRefresh.Name = "TsbRefresh";
+            TsbRefresh.Size = new Size(82, 24);
+            TsbRefresh.Text = "&Refresh";
+            TsbRefresh.Click += tsbRefresh_Click;
             // 
             // DgStaffel
             // 
-            this.DgStaffel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.DgStaffel.AutoGenerateColumns = false;
-            this.DgStaffel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgStaffel.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idDataGridViewTextBoxColumn,
-            this.rateIdDataGridViewTextBoxColumn,
-            this.valueFromDataGridViewTextBoxColumn,
-            this.valueTillDataGridViewTextBoxColumn,
-            this.staffelValueDataGridViewTextBoxColumn});
-            this.DgStaffel.DataSource = this.BsStaffel;
-            this.DgStaffel.Location = new System.Drawing.Point(19, 43);
-            this.DgStaffel.Name = "DgStaffel";
-            this.DgStaffel.RowHeadersWidth = 51;
-            this.DgStaffel.RowTemplate.Height = 29;
-            this.DgStaffel.Size = new System.Drawing.Size(462, 326);
-            this.DgStaffel.TabIndex = 2;
+            DgStaffel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            DgStaffel.AutoGenerateColumns = false;
+            DgStaffel.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DgStaffel.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, rateIdDataGridViewTextBoxColumn, valueFromDataGridViewTextBoxColumn, valueTillDataGridViewTextBoxColumn, staffelValueDataGridViewTextBoxColumn });
+            DgStaffel.DataSource = BsStaffel;
+            DgStaffel.Location = new Point(19, 43);
+            DgStaffel.Name = "DgStaffel";
+            DgStaffel.RowHeadersWidth = 51;
+            DgStaffel.Size = new Size(462, 326);
+            DgStaffel.TabIndex = 1;
             // 
             // idDataGridViewTextBoxColumn
             // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.Visible = false;
-            this.idDataGridViewTextBoxColumn.Width = 125;
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            idDataGridViewTextBoxColumn.HeaderText = "Id";
+            idDataGridViewTextBoxColumn.MinimumWidth = 6;
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            idDataGridViewTextBoxColumn.Visible = false;
+            idDataGridViewTextBoxColumn.Width = 125;
             // 
             // rateIdDataGridViewTextBoxColumn
             // 
-            this.rateIdDataGridViewTextBoxColumn.DataPropertyName = "RateId";
-            this.rateIdDataGridViewTextBoxColumn.HeaderText = "RateId";
-            this.rateIdDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.rateIdDataGridViewTextBoxColumn.Name = "rateIdDataGridViewTextBoxColumn";
-            this.rateIdDataGridViewTextBoxColumn.Visible = false;
-            this.rateIdDataGridViewTextBoxColumn.Width = 125;
+            rateIdDataGridViewTextBoxColumn.DataPropertyName = "RateId";
+            rateIdDataGridViewTextBoxColumn.HeaderText = "RateId";
+            rateIdDataGridViewTextBoxColumn.MinimumWidth = 6;
+            rateIdDataGridViewTextBoxColumn.Name = "rateIdDataGridViewTextBoxColumn";
+            rateIdDataGridViewTextBoxColumn.Visible = false;
+            rateIdDataGridViewTextBoxColumn.Width = 125;
             // 
             // valueFromDataGridViewTextBoxColumn
             // 
-            this.valueFromDataGridViewTextBoxColumn.DataPropertyName = "ValueFrom";
-            this.valueFromDataGridViewTextBoxColumn.HeaderText = "Value from";
-            this.valueFromDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.valueFromDataGridViewTextBoxColumn.Name = "valueFromDataGridViewTextBoxColumn";
-            this.valueFromDataGridViewTextBoxColumn.Width = 125;
+            valueFromDataGridViewTextBoxColumn.DataPropertyName = "ValueFrom";
+            valueFromDataGridViewTextBoxColumn.HeaderText = "Value from";
+            valueFromDataGridViewTextBoxColumn.MinimumWidth = 6;
+            valueFromDataGridViewTextBoxColumn.Name = "valueFromDataGridViewTextBoxColumn";
+            valueFromDataGridViewTextBoxColumn.Width = 125;
             // 
             // valueTillDataGridViewTextBoxColumn
             // 
-            this.valueTillDataGridViewTextBoxColumn.DataPropertyName = "ValueTill";
-            this.valueTillDataGridViewTextBoxColumn.HeaderText = "Value till";
-            this.valueTillDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.valueTillDataGridViewTextBoxColumn.Name = "valueTillDataGridViewTextBoxColumn";
-            this.valueTillDataGridViewTextBoxColumn.Width = 125;
+            valueTillDataGridViewTextBoxColumn.DataPropertyName = "ValueTill";
+            valueTillDataGridViewTextBoxColumn.HeaderText = "Value till";
+            valueTillDataGridViewTextBoxColumn.MinimumWidth = 6;
+            valueTillDataGridViewTextBoxColumn.Name = "valueTillDataGridViewTextBoxColumn";
+            valueTillDataGridViewTextBoxColumn.Width = 125;
             // 
             // staffelValueDataGridViewTextBoxColumn
             // 
-            this.staffelValueDataGridViewTextBoxColumn.DataPropertyName = "StaffelValue";
-            this.staffelValueDataGridViewTextBoxColumn.HeaderText = "Rate";
-            this.staffelValueDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.staffelValueDataGridViewTextBoxColumn.Name = "staffelValueDataGridViewTextBoxColumn";
-            this.staffelValueDataGridViewTextBoxColumn.Width = 125;
+            staffelValueDataGridViewTextBoxColumn.DataPropertyName = "StaffelValue";
+            staffelValueDataGridViewTextBoxColumn.HeaderText = "Rate";
+            staffelValueDataGridViewTextBoxColumn.MinimumWidth = 6;
+            staffelValueDataGridViewTextBoxColumn.Name = "staffelValueDataGridViewTextBoxColumn";
+            staffelValueDataGridViewTextBoxColumn.Width = 125;
             // 
             // BsStaffel
             // 
-            this.BsStaffel.DataSource = typeof(EnergyUse.Models.Staffel);
+            BsStaffel.DataSource = typeof(EnergyUse.Models.Staffel);
             // 
             // ucStaffel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.DgStaffel);
-            this.Controls.Add(this.ToolStrip1);
-            this.Name = "ucStaffel";
-            this.Size = new System.Drawing.Size(487, 372);
-            this.ToolStrip1.ResumeLayout(false);
-            this.ToolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgStaffel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BsStaffel)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(DgStaffel);
+            Controls.Add(ToolStrip1);
+            Name = "ucStaffel";
+            Size = new Size(487, 372);
+            ToolStrip1.ResumeLayout(false);
+            ToolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)DgStaffel).EndInit();
+            ((System.ComponentModel.ISupportInitialize)BsStaffel).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

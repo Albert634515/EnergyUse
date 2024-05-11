@@ -39,6 +39,11 @@
             bsPreDefinedPeriodDates = new BindingSource(components);
             toolTip1 = new ToolTip(components);
             dgPredefinedPeriodDates = new DataGridView();
+            startDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            endDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            energyTypeNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            tarifGroupNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             gbPeriodDate = new GroupBox();
             cboTarifGroup = new ComboBox();
             bsTarifGroups = new BindingSource(components);
@@ -50,11 +55,6 @@
             dtEndDate = new DateTimePicker();
             lblStartDate = new Label();
             dtStartDate = new DateTimePicker();
-            startDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            endDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            energyTypeNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            tarifGroupNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bsPreDefinedPeriodDates).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgPredefinedPeriodDates).BeginInit();
@@ -119,7 +119,38 @@
             dgPredefinedPeriodDates.Columns.AddRange(new DataGridViewColumn[] { startDateDataGridViewTextBoxColumn, endDateDataGridViewTextBoxColumn, energyTypeNameDataGridViewTextBoxColumn, tarifGroupNameDataGridViewTextBoxColumn, idDataGridViewTextBoxColumn });
             dgPredefinedPeriodDates.DataSource = bsPreDefinedPeriodDates;
             dgPredefinedPeriodDates.Name = "dgPredefinedPeriodDates";
-            dgPredefinedPeriodDates.RowTemplate.Height = 29;
+            // 
+            // startDateDataGridViewTextBoxColumn
+            // 
+            startDateDataGridViewTextBoxColumn.DataPropertyName = "StartDate";
+            resources.ApplyResources(startDateDataGridViewTextBoxColumn, "startDateDataGridViewTextBoxColumn");
+            startDateDataGridViewTextBoxColumn.Name = "startDateDataGridViewTextBoxColumn";
+            // 
+            // endDateDataGridViewTextBoxColumn
+            // 
+            endDateDataGridViewTextBoxColumn.DataPropertyName = "EndDate";
+            resources.ApplyResources(endDateDataGridViewTextBoxColumn, "endDateDataGridViewTextBoxColumn");
+            endDateDataGridViewTextBoxColumn.Name = "endDateDataGridViewTextBoxColumn";
+            // 
+            // energyTypeNameDataGridViewTextBoxColumn
+            // 
+            energyTypeNameDataGridViewTextBoxColumn.DataPropertyName = "EnergyTypeName";
+            resources.ApplyResources(energyTypeNameDataGridViewTextBoxColumn, "energyTypeNameDataGridViewTextBoxColumn");
+            energyTypeNameDataGridViewTextBoxColumn.Name = "energyTypeNameDataGridViewTextBoxColumn";
+            energyTypeNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // tarifGroupNameDataGridViewTextBoxColumn
+            // 
+            tarifGroupNameDataGridViewTextBoxColumn.DataPropertyName = "TarifGroupName";
+            resources.ApplyResources(tarifGroupNameDataGridViewTextBoxColumn, "tarifGroupNameDataGridViewTextBoxColumn");
+            tarifGroupNameDataGridViewTextBoxColumn.Name = "tarifGroupNameDataGridViewTextBoxColumn";
+            tarifGroupNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
             // 
             // gbPeriodDate
             // 
@@ -198,38 +229,6 @@
             dtStartDate.Format = DateTimePickerFormat.Short;
             resources.ApplyResources(dtStartDate, "dtStartDate");
             dtStartDate.Name = "dtStartDate";
-            // 
-            // startDateDataGridViewTextBoxColumn
-            // 
-            startDateDataGridViewTextBoxColumn.DataPropertyName = "StartDate";
-            resources.ApplyResources(startDateDataGridViewTextBoxColumn, "startDateDataGridViewTextBoxColumn");
-            startDateDataGridViewTextBoxColumn.Name = "startDateDataGridViewTextBoxColumn";
-            // 
-            // endDateDataGridViewTextBoxColumn
-            // 
-            endDateDataGridViewTextBoxColumn.DataPropertyName = "EndDate";
-            resources.ApplyResources(endDateDataGridViewTextBoxColumn, "endDateDataGridViewTextBoxColumn");
-            endDateDataGridViewTextBoxColumn.Name = "endDateDataGridViewTextBoxColumn";
-            // 
-            // energyTypeNameDataGridViewTextBoxColumn
-            // 
-            energyTypeNameDataGridViewTextBoxColumn.DataPropertyName = "EnergyTypeName";
-            resources.ApplyResources(energyTypeNameDataGridViewTextBoxColumn, "energyTypeNameDataGridViewTextBoxColumn");
-            energyTypeNameDataGridViewTextBoxColumn.Name = "energyTypeNameDataGridViewTextBoxColumn";
-            energyTypeNameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // tarifGroupNameDataGridViewTextBoxColumn
-            // 
-            tarifGroupNameDataGridViewTextBoxColumn.DataPropertyName = "TarifGroupName";
-            resources.ApplyResources(tarifGroupNameDataGridViewTextBoxColumn, "tarifGroupNameDataGridViewTextBoxColumn");
-            tarifGroupNameDataGridViewTextBoxColumn.Name = "tarifGroupNameDataGridViewTextBoxColumn";
-            tarifGroupNameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
-            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
             // 
             // ucDatePredefined
             // 

@@ -1,4 +1,64 @@
-﻿<root>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema 
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -57,9 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CboAddress.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lblAddress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>153, 61</value>
+    <value>154, 61</value>
   </data>
   <data name="lblAddress.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 20</value>
@@ -67,14 +130,26 @@
   <data name="lblAddress.Text" xml:space="preserve">
     <value>Adres:</value>
   </data>
+  <data name="lblAddress.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CboPreSelectedPeriods.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="LblPeriod.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 99</value>
+    <value>150, 95</value>
   </data>
   <data name="LblPeriod.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 20</value>
+    <value>54, 20</value>
   </data>
   <data name="LblPeriod.Text" xml:space="preserve">
-    <value>Voor geselecteerde periode:</value>
+    <value>Period:</value>
+  </data>
+  <data name="LblPeriod.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStrip1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="tsbAdd.Size" type="System.Drawing.Size, System.Drawing">
     <value>106, 24</value>
@@ -83,10 +158,10 @@
     <value>&amp;Toevoegen</value>
   </data>
   <data name="tsbSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 24</value>
+    <value>87, 24</value>
   </data>
   <data name="tsbSave.Text" xml:space="preserve">
-    <value>&amp;Bewaren</value>
+    <value>&amp;Opslaan</value>
   </data>
   <data name="tbsCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 24</value>
@@ -112,6 +187,63 @@
   <data name="tbsClose.Text" xml:space="preserve">
     <value>&amp;Sluiten</value>
   </data>
+  <data name="statusStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="DgPayments.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GbPayment.Text" xml:space="preserve">
+    <value>Betaling</value>
+  </data>
+  <data name="GbPayment.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TxtAmount.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblAmount.Location" type="System.Drawing.Point, System.Drawing">
+    <value>69, 110</value>
+  </data>
+  <data name="LblAmount.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 20</value>
+  </data>
+  <data name="LblAmount.Text" xml:space="preserve">
+    <value>Bedrag:</value>
+  </data>
+  <data name="LblAmount.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblPayDate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>28, 72</value>
+  </data>
+  <data name="LblPayDate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>101, 20</value>
+  </data>
+  <data name="LblPayDate.Text" xml:space="preserve">
+    <value>Betaal datum:</value>
+  </data>
+  <data name="LblPayDate.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="DtPayDate.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TxtDescription.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>31, 39</value>
+  </data>
+  <data name="LblDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>98, 20</value>
+  </data>
+  <data name="LblDescription.Text" xml:space="preserve">
+    <value>Omschrijving:</value>
+  </data>
+  <data name="LblDescription.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="descriptionDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
     <value>Omschrijving</value>
   </data>
@@ -121,37 +253,7 @@
   <data name="amountDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
     <value>Bedrag</value>
   </data>
-  <data name="GbPayment.Text" xml:space="preserve">
-    <value>Betaling</value>
-  </data>
-  <data name="LblAmount.Location" type="System.Drawing.Point, System.Drawing">
-    <value>68, 110</value>
-  </data>
-  <data name="LblAmount.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 20</value>
-  </data>
-  <data name="LblAmount.Text" xml:space="preserve">
-    <value>Bedrag:</value>
-  </data>
-  <data name="LblPayDate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>27, 74</value>
-  </data>
-  <data name="LblPayDate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>101, 20</value>
-  </data>
-  <data name="LblPayDate.Text" xml:space="preserve">
-    <value>Betaal datum:</value>
-  </data>
-  <data name="LblDescription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>30, 39</value>
-  </data>
-  <data name="LblDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>98, 20</value>
-  </data>
-  <data name="LblDescription.Text" xml:space="preserve">
-    <value>Omschrijving:</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Betalingen</value>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

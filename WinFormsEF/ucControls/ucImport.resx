@@ -136,7 +136,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="CmdSelectImportFile.TabIndex" type="System.Int32, mscorlib">
-    <value>29</value>
+    <value>5</value>
   </data>
   <data name="CmdSelectImportFile.Text" xml:space="preserve">
     <value>Select &amp;file</value>
@@ -163,7 +163,7 @@
     <value>563, 27</value>
   </data>
   <data name="TxtImportFile.TabIndex" type="System.Int32, mscorlib">
-    <value>28</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;TxtImportFile.Name" xml:space="preserve">
     <value>TxtImportFile</value>
@@ -187,7 +187,7 @@
     <value>82, 20</value>
   </data>
   <data name="LblImportFile.TabIndex" type="System.Int32, mscorlib">
-    <value>27</value>
+    <value>3</value>
   </data>
   <data name="LblImportFile.Text" xml:space="preserve">
     <value>Import file:</value>
@@ -314,7 +314,7 @@
     <value>1045, 879</value>
   </data>
   <data name="DgImportRows.TabIndex" type="System.Int32, mscorlib">
-    <value>33</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;DgImportRows.Name" xml:space="preserve">
     <value>DgImportRows</value>
@@ -365,7 +365,7 @@
     <value>1063, 27</value>
   </data>
   <data name="ToolStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>34</value>
+    <value>0</value>
   </data>
   <data name="ToolStrip1.Text" xml:space="preserve">
     <value>toolStrip1</value>
@@ -401,7 +401,7 @@
     <value>51, 20</value>
   </data>
   <data name="LblMeter.TabIndex" type="System.Int32, mscorlib">
-    <value>25</value>
+    <value>1</value>
   </data>
   <data name="LblMeter.Text" xml:space="preserve">
     <value>Meter:</value>
@@ -431,7 +431,7 @@
     <value>351, 28</value>
   </data>
   <data name="CboMeters.TabIndex" type="System.Int32, mscorlib">
-    <value>26</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;CboMeters.Name" xml:space="preserve">
     <value>CboMeters</value>

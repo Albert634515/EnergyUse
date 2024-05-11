@@ -46,6 +46,8 @@
             activeDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
             bsMeters = new BindingSource(components);
             gbMeter = new GroupBox();
+            dtpFrom = new DateTimePicker();
+            lblRange = new Label();
             label1 = new Label();
             cboAddress = new ComboBox();
             bsAddresses = new BindingSource(components);
@@ -58,8 +60,6 @@
             lblNumber = new Label();
             txtDescription = new TextBox();
             lblDescription = new Label();
-            dtpFrom = new DateTimePicker();
-            lblRange = new Label();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgMeters).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsMeters).BeginInit();
@@ -181,6 +181,18 @@
             gbMeter.Name = "gbMeter";
             gbMeter.TabStop = false;
             // 
+            // dtpFrom
+            // 
+            dtpFrom.DataBindings.Add(new Binding("Value", bsMeters, "ActiveFrom", true));
+            dtpFrom.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(dtpFrom, "dtpFrom");
+            dtpFrom.Name = "dtpFrom";
+            // 
+            // lblRange
+            // 
+            resources.ApplyResources(lblRange, "lblRange");
+            lblRange.Name = "lblRange";
+            // 
             // label1
             // 
             resources.ApplyResources(label1, "label1");
@@ -252,18 +264,6 @@
             // 
             resources.ApplyResources(lblDescription, "lblDescription");
             lblDescription.Name = "lblDescription";
-            // 
-            // dtpFrom
-            // 
-            dtpFrom.DataBindings.Add(new Binding("Value", bsMeters, "ActiveFrom", true));
-            dtpFrom.Format = DateTimePickerFormat.Short;
-            resources.ApplyResources(dtpFrom, "dtpFrom");
-            dtpFrom.Name = "dtpFrom";
-            // 
-            // lblRange
-            // 
-            resources.ApplyResources(lblRange, "lblRange");
-            lblRange.Name = "lblRange";
             // 
             // frmMeters
             // 

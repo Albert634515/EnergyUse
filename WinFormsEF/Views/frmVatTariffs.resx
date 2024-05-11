@@ -193,7 +193,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>0</value>
   </data>
   <data name="toolStrip1.Text" xml:space="preserve">
     <value>toolStrip1</value>
@@ -224,7 +224,7 @@
     <value>211, 28</value>
   </data>
   <data name="CboCostCategory.TabIndex" type="System.Int32, mscorlib">
-    <value>31</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;CboCostCategory.Name" xml:space="preserve">
     <value>CboCostCategory</value>
@@ -251,7 +251,7 @@
     <value>103, 20</value>
   </data>
   <data name="LblCostCategory.TabIndex" type="System.Int32, mscorlib">
-    <value>30</value>
+    <value>3</value>
   </data>
   <data name="LblCostCategory.Text" xml:space="preserve">
     <value>Cost category:</value>
@@ -281,7 +281,7 @@
     <value>124, 28</value>
   </data>
   <data name="CboEnergyType.TabIndex" type="System.Int32, mscorlib">
-    <value>29</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;CboEnergyType.Name" xml:space="preserve">
     <value>CboEnergyType</value>
@@ -308,7 +308,7 @@
     <value>90, 20</value>
   </data>
   <data name="LblEnergyType.TabIndex" type="System.Int32, mscorlib">
-    <value>28</value>
+    <value>1</value>
   </data>
   <data name="LblEnergyType.Text" xml:space="preserve">
     <value>Energy type:</value>
@@ -386,7 +386,7 @@
     <value>472, 318</value>
   </data>
   <data name="DgVatTarifs.TabIndex" type="System.Int32, mscorlib">
-    <value>32</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;DgVatTarifs.Name" xml:space="preserve">
     <value>DgVatTarifs</value>
@@ -413,7 +413,7 @@
     <value>21, 20</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>38</value>
+    <value>6</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>%</value>
@@ -437,7 +437,7 @@
     <value>69, 27</value>
   </data>
   <data name="TxtRateValue.TabIndex" type="System.Int32, mscorlib">
-    <value>37</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;TxtRateValue.Name" xml:space="preserve">
     <value>TxtRateValue</value>
@@ -464,7 +464,7 @@
     <value>40, 20</value>
   </data>
   <data name="LblTarif.TabIndex" type="System.Int32, mscorlib">
-    <value>34</value>
+    <value>4</value>
   </data>
   <data name="LblTarif.Text" xml:space="preserve">
     <value>Tarif:</value>
@@ -494,7 +494,7 @@
     <value>71, 20</value>
   </data>
   <data name="LblEndDate.TabIndex" type="System.Int32, mscorlib">
-    <value>36</value>
+    <value>2</value>
   </data>
   <data name="LblEndDate.Text" xml:space="preserve">
     <value>End date:</value>
@@ -518,7 +518,7 @@
     <value>148, 27</value>
   </data>
   <data name="DtEndDate.TabIndex" type="System.Int32, mscorlib">
-    <value>35</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;DtEndDate.Name" xml:space="preserve">
     <value>DtEndDate</value>
@@ -545,7 +545,7 @@
     <value>77, 20</value>
   </data>
   <data name="LblStartDate.TabIndex" type="System.Int32, mscorlib">
-    <value>34</value>
+    <value>0</value>
   </data>
   <data name="LblStartDate.Text" xml:space="preserve">
     <value>Start date:</value>
@@ -569,7 +569,7 @@
     <value>148, 27</value>
   </data>
   <data name="DtStartDate.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;DtStartDate.Name" xml:space="preserve">
     <value>DtStartDate</value>
@@ -590,7 +590,7 @@
     <value>483, 287</value>
   </data>
   <data name="GbTarif.TabIndex" type="System.Int32, mscorlib">
-    <value>33</value>
+    <value>6</value>
   </data>
   <data name="GbTarif.Text" xml:space="preserve">
     <value>Vat Tarif</value>

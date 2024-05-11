@@ -18,7 +18,7 @@
     <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
     <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
     <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing"">Blue</data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
     <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
         <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
@@ -174,7 +174,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+    <value>0</value>
   </data>
   <data name="toolStrip1.Text" xml:space="preserve">
     <value>toolStrip1</value>
@@ -259,7 +259,7 @@
     <value>593, 436</value>
   </data>
   <data name="dgPredefinedPeriodDates.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;dgPredefinedPeriodDates.Name" xml:space="preserve">
     <value>dgPredefinedPeriodDates</value>
@@ -286,7 +286,7 @@
     <value>151, 28</value>
   </data>
   <data name="cboTarifGroup.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;cboTarifGroup.Name" xml:space="preserve">
     <value>cboTarifGroup</value>
@@ -310,7 +310,7 @@
     <value>84, 20</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+    <value>4</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>Tarif group:</value>
@@ -337,7 +337,7 @@
     <value>151, 28</value>
   </data>
   <data name="cboEnergyType.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;cboEnergyType.Name" xml:space="preserve">
     <value>cboEnergyType</value>
@@ -361,7 +361,7 @@
     <value>90, 20</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Energy type:</value>
@@ -481,7 +481,7 @@
     <value>395, 408</value>
   </data>
   <data name="gbPeriodDate.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+    <value>2</value>
   </data>
   <data name="gbPeriodDate.Text" xml:space="preserve">
     <value>Period date</value>
@@ -549,18 +549,6 @@
   <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;bsTarifGroups.Name" xml:space="preserve">
-    <value>bsTarifGroups</value>
-  </data>
-  <data name="&gt;&gt;bsTarifGroups.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bsEnergyTypes.Name" xml:space="preserve">
-    <value>bsEnergyTypes</value>
-  </data>
-  <data name="&gt;&gt;bsEnergyTypes.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;startDateDataGridViewTextBoxColumn.Name" xml:space="preserve">
     <value>startDateDataGridViewTextBoxColumn</value>
   </data>
@@ -590,6 +578,18 @@
   </data>
   <data name="&gt;&gt;idDataGridViewTextBoxColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsTarifGroups.Name" xml:space="preserve">
+    <value>bsTarifGroups</value>
+  </data>
+  <data name="&gt;&gt;bsTarifGroups.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsEnergyTypes.Name" xml:space="preserve">
+    <value>bsEnergyTypes</value>
+  </data>
+  <data name="&gt;&gt;bsEnergyTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ucDatePredefined</value>

@@ -28,247 +28,230 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEditMeterReading));
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.lblReturnDeliveryDeltaLow = new System.Windows.Forms.Label();
-            this.txtReturnDeliveryDeltaLow = new System.Windows.Forms.TextBox();
-            this.bsMeterReading = new System.Windows.Forms.BindingSource(this.components);
-            this.lblReturnDeliveryDeltaNormal = new System.Windows.Forms.Label();
-            this.txtReturnDeliveryDeltaNormal = new System.Windows.Forms.TextBox();
-            this.lblDeltaLow = new System.Windows.Forms.Label();
-            this.txtDeltaLow = new System.Windows.Forms.TextBox();
-            this.lblDeltaNormal = new System.Windows.Forms.Label();
-            this.txtDeltaNormal = new System.Windows.Forms.TextBox();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cboMeters = new System.Windows.Forms.ComboBox();
-            this.bsMeters = new System.Windows.Forms.BindingSource(this.components);
-            this.cmdSave = new System.Windows.Forms.Button();
-            this.cmdClose = new System.Windows.Forms.Button();
-            this.lblReturnDeliveryLow = new System.Windows.Forms.Label();
-            this.txtReturnDeliveryLow = new System.Windows.Forms.TextBox();
-            this.lblReturnDeliveryNormal = new System.Windows.Forms.Label();
-            this.txtReturnDeliveryNormal = new System.Windows.Forms.TextBox();
-            this.lblRateLow = new System.Windows.Forms.Label();
-            this.txtRateLow = new System.Windows.Forms.TextBox();
-            this.lblRateNormal = new System.Windows.Forms.Label();
-            this.txtRateNormal = new System.Windows.Forms.TextBox();
-            this.dtpFrom = new System.Windows.Forms.DateTimePicker();
-            this.lblRange = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.bsMeterReading)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsMeters)).BeginInit();
-            this.SuspendLayout();
+            toolTip1 = new ToolTip(components);
+            lblReturnDeliveryDeltaLow = new Label();
+            txtReturnDeliveryDeltaLow = new TextBox();
+            bsMeterReading = new BindingSource(components);
+            lblReturnDeliveryDeltaNormal = new Label();
+            txtReturnDeliveryDeltaNormal = new TextBox();
+            lblDeltaLow = new Label();
+            txtDeltaLow = new TextBox();
+            lblDeltaNormal = new Label();
+            txtDeltaNormal = new TextBox();
+            statusStrip1 = new StatusStrip();
+            label2 = new Label();
+            cboMeters = new ComboBox();
+            bsMeters = new BindingSource(components);
+            cmdSave = new Button();
+            cmdClose = new Button();
+            lblReturnDeliveryLow = new Label();
+            txtReturnDeliveryLow = new TextBox();
+            lblReturnDeliveryNormal = new Label();
+            txtReturnDeliveryNormal = new TextBox();
+            lblRateLow = new Label();
+            txtRateLow = new TextBox();
+            lblRateNormal = new Label();
+            txtRateNormal = new TextBox();
+            dtpFrom = new DateTimePicker();
+            lblRange = new Label();
+            ((System.ComponentModel.ISupportInitialize)bsMeterReading).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsMeters).BeginInit();
+            SuspendLayout();
             // 
             // lblReturnDeliveryDeltaLow
             // 
-            resources.ApplyResources(this.lblReturnDeliveryDeltaLow, "lblReturnDeliveryDeltaLow");
-            this.lblReturnDeliveryDeltaLow.Name = "lblReturnDeliveryDeltaLow";
-            this.toolTip1.SetToolTip(this.lblReturnDeliveryDeltaLow, resources.GetString("lblReturnDeliveryDeltaLow.ToolTip"));
+            resources.ApplyResources(lblReturnDeliveryDeltaLow, "lblReturnDeliveryDeltaLow");
+            lblReturnDeliveryDeltaLow.Name = "lblReturnDeliveryDeltaLow";
+            toolTip1.SetToolTip(lblReturnDeliveryDeltaLow, resources.GetString("lblReturnDeliveryDeltaLow.ToolTip"));
             // 
             // txtReturnDeliveryDeltaLow
             // 
-            resources.ApplyResources(this.txtReturnDeliveryDeltaLow, "txtReturnDeliveryDeltaLow");
-            this.txtReturnDeliveryDeltaLow.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMeterReading, "ReturnDeliveryDeltaLow", true));
-            this.txtReturnDeliveryDeltaLow.Name = "txtReturnDeliveryDeltaLow";
-            this.txtReturnDeliveryDeltaLow.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.txtReturnDeliveryDeltaLow, resources.GetString("txtReturnDeliveryDeltaLow.ToolTip"));
+            txtReturnDeliveryDeltaLow.DataBindings.Add(new Binding("Text", bsMeterReading, "ReturnDeliveryDeltaLow", true));
+            resources.ApplyResources(txtReturnDeliveryDeltaLow, "txtReturnDeliveryDeltaLow");
+            txtReturnDeliveryDeltaLow.Name = "txtReturnDeliveryDeltaLow";
+            txtReturnDeliveryDeltaLow.ReadOnly = true;
+            toolTip1.SetToolTip(txtReturnDeliveryDeltaLow, resources.GetString("txtReturnDeliveryDeltaLow.ToolTip"));
             // 
             // bsMeterReading
             // 
-            this.bsMeterReading.DataSource = typeof(EnergyUse.Models.MeterReading);
+            bsMeterReading.DataSource = typeof(EnergyUse.Models.MeterReading);
             // 
             // lblReturnDeliveryDeltaNormal
             // 
-            resources.ApplyResources(this.lblReturnDeliveryDeltaNormal, "lblReturnDeliveryDeltaNormal");
-            this.lblReturnDeliveryDeltaNormal.Name = "lblReturnDeliveryDeltaNormal";
-            this.toolTip1.SetToolTip(this.lblReturnDeliveryDeltaNormal, resources.GetString("lblReturnDeliveryDeltaNormal.ToolTip"));
+            resources.ApplyResources(lblReturnDeliveryDeltaNormal, "lblReturnDeliveryDeltaNormal");
+            lblReturnDeliveryDeltaNormal.Name = "lblReturnDeliveryDeltaNormal";
+            toolTip1.SetToolTip(lblReturnDeliveryDeltaNormal, resources.GetString("lblReturnDeliveryDeltaNormal.ToolTip"));
             // 
             // txtReturnDeliveryDeltaNormal
             // 
-            resources.ApplyResources(this.txtReturnDeliveryDeltaNormal, "txtReturnDeliveryDeltaNormal");
-            this.txtReturnDeliveryDeltaNormal.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMeterReading, "ReturnDeliveryDeltaNormal", true));
-            this.txtReturnDeliveryDeltaNormal.Name = "txtReturnDeliveryDeltaNormal";
-            this.txtReturnDeliveryDeltaNormal.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.txtReturnDeliveryDeltaNormal, resources.GetString("txtReturnDeliveryDeltaNormal.ToolTip"));
+            txtReturnDeliveryDeltaNormal.DataBindings.Add(new Binding("Text", bsMeterReading, "ReturnDeliveryDeltaNormal", true));
+            resources.ApplyResources(txtReturnDeliveryDeltaNormal, "txtReturnDeliveryDeltaNormal");
+            txtReturnDeliveryDeltaNormal.Name = "txtReturnDeliveryDeltaNormal";
+            txtReturnDeliveryDeltaNormal.ReadOnly = true;
+            toolTip1.SetToolTip(txtReturnDeliveryDeltaNormal, resources.GetString("txtReturnDeliveryDeltaNormal.ToolTip"));
             // 
             // lblDeltaLow
             // 
-            resources.ApplyResources(this.lblDeltaLow, "lblDeltaLow");
-            this.lblDeltaLow.Name = "lblDeltaLow";
-            this.toolTip1.SetToolTip(this.lblDeltaLow, resources.GetString("lblDeltaLow.ToolTip"));
+            resources.ApplyResources(lblDeltaLow, "lblDeltaLow");
+            lblDeltaLow.Name = "lblDeltaLow";
+            toolTip1.SetToolTip(lblDeltaLow, resources.GetString("lblDeltaLow.ToolTip"));
             // 
             // txtDeltaLow
             // 
-            resources.ApplyResources(this.txtDeltaLow, "txtDeltaLow");
-            this.txtDeltaLow.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMeterReading, "DeltaLow", true));
-            this.txtDeltaLow.Name = "txtDeltaLow";
-            this.txtDeltaLow.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.txtDeltaLow, resources.GetString("txtDeltaLow.ToolTip"));
+            txtDeltaLow.DataBindings.Add(new Binding("Text", bsMeterReading, "DeltaLow", true));
+            resources.ApplyResources(txtDeltaLow, "txtDeltaLow");
+            txtDeltaLow.Name = "txtDeltaLow";
+            txtDeltaLow.ReadOnly = true;
+            toolTip1.SetToolTip(txtDeltaLow, resources.GetString("txtDeltaLow.ToolTip"));
             // 
             // lblDeltaNormal
             // 
-            resources.ApplyResources(this.lblDeltaNormal, "lblDeltaNormal");
-            this.lblDeltaNormal.Name = "lblDeltaNormal";
-            this.toolTip1.SetToolTip(this.lblDeltaNormal, resources.GetString("lblDeltaNormal.ToolTip"));
+            resources.ApplyResources(lblDeltaNormal, "lblDeltaNormal");
+            lblDeltaNormal.Name = "lblDeltaNormal";
+            toolTip1.SetToolTip(lblDeltaNormal, resources.GetString("lblDeltaNormal.ToolTip"));
             // 
             // txtDeltaNormal
             // 
-            resources.ApplyResources(this.txtDeltaNormal, "txtDeltaNormal");
-            this.txtDeltaNormal.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMeterReading, "DeltaNormal", true));
-            this.txtDeltaNormal.Name = "txtDeltaNormal";
-            this.txtDeltaNormal.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.txtDeltaNormal, resources.GetString("txtDeltaNormal.ToolTip"));
+            txtDeltaNormal.DataBindings.Add(new Binding("Text", bsMeterReading, "DeltaNormal", true));
+            resources.ApplyResources(txtDeltaNormal, "txtDeltaNormal");
+            txtDeltaNormal.Name = "txtDeltaNormal";
+            txtDeltaNormal.ReadOnly = true;
+            toolTip1.SetToolTip(txtDeltaNormal, resources.GetString("txtDeltaNormal.ToolTip"));
             // 
             // statusStrip1
             // 
-            resources.ApplyResources(this.statusStrip1, "statusStrip1");
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Name = "statusStrip1";
-            this.toolTip1.SetToolTip(this.statusStrip1, resources.GetString("statusStrip1.ToolTip"));
+            statusStrip1.ImageScalingSize = new Size(20, 20);
+            resources.ApplyResources(statusStrip1, "statusStrip1");
+            statusStrip1.Name = "statusStrip1";
             // 
             // label2
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            this.toolTip1.SetToolTip(this.label2, resources.GetString("label2.ToolTip"));
+            resources.ApplyResources(label2, "label2");
+            label2.Name = "label2";
             // 
             // cboMeters
             // 
-            resources.ApplyResources(this.cboMeters, "cboMeters");
-            this.cboMeters.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.bsMeterReading, "MeterId", true));
-            this.cboMeters.DataSource = this.bsMeters;
-            this.cboMeters.DisplayMember = "Description";
-            this.cboMeters.FormattingEnabled = true;
-            this.cboMeters.Name = "cboMeters";
-            this.toolTip1.SetToolTip(this.cboMeters, resources.GetString("cboMeters.ToolTip"));
-            this.cboMeters.ValueMember = "Id";
+            cboMeters.DataBindings.Add(new Binding("SelectedValue", bsMeterReading, "MeterId", true));
+            cboMeters.DataSource = bsMeters;
+            cboMeters.DisplayMember = "Description";
+            cboMeters.FormattingEnabled = true;
+            resources.ApplyResources(cboMeters, "cboMeters");
+            cboMeters.Name = "cboMeters";
+            cboMeters.ValueMember = "Id";
             // 
             // bsMeters
             // 
-            this.bsMeters.DataSource = typeof(EnergyUse.Models.Meter);
+            bsMeters.DataSource = typeof(EnergyUse.Models.Meter);
             // 
             // cmdSave
             // 
-            resources.ApplyResources(this.cmdSave, "cmdSave");
-            this.cmdSave.Image = global::WinFormsUI.Properties.Resources.tick_mark_24x24;
-            this.cmdSave.Name = "cmdSave";
-            this.toolTip1.SetToolTip(this.cmdSave, resources.GetString("cmdSave.ToolTip"));
-            this.cmdSave.UseVisualStyleBackColor = true;
-            this.cmdSave.Click += new System.EventHandler(this.cmdSave_Click);
+            resources.ApplyResources(cmdSave, "cmdSave");
+            cmdSave.Image = WinFormsUI.Properties.Resources.tick_mark_24x24;
+            cmdSave.Name = "cmdSave";
+            cmdSave.UseVisualStyleBackColor = true;
+            cmdSave.Click += cmdSave_Click;
             // 
             // cmdClose
             // 
-            resources.ApplyResources(this.cmdClose, "cmdClose");
-            this.cmdClose.Image = global::WinFormsUI.Properties.Resources.crossed_24x24;
-            this.cmdClose.Name = "cmdClose";
-            this.toolTip1.SetToolTip(this.cmdClose, resources.GetString("cmdClose.ToolTip"));
-            this.cmdClose.UseVisualStyleBackColor = true;
-            this.cmdClose.Click += new System.EventHandler(this.cmdClose_Click);
+            resources.ApplyResources(cmdClose, "cmdClose");
+            cmdClose.Image = WinFormsUI.Properties.Resources.crossed_24x24;
+            cmdClose.Name = "cmdClose";
+            cmdClose.UseVisualStyleBackColor = true;
+            cmdClose.Click += cmdClose_Click;
             // 
             // lblReturnDeliveryLow
             // 
-            resources.ApplyResources(this.lblReturnDeliveryLow, "lblReturnDeliveryLow");
-            this.lblReturnDeliveryLow.Name = "lblReturnDeliveryLow";
-            this.toolTip1.SetToolTip(this.lblReturnDeliveryLow, resources.GetString("lblReturnDeliveryLow.ToolTip"));
+            resources.ApplyResources(lblReturnDeliveryLow, "lblReturnDeliveryLow");
+            lblReturnDeliveryLow.Name = "lblReturnDeliveryLow";
             // 
             // txtReturnDeliveryLow
             // 
-            resources.ApplyResources(this.txtReturnDeliveryLow, "txtReturnDeliveryLow");
-            this.txtReturnDeliveryLow.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMeterReading, "ReturnDeliveryLow", true));
-            this.txtReturnDeliveryLow.Name = "txtReturnDeliveryLow";
-            this.toolTip1.SetToolTip(this.txtReturnDeliveryLow, resources.GetString("txtReturnDeliveryLow.ToolTip"));
+            txtReturnDeliveryLow.DataBindings.Add(new Binding("Text", bsMeterReading, "ReturnDeliveryLow", true));
+            resources.ApplyResources(txtReturnDeliveryLow, "txtReturnDeliveryLow");
+            txtReturnDeliveryLow.Name = "txtReturnDeliveryLow";
             // 
             // lblReturnDeliveryNormal
             // 
-            resources.ApplyResources(this.lblReturnDeliveryNormal, "lblReturnDeliveryNormal");
-            this.lblReturnDeliveryNormal.Name = "lblReturnDeliveryNormal";
-            this.toolTip1.SetToolTip(this.lblReturnDeliveryNormal, resources.GetString("lblReturnDeliveryNormal.ToolTip"));
+            resources.ApplyResources(lblReturnDeliveryNormal, "lblReturnDeliveryNormal");
+            lblReturnDeliveryNormal.Name = "lblReturnDeliveryNormal";
             // 
             // txtReturnDeliveryNormal
             // 
-            resources.ApplyResources(this.txtReturnDeliveryNormal, "txtReturnDeliveryNormal");
-            this.txtReturnDeliveryNormal.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMeterReading, "ReturnDeliveryNormal", true));
-            this.txtReturnDeliveryNormal.Name = "txtReturnDeliveryNormal";
-            this.toolTip1.SetToolTip(this.txtReturnDeliveryNormal, resources.GetString("txtReturnDeliveryNormal.ToolTip"));
+            txtReturnDeliveryNormal.DataBindings.Add(new Binding("Text", bsMeterReading, "ReturnDeliveryNormal", true));
+            resources.ApplyResources(txtReturnDeliveryNormal, "txtReturnDeliveryNormal");
+            txtReturnDeliveryNormal.Name = "txtReturnDeliveryNormal";
             // 
             // lblRateLow
             // 
-            resources.ApplyResources(this.lblRateLow, "lblRateLow");
-            this.lblRateLow.Name = "lblRateLow";
-            this.toolTip1.SetToolTip(this.lblRateLow, resources.GetString("lblRateLow.ToolTip"));
+            resources.ApplyResources(lblRateLow, "lblRateLow");
+            lblRateLow.Name = "lblRateLow";
             // 
             // txtRateLow
             // 
-            resources.ApplyResources(this.txtRateLow, "txtRateLow");
-            this.txtRateLow.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMeterReading, "RateLow", true));
-            this.txtRateLow.Name = "txtRateLow";
-            this.toolTip1.SetToolTip(this.txtRateLow, resources.GetString("txtRateLow.ToolTip"));
+            txtRateLow.DataBindings.Add(new Binding("Text", bsMeterReading, "RateLow", true));
+            resources.ApplyResources(txtRateLow, "txtRateLow");
+            txtRateLow.Name = "txtRateLow";
             // 
             // lblRateNormal
             // 
-            resources.ApplyResources(this.lblRateNormal, "lblRateNormal");
-            this.lblRateNormal.Name = "lblRateNormal";
-            this.toolTip1.SetToolTip(this.lblRateNormal, resources.GetString("lblRateNormal.ToolTip"));
+            resources.ApplyResources(lblRateNormal, "lblRateNormal");
+            lblRateNormal.Name = "lblRateNormal";
             // 
             // txtRateNormal
             // 
-            resources.ApplyResources(this.txtRateNormal, "txtRateNormal");
-            this.txtRateNormal.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsMeterReading, "RateNormal", true));
-            this.txtRateNormal.Name = "txtRateNormal";
-            this.toolTip1.SetToolTip(this.txtRateNormal, resources.GetString("txtRateNormal.ToolTip"));
+            txtRateNormal.DataBindings.Add(new Binding("Text", bsMeterReading, "RateNormal", true));
+            resources.ApplyResources(txtRateNormal, "txtRateNormal");
+            txtRateNormal.Name = "txtRateNormal";
             // 
             // dtpFrom
             // 
-            resources.ApplyResources(this.dtpFrom, "dtpFrom");
-            this.dtpFrom.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bsMeterReading, "RegistrationDate", true));
-            this.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFrom.Name = "dtpFrom";
-            this.toolTip1.SetToolTip(this.dtpFrom, resources.GetString("dtpFrom.ToolTip"));
+            dtpFrom.DataBindings.Add(new Binding("Value", bsMeterReading, "RegistrationDate", true));
+            dtpFrom.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(dtpFrom, "dtpFrom");
+            dtpFrom.Name = "dtpFrom";
             // 
             // lblRange
             // 
-            resources.ApplyResources(this.lblRange, "lblRange");
-            this.lblRange.Name = "lblRange";
-            this.toolTip1.SetToolTip(this.lblRange, resources.GetString("lblRange.ToolTip"));
+            resources.ApplyResources(lblRange, "lblRange");
+            lblRange.Name = "lblRange";
             // 
             // frmEditMeterReading
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.lblReturnDeliveryDeltaLow);
-            this.Controls.Add(this.txtReturnDeliveryDeltaLow);
-            this.Controls.Add(this.lblReturnDeliveryDeltaNormal);
-            this.Controls.Add(this.txtReturnDeliveryDeltaNormal);
-            this.Controls.Add(this.lblDeltaLow);
-            this.Controls.Add(this.txtDeltaLow);
-            this.Controls.Add(this.lblDeltaNormal);
-            this.Controls.Add(this.txtDeltaNormal);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.cboMeters);
-            this.Controls.Add(this.cmdSave);
-            this.Controls.Add(this.cmdClose);
-            this.Controls.Add(this.lblReturnDeliveryLow);
-            this.Controls.Add(this.txtReturnDeliveryLow);
-            this.Controls.Add(this.lblReturnDeliveryNormal);
-            this.Controls.Add(this.txtReturnDeliveryNormal);
-            this.Controls.Add(this.lblRateLow);
-            this.Controls.Add(this.txtRateLow);
-            this.Controls.Add(this.lblRateNormal);
-            this.Controls.Add(this.txtRateNormal);
-            this.Controls.Add(this.dtpFrom);
-            this.Controls.Add(this.lblRange);
-            this.Controls.Add(this.statusStrip1);
-            this.Name = "frmEditMeterReading";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmEditMeterReading_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.bsMeterReading)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsMeters)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lblReturnDeliveryDeltaLow);
+            Controls.Add(txtReturnDeliveryDeltaLow);
+            Controls.Add(lblReturnDeliveryDeltaNormal);
+            Controls.Add(txtReturnDeliveryDeltaNormal);
+            Controls.Add(lblDeltaLow);
+            Controls.Add(txtDeltaLow);
+            Controls.Add(lblDeltaNormal);
+            Controls.Add(txtDeltaNormal);
+            Controls.Add(label2);
+            Controls.Add(cboMeters);
+            Controls.Add(cmdSave);
+            Controls.Add(cmdClose);
+            Controls.Add(lblReturnDeliveryLow);
+            Controls.Add(txtReturnDeliveryLow);
+            Controls.Add(lblReturnDeliveryNormal);
+            Controls.Add(txtReturnDeliveryNormal);
+            Controls.Add(lblRateLow);
+            Controls.Add(txtRateLow);
+            Controls.Add(lblRateNormal);
+            Controls.Add(txtRateNormal);
+            Controls.Add(dtpFrom);
+            Controls.Add(lblRange);
+            Controls.Add(statusStrip1);
+            Name = "frmEditMeterReading";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            FormClosing += frmEditMeterReading_FormClosing;
+            ((System.ComponentModel.ISupportInitialize)bsMeterReading).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsMeters).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

@@ -47,6 +47,12 @@
             statusStrip1 = new StatusStrip();
             toolTip1 = new ToolTip(components);
             DgPayments = new DataGridView();
+            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            payDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            amountDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            addressIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            preDefinedPeriodIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             bsPayments = new BindingSource(components);
             GbPayment = new GroupBox();
             TxtAmount = new TextBox();
@@ -55,12 +61,6 @@
             DtPayDate = new DateTimePicker();
             TxtDescription = new TextBox();
             LblDescription = new Label();
-            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            payDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            amountDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            addressIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            preDefinedPeriodIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)bsAddresses).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsPreDefinedPeriod).BeginInit();
             toolStrip1.SuspendLayout();
@@ -173,6 +173,45 @@
             DgPayments.DataSource = bsPayments;
             DgPayments.Name = "DgPayments";
             // 
+            // idDataGridViewTextBoxColumn
+            // 
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            // 
+            // descriptionDataGridViewTextBoxColumn
+            // 
+            descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
+            resources.ApplyResources(descriptionDataGridViewTextBoxColumn, "descriptionDataGridViewTextBoxColumn");
+            descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
+            // 
+            // payDateDataGridViewTextBoxColumn
+            // 
+            payDateDataGridViewTextBoxColumn.DataPropertyName = "PayDate";
+            resources.ApplyResources(payDateDataGridViewTextBoxColumn, "payDateDataGridViewTextBoxColumn");
+            payDateDataGridViewTextBoxColumn.Name = "payDateDataGridViewTextBoxColumn";
+            // 
+            // amountDataGridViewTextBoxColumn
+            // 
+            amountDataGridViewTextBoxColumn.DataPropertyName = "Amount";
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N2";
+            amountDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            resources.ApplyResources(amountDataGridViewTextBoxColumn, "amountDataGridViewTextBoxColumn");
+            amountDataGridViewTextBoxColumn.Name = "amountDataGridViewTextBoxColumn";
+            // 
+            // addressIdDataGridViewTextBoxColumn
+            // 
+            addressIdDataGridViewTextBoxColumn.DataPropertyName = "AddressId";
+            resources.ApplyResources(addressIdDataGridViewTextBoxColumn, "addressIdDataGridViewTextBoxColumn");
+            addressIdDataGridViewTextBoxColumn.Name = "addressIdDataGridViewTextBoxColumn";
+            // 
+            // preDefinedPeriodIdDataGridViewTextBoxColumn
+            // 
+            preDefinedPeriodIdDataGridViewTextBoxColumn.DataPropertyName = "PreDefinedPeriodId";
+            resources.ApplyResources(preDefinedPeriodIdDataGridViewTextBoxColumn, "preDefinedPeriodIdDataGridViewTextBoxColumn");
+            preDefinedPeriodIdDataGridViewTextBoxColumn.Name = "preDefinedPeriodIdDataGridViewTextBoxColumn";
+            // 
             // bsPayments
             // 
             bsPayments.DataSource = typeof(EnergyUse.Models.Payment);
@@ -223,45 +262,6 @@
             // 
             resources.ApplyResources(LblDescription, "LblDescription");
             LblDescription.Name = "LblDescription";
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
-            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            // 
-            // descriptionDataGridViewTextBoxColumn
-            // 
-            descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
-            resources.ApplyResources(descriptionDataGridViewTextBoxColumn, "descriptionDataGridViewTextBoxColumn");
-            descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
-            // 
-            // payDateDataGridViewTextBoxColumn
-            // 
-            payDateDataGridViewTextBoxColumn.DataPropertyName = "PayDate";
-            resources.ApplyResources(payDateDataGridViewTextBoxColumn, "payDateDataGridViewTextBoxColumn");
-            payDateDataGridViewTextBoxColumn.Name = "payDateDataGridViewTextBoxColumn";
-            // 
-            // amountDataGridViewTextBoxColumn
-            // 
-            amountDataGridViewTextBoxColumn.DataPropertyName = "Amount";
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "N2";
-            amountDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            resources.ApplyResources(amountDataGridViewTextBoxColumn, "amountDataGridViewTextBoxColumn");
-            amountDataGridViewTextBoxColumn.Name = "amountDataGridViewTextBoxColumn";
-            // 
-            // addressIdDataGridViewTextBoxColumn
-            // 
-            addressIdDataGridViewTextBoxColumn.DataPropertyName = "AddressId";
-            resources.ApplyResources(addressIdDataGridViewTextBoxColumn, "addressIdDataGridViewTextBoxColumn");
-            addressIdDataGridViewTextBoxColumn.Name = "addressIdDataGridViewTextBoxColumn";
-            // 
-            // preDefinedPeriodIdDataGridViewTextBoxColumn
-            // 
-            preDefinedPeriodIdDataGridViewTextBoxColumn.DataPropertyName = "PreDefinedPeriodId";
-            resources.ApplyResources(preDefinedPeriodIdDataGridViewTextBoxColumn, "preDefinedPeriodIdDataGridViewTextBoxColumn");
-            preDefinedPeriodIdDataGridViewTextBoxColumn.Name = "preDefinedPeriodIdDataGridViewTextBoxColumn";
             // 
             // frmPayments
             // 
