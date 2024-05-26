@@ -339,7 +339,6 @@ namespace EnergyUse.Core.Reports
             List<SettlementData> settlementDataList = libSettlementData.GetSettlementCost(energyType.Id, periodicData, costCategory, tarifGroupId);
             foreach (SettlementData settlementData in settlementDataList)
             {
-                decimal vat = settlementData.Value * (settlementData.VatTarif / 100);
                 FooterText footerTextCorrection = new();
                 string footerText = string.Empty;
 
@@ -404,9 +403,9 @@ namespace EnergyUse.Core.Reports
                 if (!costCategory.CalculateVat)
                     table.AddCell(GetNormalText(""));
                 else
-                    table.AddCell(GetNormalText(Math.Round(vat, 2).ToString("##0.00")));
+                    table.AddCell(GetNormalText(Math.Round(settlementData.VatAmount, 2).ToString("##0.00")));
 
-                table.AddCell(GetNormalText(Math.Round(settlementData.Value + vat, 2).ToString("##0.00")));
+                table.AddCell(GetNormalText(Math.Round(settlementData.Value + settlementData.VatAmount, 2).ToString("##0.00")));
             }
 
             var subTotalKey = $"{Manager.LibEnergySubType.GetCombinedType(costCategory.EnergySubType.Id)}{energyType.Id}";

@@ -122,7 +122,7 @@
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="statusStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 585</value>
+    <value>0, 454</value>
   </data>
   <data name="statusStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>1018, 22</value>
@@ -234,6 +234,9 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>278, 17</value>
   </metadata>
+  <data name="dgEnergyTypes.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
   <metadata name="EnergyTypeName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -264,16 +267,10 @@
   <data name="idDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
+  <data name="idDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="idDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
-    <value>125</value>
-  </data>
-  <data name="nameDataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="nameDataGridViewTextBoxColumn1.MinimumWidth" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="nameDataGridViewTextBoxColumn1.Width" type="System.Int32, mscorlib">
     <value>125</value>
   </data>
   <data name="hasNormalAndLowDataGridViewCheckBoxColumn.HeaderText" xml:space="preserve">
@@ -281,6 +278,9 @@
   </data>
   <data name="hasNormalAndLowDataGridViewCheckBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
+  </data>
+  <data name="hasNormalAndLowDataGridViewCheckBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="hasNormalAndLowDataGridViewCheckBoxColumn.Width" type="System.Int32, mscorlib">
     <value>125</value>
@@ -291,6 +291,9 @@
   <data name="hasEnergyReturnDataGridViewCheckBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
+  <data name="hasEnergyReturnDataGridViewCheckBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="hasEnergyReturnDataGridViewCheckBoxColumn.Width" type="System.Int32, mscorlib">
     <value>125</value>
   </data>
@@ -299,6 +302,9 @@
   </data>
   <data name="defaultTypeDataGridViewCheckBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
+  </data>
+  <data name="defaultTypeDataGridViewCheckBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="defaultTypeDataGridViewCheckBoxColumn.Width" type="System.Int32, mscorlib">
     <value>125</value>
@@ -309,6 +315,9 @@
   <data name="unitIdDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
+  <data name="unitIdDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="unitIdDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
     <value>125</value>
   </data>
@@ -317,6 +326,9 @@
   </data>
   <data name="unitDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
+  </data>
+  <data name="unitDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="unitDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
     <value>125</value>
@@ -327,6 +339,9 @@
   <data name="unitNameDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
+  <data name="unitNameDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="unitNameDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
     <value>125</value>
   </data>
@@ -335,6 +350,9 @@
   </data>
   <data name="additionalCategoryAndGroupInfosDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
+  </data>
+  <data name="additionalCategoryAndGroupInfosDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="additionalCategoryAndGroupInfosDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
     <value>125</value>
@@ -345,6 +363,9 @@
   <data name="correctionFactorsDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
+  <data name="correctionFactorsDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="correctionFactorsDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
     <value>125</value>
   </data>
@@ -353,6 +374,9 @@
   </data>
   <data name="costCategoriesDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
+  </data>
+  <data name="costCategoriesDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="costCategoriesDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
     <value>125</value>
@@ -363,6 +387,9 @@
   <data name="meterReadingsDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
+  <data name="meterReadingsDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="meterReadingsDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
     <value>125</value>
   </data>
@@ -371,6 +398,9 @@
   </data>
   <data name="metersDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
+  </data>
+  <data name="metersDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="metersDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
     <value>125</value>
@@ -381,6 +411,9 @@
   <data name="nettingsDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
+  <data name="nettingsDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="nettingsDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
     <value>125</value>
   </data>
@@ -389,6 +422,9 @@
   </data>
   <data name="preDefinedPeriodDatesDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
+  </data>
+  <data name="preDefinedPeriodDatesDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="preDefinedPeriodDatesDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
     <value>125</value>
@@ -399,6 +435,9 @@
   <data name="ratesDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
+  <data name="ratesDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="ratesDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
     <value>125</value>
   </data>
@@ -407,6 +446,9 @@
   </data>
   <data name="calculatedUnitPricesDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
+  </data>
+  <data name="calculatedUnitPricesDataGridViewTextBoxColumn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="calculatedUnitPricesDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
     <value>125</value>
@@ -421,7 +463,7 @@
     <value>51</value>
   </data>
   <data name="dgEnergyTypes.Size" type="System.Drawing.Size, System.Drawing">
-    <value>408, 297</value>
+    <value>408, 421</value>
   </data>
   <data name="dgEnergyTypes.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -689,7 +731,7 @@
     <value>1</value>
   </data>
   <data name="gbColors.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+    <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="txtColor.Location" type="System.Drawing.Point, System.Drawing">
     <value>241, 20</value>
@@ -989,7 +1031,7 @@
     <value>437, 242</value>
   </data>
   <data name="gbColors.Size" type="System.Drawing.Size, System.Drawing">
-    <value>570, 195</value>
+    <value>570, 209</value>
   </data>
   <data name="gbColors.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1028,7 +1070,7 @@
     <value>8, 20</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1018, 607</value>
+    <value>1018, 476</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
@@ -1078,18 +1120,6 @@
   <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;EnergyTypeName.Name" xml:space="preserve">
-    <value>EnergyTypeName</value>
-  </data>
-  <data name="&gt;&gt;EnergyTypeName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;UnitName.Name" xml:space="preserve">
-    <value>UnitName</value>
-  </data>
-  <data name="&gt;&gt;UnitName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;bsEnergyTypes.Name" xml:space="preserve">
     <value>bsEnergyTypes</value>
   </data>
@@ -1114,16 +1144,22 @@
   <data name="&gt;&gt;colorDialog1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColorDialog, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;EnergyTypeName.Name" xml:space="preserve">
+    <value>EnergyTypeName</value>
+  </data>
+  <data name="&gt;&gt;EnergyTypeName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;UnitName.Name" xml:space="preserve">
+    <value>UnitName</value>
+  </data>
+  <data name="&gt;&gt;UnitName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;idDataGridViewTextBoxColumn.Name" xml:space="preserve">
     <value>idDataGridViewTextBoxColumn</value>
   </data>
   <data name="&gt;&gt;idDataGridViewTextBoxColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;nameDataGridViewTextBoxColumn1.Name" xml:space="preserve">
-    <value>nameDataGridViewTextBoxColumn1</value>
-  </data>
-  <data name="&gt;&gt;nameDataGridViewTextBoxColumn1.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;hasNormalAndLowDataGridViewCheckBoxColumn.Name" xml:space="preserve">

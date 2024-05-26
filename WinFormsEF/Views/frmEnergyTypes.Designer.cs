@@ -40,8 +40,6 @@
             tsbClose = new ToolStripButton();
             toolTip1 = new ToolTip(components);
             dgEnergyTypes = new DataGridView();
-            EnergyTypeName = new DataGridViewTextBoxColumn();
-            UnitName = new DataGridViewTextBoxColumn();
             bsEnergyTypes = new BindingSource(components);
             gbEnergyType = new GroupBox();
             lblUnit = new Label();
@@ -65,8 +63,9 @@
             lblColorLow = new Label();
             nameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             colorDialog1 = new ColorDialog();
+            EnergyTypeName = new DataGridViewTextBoxColumn();
+            UnitName = new DataGridViewTextBoxColumn();
             idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            nameDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             hasNormalAndLowDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
             hasEnergyReturnDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
             defaultTypeDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
@@ -150,25 +149,12 @@
             // 
             dgEnergyTypes.AllowUserToAddRows = false;
             dgEnergyTypes.AllowUserToDeleteRows = false;
+            resources.ApplyResources(dgEnergyTypes, "dgEnergyTypes");
             dgEnergyTypes.AutoGenerateColumns = false;
             dgEnergyTypes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgEnergyTypes.Columns.AddRange(new DataGridViewColumn[] { EnergyTypeName, UnitName, idDataGridViewTextBoxColumn, nameDataGridViewTextBoxColumn1, hasNormalAndLowDataGridViewCheckBoxColumn, hasEnergyReturnDataGridViewCheckBoxColumn, defaultTypeDataGridViewCheckBoxColumn, unitIdDataGridViewTextBoxColumn, unitDataGridViewTextBoxColumn, unitNameDataGridViewTextBoxColumn, additionalCategoryAndGroupInfosDataGridViewTextBoxColumn, correctionFactorsDataGridViewTextBoxColumn, costCategoriesDataGridViewTextBoxColumn, meterReadingsDataGridViewTextBoxColumn, metersDataGridViewTextBoxColumn, nettingsDataGridViewTextBoxColumn, preDefinedPeriodDatesDataGridViewTextBoxColumn, ratesDataGridViewTextBoxColumn, calculatedUnitPricesDataGridViewTextBoxColumn });
+            dgEnergyTypes.Columns.AddRange(new DataGridViewColumn[] { EnergyTypeName, UnitName, idDataGridViewTextBoxColumn, hasNormalAndLowDataGridViewCheckBoxColumn, hasEnergyReturnDataGridViewCheckBoxColumn, defaultTypeDataGridViewCheckBoxColumn, unitIdDataGridViewTextBoxColumn, unitDataGridViewTextBoxColumn, unitNameDataGridViewTextBoxColumn, additionalCategoryAndGroupInfosDataGridViewTextBoxColumn, correctionFactorsDataGridViewTextBoxColumn, costCategoriesDataGridViewTextBoxColumn, meterReadingsDataGridViewTextBoxColumn, metersDataGridViewTextBoxColumn, nettingsDataGridViewTextBoxColumn, preDefinedPeriodDatesDataGridViewTextBoxColumn, ratesDataGridViewTextBoxColumn, calculatedUnitPricesDataGridViewTextBoxColumn });
             dgEnergyTypes.DataSource = bsEnergyTypes;
-            resources.ApplyResources(dgEnergyTypes, "dgEnergyTypes");
             dgEnergyTypes.Name = "dgEnergyTypes";
-            // 
-            // EnergyTypeName
-            // 
-            EnergyTypeName.DataPropertyName = "Name";
-            resources.ApplyResources(EnergyTypeName, "EnergyTypeName");
-            EnergyTypeName.Name = "EnergyTypeName";
-            // 
-            // UnitName
-            // 
-            UnitName.DataPropertyName = "UnitName";
-            resources.ApplyResources(UnitName, "UnitName");
-            UnitName.Name = "UnitName";
-            UnitName.ReadOnly = true;
             // 
             // bsEnergyTypes
             // 
@@ -328,17 +314,24 @@
             resources.ApplyResources(nameDataGridViewTextBoxColumn, "nameDataGridViewTextBoxColumn");
             nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
             // 
+            // EnergyTypeName
+            // 
+            EnergyTypeName.DataPropertyName = "Name";
+            resources.ApplyResources(EnergyTypeName, "EnergyTypeName");
+            EnergyTypeName.Name = "EnergyTypeName";
+            // 
+            // UnitName
+            // 
+            UnitName.DataPropertyName = "UnitName";
+            resources.ApplyResources(UnitName, "UnitName");
+            UnitName.Name = "UnitName";
+            UnitName.ReadOnly = true;
+            // 
             // idDataGridViewTextBoxColumn
             // 
             idDataGridViewTextBoxColumn.DataPropertyName = "Id";
             resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
             idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            // 
-            // nameDataGridViewTextBoxColumn1
-            // 
-            nameDataGridViewTextBoxColumn1.DataPropertyName = "Name";
-            resources.ApplyResources(nameDataGridViewTextBoxColumn1, "nameDataGridViewTextBoxColumn1");
-            nameDataGridViewTextBoxColumn1.Name = "nameDataGridViewTextBoxColumn1";
             // 
             // hasNormalAndLowDataGridViewCheckBoxColumn
             // 
@@ -495,7 +488,6 @@
         private DataGridViewTextBoxColumn EnergyTypeName;
         private DataGridViewTextBoxColumn UnitName;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn1;
         private DataGridViewCheckBoxColumn hasNormalAndLowDataGridViewCheckBoxColumn;
         private DataGridViewCheckBoxColumn hasEnergyReturnDataGridViewCheckBoxColumn;
         private DataGridViewCheckBoxColumn defaultTypeDataGridViewCheckBoxColumn;

@@ -105,11 +105,11 @@ namespace EnergyUse.Core.Manager
                                 break;
                             case 3:
                                 //return normal
-                                rateUsed = periodicData.RateReturnNormal;
+                                rateUsed = 0 - periodicData.RateReturnNormal;
                                 break;
                             case 4:
                                 //return low
-                                rateUsed = periodicData.RateReturnLow;
+                                rateUsed = 0 - periodicData.RateReturnLow;
                                 break;
                             case 5:
                                 //Other
@@ -159,11 +159,11 @@ namespace EnergyUse.Core.Manager
                             break;
                         case 3:
                             //return normal
-                            settlementData.ValueBaseConsumed += periodicData.ValueYReturnNormal;
+                            settlementData.ValueBaseConsumed -= periodicData.ValueYReturnNormal;
                             break;
                         case 4:
                             //return low
-                            settlementData.ValueBaseConsumed += periodicData.ValueYReturnLow;
+                            settlementData.ValueBaseConsumed -= periodicData.ValueYReturnLow;
                             break;
                         case 5:
                             //Other
