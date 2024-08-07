@@ -221,6 +221,7 @@
             dtpPurchaseDate.Format = DateTimePickerFormat.Short;
             resources.ApplyResources(dtpPurchaseDate, "dtpPurchaseDate");
             dtpPurchaseDate.Name = "dtpPurchaseDate";
+            dtpPurchaseDate.ValueChanged += dtpPurchaseDate_ValueChanged;
             // 
             // lblDateOrPurchase
             // 

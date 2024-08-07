@@ -57,7 +57,7 @@ namespace WinFormsEF.Views
 
         private void loadSettings()
         {
-            Managers.Settings.LoadSettingCheckBox(chkHideInfoFormOnStart);
+            Managers.Settings.SetSettingCheckBox(chkHideInfoFormOnStart);
         }
 
         private void setInfo()

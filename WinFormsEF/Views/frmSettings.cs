@@ -256,32 +256,32 @@ namespace WinFormsEF.Views
             sender.Text = string.Empty;
 
             var setting = _controller.GetSetting(sender.Tag.ToString());
-            Managers.Settings.setTextBox(sender, setting);
+            Managers.Settings.SetTextBox(sender, setting);
         }
 
         private void setRadioButtonSetting(RadioButton sender)
         {
             EnergyUse.Models.Setting setting = _controller.GetSetting(sender.Tag.ToString());
-            Managers.Settings.setRadioButtonSetting(sender, setting);
+            Managers.Settings.SetRadioButtonSetting(sender, setting);
         }
 
         private void setTextBoxColorSetting(TextBox sender)
         {
             sender.BackColor = Color.Empty;            
             var setting = _controller.GetSetting(sender.Tag.ToString());
-            Managers.Settings.setTextBoxColor(sender, setting);
+            Managers.Settings.SetTextBoxColor(sender, setting);
         }
 
         private void setComboSetting(ComboBox sender, string defaultValue)
         {
             var setting = _controller.GetSetting(sender.Tag.ToString());
-            Managers.Settings.setSettingCombo(sender, setting, defaultValue);
+            Managers.Settings.SetSettingCombo(sender, setting, defaultValue);
         }
 
         private void setDateTimeSetting(DateTimePicker sender, DateTime defaultValue)
         {
             var setting = _controller.GetSetting(sender.Tag.ToString());
-            Managers.Settings.setSettingDateTimePicker(sender, setting, defaultValue);
+            Managers.Settings.SetSettingDateTimePicker(sender, setting, defaultValue);
         }
 
         private void CloseSettings()

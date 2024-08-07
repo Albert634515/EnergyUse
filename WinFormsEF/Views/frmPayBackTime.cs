@@ -87,18 +87,19 @@ namespace WinFormsEF.Views
                 txtPurchaseAmount.Tag = $"{txtPurchaseAmount.Tag}{address.Id}";
                 txtSubsidyAmount.Tag = $"{txtSubsidyAmount.Tag}{address.Id}";
 
-                Managers.Settings.LoadSettingTextBox(txtQualityReductionSolarPanels);
+                Managers.Settings.GetSettingTextBox(txtQualityReductionSolarPanels);
                 if (string.IsNullOrWhiteSpace(txtQualityReductionSolarPanels.Text))
                     txtQualityReductionSolarPanels.Text = "0";
-                Managers.Settings.LoadSettingTextBox(txtPurchaseAmount);
+
+                Managers.Settings.GetSettingTextBox(txtPurchaseAmount);
                 if (string.IsNullOrWhiteSpace(txtPurchaseAmount.Text))
                     txtPurchaseAmount.Text = "0";
 
-                Managers.Settings.LoadSettingTextBox(txtSubsidyAmount);
+                Managers.Settings.GetSettingTextBox(txtSubsidyAmount);
                 if (string.IsNullOrWhiteSpace(txtSubsidyAmount.Text))
                     txtSubsidyAmount.Text = "0";
 
-                Managers.Settings.LoadSettingDateBox(dtpPurchaseDate, DateTime.Now);
+                Managers.Settings.GetSettingDateBox(dtpPurchaseDate, DateTime.Now);
             }
         }
 
@@ -139,6 +140,12 @@ namespace WinFormsEF.Views
         {
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
             libSettings.SaveSetting(txtQualityReductionSolarPanels.Tag.ToString(), txtQualityReductionSolarPanels.Text);
+        }
+
+        private void dtpPurchaseDate_ValueChanged(object sender, EventArgs e)
+        {
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            libSettings.SaveDateSetting(dtpPurchaseDate.Tag.ToString(), dtpPurchaseDate.Value);
         }
 
         private void dgvPayBackTime_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -320,7 +327,6 @@ namespace WinFormsEF.Views
             }
 
             EnergyUse.Models.Address address = (EnergyUse.Models.Address)cmbAddress.SelectedItem;
-            //EnergyUse.Models.EnergyType energyType = (EnergyUse.Models.EnergyType)cboEnergyType.SelectedItem;
 
             int startYear = dtpPurchaseDate.Value.Year;
             for (int i = startYear; i <= nudMaxYears.Value; i++)

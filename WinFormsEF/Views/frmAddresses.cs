@@ -176,9 +176,9 @@ namespace WinFormsEF.Views
 
             setAddressSettingsTags(address);
 
-            Managers.Settings.LoadSettingTextBox(txtPurchaseAmount);
-            Managers.Settings.LoadSettingTextBox(txtSubsidyAmount);
-            Managers.Settings.LoadSettingTextBox(txtQualityReductionSolarPanels);
+            Managers.Settings.GetSettingTextBox(txtPurchaseAmount);
+            Managers.Settings.GetSettingTextBox(txtSubsidyAmount);
+            Managers.Settings.GetSettingTextBox(txtQualityReductionSolarPanels);
         }
 
         private void closeAddressForm()

@@ -74,7 +74,7 @@ namespace WinFormsEF.Managers
 
         #region LoadSettings
 
-        public static void LoadColorSetting(TextBox textBox)
+        public static void GetColorSetting(TextBox textBox)
         {
             textBox.BackColor = Color.Empty;
 
@@ -87,21 +87,21 @@ namespace WinFormsEF.Managers
             }
         }
 
-        public static void LoadSettingDateBox(DateTimePicker dateTimePicker, DateTime defaultValue)
+        public static void GetSettingDateBox(DateTimePicker dateTimePicker, DateTime defaultValue)
         {
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
             var setting = libSettings.GetSetting(dateTimePicker.Tag.ToString());
-            setSettingDateTimePicker(dateTimePicker, setting, defaultValue);
+            SetSettingDateTimePicker(dateTimePicker, setting, defaultValue);
         }
 
-        public static void LoadSettingTextBox(TextBox textBox)
+        public static void GetSettingTextBox(TextBox textBox)
         {
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
             EnergyUse.Models.Setting setting = libSettings.GetSetting(textBox.Tag.ToString());
-            setTextBox(textBox, setting);
+            SetTextBox(textBox, setting);
         }
 
-        public static void setTextBox(TextBox textBox, EnergyUse.Models.Setting setting)
+        public static void SetTextBox(TextBox textBox, EnergyUse.Models.Setting setting)
         {
             textBox.Text = string.Empty;
             if (setting != null && setting.Id > 0)
@@ -111,7 +111,7 @@ namespace WinFormsEF.Managers
             }
         }
 
-        public static void setTextBoxColor(TextBox textBox, EnergyUse.Models.Setting setting)
+        public static void SetTextBoxColor(TextBox textBox, EnergyUse.Models.Setting setting)
         {
             textBox.BackColor = Color.Empty;
             if (setting != null && setting.Id > 0)
@@ -121,7 +121,7 @@ namespace WinFormsEF.Managers
             }
         }
 
-        public static void setRadioButtonSetting(RadioButton sender, EnergyUse.Models.Setting setting)
+        public static void SetRadioButtonSetting(RadioButton sender, EnergyUse.Models.Setting setting)
         {
             if (setting != null && setting.Id > 0)
             {
@@ -130,7 +130,7 @@ namespace WinFormsEF.Managers
             }
         }
 
-        public static void setSettingCombo(ComboBox comboBox, EnergyUse.Models.Setting setting, string defaultValue)
+        public static void SetSettingCombo(ComboBox comboBox, EnergyUse.Models.Setting setting, string defaultValue)
         {
             if (setting != null && setting.Id > 0)
             {
@@ -142,7 +142,7 @@ namespace WinFormsEF.Managers
                 comboBox.SelectedIndex = comboBox.FindString(defaultValue);
         }
 
-        public static void setSettingDateTimePicker(DateTimePicker dateTimePicker, EnergyUse.Models.Setting setting, DateTime defaultValue)
+        public static void SetSettingDateTimePicker(DateTimePicker dateTimePicker, EnergyUse.Models.Setting setting, DateTime defaultValue)
         {
             // If no value found, use default value
             var settingVaue = defaultValue.ToString("yyyyMMdd");
@@ -154,7 +154,7 @@ namespace WinFormsEF.Managers
                 dateTimePicker.Value = DateTime.ParseExact(settingVaue, "yyyyMMdd", CultureInfo.InvariantCulture);
         }
 
-        public static void LoadSettingCheckBox(CheckBox checkbox)
+        public static void SetSettingCheckBox(CheckBox checkbox)
         {
             EnergyUse.Models.Setting setting = GetSetting(checkbox.Tag.ToString());
             if (setting != null && setting.Id > 0)

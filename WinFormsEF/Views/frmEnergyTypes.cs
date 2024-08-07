@@ -169,11 +169,11 @@ namespace WinFormsEF.Views
 
                 if (energyType != null && energyType.Id > 0)
                 {
-                    Managers.Settings.LoadColorSetting(txtColor);
-                    Managers.Settings.LoadColorSetting(txtColorLow);
-                    Managers.Settings.LoadColorSetting(txtColorHigh);
-                    Managers.Settings.LoadColorSetting(txtReturnDeliveryLow);
-                    Managers.Settings.LoadColorSetting(txtReturnDeliveryHigh);
+                    Managers.Settings.GetColorSetting(txtColor);
+                    Managers.Settings.GetColorSetting(txtColorLow);
+                    Managers.Settings.GetColorSetting(txtColorHigh);
+                    Managers.Settings.GetColorSetting(txtReturnDeliveryLow);
+                    Managers.Settings.GetColorSetting(txtReturnDeliveryHigh);
                 }
 
                 setColorFieldsVisible();

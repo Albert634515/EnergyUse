@@ -34,7 +34,7 @@ namespace WinFormsEF.Views
             cboEnergyType.ValueMember = "Id";
 
             var setting = _controller.GetSetting(cboEnergyType.Tag.ToString());
-            Managers.Settings.setSettingCombo(cboEnergyType, setting, "");
+            Managers.Settings.SetSettingCombo(cboEnergyType, setting, "");
 
             if (cboEnergyType.SelectedIndex != -1)
                 RefreshNetting();

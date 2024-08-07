@@ -53,7 +53,7 @@ namespace WinFormsEF.Views
             {
                 var currentCategory = (EnergyUse.Models.CostCategory)bsCostCategories.Current;
                 txtColor.Tag = $"CostCategory{currentCategory.Id}";
-                Managers.Settings.LoadColorSetting(txtColor);
+                Managers.Settings.GetColorSetting(txtColor);
             }
         }
 

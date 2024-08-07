@@ -157,6 +157,12 @@ namespace EnergyUse.Core.Manager
             _context.SaveChanges();
         }
 
+        public void SaveDateSetting(string settingTag, DateTime dateSettingValue)
+        {
+            string newSettingValue = dateSettingValue.ToString("yyyyMMdd");
+            SaveSetting(settingTag, newSettingValue);
+        }
+
         public void SaveColorSetting(string settingTag, Color newColor)
         {
             var repo = new Repositories.RepoSettings(_context);
@@ -181,6 +187,9 @@ namespace EnergyUse.Core.Manager
         {
             var repo = new Repositories.RepoSettings(_context);
             var setting = repo.GetByKey(settingTag);
+
+            if (setting == null)
+                return;
 
             repo.Remove(setting);
             _context.SaveChanges();
