@@ -15,10 +15,10 @@ namespace EnergyUse.Core.Graphs.LiveCharts
             _unitOfWork = new UnitOfWork.Graphs(graphParameter.DbName);
             _libPeriodicDate = new(_graphParameter.DbName);
 
-            loadChart();
+            setChart();
         }
 
-        private void loadChart()
+        private void setChart()
         {
             try
             {
