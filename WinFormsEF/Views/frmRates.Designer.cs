@@ -55,14 +55,24 @@
             LblRateSource = new Label();
             TxtDescription = new TextBox();
             DgRates = new DataGridView();
+            startRateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            endRateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            rateValueDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            expectedPriceChangeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            priceChangeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             GbRate = new GroupBox();
+            label1 = new Label();
+            futurePriceTextBox = new TextBox();
+            rateTaxInfoLabel = new Label();
             LblRate = new Label();
             CboRateType = new ComboBox();
             bsRateType = new BindingSource(components);
             LblRateType = new Label();
             LblPriceChangeHint = new Label();
             LblPriceChange = new Label();
-            TxtPriceChange = new TextBox();
+            priceChangeTextBox = new TextBox();
             LblExpectedPriceChangeHint = new Label();
             LblExchangeRate = new Label();
             TxtExpectedPriceChange = new TextBox();
@@ -73,14 +83,7 @@
             DtpStartRate = new DateTimePicker();
             LblRange = new Label();
             toolTip1 = new ToolTip(components);
-            LblAlwaysCalculatedWith = new Label();
-            startRateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            endRateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            rateValueDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            expectedPriceChangeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            priceChangeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            AlwaysCalculatedWithLabel = new Label();
             ToolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bsRates).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsAdditionalCategoryAndGroupInfo).BeginInit();
@@ -151,6 +154,7 @@
             // bsRates
             // 
             bsRates.DataSource = typeof(EnergyUse.Models.Rate);
+            bsRates.CurrentChanged += bsRates_CurrentChanged;
             // 
             // bsAdditionalCategoryAndGroupInfo
             // 
@@ -236,129 +240,6 @@
             DgRates.DataSource = bsRates;
             DgRates.Name = "DgRates";
             // 
-            // GbRate
-            // 
-            resources.ApplyResources(GbRate, "GbRate");
-            GbRate.Controls.Add(LblRate);
-            GbRate.Controls.Add(CboRateType);
-            GbRate.Controls.Add(LblRateType);
-            GbRate.Controls.Add(LblPriceChangeHint);
-            GbRate.Controls.Add(LblPriceChange);
-            GbRate.Controls.Add(TxtPriceChange);
-            GbRate.Controls.Add(LblExpectedPriceChangeHint);
-            GbRate.Controls.Add(LblExchangeRate);
-            GbRate.Controls.Add(TxtExpectedPriceChange);
-            GbRate.Controls.Add(TxtRate);
-            GbRate.Controls.Add(LblDescription);
-            GbRate.Controls.Add(TxtRateDescription);
-            GbRate.Controls.Add(DtpEndRate);
-            GbRate.Controls.Add(DtpStartRate);
-            GbRate.Controls.Add(LblRange);
-            GbRate.Name = "GbRate";
-            GbRate.TabStop = false;
-            // 
-            // LblRate
-            // 
-            resources.ApplyResources(LblRate, "LblRate");
-            LblRate.Name = "LblRate";
-            // 
-            // CboRateType
-            // 
-            CboRateType.DataBindings.Add(new Binding("SelectedValue", bsRates, "RateTypeId", true));
-            CboRateType.DataSource = bsRateType;
-            CboRateType.DisplayMember = "Description";
-            CboRateType.FormattingEnabled = true;
-            resources.ApplyResources(CboRateType, "CboRateType");
-            CboRateType.Name = "CboRateType";
-            CboRateType.ValueMember = "Id";
-            CboRateType.SelectedIndexChanged += CboRateType_SelectedIndexChanged;
-            // 
-            // bsRateType
-            // 
-            bsRateType.DataSource = typeof(EnergyUse.Models.Common.SelectionItem);
-            // 
-            // LblRateType
-            // 
-            resources.ApplyResources(LblRateType, "LblRateType");
-            LblRateType.Name = "LblRateType";
-            // 
-            // LblPriceChangeHint
-            // 
-            resources.ApplyResources(LblPriceChangeHint, "LblPriceChangeHint");
-            LblPriceChangeHint.Name = "LblPriceChangeHint";
-            // 
-            // LblPriceChange
-            // 
-            resources.ApplyResources(LblPriceChange, "LblPriceChange");
-            LblPriceChange.Name = "LblPriceChange";
-            // 
-            // TxtPriceChange
-            // 
-            TxtPriceChange.BackColor = SystemColors.ControlLight;
-            TxtPriceChange.DataBindings.Add(new Binding("Text", bsRates, "PriceChange", true));
-            resources.ApplyResources(TxtPriceChange, "TxtPriceChange");
-            TxtPriceChange.Name = "TxtPriceChange";
-            TxtPriceChange.ReadOnly = true;
-            // 
-            // LblExpectedPriceChangeHint
-            // 
-            resources.ApplyResources(LblExpectedPriceChangeHint, "LblExpectedPriceChangeHint");
-            LblExpectedPriceChangeHint.Name = "LblExpectedPriceChangeHint";
-            // 
-            // LblExchangeRate
-            // 
-            resources.ApplyResources(LblExchangeRate, "LblExchangeRate");
-            LblExchangeRate.Name = "LblExchangeRate";
-            // 
-            // TxtExpectedPriceChange
-            // 
-            TxtExpectedPriceChange.DataBindings.Add(new Binding("Text", bsRates, "ExpectedPriceChange", true));
-            resources.ApplyResources(TxtExpectedPriceChange, "TxtExpectedPriceChange");
-            TxtExpectedPriceChange.Name = "TxtExpectedPriceChange";
-            toolTip1.SetToolTip(TxtExpectedPriceChange, resources.GetString("TxtExpectedPriceChange.ToolTip"));
-            // 
-            // TxtRate
-            // 
-            TxtRate.DataBindings.Add(new Binding("Text", bsRates, "RateValue", true));
-            resources.ApplyResources(TxtRate, "TxtRate");
-            TxtRate.Name = "TxtRate";
-            // 
-            // LblDescription
-            // 
-            resources.ApplyResources(LblDescription, "LblDescription");
-            LblDescription.Name = "LblDescription";
-            // 
-            // TxtRateDescription
-            // 
-            TxtRateDescription.DataBindings.Add(new Binding("Text", bsRates, "Description", true));
-            resources.ApplyResources(TxtRateDescription, "TxtRateDescription");
-            TxtRateDescription.Name = "TxtRateDescription";
-            // 
-            // DtpEndRate
-            // 
-            DtpEndRate.DataBindings.Add(new Binding("Value", bsRates, "EndRate", true));
-            DtpEndRate.Format = DateTimePickerFormat.Short;
-            resources.ApplyResources(DtpEndRate, "DtpEndRate");
-            DtpEndRate.Name = "DtpEndRate";
-            // 
-            // DtpStartRate
-            // 
-            DtpStartRate.DataBindings.Add(new Binding("Value", bsRates, "StartRate", true));
-            DtpStartRate.Format = DateTimePickerFormat.Short;
-            resources.ApplyResources(DtpStartRate, "DtpStartRate");
-            DtpStartRate.Name = "DtpStartRate";
-            DtpStartRate.Value = new DateTime(2022, 9, 24, 0, 0, 0, 0);
-            // 
-            // LblRange
-            // 
-            resources.ApplyResources(LblRange, "LblRange");
-            LblRange.Name = "LblRange";
-            // 
-            // LblAlwaysCalculatedWith
-            // 
-            resources.ApplyResources(LblAlwaysCalculatedWith, "LblAlwaysCalculatedWith");
-            LblAlwaysCalculatedWith.Name = "LblAlwaysCalculatedWith";
-            // 
             // startRateDataGridViewTextBoxColumn
             // 
             startRateDataGridViewTextBoxColumn.DataPropertyName = "StartRate";
@@ -410,11 +291,156 @@
             resources.ApplyResources(idDataGridViewTextBoxColumn, "idDataGridViewTextBoxColumn");
             idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
             // 
+            // GbRate
+            // 
+            resources.ApplyResources(GbRate, "GbRate");
+            GbRate.Controls.Add(label1);
+            GbRate.Controls.Add(futurePriceTextBox);
+            GbRate.Controls.Add(rateTaxInfoLabel);
+            GbRate.Controls.Add(LblRate);
+            GbRate.Controls.Add(CboRateType);
+            GbRate.Controls.Add(LblRateType);
+            GbRate.Controls.Add(LblPriceChangeHint);
+            GbRate.Controls.Add(LblPriceChange);
+            GbRate.Controls.Add(priceChangeTextBox);
+            GbRate.Controls.Add(LblExpectedPriceChangeHint);
+            GbRate.Controls.Add(LblExchangeRate);
+            GbRate.Controls.Add(TxtExpectedPriceChange);
+            GbRate.Controls.Add(TxtRate);
+            GbRate.Controls.Add(LblDescription);
+            GbRate.Controls.Add(TxtRateDescription);
+            GbRate.Controls.Add(DtpEndRate);
+            GbRate.Controls.Add(DtpStartRate);
+            GbRate.Controls.Add(LblRange);
+            GbRate.Name = "GbRate";
+            GbRate.TabStop = false;
+            // 
+            // label1
+            // 
+            resources.ApplyResources(label1, "label1");
+            label1.Name = "label1";
+            // 
+            // futurePriceTextBox
+            // 
+            futurePriceTextBox.BackColor = SystemColors.ControlLight;
+            futurePriceTextBox.DataBindings.Add(new Binding("Text", bsRates, "FutureRate", true));
+            resources.ApplyResources(futurePriceTextBox, "futurePriceTextBox");
+            futurePriceTextBox.Name = "futurePriceTextBox";
+            futurePriceTextBox.ReadOnly = true;
+            // 
+            // rateTaxInfoLabel
+            // 
+            resources.ApplyResources(rateTaxInfoLabel, "rateTaxInfoLabel");
+            rateTaxInfoLabel.Name = "rateTaxInfoLabel";
+            // 
+            // LblRate
+            // 
+            resources.ApplyResources(LblRate, "LblRate");
+            LblRate.Name = "LblRate";
+            // 
+            // CboRateType
+            // 
+            CboRateType.DataBindings.Add(new Binding("SelectedValue", bsRates, "RateTypeId", true));
+            CboRateType.DataSource = bsRateType;
+            CboRateType.DisplayMember = "Description";
+            CboRateType.FormattingEnabled = true;
+            resources.ApplyResources(CboRateType, "CboRateType");
+            CboRateType.Name = "CboRateType";
+            CboRateType.ValueMember = "Id";
+            CboRateType.SelectedIndexChanged += CboRateType_SelectedIndexChanged;
+            // 
+            // bsRateType
+            // 
+            bsRateType.DataSource = typeof(EnergyUse.Models.Common.SelectionItem);
+            // 
+            // LblRateType
+            // 
+            resources.ApplyResources(LblRateType, "LblRateType");
+            LblRateType.Name = "LblRateType";
+            // 
+            // LblPriceChangeHint
+            // 
+            resources.ApplyResources(LblPriceChangeHint, "LblPriceChangeHint");
+            LblPriceChangeHint.Name = "LblPriceChangeHint";
+            // 
+            // LblPriceChange
+            // 
+            resources.ApplyResources(LblPriceChange, "LblPriceChange");
+            LblPriceChange.Name = "LblPriceChange";
+            // 
+            // priceChangeTextBox
+            // 
+            priceChangeTextBox.BackColor = SystemColors.ControlLight;
+            priceChangeTextBox.DataBindings.Add(new Binding("Text", bsRates, "PriceChange", true));
+            resources.ApplyResources(priceChangeTextBox, "priceChangeTextBox");
+            priceChangeTextBox.Name = "priceChangeTextBox";
+            priceChangeTextBox.ReadOnly = true;
+            // 
+            // LblExpectedPriceChangeHint
+            // 
+            resources.ApplyResources(LblExpectedPriceChangeHint, "LblExpectedPriceChangeHint");
+            LblExpectedPriceChangeHint.Name = "LblExpectedPriceChangeHint";
+            // 
+            // LblExchangeRate
+            // 
+            resources.ApplyResources(LblExchangeRate, "LblExchangeRate");
+            LblExchangeRate.Name = "LblExchangeRate";
+            // 
+            // TxtExpectedPriceChange
+            // 
+            TxtExpectedPriceChange.DataBindings.Add(new Binding("Text", bsRates, "ExpectedPriceChange", true));
+            resources.ApplyResources(TxtExpectedPriceChange, "TxtExpectedPriceChange");
+            TxtExpectedPriceChange.Name = "TxtExpectedPriceChange";
+            toolTip1.SetToolTip(TxtExpectedPriceChange, resources.GetString("TxtExpectedPriceChange.ToolTip"));
+            // 
+            // TxtRate
+            // 
+            TxtRate.DataBindings.Add(new Binding("Text", bsRates, "RateValue", true));
+            resources.ApplyResources(TxtRate, "TxtRate");
+            TxtRate.Name = "TxtRate";
+            TxtRate.TextChanged += TxtRate_TextChanged;
+            // 
+            // LblDescription
+            // 
+            resources.ApplyResources(LblDescription, "LblDescription");
+            LblDescription.Name = "LblDescription";
+            // 
+            // TxtRateDescription
+            // 
+            TxtRateDescription.DataBindings.Add(new Binding("Text", bsRates, "Description", true));
+            resources.ApplyResources(TxtRateDescription, "TxtRateDescription");
+            TxtRateDescription.Name = "TxtRateDescription";
+            // 
+            // DtpEndRate
+            // 
+            DtpEndRate.DataBindings.Add(new Binding("Value", bsRates, "EndRate", true));
+            DtpEndRate.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(DtpEndRate, "DtpEndRate");
+            DtpEndRate.Name = "DtpEndRate";
+            // 
+            // DtpStartRate
+            // 
+            DtpStartRate.DataBindings.Add(new Binding("Value", bsRates, "StartRate", true));
+            DtpStartRate.Format = DateTimePickerFormat.Short;
+            resources.ApplyResources(DtpStartRate, "DtpStartRate");
+            DtpStartRate.Name = "DtpStartRate";
+            DtpStartRate.Value = new DateTime(2022, 9, 24, 0, 0, 0, 0);
+            // 
+            // LblRange
+            // 
+            resources.ApplyResources(LblRange, "LblRange");
+            LblRange.Name = "LblRange";
+            // 
+            // AlwaysCalculatedWithLabel
+            // 
+            resources.ApplyResources(AlwaysCalculatedWithLabel, "AlwaysCalculatedWithLabel");
+            AlwaysCalculatedWithLabel.Name = "AlwaysCalculatedWithLabel";
+            // 
             // FrmRates
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(LblAlwaysCalculatedWith);
+            Controls.Add(AlwaysCalculatedWithLabel);
             Controls.Add(GbRate);
             Controls.Add(DgRates);
             Controls.Add(LblRateSource);
@@ -480,12 +506,12 @@
         private TextBox TxtRate;
         private Label LblPriceChangeHint;
         private Label LblPriceChange;
-        private TextBox TxtPriceChange;
+        private TextBox priceChangeTextBox;
         private Label LblExpectedPriceChangeHint;
         private Label LblExchangeRate;
         private TextBox TxtExpectedPriceChange;
         private ToolTip toolTip1;
-        private Label LblAlwaysCalculatedWith;
+        private Label AlwaysCalculatedWithLabel;
         private ToolStripButton TbsCancel;
         private ComboBox CboRateType;
         private Label LblRateType;
@@ -498,5 +524,8 @@
         private DataGridViewTextBoxColumn priceChangeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private Label rateTaxInfoLabel;
+        private Label label1;
+        private TextBox futurePriceTextBox;
     }
 }

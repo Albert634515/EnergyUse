@@ -25,5 +25,6 @@
         public string EnergyTypeDescription => EnergyType.Name;
         public string TarifGroupDescription => TariffGroup.Description;
         public string CostCategoryDescription => CostCategory.Name;
+        public decimal FutureRate => ExpectedPriceChange == 0 ? RateValue : (1 + (ExpectedPriceChange /  100)) * RateValue;
     }
 }

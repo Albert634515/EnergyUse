@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!--
-    Microsoft ResX Schema 
+    Microsoft ResX Schema
 
     Version 2.0
 
@@ -48,7 +48,7 @@
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
@@ -565,6 +565,90 @@
   <data name="GbRate.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>36, 237</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 20</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Future price:</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="futurePriceTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 234</value>
+  </data>
+  <data name="futurePriceTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="futurePriceTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 27</value>
+  </data>
+  <data name="futurePriceTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;futurePriceTextBox.Name" xml:space="preserve">
+    <value>futurePriceTextBox</value>
+  </data>
+  <data name="&gt;&gt;futurePriceTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;futurePriceTextBox.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;futurePriceTextBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="rateTaxInfoLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rateTaxInfoLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rateTaxInfoLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>242, 136</value>
+  </data>
+  <data name="rateTaxInfoLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>15, 20</value>
+  </data>
+  <data name="rateTaxInfoLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="rateTaxInfoLabel.Text" xml:space="preserve">
+    <value>_</value>
+  </data>
+  <data name="&gt;&gt;rateTaxInfoLabel.Name" xml:space="preserve">
+    <value>rateTaxInfoLabel</value>
+  </data>
+  <data name="&gt;&gt;rateTaxInfoLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rateTaxInfoLabel.Parent" xml:space="preserve">
+    <value>GbRate</value>
+  </data>
+  <data name="&gt;&gt;rateTaxInfoLabel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="LblRate.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -572,7 +656,7 @@
     <value>NoControl</value>
   </data>
   <data name="LblRate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>90, 133</value>
+    <value>90, 136</value>
   </data>
   <data name="LblRate.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 20</value>
@@ -593,7 +677,7 @@
     <value>GbRate</value>
   </data>
   <data name="&gt;&gt;LblRate.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>3</value>
   </data>
   <metadata name="bsRateType.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>463, 66</value>
@@ -620,7 +704,7 @@
     <value>GbRate</value>
   </data>
   <data name="&gt;&gt;CboRateType.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>4</value>
   </data>
   <data name="LblRateType.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -650,7 +734,7 @@
     <value>GbRate</value>
   </data>
   <data name="&gt;&gt;LblRateType.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="LblPriceChangeHint.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -680,7 +764,7 @@
     <value>GbRate</value>
   </data>
   <data name="&gt;&gt;LblPriceChangeHint.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>6</value>
   </data>
   <data name="LblPriceChange.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -710,31 +794,31 @@
     <value>GbRate</value>
   </data>
   <data name="&gt;&gt;LblPriceChange.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>7</value>
   </data>
-  <data name="TxtPriceChange.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="priceChangeTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>147, 199</value>
   </data>
-  <data name="TxtPriceChange.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="priceChangeTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
   </data>
-  <data name="TxtPriceChange.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="priceChangeTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>83, 27</value>
   </data>
-  <data name="TxtPriceChange.TabIndex" type="System.Int32, mscorlib">
+  <data name="priceChangeTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
   </data>
-  <data name="&gt;&gt;TxtPriceChange.Name" xml:space="preserve">
-    <value>TxtPriceChange</value>
+  <data name="&gt;&gt;priceChangeTextBox.Name" xml:space="preserve">
+    <value>priceChangeTextBox</value>
   </data>
-  <data name="&gt;&gt;TxtPriceChange.Type" xml:space="preserve">
+  <data name="&gt;&gt;priceChangeTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TxtPriceChange.Parent" xml:space="preserve">
+  <data name="&gt;&gt;priceChangeTextBox.Parent" xml:space="preserve">
     <value>GbRate</value>
   </data>
-  <data name="&gt;&gt;TxtPriceChange.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="&gt;&gt;priceChangeTextBox.ZOrder" xml:space="preserve">
+    <value>8</value>
   </data>
   <data name="LblExpectedPriceChangeHint.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -764,7 +848,7 @@
     <value>GbRate</value>
   </data>
   <data name="&gt;&gt;LblExpectedPriceChangeHint.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>9</value>
   </data>
   <data name="LblExchangeRate.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -794,7 +878,7 @@
     <value>GbRate</value>
   </data>
   <data name="&gt;&gt;LblExchangeRate.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>10</value>
   </data>
   <data name="TxtExpectedPriceChange.Location" type="System.Drawing.Point, System.Drawing">
     <value>147, 164</value>
@@ -824,10 +908,10 @@
     <value>GbRate</value>
   </data>
   <data name="&gt;&gt;TxtExpectedPriceChange.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>11</value>
   </data>
   <data name="TxtRate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>147, 129</value>
+    <value>147, 133</value>
   </data>
   <data name="TxtRate.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
@@ -848,7 +932,7 @@
     <value>GbRate</value>
   </data>
   <data name="&gt;&gt;TxtRate.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>12</value>
   </data>
   <data name="LblDescription.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -878,7 +962,7 @@
     <value>GbRate</value>
   </data>
   <data name="&gt;&gt;LblDescription.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>13</value>
   </data>
   <data name="TxtRateDescription.Location" type="System.Drawing.Point, System.Drawing">
     <value>147, 94</value>
@@ -905,7 +989,7 @@
     <value>GbRate</value>
   </data>
   <data name="&gt;&gt;TxtRateDescription.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>14</value>
   </data>
   <data name="DtpEndRate.Location" type="System.Drawing.Point, System.Drawing">
     <value>277, 61</value>
@@ -929,7 +1013,7 @@
     <value>GbRate</value>
   </data>
   <data name="&gt;&gt;DtpEndRate.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>15</value>
   </data>
   <data name="DtpStartRate.Location" type="System.Drawing.Point, System.Drawing">
     <value>147, 61</value>
@@ -953,7 +1037,7 @@
     <value>GbRate</value>
   </data>
   <data name="&gt;&gt;DtpStartRate.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>16</value>
   </data>
   <data name="LblRange.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -983,7 +1067,7 @@
     <value>GbRate</value>
   </data>
   <data name="&gt;&gt;LblRange.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>17</value>
   </data>
   <data name="GbRate.Location" type="System.Drawing.Point, System.Drawing">
     <value>873, 272</value>
@@ -1009,37 +1093,37 @@
   <data name="&gt;&gt;GbRate.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="LblAlwaysCalculatedWith.AutoSize" type="System.Boolean, mscorlib">
+  <data name="AlwaysCalculatedWithLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="LblAlwaysCalculatedWith.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="AlwaysCalculatedWithLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="LblAlwaysCalculatedWith.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="AlwaysCalculatedWithLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>357, 88</value>
   </data>
-  <data name="LblAlwaysCalculatedWith.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="AlwaysCalculatedWithLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 20</value>
   </data>
-  <data name="LblAlwaysCalculatedWith.TabIndex" type="System.Int32, mscorlib">
+  <data name="AlwaysCalculatedWithLabel.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="LblAlwaysCalculatedWith.Text" xml:space="preserve">
+  <data name="AlwaysCalculatedWithLabel.Text" xml:space="preserve">
     <value>_</value>
   </data>
-  <data name="LblAlwaysCalculatedWith.Visible" type="System.Boolean, mscorlib">
+  <data name="AlwaysCalculatedWithLabel.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;LblAlwaysCalculatedWith.Name" xml:space="preserve">
-    <value>LblAlwaysCalculatedWith</value>
+  <data name="&gt;&gt;AlwaysCalculatedWithLabel.Name" xml:space="preserve">
+    <value>AlwaysCalculatedWithLabel</value>
   </data>
-  <data name="&gt;&gt;LblAlwaysCalculatedWith.Type" xml:space="preserve">
+  <data name="&gt;&gt;AlwaysCalculatedWithLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;LblAlwaysCalculatedWith.Parent" xml:space="preserve">
+  <data name="&gt;&gt;AlwaysCalculatedWithLabel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;LblAlwaysCalculatedWith.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;AlwaysCalculatedWithLabel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -1126,18 +1210,6 @@
   <data name="&gt;&gt;bsTarifGroups.Type" xml:space="preserve">
     <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;bsRateType.Name" xml:space="preserve">
-    <value>bsRateType</value>
-  </data>
-  <data name="&gt;&gt;bsRateType.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
-    <value>toolTip1</value>
-  </data>
-  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;startRateDataGridViewTextBoxColumn.Name" xml:space="preserve">
     <value>startRateDataGridViewTextBoxColumn</value>
   </data>
@@ -1179,6 +1251,18 @@
   </data>
   <data name="&gt;&gt;idDataGridViewTextBoxColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsRateType.Name" xml:space="preserve">
+    <value>bsRateType</value>
+  </data>
+  <data name="&gt;&gt;bsRateType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FrmRates</value>

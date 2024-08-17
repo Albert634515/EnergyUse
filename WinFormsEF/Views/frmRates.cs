@@ -67,6 +67,11 @@ namespace WinFormsEF.Views
 
         #region Events
 
+        private void bsRates_CurrentChanged(object sender, EventArgs e)
+        {
+            setRateIncExLabel();
+        }
+
         private void CboEnergyType_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (CboEnergyType.SelectedIndex != -1)
@@ -95,21 +100,7 @@ namespace WinFormsEF.Views
 
                 initAdditionalCategoryAndGroupInfo();
                 initRates();
-                SetLabelAlwaysCalculatedWith(costCategory.TariffGroup);
-            }
-        }
-
-        private void SetLabelAlwaysCalculatedWith(EnergyUse.Models.TariffGroup tarifGroup)
-        {
-            LblAlwaysCalculatedWith.Visible = false;
-
-            if (tarifGroup != null && tarifGroup.Id > 0)
-            {
-                var message = Managers.Languages.GetResourceString("RatesAlwaysCalculatedWith", "Category is always calculated with tarif group: %s");
-                message = message.Replace("%s", "tarifGroup.Description");
-
-                LblAlwaysCalculatedWith.Visible = true;
-                LblAlwaysCalculatedWith.Text = message;
+                setLabelAlwaysCalculatedWith(costCategory.TariffGroup);
             }
         }
 
@@ -122,6 +113,11 @@ namespace WinFormsEF.Views
         private void TxtDescription_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             setAdditionalInfo();
+        }
+
+        private void TxtRate_TextChanged(object sender, EventArgs e)
+        {
+            setRateIncExLabel();
         }
 
         private void FrmRates_FormClosing(object sender, FormClosingEventArgs e)
@@ -174,6 +170,38 @@ namespace WinFormsEF.Views
         #endregion
 
         #region Methods
+
+        private void setRateIncExLabel()
+        {
+            rateTaxInfoLabel.Text = "_";
+
+            if (bsRates.Current == null)
+                return;
+
+            var currentRate = (EnergyUse.Models.Rate)bsRates.Current;
+            var costCategory = (EnergyUse.Models.CostCategory)CboCostCategory.SelectedItem;
+
+            var rateTaxInfo = _controller.GetRateIncExTax(costCategory, currentRate);
+            if (rateTaxInfo != null)
+            {
+                if (costCategory.CalculateVat)
+                    rateTaxInfoLabel.Text = rateTaxInfo.RateIncTax.ToString();
+            }
+        }
+
+        private void setLabelAlwaysCalculatedWith(EnergyUse.Models.TariffGroup tarifGroup)
+        {
+            AlwaysCalculatedWithLabel.Visible = false;
+
+            if (tarifGroup != null && tarifGroup.Id > 0)
+            {
+                var message = Managers.Languages.GetResourceString("RatesAlwaysCalculatedWith", "Category is always calculated with tarif group: %s");
+                message = message.Replace("%s", tarifGroup.Description);
+
+                AlwaysCalculatedWithLabel.Visible = true;
+                AlwaysCalculatedWithLabel.Text = message;
+            }
+        }
 
         private void changeRateType()
         {
@@ -301,8 +329,6 @@ namespace WinFormsEF.Views
             var rate = (EnergyUse.Models.Rate)bsRates.Current;
             rate.PriceChange = getPriceChange(rate);
 
-            // Save additional groep info
-
             _controller.UnitOfWork.Complete();
         }
 
@@ -393,5 +419,6 @@ namespace WinFormsEF.Views
         }
 
         #endregion
+
     }
 }

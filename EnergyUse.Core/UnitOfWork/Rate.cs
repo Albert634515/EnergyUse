@@ -15,6 +15,7 @@ namespace EnergyUse.Core.UnitOfWork
         public RepoTariffGroup TarifGroupRepo;
         public RepoStaffel StaffelRepo;
         public RepoAdditionalCategoryAndGroupInfo AdditionalCategoryAndGroupInfoRepo;
+        public RepoVatTarif RepoVatTarif;
 
         public List<Models.Rate> RateList = new();
 
@@ -28,6 +29,7 @@ namespace EnergyUse.Core.UnitOfWork
             TarifGroupRepo = new RepoTariffGroup(_context);
             StaffelRepo = new RepoStaffel(_context);
             AdditionalCategoryAndGroupInfoRepo = new RepoAdditionalCategoryAndGroupInfo(_context);
+            RepoVatTarif = new RepoVatTarif(_context);
         }
 
         public int Complete()
