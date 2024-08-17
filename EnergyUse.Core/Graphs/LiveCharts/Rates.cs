@@ -11,10 +11,10 @@ namespace EnergyUse.Core.Graphs.LiveCharts
             _graphParameter = graphParameter;
             _unitOfWork = new UnitOfWork.Graphs(_graphParameter.DbName);
 
-            loadChart();
+            getChart();
         }
 
-        private void loadChart()
+        private void getChart()
         {
             try
             {
@@ -23,9 +23,9 @@ namespace EnergyUse.Core.Graphs.LiveCharts
                 if (_graphParameter.EnergyTypeList != null && _graphParameter.EnergyTypeList.Count > 0)
                 {
                     if (_graphParameter.ShowType == Common.Enums.ShowType.Unit)
-                        GetChartSeriesPerCostCategoryAndUnit(_graphParameter.EnergyTypeList, _graphParameter.From, _graphParameter.Till, 1);
+                        getChartSeriesPerCostCategoryAndUnit(_graphParameter.EnergyTypeList, _graphParameter.From, _graphParameter.Till, 1);
                     else
-                        GetChartSeriesPerCostCategory(_graphParameter.EnergyTypeList);
+                        getChartSeriesPerCostCategory(_graphParameter.EnergyTypeList);
                 }
             }
             catch (Exception)
@@ -36,7 +36,7 @@ namespace EnergyUse.Core.Graphs.LiveCharts
 
         #region GetChartSeriesPerCostCategoryAndUnit
 
-        private void GetChartSeriesPerCostCategoryAndUnit(List<Models.EnergyType> energyTypes, DateTime startDate, DateTime endDate, Int64 tarifGroupId)
+        private void getChartSeriesPerCostCategoryAndUnit(List<Models.EnergyType> energyTypes, DateTime startDate, DateTime endDate, Int64 tarifGroupId)
         {
             var typeCounter = -1;
 
@@ -131,7 +131,7 @@ namespace EnergyUse.Core.Graphs.LiveCharts
 
         #region GetChartSeriesPerCostCategory
 
-        private void GetChartSeriesPerCostCategory(List<Models.EnergyType> energyTypes)
+        private void getChartSeriesPerCostCategory(List<Models.EnergyType> energyTypes)
         {
             var typeCounter = -1;
 
@@ -162,7 +162,7 @@ namespace EnergyUse.Core.Graphs.LiveCharts
 
                     // Add last rate by enddate
                     if (lastRate != null && lastRate.Id > 0)
-                        addRateToList(costCategory.Name, lastRate.RateValue, lastRate.StartRate);
+                        addRateToList(costCategory.Name, lastRate.RateValue, lastRate.EndRate);
                 }
 
                 // Creating a list of series
