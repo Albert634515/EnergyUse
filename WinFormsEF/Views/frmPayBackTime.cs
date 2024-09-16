@@ -265,7 +265,7 @@ namespace WinFormsEF.Views
 
                 // Voor alle cost category met te betalen waarden
                 List<EnergyUse.Models.CostCategory> costCategories = _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeAndUntit(energyType.Id, "kWh").ToList();
-                costCategories = costCategories.Where(x => x.EnergySubType.Id == 5).ToList();
+                costCategories = costCategories.Where(x => x.EnergySubType.Id == 5 || x.EnergySubType.Id == 6 || x.EnergySubType.Id == 7).ToList();
                 foreach (EnergyUse.Models.CostCategory costCategory in costCategories)
                 {
                     tarifGroupId = (long)((costCategory.TariffGroup == null || costCategory.TariffGroup.Id <= 0) ? address.TariffGroup.Id : costCategory.TariffGroup.Id);

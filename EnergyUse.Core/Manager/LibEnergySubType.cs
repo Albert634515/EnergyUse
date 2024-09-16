@@ -14,12 +14,13 @@
                 case 2:
                 case 3:
                 case 4:
+                case 6:
+                case 7:
                     combinedType = "Energy";
                     break;
                 case 5:
                     combinedType = "Other";
                     break;
-
             }
 
             return combinedType;

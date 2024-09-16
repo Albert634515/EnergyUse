@@ -63,7 +63,7 @@ namespace EnergyUse.Core.Manager
                     }
 
                     //Ophalen tarieven
-                    if (costCategory.EnergySubType.Id == 5)
+                    if (costCategory.EnergySubType.Id >= 5)
                     {
                         _rates = rateRepo.SelectByCostCategoryAndDate(energyTypeId, costCategory.Id, periodicData.ValueXDate, periodicData.ValueXDate, tarifGroupId).ToList();
                         rate = _rates.Where(x => periodicData.ValueXDate >= x.StartRate && periodicData.ValueXDate <= x.EndRate).FirstOrDefault();
@@ -105,21 +105,33 @@ namespace EnergyUse.Core.Manager
                                 break;
                             case 3:
                                 //return normal
-                                rateUsed = 0 - periodicData.RateReturnNormal;
+                                if (periodicData.RateReturnNormal < 0)
+                                    rateUsed = 0 - periodicData.RateReturnNormal;
+                                else
+                                    rateUsed = periodicData.RateReturnNormal;
                                 break;
                             case 4:
                                 //return low
-                                rateUsed = 0 - periodicData.RateReturnLow;
+                                if (periodicData.RateReturnNormal < 0)
+                                    rateUsed = 0 - periodicData.RateReturnLow;
+                                else
+                                    rateUsed =  periodicData.RateReturnLow;
                                 break;
                             case 5:
                                 //Other
+                                rateUsed = rate.RateValue;
+                                break;
+                            case 6:
+                                rateUsed = rate.RateValue;
+                                break;
+                            case 7:
                                 rateUsed = rate.RateValue;
                                 break;
                         }
                     }
 
                     //Als er nog geen sd record is eerste aanmaken
-                    // Zoek laatste record, kijk of tarief geliijk is anders nieuwe maken en toevoegen
+                    // Zoek laatste record, kijk of tarief gelijk is anders nieuwe maken en toevoegen
 
                     settlementData = settlementDataList.LastOrDefault(x => x.CorrectionFactor == periodicData.CorrectionFactor
                                                                          && x.LastAvailableRateUsed == lastAvailableRateUsed
@@ -179,6 +191,14 @@ namespace EnergyUse.Core.Manager
                                 settlementData.ValueBaseConsumed += 0;
                                 settlementData.ValueBaseProduced += 0;
                             }
+                            break;
+                        case 6:
+                            //return cost normal
+                            settlementData.ValueBaseConsumed += periodicData.ValueYReturnNormal;
+                            break;
+                        case 7:
+                            //return cost low
+                            settlementData.ValueBaseConsumed += periodicData.ValueYReturnLow;
                             break;
                     }
 
