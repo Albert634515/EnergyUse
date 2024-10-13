@@ -180,6 +180,7 @@ namespace EnergyUse.Core.Manager
                         case 5:
                             //Other
 
+                            // CalculationType== 1: Per unit
                             if (costCategory.CalculationType.Id == 1)
                             {
                                 settlementData.ValueBaseConsumed += (periodicData.ValueYNormal + periodicData.ValueYLow);
@@ -194,11 +195,11 @@ namespace EnergyUse.Core.Manager
                             break;
                         case 6:
                             //return cost normal
-                            settlementData.ValueBaseConsumed += periodicData.ValueYReturnNormal;
+                            settlementData.ValueBaseConsumed += 0 - periodicData.ValueYReturnNormal;
                             break;
                         case 7:
                             //return cost low
-                            settlementData.ValueBaseConsumed += periodicData.ValueYReturnLow;
+                            settlementData.ValueBaseConsumed += 0 - periodicData.ValueYReturnLow;
                             break;
                     }
 
