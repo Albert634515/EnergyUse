@@ -16,11 +16,11 @@ public class ChartAxis
     public static Axis GetDataAxis()
     {
         return new Axis
-            {
-                LabelsRotation = 15,
-                Position = AxisPosition.Start,
-                MinStep = 1,
-            };
+        {
+            LabelsRotation = 15,
+            Position = AxisPosition.Start,
+            MinStep = 1,
+        };
     }
 
     public static List<Axis> GetDateAxisList(double value = 1)
@@ -30,10 +30,9 @@ public class ChartAxis
 
     public static Axis GetDateAxis(double value = 1)
     {
-        return new Axis
+        return new DateTimeAxis(TimeSpan.FromDays(value), date => date.ToString("dd/MM/yyyy"))
         {
-            Labeler = value => new DateTime((long)value).ToString("dd/MM/yyyy"),
-            LabelsRotation = 15,
+            LabelsRotation = 20,
             Position = AxisPosition.Start,
             MinStep = TimeSpan.FromDays(value).Ticks,
             UnitWidth = TimeSpan.FromDays(value).Ticks
@@ -47,14 +46,12 @@ public class ChartAxis
 
     public static Axis GetWeekAxis(double value = (defaultYearSpan / 53))
     {
-        return new Axis
+        return new DateTimeAxis(TimeSpan.FromDays(value), date => date.YearWeekFormat())
         {
-            Labeler = value => new DateTime((long)value).YearWeekFormat(),
-            LabelsRotation = 15,
+            LabelsRotation = 20,
             Position = AxisPosition.Start,
             MinStep = TimeSpan.FromDays(value).Ticks,
-            UnitWidth = TimeSpan.FromDays(value).Ticks,
-            //SeparatorsPaint = new SolidColorPaint { Color = SKColors.Black, StrokeThickness = 2 },
+            UnitWidth = TimeSpan.FromDays(value).Ticks
         };
     }
 
@@ -65,14 +62,12 @@ public class ChartAxis
 
     public static Axis GetMonthAxis(double value = (defaultYearSpan / 12))
     {
-        return new Axis
+        return new DateTimeAxis(TimeSpan.FromDays(value), date => date.ToString("yyyyMM"))
         {
-            Labeler = value => new DateTime((long)value).ToString("yyyyMM"),
-            LabelsRotation = 15,
+            LabelsRotation = 20,
             Position = AxisPosition.Start,
             MinStep = TimeSpan.FromDays(value).Ticks,
-            UnitWidth = TimeSpan.FromDays(value).Ticks,
-            //SeparatorsPaint = new SolidColorPaint { Color = SKColors.Black, StrokeThickness = 2 },
+            UnitWidth = TimeSpan.FromDays(value).Ticks
         };
     }
 
@@ -83,16 +78,12 @@ public class ChartAxis
 
     public static Axis GetYearAxis(double value = defaultYearSpan, string label = "Year")
     {
-        return new Axis
-            {
-                Name = label,
-                Labeler = value => new DateTime((long) value).ToString("yyyy"),
-                LabelsRotation = 15,
-                Position = AxisPosition.Start,
-                MinStep = TimeSpan.FromDays(value).Ticks,
-                UnitWidth = TimeSpan.FromDays(value).Ticks,
-                //FDorceToMinStep = true, // this could be useful in some cases.
-                //SeparatorsPaint = new SolidColorPaint { Color = SKColors.Black, StrokeThickness = 2 },
-            };
+        return new DateTimeAxis(TimeSpan.FromDays(value), date => date.ToString("yyyy"))
+        {
+            LabelsRotation = 20,
+            Position = AxisPosition.Start,
+            MinStep = TimeSpan.FromDays(value).Ticks,
+            UnitWidth = TimeSpan.FromDays(value).Ticks
+        };
     }
 }
