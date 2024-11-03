@@ -109,9 +109,6 @@ public class LibPeriodicDate
         {
             if (costCategory.CalculationType.Id == 1 || costCategory.CalculationType.Id == 3)
             {
-                decimal priceIncrease = 0;
-                decimal lastRate = 0;
-
                 //Loop data
                 foreach (PeriodicDataPerDay periodicData in _periodicDataList)
                 {
