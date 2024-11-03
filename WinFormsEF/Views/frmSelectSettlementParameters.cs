@@ -1,4 +1,5 @@
 ﻿using EnergyUse.Core.Controllers;
+using Org.BouncyCastle.Ocsp;
 using System.Data;
 
 namespace WinFormsEF.Views;
@@ -82,6 +83,8 @@ public partial class frmSelectSettlementParameters : Form
         reportList.Add(EnergyUse.Common.Enums.ReportType.SettlementOld.ToString());
 
         reportComboBox.DataSource = reportList;
+
+        reportComboBox.Text = EnergyUse.Common.Enums.ReportType.SettlementSplitByType.ToString();
     }
     
     #endregion
