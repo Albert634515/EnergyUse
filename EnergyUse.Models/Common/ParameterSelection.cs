@@ -1,14 +1,13 @@
-﻿namespace EnergyUse.Models.Common
-{
-    public class ParameterSelection
-    {
-        public long AddressId = 0;
-        public long PreSelectedPeriodId = 0;
-        public bool ShowCalculatedData = false;
-        public bool PredictMissingData = false;
-        public DateTime StartRange = DateTime.MinValue;
-        public DateTime EndRange = DateTime.MinValue;
+﻿namespace EnergyUse.Models.Common;
 
-        public List<SelectedEnergyType> SelectedEnergyTypeList = new List<SelectedEnergyType>();
-    }
+public class ParameterSelection
+{
+    public long AddressId { get; set; } = 0;
+    public long PreSelectedPeriodId { get; set; } = 0;
+    public bool PredictMissingData { get; set; } = false;
+    public DateTime StartRange { get; set; } = DateTime.MinValue;
+    public DateTime EndRange { get; set; } = DateTime.MinValue;
+    public EnergyUse.Common.Enums.ReportType ReportType { get; set; } = EnergyUse.Common.Enums.ReportType.None;
+
+    public List<SelectedEnergyType> SelectedEnergyTypeList { get; set; } = new List<SelectedEnergyType>();
 }

@@ -1,13 +1,12 @@
-﻿namespace EnergyUse.Common.Enums
+﻿namespace EnergyUse.Common.Enums;
+
+public enum ShowType
 {
-    public enum ShowType
-    {
-        Rate,
-        Value,
-        AvgRate,
-        AvgValue,
-        Efficiency,
-        Unit,
-        Unknown
-    }
+    Rate,
+    Value,
+    AvgRate,
+    AvgValue,
+    Efficiency,
+    Unit,
+    Unknown
 }

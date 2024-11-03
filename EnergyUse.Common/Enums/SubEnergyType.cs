@@ -1,13 +1,12 @@
-﻿namespace EnergyUse.Common.Enums
+﻿namespace EnergyUse.Common.Enums;
+
+public enum SubEnergyType
 {
-    public enum SubEnergyType
-    {
-        Normal = 1,
-        Low = 2,
-        ReturnNormal = 3,
-        ReturnLow = 4,
-        Other = 5,
-        ReturnCostNormal = 6,
-        ReturnCostLow = 7
-    }
+    Normal = 1,
+    Low = 2,
+    ReturnNormal = 3,
+    ReturnLow = 4,
+    Other = 5,
+    ReturnCostNormal = 6,
+    ReturnCostLow = 7
 }

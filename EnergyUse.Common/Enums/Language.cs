@@ -1,9 +1,8 @@
-﻿namespace EnergyUse.Common.Enums
+﻿namespace EnergyUse.Common.Enums;
+
+public enum Language
 {
-    public enum Language
-    {
-        English,
-        Nederlands,
-        Polski
-    }
+    English,
+    Nederlands,
+    Polski
 }

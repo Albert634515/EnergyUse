@@ -1,9 +1,8 @@
-﻿namespace EnergyUse.Common.Enums
+﻿namespace EnergyUse.Common.Enums;
+
+public enum ShowBy
 {
-    public enum ShowBy
-    {
-        Category,
-        SubCategory,
-        Total
-    }
+    Category,
+    SubCategory,
+    Total
 }

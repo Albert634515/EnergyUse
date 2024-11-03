@@ -1,11 +1,10 @@
-﻿namespace EnergyUse.Core.Interfaces
+﻿namespace EnergyUse.Core.Interfaces;
+
+public interface IUnitOfWork : IDisposable
 {
-    public interface IUnitOfWork : IDisposable
-    {
-        int Complete();
+    int Complete();
 
-        bool HasChanges();
+    bool HasChanges();
 
-        void CancelChanges();
-    }
+    void CancelChanges();
 }

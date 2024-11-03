@@ -2,42 +2,41 @@
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Repositories;
 
-namespace EnergyUse.Core.UnitOfWork
+namespace EnergyUse.Core.UnitOfWork;
+
+public class DemoData : IUnitOfWork
 {
-    public class DemoData : IUnitOfWork
+    private readonly EnergyUseContext _context;
+
+    public RepoGeneral<Models.Address> AddressRepo;
+    public RepoEnergyType EnergyTypeRepo;
+
+    public DemoData(string dbFileName)
     {
-        private readonly EnergyUseContext _context;
+        _context = new EnergyUseContext(dbFileName);
 
-        public RepoGeneral<Models.Address> AddressRepo;
-        public RepoEnergyType EnergyTypeRepo;
+        AddressRepo = new RepoGeneral<Models.Address>(_context);
+        EnergyTypeRepo = new RepoEnergyType(_context);
+    }
 
-        public DemoData(string dbFileName)
-        {
-            _context = new EnergyUseContext(dbFileName);
+    public int Complete()
+    {
+        return _context.SaveChanges();
+    }
 
-            AddressRepo = new RepoGeneral<Models.Address>(_context);
-            EnergyTypeRepo = new RepoEnergyType(_context);
-        }
+    public bool HasChanges()
+    {
+        return _context.ChangeTracker.HasChanges();
+    }
 
-        public int Complete()
-        {
-            return _context.SaveChanges();
-        }
+    public void CancelChanges()
+    {
+        AddressRepo.RejectChanges();
+        EnergyTypeRepo.RejectChanges();
+    }
 
-        public bool HasChanges()
-        {
-            return _context.ChangeTracker.HasChanges();
-        }
-
-        public void CancelChanges()
-        {
-            AddressRepo.RejectChanges();
-            EnergyTypeRepo.RejectChanges();
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

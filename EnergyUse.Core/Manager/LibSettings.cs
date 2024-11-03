@@ -2,197 +2,196 @@
 using EnergyUse.Common.Enums;
 using EnergyUse.Core.Context;
 
-namespace EnergyUse.Core.Manager
+namespace EnergyUse.Core.Manager;
+
+public class LibSettings
 {
-    public class LibSettings
+    private readonly EnergyUseContext _context;
+
+    public LibSettings(string dbFileName)
     {
-        private readonly EnergyUseContext _context;
+        _context = new EnergyUseContext(dbFileName);
+    }
 
-        public LibSettings(string dbFileName)
+    public void SetLastUsedImportFile(string lastImportFile, string fileKey)
+    {
+        if (!string.IsNullOrWhiteSpace(lastImportFile))
         {
-            _context = new EnergyUseContext(dbFileName);
-        }
+            SaveSetting("ImportDirectory", Path.GetDirectoryName(lastImportFile));
 
-        public void SetLastUsedImportFile(string lastImportFile, string fileKey)
-        {
-            if (!string.IsNullOrWhiteSpace(lastImportFile))
-            {
-                SaveSetting("ImportDirectory", Path.GetDirectoryName(lastImportFile));
-
-                if (!string.IsNullOrWhiteSpace(fileKey))
-                    SaveSetting(fileKey, lastImportFile);
-            }
-        }
-
-        public string GetLastUsedImportFile(string fileKey)
-        {
-            var lastUsedImportFile = string.Empty;
             if (!string.IsNullOrWhiteSpace(fileKey))
-            {
-                var setting = GetSetting(fileKey);
-                if (setting != null && setting.Id > 0)
-                    lastUsedImportFile = setting.KeyValue;
-            }
-
-            return lastUsedImportFile;
+                SaveSetting(fileKey, lastImportFile);
         }
+    }
 
-        public string GetLastImportDirectory()
+    public string GetLastUsedImportFile(string fileKey)
+    {
+        var lastUsedImportFile = string.Empty;
+        if (!string.IsNullOrWhiteSpace(fileKey))
         {
-            string lastImportDirectory;
-            Models.Setting setting = GetSetting("ImportDirectory");
+            var setting = GetSetting(fileKey);
             if (setting != null && setting.Id > 0)
-                lastImportDirectory = setting.KeyValue;
-            else
-                lastImportDirectory = string.Empty;
-
-            return lastImportDirectory;
+                lastUsedImportFile = setting.KeyValue;
         }
 
-        public int GetNumberOfEnergyTypesOnReport(long addressId)
-        {
-            int numberOfEnergyTypesOnReport = 0;
+        return lastUsedImportFile;
+    }
 
-            var setting = GetSetting($"NumberOfEnergyTypesOnReport_A{addressId}");
+    public string GetLastImportDirectory()
+    {
+        string lastImportDirectory;
+        Models.Setting setting = GetSetting("ImportDirectory");
+        if (setting != null && setting.Id > 0)
+            lastImportDirectory = setting.KeyValue;
+        else
+            lastImportDirectory = string.Empty;
+
+        return lastImportDirectory;
+    }
+
+    public int GetNumberOfEnergyTypesOnReport(long addressId)
+    {
+        int numberOfEnergyTypesOnReport = 0;
+
+        var setting = GetSetting($"NumberOfEnergyTypesOnReport_A{addressId}");
+        if (setting != null && !string.IsNullOrWhiteSpace(setting.KeyValue))
+        {
+            _ = int.TryParse(setting.KeyValue, out numberOfEnergyTypesOnReport);
+        }
+
+        return numberOfEnergyTypesOnReport;
+    }
+
+    public int GetMainSpitterDistance(string splitterName)
+    {
+        int splitterDistance = 360;
+
+        if (!string.IsNullOrWhiteSpace(splitterName))
+        {
+            var setting = GetSetting(splitterName);
             if (setting != null && !string.IsNullOrWhiteSpace(setting.KeyValue))
             {
-                _ = int.TryParse(setting.KeyValue, out numberOfEnergyTypesOnReport);
+                _ = int.TryParse(setting.KeyValue, out splitterDistance);
             }
-
-            return numberOfEnergyTypesOnReport;
         }
 
-        public int GetMainSpitterDistance(string splitterName)
-        {
-            int splitterDistance = 360;
+        return splitterDistance;
+    }
 
-            if (!string.IsNullOrWhiteSpace(splitterName))
+    public Color GetChartColor(string colorKey)
+    {
+        Color color = GetColorSetting(colorKey);
+
+        return color;
+    }
+
+    public Color GetChartColor(Models.EnergyType energyType, SubEnergyType subType)
+    {
+        string colorKey;
+
+        if (energyType.HasNormalAndLow)
+            colorKey = $"Color{subType}{energyType.Id}";
+        else
+            colorKey = $"Color{energyType.Id}";
+
+        Color color = GetColorSetting(colorKey);
+
+        return color;
+    }
+
+    public Color GetColorSetting(string settingKey, Color? color = null)
+    {
+        if (color == null)
+            color = Color.Empty;
+
+        var setting = GetSetting(settingKey);
+        if (setting != null && setting.KeyValue != null)
+        {
+            color = ColorTranslator.FromWin32(int.Parse(setting.KeyValue));
+        }
+
+        return color.Value;
+    }
+
+    public string GetCurrentLanguage()
+    {
+        string language = "en-US";
+        var setting = GetSetting("Language");
+        if (setting != null && setting.KeyValue != null)
+        {
+            language = setting.KeyValue switch
             {
-                var setting = GetSetting(splitterName);
-                if (setting != null && !string.IsNullOrWhiteSpace(setting.KeyValue))
-                {
-                    _ = int.TryParse(setting.KeyValue, out splitterDistance);
-                }
-            }
-
-            return splitterDistance;
+                "English" => "en-US",
+                "Nederlands" => "nl-NL",
+                "Polski" => "pl-PL",
+                _ => "en-US",
+            };
         }
 
-        public Color GetChartColor(string colorKey)
+        return language;
+    }
+
+    public Models.Setting? GetSetting(string key)
+    {
+        var repo = new Repositories.RepoSettings(_context);
+        return repo.GetByKey(key);
+    }
+
+    public void SaveSetting(string settingTag, string newSettingValue)
+    {
+        var repo = new Repositories.RepoSettings(_context);
+        var setting = repo.GetByKey(settingTag);
+
+        if (setting == null || setting.Id == 0)
         {
-            Color color = GetColorSetting(colorKey);
-
-            return color;
+            setting = new Models.Setting();
+            setting.Key = settingTag;
+            setting.KeyValue = newSettingValue;
+            repo.Add(setting);
         }
-
-        public Color GetChartColor(Models.EnergyType energyType, SubEnergyType subType)
+        else
         {
-            string colorKey;
-
-            if (energyType.HasNormalAndLow)
-                colorKey = $"Color{subType}{energyType.Id}";
-            else
-                colorKey = $"Color{energyType.Id}";
-
-            Color color = GetColorSetting(colorKey);
-
-            return color;
+            setting.KeyValue = newSettingValue;
         }
 
-        public Color GetColorSetting(string settingKey, Color? color = null)
+        _context.SaveChanges();
+    }
+
+    public void SaveDateSetting(string settingTag, DateTime dateSettingValue)
+    {
+        string newSettingValue = dateSettingValue.ToString("yyyyMMdd");
+        SaveSetting(settingTag, newSettingValue);
+    }
+
+    public void SaveColorSetting(string settingTag, Color newColor)
+    {
+        var repo = new Repositories.RepoSettings(_context);
+        var setting = repo.GetByKey(settingTag);
+
+        if (setting == null || setting.Id == 0)
         {
-            if (color == null)
-                color = Color.Empty;
-
-            var setting = GetSetting(settingKey);
-            if (setting != null && setting.KeyValue != null)
-            {
-                color = ColorTranslator.FromWin32(int.Parse(setting.KeyValue));
-            }
-
-            return color.Value;
+            setting = new Models.Setting();
+            setting.Key = settingTag;
+            setting.KeyValue =ColorTranslator.ToWin32(newColor).ToString();
+            repo.Add(setting);
         }
-
-        public string GetCurrentLanguage()
+        else
         {
-            string language = "en-US";
-            var setting = GetSetting("Language");
-            if (setting != null && setting.KeyValue != null)
-            {
-                language = setting.KeyValue switch
-                {
-                    "English" => "en-US",
-                    "Nederlands" => "nl-NL",
-                    "Polski" => "pl-PL",
-                    _ => "en-US",
-                };
-            }
-
-            return language;
+            setting.KeyValue = ColorTranslator.ToWin32(newColor).ToString();
         }
 
-        public Models.Setting? GetSetting(string key)
-        {
-            var repo = new Repositories.RepoSettings(_context);
-            return repo.GetByKey(key);
-        }
+        _context.SaveChanges();
+    }
 
-        public void SaveSetting(string settingTag, string newSettingValue)
-        {
-            var repo = new Repositories.RepoSettings(_context);
-            var setting = repo.GetByKey(settingTag);
+    public void DeleteSetting(string settingTag)
+    {
+        var repo = new Repositories.RepoSettings(_context);
+        var setting = repo.GetByKey(settingTag);
 
-            if (setting == null || setting.Id == 0)
-            {
-                setting = new Models.Setting();
-                setting.Key = settingTag;
-                setting.KeyValue = newSettingValue;
-                repo.Add(setting);
-            }
-            else
-            {
-                setting.KeyValue = newSettingValue;
-            }
+        if (setting == null)
+            return;
 
-            _context.SaveChanges();
-        }
-
-        public void SaveDateSetting(string settingTag, DateTime dateSettingValue)
-        {
-            string newSettingValue = dateSettingValue.ToString("yyyyMMdd");
-            SaveSetting(settingTag, newSettingValue);
-        }
-
-        public void SaveColorSetting(string settingTag, Color newColor)
-        {
-            var repo = new Repositories.RepoSettings(_context);
-            var setting = repo.GetByKey(settingTag);
-
-            if (setting == null || setting.Id == 0)
-            {
-                setting = new Models.Setting();
-                setting.Key = settingTag;
-                setting.KeyValue =ColorTranslator.ToWin32(newColor).ToString();
-                repo.Add(setting);
-            }
-            else
-            {
-                setting.KeyValue = ColorTranslator.ToWin32(newColor).ToString();
-            }
-
-            _context.SaveChanges();
-        }
-
-        public void DeleteSetting(string settingTag)
-        {
-            var repo = new Repositories.RepoSettings(_context);
-            var setting = repo.GetByKey(settingTag);
-
-            if (setting == null)
-                return;
-
-            repo.Remove(setting);
-            _context.SaveChanges();
-        }
+        repo.Remove(setting);
+        _context.SaveChanges();
     }
 }

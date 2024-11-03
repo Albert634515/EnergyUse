@@ -2,63 +2,62 @@
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Repositories;
 
-namespace EnergyUse.Core.UnitOfWork
+namespace EnergyUse.Core.UnitOfWork;
+
+public class Address : IUnitOfWork
 {
-    public class Address : IUnitOfWork
+    private readonly EnergyUseContext _context;
+
+    public RepoAddress AddressRepo;
+
+    public List<Models.Address> Addresses = new();
+
+    public Address(string dbFileName)
     {
-        private readonly EnergyUseContext _context;
+        _context = new EnergyUseContext(dbFileName);
 
-        public RepoAddress AddressRepo;
+        AddressRepo = new RepoAddress(_context);
+    }
 
-        public List<Models.Address> Addresses = new();
+    public int Complete()
+    {
+        return _context.SaveChanges();
+    }
 
-        public Address(string dbFileName)
-        {
-            _context = new EnergyUseContext(dbFileName);
+    public bool HasChanges()
+    {
+        return _context.ChangeTracker.HasChanges();
+    }
 
-            AddressRepo = new RepoAddress(_context);
-        }
+    public void CancelChanges()
+    {
+        AddressRepo.RejectChanges();
+    }
 
-        public int Complete()
-        {
-            return _context.SaveChanges();
-        }
+    public void Delete(Models.Address entity)
+    {
+        AddressRepo.Remove(entity);
+        Addresses.Remove(entity);
+    }
 
-        public bool HasChanges()
-        {
-            return _context.ChangeTracker.HasChanges();
-        }
+    public Models.Address AddDefaultEntity(string defaultDescription)
+    {
+        var entity = new Models.Address();
+        entity.Description = defaultDescription;
 
-        public void CancelChanges()
-        {
-            AddressRepo.RejectChanges();
-        }
+        AddressRepo.Add(entity);
+        Addresses.Add(entity);
 
-        public void Delete(Models.Address entity)
-        {
-            AddressRepo.Remove(entity);
-            Addresses.Remove(entity);
-        }
+        return entity;
+    }
 
-        public Models.Address AddDefaultEntity(string defaultDescription)
-        {
-            var entity = new Models.Address();
-            entity.Description = defaultDescription;
+    public int GetPosition(Models.Address entity)
+    {
+        return Addresses.IndexOf(entity);
+    }
 
-            AddressRepo.Add(entity);
-            Addresses.Add(entity);
-
-            return entity;
-        }
-
-        public int GetPosition(Models.Address entity)
-        {
-            return Addresses.IndexOf(entity);
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

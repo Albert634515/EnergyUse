@@ -1,138 +1,137 @@
 ﻿using EnergyUse.Core.Controllers;
 
-namespace WinFormsEF.Views
+namespace WinFormsEF.Views;
+
+public partial class frmTariffGroups : Form
 {
-    public partial class frmTariffGroups : Form
+    #region FormProperties
+
+    private TariffGroupController _controller;
+
+    #endregion
+
+    #region InitForm
+
+    public frmTariffGroups()
     {
-        #region FormProperties
+        _controller = new TariffGroupController(Managers.Config.GetDbFileName());
+        _controller.Initialize();
 
-        private TariffGroupController _controller;
+        InitializeComponent();
+        setBaseFormSettings();
+        setTarifGroups();
+    }
 
-        #endregion
+    #endregion
 
-        #region InitForm
+    #region Events
 
-        public frmTariffGroups()
+    private void FrmTarifGroups_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        _ = DgTarifGroups.Focus();
+
+        if (_controller.UnitOfWork.HasChanges())
+            e.Cancel = e.Cancel = Managers.GeneralDialogs.WarningUnsavedChanges(this);
+    }
+
+    #endregion
+
+    #region Toolbar
+
+    private void TsbAdd_Click(object sender, EventArgs e)
+    {
+        addTarifGroup();
+    }
+
+    private void TsbSave_Click(object sender, EventArgs e)
+    {
+        setTarifGroup();
+    }
+
+    private void TbsCancel_Click(object sender, EventArgs e)
+    {
+        cancelTarifGroup();
+    }
+
+    private void TsbDelete_Click(object sender, EventArgs e)
+    {
+        deleteTarifGroup();
+    }
+
+    private void TsbRefresh_Click(object sender, EventArgs e)
+    {
+        setTarifGroups();
+    }
+
+    private void TsbClose_Click(object sender, EventArgs e)
+    {
+        closeTarifGroup();
+    }
+
+    #endregion
+
+    #region Methods
+
+    private void setTarifGroups()
+    {
+        _controller.UnitOfWork.TariffGroups = _controller.UnitOfWork.TariffGroupRepo.GetAll().ToList();
+
+        BsTarifGroups.DataSource = _controller.UnitOfWork.TariffGroups;
+        BsTarifGroups.ResetBindings(false);
+    }
+
+    private void addTarifGroup()
+    {
+        var entity = _controller.UnitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("TarifGroupNewGroup", "New group"));
+
+        BsTarifGroups.DataSource = _controller.UnitOfWork.TariffGroups;
+        BsTarifGroups.ResetBindings(false);
+
+        BsTarifGroups.Position = _controller.UnitOfWork.GetPosition(entity);
+    }
+
+    private void cancelTarifGroup()
+    {
+        _controller.UnitOfWork.CancelChanges();
+        setTarifGroups();
+    }
+
+    private void setTarifGroup()
+    {
+        // Set focus on grid to force valdition and update of bindingsource form interfaces
+        DgTarifGroups.Focus();
+
+        _controller.UnitOfWork.Complete();
+    }
+
+    private void deleteTarifGroup()
+    {
+        if (BsTarifGroups.Current != null)
         {
-            _controller = new TariffGroupController(Managers.Config.GetDbFileName());
-            _controller.Initialize();
-
-            InitializeComponent();
-            setBaseFormSettings();
-            setTarifGroups();
-        }
-
-        #endregion
-
-        #region Events
-
-        private void FrmTarifGroups_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            _ = DgTarifGroups.Focus();
-
-            if (_controller.UnitOfWork.HasChanges())
-                e.Cancel = e.Cancel = Managers.GeneralDialogs.WarningUnsavedChanges(this);
-        }
-
-        #endregion
-
-        #region Toolbar
-
-        private void TsbAdd_Click(object sender, EventArgs e)
-        {
-            addTarifGroup();
-        }
-
-        private void TsbSave_Click(object sender, EventArgs e)
-        {
-            setTarifGroup();
-        }
-
-        private void TbsCancel_Click(object sender, EventArgs e)
-        {
-            cancelTarifGroup();
-        }
-
-        private void TsbDelete_Click(object sender, EventArgs e)
-        {
-            deleteTarifGroup();
-        }
-
-        private void TsbRefresh_Click(object sender, EventArgs e)
-        {
-            setTarifGroups();
-        }
-
-        private void TsbClose_Click(object sender, EventArgs e)
-        {
-            closeTarifGroup();
-        }
-
-        #endregion
-
-        #region Methods
-
-        private void setTarifGroups()
-        {
-            _controller.UnitOfWork.TariffGroups = _controller.UnitOfWork.TariffGroupRepo.GetAll().ToList();
-
-            BsTarifGroups.DataSource = _controller.UnitOfWork.TariffGroups;
-            BsTarifGroups.ResetBindings(false);
-        }
-
-        private void addTarifGroup()
-        {
-            var entity = _controller.UnitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("TarifGroupNewGroup", "New group"));
-
-            BsTarifGroups.DataSource = _controller.UnitOfWork.TariffGroups;
-            BsTarifGroups.ResetBindings(false);
-
-            BsTarifGroups.Position = _controller.UnitOfWork.GetPosition(entity);
-        }
-
-        private void cancelTarifGroup()
-        {
-            _controller.UnitOfWork.CancelChanges();
-            setTarifGroups();
-        }
-
-        private void setTarifGroup()
-        {
-            // Set focus on grid to force valdition and update of bindingsource form interfaces
-            DgTarifGroups.Focus();
-
-            _controller.UnitOfWork.Complete();
-        }
-
-        private void deleteTarifGroup()
-        {
-            if (BsTarifGroups.Current != null)
+            var message = Managers.Languages.GetResourceString("TariffGroupsAskDelete", "Are you sure you want to delete this tarif group?");
+            var message2 = Managers.Languages.GetResourceString("DeleteTitle", "Delete?");
+            if (MessageBox.Show(message, message2, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                var message = Managers.Languages.GetResourceString("TariffGroupsAskDelete", "Are you sure you want to delete this tarif group?");
-                var message2 = Managers.Languages.GetResourceString("DeleteTitle", "Delete?");
-                if (MessageBox.Show(message, message2, MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    var entity = (EnergyUse.Models.TariffGroup)BsTarifGroups.Current;
-                    _controller.UnitOfWork.Delete(entity);
+                var entity = (EnergyUse.Models.TariffGroup)BsTarifGroups.Current;
+                _controller.UnitOfWork.Delete(entity);
 
-                    BsTarifGroups.DataSource = _controller.UnitOfWork.TariffGroups;
-                    BsTarifGroups.ResetBindings(false);
-                }
+                BsTarifGroups.DataSource = _controller.UnitOfWork.TariffGroups;
+                BsTarifGroups.ResetBindings(false);
             }
         }
-
-        private void closeTarifGroup()
-        {
-            Close();
-        }
-
-        private void setBaseFormSettings()
-        {
-            Managers.Settings.SetBaseFormSettings(this);
-            if (BackColor != Color.Empty)
-                DgTarifGroups.BackgroundColor = BackColor;
-        }
-
-        #endregion
     }
+
+    private void closeTarifGroup()
+    {
+        Close();
+    }
+
+    private void setBaseFormSettings()
+    {
+        Managers.Settings.SetBaseFormSettings(this);
+        if (BackColor != Color.Empty)
+            DgTarifGroups.BackgroundColor = BackColor;
+    }
+
+    #endregion
 }

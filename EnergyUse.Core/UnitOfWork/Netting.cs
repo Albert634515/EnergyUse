@@ -2,74 +2,73 @@
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Repositories;
 
-namespace EnergyUse.Core.UnitOfWork
+namespace EnergyUse.Core.UnitOfWork;
+
+public class Netting : IUnitOfWork
 {
-    public class Netting : IUnitOfWork
+    private readonly EnergyUseContext _context;
+
+    public RepoEnergyType EnergyTypeRepo;
+    public RepoNetting NettingRepo;
+
+    public List<Models.Netting> Nettings = new();
+
+    public Netting(string dbFileName)
     {
-        private readonly EnergyUseContext _context;
+        _context = new EnergyUseContext(dbFileName);
 
-        public RepoEnergyType EnergyTypeRepo;
-        public RepoNetting NettingRepo;
+        EnergyTypeRepo = new RepoEnergyType(_context);
+        NettingRepo = new RepoNetting(_context);
+    }
 
-        public List<Models.Netting> Nettings = new();
+    public int Complete()
+    {
+        return _context.SaveChanges();
+    }
 
-        public Netting(string dbFileName)
-        {
-            _context = new EnergyUseContext(dbFileName);
+    public bool HasChanges()
+    {
+        return _context.ChangeTracker.HasChanges();
+    }
 
-            EnergyTypeRepo = new RepoEnergyType(_context);
-            NettingRepo = new RepoNetting(_context);
-        }
+    public void CancelChanges()
+    {
+        EnergyTypeRepo.RejectChanges();
+        NettingRepo.RejectChanges();
+    }
 
-        public int Complete()
-        {
-            return _context.SaveChanges();
-        }
+    public void Delete(Models.Netting entity)
+    {
+        NettingRepo.Remove(entity);
+        Nettings.Remove(entity);
+    }
 
-        public bool HasChanges()
-        {
-            return _context.ChangeTracker.HasChanges();
-        }
+    public Models.Netting AddDefaultEntity(long energyTypeId)
+    {
+        var entity = new Models.Netting();
+        entity.EnergyTypeId = energyTypeId;
+        entity.Rate = 0;
 
-        public void CancelChanges()
-        {
-            EnergyTypeRepo.RejectChanges();
-            NettingRepo.RejectChanges();
-        }
+        NettingRepo.Add(entity);
+        Nettings.Add(entity);
 
-        public void Delete(Models.Netting entity)
-        {
-            NettingRepo.Remove(entity);
-            Nettings.Remove(entity);
-        }
+        SetListSorted();
 
-        public Models.Netting AddDefaultEntity(long energyTypeId)
-        {
-            var entity = new Models.Netting();
-            entity.EnergyTypeId = energyTypeId;
-            entity.Rate = 0;
+        return entity;
+    }
 
-            NettingRepo.Add(entity);
-            Nettings.Add(entity);
+    public void SetListSorted()
+    {
+        Nettings = Nettings.OrderByDescending(o => o.StartDate).ToList();
+    }
 
-            SetListSorted();
+    public int GetPosition(Models.Netting entity)
+    {
+        return Nettings.IndexOf(entity);
+    }
 
-            return entity;
-        }
-
-        public void SetListSorted()
-        {
-            Nettings = Nettings.OrderByDescending(o => o.StartDate).ToList();
-        }
-
-        public int GetPosition(Models.Netting entity)
-        {
-            return Nettings.IndexOf(entity);
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

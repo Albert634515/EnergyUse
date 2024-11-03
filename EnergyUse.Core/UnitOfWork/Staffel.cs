@@ -1,67 +1,64 @@
 ﻿using EnergyUse.Core.Context;
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Repositories;
-using EnergyUse.Models;
-using iText.StyledXmlParser.Jsoup.Safety;
 
-namespace EnergyUse.Core.UnitOfWork
+namespace EnergyUse.Core.UnitOfWork;
+
+public class Staffel : IUnitOfWork
 {
-    public class Staffel : IUnitOfWork
+    private readonly EnergyUseContext _context;
+
+    public RepoStaffel StaffelRepo;
+    public List<Models.Staffel> Staffels = new();
+
+    public Staffel(string dbFileName)
     {
-        private readonly EnergyUseContext _context;
+        _context = new EnergyUseContext(dbFileName);
 
-        public RepoStaffel StaffelRepo;
-        public List<Models.Staffel> Staffels = new();
+        StaffelRepo = new RepoStaffel(_context);
+    }
 
-        public Staffel(string dbFileName)
-        {
-            _context = new EnergyUseContext(dbFileName);
+    public int Complete()
+    {
+        return _context.SaveChanges();
+    }
 
-            StaffelRepo = new RepoStaffel(_context);
-        }
+    public bool HasChanges()
+    {
+        return _context.ChangeTracker.HasChanges();
+    }
 
-        public int Complete()
-        {
-            return _context.SaveChanges();
-        }
+    public void CancelChanges()
+    {
+        StaffelRepo.RejectChanges();
+    }
 
-        public bool HasChanges()
-        {
-            return _context.ChangeTracker.HasChanges();
-        }
+    public void Delete(Models.Staffel entity)
+    {
+        StaffelRepo.Remove(entity);
+    }
 
-        public void CancelChanges()
-        {
-            StaffelRepo.RejectChanges();
-        }
+    public Models.Staffel AddDefaultEntity(long rateId)
+    {
+        var entity = new Models.Staffel();
+        entity.RateId = rateId;
 
-        public void Delete(Models.Staffel entity)
-        {
-            StaffelRepo.Remove(entity);
-        }
+        StaffelRepo.Add(entity);
 
-        public Models.Staffel AddDefaultEntity(long rateId)
-        {
-            var entity = new Models.Staffel();
-            entity.RateId = rateId;
+        return entity;
+    }
+    public void SetListSorted()
+    {
+        Staffels = Staffels.OrderByDescending(o => o.StaffelValue).ToList();
+    }
 
-            StaffelRepo.Add(entity);
+    public int GetPosition(Models.Staffel entity)
+    {
+        return Staffels.IndexOf(entity);
+    }
 
-            return entity;
-        }
-        public void SetListSorted()
-        {
-            Staffels = Staffels.OrderByDescending(o => o.StaffelValue).ToList();
-        }
-
-        public int GetPosition(Models.Staffel entity)
-        {
-            return Staffels.IndexOf(entity);
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

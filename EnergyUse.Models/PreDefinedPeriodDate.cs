@@ -1,42 +1,41 @@
-﻿namespace EnergyUse.Models
+﻿namespace EnergyUse.Models;
+
+public partial class PreDefinedPeriodDate
 {
-    public partial class PreDefinedPeriodDate
+    public long Id { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+
+    public long? PreDefinedPeriodId { get; set; }
+    public long? EnergyTypeId { get; set; }
+    public long? TariffGroupId { get; set; }
+
+    public virtual EnergyType EnergyType { get; set; }
+    public virtual PreDefinedPeriod PreDefinedPeriod { get; set; }
+    public virtual TariffGroup? TariffGroup { get; set; }
+    
+   
+    //ReadOnly props
+
+    public string EnergyTypeName
     {
-        public long Id { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-
-        public long? PreDefinedPeriodId { get; set; }
-        public long? EnergyTypeId { get; set; }
-        public long? TariffGroupId { get; set; }
-
-        public virtual EnergyType EnergyType { get; set; }
-        public virtual PreDefinedPeriod PreDefinedPeriod { get; set; }
-        public virtual TariffGroup? TariffGroup { get; set; }
-        
-       
-        //ReadOnly props
-
-        public string EnergyTypeName
+        get
         {
-            get
-            {
-                if (EnergyType == null)
-                    return string.Empty;
-                else
-                    return EnergyType.Name;
-            }
+            if (EnergyType == null)
+                return string.Empty;
+            else
+                return EnergyType.Name;
         }
+    }
 
-        public string TarifGroupName
+    public string TarifGroupName
+    {
+        get
         {
-            get
-            {
-                if (TariffGroup == null)
-                    return string.Empty;
-                else
-                    return TariffGroup.Description;
-            }
+            if (TariffGroup == null)
+                return string.Empty;
+            else
+                return TariffGroup.Description;
         }
     }
 }

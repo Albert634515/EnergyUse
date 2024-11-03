@@ -2,45 +2,44 @@
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Repositories;
 
-namespace EnergyUse.Core.UnitOfWork
+namespace EnergyUse.Core.UnitOfWork;
+
+public class PredefinedPeriodDate : IUnitOfWork
 {
-    public class PredefinedPeriodDate : IUnitOfWork
+    private readonly EnergyUseContext _context;
+
+    public RepoTariffGroup TarifGroupRepo;
+    public RepoEnergyType EnergyTypeRepo;
+    public RepoPredefinedPeriodDate PreDefinedPeriodDateRepo;
+
+    public PredefinedPeriodDate(string dbFileName)
     {
-        private readonly EnergyUseContext _context;
+        _context = new EnergyUseContext(dbFileName); 
 
-        public RepoTariffGroup TarifGroupRepo;
-        public RepoEnergyType EnergyTypeRepo;
-        public RepoPredefinedPeriodDate PreDefinedPeriodDateRepo;
+        TarifGroupRepo = new RepoTariffGroup(_context);
+        EnergyTypeRepo = new RepoEnergyType(_context);
+        PreDefinedPeriodDateRepo = new RepoPredefinedPeriodDate(_context);
+    }
 
-        public PredefinedPeriodDate(string dbFileName)
-        {
-            _context = new EnergyUseContext(dbFileName); 
+    public int Complete()
+    {
+        return _context.SaveChanges();
+    }
 
-            TarifGroupRepo = new RepoTariffGroup(_context);
-            EnergyTypeRepo = new RepoEnergyType(_context);
-            PreDefinedPeriodDateRepo = new RepoPredefinedPeriodDate(_context);
-        }
+    public bool HasChanges()
+    {
+        return _context.ChangeTracker.HasChanges();
+    }
 
-        public int Complete()
-        {
-            return _context.SaveChanges();
-        }
+    public void CancelChanges()
+    {
+        TarifGroupRepo.RejectChanges();
+        EnergyTypeRepo.RejectChanges();
+        PreDefinedPeriodDateRepo.RejectChanges();
+    }
 
-        public bool HasChanges()
-        {
-            return _context.ChangeTracker.HasChanges();
-        }
-
-        public void CancelChanges()
-        {
-            TarifGroupRepo.RejectChanges();
-            EnergyTypeRepo.RejectChanges();
-            PreDefinedPeriodDateRepo.RejectChanges();
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

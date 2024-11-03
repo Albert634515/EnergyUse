@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!--
-    Microsoft ResX Schema 
+    Microsoft ResX Schema
 
     Version 2.0
 
@@ -48,7 +48,7 @@
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
@@ -164,7 +164,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;addButton.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="clearPeriodButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -203,7 +203,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;clearPeriodButton.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>420, 17</value>
@@ -230,7 +230,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;statusStrip1.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="lblAddress.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -260,73 +260,40 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblAddress.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
-  <data name="ChkpredictMissingData.AutoSize" type="System.Boolean, mscorlib">
+  <data name="predictMissingDataCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="ChkpredictMissingData.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="predictMissingDataCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="ChkpredictMissingData.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="predictMissingDataCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>169, 114</value>
   </data>
-  <data name="ChkpredictMissingData.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="predictMissingDataCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
   </data>
-  <data name="ChkpredictMissingData.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="predictMissingDataCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>165, 24</value>
   </data>
-  <data name="ChkpredictMissingData.TabIndex" type="System.Int32, mscorlib">
+  <data name="predictMissingDataCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="ChkpredictMissingData.Text" xml:space="preserve">
+  <data name="predictMissingDataCheckBox.Text" xml:space="preserve">
     <value>Predict missing data</value>
   </data>
-  <data name="&gt;&gt;ChkpredictMissingData.Name" xml:space="preserve">
-    <value>ChkpredictMissingData</value>
+  <data name="&gt;&gt;predictMissingDataCheckBox.Name" xml:space="preserve">
+    <value>predictMissingDataCheckBox</value>
   </data>
-  <data name="&gt;&gt;ChkpredictMissingData.Type" xml:space="preserve">
+  <data name="&gt;&gt;predictMissingDataCheckBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ChkpredictMissingData.Parent" xml:space="preserve">
+  <data name="&gt;&gt;predictMissingDataCheckBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;ChkpredictMissingData.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="ChkShowCalculatedData.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="ChkShowCalculatedData.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="ChkShowCalculatedData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>169, 82</value>
-  </data>
-  <data name="ChkShowCalculatedData.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="ChkShowCalculatedData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>216, 24</value>
-  </data>
-  <data name="ChkShowCalculatedData.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="ChkShowCalculatedData.Text" xml:space="preserve">
-    <value>Show calculated meter data</value>
-  </data>
-  <data name="&gt;&gt;ChkShowCalculatedData.Name" xml:space="preserve">
-    <value>ChkShowCalculatedData</value>
-  </data>
-  <data name="&gt;&gt;ChkShowCalculatedData.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ChkShowCalculatedData.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;ChkShowCalculatedData.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="&gt;&gt;predictMissingDataCheckBox.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="cancelParameterSelectionButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -365,7 +332,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cancelParameterSelectionButton.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="selectButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -401,7 +368,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;selectButton.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="preSelectedPeriodComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>169, 48</value>
@@ -425,7 +392,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;preSelectedPeriodComboBox.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -455,7 +422,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="addressComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>169, 14</value>
@@ -479,11 +446,65 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;addressComboBox.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <metadata name="bsEnergyTypes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>262, 17</value>
   </metadata>
+  <data name="reportComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>169, 84</value>
+  </data>
+  <data name="reportComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="reportComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>277, 28</value>
+  </data>
+  <data name="reportComboBox.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;reportComboBox.Name" xml:space="preserve">
+    <value>reportComboBox</value>
+  </data>
+  <data name="&gt;&gt;reportComboBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;reportComboBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;reportComboBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 87</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 20</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Report:</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -518,7 +539,7 @@
     <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FrmSelectSettelementParameters</value>
+    <value>frmSelectSettlementParameters</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

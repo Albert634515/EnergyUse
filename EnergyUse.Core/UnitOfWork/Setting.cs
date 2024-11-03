@@ -2,39 +2,38 @@
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Repositories;
 
-namespace EnergyUse.Core.UnitOfWork
+namespace EnergyUse.Core.UnitOfWork;
+
+public class Setting : IUnitOfWork
 {
-    public class Setting : IUnitOfWork
+    private readonly EnergyUseContext _context;
+
+    public RepoSettings SettingsRepo;
+
+    public Setting(string dbFileName)
     {
-        private readonly EnergyUseContext _context;
+        _context = new EnergyUseContext(dbFileName);
 
-        public RepoSettings SettingsRepo;
+        SettingsRepo = new RepoSettings(_context);
+    }
 
-        public Setting(string dbFileName)
-        {
-            _context = new EnergyUseContext(dbFileName);
+    public int Complete()
+    {
+        return _context.SaveChanges();
+    }
 
-            SettingsRepo = new RepoSettings(_context);
-        }
+    public bool HasChanges()
+    {
+        return _context.ChangeTracker.HasChanges();
+    }
 
-        public int Complete()
-        {
-            return _context.SaveChanges();
-        }
+    public void CancelChanges()
+    {
+        SettingsRepo.RejectChanges();
+    }
 
-        public bool HasChanges()
-        {
-            return _context.ChangeTracker.HasChanges();
-        }
-
-        public void CancelChanges()
-        {
-            SettingsRepo.RejectChanges();
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace EnergyUse.Models
+﻿namespace EnergyUse.Models;
+
+public partial class Setting
 {
-    public partial class Setting
-    {
-        public int Id { get; set; }
-        public string Key { get; set; }
-        public string KeyValue { get; set; }
-    }
+    public int Id { get; set; } = 0;
+    public string Key { get; set; } = string.Empty;
+    public string KeyValue { get; set; } = string.Empty;
 }

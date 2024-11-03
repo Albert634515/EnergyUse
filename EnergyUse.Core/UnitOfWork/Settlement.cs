@@ -2,49 +2,48 @@
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Repositories;
 
-namespace EnergyUse.Core.UnitOfWork
+namespace EnergyUse.Core.UnitOfWork;
+
+public class Settlement : IUnitOfWork
 {
-    public class Settlement : IUnitOfWork
+    private readonly EnergyUseContext _context;
+
+    public RepoAddress AddressRepo;
+    public RepoCostCategories CostCategoriesRepo;
+    public RepoVatTarif VatTarifRepo;
+    public RepoMeterReading MeterReadingRepo;
+    public RepoPayment PaymentRepo;
+
+    public Settlement(string dbFileName)
     {
-        private readonly EnergyUseContext _context;
+        _context = new EnergyUseContext(dbFileName);
 
-        public RepoAddress AddressRepo;
-        public RepoCostCategories CostCategoriesRepo;
-        public RepoVatTarif VatTarifRepo;
-        public RepoMeterReading MeterReadingRepo;
-        public RepoPayment PaymentRepo;
+        AddressRepo = new RepoAddress(_context);
+        CostCategoriesRepo = new RepoCostCategories(_context);
+        VatTarifRepo = new RepoVatTarif(_context);
+        MeterReadingRepo = new RepoMeterReading(_context);
+        PaymentRepo = new RepoPayment(_context);
+    }
 
-        public Settlement(string dbFileName)
-        {
-            _context = new EnergyUseContext(dbFileName);
+    public int Complete()
+    {
+        return _context.SaveChanges();
+    }
 
-            AddressRepo = new RepoAddress(_context);
-            CostCategoriesRepo = new RepoCostCategories(_context);
-            VatTarifRepo = new RepoVatTarif(_context);
-            MeterReadingRepo = new RepoMeterReading(_context);
-            PaymentRepo = new RepoPayment(_context);
-        }
+    public bool HasChanges()
+    {
+        return _context.ChangeTracker.HasChanges();
+    }
 
-        public int Complete()
-        {
-            return _context.SaveChanges();
-        }
+    public void CancelChanges()
+    {
+        AddressRepo.RejectChanges();
+        CostCategoriesRepo.RejectChanges();
+        VatTarifRepo.RejectChanges();
+    }
 
-        public bool HasChanges()
-        {
-            return _context.ChangeTracker.HasChanges();
-        }
-
-        public void CancelChanges()
-        {
-            AddressRepo.RejectChanges();
-            CostCategoriesRepo.RejectChanges();
-            VatTarifRepo.RejectChanges();
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace EnergyUse.Core.Manager
+﻿namespace EnergyUse.Core.Manager;
+
+public class LibCalculatedUnitPrice
 {
-    public class LibCalculatedUnitPrice
-    {
-        
-    }
+    
 }

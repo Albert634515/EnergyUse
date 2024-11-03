@@ -2,47 +2,46 @@
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Repositories;
 
-namespace EnergyUse.Core.UnitOfWork
+namespace EnergyUse.Core.UnitOfWork;
+
+public class PayBackTime : IUnitOfWork
 {
-    public class PayBackTime : IUnitOfWork
+    private readonly EnergyUseContext _context;
+
+    public RepoEnergyType EnergyTypeRepo;
+    public RepoAddress AddressRepo;
+    public RepoCostCategories CostCategoryRepo;
+    public RepoCalculatedUnitPrice CalculatedUnitPriceRepo;
+
+    public PayBackTime(string dbFileName)
     {
-        private readonly EnergyUseContext _context;
+        _context = new EnergyUseContext(dbFileName);
 
-        public RepoEnergyType EnergyTypeRepo;
-        public RepoAddress AddressRepo;
-        public RepoCostCategories CostCategoryRepo;
-        public RepoCalculatedUnitPrice CalculatedUnitPriceRepo;
+        EnergyTypeRepo = new RepoEnergyType(_context);
+        AddressRepo = new RepoAddress(_context);
+        CostCategoryRepo = new RepoCostCategories(_context);
+        CalculatedUnitPriceRepo = new RepoCalculatedUnitPrice(_context);
+    }
 
-        public PayBackTime(string dbFileName)
-        {
-            _context = new EnergyUseContext(dbFileName);
+    public int Complete()
+    {
+        return _context.SaveChanges();
+    }
 
-            EnergyTypeRepo = new RepoEnergyType(_context);
-            AddressRepo = new RepoAddress(_context);
-            CostCategoryRepo = new RepoCostCategories(_context);
-            CalculatedUnitPriceRepo = new RepoCalculatedUnitPrice(_context);
-        }
+    public bool HasChanges()
+    {
+        return _context.ChangeTracker.HasChanges();
+    }
 
-        public int Complete()
-        {
-            return _context.SaveChanges();
-        }
+    public void CancelChanges()
+    {
+        EnergyTypeRepo.RejectChanges();
+        AddressRepo.RejectChanges();
+        CostCategoryRepo.RejectChanges();
+    }
 
-        public bool HasChanges()
-        {
-            return _context.ChangeTracker.HasChanges();
-        }
-
-        public void CancelChanges()
-        {
-            EnergyTypeRepo.RejectChanges();
-            AddressRepo.RejectChanges();
-            CostCategoryRepo.RejectChanges();
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

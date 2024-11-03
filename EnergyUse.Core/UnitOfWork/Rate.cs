@@ -3,110 +3,109 @@ using EnergyUse.Core.Context;
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Repositories;
 
-namespace EnergyUse.Core.UnitOfWork
+namespace EnergyUse.Core.UnitOfWork;
+
+public class Rate : IUnitOfWork
 {
-    public class Rate : IUnitOfWork
+    private readonly EnergyUseContext _context;
+
+    public RepoRate RateRepo;
+    public RepoEnergyType EnergyTypeRepo;
+    public RepoCostCategories CostCategoryRepo;
+    public RepoTariffGroup TarifGroupRepo;
+    public RepoStaffel StaffelRepo;
+    public RepoAdditionalCategoryAndGroupInfo AdditionalCategoryAndGroupInfoRepo;
+    public RepoVatTarif RepoVatTarif;
+
+    public List<Models.Rate> RateList = new();
+
+    public Rate(string dbFileName)
     {
-        private readonly EnergyUseContext _context;
+        _context = new EnergyUseContext(dbFileName);
 
-        public RepoRate RateRepo;
-        public RepoEnergyType EnergyTypeRepo;
-        public RepoCostCategories CostCategoryRepo;
-        public RepoTariffGroup TarifGroupRepo;
-        public RepoStaffel StaffelRepo;
-        public RepoAdditionalCategoryAndGroupInfo AdditionalCategoryAndGroupInfoRepo;
-        public RepoVatTarif RepoVatTarif;
+        RateRepo = new RepoRate(_context);
+        EnergyTypeRepo = new RepoEnergyType(_context);
+        CostCategoryRepo = new RepoCostCategories(_context);
+        TarifGroupRepo = new RepoTariffGroup(_context);
+        StaffelRepo = new RepoStaffel(_context);
+        AdditionalCategoryAndGroupInfoRepo = new RepoAdditionalCategoryAndGroupInfo(_context);
+        RepoVatTarif = new RepoVatTarif(_context);
+    }
 
-        public List<Models.Rate> RateList = new();
+    public int Complete()
+    {
+        return _context.SaveChanges();
+    }
 
-        public Rate(string dbFileName)
+    public bool HasChanges()
+    {
+        return _context.ChangeTracker.HasChanges();
+    }
+
+    public void CancelChanges()
+    {
+        EnergyTypeRepo.RejectChanges();
+        CostCategoryRepo.RejectChanges();
+        TarifGroupRepo.RejectChanges();
+        RateRepo.RejectChanges();
+        StaffelRepo.RejectChanges();
+        AdditionalCategoryAndGroupInfoRepo.RejectChanges();
+    }
+
+    public void Delete(Models.Rate rate)
+    {
+        if (rate.Id > 0)
         {
-            _context = new EnergyUseContext(dbFileName);
-
-            RateRepo = new RepoRate(_context);
-            EnergyTypeRepo = new RepoEnergyType(_context);
-            CostCategoryRepo = new RepoCostCategories(_context);
-            TarifGroupRepo = new RepoTariffGroup(_context);
-            StaffelRepo = new RepoStaffel(_context);
-            AdditionalCategoryAndGroupInfoRepo = new RepoAdditionalCategoryAndGroupInfo(_context);
-            RepoVatTarif = new RepoVatTarif(_context);
+            RateRepo.Remove(rate);
+            Complete();
         }
 
-        public int Complete()
+        RateList.Remove(rate);
+    }
+
+    public Models.Rate AddDefaultEntity(long energyTypeId, long costCategoryId, long tarifGroupId)
+    {
+        var entity = new Models.Rate();
+        entity.RateTypeId = (int)Common.Enums.RateType.FixedPrice;
+        entity.CostCategoryId = costCategoryId;
+        entity.EnergyTypeId = energyTypeId;
+        entity.TariffGroupId = tarifGroupId;
+        entity.StartRate = DateTime.Now.Date;
+        entity.EndRate = DateTime.Now.Date;
+        entity.RateValue = 0;
+
+        Models.Rate? lastEntity = RateRepo.SelectLastRate(energyTypeId, costCategoryId, tarifGroupId);
+        if (lastEntity != null)
         {
-            return _context.SaveChanges();
+            entity.StartRate = lastEntity.EndRate.AddDays(1);
+
+            var monthDiff = Manager.LibGeneral.MonthDiff(entity.StartRate, entity.EndRate);
+            if (monthDiff <= 0)
+                monthDiff = 1;
+
+            entity.EndRate = entity.StartRate.AddMonths(monthDiff);
         }
 
-        public bool HasChanges()
-        {
-            return _context.ChangeTracker.HasChanges();
-        }
+        RateRepo.Add(entity);
+        RateList.Add(entity);
 
-        public void CancelChanges()
-        {
-            EnergyTypeRepo.RejectChanges();
-            CostCategoryRepo.RejectChanges();
-            TarifGroupRepo.RejectChanges();
-            RateRepo.RejectChanges();
-            StaffelRepo.RejectChanges();
-            AdditionalCategoryAndGroupInfoRepo.RejectChanges();
-        }
+        SetListSorted();
 
-        public void Delete(Models.Rate rate)
-        {
-            if (rate.Id > 0)
-            {
-                RateRepo.Remove(rate);
-                Complete();
-            }
+        return entity;
+    }
 
-            RateList.Remove(rate);
-        }
+    public void SetListSorted()
+    {
+        RateList = RateList.OrderByDescending(o => o.StartRate).ToList();
+    }
 
-        public Models.Rate AddDefaultEntity(long energyTypeId, long costCategoryId, long tarifGroupId)
-        {
-            var entity = new Models.Rate();
-            entity.RateTypeId = (int)Common.Enums.RateType.FixedPrice;
-            entity.CostCategoryId = costCategoryId;
-            entity.EnergyTypeId = energyTypeId;
-            entity.TariffGroupId = tarifGroupId;
-            entity.StartRate = DateTime.Now.Date;
-            entity.EndRate = DateTime.Now.Date;
-            entity.RateValue = 0;
+    public int GetPosition(Models.Rate rate)
+    {
+        return RateList.IndexOf(rate);
+    }
 
-            Models.Rate? lastEntity = RateRepo.SelectLastRate(energyTypeId, costCategoryId, tarifGroupId);
-            if (lastEntity != null)
-            {
-                entity.StartRate = lastEntity.EndRate.AddDays(1);
-
-                var monthDiff = Manager.LibGeneral.MonthDiff(entity.StartRate, entity.EndRate);
-                if (monthDiff <= 0)
-                    monthDiff = 1;
-
-                entity.EndRate = entity.StartRate.AddMonths(monthDiff);
-            }
-
-            RateRepo.Add(entity);
-            RateList.Add(entity);
-
-            SetListSorted();
-
-            return entity;
-        }
-
-        public void SetListSorted()
-        {
-            RateList = RateList.OrderByDescending(o => o.StartRate).ToList();
-        }
-
-        public int GetPosition(Models.Rate rate)
-        {
-            return RateList.IndexOf(rate);
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

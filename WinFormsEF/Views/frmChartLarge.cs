@@ -1,30 +1,29 @@
-﻿namespace WinFormsEF.Views
+﻿namespace WinFormsEF.Views;
+
+public partial class frmChartLarge : Form
 {
-    public partial class frmChartLarge : Form
+    #region FormProperties
+
+    #endregion
+
+    #region InitForm
+
+    public frmChartLarge()
     {
-        #region FormProperties
-
-        #endregion
-
-        #region InitForm
-
-        public frmChartLarge()
-        {
-            InitializeComponent();
-        }
-
-        #endregion
-
-        #region Events
-
-        #endregion
-
-        #region Toolbar
-
-        #endregion
-
-        #region Methods
-
-        #endregion
+        InitializeComponent();
     }
+
+    #endregion
+
+    #region Events
+
+    #endregion
+
+    #region Toolbar
+
+    #endregion
+
+    #region Methods
+
+    #endregion
 }

@@ -1,7 +1,6 @@
-﻿namespace EnergyUse.Core.Interfaces
+﻿namespace EnergyUse.Core.Interfaces;
+
+public interface IController
 {
-    public interface IController
-    {
-        public void Initialize();
-    }
+    public void Initialize();
 }

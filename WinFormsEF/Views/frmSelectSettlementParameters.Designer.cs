@@ -1,6 +1,6 @@
 ﻿namespace WinFormsEF.Views
 {
-    partial class FrmSelectSettelementParameters
+    partial class frmSelectSettlementParameters
     {
         /// <summary>
         /// Required designer variable.
@@ -29,21 +29,22 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSelectSettelementParameters));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSelectSettlementParameters));
             bsAddresses = new BindingSource(components);
             toolTip1 = new ToolTip(components);
             addButton = new Button();
             clearPeriodButton = new Button();
             statusStrip1 = new StatusStrip();
             lblAddress = new Label();
-            ChkpredictMissingData = new CheckBox();
-            ChkShowCalculatedData = new CheckBox();
+            predictMissingDataCheckBox = new CheckBox();
             cancelParameterSelectionButton = new Button();
             selectButton = new Button();
             preSelectedPeriodComboBox = new ComboBox();
             label1 = new Label();
             addressComboBox = new ComboBox();
             bsEnergyTypes = new BindingSource(components);
+            reportComboBox = new ComboBox();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)bsAddresses).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).BeginInit();
             SuspendLayout();
@@ -81,19 +82,13 @@
             resources.ApplyResources(lblAddress, "lblAddress");
             lblAddress.Name = "lblAddress";
             // 
-            // ChkpredictMissingData
+            // predictMissingDataCheckBox
             // 
-            resources.ApplyResources(ChkpredictMissingData, "ChkpredictMissingData");
-            ChkpredictMissingData.Checked = true;
-            ChkpredictMissingData.CheckState = CheckState.Checked;
-            ChkpredictMissingData.Name = "ChkpredictMissingData";
-            ChkpredictMissingData.UseVisualStyleBackColor = true;
-            // 
-            // ChkShowCalculatedData
-            // 
-            resources.ApplyResources(ChkShowCalculatedData, "ChkShowCalculatedData");
-            ChkShowCalculatedData.Name = "ChkShowCalculatedData";
-            ChkShowCalculatedData.UseVisualStyleBackColor = true;
+            resources.ApplyResources(predictMissingDataCheckBox, "predictMissingDataCheckBox");
+            predictMissingDataCheckBox.Checked = true;
+            predictMissingDataCheckBox.CheckState = CheckState.Checked;
+            predictMissingDataCheckBox.Name = "predictMissingDataCheckBox";
+            predictMissingDataCheckBox.UseVisualStyleBackColor = true;
             // 
             // cancelParameterSelectionButton
             // 
@@ -137,16 +132,29 @@
             // 
             bsEnergyTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
             // 
-            // FrmSelectSettelementParameters
+            // reportComboBox
+            // 
+            reportComboBox.FormattingEnabled = true;
+            resources.ApplyResources(reportComboBox, "reportComboBox");
+            reportComboBox.Name = "reportComboBox";
+            reportComboBox.Tag = "LastPreSelectedPeriod";
+            // 
+            // label2
+            // 
+            resources.ApplyResources(label2, "label2");
+            label2.Name = "label2";
+            // 
+            // frmSelectSettlementParameters
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(reportComboBox);
+            Controls.Add(label2);
             Controls.Add(clearPeriodButton);
             Controls.Add(addressComboBox);
             Controls.Add(addButton);
             Controls.Add(lblAddress);
-            Controls.Add(ChkpredictMissingData);
-            Controls.Add(ChkShowCalculatedData);
+            Controls.Add(predictMissingDataCheckBox);
             Controls.Add(cancelParameterSelectionButton);
             Controls.Add(selectButton);
             Controls.Add(preSelectedPeriodComboBox);
@@ -154,7 +162,7 @@
             Controls.Add(statusStrip1);
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "FrmSelectSettelementParameters";
+            Name = "frmSelectSettlementParameters";
             ShowIcon = false;
             ShowInTaskbar = false;
             ((System.ComponentModel.ISupportInitialize)bsAddresses).EndInit();
@@ -171,13 +179,14 @@
         private BindingSource bsEnergyTypes;
         private Button addButton;
         private Label lblAddress;
-        public CheckBox ChkpredictMissingData;
-        public CheckBox ChkShowCalculatedData;
+        public CheckBox predictMissingDataCheckBox;
         private Button cancelParameterSelectionButton;
         private Button selectButton;
         private ComboBox preSelectedPeriodComboBox;
         private Label label1;
         public ComboBox addressComboBox;
         private Button clearPeriodButton;
+        private ComboBox reportComboBox;
+        private Label label2;
     }
 }

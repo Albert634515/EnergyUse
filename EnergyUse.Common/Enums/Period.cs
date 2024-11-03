@@ -1,12 +1,11 @@
-﻿namespace EnergyUse.Common.Enums
+﻿namespace EnergyUse.Common.Enums;
+
+public enum Period
 {
-    public enum Period
-    {
-        Day,
-        Week,
-        Month,
-        Year,
-        SettlementDay,
-        Unknown
-    }
+    Day,
+    Week,
+    Month,
+    Year,
+    SettlementDay,
+    Unknown
 }

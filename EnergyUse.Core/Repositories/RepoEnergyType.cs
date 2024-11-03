@@ -1,47 +1,46 @@
 ﻿using EnergyUse.Core.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace EnergyUse.Core.Repositories
-{
-    public class RepoEnergyType : RepoGeneral<Models.EnergyType>
-    { 
-        private readonly EnergyUseContext _context;
+namespace EnergyUse.Core.Repositories;
 
-        public RepoEnergyType(EnergyUseContext dbContext) : base(dbContext)
-        {
-            _context = dbContext;
-        }
+public class RepoEnergyType : RepoGeneral<Models.EnergyType>
+{ 
+    private readonly EnergyUseContext _context;
 
-        public Models.EnergyType Get(int id)
-        {
-            return _context.Set<Models.EnergyType>().Include(s => s.Unit).Where(s => s.Id == id).FirstOrDefault();
-        }
+    public RepoEnergyType(EnergyUseContext dbContext) : base(dbContext)
+    {
+        _context = dbContext;
+    }
 
-        public new IEnumerable<Models.EnergyType> GetAll()
-        {
-            return _context.Set<Models.EnergyType>()
-                           .Include(s => s.Unit);
-        }
+    public Models.EnergyType Get(int id)
+    {
+        return _context.Set<Models.EnergyType>().Include(s => s.Unit).Where(s => s.Id == id).FirstOrDefault();
+    }
 
-        public Models.EnergyType SelectByName(string energyTypeName)
-        {
-            return _context.EnergyTypes
-                           .Where(s => s.Name == energyTypeName).FirstOrDefault();
-        }
+    public new IEnumerable<Models.EnergyType> GetAll()
+    {
+        return _context.Set<Models.EnergyType>()
+                       .Include(s => s.Unit);
+    }
 
-        public IEnumerable<Models.EnergyType> SelectByAddressId(long addressId)
-        {
-            var energyTypes = _context.Meters
-                           .Include(a => a.Address)
-                           .Where(m => m.Address.Id == addressId)
-                           .Select(s => s.EnergyType.Id).ToList();
+    public Models.EnergyType SelectByName(string energyTypeName)
+    {
+        return _context.EnergyTypes
+                       .Where(s => s.Name == energyTypeName).FirstOrDefault();
+    }
 
-            if (energyTypes.Count == 0)
-                energyTypes.Add(0);
+    public IEnumerable<Models.EnergyType> SelectByAddressId(long addressId)
+    {
+        var energyTypes = _context.Meters
+                       .Include(a => a.Address)
+                       .Where(m => m.Address.Id == addressId)
+                       .Select(s => s.EnergyType.Id).ToList();
 
-            return _context.Set<Models.EnergyType>()
-                           .Include(s => s.Unit)
-                           .Where(x => energyTypes.Contains(x.Id));
-        }
+        if (energyTypes.Count == 0)
+            energyTypes.Add(0);
+
+        return _context.Set<Models.EnergyType>()
+                       .Include(s => s.Unit)
+                       .Where(x => energyTypes.Contains(x.Id));
     }
 }

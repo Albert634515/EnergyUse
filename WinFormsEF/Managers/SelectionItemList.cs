@@ -1,29 +1,28 @@
 ﻿using EnergyUse.Models.Common;
 
-namespace WinFormsEF.Managers
+namespace WinFormsEF.Managers;
+
+public class SelectionItemList
 {
-    public class SelectionItemList
+    public static List<SelectionItem> GetRateTypeList()
     {
-        public static List<SelectionItem> GetRateList()
-        {
-            var list = EnergyUse.Core.Manager.LibSelectionItemList.GetRateList();
+        var list = EnergyUse.Core.Manager.LibSelectionItemList.GetRateTypeList();
 
-            // Add translationss
-            foreach (var item in list)
-                item.Description = Languages.GetResourceString(item.Key, item.Description);
+        // Add translationss
+        foreach (var item in list)
+            item.Description = Languages.GetResourceString(item.Key, item.Description);
 
-            return list;
-        }
+        return list;
+    }
 
-        public static List<SelectionItem> GetPeriodList()
-        {
-            var list = EnergyUse.Core.Manager.LibSelectionItemList.GetPeriodList();
+    public static List<SelectionItem> GetPeriodList()
+    {
+        var list = EnergyUse.Core.Manager.LibSelectionItemList.GetPeriodList();
 
-            // Add translationss
-            foreach (var item in list)
-                item.Description = Languages.GetResourceString(item.Key, item.Key);
+        // Add translationss
+        foreach (var item in list)
+            item.Description = Languages.GetResourceString(item.Key, item.Key);
 
-            return list;
-        }
+        return list;
     }
 }

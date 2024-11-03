@@ -1,20 +1,19 @@
 ﻿using EnergyUse.Core.Context;
 
-namespace EnergyUse.Core.Repositories
+namespace EnergyUse.Core.Repositories;
+
+public class RepoTariffGroup : RepoGeneral<Models.TariffGroup>
 {
-    public class RepoTariffGroup : RepoGeneral<Models.TariffGroup>
+    private readonly EnergyUseContext _context;
+
+    public RepoTariffGroup(EnergyUseContext dbContext) : base(dbContext)
     {
-        private readonly EnergyUseContext _context;
+        _context = dbContext;
+    }
 
-        public RepoTariffGroup(EnergyUseContext dbContext) : base(dbContext)
-        {
-            _context = dbContext;
-        }
-
-        public Models.TariffGroup? SelectByDescription(string description)
-        {
-            return _context.TariffGroups
-                           .Where(s => s.Description == description).FirstOrDefault();
-        }
+    public Models.TariffGroup? SelectByDescription(string description)
+    {
+        return _context.TariffGroups
+                       .Where(s => s.Description == description).FirstOrDefault();
     }
 }

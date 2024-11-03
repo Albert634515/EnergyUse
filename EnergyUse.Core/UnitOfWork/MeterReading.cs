@@ -2,71 +2,70 @@
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Repositories;
 
-namespace EnergyUse.Core.UnitOfWork
+namespace EnergyUse.Core.UnitOfWork;
+
+public class MeterReading : IUnitOfWork
 {
-    public class MeterReading : IUnitOfWork
+    private readonly EnergyUseContext _context;
+
+    public RepoMeterReading MeterReadingRepo;
+    public RepoMeter MeterRepo;
+    public RepoEnergyType EnergyTypeRepo;
+
+    public List<Models.MeterReading> MeterReadings = new();
+
+    public MeterReading(string dbFileName)
     {
-        private readonly EnergyUseContext _context;
+        _context = new EnergyUseContext(dbFileName);
 
-        public RepoMeterReading MeterReadingRepo;
-        public RepoMeter MeterRepo;
-        public RepoEnergyType EnergyTypeRepo;
+        MeterReadingRepo = new RepoMeterReading(_context);
+        MeterRepo = new RepoMeter(_context);
+        EnergyTypeRepo = new RepoEnergyType(_context);
+    }
 
-        public List<Models.MeterReading> MeterReadings = new();
+    public int Complete()
+    {
+        return _context.SaveChanges();
+    }
 
-        public MeterReading(string dbFileName)
-        {
-            _context = new EnergyUseContext(dbFileName);
+    public bool HasChanges()
+    {
+        return _context.ChangeTracker.HasChanges();
+    }
 
-            MeterReadingRepo = new RepoMeterReading(_context);
-            MeterRepo = new RepoMeter(_context);
-            EnergyTypeRepo = new RepoEnergyType(_context);
-        }
+    public void CancelChanges()
+    {
+        MeterReadingRepo.RejectChanges();
+        MeterRepo.RejectChanges();
+    }
 
-        public int Complete()
-        {
-            return _context.SaveChanges();
-        }
+    public void Delete(Models.MeterReading meterReading)
+    {
+        MeterReadingRepo.Remove(meterReading);
+        Complete();
 
-        public bool HasChanges()
-        {
-            return _context.ChangeTracker.HasChanges();
-        }
+        MeterReadings.Remove(meterReading);
+    }
 
-        public void CancelChanges()
-        {
-            MeterReadingRepo.RejectChanges();
-            MeterRepo.RejectChanges();
-        }
+    public Models.MeterReading AddDefaultEntity(long addressId, long energyTypeId)
+    {
+        var defaultMeter = MeterRepo.SelectDefaultMeterByAddress(addressId, energyTypeId);
+        var energyType = EnergyTypeRepo.Get(energyTypeId);
+        var entity = MeterReadingRepo.GetDefaultReading(energyType, defaultMeter);
 
-        public void Delete(Models.MeterReading meterReading)
-        {
-            MeterReadingRepo.Remove(meterReading);
-            Complete();
+        MeterReadingRepo.Add(entity);
+        MeterReadings.Add(entity);
 
-            MeterReadings.Remove(meterReading);
-        }
+        return entity;
+    }
 
-        public Models.MeterReading AddDefaultEntity(long addressId, long energyTypeId)
-        {
-            var defaultMeter = MeterRepo.SelectDefaultMeterByAddress(addressId, energyTypeId);
-            var energyType = EnergyTypeRepo.Get(energyTypeId);
-            var entity = MeterReadingRepo.GetDefaultReading(energyType, defaultMeter);
+    public int GetPosition(Models.MeterReading meterReading)
+    {
+        return MeterReadings.IndexOf(meterReading);
+    }
 
-            MeterReadingRepo.Add(entity);
-            MeterReadings.Add(entity);
-
-            return entity;
-        }
-
-        public int GetPosition(Models.MeterReading meterReading)
-        {
-            return MeterReadings.IndexOf(meterReading);
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

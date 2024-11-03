@@ -2,63 +2,62 @@
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Repositories;
 
-namespace EnergyUse.Core.UnitOfWork
+namespace EnergyUse.Core.UnitOfWork;
+
+public class TariffGroup : IUnitOfWork
 {
-    public class TariffGroup : IUnitOfWork
+    private readonly EnergyUseContext _context;
+
+    public RepoTariffGroup TariffGroupRepo;
+
+    public List<Models.TariffGroup> TariffGroups = new();
+
+    public TariffGroup(string dbFileName)
     {
-        private readonly EnergyUseContext _context;
+        _context = new EnergyUseContext(dbFileName);
 
-        public RepoTariffGroup TariffGroupRepo;
+        TariffGroupRepo = new RepoTariffGroup(_context);
+    }
 
-        public List<Models.TariffGroup> TariffGroups = new();
+    public int Complete()
+    {
+        return _context.SaveChanges();
+    }
 
-        public TariffGroup(string dbFileName)
-        {
-            _context = new EnergyUseContext(dbFileName);
+    public bool HasChanges()
+    {
+        return _context.ChangeTracker.HasChanges();
+    }
 
-            TariffGroupRepo = new RepoTariffGroup(_context);
-        }
+    public void CancelChanges()
+    {
+        TariffGroupRepo.RejectChanges();
+    }
 
-        public int Complete()
-        {
-            return _context.SaveChanges();
-        }
+    public void Delete(Models.TariffGroup entity)
+    {
+        TariffGroupRepo.Remove(entity);
+        TariffGroups.Remove(entity);
+    }
 
-        public bool HasChanges()
-        {
-            return _context.ChangeTracker.HasChanges();
-        }
+    public Models.TariffGroup AddDefaultEntity(string defaultDescription)
+    {
+        var entity = new Models.TariffGroup();
+        entity.Description = defaultDescription;
 
-        public void CancelChanges()
-        {
-            TariffGroupRepo.RejectChanges();
-        }
+        TariffGroupRepo.Add(entity);
+        TariffGroups.Add(entity);
 
-        public void Delete(Models.TariffGroup entity)
-        {
-            TariffGroupRepo.Remove(entity);
-            TariffGroups.Remove(entity);
-        }
+        return entity;
+    }
 
-        public Models.TariffGroup AddDefaultEntity(string defaultDescription)
-        {
-            var entity = new Models.TariffGroup();
-            entity.Description = defaultDescription;
+    public int GetPosition(Models.TariffGroup entity)
+    {
+        return TariffGroups.IndexOf(entity);
+    }
 
-            TariffGroupRepo.Add(entity);
-            TariffGroups.Add(entity);
-
-            return entity;
-        }
-
-        public int GetPosition(Models.TariffGroup entity)
-        {
-            return TariffGroups.IndexOf(entity);
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

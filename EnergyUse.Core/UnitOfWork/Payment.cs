@@ -2,73 +2,72 @@
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Repositories;
 
-namespace EnergyUse.Core.UnitOfWork
+namespace EnergyUse.Core.UnitOfWork;
+
+public class Payment : IUnitOfWork
 {
-    public class Payment : IUnitOfWork
+    private readonly EnergyUseContext _context;
+
+    public RepoPayment PaymentRepo;
+    public RepoAddress AddressRepo;
+    public RepoPreDefinedPeriod PreDefinedPeriodRepo;
+
+    public List<Models.Payment> Payments = new();
+
+    public Payment(string dbFileName)
     {
-        private readonly EnergyUseContext _context;
+        _context = new EnergyUseContext(dbFileName);
 
-        public RepoPayment PaymentRepo;
-        public RepoAddress AddressRepo;
-        public RepoPreDefinedPeriod PreDefinedPeriodRepo;
+        PaymentRepo = new RepoPayment(_context);
+        AddressRepo = new RepoAddress(_context);
+        PreDefinedPeriodRepo = new RepoPreDefinedPeriod(_context);
+    }
 
-        public List<Models.Payment> Payments = new();
+    public int Complete()
+    {
+        return _context.SaveChanges();
+    }
 
-        public Payment(string dbFileName)
-        {
-            _context = new EnergyUseContext(dbFileName);
+    public bool HasChanges()
+    {
+        return _context.ChangeTracker.HasChanges();
+    }
 
-            PaymentRepo = new RepoPayment(_context);
-            AddressRepo = new RepoAddress(_context);
-            PreDefinedPeriodRepo = new RepoPreDefinedPeriod(_context);
-        }
+    public void CancelChanges()
+    {
+        PaymentRepo.RejectChanges();
+    }
 
-        public int Complete()
-        {
-            return _context.SaveChanges();
-        }
+    public void Delete(Models.Payment entity)
+    {
+        PaymentRepo.Remove(entity);
+    }
 
-        public bool HasChanges()
-        {
-            return _context.ChangeTracker.HasChanges();
-        }
+    public Models.Payment AddDefaultEntity(string defaultDescription, long addressId, long periodId)
+    {
+        var entity = new Models.Payment();
+        entity.Description = defaultDescription;
+        entity.AddressId = addressId;
+        entity.PreDefinedPeriodId = periodId;
+        entity.PayDate = DateTime.Now;
 
-        public void CancelChanges()
-        {
-            PaymentRepo.RejectChanges();
-        }
+        PaymentRepo.Add(entity);
+        Payments.Add(entity);
 
-        public void Delete(Models.Payment entity)
-        {
-            PaymentRepo.Remove(entity);
-        }
+        return entity;
+    }
+    public void SetListSorted()
+    {
+        Payments = Payments.OrderByDescending(o => o.PayDate).ToList();
+    }
 
-        public Models.Payment AddDefaultEntity(string defaultDescription, long addressId, long periodId)
-        {
-            var entity = new Models.Payment();
-            entity.Description = defaultDescription;
-            entity.AddressId = addressId;
-            entity.PreDefinedPeriodId = periodId;
-            entity.PayDate = DateTime.Now;
+    public int GetPosition(Models.Payment entity)
+    {
+        return Payments.IndexOf(entity);
+    }
 
-            PaymentRepo.Add(entity);
-            Payments.Add(entity);
-
-            return entity;
-        }
-        public void SetListSorted()
-        {
-            Payments = Payments.OrderByDescending(o => o.PayDate).ToList();
-        }
-
-        public int GetPosition(Models.Payment entity)
-        {
-            return Payments.IndexOf(entity);
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

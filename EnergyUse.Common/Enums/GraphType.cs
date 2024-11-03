@@ -1,8 +1,7 @@
-﻿namespace EnergyUse.Common.Enums
+﻿namespace EnergyUse.Common.Enums;
+
+public enum GraphType
 {
-    public enum GraphType
-    {
-        MsGraph,
-        LiveCharts
-    }
+    MsGraph,
+    LiveCharts
 }

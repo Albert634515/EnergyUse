@@ -1,10 +1,9 @@
-﻿namespace EnergyUse.Models.Common
+﻿namespace EnergyUse.Models.Common;
+
+public class SelectedEnergyType
 {
-    public class SelectedEnergyType
-    {
-        public Models.EnergyType EnergyType;
-        public long TarifGroup = 0;
-        public DateTime StartRange = DateTime.MinValue;
-        public DateTime EndRange = DateTime.MinValue;
-    }
+    public Models.EnergyType EnergyType;
+    public long TarifGroup = 0;
+    public DateTime StartRange = DateTime.MinValue;
+    public DateTime EndRange = DateTime.MinValue;
 }
