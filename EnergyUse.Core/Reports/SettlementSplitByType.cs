@@ -80,12 +80,13 @@ public class SettlementSplitByType : SettlementBase
 
                 document.Add(new Paragraph(""));
 
-                setSettlementSubTotal(energyType, settlementDataList);                
+                setSettlementSubTotal(energyType, settlementDataList);
+
+                table = setTotalToTable(energyType);
+                document.Add(table);
             }
         } // End of loop of selected energy types
 
-        table = setTotalToTable();
-        document.Add(table);
         document.Add(new Paragraph(""));
 
         table = getPayments(address.Id, parameterSelection.PreSelectedPeriodId, parameterSelection.StartRange, parameterSelection.EndRange);

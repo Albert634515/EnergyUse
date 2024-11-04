@@ -74,12 +74,13 @@ public class SettlementCompact : SettlementBase
 
                 document.Add(new Paragraph(""));
 
-                setSettlementSubTotal(energyType, settlementDataList);                
-            }
-        } // End of loop of selected energy types
+                setSettlementSubTotal(energyType, settlementDataList);
 
-        table = setTotalToTable();
-        document.Add(table);
+                table = setTotalToTable(energyType);
+                document.Add(table);
+            }
+        } // End of loop of selected energy types     
+       
         document.Add(new Paragraph(""));
 
         table = getPayments(address.Id, parameterSelection.PreSelectedPeriodId, parameterSelection.StartRange, parameterSelection.EndRange);

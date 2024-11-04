@@ -272,33 +272,31 @@ public class SettlementBase : ReportBase
                 settlementSubTotal.EngergyTypeId = energyType.Id;
                 settlementSubTotal.SubTotalType = subTotalKey;
                 settlementSubTotal.Description = getSubTotalName(settlementData.CostCategory, energyType);
+
                 _settlementSubTotalList.Add(settlementSubTotal);
             }
 
-            settlementSubTotal.ValueBase = settlementDataList.Sum(s => s.ValueBase);
-            settlementSubTotal.TotalValue = settlementDataList.Sum(s => s.Value);
-            settlementSubTotal.TotalVat = settlementDataList.Sum(s => s.Value * (s.VatTarif / 100));
+            settlementSubTotal.ValueBase += settlementData.ValueBase;
+            settlementSubTotal.TotalValue += settlementData.Value;
+            settlementSubTotal.TotalVat += settlementData.VatAmount;
         }
     }
 
-    internal Table setTotalToTable()
+    internal Table setTotalToTable(Models.EnergyType energyType)
     {
         Table table = new(_pointColumnWidths);
         table.SetKeepTogether(true);
         GetSectionHeader(table, "Totals");
 
-        table.AddHeaderCell(GetBoldText("", 1, 3));
-        table.AddHeaderCell(GetBoldText("Unit"));
-        table.AddHeaderCell(GetBoldText(""));
+        table.AddHeaderCell(GetBoldText("", 1, 5));
         table.AddHeaderCell(GetBoldText("Money ex."));
         table.AddHeaderCell(GetBoldText("Vat"));
         table.AddHeaderCell(GetBoldText("Money inc."));
 
-        foreach (SettlementSubTotal settlementSubTotal in _settlementSubTotalList)
+        var settlementSubTotalList = _settlementSubTotalList.Where(x => x.EngergyTypeId == energyType.Id).ToList();
+        foreach (SettlementSubTotal settlementSubTotal in settlementSubTotalList)
         {
-            table.AddCell(GetNormalText(settlementSubTotal.Description, 1, 3, iText.Layout.Properties.TextAlignment.LEFT));
-            table.AddCell(GetNormalText(Math.Round(settlementSubTotal.ValueBase, 2).ToString()));
-            table.AddCell(GetNormalText(""));
+            table.AddCell(GetNormalText(settlementSubTotal.Description, 1, 5, iText.Layout.Properties.TextAlignment.LEFT));
             table.AddCell(GetNormalText(Math.Round(settlementSubTotal.TotalValue, 2).ToString("##0.00")));
             table.AddCell(GetNormalText(Math.Round(settlementSubTotal.TotalVat, 2).ToString("##0.00")));
             table.AddCell(GetNormalText(Math.Round(settlementSubTotal.TotalValue + settlementSubTotal.TotalVat, 2).ToString("##0.00")));
