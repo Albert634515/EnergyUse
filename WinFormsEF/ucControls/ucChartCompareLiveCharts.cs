@@ -58,7 +58,10 @@ public partial class ucChartCompareLiveCharts : UserControl
     {
         if (_initSettings) { return; }
 
+        _initSettings = true;
+        setNumberCombo();
         setCurrentComboValue(CboPeriodType);
+        _initSettings = false;
         SetChart();
     }
 
