@@ -451,6 +451,9 @@
   <metadata name="bsEnergyTypes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>262, 17</value>
   </metadata>
+  <metadata name="bsReportTypes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>553, 22</value>
+  </metadata>
   <data name="reportComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>169, 84</value>
   </data>
@@ -518,7 +521,7 @@
     <value>CenterParent</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Select Parameters</value>
+    <value>Select report parameters</value>
   </data>
   <data name="&gt;&gt;bsAddresses.Name" xml:space="preserve">
     <value>bsAddresses</value>
@@ -538,8 +541,14 @@
   <data name="&gt;&gt;bsEnergyTypes.Type" xml:space="preserve">
     <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;bsReportTypes.Name" xml:space="preserve">
+    <value>bsReportTypes</value>
+  </data>
+  <data name="&gt;&gt;bsReportTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>frmSelectSettlementParameters</value>
+    <value>frmSelectReportParameters</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

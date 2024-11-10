@@ -25,4 +25,27 @@ public class SelectionItemList
 
         return list;
     }
+
+    public static List<SelectionItem> GetTariffGroupTypeList()
+    {
+        var list = EnergyUse.Core.Manager.LibSelectionItemList.GetTariffGroupTypeList();
+
+        // Add translationss
+        foreach (var item in list)
+            item.Description = Languages.GetResourceString(item.Key, item.Key);
+
+        return list;
+    }
+
+    public static List<SelectionItem> GetReportTypeList()
+    {
+        var list = EnergyUse.Core.Manager.LibSelectionItemList.GetReportTypeList();
+
+        // Add translationss
+        foreach (var item in list)
+            item.Description = Languages.GetResourceString(item.Key, item.Key);
+
+        return list;
+    }
+
 }

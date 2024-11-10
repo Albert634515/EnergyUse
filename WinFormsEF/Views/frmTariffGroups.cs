@@ -19,7 +19,19 @@ public partial class frmTariffGroups : Form
 
         InitializeComponent();
         setBaseFormSettings();
+        setTariffGroupTypeCombo("");
         setTarifGroups();
+    }
+
+    private void setTariffGroupTypeCombo(string currentValue)
+    {
+        var items = WinFormsEF.Managers.SelectionItemList.GetTariffGroupTypeList();
+        bsTariffGroupTypes.DataSource = items;
+
+        if (currentValue == null)
+            currentValue = ((int)EnergyUse.Common.Enums.TariffGroupType.EnergyCosts).ToString();
+
+        typeComboBox.SelectedIndex = typeComboBox.FindString(currentValue);
     }
 
     #endregion

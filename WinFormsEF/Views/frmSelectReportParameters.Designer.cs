@@ -1,6 +1,6 @@
 ﻿namespace WinFormsEF.Views
 {
-    partial class frmSelectSettlementParameters
+    partial class frmSelectReportParameters
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSelectSettlementParameters));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSelectReportParameters));
             bsAddresses = new BindingSource(components);
             toolTip1 = new ToolTip(components);
             addButton = new Button();
@@ -45,8 +45,10 @@
             bsEnergyTypes = new BindingSource(components);
             reportComboBox = new ComboBox();
             label2 = new Label();
+            bsReportTypes = new BindingSource(components);
             ((System.ComponentModel.ISupportInitialize)bsAddresses).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsReportTypes).BeginInit();
             SuspendLayout();
             // 
             // bsAddresses
@@ -134,17 +136,24 @@
             // 
             // reportComboBox
             // 
+            reportComboBox.DataSource = bsReportTypes;
+            reportComboBox.DisplayMember = "Description";
             reportComboBox.FormattingEnabled = true;
             resources.ApplyResources(reportComboBox, "reportComboBox");
             reportComboBox.Name = "reportComboBox";
-            reportComboBox.Tag = "LastPreSelectedPeriod";
+            reportComboBox.Tag = "SelectedReport";
+            reportComboBox.ValueMember = "Id";
             // 
             // label2
             // 
             resources.ApplyResources(label2, "label2");
             label2.Name = "label2";
             // 
-            // frmSelectSettlementParameters
+            // bsReportTypes
+            // 
+            bsReportTypes.DataSource = typeof(EnergyUse.Models.Common.SelectionItem);
+            // 
+            // frmSelectReportParameters
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
@@ -162,11 +171,12 @@
             Controls.Add(statusStrip1);
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "frmSelectSettlementParameters";
+            Name = "frmSelectReportParameters";
             ShowIcon = false;
             ShowInTaskbar = false;
             ((System.ComponentModel.ISupportInitialize)bsAddresses).EndInit();
             ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsReportTypes).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -188,5 +198,6 @@
         private Button clearPeriodButton;
         private ComboBox reportComboBox;
         private Label label2;
+        private BindingSource bsReportTypes;
     }
 }

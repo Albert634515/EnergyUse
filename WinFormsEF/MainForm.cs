@@ -359,7 +359,7 @@ public partial class MainForm : Form
     {
         var address = (EnergyUse.Models.Address)CboAddress.SelectedItem;
         EnergyUse.Models.Common.ParameterSelection parameterSelection;
-        using (var frmSelectParameters = new frmSelectSettlementParameters(address))
+        using (var frmSelectParameters = new frmSelectReportParameters(address, EnergyUse.Common.Enums.ReportType.SettlementSplitByType))
         {
             frmSelectParameters.ShowDialog();
             if (frmSelectParameters.ReturnValue <= 0)
@@ -380,7 +380,7 @@ public partial class MainForm : Form
     {
         var address = (EnergyUse.Models.Address)CboAddress.SelectedItem;
         EnergyUse.Models.Common.ParameterSelection parameterSelection;
-        using (var frmSelectParameters = new frmSelectSettlementParameters(address))
+        using (var frmSelectParameters = new frmSelectReportParameters(address, EnergyUse.Common.Enums.ReportType.Rates))
         {
             frmSelectParameters.ShowDialog();
             if (frmSelectParameters.ReturnValue <= 0)

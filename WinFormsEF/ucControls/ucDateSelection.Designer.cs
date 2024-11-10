@@ -32,12 +32,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucDateSelection));
             bsEngeryTypes = new BindingSource(components);
             toolTip1 = new ToolTip(components);
+            cmdRemove = new Button();
             cboEnergyType = new ComboBox();
             lblRange = new Label();
             dtpFrom = new DateTimePicker();
             dtpTill = new DateTimePicker();
             lblEnergyType = new Label();
-            cmdRemove = new Button();
             cboTarifGroups = new ComboBox();
             bsTarifGroups = new BindingSource(components);
             label1 = new Label();
@@ -53,6 +53,15 @@
             // bsEngeryTypes
             // 
             bsEngeryTypes.DataSource = typeof(EnergyUse.Models.EnergyType);
+            // 
+            // cmdRemove
+            // 
+            cmdRemove.Image = WinFormsUI.Properties.Resources.remove_24x24;
+            resources.ApplyResources(cmdRemove, "cmdRemove");
+            cmdRemove.Name = "cmdRemove";
+            toolTip2.SetToolTip(cmdRemove, resources.GetString("cmdRemove.ToolTip"));
+            toolTip1.SetToolTip(cmdRemove, resources.GetString("cmdRemove.ToolTip1"));
+            cmdRemove.UseVisualStyleBackColor = true;
             // 
             // cboEnergyType
             // 
@@ -84,15 +93,6 @@
             // 
             resources.ApplyResources(lblEnergyType, "lblEnergyType");
             lblEnergyType.Name = "lblEnergyType";
-            // 
-            // cmdRemove
-            // 
-            cmdRemove.Image = WinFormsUI.Properties.Resources.remove_24x24;
-            resources.ApplyResources(cmdRemove, "cmdRemove");
-            cmdRemove.Name = "cmdRemove";
-            toolTip2.SetToolTip(cmdRemove, resources.GetString("cmdRemove.ToolTip"));
-            toolTip1.SetToolTip(cmdRemove, resources.GetString("cmdRemove.ToolTip1"));
-            cmdRemove.UseVisualStyleBackColor = true;
             // 
             // cboTarifGroups
             // 

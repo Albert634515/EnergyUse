@@ -93,13 +93,13 @@ public class LibPeriodicDate
         addRateToData();
 
         // Add addital cost data
-        addAdditionalCost();
+        addCost();
     }
 
     /// <summary>
-    /// Set additional cost for each day in selection
+    /// Set cost for each day in selection
     /// </summary>
-    private void addAdditionalCost()
+    private void addCost()
     {
         List<OtherCost> otherCostList = new();
         var costCategoryList = _costCategoriesRepo.SelectByEnergyTypeAndRange(_parameterPeriod.EnergyType.Id, _parameterPeriod.StartRange, _parameterPeriod.EndRange);

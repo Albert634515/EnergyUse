@@ -264,6 +264,7 @@ public partial class EnergyUseContext : DbContext
         {
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Description).HasColumnType("VARCHAR (100)").IsRequired();
+            entity.Property(e => e.TypeId).HasColumnType("NUMERIC (2)").IsRequired();
         });
 
         modelBuilder.Entity<Unit>(entity =>

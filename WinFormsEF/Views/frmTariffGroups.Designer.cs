@@ -43,9 +43,17 @@
             IdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             DescriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             BsTarifGroups = new BindingSource(components);
+            gbCostCategory = new GroupBox();
+            typeLabel = new Label();
+            typeComboBox = new ComboBox();
+            bsTariffGroupTypes = new BindingSource(components);
+            descriptionTextBox = new TextBox();
+            descriptionLabel = new Label();
             ToolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DgTarifGroups).BeginInit();
             ((System.ComponentModel.ISupportInitialize)BsTarifGroups).BeginInit();
+            gbCostCategory.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)bsTariffGroupTypes).BeginInit();
             SuspendLayout();
             // 
             // ToolStrip1
@@ -114,27 +122,71 @@
             DgTarifGroups.Columns.AddRange(new DataGridViewColumn[] { IdDataGridViewTextBoxColumn, DescriptionDataGridViewTextBoxColumn });
             DgTarifGroups.DataSource = BsTarifGroups;
             DgTarifGroups.Name = "DgTarifGroups";
+            DgTarifGroups.ReadOnly = true;
             // 
             // IdDataGridViewTextBoxColumn
             // 
             IdDataGridViewTextBoxColumn.DataPropertyName = "Id";
             resources.ApplyResources(IdDataGridViewTextBoxColumn, "IdDataGridViewTextBoxColumn");
             IdDataGridViewTextBoxColumn.Name = "IdDataGridViewTextBoxColumn";
+            IdDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // DescriptionDataGridViewTextBoxColumn
             // 
             DescriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
             resources.ApplyResources(DescriptionDataGridViewTextBoxColumn, "DescriptionDataGridViewTextBoxColumn");
             DescriptionDataGridViewTextBoxColumn.Name = "DescriptionDataGridViewTextBoxColumn";
+            DescriptionDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // BsTarifGroups
             // 
             BsTarifGroups.DataSource = typeof(EnergyUse.Models.TariffGroup);
             // 
+            // gbCostCategory
+            // 
+            resources.ApplyResources(gbCostCategory, "gbCostCategory");
+            gbCostCategory.Controls.Add(typeLabel);
+            gbCostCategory.Controls.Add(typeComboBox);
+            gbCostCategory.Controls.Add(descriptionTextBox);
+            gbCostCategory.Controls.Add(descriptionLabel);
+            gbCostCategory.Name = "gbCostCategory";
+            gbCostCategory.TabStop = false;
+            // 
+            // typeLabel
+            // 
+            resources.ApplyResources(typeLabel, "typeLabel");
+            typeLabel.Name = "typeLabel";
+            // 
+            // typeComboBox
+            // 
+            typeComboBox.DataBindings.Add(new Binding("SelectedValue", BsTarifGroups, "TypeId", true));
+            typeComboBox.DataSource = bsTariffGroupTypes;
+            typeComboBox.DisplayMember = "Description";
+            typeComboBox.FormattingEnabled = true;
+            resources.ApplyResources(typeComboBox, "typeComboBox");
+            typeComboBox.Name = "typeComboBox";
+            typeComboBox.ValueMember = "Id";
+            // 
+            // bsTariffGroupTypes
+            // 
+            bsTariffGroupTypes.DataSource = typeof(EnergyUse.Models.Common.SelectionItem);
+            // 
+            // descriptionTextBox
+            // 
+            descriptionTextBox.DataBindings.Add(new Binding("Text", BsTarifGroups, "Description", true));
+            resources.ApplyResources(descriptionTextBox, "descriptionTextBox");
+            descriptionTextBox.Name = "descriptionTextBox";
+            // 
+            // descriptionLabel
+            // 
+            resources.ApplyResources(descriptionLabel, "descriptionLabel");
+            descriptionLabel.Name = "descriptionLabel";
+            // 
             // frmTariffGroups
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(gbCostCategory);
             Controls.Add(DgTarifGroups);
             Controls.Add(StatusStrip1);
             Controls.Add(ToolStrip1);
@@ -146,6 +198,9 @@
             ToolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)DgTarifGroups).EndInit();
             ((System.ComponentModel.ISupportInitialize)BsTarifGroups).EndInit();
+            gbCostCategory.ResumeLayout(false);
+            gbCostCategory.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)bsTariffGroupTypes).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -165,5 +220,11 @@
         private ToolStripButton TbsCancel;
         private DataGridViewTextBoxColumn IdDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn DescriptionDataGridViewTextBoxColumn;
+        private GroupBox gbCostCategory;
+        private Label typeLabel;
+        private ComboBox typeComboBox;
+        private TextBox descriptionTextBox;
+        private Label descriptionLabel;
+        private BindingSource bsTariffGroupTypes;
     }
 }

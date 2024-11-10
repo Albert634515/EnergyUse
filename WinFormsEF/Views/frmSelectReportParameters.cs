@@ -3,14 +3,14 @@ using System.Data;
 
 namespace WinFormsEF.Views;
 
-public partial class frmSelectSettlementParameters : Form
+public partial class frmSelectReportParameters : Form
 {
     #region FormProperties
-
-    private SelectSettelementParametersController _controller;
+        
     public EnergyUse.Models.Address CurrentAddress { get; set; }
     public int ReturnValue { get; set; } = 0;
 
+    private SelectSettelementParametersController _controller;
     private int _selectionLineCount { get; set; } = 0;
     private List<EnergyUse.Models.PreDefinedPeriod> _preDefinedPeriods { get; set; }
 
@@ -18,7 +18,7 @@ public partial class frmSelectSettlementParameters : Form
 
     #region InitForm
 
-    public frmSelectSettlementParameters(EnergyUse.Models.Address address)
+    public frmSelectReportParameters(EnergyUse.Models.Address address, EnergyUse.Common.Enums.ReportType defaultReport)
     {
         _controller = new SelectSettelementParametersController(Managers.Config.GetDbFileName());
         _controller.Initialize();
@@ -32,7 +32,7 @@ public partial class frmSelectSettlementParameters : Form
 
         setComboAddresses();
         setPreSelectePeriods();
-        setReportLists();
+        setReportLists(defaultReport);
         setEnergyTypeSelections(address.Id);
         setEnergyTypeLists(address);
 
@@ -74,16 +74,12 @@ public partial class frmSelectSettlementParameters : Form
             preSelectedPeriodComboBox.SelectedIndex = -1;
     }
 
-    private void setReportLists()
+    private void setReportLists(EnergyUse.Common.Enums.ReportType defaultReport)
     {
-        var reportList = new List<string>();
-        reportList.Add(EnergyUse.Common.Enums.ReportType.SettlementCompact.ToString());
-        reportList.Add(EnergyUse.Common.Enums.ReportType.SettlementSplitByType.ToString());
-        reportList.Add(EnergyUse.Common.Enums.ReportType.SettlementOld.ToString());
+        var reportList = EnergyUse.Core.Manager.LibSelectionItemList.GetReportTypeList();
+        bsReportTypes.DataSource = reportList;
 
-        reportComboBox.DataSource = reportList;
-
-        reportComboBox.Text = EnergyUse.Common.Enums.ReportType.SettlementSplitByType.ToString();
+        reportComboBox.Text = defaultReport.ToString();
     }
     
     #endregion

@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using iText.Commons.Utils.Collections;
+using System.Data;
 
 namespace WinFormsEF.ucControls;
 
@@ -28,6 +29,7 @@ public partial class ucDateSelection : UserControl
         if (TarifGroupsList is null)
             TarifGroupsList = new List<EnergyUse.Models.TariffGroup>();
 
+        TarifGroupsList = TarifGroupsList.Where(w => w.TypeId == (int)EnergyUse.Common.Enums.TariffGroupType.EnergyCosts).ToList();
         bsTarifGroups.DataSource = TarifGroupsList;
 
         cboTarifGroups.SelectedIndex = -1;
@@ -73,7 +75,7 @@ public partial class ucDateSelection : UserControl
         if (tarifGroupId <= 0)
             return;
 
-        EnergyUse.Models.TariffGroup tarifGroup = TarifGroupsList.Where(x => x.Id == tarifGroupId).FirstOrDefault();
+        EnergyUse.Models.TariffGroup tarifGroup = TarifGroupsList.Where(x => x.Id == tarifGroupId && x.TypeId == (int)EnergyUse.Common.Enums.TariffGroupType.EnergyCosts).FirstOrDefault();
         if (tarifGroup != null)
             cboTarifGroups.SelectedItem = tarifGroup;
     }

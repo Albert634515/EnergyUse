@@ -13,6 +13,7 @@ public partial class TariffGroup
 
     public long Id { get; set; }
     public string Description { get; set; } = string.Empty;
+    public int TypeId { get; set; } = 0;
 
     public virtual ICollection<AdditionalCategoryAndGroupInfo>? AdditionalCategoryAndGroupInfos { get; set; }
     public virtual ICollection<Address>? Addresses { get; set; }

@@ -5,6 +5,6 @@ public enum ReportType
     None = 0,
     SettlementCompact = 1,
     SettlementSplitByType = 2,
-    SettlementOld = 99
-    
+    Rates = 3,
+    SettlementOld = 99    
 }
