@@ -2,7 +2,7 @@
 
 namespace EnergyUse.Core.Controllers;
 
-public class SelectSettelementParametersController : IController
+public class SelectReportParametersController : IController
 {
     #region ControlerProperties
 
@@ -16,7 +16,7 @@ public class SelectSettelementParametersController : IController
 
     #region InitControler
 
-    public SelectSettelementParametersController(string dbFileName)
+    public SelectReportParametersController(string dbFileName)
     {
         _dbFileName = dbFileName;
     }

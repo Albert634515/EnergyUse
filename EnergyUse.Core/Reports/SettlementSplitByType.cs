@@ -56,6 +56,8 @@ public class SettlementSplitByType : SettlementBase
 
             List<PeriodicData> periodicData = LibPeriodicDate.GetRange(parameterPeriod);
             List<SettlementData> settlementDataList = mapCostCategories(periodicData);
+            if (parameterSelection.ShowRates == false)
+                settlementDataList = mergeSettlementData(settlementDataList);
 
             if (periodicData.Count == 0)
             {
@@ -70,19 +72,19 @@ public class SettlementSplitByType : SettlementBase
                 document.Add(new Paragraph(""));
 
                 var list1 = settlementDataList.Where(w => w.CostCategory.EnergySubTypeId != 5).ToList();
-                table = getCostTable(item, list1);
+                table = getCostTable(item, list1, parameterSelection.ShowRates);
                 document.Add(table);
                 document.Add(new Paragraph(""));
 
                 var list2 = settlementDataList.Where(w => w.CostCategory.EnergySubTypeId == 5).ToList();
-                table = getCostTable(item, list2);
+                table = getCostTable(item, list2, parameterSelection.ShowRates);
                 document.Add(table);
 
                 document.Add(new Paragraph(""));
 
                 setSettlementSubTotal(energyType, settlementDataList);
 
-                table = setTotalToTable(energyType);
+                table = setTotalToTable(energyType, parameterSelection.ShowRates);
                 document.Add(table);
             }
         } // End of loop of selected energy types

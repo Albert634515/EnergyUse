@@ -56,6 +56,8 @@ public class SettlementCompact : SettlementBase
 
             List<PeriodicData> periodicData = LibPeriodicDate.GetRange(parameterPeriod);
             List<SettlementData> settlementDataList = mapCostCategories(periodicData);
+            if (parameterSelection.ShowRates == false)
+                settlementDataList = mergeSettlementData(settlementDataList);
 
             if (periodicData.Count == 0)
             {
@@ -69,14 +71,14 @@ public class SettlementCompact : SettlementBase
                 document.Add(table);
                 document.Add(new Paragraph(""));
 
-                table = getCostTable(item, settlementDataList);
+                table = getCostTable(item, settlementDataList, parameterSelection.ShowRates);
                 document.Add(table);
 
                 document.Add(new Paragraph(""));
 
                 setSettlementSubTotal(energyType, settlementDataList);
 
-                table = setTotalToTable(energyType);
+                table = setTotalToTable(energyType, parameterSelection.ShowRates);
                 document.Add(table);
             }
         } // End of loop of selected energy types     

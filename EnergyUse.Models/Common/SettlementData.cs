@@ -23,13 +23,7 @@ public class SettlementData
     public bool LastAvailableRateUsed { get; set; } = false;
     public decimal Value { get; set; } = 0.0m;
     public decimal VatTarif { get; set; } = 0.0m;
-    public decimal VatAmount
-    {
-        get
-        {
-            return Value * (VatTarif / 100);
-        }
-    }
+    public decimal VatAmount { get; set; } = 0.0m;
     public bool LastAvailableVatRateUsed { get; set; } = false;        
     public bool DataPredicted { get; set; } = false;
     public decimal PriceIncrease { get; set; } = 0;

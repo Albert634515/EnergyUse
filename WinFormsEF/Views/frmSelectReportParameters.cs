@@ -1,4 +1,5 @@
 ﻿using EnergyUse.Core.Controllers;
+using EnergyUse.Models;
 using System.Data;
 
 namespace WinFormsEF.Views;
@@ -6,11 +7,11 @@ namespace WinFormsEF.Views;
 public partial class frmSelectReportParameters : Form
 {
     #region FormProperties
-        
+
     public EnergyUse.Models.Address CurrentAddress { get; set; }
     public int ReturnValue { get; set; } = 0;
 
-    private SelectSettelementParametersController _controller;
+    private SelectReportParametersController _controller;
     private int _selectionLineCount { get; set; } = 0;
     private List<EnergyUse.Models.PreDefinedPeriod> _preDefinedPeriods { get; set; }
 
@@ -20,7 +21,7 @@ public partial class frmSelectReportParameters : Form
 
     public frmSelectReportParameters(EnergyUse.Models.Address address, EnergyUse.Common.Enums.ReportType defaultReport)
     {
-        _controller = new SelectSettelementParametersController(Managers.Config.GetDbFileName());
+        _controller = new SelectReportParametersController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
         InitializeComponent();
@@ -81,7 +82,7 @@ public partial class frmSelectReportParameters : Form
 
         reportComboBox.Text = defaultReport.ToString();
     }
-    
+
     #endregion
 
     #region Events
@@ -108,26 +109,18 @@ public partial class frmSelectReportParameters : Form
         preSelectedPeriodComboBox.SelectedIndex = -1;
     }
 
+    private void reportComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        setSettingsReportTypeBased();
+    }
+
     #endregion
 
     #region ButtonEvents
 
     private void cmdAdd_Click(object sender, EventArgs e)
     {
-        Point location;
-        EnergyUse.Models.Address address = (EnergyUse.Models.Address)addressComboBox.SelectedItem;
-        ucControls.ucDateSelection ucDateSelectionLast;
-
-        var lastdateSelectionName = getLastSelectedKey();
-        ucDateSelectionLast = (ucControls.ucDateSelection)FindControl(this, lastdateSelectionName);
-        location = predictMissingDataCheckBox.Location;
-        location.X -= 72;
-        location.Y = ucDateSelectionLast.Location.Y;
-
-        if (ucDateSelectionLast != null)
-        {
-            setDateSelectionLine(_selectionLineCount + 1, address.Id, location);
-        }
+        addDateSelectionLine();
     }
 
     private void cmdCancel_Click(object sender, EventArgs e)
@@ -231,8 +224,9 @@ public partial class frmSelectReportParameters : Form
 
         ucControls.ucDateSelection ucDateSelection;
         int dateSelectionCount = getDateSelectionCount(addressId);
-        Point location = predictMissingDataCheckBox.Location;
-        location.X -= 72;
+        Point location = parametersGroupBox.Location;
+        location.X -= 5;
+        location.Y += parametersGroupBox.Height - 35;
 
         for (int i = 1; i <= dateSelectionCount; i++)
         {
@@ -255,11 +249,30 @@ public partial class frmSelectReportParameters : Form
 
         return dateSelectionCount;
     }
+
     private void setLocationAddRemoveButton(int height)
     {
         Point location = addButton.Location;
         location.Y += height;
         addButton.Location = location;
+    }
+
+    private void addDateSelectionLine()
+    {
+        Point location;
+        EnergyUse.Models.Address address = (EnergyUse.Models.Address)addressComboBox.SelectedItem;
+        ucControls.ucDateSelection ucDateSelectionLast;
+
+        var lastdateSelectionName = getLastSelectedKey();
+        ucDateSelectionLast = (ucControls.ucDateSelection)FindControl(this, lastdateSelectionName);
+        location = parametersGroupBox.Location;
+        location.X -= 5;
+        location.Y = ucDateSelectionLast.Location.Y;
+
+        if (ucDateSelectionLast != null)
+        {
+            setDateSelectionLine(_selectionLineCount + 1, address.Id, location);
+        }
     }
 
     private ucControls.ucDateSelection setDateSelectionLine(int lineCount, long addressId, Point location)
@@ -430,6 +443,26 @@ public partial class frmSelectReportParameters : Form
         Managers.Settings.SetBaseFormSettings(this);
     }
 
+    /// <summary>
+    /// Set form settings based on set report type
+    /// </summary>
+    private void setSettingsReportTypeBased()
+    {
+        EnergyUse.Common.Enums.ReportType selectedReport = EnergyUse.Common.Enums.ReportType.None;
+        Enum.TryParse(reportComboBox.Text, out selectedReport);
+
+        showRatesCheckBox.Visible = true;
+        if (selectedReport == EnergyUse.Common.Enums.ReportType.None)
+            return;
+        else if (selectedReport == EnergyUse.Common.Enums.ReportType.Rates)
+        {
+            showRatesCheckBox.Visible = false;
+            showRatesCheckBox.Checked = true;
+        }
+        else if (selectedReport == EnergyUse.Common.Enums.ReportType.SettlementCompact)
+            showRatesCheckBox.Checked = false;
+    }
+
     private Control FindControl(Control parent, string name)
     {
         // Check the parent.
@@ -451,7 +484,7 @@ public partial class frmSelectReportParameters : Form
         bool dataselectionFound;
         EnergyUse.Models.TariffGroup tarifGroup;
         EnergyUse.Common.Enums.ReportType selectedReport = EnergyUse.Common.Enums.ReportType.None;
-        Enum.TryParse<EnergyUse.Common.Enums.ReportType>(reportComboBox.Text, out selectedReport);
+        Enum.TryParse(reportComboBox.Text, out selectedReport);
 
         var selectionCount = 1;
 
@@ -460,6 +493,7 @@ public partial class frmSelectReportParameters : Form
         parameterSelection.StartRange = DateTime.Now.AddMonths(-6);
         parameterSelection.EndRange = parameterSelection.StartRange.AddMonths(6);
         parameterSelection.PredictMissingData = predictMissingDataCheckBox.Checked;
+        parameterSelection.ShowRates = showRatesCheckBox.Checked;
         parameterSelection.ReportType = selectedReport;
 
         var address = (EnergyUse.Models.Address)addressComboBox.SelectedItem;
@@ -467,7 +501,7 @@ public partial class frmSelectReportParameters : Form
 
         var preSelectedPeriod = (EnergyUse.Models.PreDefinedPeriod)preSelectedPeriodComboBox.SelectedItem;
         if (preSelectedPeriod != null)
-            parameterSelection.PreSelectedPeriodId = preSelectedPeriod.Id;      
+            parameterSelection.PreSelectedPeriodId = preSelectedPeriod.Id;
 
         do
         {

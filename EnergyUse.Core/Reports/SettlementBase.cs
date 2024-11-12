@@ -1,6 +1,7 @@
 ﻿using EnergyUse.Models.Common;
 using iText.Kernel.Font;
 using iText.Layout.Element;
+using Org.BouncyCastle.Bcpg;
 
 namespace EnergyUse.Core.Reports;
 
@@ -133,6 +134,8 @@ public class SettlementBase : ReportBase
                     settlementData.ValueBaseConsumed = dayDiff;
                     settlementData.Value = (settlementData.Rate * dayDiff);
                 }
+
+                settlementData.VatAmount = settlementData.Value * (settlementData.VatTarif / 100);
             }
         }
 
@@ -141,12 +144,42 @@ public class SettlementBase : ReportBase
         return settlementDatas;
     }
 
-    internal Table getCostTable(SelectedEnergyType item, List<SettlementData> settlementDataList)
+    internal List<SettlementData> mergeSettlementData(List<SettlementData> settlementDataList)
+    {
+        var mergeSettlementData = new List<SettlementData>();
+        foreach (SettlementData settlementData in settlementDataList)
+        {
+            var mergeSettlementDataItem = mergeSettlementData.LastOrDefault(x => x.CostCategory.Id == settlementData.CostCategory.Id);
+            if (mergeSettlementDataItem is null)
+            {
+                mergeSettlementDataItem = new SettlementData();
+                mergeSettlementDataItem.CostCategory = settlementData.CostCategory;
+                mergeSettlementDataItem.Description = settlementData.Description;
+                mergeSettlementDataItem.ValueBaseConsumed = settlementData.ValueBaseConsumed;
+                mergeSettlementDataItem.ValueBaseProduced = settlementData.ValueBaseProduced;
+                mergeSettlementDataItem.VatAmount = settlementData.VatAmount;
+                mergeSettlementDataItem.StartDate = settlementData.StartDate;
+                mergeSettlementDataItem.EndDate = settlementData.EndDate;
+
+                mergeSettlementData.Add(mergeSettlementDataItem);
+            }
+            else
+            {
+                mergeSettlementDataItem.ValueBaseConsumed += settlementData.ValueBaseConsumed;
+                mergeSettlementDataItem.ValueBaseProduced += settlementData.ValueBaseProduced;
+                mergeSettlementDataItem.Value += settlementData.Value;
+                mergeSettlementDataItem.EndDate = settlementData.EndDate;
+            }
+        }
+        return mergeSettlementData;
+    }
+
+    internal Table getCostTable(SelectedEnergyType item, List<SettlementData> settlementDataList, bool showRates)
     {
         _footerTextsList = new List<FooterText>();
         var table = new Table(_pointColumnWidths);
 
-        getCategoryTableHeader(table);
+        getCategoryTableHeader(table, showRates);
         foreach (SettlementData settlementData in settlementDataList)
         {
             FooterText footerTextCorrection = new();
@@ -202,12 +235,13 @@ public class SettlementBase : ReportBase
                 footerText = $"{footerText}{footerTextCorrection.Counter}";
             }
 
-            table.AddCell(GetNormalText(settlementData.Description, 1, 1, iText.Layout.Properties.TextAlignment.LEFT, footerText));
+            table.AddCell(GetNormalText(settlementData.Description, 1, showRates ? 1 : 2, iText.Layout.Properties.TextAlignment.LEFT, footerText));
             table.AddCell(GetNormalText(settlementData.StartDate.ToString("dd-MM-yyyy"), 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
             table.AddCell(GetNormalText(settlementData.EndDate.ToString("dd-MM-yyyy"), 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
             table.AddCell(GetNormalText(Math.Round(settlementData.ValueBase, 2).ToString()));
 
-            table.AddCell(GetNormalText(settlementData.Rate.ToString("##0.00000")));
+            if (showRates)
+                table.AddCell(GetNormalText(settlementData.Rate.ToString("##0.00000")));
             table.AddCell(GetNormalText(Math.Round(settlementData.Value, 2).ToString("##0.00")));
 
             if (!settlementData.CostCategory.CalculateVat)
@@ -229,18 +263,21 @@ public class SettlementBase : ReportBase
         settlementSubTotal.TotalValue = settlementDataList.Sum(s => s.Value);
         settlementSubTotal.TotalVat = settlementDataList.Sum(s => s.Value * (s.VatTarif / 100));
 
-        setSettlementSubTotal(table, settlementSubTotal, $"Sub total {item.EnergyType.Name}");
-    
+        setSettlementSubTotal(table, settlementSubTotal, $"Sub total {item.EnergyType.Name}", showRates);
+
         return table;
     }
 
-    internal void getCategoryTableHeader(Table table)
+    internal void getCategoryTableHeader(Table table, bool showRates)
     {
-        table.AddHeaderCell(GetBoldText("Description", 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddHeaderCell(GetBoldText("Description", 1, showRates ? 1 : 2, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddHeaderCell(GetBoldText("From", 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddHeaderCell(GetBoldText("Till", 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddHeaderCell(GetBoldText("Unit"));
-        table.AddHeaderCell(GetBoldText("Rate"));
+
+        if (showRates)
+            table.AddHeaderCell(GetBoldText("Rate"));
+
         table.AddHeaderCell(GetBoldText("Total ex.vat"));
         table.AddHeaderCell(GetBoldText("Vat"));
         table.AddHeaderCell(GetBoldText("Total"));
@@ -252,9 +289,9 @@ public class SettlementBase : ReportBase
     /// <param name="table"></param>
     /// <param name="settlementSubTotal"></param>
     /// <param name="rowDescription"></param>
-    private void setSettlementSubTotal(Table table, SettlementSubTotal settlementSubTotal, string rowDescription)
+    private void setSettlementSubTotal(Table table, SettlementSubTotal settlementSubTotal, string rowDescription, bool showRates)
     {
-        table.AddFooterCell(GetBoldTextGrey(rowDescription, 1, 5, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddFooterCell(GetBoldTextGrey(rowDescription, 1, showRates ? 5 : 5, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddFooterCell(GetBoldTextGrey(Math.Round(settlementSubTotal.TotalValue, 2).ToString()));
         table.AddFooterCell(GetBoldTextGrey(Math.Round(settlementSubTotal.TotalVat, 2).ToString()));
         table.AddFooterCell(GetBoldTextGrey(Math.Round(settlementSubTotal.TotalValue + settlementSubTotal.TotalVat, 2).ToString()));
@@ -282,13 +319,13 @@ public class SettlementBase : ReportBase
         }
     }
 
-    internal Table setTotalToTable(Models.EnergyType energyType)
+    internal Table setTotalToTable(Models.EnergyType energyType, bool showRates)
     {
         Table table = new(_pointColumnWidths);
         table.SetKeepTogether(true);
         GetSectionHeader(table, "Totals");
 
-        table.AddHeaderCell(GetBoldText("", 1, 5));
+        table.AddHeaderCell(GetBoldText("", 1, showRates ? 5 : 5));
         table.AddHeaderCell(GetBoldText("Money ex."));
         table.AddHeaderCell(GetBoldText("Vat"));
         table.AddHeaderCell(GetBoldText("Money inc."));
@@ -296,18 +333,18 @@ public class SettlementBase : ReportBase
         var settlementSubTotalList = _settlementSubTotalList.Where(x => x.EngergyTypeId == energyType.Id).ToList();
         foreach (SettlementSubTotal settlementSubTotal in settlementSubTotalList)
         {
-            table.AddCell(GetNormalText(settlementSubTotal.Description, 1, 5, iText.Layout.Properties.TextAlignment.LEFT));
+            table.AddCell(GetNormalText(settlementSubTotal.Description, 1, showRates ? 5 : 5, iText.Layout.Properties.TextAlignment.LEFT));
             table.AddCell(GetNormalText(Math.Round(settlementSubTotal.TotalValue, 2).ToString("##0.00")));
             table.AddCell(GetNormalText(Math.Round(settlementSubTotal.TotalVat, 2).ToString("##0.00")));
             table.AddCell(GetNormalText(Math.Round(settlementSubTotal.TotalValue + settlementSubTotal.TotalVat, 2).ToString("##0.00")));
         }
 
-        table.AddFooterCell(GetBoldTextGrey("Total", 1, 5, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddFooterCell(GetBoldTextGrey("Total", 1, showRates ? 5 : 5, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddFooterCell(GetBoldTextGrey(Math.Round(_settlementSubTotalList.Sum(x => x.TotalValue), 2).ToString("##0.00")));
         table.AddFooterCell(GetBoldTextGrey(Math.Round(_settlementSubTotalList.Sum(x => x.TotalVat), 2).ToString("##0.00")));
         table.AddFooterCell(GetBoldTextGrey(Math.Round(_settlementSubTotalList.Sum(x => x.TotalValue) + _settlementSubTotalList.Sum(x => x.TotalVat), 2).ToString("##0.00")));
 
-        table.AddFooterCell(GetBoldText("Per Month", 1, 5, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddFooterCell(GetBoldText("Per Month", 1, showRates ? 5 : 5, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddFooterCell(GetBoldText(Math.Round(_settlementSubTotalList.Sum(x => x.TotalValue) / 12, 2).ToString("##0.00")));
         table.AddFooterCell(GetBoldText(Math.Round(_settlementSubTotalList.Sum(x => x.TotalVat) / 12, 2).ToString("##0.00")));
         table.AddFooterCell(GetBoldText(Math.Round((_settlementSubTotalList.Sum(x => x.TotalValue) + _settlementSubTotalList.Sum(x => x.TotalVat)) / 12, 2).ToString("##0.00")));

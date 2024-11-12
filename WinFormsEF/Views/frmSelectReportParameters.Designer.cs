@@ -44,11 +44,14 @@
             addressComboBox = new ComboBox();
             bsEnergyTypes = new BindingSource(components);
             reportComboBox = new ComboBox();
-            label2 = new Label();
             bsReportTypes = new BindingSource(components);
+            label2 = new Label();
+            showRatesCheckBox = new CheckBox();
+            parametersGroupBox = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)bsAddresses).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsReportTypes).BeginInit();
+            parametersGroupBox.SuspendLayout();
             SuspendLayout();
             // 
             // bsAddresses
@@ -143,31 +146,48 @@
             reportComboBox.Name = "reportComboBox";
             reportComboBox.Tag = "SelectedReport";
             reportComboBox.ValueMember = "Id";
+            reportComboBox.SelectedIndexChanged += reportComboBox_SelectedIndexChanged;
+            // 
+            // bsReportTypes
+            // 
+            bsReportTypes.DataSource = typeof(EnergyUse.Models.Common.SelectionItem);
             // 
             // label2
             // 
             resources.ApplyResources(label2, "label2");
             label2.Name = "label2";
             // 
-            // bsReportTypes
+            // showRatesCheckBox
             // 
-            bsReportTypes.DataSource = typeof(EnergyUse.Models.Common.SelectionItem);
+            resources.ApplyResources(showRatesCheckBox, "showRatesCheckBox");
+            showRatesCheckBox.Checked = true;
+            showRatesCheckBox.CheckState = CheckState.Checked;
+            showRatesCheckBox.Name = "showRatesCheckBox";
+            showRatesCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // parametersGroupBox
+            // 
+            resources.ApplyResources(parametersGroupBox, "parametersGroupBox");
+            parametersGroupBox.Controls.Add(reportComboBox);
+            parametersGroupBox.Controls.Add(addressComboBox);
+            parametersGroupBox.Controls.Add(clearPeriodButton);
+            parametersGroupBox.Controls.Add(lblAddress);
+            parametersGroupBox.Controls.Add(showRatesCheckBox);
+            parametersGroupBox.Controls.Add(label2);
+            parametersGroupBox.Controls.Add(predictMissingDataCheckBox);
+            parametersGroupBox.Controls.Add(preSelectedPeriodComboBox);
+            parametersGroupBox.Controls.Add(label1);
+            parametersGroupBox.Name = "parametersGroupBox";
+            parametersGroupBox.TabStop = false;
             // 
             // frmSelectReportParameters
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(reportComboBox);
-            Controls.Add(label2);
-            Controls.Add(clearPeriodButton);
-            Controls.Add(addressComboBox);
+            Controls.Add(parametersGroupBox);
             Controls.Add(addButton);
-            Controls.Add(lblAddress);
-            Controls.Add(predictMissingDataCheckBox);
             Controls.Add(cancelParameterSelectionButton);
             Controls.Add(selectButton);
-            Controls.Add(preSelectedPeriodComboBox);
-            Controls.Add(label1);
             Controls.Add(statusStrip1);
             MaximizeBox = false;
             MinimizeBox = false;
@@ -177,6 +197,8 @@
             ((System.ComponentModel.ISupportInitialize)bsAddresses).EndInit();
             ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).EndInit();
             ((System.ComponentModel.ISupportInitialize)bsReportTypes).EndInit();
+            parametersGroupBox.ResumeLayout(false);
+            parametersGroupBox.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -199,5 +221,7 @@
         private ComboBox reportComboBox;
         private Label label2;
         private BindingSource bsReportTypes;
+        public CheckBox showRatesCheckBox;
+        private GroupBox parametersGroupBox;
     }
 }
