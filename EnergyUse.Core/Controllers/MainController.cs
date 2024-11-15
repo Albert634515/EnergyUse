@@ -104,8 +104,7 @@ public class MainController : IController
         }
         else
         {
-            var LibSettlement = new EnergyUse.Core.Reports.Settlement(_dbFileName);
-            return LibSettlement.GetSettlementPdf(parameterSelection);
+            throw new Exception("Unknown report type");
         }
     }
 
