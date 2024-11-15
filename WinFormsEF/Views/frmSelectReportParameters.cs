@@ -1,5 +1,4 @@
 ﻿using EnergyUse.Core.Controllers;
-using EnergyUse.Models;
 using System.Data;
 
 namespace WinFormsEF.Views;

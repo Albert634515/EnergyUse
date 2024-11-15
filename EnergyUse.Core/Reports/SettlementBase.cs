@@ -1,7 +1,6 @@
 ﻿using EnergyUse.Models.Common;
 using iText.Kernel.Font;
 using iText.Layout.Element;
-using Org.BouncyCastle.Bcpg;
 
 namespace EnergyUse.Core.Reports;
 
