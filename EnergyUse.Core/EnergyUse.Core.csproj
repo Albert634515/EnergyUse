@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="7.4.2">
+    <PackageReference Include="EPPlus" Version="7.5.0">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
     <PackageReference Include="itext.bouncy-castle-adapter" Version="8.0.5" />
