@@ -66,25 +66,24 @@
             dtpPurchaseDate = new DateTimePicker();
             lblDateOrPurchase = new Label();
             dgPayBackTime = new DataGridView();
-            periodIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            startPeriodDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            endPeriodDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            ReturnOnInvestment = new DataGridViewTextBoxColumn();
-            ReturnOnInvestmentTotal = new DataGridViewTextBoxColumn();
-            Return = new DataGridViewTextBoxColumn();
-            valueProducedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            valueConsumedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            ValueProducedAndConsumed = new DataGridViewTextBoxColumn();
-            MonetaryValueProduced = new DataGridViewTextBoxColumn();
-            MonetaryValueConsumed = new DataGridViewTextBoxColumn();
-            MonetaryValueProducedAndConsumed = new DataGridViewTextBoxColumn();
-            OtherCostProduced = new DataGridViewTextBoxColumn();
-            OtherCostConsumed = new DataGridViewTextBoxColumn();
             bsPayBackTimes = new BindingSource(components);
             toolStrip1 = new ToolStrip();
             tsbCalculate = new ToolStripButton();
             tsbClose = new ToolStripButton();
-            toolTip2 = new ToolTip(components);
+            periodIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            startPeriodDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            endPeriodDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            valueProducedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            valueConsumedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            EstimateDirectUsed = new DataGridViewTextBoxColumn();
+            MonetaryValueProduced = new DataGridViewTextBoxColumn();
+            OtherCostProduced = new DataGridViewTextBoxColumn();
+            MonetaryValueConsumed = new DataGridViewTextBoxColumn();
+            OtherCostConsumed = new DataGridViewTextBoxColumn();
+            MonetaryValueProducedAndConsumed = new DataGridViewTextBoxColumn();
+            ReturnOnInvestment = new DataGridViewTextBoxColumn();
+            ReturnOnInvestmentTotal = new DataGridViewTextBoxColumn();
+            Return = new DataGridViewTextBoxColumn();
             statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bsEnergyTypes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsAddresses).BeginInit();
@@ -234,144 +233,12 @@
             dgPayBackTime.AllowUserToDeleteRows = false;
             resources.ApplyResources(dgPayBackTime, "dgPayBackTime");
             dgPayBackTime.AutoGenerateColumns = false;
-            dgPayBackTime.Columns.AddRange(new DataGridViewColumn[] { periodIdDataGridViewTextBoxColumn, startPeriodDataGridViewTextBoxColumn, endPeriodDataGridViewTextBoxColumn, ReturnOnInvestment, ReturnOnInvestmentTotal, Return, valueProducedDataGridViewTextBoxColumn, valueConsumedDataGridViewTextBoxColumn, ValueProducedAndConsumed, MonetaryValueProduced, MonetaryValueConsumed, MonetaryValueProducedAndConsumed, OtherCostProduced, OtherCostConsumed });
+            dgPayBackTime.Columns.AddRange(new DataGridViewColumn[] { periodIdDataGridViewTextBoxColumn, startPeriodDataGridViewTextBoxColumn, endPeriodDataGridViewTextBoxColumn, valueProducedDataGridViewTextBoxColumn, valueConsumedDataGridViewTextBoxColumn, EstimateDirectUsed, MonetaryValueProduced, OtherCostProduced, MonetaryValueConsumed, OtherCostConsumed, MonetaryValueProducedAndConsumed, ReturnOnInvestment, ReturnOnInvestmentTotal, Return });
             dgPayBackTime.DataSource = bsPayBackTimes;
             dgPayBackTime.Name = "dgPayBackTime";
             dgPayBackTime.ReadOnly = true;
             dgPayBackTime.RowTemplate.Height = 24;
             dgPayBackTime.CellFormatting += dgvPayBackTime_CellFormatting;
-            // 
-            // periodIdDataGridViewTextBoxColumn
-            // 
-            periodIdDataGridViewTextBoxColumn.DataPropertyName = "PeriodId";
-            resources.ApplyResources(periodIdDataGridViewTextBoxColumn, "periodIdDataGridViewTextBoxColumn");
-            periodIdDataGridViewTextBoxColumn.Name = "periodIdDataGridViewTextBoxColumn";
-            periodIdDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // startPeriodDataGridViewTextBoxColumn
-            // 
-            startPeriodDataGridViewTextBoxColumn.DataPropertyName = "StartPeriod";
-            resources.ApplyResources(startPeriodDataGridViewTextBoxColumn, "startPeriodDataGridViewTextBoxColumn");
-            startPeriodDataGridViewTextBoxColumn.Name = "startPeriodDataGridViewTextBoxColumn";
-            startPeriodDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // endPeriodDataGridViewTextBoxColumn
-            // 
-            endPeriodDataGridViewTextBoxColumn.DataPropertyName = "EndPeriod";
-            resources.ApplyResources(endPeriodDataGridViewTextBoxColumn, "endPeriodDataGridViewTextBoxColumn");
-            endPeriodDataGridViewTextBoxColumn.Name = "endPeriodDataGridViewTextBoxColumn";
-            endPeriodDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // ReturnOnInvestment
-            // 
-            ReturnOnInvestment.DataPropertyName = "ReturnOnInvestment";
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "N2";
-            ReturnOnInvestment.DefaultCellStyle = dataGridViewCellStyle1;
-            resources.ApplyResources(ReturnOnInvestment, "ReturnOnInvestment");
-            ReturnOnInvestment.Name = "ReturnOnInvestment";
-            ReturnOnInvestment.ReadOnly = true;
-            // 
-            // ReturnOnInvestmentTotal
-            // 
-            ReturnOnInvestmentTotal.DataPropertyName = "ReturnOnInvestmentTotal";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "N2";
-            ReturnOnInvestmentTotal.DefaultCellStyle = dataGridViewCellStyle2;
-            resources.ApplyResources(ReturnOnInvestmentTotal, "ReturnOnInvestmentTotal");
-            ReturnOnInvestmentTotal.Name = "ReturnOnInvestmentTotal";
-            ReturnOnInvestmentTotal.ReadOnly = true;
-            // 
-            // Return
-            // 
-            Return.DataPropertyName = "Return";
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "N2";
-            Return.DefaultCellStyle = dataGridViewCellStyle3;
-            resources.ApplyResources(Return, "Return");
-            Return.Name = "Return";
-            Return.ReadOnly = true;
-            // 
-            // valueProducedDataGridViewTextBoxColumn
-            // 
-            valueProducedDataGridViewTextBoxColumn.DataPropertyName = "ValueProduced";
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "N2";
-            dataGridViewCellStyle4.NullValue = null;
-            valueProducedDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
-            resources.ApplyResources(valueProducedDataGridViewTextBoxColumn, "valueProducedDataGridViewTextBoxColumn");
-            valueProducedDataGridViewTextBoxColumn.Name = "valueProducedDataGridViewTextBoxColumn";
-            valueProducedDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // valueConsumedDataGridViewTextBoxColumn
-            // 
-            valueConsumedDataGridViewTextBoxColumn.DataPropertyName = "ValueConsumed";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.Format = "N2";
-            valueConsumedDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
-            resources.ApplyResources(valueConsumedDataGridViewTextBoxColumn, "valueConsumedDataGridViewTextBoxColumn");
-            valueConsumedDataGridViewTextBoxColumn.Name = "valueConsumedDataGridViewTextBoxColumn";
-            valueConsumedDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // ValueProducedAndConsumed
-            // 
-            ValueProducedAndConsumed.DataPropertyName = "ValueProducedAndConsumed";
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Format = "N2";
-            ValueProducedAndConsumed.DefaultCellStyle = dataGridViewCellStyle6;
-            resources.ApplyResources(ValueProducedAndConsumed, "ValueProducedAndConsumed");
-            ValueProducedAndConsumed.Name = "ValueProducedAndConsumed";
-            ValueProducedAndConsumed.ReadOnly = true;
-            // 
-            // MonetaryValueProduced
-            // 
-            MonetaryValueProduced.DataPropertyName = "MonetaryValueProduced";
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle7.Format = "N2";
-            MonetaryValueProduced.DefaultCellStyle = dataGridViewCellStyle7;
-            resources.ApplyResources(MonetaryValueProduced, "MonetaryValueProduced");
-            MonetaryValueProduced.Name = "MonetaryValueProduced";
-            MonetaryValueProduced.ReadOnly = true;
-            // 
-            // MonetaryValueConsumed
-            // 
-            MonetaryValueConsumed.DataPropertyName = "MonetaryValueConsumed";
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle8.Format = "N2";
-            MonetaryValueConsumed.DefaultCellStyle = dataGridViewCellStyle8;
-            resources.ApplyResources(MonetaryValueConsumed, "MonetaryValueConsumed");
-            MonetaryValueConsumed.Name = "MonetaryValueConsumed";
-            MonetaryValueConsumed.ReadOnly = true;
-            // 
-            // MonetaryValueProducedAndConsumed
-            // 
-            MonetaryValueProducedAndConsumed.DataPropertyName = "MonetaryValueProducedAndConsumed";
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle9.Format = "N2";
-            MonetaryValueProducedAndConsumed.DefaultCellStyle = dataGridViewCellStyle9;
-            resources.ApplyResources(MonetaryValueProducedAndConsumed, "MonetaryValueProducedAndConsumed");
-            MonetaryValueProducedAndConsumed.Name = "MonetaryValueProducedAndConsumed";
-            MonetaryValueProducedAndConsumed.ReadOnly = true;
-            // 
-            // OtherCostProduced
-            // 
-            OtherCostProduced.DataPropertyName = "OtherCostProduced";
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle10.Format = "N2";
-            OtherCostProduced.DefaultCellStyle = dataGridViewCellStyle10;
-            resources.ApplyResources(OtherCostProduced, "OtherCostProduced");
-            OtherCostProduced.Name = "OtherCostProduced";
-            OtherCostProduced.ReadOnly = true;
-            // 
-            // OtherCostConsumed
-            // 
-            OtherCostConsumed.DataPropertyName = "OtherCostConsumed";
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle11.Format = "N2";
-            OtherCostConsumed.DefaultCellStyle = dataGridViewCellStyle11;
-            resources.ApplyResources(OtherCostConsumed, "OtherCostConsumed");
-            OtherCostConsumed.Name = "OtherCostConsumed";
-            OtherCostConsumed.ReadOnly = true;
             // 
             // bsPayBackTimes
             // 
@@ -398,6 +265,138 @@
             resources.ApplyResources(tsbClose, "tsbClose");
             tsbClose.Name = "tsbClose";
             tsbClose.Click += tsbClose_Click;
+            // 
+            // periodIdDataGridViewTextBoxColumn
+            // 
+            periodIdDataGridViewTextBoxColumn.DataPropertyName = "PeriodId";
+            resources.ApplyResources(periodIdDataGridViewTextBoxColumn, "periodIdDataGridViewTextBoxColumn");
+            periodIdDataGridViewTextBoxColumn.Name = "periodIdDataGridViewTextBoxColumn";
+            periodIdDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // startPeriodDataGridViewTextBoxColumn
+            // 
+            startPeriodDataGridViewTextBoxColumn.DataPropertyName = "StartPeriod";
+            resources.ApplyResources(startPeriodDataGridViewTextBoxColumn, "startPeriodDataGridViewTextBoxColumn");
+            startPeriodDataGridViewTextBoxColumn.Name = "startPeriodDataGridViewTextBoxColumn";
+            startPeriodDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // endPeriodDataGridViewTextBoxColumn
+            // 
+            endPeriodDataGridViewTextBoxColumn.DataPropertyName = "EndPeriod";
+            resources.ApplyResources(endPeriodDataGridViewTextBoxColumn, "endPeriodDataGridViewTextBoxColumn");
+            endPeriodDataGridViewTextBoxColumn.Name = "endPeriodDataGridViewTextBoxColumn";
+            endPeriodDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // valueProducedDataGridViewTextBoxColumn
+            // 
+            valueProducedDataGridViewTextBoxColumn.DataPropertyName = "ValueProduced";
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = null;
+            valueProducedDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            resources.ApplyResources(valueProducedDataGridViewTextBoxColumn, "valueProducedDataGridViewTextBoxColumn");
+            valueProducedDataGridViewTextBoxColumn.Name = "valueProducedDataGridViewTextBoxColumn";
+            valueProducedDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // valueConsumedDataGridViewTextBoxColumn
+            // 
+            valueConsumedDataGridViewTextBoxColumn.DataPropertyName = "ValueConsumed";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N2";
+            valueConsumedDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            resources.ApplyResources(valueConsumedDataGridViewTextBoxColumn, "valueConsumedDataGridViewTextBoxColumn");
+            valueConsumedDataGridViewTextBoxColumn.Name = "valueConsumedDataGridViewTextBoxColumn";
+            valueConsumedDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // EstimateDirectUsed
+            // 
+            EstimateDirectUsed.DataPropertyName = "EstimateDirectUsed";
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N2";
+            EstimateDirectUsed.DefaultCellStyle = dataGridViewCellStyle3;
+            resources.ApplyResources(EstimateDirectUsed, "EstimateDirectUsed");
+            EstimateDirectUsed.Name = "EstimateDirectUsed";
+            EstimateDirectUsed.ReadOnly = true;
+            // 
+            // MonetaryValueProduced
+            // 
+            MonetaryValueProduced.DataPropertyName = "MonetaryValueProduced";
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "N2";
+            MonetaryValueProduced.DefaultCellStyle = dataGridViewCellStyle4;
+            resources.ApplyResources(MonetaryValueProduced, "MonetaryValueProduced");
+            MonetaryValueProduced.Name = "MonetaryValueProduced";
+            MonetaryValueProduced.ReadOnly = true;
+            // 
+            // OtherCostProduced
+            // 
+            OtherCostProduced.DataPropertyName = "OtherCostProduced";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "N2";
+            OtherCostProduced.DefaultCellStyle = dataGridViewCellStyle5;
+            resources.ApplyResources(OtherCostProduced, "OtherCostProduced");
+            OtherCostProduced.Name = "OtherCostProduced";
+            OtherCostProduced.ReadOnly = true;
+            // 
+            // MonetaryValueConsumed
+            // 
+            MonetaryValueConsumed.DataPropertyName = "MonetaryValueConsumed";
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "N2";
+            MonetaryValueConsumed.DefaultCellStyle = dataGridViewCellStyle6;
+            resources.ApplyResources(MonetaryValueConsumed, "MonetaryValueConsumed");
+            MonetaryValueConsumed.Name = "MonetaryValueConsumed";
+            MonetaryValueConsumed.ReadOnly = true;
+            // 
+            // OtherCostConsumed
+            // 
+            OtherCostConsumed.DataPropertyName = "OtherCostConsumed";
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "N2";
+            OtherCostConsumed.DefaultCellStyle = dataGridViewCellStyle7;
+            resources.ApplyResources(OtherCostConsumed, "OtherCostConsumed");
+            OtherCostConsumed.Name = "OtherCostConsumed";
+            OtherCostConsumed.ReadOnly = true;
+            // 
+            // MonetaryValueProducedAndConsumed
+            // 
+            MonetaryValueProducedAndConsumed.DataPropertyName = "MonetaryValueProducedAndConsumed";
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "N2";
+            MonetaryValueProducedAndConsumed.DefaultCellStyle = dataGridViewCellStyle8;
+            resources.ApplyResources(MonetaryValueProducedAndConsumed, "MonetaryValueProducedAndConsumed");
+            MonetaryValueProducedAndConsumed.Name = "MonetaryValueProducedAndConsumed";
+            MonetaryValueProducedAndConsumed.ReadOnly = true;
+            // 
+            // ReturnOnInvestment
+            // 
+            ReturnOnInvestment.DataPropertyName = "ReturnOnInvestment";
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle9.Format = "N2";
+            ReturnOnInvestment.DefaultCellStyle = dataGridViewCellStyle9;
+            resources.ApplyResources(ReturnOnInvestment, "ReturnOnInvestment");
+            ReturnOnInvestment.Name = "ReturnOnInvestment";
+            ReturnOnInvestment.ReadOnly = true;
+            // 
+            // ReturnOnInvestmentTotal
+            // 
+            ReturnOnInvestmentTotal.DataPropertyName = "ReturnOnInvestmentTotal";
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle10.Format = "N2";
+            ReturnOnInvestmentTotal.DefaultCellStyle = dataGridViewCellStyle10;
+            resources.ApplyResources(ReturnOnInvestmentTotal, "ReturnOnInvestmentTotal");
+            ReturnOnInvestmentTotal.Name = "ReturnOnInvestmentTotal";
+            ReturnOnInvestmentTotal.ReadOnly = true;
+            // 
+            // Return
+            // 
+            Return.DataPropertyName = "Return";
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle11.Format = "N2";
+            Return.DefaultCellStyle = dataGridViewCellStyle11;
+            resources.ApplyResources(Return, "Return");
+            Return.Name = "Return";
+            Return.ReadOnly = true;
             // 
             // frmPayBackTime
             // 
@@ -467,7 +466,6 @@
         private DateTimePicker dtpPurchaseDate;
         private Label lblDateOrPurchase;
         private DataGridView dgPayBackTime;
-        private ToolTip toolTip2;
         private ToolStrip toolStrip1;
         private ToolStripButton tsbCalculate;
         private ToolStripButton tsbClose;
@@ -476,16 +474,16 @@
         private DataGridViewTextBoxColumn periodIdDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn startPeriodDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn endPeriodDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn valueProducedDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn valueConsumedDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn EstimateDirectUsed;
+        private DataGridViewTextBoxColumn MonetaryValueProduced;
+        private DataGridViewTextBoxColumn OtherCostProduced;
+        private DataGridViewTextBoxColumn MonetaryValueConsumed;
+        private DataGridViewTextBoxColumn OtherCostConsumed;
+        private DataGridViewTextBoxColumn MonetaryValueProducedAndConsumed;
         private DataGridViewTextBoxColumn ReturnOnInvestment;
         private DataGridViewTextBoxColumn ReturnOnInvestmentTotal;
         private DataGridViewTextBoxColumn Return;
-        private DataGridViewTextBoxColumn valueProducedDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn valueConsumedDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn ValueProducedAndConsumed;
-        private DataGridViewTextBoxColumn MonetaryValueProduced;
-        private DataGridViewTextBoxColumn MonetaryValueConsumed;
-        private DataGridViewTextBoxColumn MonetaryValueProducedAndConsumed;
-        private DataGridViewTextBoxColumn OtherCostProduced;
-        private DataGridViewTextBoxColumn OtherCostConsumed;
     }
 }

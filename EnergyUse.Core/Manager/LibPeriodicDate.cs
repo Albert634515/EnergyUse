@@ -30,7 +30,7 @@ public class LibPeriodicDate
     private decimal _avgCorrectionPercentage = 1;
     private decimal _avgCorrectionPercentageReturn = 1;
     private Models.MeterReading _lastrow;
-    private List<Models.Rate> _rates = new List<Models.Rate>();
+    private List<Models.Rate> _rates = new();
 
     #endregion
 
@@ -69,8 +69,10 @@ public class LibPeriodicDate
         var lastRow = _meterReadingRepo.SelectLastRow(_parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId);
         if (lastRow == null)
         {
-            lastRow = new Models.MeterReading();
-            lastRow.RegistrationDate = DateTime.MinValue;
+            lastRow = new Models.MeterReading
+            {
+                RegistrationDate = DateTime.MinValue
+            };
         }
 
         return lastRow;
@@ -189,12 +191,13 @@ public class LibPeriodicDate
 
                     //If there is no cost record create it
                     // Zoek laatste record, kijk of tarief gelijk is anders nieuwe maken en toevoegen
-                    var otherCost = new OtherCost();
-                    otherCost.CostCategoryId = costCategory.Id;
-
-                    otherCost.CorrectionFactor = periodicData.CorrectionFactor;
-                    otherCost.LastAvailableRateUsed = lastAvailableVatRateUsed;
-                    otherCost.LastAvailableVatRateUsed = lastAvailableVatRateUsed;
+                    OtherCost otherCost = new()
+                    {
+                        CostCategoryId = costCategory.Id,
+                        CorrectionFactor = periodicData.CorrectionFactor,
+                        LastAvailableRateUsed = lastAvailableVatRateUsed,
+                        LastAvailableVatRateUsed = lastAvailableVatRateUsed
+                    };
 
                     if (priceRate is not null)
                     {
@@ -236,15 +239,17 @@ public class LibPeriodicDate
 
             if (periodicData is null)
             {
-                periodicData = new PeriodicData();
-                periodicData.PeriodType = _parameterPeriod.PeriodType;
-                periodicData.ValueX = labels.Item1;
-                periodicData.ValueXDate = labels.Item2;
-                periodicData.ValueXString = labels.Item3;
-                periodicData.IsPredicted = periodicDataPerDay.IsPredicted;
+                periodicData = new PeriodicData
+                {
+                    PeriodType = _parameterPeriod.PeriodType,
+                    ValueX = labels.Item1,
+                    ValueXDate = labels.Item2,
+                    ValueXString = labels.Item3,
+                    IsPredicted = periodicDataPerDay.IsPredicted,
 
-                // Correction factor should not be added to graph data
-                periodicData.CorrectionFactor = 0;
+                    // Correction factor should not be added to graph data
+                    CorrectionFactor = 0
+                };
                 if (_parameterPeriod.PeriodType == Period.SettlementDay && periodicDataPerDay.CorrectionFactor != 1)
                     periodicData.CorrectionFactor = periodicDataPerDay.CorrectionFactor;
 

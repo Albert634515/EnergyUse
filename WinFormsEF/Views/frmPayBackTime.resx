@@ -706,6 +706,96 @@
   <data name="endPeriodDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
     <value>80</value>
   </data>
+  <data name="valueProducedDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Value Produced</value>
+  </data>
+  <data name="valueProducedDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="valueProducedDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>80</value>
+  </data>
+  <data name="valueConsumedDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Value Consumed</value>
+  </data>
+  <data name="valueConsumedDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="valueConsumedDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>80</value>
+  </data>
+  <metadata name="EstimateDirectUsed.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="EstimateDirectUsed.HeaderText" xml:space="preserve">
+    <value>Estimate direct used</value>
+  </data>
+  <data name="EstimateDirectUsed.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="EstimateDirectUsed.Width" type="System.Int32, mscorlib">
+    <value>80</value>
+  </data>
+  <metadata name="MonetaryValueProduced.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="MonetaryValueProduced.HeaderText" xml:space="preserve">
+    <value>Monetary Value Produced</value>
+  </data>
+  <data name="MonetaryValueProduced.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="MonetaryValueProduced.Width" type="System.Int32, mscorlib">
+    <value>80</value>
+  </data>
+  <metadata name="OtherCostProduced.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="OtherCostProduced.HeaderText" xml:space="preserve">
+    <value>Other Cost Produced</value>
+  </data>
+  <data name="OtherCostProduced.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="OtherCostProduced.Width" type="System.Int32, mscorlib">
+    <value>80</value>
+  </data>
+  <metadata name="MonetaryValueConsumed.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="MonetaryValueConsumed.HeaderText" xml:space="preserve">
+    <value>Monetary Value Consumed</value>
+  </data>
+  <data name="MonetaryValueConsumed.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="MonetaryValueConsumed.Width" type="System.Int32, mscorlib">
+    <value>80</value>
+  </data>
+  <metadata name="OtherCostConsumed.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="OtherCostConsumed.HeaderText" xml:space="preserve">
+    <value>Other Cost Consumed</value>
+  </data>
+  <data name="OtherCostConsumed.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="OtherCostConsumed.Width" type="System.Int32, mscorlib">
+    <value>85</value>
+  </data>
+  <metadata name="MonetaryValueProducedAndConsumed.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="MonetaryValueProducedAndConsumed.HeaderText" xml:space="preserve">
+    <value>Monetary Value Produced And Consumed</value>
+  </data>
+  <data name="MonetaryValueProducedAndConsumed.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="MonetaryValueProducedAndConsumed.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
   <metadata name="ReturnOnInvestment.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -741,96 +831,6 @@
   </data>
   <data name="Return.Width" type="System.Int32, mscorlib">
     <value>80</value>
-  </data>
-  <data name="valueProducedDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
-    <value>Value Produced</value>
-  </data>
-  <data name="valueProducedDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="valueProducedDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
-    <value>80</value>
-  </data>
-  <data name="valueConsumedDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
-    <value>Value Consumed</value>
-  </data>
-  <data name="valueConsumedDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="valueConsumedDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
-    <value>80</value>
-  </data>
-  <metadata name="ValueProducedAndConsumed.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="ValueProducedAndConsumed.HeaderText" xml:space="preserve">
-    <value>Value Produced And Consumed</value>
-  </data>
-  <data name="ValueProducedAndConsumed.MinimumWidth" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="ValueProducedAndConsumed.Width" type="System.Int32, mscorlib">
-    <value>125</value>
-  </data>
-  <metadata name="MonetaryValueProduced.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="MonetaryValueProduced.HeaderText" xml:space="preserve">
-    <value>Monetary Value Produced</value>
-  </data>
-  <data name="MonetaryValueProduced.MinimumWidth" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="MonetaryValueProduced.Width" type="System.Int32, mscorlib">
-    <value>80</value>
-  </data>
-  <metadata name="MonetaryValueConsumed.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="MonetaryValueConsumed.HeaderText" xml:space="preserve">
-    <value>Monetary Value Consumed</value>
-  </data>
-  <data name="MonetaryValueConsumed.MinimumWidth" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="MonetaryValueConsumed.Width" type="System.Int32, mscorlib">
-    <value>80</value>
-  </data>
-  <metadata name="MonetaryValueProducedAndConsumed.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="MonetaryValueProducedAndConsumed.HeaderText" xml:space="preserve">
-    <value>Monetary Value Produced And Consumed</value>
-  </data>
-  <data name="MonetaryValueProducedAndConsumed.MinimumWidth" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="MonetaryValueProducedAndConsumed.Width" type="System.Int32, mscorlib">
-    <value>125</value>
-  </data>
-  <metadata name="OtherCostProduced.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="OtherCostProduced.HeaderText" xml:space="preserve">
-    <value>Other Cost Produced</value>
-  </data>
-  <data name="OtherCostProduced.MinimumWidth" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="OtherCostProduced.Width" type="System.Int32, mscorlib">
-    <value>80</value>
-  </data>
-  <metadata name="OtherCostConsumed.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="OtherCostConsumed.HeaderText" xml:space="preserve">
-    <value>Other Cost Consumed</value>
-  </data>
-  <data name="OtherCostConsumed.MinimumWidth" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="OtherCostConsumed.Width" type="System.Int32, mscorlib">
-    <value>85</value>
   </data>
   <metadata name="bsPayBackTimes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>290, 17</value>
@@ -910,9 +910,6 @@
   <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <metadata name="toolTip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>724, 17</value>
-  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -958,6 +955,24 @@
   <data name="&gt;&gt;bsAddresses.Type" xml:space="preserve">
     <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;bsPayBackTimes.Name" xml:space="preserve">
+    <value>bsPayBackTimes</value>
+  </data>
+  <data name="&gt;&gt;bsPayBackTimes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbCalculate.Name" xml:space="preserve">
+    <value>tsbCalculate</value>
+  </data>
+  <data name="&gt;&gt;tsbCalculate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbClose.Name" xml:space="preserve">
+    <value>tsbClose</value>
+  </data>
+  <data name="&gt;&gt;tsbClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;periodIdDataGridViewTextBoxColumn.Name" xml:space="preserve">
     <value>periodIdDataGridViewTextBoxColumn</value>
   </data>
@@ -974,6 +989,54 @@
     <value>endPeriodDataGridViewTextBoxColumn</value>
   </data>
   <data name="&gt;&gt;endPeriodDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;valueProducedDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>valueProducedDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;valueProducedDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;valueConsumedDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>valueConsumedDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;valueConsumedDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EstimateDirectUsed.Name" xml:space="preserve">
+    <value>EstimateDirectUsed</value>
+  </data>
+  <data name="&gt;&gt;EstimateDirectUsed.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MonetaryValueProduced.Name" xml:space="preserve">
+    <value>MonetaryValueProduced</value>
+  </data>
+  <data name="&gt;&gt;MonetaryValueProduced.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;OtherCostProduced.Name" xml:space="preserve">
+    <value>OtherCostProduced</value>
+  </data>
+  <data name="&gt;&gt;OtherCostProduced.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MonetaryValueConsumed.Name" xml:space="preserve">
+    <value>MonetaryValueConsumed</value>
+  </data>
+  <data name="&gt;&gt;MonetaryValueConsumed.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;OtherCostConsumed.Name" xml:space="preserve">
+    <value>OtherCostConsumed</value>
+  </data>
+  <data name="&gt;&gt;OtherCostConsumed.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MonetaryValueProducedAndConsumed.Name" xml:space="preserve">
+    <value>MonetaryValueProducedAndConsumed</value>
+  </data>
+  <data name="&gt;&gt;MonetaryValueProducedAndConsumed.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ReturnOnInvestment.Name" xml:space="preserve">
@@ -993,78 +1056,6 @@
   </data>
   <data name="&gt;&gt;Return.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;valueProducedDataGridViewTextBoxColumn.Name" xml:space="preserve">
-    <value>valueProducedDataGridViewTextBoxColumn</value>
-  </data>
-  <data name="&gt;&gt;valueProducedDataGridViewTextBoxColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;valueConsumedDataGridViewTextBoxColumn.Name" xml:space="preserve">
-    <value>valueConsumedDataGridViewTextBoxColumn</value>
-  </data>
-  <data name="&gt;&gt;valueConsumedDataGridViewTextBoxColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ValueProducedAndConsumed.Name" xml:space="preserve">
-    <value>ValueProducedAndConsumed</value>
-  </data>
-  <data name="&gt;&gt;ValueProducedAndConsumed.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MonetaryValueProduced.Name" xml:space="preserve">
-    <value>MonetaryValueProduced</value>
-  </data>
-  <data name="&gt;&gt;MonetaryValueProduced.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MonetaryValueConsumed.Name" xml:space="preserve">
-    <value>MonetaryValueConsumed</value>
-  </data>
-  <data name="&gt;&gt;MonetaryValueConsumed.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MonetaryValueProducedAndConsumed.Name" xml:space="preserve">
-    <value>MonetaryValueProducedAndConsumed</value>
-  </data>
-  <data name="&gt;&gt;MonetaryValueProducedAndConsumed.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;OtherCostProduced.Name" xml:space="preserve">
-    <value>OtherCostProduced</value>
-  </data>
-  <data name="&gt;&gt;OtherCostProduced.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;OtherCostConsumed.Name" xml:space="preserve">
-    <value>OtherCostConsumed</value>
-  </data>
-  <data name="&gt;&gt;OtherCostConsumed.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bsPayBackTimes.Name" xml:space="preserve">
-    <value>bsPayBackTimes</value>
-  </data>
-  <data name="&gt;&gt;bsPayBackTimes.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tsbCalculate.Name" xml:space="preserve">
-    <value>tsbCalculate</value>
-  </data>
-  <data name="&gt;&gt;tsbCalculate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tsbClose.Name" xml:space="preserve">
-    <value>tsbClose</value>
-  </data>
-  <data name="&gt;&gt;tsbClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolTip2.Name" xml:space="preserve">
-    <value>toolTip2</value>
-  </data>
-  <data name="&gt;&gt;toolTip2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>frmPayBackTime</value>

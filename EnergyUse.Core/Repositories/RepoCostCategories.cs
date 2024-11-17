@@ -1,4 +1,5 @@
 ﻿using EnergyUse.Core.Context;
+using EnergyUse.Models.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace EnergyUse.Core.Repositories;
@@ -11,19 +12,6 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
     {
         _context = dbContext;
     }
-
-    //@"SELECT costcategory.*, 
-    //                            energysubtype.description, 
-    //                            calculationtype.description CalculationType 
-    //                       FROM costcategory
-    //                  LEFT JOIN energysubtype ON energysubtype.id = costcategory.energysubtypeid
-    //                  LEFT JOIN calculationtype ON calculationtype.id = costcategory.calculationtypeid
-    //                      WHERE costcategory.energyTypeId = $energyTypeId
-    //                        AND costcategory.Id IN (SELECT Distinct CostCategoryId
-    //                                                  FROM rate 
-    //                                                 WHERE rate.energytypeId = $energyTypeId)
-    //                        AND unitid = $unitid
-    //                   ORDER BY sortorder";
 
     public Models.CostCategory? Get(long costCategoryId)
     {
@@ -114,7 +102,7 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
 
     public Models.CostCategory GetDefault(long energyTypeId)
     {
-        Models.CostCategory costCategory = new Models.CostCategory();
+        Models.CostCategory costCategory = new();
         costCategory.Id = 0;
         costCategory.EnergySubType = new Models.EnergySubType();
         costCategory.EnergyType = new Models.EnergyType();
@@ -122,5 +110,128 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
 
         return costCategory;
     }
+
+    #region Mappers
+
+    public List<SettlementData> MapCostCategories(List<PeriodicData> periodicDataList)
+    {
+        List<SettlementData> settlementDatas = new();
+        SettlementData? settlementData = null;
+        decimal lastRate = 0;
+
+        foreach (var periodicData in periodicDataList)
+        {
+            foreach (var otherCost in periodicData.OtherCosts)
+            {
+                var costCategory = Get(otherCost.CostCategoryId);
+                if (costCategory is null)
+                    throw new Exception($"Cost category {otherCost.CostCategoryId} not found");
+
+                if ((costCategory.EnergySubType.Id == 3 || costCategory.EnergySubType.Id == 4) && otherCost.Rate < 0)
+                    otherCost.Rate = Math.Abs(otherCost.Rate);
+
+                settlementData = settlementDatas.LastOrDefault(x => x.CorrectionFactor == periodicData.CorrectionFactor
+                                                     && x.LastAvailableRateUsed == otherCost.LastAvailableRateUsed
+                                                     && x.LastAvailableVatRateUsed == otherCost.LastAvailableVatRateUsed
+                                                     && x.DataPredicted == periodicData.IsPredicted
+                                                     && x.VatTarif == otherCost.VatTarif
+                                                     && x.Rate == otherCost.Rate
+                                                     && x.CostCategory.Id == otherCost.CostCategoryId);
+
+                if (settlementData is null)
+                {
+                    // Look up cost category for extra info
+                    settlementData = new SettlementData
+                    {
+                        Description = costCategory.Name,
+                        CostCategory = costCategory,
+                        CorrectionFactor = periodicData.CorrectionFactor,
+                        LastAvailableRateUsed = otherCost.LastAvailableRateUsed,
+                        LastAvailableVatRateUsed = otherCost.LastAvailableVatRateUsed,
+                        DataPredicted = periodicData.IsPredicted,
+                        VatTarif = otherCost.VatTarif,
+                        Rate = otherCost.Rate,
+                        StartDate = periodicData.ValueXDate,
+                        EndDate = periodicData.ValueXDate
+                    };
+
+                    settlementDatas.Add(settlementData);
+                }
+                else
+                {
+                    settlementData.EndDate = periodicData.ValueXDate;
+                }
+
+                switch (costCategory.EnergySubType.Id)
+                {
+                    case 1:
+                        //Normal
+                        settlementData.ValueBaseConsumed += periodicData.ValueYNormal;
+                        break;
+                    case 2:
+                        //low
+                        settlementData.ValueBaseConsumed += periodicData.ValueYLow;
+                        break;
+                    case 3:
+                        //return normal
+                        settlementData.ValueBaseProduced -= periodicData.ValueYReturnNormal;
+                        break;
+                    case 4:
+                        //return low
+                        settlementData.ValueBaseProduced -= periodicData.ValueYReturnLow;
+                        break;
+                    case 5:
+                        //Other
+
+                        if (costCategory.CalculationType.Id == 1)
+                        {
+                            // CalculationType== 1: Per unit
+                            settlementData.ValueBaseConsumed += (periodicData.ValueYNormal + periodicData.ValueYLow);
+                            settlementData.ValueBaseProduced += 1 - (periodicData.NettingValueYReturnNormal + periodicData.NettingValueYReturnLow);
+                        }
+                        else if (costCategory.CalculationType.Id == 3)
+                        {
+                            // CalculationType== 3: Per day
+                        }
+                        else
+                        {
+                            settlementData.ValueBaseConsumed += 0;
+                            settlementData.ValueBaseProduced += 0;
+                        }
+                        break;
+                    case 6:
+                        //return cost normal
+                        settlementData.ValueBaseProduced += 0 - periodicData.ValueYReturnNormal;
+                        break;
+                    case 7:
+                        //return cost low
+                        settlementData.ValueBaseProduced += 0 - periodicData.ValueYReturnLow;
+                        break;
+                }
+
+                lastRate = otherCost.Rate;
+                settlementData.Value = settlementData.ValueBase * settlementData.Rate;
+                if (costCategory.CanNotBeNegative && settlementData.Value < 0)
+                    settlementData.Value = 0;
+
+                if (costCategory.CalculationType.Id == 3)
+                {
+                    var dayDiff = (settlementData.EndDate - settlementData.StartDate).Days + 1;
+                    dayDiff = (dayDiff == 0) ? 1 : dayDiff;
+
+                    settlementData.ValueBaseConsumed = dayDiff;
+                    settlementData.Value = (settlementData.Rate * dayDiff);
+                }
+
+                settlementData.VatAmount = settlementData.Value * (settlementData.VatTarif / 100);
+            }
+        }
+
+        settlementDatas = settlementDatas.OrderBy(o => o.CostCategory.SortOrder).ToList();
+
+        return settlementDatas;
+    }
+
+    #endregion
 
 }

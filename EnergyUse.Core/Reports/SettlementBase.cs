@@ -12,7 +12,7 @@ public class SettlementBase : ReportBase
     internal readonly string _dbFileName;
     internal static UnitOfWork.Settlement _unitOfWork;
 
-    internal static float[] _pointColumnWidths = { 250F, 115F, 115F, 60F, 75F, 110F, 90F, 110F };
+    internal static float[] _pointColumnWidths = [250F, 115F, 115F, 60F, 75F, 110F, 90F, 110F];
     internal static List<SettlementSubTotal> _settlementSubTotalList = new();
     internal static List<FooterText> _footerTextsList = new();
 
@@ -22,125 +22,6 @@ public class SettlementBase : ReportBase
     {
         _dbFileName = dbFileName;
         _unitOfWork = new UnitOfWork.Settlement(_dbFileName);
-    }
-
-    internal List<SettlementData> mapCostCategories(List<PeriodicData> periodicDataList)
-    {
-        List<SettlementData> settlementDatas = new List<SettlementData>();
-        SettlementData? settlementData = null;
-        decimal lastRate = 0;
-
-        foreach (var periodicData in periodicDataList)
-        {
-            foreach (var otherCost in periodicData.OtherCosts)
-            {
-                var costCategory = _unitOfWork.CostCategoriesRepo.Get(otherCost.CostCategoryId);
-                if (costCategory is null)
-                    throw new Exception($"Cost category {otherCost.CostCategoryId} not found");
-
-                if ((costCategory.EnergySubType.Id == 3 || costCategory.EnergySubType.Id == 4) && otherCost.Rate < 0)
-                    otherCost.Rate = Math.Abs(otherCost.Rate);
-
-                settlementData = settlementDatas.LastOrDefault(x => x.CorrectionFactor == periodicData.CorrectionFactor
-                                                     && x.LastAvailableRateUsed == otherCost.LastAvailableRateUsed
-                                                     && x.LastAvailableVatRateUsed == otherCost.LastAvailableVatRateUsed
-                                                     && x.DataPredicted == periodicData.IsPredicted
-                                                     && x.VatTarif == otherCost.VatTarif
-                                                     && x.Rate == otherCost.Rate
-                                                     && x.CostCategory.Id == otherCost.CostCategoryId);
-
-                if (settlementData is null)
-                {
-                    // Look up cost category for extra info
-                    settlementData = new SettlementData
-                    {
-                        Description = costCategory.Name,
-                        CostCategory = costCategory,
-                        CorrectionFactor = periodicData.CorrectionFactor,
-                        LastAvailableRateUsed = otherCost.LastAvailableRateUsed,
-                        LastAvailableVatRateUsed = otherCost.LastAvailableVatRateUsed,
-                        DataPredicted = periodicData.IsPredicted,
-                        VatTarif = otherCost.VatTarif,
-                        Rate = otherCost.Rate,
-                        StartDate = periodicData.ValueXDate,
-                        EndDate = periodicData.ValueXDate
-                    };
-
-                    settlementDatas.Add(settlementData);
-                }
-                else
-                {
-                    settlementData.EndDate = periodicData.ValueXDate;
-                }
-
-                switch (costCategory.EnergySubType.Id)
-                {
-                    case 1:
-                        //Normal
-                        settlementData.ValueBaseConsumed += periodicData.ValueYNormal;
-                        break;
-                    case 2:
-                        //low
-                        settlementData.ValueBaseConsumed += periodicData.ValueYLow;
-                        break;
-                    case 3:
-                        //return normal
-                        settlementData.ValueBaseConsumed -= periodicData.ValueYReturnNormal;
-                        break;
-                    case 4:
-                        //return low
-                        settlementData.ValueBaseConsumed -= periodicData.ValueYReturnLow;
-                        break;
-                    case 5:
-                        //Other
-
-                        if (costCategory.CalculationType.Id == 1)
-                        {
-                            // CalculationType== 1: Per unit
-                            settlementData.ValueBaseConsumed += (periodicData.ValueYNormal + periodicData.ValueYLow);
-                            settlementData.ValueBaseProduced += 1 - (periodicData.NettingValueYReturnNormal + periodicData.NettingValueYReturnLow);
-                        }
-                        else if (costCategory.CalculationType.Id == 3)
-                        {
-                            // CalculationType== 3: Per day
-                        }
-                        else
-                        {
-                            settlementData.ValueBaseConsumed += 0;
-                            settlementData.ValueBaseProduced += 0;
-                        }
-                        break;
-                    case 6:
-                        //return cost normal
-                        settlementData.ValueBaseConsumed += 0 - periodicData.ValueYReturnNormal;
-                        break;
-                    case 7:
-                        //return cost low
-                        settlementData.ValueBaseConsumed += 0 - periodicData.ValueYReturnLow;
-                        break;
-                }
-
-                lastRate = otherCost.Rate;
-                settlementData.Value = settlementData.ValueBase * settlementData.Rate;
-                if (costCategory.CanNotBeNegative && settlementData.Value < 0)
-                    settlementData.Value = 0;
-
-                if (costCategory.CalculationType.Id == 3)
-                {
-                    var dayDiff = (settlementData.EndDate - settlementData.StartDate).Days + 1;
-                    dayDiff = (dayDiff == 0) ? 1 : dayDiff;
-
-                    settlementData.ValueBaseConsumed = dayDiff;
-                    settlementData.Value = (settlementData.Rate * dayDiff);
-                }
-
-                settlementData.VatAmount = settlementData.Value * (settlementData.VatTarif / 100);
-            }
-        }
-
-        settlementDatas = settlementDatas.OrderBy(o => o.CostCategory.SortOrder).ToList();
-
-        return settlementDatas;
     }
 
     internal List<SettlementData> mergeSettlementData(List<SettlementData> settlementDataList)

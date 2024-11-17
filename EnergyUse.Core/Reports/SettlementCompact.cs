@@ -55,7 +55,7 @@ public class SettlementCompact : SettlementBase
             parameterPeriod.QuantityReduction = 1;
 
             List<PeriodicData> periodicData = LibPeriodicDate.GetRange(parameterPeriod);
-            List<SettlementData> settlementDataList = mapCostCategories(periodicData);
+            List<SettlementData> settlementDataList = _unitOfWork.CostCategoriesRepo.MapCostCategories(periodicData);
             if (parameterSelection.ShowRates == false)
                 settlementDataList = mergeSettlementData(settlementDataList);
 

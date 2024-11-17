@@ -214,79 +214,25 @@ public partial class frmPayBackTime : Form
         toolStripStatusLabel1.Visible = true;
         toolStripStatusLabel1.Text = "";
         var message = Managers.Languages.GetResourceString("Progress", "Progress");
-        var libPeriodicDate = new EnergyUse.Core.Manager.LibPeriodicDate(Managers.Config.GetDbFileName());
+        
 
         for (int i = 1; i <= nudMaxYears.Value; i++)
         {
             toolStripStatusLabel1.Text = $"{message} {i}/{nudMaxYears.Value}";
             int dProgress = (int)(i / nudMaxYears.Value * 100);
             toolStripProgressBar1.Value = dProgress;
-            decimal quantityReduction = 0;
-
             Application.DoEvents();
 
-            PayBackTime payBackTime = new();
-            payBackTime.PeriodId = i;
-            payBackTime.StartPeriod = lastPeriodStart;
-            payBackTime.EndPeriod = lastPeriodStart.AddYears(1);
+            PayBackTime payBackTime = _controller.CalculatePayBackPeriod(i, lastPeriodStart, lastPeriodStart.AddYears(1), address, energyType, initialInvestment, decimal.Parse(txtQualityReductionSolarPanels.Text), decimal.Parse(txtTotalCapacitySolarPanels.Text));
 
-            settlementDataList = new List<SettlementData>();
-            List<PeriodicData> periodicData = new();
-
-            long tarifGroupId = address.TariffGroup.Id;
-
-            if (payBackTime.StartPeriod >= DateTime.Now)
-                quantityReduction = LibGeneral.GetQuantityReduction(decimal.Parse(txtQualityReductionSolarPanels.Text), i);
-
-            var totalCapacity = decimal.Parse(txtTotalCapacitySolarPanels.Text);
-            if (quantityReduction != 0)
-                totalCapacity = totalCapacity * (quantityReduction / 100);
-
-            ParameterPeriod parameterPeriod = new ParameterPeriod();
-            parameterPeriod.EnergyType = energyType;
-            parameterPeriod.AddressId = address.Id;
-            parameterPeriod.StartRange = payBackTime.StartPeriod;
-            parameterPeriod.EndRange = payBackTime.EndPeriod;
-            parameterPeriod.ShowType = EnergyUse.Common.Enums.ShowType.Value;
-            parameterPeriod.PeriodType = EnergyUse.Common.Enums.Period.SettlementDay;
-            parameterPeriod.PredictMissingData = true;
-            parameterPeriod.TarifGroupId = tarifGroupId;
-            parameterPeriod.QuantityReduction = quantityReduction / 100;
-
-            periodicData = libPeriodicDate.GetRange(parameterPeriod);
-            payBackTime.ValueConsumed = Math.Round(periodicData.Sum(s => s.ValueYNormal + s.ValueYLow), 2);
-            payBackTime.ValueProduced = Math.Round(periodicData.Sum(s => s.ValueYReturnNormal + s.ValueYReturnLow), 2);
-
-            payBackTime.ValueProducedAndConsumed = Math.Round(totalCapacity - payBackTime.ValueProduced, 2);
-            payBackTime.MonetaryValueProducedAndConsumed = Math.Round(payBackTime.ValueProducedAndConsumed * getPricePerUnitPerYear(startYear + i, address.TariffGroup.Id), 2);
-
-            payBackTime.MonetaryValueConsumed = Math.Round(periodicData.Sum(s => (s.ValueYNormal * s.RateNormal) + (s.ValueYLow * s.RateLow)), 2);
-            payBackTime.MonetaryValueProduced = Math.Round(periodicData.Sum(s => (s.ValueYReturnNormal * s.RateReturnNormal) + (s.ValueYReturnLow * s.RateReturnLow)), 2);
-
-            // Voor alle cost category met te betalen waarden
-            List<EnergyUse.Models.CostCategory> costCategories = _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeAndUntit(energyType.Id, "kWh").ToList();
-            costCategories = costCategories.Where(x => x.EnergySubType.Id == 5 || x.EnergySubType.Id == 6 || x.EnergySubType.Id == 7).ToList();
-            foreach (EnergyUse.Models.CostCategory costCategory in costCategories)
-            {
-                tarifGroupId = (long)((costCategory.TariffGroup == null || costCategory.TariffGroup.Id <= 0) ? address.TariffGroup.Id : costCategory.TariffGroup.Id);
-                var libSettlementData = new EnergyUse.Core.Manager.LibSettlementData(Managers.Config.GetDbFileName());
-                settlementDataList.AddRange(libSettlementData.GetSettlementCost(energyType.Id, periodicData, costCategory, tarifGroupId));
-            }
-
-            payBackTime.OtherCostConsumed = Math.Round(settlementDataList.Sum(s => (s.ValueBaseConsumed * s.Rate)), 2);
-            payBackTime.OtherCostProduced = Math.Round(settlementDataList.Sum(s => (s.ValueBaseProduced * s.Rate)), 2);
-
-            payBackTime.ReturnOnInvestment = Math.Abs(payBackTime.MonetaryValueProduced) + Math.Abs(payBackTime.OtherCostProduced) + Math.Abs(payBackTime.MonetaryValueProducedAndConsumed);
+            lastPeriodStart = payBackTime.StartPeriod;
             payBackTime.ReturnOnInvestmentTotal = lastRoi + payBackTime.ReturnOnInvestment;
-
-            payBackTime.Return = Math.Round((payBackTime.ReturnOnInvestment / initialInvestment) * 100, 2);
 
             _payBackTimeList.Add(payBackTime);
             lastPeriodStart = payBackTime.EndPeriod.AddDays(1);
             lastRoi = payBackTime.ReturnOnInvestmentTotal;
 
             //Clear data lists
-            periodicData.Clear();
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
@@ -327,11 +273,12 @@ public partial class frmPayBackTime : Form
         }
 
         EnergyUse.Models.Address address = (EnergyUse.Models.Address)cmbAddress.SelectedItem;
+        EnergyUse.Models.EnergyType energyType = (EnergyUse.Models.EnergyType)cboEnergyType.SelectedItem;
 
         int startYear = dtpPurchaseDate.Value.Year;
         for (int i = startYear; i <= nudMaxYears.Value; i++)
         {
-            var pricePerUnit = getPricePerUnitPerYear(i, address.TariffGroup.Id);
+            var pricePerUnit =  _controller.GetPricePerUnitPerYear(i, address.TariffGroup.Id, address, energyType);
             if (pricePerUnit < 0)
             {
                 var message = Managers.Languages.GetResourceString("PayBackTimeNoPricePerUnit", "There is no price unit for year %s");
@@ -347,27 +294,6 @@ public partial class frmPayBackTime : Form
     private decimal getInitialInvestement()
     {
         return decimal.Parse(txtPurchaseAmount.Text) - decimal.Parse(txtSubsidyAmount.Text);
-    }
-
-    private decimal getPricePerUnitPerYear(int year, long tarifGroupId)
-    {
-        decimal price = 0;
-        EnergyUse.Models.Address address = (EnergyUse.Models.Address)cmbAddress.SelectedItem;
-        EnergyUse.Models.EnergyType energyType = (EnergyUse.Models.EnergyType)cboEnergyType.SelectedItem;
-
-        if (year <= DateTime.Now.Year)
-        {
-            var calculatedUnitPrice = _controller.UnitOfWork.CalculatedUnitPriceRepo.GetByYear(year, energyType.Id, (long)address.TariffGroupId);
-            if (calculatedUnitPrice != null)
-                price = calculatedUnitPrice.Price;
-        }
-
-        if (price == 0)
-        {
-            price = _controller.UnitOfWork.CalculatedUnitPriceRepo.GetByAverage(energyType.Id, (long)address.TariffGroupId);
-        }
-
-        return price;
     }
 
     private void setFormSettings()
