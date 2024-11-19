@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using EnergyUse.Common.Extensions;
-using EnergyUse.Common.Libs;
 using EnergyUse.Core.Controllers;
 using EnergyUse.Models.Common;
 
@@ -209,7 +208,7 @@ public partial class frmPayBackTime : Form
         DateTime lastPeriodStart = dtpPurchaseDate.Value;
         int startYear = dtpPurchaseDate.Value.Year - 1;
         decimal initialInvestment = getInitialInvestement();
-        decimal lastRoi = 1 - Math.Abs(initialInvestment); //Initial value
+        decimal lastRoi = 0 - Math.Abs(initialInvestment);
         toolStripProgressBar1.Visible = true;
         toolStripStatusLabel1.Visible = true;
         toolStripStatusLabel1.Text = "";
@@ -223,7 +222,20 @@ public partial class frmPayBackTime : Form
             toolStripProgressBar1.Value = dProgress;
             Application.DoEvents();
 
-            PayBackTime payBackTime = _controller.CalculatePayBackPeriod(i, lastPeriodStart, lastPeriodStart.AddYears(1), address, energyType, initialInvestment, decimal.Parse(txtQualityReductionSolarPanels.Text), decimal.Parse(txtTotalCapacitySolarPanels.Text));
+            ParameterCalcPeriod parameterCalcPeriod
+                = new ParameterCalcPeriod()
+                {
+                    PeriodId = i,
+                    PeriodStart = lastPeriodStart,
+                    Address = address,
+                    EnergyType = energyType,
+                    InitialInvestment = initialInvestment,
+                    QualityReductionSolarPanels = decimal.Parse(txtQualityReductionSolarPanels.Text),
+                    TotalCapacitySolarPanels = decimal.Parse(txtTotalCapacitySolarPanels.Text),
+                    AverageReturn = decimal.Parse(txtAverageReturn.Text)
+                };
+
+            PayBackTime payBackTime = _controller.CalculatePayBackPeriod(parameterCalcPeriod);
 
             lastPeriodStart = payBackTime.StartPeriod;
             payBackTime.ReturnOnInvestmentTotal = lastRoi + payBackTime.ReturnOnInvestment;
@@ -278,7 +290,7 @@ public partial class frmPayBackTime : Form
         int startYear = dtpPurchaseDate.Value.Year;
         for (int i = startYear; i <= nudMaxYears.Value; i++)
         {
-            var pricePerUnit =  _controller.GetPricePerUnitPerYear(i, address.TariffGroup.Id, address, energyType);
+            var pricePerUnit =  _controller.GetPricePerUnitPerYear(i, address, energyType);
             if (pricePerUnit < 0)
             {
                 var message = Managers.Languages.GetResourceString("PayBackTimeNoPricePerUnit", "There is no price unit for year %s");

@@ -44,32 +44,33 @@ public class PayBackTimeController : IController
 
     #endregion
 
-    public PayBackTime CalculatePayBackPeriod(int periodId, DateTime lastPeriodStart, DateTime startYear, Address address, EnergyType energyType, decimal initialInvestment, decimal quantityReductionPerc, decimal totalCapacity)
+    public PayBackTime CalculatePayBackPeriod(ParameterCalcPeriod parameterCalcPeriod)
     {
         decimal quantityReduction = 0;
+        decimal totalCapacity = parameterCalcPeriod.TotalCapacitySolarPanels;
 
         PayBackTime payBackTime = new();
-        payBackTime.PeriodId = periodId;
-        payBackTime.StartPeriod = lastPeriodStart;
-        payBackTime.EndPeriod = lastPeriodStart.AddYears(1);
+        payBackTime.PeriodId = parameterCalcPeriod.PeriodId;
+        payBackTime.StartPeriod = parameterCalcPeriod.PeriodStart;
+        payBackTime.EndPeriod = parameterCalcPeriod.PeriodStart.AddYears(1);
 
         var settlementDataList = new List<SettlementData>();
         List<PeriodicData> periodicData = new();
 
-        if (address.TariffGroup != null)
+        if (parameterCalcPeriod.Address.TariffGroup != null)
         {
-            long tarifGroupId = address.TariffGroup.Id;
+            long tarifGroupId = parameterCalcPeriod.Address.TariffGroup.Id;
 
             if (payBackTime.StartPeriod >= DateTime.Now)
-                quantityReduction = Common.Libs.LibGeneral.GetQuantityReduction(quantityReductionPerc, periodId);
+                quantityReduction = Common.Libs.LibGeneral.GetQuantityReduction(parameterCalcPeriod.QualityReductionSolarPanels, parameterCalcPeriod.PeriodId);
 
             if (quantityReduction != 0)
                 totalCapacity = totalCapacity * (quantityReduction / 100);
 
             ParameterPeriod parameterPeriod = new()
             {
-                EnergyType = energyType,
-                AddressId = address.Id,
+                EnergyType = parameterCalcPeriod.EnergyType,
+                AddressId = parameterCalcPeriod.Address.Id,
                 StartRange = payBackTime.StartPeriod,
                 EndRange = payBackTime.EndPeriod,
                 ShowType = EnergyUse.Common.Enums.ShowType.Value,
@@ -90,7 +91,8 @@ public class PayBackTimeController : IController
                 payBackTime.ValueProduced = Math.Abs(Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 3 || w.CostCategory.EnergySubTypeId == 4).Sum(s => s.ValueBaseProduced), 2));
 
                 // Kolom3: Geschatte direct verbruik in kw
-                payBackTime.EstimateDirectUsed = Math.Round(totalCapacity - payBackTime.ValueProduced, 2);
+                payBackTime.EstimateDirectUsed = Math.Round((totalCapacity * (parameterCalcPeriod.AverageReturn / 100)) - payBackTime.ValueProduced, 2);
+                payBackTime.ValueProducedEstimateDirectUsed = Math.Round(payBackTime.EstimateDirectUsed * GetPricePerUnitPerYear(parameterCalcPeriod.PeriodStart.Year + parameterCalcPeriod.PeriodId, parameterCalcPeriod.Address, parameterCalcPeriod.EnergyType),2);
 
                 // Kolom4: Verbruikte energie in Euro                
                 payBackTime.MonetaryValueConsumed = Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 1 || w.CostCategory.EnergySubTypeId == 2).Sum(s => s.Value), 2);
@@ -102,19 +104,19 @@ public class PayBackTimeController : IController
                 payBackTime.OtherCostProduced = Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 6 || w.CostCategory.EnergySubTypeId == 7).Sum(s => s.Value), 2);
 
                 // Kolom7: Total kosten in euro
-                payBackTime.MonetaryValueProducedAndConsumed = payBackTime.MonetaryValueConsumed + payBackTime.MonetaryValueProduced + payBackTime.OtherCostConsumed + +payBackTime.OtherCostProduced;
+                payBackTime.MonetaryValueProducedAndConsumed = payBackTime.MonetaryValueConsumed + payBackTime.MonetaryValueProduced + payBackTime.OtherCostConsumed + payBackTime.OtherCostProduced;
 
                 // Kolom8: ROI
-                payBackTime.ReturnOnInvestment = Math.Abs(payBackTime.MonetaryValueProduced) + Math.Abs(payBackTime.OtherCostProduced) + Math.Abs(payBackTime.MonetaryValueProducedAndConsumed);
+                payBackTime.ReturnOnInvestment = Math.Abs(payBackTime.MonetaryValueProduced) + Math.Abs(payBackTime.OtherCostProduced) + Math.Abs(payBackTime.ValueProducedEstimateDirectUsed);
 
-                payBackTime.Return = Math.Round((payBackTime.ReturnOnInvestment / initialInvestment) * 100, 2);
+                payBackTime.Return = Math.Round((payBackTime.ReturnOnInvestment / parameterCalcPeriod.InitialInvestment) * 100, 2);
             }
         }
 
         return payBackTime;
     }
 
-    public decimal GetPricePerUnitPerYear(int year, long tarifGroupId, EnergyUse.Models.Address address, EnergyUse.Models.EnergyType energyType)
+    public decimal GetPricePerUnitPerYear(int year, EnergyUse.Models.Address address, EnergyUse.Models.EnergyType energyType)
     {
         decimal price = 0;
         if (year <= DateTime.Now.Year)

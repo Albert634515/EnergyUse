@@ -70,6 +70,9 @@
             toolStrip1 = new ToolStrip();
             tsbCalculate = new ToolStripButton();
             tsbClose = new ToolStripButton();
+            label2 = new Label();
+            txtAverageReturn = new TextBox();
+            label4 = new Label();
             periodIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             startPeriodDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             endPeriodDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -77,8 +80,9 @@
             valueConsumedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             EstimateDirectUsed = new DataGridViewTextBoxColumn();
             MonetaryValueProduced = new DataGridViewTextBoxColumn();
-            OtherCostProduced = new DataGridViewTextBoxColumn();
+            ValueProducedEstimateDirectUsed = new DataGridViewTextBoxColumn();
             MonetaryValueConsumed = new DataGridViewTextBoxColumn();
+            OtherCostProduced = new DataGridViewTextBoxColumn();
             OtherCostConsumed = new DataGridViewTextBoxColumn();
             MonetaryValueProducedAndConsumed = new DataGridViewTextBoxColumn();
             ReturnOnInvestment = new DataGridViewTextBoxColumn();
@@ -233,7 +237,7 @@
             dgPayBackTime.AllowUserToDeleteRows = false;
             resources.ApplyResources(dgPayBackTime, "dgPayBackTime");
             dgPayBackTime.AutoGenerateColumns = false;
-            dgPayBackTime.Columns.AddRange(new DataGridViewColumn[] { periodIdDataGridViewTextBoxColumn, startPeriodDataGridViewTextBoxColumn, endPeriodDataGridViewTextBoxColumn, valueProducedDataGridViewTextBoxColumn, valueConsumedDataGridViewTextBoxColumn, EstimateDirectUsed, MonetaryValueProduced, OtherCostProduced, MonetaryValueConsumed, OtherCostConsumed, MonetaryValueProducedAndConsumed, ReturnOnInvestment, ReturnOnInvestmentTotal, Return });
+            dgPayBackTime.Columns.AddRange(new DataGridViewColumn[] { periodIdDataGridViewTextBoxColumn, startPeriodDataGridViewTextBoxColumn, endPeriodDataGridViewTextBoxColumn, valueProducedDataGridViewTextBoxColumn, valueConsumedDataGridViewTextBoxColumn, EstimateDirectUsed, MonetaryValueProduced, ValueProducedEstimateDirectUsed, MonetaryValueConsumed, OtherCostProduced, OtherCostConsumed, MonetaryValueProducedAndConsumed, ReturnOnInvestment, ReturnOnInvestmentTotal, Return });
             dgPayBackTime.DataSource = bsPayBackTimes;
             dgPayBackTime.Name = "dgPayBackTime";
             dgPayBackTime.ReadOnly = true;
@@ -265,6 +269,22 @@
             resources.ApplyResources(tsbClose, "tsbClose");
             tsbClose.Name = "tsbClose";
             tsbClose.Click += tsbClose_Click;
+            // 
+            // label2
+            // 
+            resources.ApplyResources(label2, "label2");
+            label2.Name = "label2";
+            // 
+            // txtAverageReturn
+            // 
+            resources.ApplyResources(txtAverageReturn, "txtAverageReturn");
+            txtAverageReturn.Name = "txtAverageReturn";
+            txtAverageReturn.Tag = "QualityReductionSolarPanels";
+            // 
+            // label4
+            // 
+            resources.ApplyResources(label4, "label4");
+            label4.Name = "label4";
             // 
             // periodIdDataGridViewTextBoxColumn
             // 
@@ -328,25 +348,32 @@
             MonetaryValueProduced.Name = "MonetaryValueProduced";
             MonetaryValueProduced.ReadOnly = true;
             // 
-            // OtherCostProduced
+            // ValueProducedEstimateDirectUsed
             // 
-            OtherCostProduced.DataPropertyName = "OtherCostProduced";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.Format = "N2";
-            OtherCostProduced.DefaultCellStyle = dataGridViewCellStyle5;
-            resources.ApplyResources(OtherCostProduced, "OtherCostProduced");
-            OtherCostProduced.Name = "OtherCostProduced";
-            OtherCostProduced.ReadOnly = true;
+            ValueProducedEstimateDirectUsed.DataPropertyName = "ValueProducedEstimateDirectUsed";
+            resources.ApplyResources(ValueProducedEstimateDirectUsed, "ValueProducedEstimateDirectUsed");
+            ValueProducedEstimateDirectUsed.Name = "ValueProducedEstimateDirectUsed";
+            ValueProducedEstimateDirectUsed.ReadOnly = true;
             // 
             // MonetaryValueConsumed
             // 
             MonetaryValueConsumed.DataPropertyName = "MonetaryValueConsumed";
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Format = "N2";
-            MonetaryValueConsumed.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "N2";
+            MonetaryValueConsumed.DefaultCellStyle = dataGridViewCellStyle5;
             resources.ApplyResources(MonetaryValueConsumed, "MonetaryValueConsumed");
             MonetaryValueConsumed.Name = "MonetaryValueConsumed";
             MonetaryValueConsumed.ReadOnly = true;
+            // 
+            // OtherCostProduced
+            // 
+            OtherCostProduced.DataPropertyName = "OtherCostProduced";
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "N2";
+            OtherCostProduced.DefaultCellStyle = dataGridViewCellStyle6;
+            resources.ApplyResources(OtherCostProduced, "OtherCostProduced");
+            OtherCostProduced.Name = "OtherCostProduced";
+            OtherCostProduced.ReadOnly = true;
             // 
             // OtherCostConsumed
             // 
@@ -402,6 +429,9 @@
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(label2);
+            Controls.Add(txtAverageReturn);
+            Controls.Add(label4);
             Controls.Add(toolStrip1);
             Controls.Add(dgPayBackTime);
             Controls.Add(label6);
@@ -471,6 +501,9 @@
         private ToolStripButton tsbClose;
         private ToolStripProgressBar toolStripProgressBar1;
         private ToolStripStatusLabel toolStripStatusLabel1;
+        private Label label2;
+        private TextBox txtAverageReturn;
+        private Label label4;
         private DataGridViewTextBoxColumn periodIdDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn startPeriodDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn endPeriodDataGridViewTextBoxColumn;
@@ -478,8 +511,9 @@
         private DataGridViewTextBoxColumn valueConsumedDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn EstimateDirectUsed;
         private DataGridViewTextBoxColumn MonetaryValueProduced;
-        private DataGridViewTextBoxColumn OtherCostProduced;
+        private DataGridViewTextBoxColumn ValueProducedEstimateDirectUsed;
         private DataGridViewTextBoxColumn MonetaryValueConsumed;
+        private DataGridViewTextBoxColumn OtherCostProduced;
         private DataGridViewTextBoxColumn OtherCostConsumed;
         private DataGridViewTextBoxColumn MonetaryValueProducedAndConsumed;
         private DataGridViewTextBoxColumn ReturnOnInvestment;
