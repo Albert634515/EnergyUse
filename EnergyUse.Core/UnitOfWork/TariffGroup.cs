@@ -40,10 +40,11 @@ public class TariffGroup : IUnitOfWork
         TariffGroups.Remove(entity);
     }
 
-    public Models.TariffGroup AddDefaultEntity(string defaultDescription)
+    public Models.TariffGroup SetDefaultEntity(string defaultDescription)
     {
         var entity = new Models.TariffGroup();
         entity.Description = defaultDescription;
+        entity.TypeId = 2;
 
         TariffGroupRepo.Add(entity);
         TariffGroups.Add(entity);

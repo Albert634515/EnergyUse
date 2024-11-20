@@ -101,12 +101,14 @@ public class LibBaseData
 
         var tariffGroup = new Models.TariffGroup();
         tariffGroup.Id = 1;
-        tariffGroup.Description = "Default";
+        tariffGroup.Description = "General Tax";
+        tariffGroup.TypeId = 1;
         tariffGroups.Add(tariffGroup);
 
         tariffGroup = new Models.TariffGroup();
         tariffGroup.Id = 2;
-        tariffGroup.Description = "General";
+        tariffGroup.Description = "Default energy";
+        tariffGroup.TypeId = 2;
         tariffGroups.Add(tariffGroup);
 
         return tariffGroups;

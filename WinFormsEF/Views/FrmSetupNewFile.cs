@@ -289,10 +289,10 @@ public partial class FrmSetupNewFile : Form
         setDefaultDataDirectory();
         setDefaultDataFile();
         setAddressSettingsTags();
-        addDefaultEnergyTypes();
+        setDefaultEnergyTypes();
     }
 
-    private void addDefaultEnergyTypes(bool hasNormalAndLow = true, bool hasEnergyReturn = false)
+    private void setDefaultEnergyTypes(bool hasNormalAndLow = true, bool hasEnergyReturn = false)
     {
         Point location = new Point(5, 20);
 
@@ -365,8 +365,8 @@ public partial class FrmSetupNewFile : Form
         var energyTypeElectricity = _controller.UnitOfWork.EnergyTypeRepo.SelectByName("Electricity");
         var energySubType = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Normal");
         var energySubTypeOther = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Other");
-        var tarifGroupDefault = _controller.UnitOfWork.TarifGroupRepo.SelectByDescription("Default");
-        var tarifGroupGeneral = _controller.UnitOfWork.TarifGroupRepo.SelectByDescription("General");
+        var tarifGroupDefault = _controller.UnitOfWork.TarifGroupRepo.SelectByDescription("Default energy");
+        var tarifGroupGeneral = _controller.UnitOfWork.TarifGroupRepo.SelectByDescription("General Tax");
 
         CostCategory costCategory;
         if (energyTypeElectricity != null)

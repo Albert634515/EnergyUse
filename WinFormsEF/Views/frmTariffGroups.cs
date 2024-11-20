@@ -94,7 +94,7 @@ public partial class frmTariffGroups : Form
 
     private void addTarifGroup()
     {
-        var entity = _controller.UnitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("TarifGroupNewGroup", "New group"));
+        var entity = _controller.UnitOfWork.SetDefaultEntity(Managers.Languages.GetResourceString("TarifGroupNewGroup", "New group"));
 
         BsTarifGroups.DataSource = _controller.UnitOfWork.TariffGroups;
         BsTarifGroups.ResetBindings(false);
