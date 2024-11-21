@@ -1,5 +1,6 @@
 ﻿using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Manager;
+using EnergyUse.Core.UnitOfWork;
 using EnergyUse.Models;
 using EnergyUse.Models.Common;
 
@@ -44,12 +45,12 @@ public class PayBackTimeController : IController
 
     #endregion
 
-    public PayBackTime CalculatePayBackPeriod(ParameterCalcPeriod parameterCalcPeriod)
+    public Models.Common.PayBackTime CalculatePayBackPeriod(ParameterCalcPeriod parameterCalcPeriod)
     {
         decimal quantityReduction = 0;
         decimal totalCapacity = parameterCalcPeriod.TotalCapacitySolarPanels;
 
-        PayBackTime payBackTime = new();
+        Models.Common.PayBackTime payBackTime = new();
         payBackTime.PeriodId = parameterCalcPeriod.PeriodId;
         payBackTime.StartPeriod = parameterCalcPeriod.PeriodStart;
         payBackTime.EndPeriod = parameterCalcPeriod.PeriodStart.AddYears(1);
@@ -85,28 +86,29 @@ public class PayBackTimeController : IController
             var costCategories = UnitOfWork?.CostCategoryRepo.MapCostCategories(periodicData);
             if (costCategories != null)
             {
-                // Kolom1: verbruikte energie in kw
+                // Kolom: verbruikte energie in kw
                 payBackTime.ValueConsumed = Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 1 || w.CostCategory.EnergySubTypeId == 2).Sum(s => s.ValueBaseConsumed), 2);
-                // Kolom2: Opgewekte energie in kw
+                // Kolom: Opgewekte energie in kw
                 payBackTime.ValueProduced = Math.Abs(Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 3 || w.CostCategory.EnergySubTypeId == 4).Sum(s => s.ValueBaseProduced), 2));
 
-                // Kolom3: Geschatte direct verbruik in kw
+                // Kolom: Geschatte direct verbruik in kw
                 payBackTime.EstimateDirectUsed = Math.Round((totalCapacity * (parameterCalcPeriod.AverageReturn / 100)) - payBackTime.ValueProduced, 2);
                 payBackTime.ValueProducedEstimateDirectUsed = Math.Round(payBackTime.EstimateDirectUsed * GetPricePerUnitPerYear(parameterCalcPeriod.PeriodStart.Year + parameterCalcPeriod.PeriodId, parameterCalcPeriod.Address, parameterCalcPeriod.EnergyType),2);
 
-                // Kolom4: Verbruikte energie in Euro                
+                // Kolom: Verbruikte energie in Euro                
                 payBackTime.MonetaryValueConsumed = Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 1 || w.CostCategory.EnergySubTypeId == 2).Sum(s => s.Value), 2);
-                // Kolom5: Overige (vast) kosten in euro
+                // Kolom: Overige (vast) kosten in euro
                 payBackTime.OtherCostConsumed = Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 5).Sum(s => s.Value), 2);
 
-                // Kolom6: Opgewekte energie in Euro (inc kosten)
+                // Kolom: Opgewekte energie in Euro (inc kosten)
                 payBackTime.MonetaryValueProduced = Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 3 || w.CostCategory.EnergySubTypeId == 4).Sum(s => s.Value), 2);
                 payBackTime.OtherCostProduced = Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 6 || w.CostCategory.EnergySubTypeId == 7).Sum(s => s.Value), 2);
+                payBackTime.NettoProduced = payBackTime.MonetaryValueProduced + payBackTime.OtherCostProduced;
 
-                // Kolom7: Total kosten in euro
-                payBackTime.MonetaryValueProducedAndConsumed = payBackTime.MonetaryValueConsumed + payBackTime.MonetaryValueProduced + payBackTime.OtherCostConsumed + payBackTime.OtherCostProduced;
+                // Kolom: Total kosten in euro
+                payBackTime.TotalCost = payBackTime.MonetaryValueConsumed + payBackTime.MonetaryValueProduced + payBackTime.OtherCostConsumed + payBackTime.OtherCostProduced;
 
-                // Kolom8: ROI
+                // Kolom: ROI
                 payBackTime.ReturnOnInvestment = Math.Abs(payBackTime.MonetaryValueProduced) + Math.Abs(payBackTime.OtherCostProduced) + Math.Abs(payBackTime.ValueProducedEstimateDirectUsed);
 
                 payBackTime.Return = Math.Round((payBackTime.ReturnOnInvestment / parameterCalcPeriod.InitialInvestment) * 100, 2);

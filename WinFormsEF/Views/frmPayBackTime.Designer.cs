@@ -82,9 +82,10 @@
             MonetaryValueProduced = new DataGridViewTextBoxColumn();
             ValueProducedEstimateDirectUsed = new DataGridViewTextBoxColumn();
             MonetaryValueConsumed = new DataGridViewTextBoxColumn();
+            NettoProduced = new DataGridViewTextBoxColumn();
             OtherCostProduced = new DataGridViewTextBoxColumn();
             OtherCostConsumed = new DataGridViewTextBoxColumn();
-            MonetaryValueProducedAndConsumed = new DataGridViewTextBoxColumn();
+            TotalCost = new DataGridViewTextBoxColumn();
             ReturnOnInvestment = new DataGridViewTextBoxColumn();
             ReturnOnInvestmentTotal = new DataGridViewTextBoxColumn();
             Return = new DataGridViewTextBoxColumn();
@@ -237,7 +238,7 @@
             dgPayBackTime.AllowUserToDeleteRows = false;
             resources.ApplyResources(dgPayBackTime, "dgPayBackTime");
             dgPayBackTime.AutoGenerateColumns = false;
-            dgPayBackTime.Columns.AddRange(new DataGridViewColumn[] { periodIdDataGridViewTextBoxColumn, startPeriodDataGridViewTextBoxColumn, endPeriodDataGridViewTextBoxColumn, valueProducedDataGridViewTextBoxColumn, valueConsumedDataGridViewTextBoxColumn, EstimateDirectUsed, MonetaryValueProduced, ValueProducedEstimateDirectUsed, MonetaryValueConsumed, OtherCostProduced, OtherCostConsumed, MonetaryValueProducedAndConsumed, ReturnOnInvestment, ReturnOnInvestmentTotal, Return });
+            dgPayBackTime.Columns.AddRange(new DataGridViewColumn[] { periodIdDataGridViewTextBoxColumn, startPeriodDataGridViewTextBoxColumn, endPeriodDataGridViewTextBoxColumn, valueProducedDataGridViewTextBoxColumn, valueConsumedDataGridViewTextBoxColumn, EstimateDirectUsed, MonetaryValueProduced, ValueProducedEstimateDirectUsed, MonetaryValueConsumed, NettoProduced, OtherCostProduced, OtherCostConsumed, TotalCost, ReturnOnInvestment, ReturnOnInvestmentTotal, Return });
             dgPayBackTime.DataSource = bsPayBackTimes;
             dgPayBackTime.Name = "dgPayBackTime";
             dgPayBackTime.ReadOnly = true;
@@ -365,6 +366,13 @@
             MonetaryValueConsumed.Name = "MonetaryValueConsumed";
             MonetaryValueConsumed.ReadOnly = true;
             // 
+            // NettoProduced
+            // 
+            NettoProduced.DataPropertyName = "NettoProduced";
+            resources.ApplyResources(NettoProduced, "NettoProduced");
+            NettoProduced.Name = "NettoProduced";
+            NettoProduced.ReadOnly = true;
+            // 
             // OtherCostProduced
             // 
             OtherCostProduced.DataPropertyName = "OtherCostProduced";
@@ -385,15 +393,15 @@
             OtherCostConsumed.Name = "OtherCostConsumed";
             OtherCostConsumed.ReadOnly = true;
             // 
-            // MonetaryValueProducedAndConsumed
+            // TotalCost
             // 
-            MonetaryValueProducedAndConsumed.DataPropertyName = "MonetaryValueProducedAndConsumed";
+            TotalCost.DataPropertyName = "TotalCost";
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleRight;
             dataGridViewCellStyle8.Format = "N2";
-            MonetaryValueProducedAndConsumed.DefaultCellStyle = dataGridViewCellStyle8;
-            resources.ApplyResources(MonetaryValueProducedAndConsumed, "MonetaryValueProducedAndConsumed");
-            MonetaryValueProducedAndConsumed.Name = "MonetaryValueProducedAndConsumed";
-            MonetaryValueProducedAndConsumed.ReadOnly = true;
+            TotalCost.DefaultCellStyle = dataGridViewCellStyle8;
+            resources.ApplyResources(TotalCost, "TotalCost");
+            TotalCost.Name = "TotalCost";
+            TotalCost.ReadOnly = true;
             // 
             // ReturnOnInvestment
             // 
@@ -513,9 +521,10 @@
         private DataGridViewTextBoxColumn MonetaryValueProduced;
         private DataGridViewTextBoxColumn ValueProducedEstimateDirectUsed;
         private DataGridViewTextBoxColumn MonetaryValueConsumed;
+        private DataGridViewTextBoxColumn NettoProduced;
         private DataGridViewTextBoxColumn OtherCostProduced;
         private DataGridViewTextBoxColumn OtherCostConsumed;
-        private DataGridViewTextBoxColumn MonetaryValueProducedAndConsumed;
+        private DataGridViewTextBoxColumn TotalCost;
         private DataGridViewTextBoxColumn ReturnOnInvestment;
         private DataGridViewTextBoxColumn ReturnOnInvestmentTotal;
         private DataGridViewTextBoxColumn Return;
