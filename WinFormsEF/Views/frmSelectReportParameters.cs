@@ -20,21 +20,26 @@ public partial class frmSelectReportParameters : Form
 
     public frmSelectReportParameters(EnergyUse.Models.Address address, EnergyUse.Common.Enums.ReportType defaultReport)
     {
-        _controller = new SelectReportParametersController(Managers.Config.GetDbFileName());
-        _controller.Initialize();
-
         InitializeComponent();
         setBaseFormSettings();
 
-        _controller.InitSettings = true;
-
         CurrentAddress = address;
+
+        initializeForm(defaultReport);
+    }
+
+    private void initializeForm(EnergyUse.Common.Enums.ReportType defaultReport)
+    {
+        _controller = new SelectReportParametersController(Managers.Config.GetDbFileName());
+        _controller.Initialize();
+
+        _controller.InitSettings = true;
 
         setComboAddresses();
         setPreSelectePeriods();
         setReportLists(defaultReport);
-        setEnergyTypeSelections(address.Id);
-        setEnergyTypeLists(address);
+        setEnergyTypeSelections(CurrentAddress.Id);
+        setEnergyTypeLists(CurrentAddress);
 
         _controller.InitSettings = false;
     }

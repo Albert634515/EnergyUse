@@ -11,17 +11,23 @@ public partial class frmPreDefinedPeriod : Form
     #endregion
 
     #region InitForm
+
     public frmPreDefinedPeriod()
+    {
+        InitializeComponent();
+        initializeForm();
+    }
+
+    private void initializeForm()
     {
         _controller = new PreDefinedPeriodController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
-        InitializeComponent();
         setBaseFormSettings();
-        LoadPreDefinedPeriods();
+        setPreDefinedPeriods();
     }
 
-    private void LoadPreDefinedPeriods()
+    private void setPreDefinedPeriods()
     {
         _controller.UnitOfWork.PreDefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
         bsPreDefinedPeriod.DataSource = _controller.UnitOfWork.PreDefinedPeriods;
@@ -36,7 +42,7 @@ public partial class frmPreDefinedPeriod : Form
 
         if (ucDatePredefined1.HasChanges())
         {
-            var unSavedIn = Managers.Languages.GetResourceString("PredefinedDates", " predefined dates");                
+            var unSavedIn = Managers.Languages.GetResourceString("PredefinedDates", " predefined dates");
             e.Cancel = e.Cancel = Managers.GeneralDialogs.WarningUnsavedChangesIn(this, unSavedIn);
         }
     }
@@ -97,7 +103,7 @@ public partial class frmPreDefinedPeriod : Form
     #region Methods
 
     private void addPredefinedPeriod()
-    {           
+    {
         var entity = _controller.UnitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("Newperiod", "New period"));
 
         bsPreDefinedPeriod.DataSource = _controller.UnitOfWork.PreDefinedPeriods;

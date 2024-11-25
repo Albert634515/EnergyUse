@@ -19,11 +19,11 @@ public partial class frmCalculatedUnitPrice : Form
 
         InitializeComponent();
         setBaseFormSettings();
-        LoadComboEnergyTypes();
-        LoadComboTarifGroups();
+        setComboEnergyTypes();
+        setComboTarifGroups();
     }
 
-    private void LoadComboEnergyTypes()
+    private void setComboEnergyTypes()
     {
         var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
         bsEnergyTypes.DataSource = energyTypes;
@@ -31,7 +31,7 @@ public partial class frmCalculatedUnitPrice : Form
         cboEnergyType.SelectedIndex = -1;
     }
 
-    private void LoadComboTarifGroups()
+    private void setComboTarifGroups()
     {
         var tarifGroups = _controller.UnitOfWork.TarifGroupRepo.GetAll().ToList();
         bsTarifGroups.DataSource = tarifGroups;

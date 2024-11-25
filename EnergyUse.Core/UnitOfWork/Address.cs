@@ -9,6 +9,7 @@ public class Address : IUnitOfWork
     private readonly EnergyUseContext _context;
 
     public RepoAddress AddressRepo;
+    public RepoTariffGroup RepoTariffGroupRepo;
 
     public List<Models.Address> Addresses = new();
 
@@ -17,6 +18,7 @@ public class Address : IUnitOfWork
         _context = new EnergyUseContext(dbFileName);
 
         AddressRepo = new RepoAddress(_context);
+        RepoTariffGroupRepo = new RepoTariffGroup(_context);
     }
 
     public int Complete()

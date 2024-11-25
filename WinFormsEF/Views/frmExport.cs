@@ -19,13 +19,18 @@ public partial class frmExport : Form
         _controller.Initialize();
 
         InitializeComponent();
-        setBaseFormSettings();
-        setDefaultExportFile();
-        LoadComboAddresses();
-        LoadComboEnergyTypes();
+        initializeForm();
     }
 
-    private void LoadComboAddresses()
+    private void initializeForm()
+    {
+        setBaseFormSettings();
+        setDefaultExportFile();
+        setComboAddresses();
+        setComboEnergyTypes();
+    }
+
+    private void setComboAddresses()
     {
         var addressList = _controller.UnitOfWork.AddressRepo.GetAll();
         bsAddresses.DataSource = addressList;
@@ -38,7 +43,7 @@ public partial class frmExport : Form
             cmbAddress.SelectedItem = defaultAddress;
     }
 
-    private void LoadComboEnergyTypes()
+    private void setComboEnergyTypes()
     {
         var energyTypes = new List<EnergyUse.Models.EnergyType>();
         EnergyUse.Models.Address address;

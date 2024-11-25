@@ -18,10 +18,15 @@ public partial class frmPayBackTime : Form
 
     public frmPayBackTime()
     {
+        InitializeComponent();
+        initializeForm();
+    }
+
+    private void initializeForm()
+    {
         _controller = new PayBackTimeController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
-        InitializeComponent();
         setFormSettings();
         setComboAddresses();
         setComboEnergyTypes();
@@ -290,7 +295,8 @@ public partial class frmPayBackTime : Form
         int startYear = dtpPurchaseDate.Value.Year;
         for (int i = startYear; i <= nudMaxYears.Value; i++)
         {
-            var pricePerUnit =  _controller.GetPricePerUnitPerYear(i, address, energyType);
+            var defaultTarifGroupId = address.DefaultTariffGroupId ?? 0;
+            var pricePerUnit =  _controller.GetPricePerUnitPerYear(i, defaultTarifGroupId, energyType.Id);
             if (pricePerUnit < 0)
             {
                 var message = Managers.Languages.GetResourceString("PayBackTimeNoPricePerUnit", "There is no price unit for year %s");

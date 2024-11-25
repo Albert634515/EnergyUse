@@ -20,10 +20,10 @@ public partial class frmCostcategories : Form
         InitializeComponent();
         setBaseFormSettings();
 
-        LoadComboData();
+        InitializeForm();
     }
 
-    private void LoadComboData()
+    private void InitializeForm()
     {
         bsEnergyTypes.DataSource = _controller.UnitOfWork.EnergyTypeRepo.GetAll();
         bsCalculationType.DataSource = _controller.UnitOfWork.CalculationTypeRepo.GetAll();

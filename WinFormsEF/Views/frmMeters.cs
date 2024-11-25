@@ -18,6 +18,11 @@ public partial class frmMeters : Form
         _controller.Initialize();
 
         InitializeComponent();
+        initializeForm();
+    }
+
+    private void initializeForm()
+    {
         setBaseFormSettings();
         setComboEnergyTypes();
         setComboAddresses();

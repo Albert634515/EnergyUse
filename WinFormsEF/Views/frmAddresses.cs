@@ -19,17 +19,24 @@ public partial class frmAddresses : Form
 
         InitializeComponent();
         setBaseFormSettings();
-        LoadForm();
+        initializeForm();
     }
 
-    private void LoadForm()
+    private void initializeForm()
     {
-        LoadAddresses();
+        setAddresses();
+        setTariffGroups();
     }
 
-    private void LoadAddresses()
+    private void setAddresses()
     {
         bsAddresses.DataSource = _controller.GetAllAdresses();
+    }
+
+    private void setTariffGroups()
+    {
+        generalTaxBindingSource.DataSource = _controller.GetTariffGroups((int)EnergyUse.Common.Enums.TariffGroupType.GeneralCosts);
+        defaultEnergyBindingSource.DataSource = _controller.GetTariffGroups((int)EnergyUse.Common.Enums.TariffGroupType.EnergyCosts);
     }
 
     #endregion
@@ -74,7 +81,7 @@ public partial class frmAddresses : Form
 
     private void tsbRefresh_Click(object sender, EventArgs e)
     {
-        LoadAddresses();
+        setAddresses();
     }
 
     private void tsbClose_Click(object sender, EventArgs e)
@@ -157,7 +164,7 @@ public partial class frmAddresses : Form
     private void cancelAddress()
     {
         _controller.UnitOfWork.CancelChanges();
-        LoadAddresses();
+        setAddresses();
     }
 
     private void deleteAddress()

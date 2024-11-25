@@ -69,11 +69,21 @@
             txtCity = new TextBox();
             txtHouseNo = new TextBox();
             toolTip2 = new ToolTip(components);
+            defaultTariffGroupsGroupBox = new GroupBox();
+            label3 = new Label();
+            defaultEnergyComboBox = new ComboBox();
+            defaultEnergyBindingSource = new BindingSource(components);
+            generalLabel = new Label();
+            generalTariffComboBox = new ComboBox();
+            generalTaxBindingSource = new BindingSource(components);
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgAddresses).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsAddresses).BeginInit();
             gbSolar.SuspendLayout();
             gbAddress.SuspendLayout();
+            defaultTariffGroupsGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)defaultEnergyBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)generalTaxBindingSource).BeginInit();
             SuspendLayout();
             // 
             // statusStrip1
@@ -320,13 +330,62 @@
             resources.ApplyResources(txtHouseNo, "txtHouseNo");
             txtHouseNo.Name = "txtHouseNo";
             // 
+            // defaultTariffGroupsGroupBox
+            // 
+            resources.ApplyResources(defaultTariffGroupsGroupBox, "defaultTariffGroupsGroupBox");
+            defaultTariffGroupsGroupBox.Controls.Add(label3);
+            defaultTariffGroupsGroupBox.Controls.Add(defaultEnergyComboBox);
+            defaultTariffGroupsGroupBox.Controls.Add(generalLabel);
+            defaultTariffGroupsGroupBox.Controls.Add(generalTariffComboBox);
+            defaultTariffGroupsGroupBox.Name = "defaultTariffGroupsGroupBox";
+            defaultTariffGroupsGroupBox.TabStop = false;
+            // 
+            // label3
+            // 
+            resources.ApplyResources(label3, "label3");
+            label3.Name = "label3";
+            // 
+            // defaultEnergyComboBox
+            // 
+            defaultEnergyComboBox.DataBindings.Add(new Binding("SelectedValue", bsAddresses, "DefaultTariffGroupId", true));
+            defaultEnergyComboBox.DataSource = defaultEnergyBindingSource;
+            defaultEnergyComboBox.DisplayMember = "Description";
+            defaultEnergyComboBox.FormattingEnabled = true;
+            resources.ApplyResources(defaultEnergyComboBox, "defaultEnergyComboBox");
+            defaultEnergyComboBox.Name = "defaultEnergyComboBox";
+            defaultEnergyComboBox.ValueMember = "Id";
+            // 
+            // defaultEnergyBindingSource
+            // 
+            defaultEnergyBindingSource.DataSource = typeof(EnergyUse.Models.TariffGroup);
+            // 
+            // generalLabel
+            // 
+            resources.ApplyResources(generalLabel, "generalLabel");
+            generalLabel.Name = "generalLabel";
+            // 
+            // generalTariffComboBox
+            // 
+            generalTariffComboBox.DataBindings.Add(new Binding("SelectedValue", bsAddresses, "GeneralTariffGroupId", true));
+            generalTariffComboBox.DataSource = generalTaxBindingSource;
+            generalTariffComboBox.DisplayMember = "Description";
+            generalTariffComboBox.FormattingEnabled = true;
+            resources.ApplyResources(generalTariffComboBox, "generalTariffComboBox");
+            generalTariffComboBox.Name = "generalTariffComboBox";
+            generalTariffComboBox.ValueMember = "Id";
+            // 
+            // generalTaxBindingSource
+            // 
+            generalTaxBindingSource.DataSource = typeof(EnergyUse.Models.TariffGroup);
+            // 
             // frmAddresses
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(gbSolar);
-            Controls.Add(lblRate);
+            Controls.Add(defaultTariffGroupsGroupBox);
             Controls.Add(gbAddress);
+            Controls.Add(lblRate);
             Controls.Add(txtDescription);
             Controls.Add(dgAddresses);
             Controls.Add(chkDefaultAddress);
@@ -344,6 +403,10 @@
             gbSolar.PerformLayout();
             gbAddress.ResumeLayout(false);
             gbAddress.PerformLayout();
+            defaultTariffGroupsGroupBox.ResumeLayout(false);
+            defaultTariffGroupsGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)defaultEnergyBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)generalTaxBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -389,5 +452,12 @@
         private ToolStripButton tbsCancel;
         private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private GroupBox defaultTariffGroupsGroupBox;
+        private Label generalLabel;
+        private ComboBox generalTariffComboBox;
+        private Label label3;
+        private ComboBox defaultEnergyComboBox;
+        private BindingSource generalTaxBindingSource;
+        private BindingSource defaultEnergyBindingSource;
     }
 }

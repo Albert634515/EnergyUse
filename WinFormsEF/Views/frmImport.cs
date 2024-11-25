@@ -15,12 +15,17 @@ public partial class frmImport : Form
     public frmImport()
     {
         InitializeComponent();
-        setBaseFormSettings();
-        LoadComboAddresses();
-        LoadComboEnergyTypes();
+        initializeForm();
     }
 
-    private void LoadComboAddresses()
+    private void initializeForm()
+    {
+        setBaseFormSettings();
+        setComboAddresses();
+        setComboEnergyTypes();
+    }
+
+    private void setComboAddresses()
     {
        var addressList = _unitOfWork.AddressRepo.GetAll().ToList();
         bsAddresses.DataSource = addressList;
@@ -30,7 +35,7 @@ public partial class frmImport : Form
             cmbAddress.SelectedItem = defaultAddress;
     }
 
-    private void LoadComboEnergyTypes()
+    private void setComboEnergyTypes()
     {
         List<EnergyUse.Models.EnergyType> energyTypes = new();
         EnergyUse.Models.Address address;

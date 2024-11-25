@@ -1,7 +1,5 @@
 ﻿using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Manager;
-using EnergyUse.Core.UnitOfWork;
-using EnergyUse.Models;
 using EnergyUse.Models.Common;
 
 namespace EnergyUse.Core.Controllers;
@@ -11,7 +9,7 @@ public class PayBackTimeController : IController
     #region ControlerProperties
 
     public bool InitSettings { get; set; } = false;
-    public EnergyUse.Core.UnitOfWork.PayBackTime? UnitOfWork { get; set; } = null;
+    public UnitOfWork.PayBackTime? UnitOfWork { get; set; } = null;
 
     private string _dbFileName { get; set; } = string.Empty;
     private LibSettings? _libSettings { get; set; } = null;
@@ -60,7 +58,7 @@ public class PayBackTimeController : IController
 
         if (parameterCalcPeriod.Address.TariffGroup != null)
         {
-            long tarifGroupId = parameterCalcPeriod.Address.TariffGroup.Id;
+            long defaultTarifGroupId = parameterCalcPeriod.Address.DefaultTariffGroupId.HasValue ? parameterCalcPeriod.Address.DefaultTariffGroupId.Value : 0;
 
             if (payBackTime.StartPeriod >= DateTime.Now)
                 quantityReduction = Common.Libs.LibGeneral.GetQuantityReduction(parameterCalcPeriod.QualityReductionSolarPanels, parameterCalcPeriod.PeriodId);
@@ -77,11 +75,15 @@ public class PayBackTimeController : IController
                 ShowType = EnergyUse.Common.Enums.ShowType.Value,
                 PeriodType = EnergyUse.Common.Enums.Period.SettlementDay,
                 PredictMissingData = true,
-                TarifGroupId = tarifGroupId,
+                TarifGroupId = defaultTarifGroupId,
                 QuantityReduction = quantityReduction / 100
             };
 
-            periodicData = _libPeriodicDate.GetRange(parameterPeriod);
+            if (_libPeriodicDate != null)
+            {
+                periodicData = _libPeriodicDate.GetRange(parameterPeriod);
+            }
+
             // Get all cost category with cost and values
             var costCategories = UnitOfWork?.CostCategoryRepo.MapCostCategories(periodicData);
             if (costCategories != null)
@@ -93,7 +95,7 @@ public class PayBackTimeController : IController
 
                 // Kolom: Geschatte direct verbruik in kw
                 payBackTime.EstimateDirectUsed = Math.Round((totalCapacity * (parameterCalcPeriod.AverageReturn / 100)) - payBackTime.ValueProduced, 2);
-                payBackTime.ValueProducedEstimateDirectUsed = Math.Round(payBackTime.EstimateDirectUsed * GetPricePerUnitPerYear(parameterCalcPeriod.PeriodStart.Year + parameterCalcPeriod.PeriodId, parameterCalcPeriod.Address, parameterCalcPeriod.EnergyType),2);
+                payBackTime.ValueProducedEstimateDirectUsed = Math.Round(payBackTime.EstimateDirectUsed * GetPricePerUnitPerYear(parameterCalcPeriod.PeriodStart.Year + parameterCalcPeriod.PeriodId, defaultTarifGroupId, parameterCalcPeriod.EnergyType.Id), 2);
 
                 // Kolom: Verbruikte energie in Euro                
                 payBackTime.MonetaryValueConsumed = Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 1 || w.CostCategory.EnergySubTypeId == 2).Sum(s => s.Value), 2);
@@ -118,19 +120,22 @@ public class PayBackTimeController : IController
         return payBackTime;
     }
 
-    public decimal GetPricePerUnitPerYear(int year, EnergyUse.Models.Address address, EnergyUse.Models.EnergyType energyType)
+    public decimal GetPricePerUnitPerYear(int year, long defaultTarifGroupId, long energyTypeId)
     {
         decimal price = 0;
-        if (year <= DateTime.Now.Year)
+        if (UnitOfWork != null)
         {
-            var calculatedUnitPrice = UnitOfWork.CalculatedUnitPriceRepo.GetByYear(year, energyType.Id, (long)address.TariffGroupId);
-            if (calculatedUnitPrice != null)
-                price = calculatedUnitPrice.Price;
-        }
+            if (year <= DateTime.Now.Year)
+            {
+                var calculatedUnitPrice = UnitOfWork.CalculatedUnitPriceRepo.GetByYear(year, energyTypeId, defaultTarifGroupId);
+                if (calculatedUnitPrice != null)
+                    price = calculatedUnitPrice.Price;
+            }
 
-        if (price == 0)
-        {
-            price = UnitOfWork.CalculatedUnitPriceRepo.GetByAverage(energyType.Id, (long)address.TariffGroupId);
+            if (price == 0)
+            {
+                price = UnitOfWork.CalculatedUnitPriceRepo.GetByAverage(energyTypeId, defaultTarifGroupId);
+            }
         }
 
         return price;

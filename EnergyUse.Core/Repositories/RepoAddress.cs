@@ -15,27 +15,26 @@ public class RepoAddress : RepoGeneral<Models.Address>
     public Models.Address? Get(int id)
     {
         return _context.Set<Models.Address>()
-                       .Include(t => t.TariffGroup)
+                       .Include(i => i.TariffGroup)
                        .Where(w => w.Id == id).FirstOrDefault();
     }
 
     public Models.Address? GetByDescription(string description)
     {
         return _context.Set<Models.Address>()
-                       .Include(t => t.TariffGroup)
+                       .Include(i => i.TariffGroup)
                        .Where(w => w.Description == description).FirstOrDefault();
     }
 
     public new IEnumerable<Models.Address> GetAll()
     {
         return _context.Set<Models.Address>()
-                       .Include(t => t.TariffGroup);
+                       .Include(a => a.TariffGroup);
     }
 
     public int GetExistsByDescription(string description, long addressId)
     {
         return _context.Set<Models.Address>()
-                       .Include(t => t.TariffGroup)
                        .Where(w=> w.Description == description && w.Id != addressId).Count();
     }
 }

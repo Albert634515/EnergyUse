@@ -14,10 +14,15 @@ public partial class frmTariffGroups : Form
 
     public frmTariffGroups()
     {
+        InitializeComponent();
+        initializeForm();
+    }
+
+    private void initializeForm()
+    {
         _controller = new TariffGroupController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
-        InitializeComponent();
         setBaseFormSettings();
         setTariffGroupTypeCombo("");
         setTarifGroups();

@@ -13,9 +13,15 @@ public partial class frmInfo : Form
     public frmInfo()
     {
         InitializeComponent();
+        initializeForm();
+    }
+
+    private void initializeForm()
+    {
         setBaseFormSettings();
         setInfo();
-        loadSettings();
+
+        Managers.Settings.SetSettingCheckBox(chkHideInfoFormOnStart);
     }
 
     #endregion
@@ -53,11 +59,6 @@ public partial class frmInfo : Form
     private void closeInfoForm()
     {
         Close();
-    }
-
-    private void loadSettings()
-    {
-        Managers.Settings.SetSettingCheckBox(chkHideInfoFormOnStart);
     }
 
     private void setInfo()

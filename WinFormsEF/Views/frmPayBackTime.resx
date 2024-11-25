@@ -137,7 +137,7 @@
     <value>0, 664</value>
   </data>
   <data name="statusStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1416, 26</value>
+    <value>1485, 26</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="statusStrip1.TabIndex" type="System.Int32, mscorlib">
@@ -860,7 +860,7 @@
     <value>290, 17</value>
   </metadata>
   <data name="dgPayBackTime.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 142</value>
+    <value>12, 134</value>
   </data>
   <data name="dgPayBackTime.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
@@ -869,7 +869,7 @@
     <value>51</value>
   </data>
   <data name="dgPayBackTime.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1392, 522</value>
+    <value>1461, 522</value>
   </data>
   <data name="dgPayBackTime.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -914,7 +914,7 @@
     <value>0, 0</value>
   </data>
   <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1416, 27</value>
+    <value>1485, 27</value>
   </data>
   <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1028,7 +1028,7 @@
     <value>8, 20</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1416, 690</value>
+    <value>1485, 690</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
@@ -1065,24 +1065,6 @@
   </data>
   <data name="&gt;&gt;bsAddresses.Type" xml:space="preserve">
     <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bsPayBackTimes.Name" xml:space="preserve">
-    <value>bsPayBackTimes</value>
-  </data>
-  <data name="&gt;&gt;bsPayBackTimes.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tsbCalculate.Name" xml:space="preserve">
-    <value>tsbCalculate</value>
-  </data>
-  <data name="&gt;&gt;tsbCalculate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tsbClose.Name" xml:space="preserve">
-    <value>tsbClose</value>
-  </data>
-  <data name="&gt;&gt;tsbClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;periodIdDataGridViewTextBoxColumn.Name" xml:space="preserve">
     <value>periodIdDataGridViewTextBoxColumn</value>
@@ -1179,6 +1161,24 @@
   </data>
   <data name="&gt;&gt;Return.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bsPayBackTimes.Name" xml:space="preserve">
+    <value>bsPayBackTimes</value>
+  </data>
+  <data name="&gt;&gt;bsPayBackTimes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbCalculate.Name" xml:space="preserve">
+    <value>tsbCalculate</value>
+  </data>
+  <data name="&gt;&gt;tsbCalculate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbClose.Name" xml:space="preserve">
+    <value>tsbClose</value>
+  </data>
+  <data name="&gt;&gt;tsbClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>frmPayBackTime</value>

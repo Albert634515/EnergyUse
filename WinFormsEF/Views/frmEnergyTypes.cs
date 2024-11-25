@@ -20,22 +20,22 @@ public partial class frmEnergyTypes : Form
 
         InitializeComponent();
         setBaseFormSettings();
-        LoadForm();
+        initializeForm();
     }
 
-    private void LoadForm()
+    private void initializeForm()
     {
-        LoadEnergyTypes();
-        LoadUnitList();
+        setEnergyTypes();
+        setUnitList();
     }
 
-    private void LoadEnergyTypes()
+    private void setEnergyTypes()
     {
         _controller.UnitOfWork.EnergyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
         bsEnergyTypes.DataSource = _controller.UnitOfWork.EnergyTypes;
     }
 
-    private void LoadUnitList()
+    private void setUnitList()
     {
         _controller.UnitOfWork.Units = _controller.UnitOfWork.UnitRepo.GetAll().ToList();
         bsUnits.DataSource = _controller.UnitOfWork.Units;
@@ -142,7 +142,7 @@ public partial class frmEnergyTypes : Form
 
     private void tsbRefresh_Click(object sender, EventArgs e)
     {
-        LoadEnergyTypes();
+        setEnergyTypes();
     }
 
     private void TsbClose_Click(object sender, EventArgs e)
@@ -220,7 +220,7 @@ public partial class frmEnergyTypes : Form
     private void cancelEnergyType()
     {
         _controller.UnitOfWork.CancelChanges();
-        LoadEnergyTypes();
+        setEnergyTypes();
     }
 
     private void deleteEnergyType()

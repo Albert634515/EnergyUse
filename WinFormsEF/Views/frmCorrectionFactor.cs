@@ -19,10 +19,10 @@ public partial class frmCorrectionFactor : Form
 
         InitializeComponent();
         setBaseFormSettings();
-        LoadComboEnergyTypes();
+        setComboEnergyTypes();
     }
 
-    private void LoadComboEnergyTypes()
+    private void setComboEnergyTypes()
     {
         var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
         cboEnergyType.DataSource = energyTypes;

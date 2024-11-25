@@ -15,10 +15,15 @@ public partial class FrmRates : Form
 
     public FrmRates()
     {
+        InitializeComponent();
+        initializeForm();
+    }
+
+    private void initializeForm()
+    {
         _controller = new RateController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
-        InitializeComponent();
         setBaseFormSettings();
         setComboEnergyTypes();
         setComboTarifGroups();

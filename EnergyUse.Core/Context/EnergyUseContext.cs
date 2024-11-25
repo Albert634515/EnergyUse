@@ -52,7 +52,8 @@ public partial class EnergyUseContext : DbContext
             entity.Property(e => e.SolarPanelsAvailable).HasColumnType("BOOLEAN").HasDefaultValueSql("false");
             entity.Property(e => e.TotalCapacity).HasColumnType("INTEGER (5)").HasDefaultValueSql("0");
 
-            entity.HasOne(d => d.TariffGroup).WithMany(p => p.Addresses).HasForeignKey(d => d.TariffGroupId).OnDelete(DeleteBehavior.NoAction);
+            entity.HasOne(d => d.TariffGroup).WithMany(p => p.Addresses).HasForeignKey(d => d.DefaultTariffGroupId).OnDelete(DeleteBehavior.NoAction);
+            entity.HasOne(d => d.TariffGroup).WithMany(p => p.Addresses).HasForeignKey(d => d.GeneralTariffGroupId).OnDelete(DeleteBehavior.NoAction);
         });
 
 

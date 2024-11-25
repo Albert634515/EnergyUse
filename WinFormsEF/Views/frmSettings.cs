@@ -15,12 +15,17 @@ public partial class frmSettings : Form
 
     public frmSettings()
     {
+        InitializeComponent();
+        initializeForm();
+    }
+
+    private void initializeForm()
+    {
         _controller = new SettingsController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
-        InitializeComponent();
         setBaseFormSettings();
-        loadSettings();
+        setSettings();
     }
 
     #endregion
@@ -198,7 +203,7 @@ public partial class frmSettings : Form
         _controller.resetChartSettings();
         _controller.resetDataPredictionSettings();
 
-        loadSettings();
+        setSettings();
     }
 
     private void tsbClose_Click(object sender, EventArgs e)
@@ -210,7 +215,7 @@ public partial class frmSettings : Form
 
     #region Methods
 
-    private void loadSettings()
+    private void setSettings()
     {
         _controller.InitSettings = true;
 

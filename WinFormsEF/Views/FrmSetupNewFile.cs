@@ -1,4 +1,5 @@
-﻿using EnergyUse.Common.Libs;
+﻿using EnergyUse.Common.Enums;
+using EnergyUse.Common.Libs;
 using EnergyUse.Core.Controllers;
 using EnergyUse.Models;
 
@@ -328,9 +329,11 @@ public partial class FrmSetupNewFile : Form
     private void setUpNewAddress()
     {
         var address = (Address)bsAddress.Current;
-        var tarifGroupDefault = _controller.UnitOfWork.TarifGroupRepo.SelectByDescription("Default");
+        var tarifGroupDefaultDefault = _controller.UnitOfWork.TarifGroupRepo.SelectById((long)TariffGroupType.EnergyCosts);
+        var tarifGroupDefaultGeneral = _controller.UnitOfWork.TarifGroupRepo.SelectById((long)TariffGroupType.GeneralCosts);
 
-        address.TariffGroupId = tarifGroupDefault.Id;
+        address.DefaultTariffGroupId = tarifGroupDefaultDefault.Id;
+        address.GeneralTariffGroupId = tarifGroupDefaultGeneral.Id;
         address.DefaultAddress = true;
         _controller.UnitOfWork.AddressRepo.Add(address);
         _controller.UnitOfWork.Complete();
@@ -365,8 +368,8 @@ public partial class FrmSetupNewFile : Form
         var energyTypeElectricity = _controller.UnitOfWork.EnergyTypeRepo.SelectByName("Electricity");
         var energySubType = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Normal");
         var energySubTypeOther = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Other");
-        var tarifGroupDefault = _controller.UnitOfWork.TarifGroupRepo.SelectByDescription("Default energy");
-        var tarifGroupGeneral = _controller.UnitOfWork.TarifGroupRepo.SelectByDescription("General Tax");
+        var tarifGroupDefault = _controller.UnitOfWork.TarifGroupRepo.SelectById((long)TariffGroupType.EnergyCosts);
+        var tarifGroupGeneral = _controller.UnitOfWork.TarifGroupRepo.SelectById((long)TariffGroupType.GeneralCosts);
 
         CostCategory costCategory;
         if (energyTypeElectricity != null)

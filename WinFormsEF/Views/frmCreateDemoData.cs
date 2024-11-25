@@ -19,12 +19,12 @@ public partial class frmCreateDemoData : Form
 
         InitializeComponent();
         setBaseFormSettings();
-        LoadComboEnergyTypes();
-        LoadComboSourceAddresses();
-        LoadComboTargetAddresses();
+        setComboEnergyTypes();
+        setComboSourceAddresses();
+        setComboTargetAddresses();
     }
 
-    private void LoadComboSourceAddresses()
+    private void setComboSourceAddresses()
     {
         var addressList = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
         cboSourceAddress.DataSource = addressList;
@@ -34,7 +34,7 @@ public partial class frmCreateDemoData : Form
         cboSourceAddress.SelectedIndex = -1;
     }
 
-    private void LoadComboTargetAddresses()
+    private void setComboTargetAddresses()
     {
         var addressList = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
         cboTargetAddress.DataSource = addressList;
@@ -44,7 +44,7 @@ public partial class frmCreateDemoData : Form
         cboTargetAddress.SelectedIndex = -1;
     }
 
-    private void LoadComboEnergyTypes()
+    private void setComboEnergyTypes()
     {
         var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
         cboEnergyType.DataSource = energyTypes;

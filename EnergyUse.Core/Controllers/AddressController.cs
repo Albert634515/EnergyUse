@@ -76,7 +76,15 @@ public class AddressController : IController
         UnitOfWork.Addresses = UnitOfWork.AddressRepo.GetAll().ToList();
         return UnitOfWork.Addresses;
     }
-    
+
+    public List<Models.TariffGroup> GetTariffGroups(int typeId)
+    {
+        var tariffGroupList = UnitOfWork.RepoTariffGroupRepo.GetAll().ToList();
+        tariffGroupList = tariffGroupList.Where(x => x.TypeId == typeId).ToList();
+        return tariffGroupList;
+    }
+
+
     public Models.Address AddDefaultEntity(string defaultDescription)
     {
         return UnitOfWork.AddDefaultEntity(defaultDescription);

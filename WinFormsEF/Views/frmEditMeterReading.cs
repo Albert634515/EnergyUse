@@ -11,6 +11,7 @@ public partial class frmEditMeterReading : Form
     private MeterReadingController _controller;
     private EnergyUse.Models.EnergyType _CurrentEnergyType;
     private long _CurrentAddressId;
+    private long _meterAddressId;
 
     #endregion
 
@@ -26,18 +27,24 @@ public partial class frmEditMeterReading : Form
 
         _CurrentAddressId = addressId;
         _CurrentEnergyType = currentEnergyType;
+        _meterAddressId = meterReadingId;
 
-        LoadMeters();
-        SetCurrentDataSource(currentEnergyType, addressId, meterReadingId);
+        initializeForm();
     }
 
-    private void LoadMeters()
+    private void initializeForm()
+    {
+        setMeters();
+        setCurrentDataSource(_CurrentEnergyType, _CurrentAddressId, _meterAddressId);
+    }
+
+    private void setMeters()
     {
         bsMeters.DataSource = _controller.UnitOfWork.MeterRepo.SelectByAddressAndEnergyType(_CurrentAddressId, _CurrentEnergyType.Id).ToList();
         cboMeters.SelectedIndex = -1;
     }
 
-    private void SetCurrentDataSource(EnergyUse.Models.EnergyType currentEnergyType, long addressId, long meterReadingId)
+    private void setCurrentDataSource(EnergyUse.Models.EnergyType currentEnergyType, long addressId, long meterReadingId)
     {
         if (meterReadingId == 0)
             _controller.UnitOfWork.AddDefaultEntity(addressId, currentEnergyType.Id);

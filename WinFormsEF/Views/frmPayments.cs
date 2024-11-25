@@ -14,17 +14,22 @@ public partial class frmPayments : Form
 
     public frmPayments()
     {
+        InitializeComponent();
+        initizeForm();
+    }
+
+    private void initizeForm()
+    {
         _controller = new PaymentsController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
-        InitializeComponent();
         setBaseFormSettings();
 
-        LoadComboAddresses();
-        LoadPreSelectePeriods();
+        setComboAddresses();
+        setPreSelectePeriods();
     }
 
-    private void LoadComboAddresses()
+    private void setComboAddresses()
     {
         var addressList = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
         bsAddresses.DataSource = addressList;
@@ -36,7 +41,7 @@ public partial class frmPayments : Form
             CboAddress.SelectedIndex = -1;
     }
 
-    private void LoadPreSelectePeriods()
+    private void setPreSelectePeriods()
     {
         var PreDefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
 

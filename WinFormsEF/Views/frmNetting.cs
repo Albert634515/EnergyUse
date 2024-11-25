@@ -14,12 +14,18 @@ public partial class frmNetting : Form
 
     public frmNetting()
     {
+        InitializeComponent();
+        initializeForm();
+
+    }
+
+    private void initializeForm()
+    {
         _controller = new NettingController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
         _controller.InitSettings = true;
 
-        InitializeComponent();
         SetBaseFormSettings();
         setComboEnergyTypes();
 

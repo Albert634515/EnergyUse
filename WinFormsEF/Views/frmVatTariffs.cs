@@ -14,15 +14,24 @@ public partial class frmVatTariffs : Form
 
     public frmVatTariffs()
     {
+        InitializeComponent();
+        initializeForm();
+    }
+
+    private void initializeForm()
+    {
         _controller = new VatTariffController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
-        InitializeComponent();
+        _controller.InitSettings = true;
+
         setBaseFormSettings();
-        LoadComboEnergyTypes();
+        setComboEnergyTypes();
+
+        _controller.InitSettings = false;
     }
 
-    private void LoadComboEnergyTypes()
+    private void setComboEnergyTypes()
     {
         var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
         bsEnergyTypes.DataSource = energyTypes;

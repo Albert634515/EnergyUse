@@ -14,7 +14,8 @@ public partial class Address
     public bool SolarPanelsAvailable { get; set; }
     public long TotalCapacity { get; set; }
 
-    public long? TariffGroupId { get; set; }
+    public long? DefaultTariffGroupId { get; set; }
+    public long? GeneralTariffGroupId { get; set; }
 
     public virtual TariffGroup? TariffGroup { get; set; }
     public virtual ICollection<Meter> Meters { get; set; }
