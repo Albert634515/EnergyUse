@@ -54,7 +54,11 @@ public partial class FrmRates : Form
 
     private void setComboTarifGroups()
     {
+        var costCategorie = (EnergyUse.Models.CostCategory)CboCostCategory.SelectedItem;
         var tarifGroups = _controller.UnitOfWork.TarifGroupRepo.GetAll().ToList();
+        if (costCategorie != null && costCategorie.TariffGroup != null && costCategorie.TariffGroup.Id > 0)
+            tarifGroups = tarifGroups.Where(t => t.Id == costCategorie.TariffGroup.Id).ToList();
+
         bsTarifGroups.DataSource = tarifGroups;
 
         CboTarifGroup.SelectedIndex = -1;
@@ -332,7 +336,7 @@ public partial class FrmRates : Form
         DgRates.Focus();
 
         var rate = (EnergyUse.Models.Rate)bsRates.Current;
-        rate.PriceChange = getPriceChange(rate);
+        rate.PriceChange = _controller.GetPriceChange(rate);
 
         _controller.UnitOfWork.Complete();
     }
@@ -342,15 +346,6 @@ public partial class FrmRates : Form
         _controller.UnitOfWork.CancelChanges();
     }
 
-    private decimal getPriceChange(EnergyUse.Models.Rate rate)
-    {
-        decimal priceChange = 0;
-        var previousRate = _controller.UnitOfWork.RateRepo.SelectLastRateByDate(rate.EnergyType.Id, rate.CostCategory.Id, rate.StartRate.AddDays(-1), rate.TariffGroup.Id);
-        if (previousRate != null && previousRate.Id > 0)
-            priceChange = Math.Round(((rate.RateValue - previousRate.RateValue) / previousRate.RateValue) * 100, 2);
-
-        return priceChange;
-    }
 
     private EnergyUse.Models.TariffGroup getCurrentTarifGroup()
     {

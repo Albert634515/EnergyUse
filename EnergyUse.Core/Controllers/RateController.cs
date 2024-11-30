@@ -47,6 +47,16 @@ public class RateController : IController
 
     #region methods
 
+    public decimal GetPriceChange(EnergyUse.Models.Rate rate)
+    {
+        decimal priceChange = 0;
+        var previousRate = UnitOfWork.RateRepo.SelectLastRateByDate(rate.EnergyType.Id, rate.CostCategory.Id, rate.StartRate.AddDays(-1), rate.TariffGroup.Id);
+        if (previousRate != null && previousRate.Id > 0)
+            priceChange = Math.Round(((rate.RateValue - previousRate.RateValue) / previousRate.RateValue) * 100, 2);
+
+        return priceChange;
+    }
+
     public RateTaxInfo GetRateIncExTax(Models.CostCategory costCategory, Models.Rate rate)
     {
         var rateTaxInfo = new EnergyUse.Models.Common.RateTaxInfo();
