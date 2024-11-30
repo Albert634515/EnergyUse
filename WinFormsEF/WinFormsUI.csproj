@@ -35,6 +35,7 @@
       <LastGenOutput>Lang_nl.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </Content>
+    <Content Include="Resources\EnergyUse.ico" />
   </ItemGroup>
 
   <ItemGroup>
