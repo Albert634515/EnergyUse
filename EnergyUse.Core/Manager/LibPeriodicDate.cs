@@ -2,6 +2,7 @@
 using EnergyUse.Common.Extensions;
 using EnergyUse.Common.Libs;
 using EnergyUse.Core.Context;
+using EnergyUse.Core.UnitOfWork;
 using EnergyUse.Models;
 using EnergyUse.Models.Common;
 using System.Globalization;
@@ -31,6 +32,7 @@ public class LibPeriodicDate
     private decimal _avgCorrectionPercentageReturn = 1;
     private Models.MeterReading _lastrow;
     private List<Models.Rate> _rates = new();
+    private List<Models.Common.PeriodStaffel> _periodStaffelList = new List<Models.Common.PeriodStaffel>();
 
     #endregion
 
@@ -115,7 +117,7 @@ public class LibPeriodicDate
                 foreach (PeriodicDataPerDay periodicData in _periodicDataList)
                 {
                     var periodicDate = periodicData.ValueX;
-                    var tarifGroupId = _parameterPeriod.TarifGroupId;   
+                    var tarifGroupId = _parameterPeriod.TarifGroupId;
                     if (costCategory.TariffGroupId.HasValue && costCategory.TariffGroupId > 0)
                         tarifGroupId = costCategory.TariffGroupId.Value;
 
@@ -144,50 +146,23 @@ public class LibPeriodicDate
                             vat = vatTarif.Tarif;
                     }
 
-                    PriceRate? priceRate = null;
-                    switch (costCategory.EnergySubType.Id)
+                    PriceRate? priceRate = getPriceRate(libPriceRate, costCategory, periodicData, tarifGroupId);
+
+                    if (priceRate != null && priceRate.RateTypeId == 2)
                     {
-                        case 1:
-                            //Normal
-                            priceRate = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.Normal, tarifGroupId);
-                            break;
-                        case 2:
-                            //low
-                            priceRate = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.Low, tarifGroupId);
-                            // periodicDataPerDay.ValueYMonetaryLow = periodicDataPerDay.ValueYLow * periodicDataPerDay.RateLow;
-                            break;
-                        case 3:
-                            //return normal
-                            priceRate = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.ReturnNormal, tarifGroupId);
-                            break;
-                        case 4:
-                            //return low
-                            priceRate = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.ReturnLow, tarifGroupId);
-                            break;
-                        case 5:
-                            //Other
-                            priceRate = libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
-                            break;
-                        case 6:
-                            // Return cost normal
-                            priceRate = libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
-                            break;
-                        case 7:
-                            // Return low normal
-                            priceRate = libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
-                            break;
+                        //Calculate staffel
+                        // - Set Initial staffel value cache for previouse period
+                        // - Set staffel cache
+                        // - Set staffel value
+                        setInitialStaffel(priceRate.RateId, costCategory.EnergySubTypeId.Value);
+                        var staffels = getStaffel(priceRate.RateId, periodicData, costCategory.EnergySubTypeId.Value);
+
+                        // For now overrule rate value with staffel value
+                        if (staffels != null && staffels.Count > 0)
+                        {
+                            // Convert staffel to other costs
+                        }
                     }
-
-                    //Models.Staffel? staffel = null;
-                    //if (priceRate != null && priceRate.RateTypeId == 2)
-                    //{
-                    //    // Get staffel, TODO could be multiple staffel if streshold is exceeded
-                    //    staffel = getStaffel(priceRate.RateId, periodicDate.Date);
-
-                    //    // For now overrule rate value with staffel value
-                    //    if (staffel != null)
-                    //        priceRate.Rate = staffel.StaffelValue;
-                    //}
 
                     //If there is no cost record create it
                     // Zoek laatste record, kijk of tarief gelijk is anders nieuwe maken en toevoegen
@@ -215,6 +190,44 @@ public class LibPeriodicDate
                 }
             }
         }
+    }
+
+    private PriceRate? getPriceRate(LibPriceRate libPriceRate, Models.CostCategory costCategory, PeriodicDataPerDay periodicData, long tarifGroupId)
+    {
+        PriceRate? priceRate = null;
+        switch (costCategory.EnergySubType.Id)
+        {
+            case 1:
+                //Normal
+                priceRate = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.Normal, tarifGroupId);
+                break;
+            case 2:
+                //low
+                priceRate = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.Low, tarifGroupId);
+                break;
+            case 3:
+                //return normal
+                priceRate = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.ReturnNormal, tarifGroupId);
+                break;
+            case 4:
+                //return low
+                priceRate = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.ReturnLow, tarifGroupId);
+                break;
+            case 5:
+                //Other
+                priceRate = libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
+                break;
+            case 6:
+                // Return cost normal
+                priceRate = libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
+                break;
+            case 7:
+                // Return low normal
+                priceRate = libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
+                break;
+        }
+
+        return priceRate;
     }
 
     /// <summary>
@@ -289,9 +302,167 @@ public class LibPeriodicDate
         return periodicDataList;
     }
 
-    private Models.Staffel? getStaffel(long rateId, long maxRange)
+    /// <summary>
+    /// Pre fill staffel cache
+    /// - set data for period before current range
+    /// </summary>
+    /// <param name="rateId"></param>
+    private void setInitialStaffel(long rateId, long energySubTypeId)
     {
-        return _staffelRepo.SelectByRateIdAndRange(rateId, maxRange).FirstOrDefault();
+        // Check if staffel is already set
+        if (_periodStaffelList.Where(w => w.RateId == rateId).Any())
+            return;
+
+        var priceRate = _rateRepo.SelectById(rateId);
+        var staffels = _staffelRepo.SelectByRateId(rateId);
+        _periodStaffelList = new List<Models.Common.PeriodStaffel>();
+
+        foreach (var staffel in staffels)
+        {
+            // set staffels for current period in staffel cache
+            var periodStaffel = new Models.Common.PeriodStaffel();
+            periodStaffel.RateId = rateId;
+            periodStaffel.StartRange = priceRate.StartRate;
+            periodStaffel.EndRange = priceRate.EndRate;
+            periodStaffel.EnergySubTypeId = energySubTypeId;
+            _periodStaffelList.Add(periodStaffel);
+        }
+
+        // Prefill staffel values with values for period before current range
+        // Start range is priceRate.start - End range is _parameterPeriod.startRange
+        DateTime currentDate = priceRate.StartRate;
+        if (_parameterPeriod.StartRange > priceRate.StartRate)
+        {
+            // Get period date for range to fill intial staffels
+            var meterReadings = _meterReadingRepo.SelectByRange(priceRate.StartRate, _parameterPeriod.StartRange, _parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId, _parameterPeriod.Month, _parameterPeriod.Week, _parameterPeriod.Day).ToList();
+
+            // Get period date for range to fill intial staffels
+            decimal leftOver = -1;
+            foreach (var meaterReading in meterReadings)
+            {
+                do
+                {
+                    leftOver = getInitialStaffel(rateId, meaterReading, energySubTypeId);
+                } while (leftOver == 0);
+            }
+        }
+    }
+
+    private decimal getInitialStaffel(long rateId, Models.MeterReading meterReading, long energySubTypeId)
+    {
+        decimal leftOver = 0;
+
+        // Look up staffel
+        var periodStaffel = _periodStaffelList.Where(w => w.RateId == rateId
+                                                       && w.EndRange <= meterReading.RegistrationDate
+                                                       && w.StartRange >= meterReading.RegistrationDate
+                                                       && w.Value <= w.MaxLevel
+                                                       && w.EnergySubTypeId == energySubTypeId).FirstOrDefault();
+        if (periodStaffel != null)
+        {
+            decimal value = 0;
+            switch (energySubTypeId)
+            {
+                case 1:
+                    //Normal
+                    value = meterReading.DeltaNormal;
+                    break;
+                case 2:
+                    //low
+                    value = meterReading.DeltaLow;
+                    break;
+                case 3:
+                    //return normal
+                    value = meterReading.ReturnDeliveryDeltaNormal;
+                    break;
+                case 4:
+                    //return low
+                    value = meterReading.ReturnDeliveryDeltaLow;
+                    break;
+                case 5:
+                    //Other
+                    value = meterReading.DeltaNormal + meterReading.DeltaLow + meterReading.ReturnDeliveryDeltaNormal + meterReading.ReturnDeliveryDeltaLow;
+                    break;
+                case 6:
+                    // Return cost normal
+                    value = meterReading.ReturnDeliveryDeltaNormal;
+                    break;
+                case 7:
+                    // Return low normal
+                    value = meterReading.ReturnDeliveryDeltaLow;
+                    break;
+            }
+
+            if (periodStaffel.MaxLevel > periodStaffel.Value + value)
+            {
+                leftOver = periodStaffel.MaxLevel - periodStaffel.Value;
+                periodStaffel.Value = periodStaffel.MaxLevel;
+
+                var newPeriodStaffel = new Models.Common.PeriodStaffel();
+                newPeriodStaffel.RateId = periodStaffel.RateId;
+                newPeriodStaffel.StartRange = periodStaffel.EndRange;
+                newPeriodStaffel.EndRange = meterReading.RegistrationDate;
+                newPeriodStaffel.Value = leftOver;
+                _periodStaffelList.Add(newPeriodStaffel);
+            }
+            else
+            {
+                periodStaffel.Value += value;
+                leftOver = 0;
+            }
+        }
+
+        return leftOver;
+    }
+
+    private List<Models.Staffel> getStaffel(long rateId, PeriodicDataPerDay pdPerD, long energySubTypeId)
+    {
+        var staffels = new List<Models.Staffel>();
+
+        // Look up staffel
+        var periodStaffel = _periodStaffelList.Where(w => w.RateId == rateId
+                                                       && w.EndRange <= pdPerD.ValueX
+                                                       && w.StartRange >= pdPerD.ValueX
+                                                       && w.Value <= w.MaxLevel
+                                                       && w.EnergySubTypeId == energySubTypeId).FirstOrDefault();
+        if (periodStaffel != null)
+        {
+            decimal value = 0;
+            switch (energySubTypeId)
+            {
+                case 1:
+                    //Normal
+                    value = pdPerD.ValueYNormal;
+                    break;
+                case 2:
+                    //low
+                    value = pdPerD.ValueYLow;
+                    break;
+                case 3:
+                    //return normal
+                    value = pdPerD.ValueYReturnNormal;
+                    break;
+                case 4:
+                    //return low
+                    value = pdPerD.ValueYReturnLow;
+                    break;
+                case 5:
+                    //Other
+                    value = pdPerD.ValueYNormal + pdPerD.ValueYLow + pdPerD.ValueYReturnNormal + pdPerD.ValueYReturnLow;
+                    break;
+                case 6:
+                    // Return cost normal
+                    value = pdPerD.ValueYReturnNormal;
+                    break;
+                case 7:
+                    // Return low normal
+                    value = pdPerD.ValueYReturnLow;
+                    break;
+            }
+        }
+
+        return staffels;
+
     }
 
     private Tuple<int, DateTime, string> GetLabels(PeriodicDataPerDay periodicDataPerDay)

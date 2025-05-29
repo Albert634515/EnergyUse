@@ -12,13 +12,25 @@ public class RepoRate : RepoGeneral<Models.Rate>
         _context = dbContext;
     }
 
+    public Models.Rate? SelectById(long rateId)
+    {
+        return _context.Rates
+                       .Include(c => c.CostCategory)
+                       .Include(t => t.TariffGroup)
+                       .Include(e => e.EnergyType)
+                       .Where(x => x.Id == rateId)
+                       .FirstOrDefault();
+    }
+
     public IEnumerable<Models.Rate> SelectByCostCategoryAndEnergyTypeAndTarifGroup(long costCategoryId, long energyTypeId, long tarifGroupId)
     {
         return _context.Rates
                        .Include(c => c.CostCategory)
                        .Include(t => t.TariffGroup)
                        .Include(e => e.EnergyType)
-                       .Where(x => x.CostCategory.Id == costCategoryId && x.EnergyType.Id == energyTypeId && x.TariffGroup.Id == tarifGroupId)
+                       .Where(x => x.CostCategory.Id == costCategoryId 
+                                && x.EnergyType.Id == energyTypeId 
+                                && x.TariffGroup.Id == tarifGroupId)
                        .OrderBy(o => o.StartRate);
     }
 
@@ -28,7 +40,10 @@ public class RepoRate : RepoGeneral<Models.Rate>
             .Include(c => c.CostCategory)
             .Include(t => t.TariffGroup)
             .Include(e => e.EnergyType)
-            .Where(x => x.EnergyType.Id == energyTypeId && x.CostCategory.Id == costCategoryId && x.TariffGroup.Id == tarifGroupId && (x.StartRate.Date <= endDate.Date && x.EndRate.Date >= startDate.Date));
+            .Where(x => x.EnergyType.Id == energyTypeId 
+                     && x.CostCategory.Id == costCategoryId 
+                     && x.TariffGroup.Id == tarifGroupId 
+                     && (x.StartRate.Date <= endDate.Date && x.EndRate.Date >= startDate.Date));
     }
 
     public Models.Rate? SelectLastRateByDate(long energyTypeId, long costCategoryId, DateTime lastDate, long tarifGroupId)
