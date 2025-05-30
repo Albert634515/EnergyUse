@@ -1,40 +1,23 @@
 ﻿using EnergyUse.Core.Interfaces;
-using System.Diagnostics;
 
 namespace EnergyUse.Core.Controllers;
 
-public class BackUpAndRestoreController : IController
+public class BackUpAndRestoreController : BaseController, IController
 {
     #region ControlerProperties
-
-    private string _dbFileName { get; set; } = string.Empty;
-
-    private EnergyUse.Core.Manager.LibSettings? _libSettings { get; set; } = null;
-
-    public bool InitSettings { get; set; } = false;
 
     #endregion
 
     #region InitControler
 
-    public BackUpAndRestoreController(string dbFileName)
+    public BackUpAndRestoreController(string dbFileName) : base(dbFileName)
     {
-        _dbFileName = dbFileName;
+
     }
 
     public void Initialize()
     {
-        setSettingsManager();
-    }
-
-    private void setSettingsManager()
-    {
-        _libSettings = new EnergyUse.Core.Manager.LibSettings(_dbFileName);
-    }
-
-    public string getDbFileName()
-    {
-        return _dbFileName;
+        base.setSettingsManager();
     }
 
     #endregion
@@ -43,16 +26,15 @@ public class BackUpAndRestoreController : IController
 
     public string getSettingBackUpDir(string settingKey)
     {
-        string settingValue = string.Empty;
+        if (string.IsNullOrWhiteSpace(settingKey))
+            throw new ArgumentException("SettingKey cannot be null or empty.", nameof(settingKey));
 
-        if (_libSettings != null)
-        {
-            Models.Setting setting = _libSettings.GetSetting(settingKey);
-            if ((setting == null || (setting != null && string.IsNullOrWhiteSpace(setting.KeyValue))) || !Directory.Exists(setting.KeyValue))
-                settingValue = getDefaultBackUpDir();
-            else
-                settingValue = setting.KeyValue;
-        }
+        if (_libSettings == null)
+            return getDefaultBackUpDir();
+
+        var settingValue = GetSettingValue(settingKey);
+        if (string.IsNullOrWhiteSpace(settingValue) || !Directory.Exists(settingValue))
+            settingValue = getDefaultBackUpDir();
 
         return settingValue;
     }

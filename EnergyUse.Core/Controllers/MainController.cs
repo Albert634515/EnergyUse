@@ -3,25 +3,23 @@ using EnergyUse.Models.Common;
 
 namespace EnergyUse.Core.Controllers;
 
-public class MainController : IController
+public class MainController : BaseController, IController
 {
     #region ControlerProperties
 
-    private string _dbFileName { get; set; }  = string.Empty;
     private EnergyUse.Core.UnitOfWork.MainForm? _unitOfWork { get; set; } = null;
-    private EnergyUse.Core.Manager.LibSettings? _libSettings { get; set; } = null;
 
     #endregion
 
-    public MainController(string dbFileName)
+    public MainController(string dbFileName) : base(dbFileName)
     {
-        _dbFileName = dbFileName;
+
     }
 
     public void Initialize()
     {
         setUnitOfWork();
-        setSettingsManager();
+        base.setSettingsManager();
     }
 
     private void setUnitOfWork()
@@ -29,20 +27,14 @@ public class MainController : IController
         _unitOfWork = new EnergyUse.Core.UnitOfWork.MainForm(_dbFileName);
     }
 
-    private void setSettingsManager()
-    {
-        _libSettings = new EnergyUse.Core.Manager.LibSettings(_dbFileName);
-    }
-
-    public string getDbFileName()
-    {
-        return _dbFileName;
-    }
 
     #region Address
 
     public IEnumerable<Models.Address> GetAllAddresses()
     {
+        if (_unitOfWork?.AddressRepo == null)
+            throw new InvalidOperationException("UnitOfWork or AddressRepo is not initialized.");
+
         return _unitOfWork.AddressRepo.GetAll().ToList();
     }
 
@@ -52,6 +44,9 @@ public class MainController : IController
 
     public IEnumerable<Models.EnergyType> getEnergyTypesByAddressId(long addressId)
     {
+        if (_unitOfWork?.AddressRepo == null)
+            throw new InvalidOperationException("UnitOfWork or AddressRepo is not initialized.");
+
         return _unitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList();
     }
 
@@ -71,23 +66,15 @@ public class MainController : IController
 
     public int GetMainSpitterDistance(string splitterName)
     {
-        return _libSettings.GetMainSpitterDistance(splitterName);
-    }
-
-    public void SaveSetting(string settingTag, string newSettingValue)
-    {
-        _libSettings.SaveSetting(settingTag, newSettingValue);
-    }
-
-    public Models.Setting GetKey(string key)
-    {
-        return _libSettings.GetSetting(key);
+        if (_libSettings != null)
+            return _libSettings.GetMainSpitterDistance(splitterName);
+        else
+            return 360;
     }
 
     #endregion
 
     #region Report
-
 
     public string GetSettlementPdf(ParameterSelection parameterSelection)
     {

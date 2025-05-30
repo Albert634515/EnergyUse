@@ -209,7 +209,7 @@ public partial class frmAddresses : Form
         }
     }
 
-    private void setBaseFormSettings()
+    protected void setBaseFormSettings()
     {
         _controller.UnitOfWork = new EnergyUse.Core.UnitOfWork.Address(Managers.Config.GetDbFileName());
 

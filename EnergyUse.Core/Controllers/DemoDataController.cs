@@ -2,44 +2,30 @@
 
 namespace EnergyUse.Core.Controllers;
 
-public class DemoDataController : IController
+public class DemoDataController : BaseController, IController
 {
     #region ControlerProperties
 
-    private string _dbFileName { get; set; } = string.Empty;
     public EnergyUse.Core.UnitOfWork.DemoData? UnitOfWork { get; set; } = null;
-    private EnergyUse.Core.Manager.LibSettings? _libSettings { get; set; } = null;
-
-    public bool InitSettings { get; set; } = false;
 
     #endregion
 
     #region InitControler
 
-    public DemoDataController(string dbFileName)
+    public DemoDataController(string dbFileName): base(dbFileName)
     {
-        _dbFileName = dbFileName;
+
     }
 
     public void Initialize()
     {
         setUnitOfWork();
-        setSettingsManager();
+        base.setSettingsManager();
     }
 
     private void setUnitOfWork()
     {
         UnitOfWork = new EnergyUse.Core.UnitOfWork.DemoData(_dbFileName);
-    }
-
-    private void setSettingsManager()
-    {
-        _libSettings = new EnergyUse.Core.Manager.LibSettings(_dbFileName);
-    }
-
-    public string getDbFileName()
-    {
-        return _dbFileName;
     }
 
     #endregion

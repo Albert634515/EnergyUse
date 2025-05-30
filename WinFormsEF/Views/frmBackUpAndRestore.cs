@@ -1,4 +1,5 @@
 ﻿using EnergyUse.Core.Controllers;
+using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace WinFormsEF.Views;
 
@@ -47,13 +48,16 @@ public partial class frmBackUpAndRestore : Form
 
     private void cmdSelectExportFile_Click(object sender, EventArgs e)
     {
-        FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+        FolderBrowserDialog fbd = new FolderBrowserDialog();
         var setting = _controller.getSettingBackUpDir("BackUpDirectory");
         if (! string.IsNullOrWhiteSpace(setting))
-            folderDialog.SelectedPath = setting;
+            fbd.SelectedPath = setting;
 
-        if (folderDialog.ShowDialog() == DialogResult.OK)
-            txtBackUpDir.Text = folderDialog.SelectedPath;
+        if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+        {
+            txtBackUpDir.Text = fbd.SelectedPath;
+            _controller.SaveSetting(txtBackUpDir.Tag.ToString(), fbd.SelectedPath);
+        }
     }
 
     private void cmdCreateBackup_Click(object sender, EventArgs e)

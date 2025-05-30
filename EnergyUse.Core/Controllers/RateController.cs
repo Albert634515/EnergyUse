@@ -3,29 +3,25 @@ using EnergyUse.Models.Common;
 
 namespace EnergyUse.Core.Controllers;
 
-public class RateController : IController
+public class RateController : BaseController, IController
 {
     #region ControlerProperties
 
-    private string _dbFileName { get; set; } = string.Empty;
     public EnergyUse.Core.UnitOfWork.Rate? UnitOfWork { get; set; } = null;
-    private EnergyUse.Core.Manager.LibSettings? _libSettings { get; set; } = null;
-
-    public bool InitSettings { get; set; } = false;
 
     #endregion
 
     #region InitControler
 
-    public RateController(string dbFileName)
+    public RateController(string dbFileName) : base(dbFileName)
     {
-        _dbFileName = dbFileName;
+
     }
 
     public void Initialize()
     {
         setUnitOfWork();
-        setSettingsManager();
+        base.setSettingsManager();
     }
 
     private void setUnitOfWork()
@@ -33,23 +29,19 @@ public class RateController : IController
         UnitOfWork = new EnergyUse.Core.UnitOfWork.Rate(_dbFileName);
     }
 
-    private void setSettingsManager()
-    {
-        _libSettings = new EnergyUse.Core.Manager.LibSettings(_dbFileName);
-    }
-
-    public string getDbFileName()
-    {
-        return _dbFileName;
-    }
-
     #endregion
 
-    #region methods
+    #region Methods
 
     public decimal GetPriceChange(EnergyUse.Models.Rate rate)
     {
         decimal priceChange = 0;
+
+        if (UnitOfWork?.RateRepo == null)
+        {
+            throw new InvalidOperationException("UnitOfWork or RateRepo is not initialized.");
+        }
+
         var previousRate = UnitOfWork.RateRepo.SelectLastRateByDate(rate.EnergyType.Id, rate.CostCategory.Id, rate.StartRate.AddDays(-1), rate.TariffGroup.Id);
         if (previousRate != null && previousRate.Id > 0)
             priceChange = Math.Round(((rate.RateValue - previousRate.RateValue) / previousRate.RateValue) * 100, 2);
@@ -60,6 +52,11 @@ public class RateController : IController
     public RateTaxInfo GetRateIncExTax(Models.CostCategory costCategory, Models.Rate rate)
     {
         var rateTaxInfo = new EnergyUse.Models.Common.RateTaxInfo();
+
+        if (UnitOfWork?.RateRepo == null)
+        {
+            throw new InvalidOperationException("UnitOfWork or RateRepo is not initialized.");
+        }
 
         if (rate == null || costCategory == null)
             return rateTaxInfo;

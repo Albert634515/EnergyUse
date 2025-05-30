@@ -4,41 +4,33 @@ using EnergyUse.Models.Common;
 
 namespace EnergyUse.Core.Controllers;
 
-public class PayBackTimeController : IController
+public class PayBackTimeController : BaseController, IController
 {
     #region ControlerProperties
 
-    public bool InitSettings { get; set; } = false;
     public UnitOfWork.PayBackTime? UnitOfWork { get; set; } = null;
 
-    private string _dbFileName { get; set; } = string.Empty;
-    private LibSettings? _libSettings { get; set; } = null;
     private LibPeriodicDate? _libPeriodicDate = null;
 
     #endregion
 
     #region InitControler
 
-    public PayBackTimeController(string dbFileName)
+    public PayBackTimeController(string dbFileName) : base(dbFileName)
     {
-        _dbFileName = dbFileName;
         _libPeriodicDate = new LibPeriodicDate(_dbFileName);
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.PayBackTime(_dbFileName);
+        
     }
 
     public void Initialize()
     {
-        setSettingsManager();
+        setUnitOfWork();
+        base.setSettingsManager();
     }
 
-    private void setSettingsManager()
+    private void setUnitOfWork()
     {
-        _libSettings = new EnergyUse.Core.Manager.LibSettings(_dbFileName);
-    }
-
-    public string getDbFileName()
-    {
-        return _dbFileName;
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.PayBackTime(_dbFileName);
     }
 
     #endregion

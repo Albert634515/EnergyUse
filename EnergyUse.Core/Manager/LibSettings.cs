@@ -28,25 +28,14 @@ public class LibSettings
     {
         var lastUsedImportFile = string.Empty;
         if (!string.IsNullOrWhiteSpace(fileKey))
-        {
-            var setting = GetSetting(fileKey);
-            if (setting != null && setting.Id > 0)
-                lastUsedImportFile = setting.KeyValue;
-        }
+            lastUsedImportFile = GetSettingValue(fileKey);
 
         return lastUsedImportFile;
     }
 
     public string GetLastImportDirectory()
     {
-        string lastImportDirectory;
-        Models.Setting setting = GetSetting("ImportDirectory");
-        if (setting != null && setting.Id > 0)
-            lastImportDirectory = setting.KeyValue;
-        else
-            lastImportDirectory = string.Empty;
-
-        return lastImportDirectory;
+        return GetSettingValue("ImportDirectory");
     }
 
     public int GetNumberOfEnergyTypesOnReport(long addressId)
@@ -131,6 +120,16 @@ public class LibSettings
         return language;
     }
 
+
+    public string GetSettingValue(string key)
+    {
+        Models.Setting? setting = GetSetting(key);
+        if (setting != null)
+            return setting.KeyValue;
+        else
+            return string.Empty;
+    }
+
     public Models.Setting? GetSetting(string key)
     {
         var repo = new Repositories.RepoSettings(_context);
@@ -172,7 +171,7 @@ public class LibSettings
         {
             setting = new Models.Setting();
             setting.Key = settingTag;
-            setting.KeyValue =ColorTranslator.ToWin32(newColor).ToString();
+            setting.KeyValue = ColorTranslator.ToWin32(newColor).ToString();
             repo.Add(setting);
         }
         else

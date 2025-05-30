@@ -435,7 +435,7 @@ public partial class MainForm : Form
     {
         var lastUcLoaded = string.Empty;
 
-        var setting = _controller.GetKey($"LastUcLoaded_{targetPanel.Tag}");
+        var setting = _controller.GetSetting($"LastUcLoaded_{targetPanel.Tag}");
         if (setting != null)
             lastUcLoaded = setting.KeyValue;
         else if (string.IsNullOrWhiteSpace(lastUcLoaded))
@@ -501,7 +501,7 @@ public partial class MainForm : Form
     private void getChartControl(string controlName, SplitterPanel targetPanel)
     {
         EnergyUse.Common.Enums.GraphType graphType;
-        var setting = _controller.GetKey("GraphType");
+        var setting = _controller.GetSetting("GraphType");
         if (setting == null)
             graphType = EnergyUse.Common.Enums.GraphType.LiveCharts;
         else

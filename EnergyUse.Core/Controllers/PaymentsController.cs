@@ -2,21 +2,17 @@
 
 namespace EnergyUse.Core.Controllers;
 
-public class PaymentsController : IController
+public class PaymentsController : BaseController, IController
 {
     #region ControlerProperties
 
-    private string _dbFileName { get; set; } = string.Empty;
     public EnergyUse.Core.UnitOfWork.Payment? UnitOfWork { get; set; } = null;
-    private EnergyUse.Core.Manager.LibSettings? _libSettings { get; set; } = null;
-
-    public bool InitSettings { get; set; } = false;
 
     #endregion
 
     #region InitControler
 
-    public PaymentsController(string dbFileName)
+    public PaymentsController(string dbFileName) : base(dbFileName)
     {
         _dbFileName = dbFileName;
     }
@@ -24,22 +20,12 @@ public class PaymentsController : IController
     public void Initialize()
     {
         setUnitOfWork();
-        setSettingsManager();
+        base.setSettingsManager();
     }
 
     private void setUnitOfWork()
     {
         UnitOfWork = new EnergyUse.Core.UnitOfWork.Payment(_dbFileName);
-    }
-
-    private void setSettingsManager()
-    {
-        _libSettings = new EnergyUse.Core.Manager.LibSettings(_dbFileName);
-    }
-
-    public string getDbFileName()
-    {
-        return _dbFileName;
     }
 
     #endregion
