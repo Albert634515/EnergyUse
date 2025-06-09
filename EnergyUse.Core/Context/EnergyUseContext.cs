@@ -44,7 +44,7 @@ public partial class EnergyUseContext : DbContext
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.City).HasColumnType("VARCHAR (100)");
             entity.Property(e => e.DefaultAddress).HasColumnType("BOOLEAN").HasDefaultValueSql("false");
-            entity.Property(e => e.Description).IsRequired().HasColumnType("VARCHAR (100)");                
+            entity.Property(e => e.Description).IsRequired().HasColumnType("VARCHAR (100)");
             entity.Property(e => e.HouseNumber).HasColumnType("VARCHAR (15)");
             entity.Property(e => e.PostalCode).HasColumnType("VARCHAR (15)");
             entity.Property(e => e.Street).HasColumnType("VARCHAR (150)");
@@ -54,6 +54,8 @@ public partial class EnergyUseContext : DbContext
 
             entity.HasOne(d => d.TariffGroup).WithMany(p => p.Addresses).HasForeignKey(d => d.DefaultTariffGroupId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne(d => d.TariffGroup).WithMany(p => p.Addresses).HasForeignKey(d => d.GeneralTariffGroupId).OnDelete(DeleteBehavior.NoAction);
+
+            entity.HasIndex(i => i.Id, "AD_ID").IsUnique();
         });
 
 
@@ -62,13 +64,15 @@ public partial class EnergyUseContext : DbContext
             entity.HasKey(x => x.Id);
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Description).HasColumnType("VARCHAR (100)");
+
+            entity.HasIndex(i => i.Id, "CT_ID").IsUnique();
         });
 
         modelBuilder.Entity<CorrectionFactor>(entity =>
         {
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();                
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Factor).HasColumnType("DECIMAL (10, 5)");
-            entity.Property(e => e.Factor).HasPrecision(10, 5); 
+            entity.Property(e => e.Factor).HasPrecision(10, 5);
             entity.Property(e => e.StartFactor).HasColumnType("DATE");
             entity.Property(e => e.EndFactor).HasColumnType("DATE");
             entity.Property(e => e.EnergyTypeId).IsRequired();
@@ -94,7 +98,7 @@ public partial class EnergyUseContext : DbContext
             entity.HasOne(d => d.EnergyType).WithMany(p => p.CostCategories).HasForeignKey(d => d.EnergyTypeId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne(d => d.TariffGroup).WithMany(p => p.CostCategories).HasForeignKey(d => d.TariffGroupId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne(d => d.Unit).WithMany(p => p.CostCategories).HasForeignKey(d => d.UnitId).OnDelete(DeleteBehavior.NoAction);
-          
+
             entity.HasIndex(i => i.EnergyTypeId, "CC_EnergyTypeId");
         });
 
@@ -115,12 +119,16 @@ public partial class EnergyUseContext : DbContext
 
             entity.HasOne(d => d.EnergyType).WithMany(p => p.CalculatedUnitPrices).HasForeignKey(d => d.EnergyTypeId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne(d => d.TariffGroup).WithMany(p => p.CalculatedUnitPrices).HasForeignKey(d => d.EnergyTypeId).OnDelete(DeleteBehavior.NoAction);
+
+            entity.HasIndex(i => i.Id, "CU_ID");
         });
 
         modelBuilder.Entity<EnergySubType>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Description).HasColumnType("VARCHAR (25)").IsRequired();
+
+            entity.HasIndex(i => i.Id, "ES_ID").IsUnique();
         });
 
         modelBuilder.Entity<EnergyType>().Property(r => r.Id).ValueGeneratedOnAdd();
@@ -135,6 +143,7 @@ public partial class EnergyUseContext : DbContext
             entity.Property(e => e.Name).HasColumnType("VARCHAR (25)");
             entity.Property(e => e.UnitId).HasColumnType("VARCHAR (15)");
 
+            entity.HasIndex(i => i.Id, "ET_ID").IsUnique();
             entity.HasOne(d => d.Unit).WithMany(p => p.EnergyTypes).HasForeignKey(d => d.UnitId);
         });
 
@@ -150,7 +159,9 @@ public partial class EnergyUseContext : DbContext
             entity.HasOne(h => h.Address).WithMany(p => p.Meters).HasForeignKey(d => d.AddressId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne(h => h.EnergyType).WithMany(p => p.Meters).HasForeignKey(d => d.EnergyTypeId).OnDelete(DeleteBehavior.NoAction);
 
+            entity.HasIndex(i => i.Id, "MT_ID").IsUnique();
             entity.HasIndex(i => i.EnergyTypeId, "MT_EnergyTypeId");
+            entity.HasIndex(i => i.AddressId, "MT_AddressId");
         });
 
         modelBuilder.Entity<MeterReading>(entity =>
@@ -172,8 +183,10 @@ public partial class EnergyUseContext : DbContext
             entity.HasOne(d => d.EnergyType).WithMany(p => p.MeterReadings).HasForeignKey(d => d.EnergyTypeId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne(d => d.Meter).WithMany(p => p.MeterReadings).HasForeignKey(d => d.MeterId).OnDelete(DeleteBehavior.NoAction);
 
+            entity.HasIndex(i => i.Id, "MR_ID");
             entity.HasIndex(i => i.EnergyTypeId, "MR_EnergyTypeId");
             entity.HasIndex(i => i.MeterId, "MR_MeterId");
+            entity.HasIndex(i => i.RegistrationDate, "MR_registrationDate");
         });
 
         modelBuilder.Entity<Netting>(entity =>
@@ -184,6 +197,7 @@ public partial class EnergyUseContext : DbContext
             entity.Property(e => e.StartDate).HasColumnType("DATE");
             entity.HasOne(d => d.EnergyType).WithMany(p => p.Nettings).HasForeignKey(d => d.EnergyTypeId);
 
+            entity.HasIndex(i => i.Id, "NT_ID");
             entity.HasIndex(i => i.EnergyTypeId, "NT_EnergyTypeId");
         });
 
@@ -197,6 +211,8 @@ public partial class EnergyUseContext : DbContext
             entity.HasOne(d => d.Address).WithMany(p => p.Payments).HasForeignKey(d => d.AddressId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne(d => d.PreDefinedPeriod).WithMany(p => p.Payments).HasForeignKey(d => d.PreDefinedPeriodId).OnDelete(DeleteBehavior.NoAction);
 
+            entity.HasIndex(i => i.Id, "PM_ID");
+            entity.HasIndex(i => i.PreDefinedPeriodId, "PM_PreDefinedPeriodId");
             entity.HasIndex(i => i.AddressId, "PM_AddressId");
         });
 
@@ -204,6 +220,8 @@ public partial class EnergyUseContext : DbContext
         {
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Description).HasColumnType("VARCHAR (50)").IsRequired();
+
+            entity.HasIndex(e => e.Id, "PP_ID").IsUnique();
         });
 
         modelBuilder.Entity<PreDefinedPeriodDate>(entity =>
@@ -234,6 +252,7 @@ public partial class EnergyUseContext : DbContext
             entity.HasOne(d => d.EnergyType).WithMany(p => p.Rates).HasForeignKey(d => d.EnergyTypeId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne(d => d.TariffGroup).WithMany(p => p.Rates).HasForeignKey(d => d.TariffGroupId).OnDelete(DeleteBehavior.NoAction);
 
+            entity.HasIndex(i => i.Id, "RT_ID");
             entity.HasIndex(i => i.EnergyTypeId, "RT_EnergyTypeId");
             entity.HasIndex(i => i.RateTypeId, "RT_RateTypeId");
         });
@@ -246,6 +265,9 @@ public partial class EnergyUseContext : DbContext
 
             entity.Property(e => e.Key).IsRequired().HasColumnType("VARCHAR (20)");
             entity.Property(e => e.KeyValue).HasColumnType("VARCHAR (254)");
+
+            entity.HasIndex(i => i.Id, "ST_ID").IsUnique();
+            entity.HasIndex(i => i.Key, "ST_Key").IsUnique();
         });
 
         modelBuilder.Entity<Staffel>(entity =>
@@ -259,6 +281,9 @@ public partial class EnergyUseContext : DbContext
             entity.Property(e => e.StaffelValue).HasColumnType("DECIMAL (10, 5)").HasDefaultValueSql("0");
 
             entity.HasOne(d => d.Rate).WithMany(p => p.Staffels).HasForeignKey(d => d.RateId).OnDelete(DeleteBehavior.NoAction);
+
+            entity.HasIndex(i => i.Id, "SF_ID").IsUnique();
+            entity.HasIndex(i => i.RateId, "SF_RateId");
         });
 
         modelBuilder.Entity<TariffGroup>(entity =>
@@ -266,6 +291,8 @@ public partial class EnergyUseContext : DbContext
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Description).HasColumnType("VARCHAR (100)").IsRequired();
             entity.Property(e => e.TypeId).HasColumnType("NUMERIC (2)").IsRequired();
+
+            entity.HasIndex(i => i.Id, "TG_ID").IsUnique();
         });
 
         modelBuilder.Entity<Unit>(entity =>
@@ -273,6 +300,8 @@ public partial class EnergyUseContext : DbContext
             entity.HasKey(r => r.Id);
             entity.Property(e => e.Id).HasColumnType("VARCHAR (15)");
             entity.Property(e => e.Description).HasColumnType("VARCHAR (30)").IsRequired();
+
+            entity.HasIndex(i => i.Id, "UN_ID").IsUnique();
         });
 
         modelBuilder.Entity<VatTarif>(entity =>
@@ -280,8 +309,11 @@ public partial class EnergyUseContext : DbContext
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.StartDate).HasColumnType("DATE");
             entity.Property(e => e.EndDate).HasColumnType("DATE");
-            entity.Property(e => e.Tarif).HasColumnType("DECIMAL (10, 2)");                
+            entity.Property(e => e.Tarif).HasColumnType("DECIMAL (10, 2)");
             entity.HasOne(d => d.CostCategory).WithMany(p => p.VatTarifs).HasForeignKey(d => d.CostCategoryId);
+
+            entity.HasIndex(i => i.Id, "VT_Id").IsUnique();
+            entity.HasIndex(i => i.CostCategoryId, "VT_CostCategoryId");
         });
 
         OnModelCreatingPartial(modelBuilder);
