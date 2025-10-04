@@ -12,7 +12,12 @@ public class BaseController
 
     public BaseController(string dbFileName)
     {
-        _dbFileName = string.IsNullOrWhiteSpace(dbFileName) ? throw new ArgumentException("Database file name cannot be null or empty.", nameof(dbFileName)) : dbFileName.Trim();
+        _dbFileName = dbFileName.Trim();
+    }
+
+    public BaseController()
+    {
+       
     }
 
     protected void setSettingsManager()

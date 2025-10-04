@@ -281,9 +281,6 @@ public partial class EnergyUseContext : DbContext
             entity.Property(e => e.StaffelValue).HasColumnType("DECIMAL (10, 5)").HasDefaultValueSql("0");
 
             entity.HasOne(d => d.Rate).WithMany(p => p.Staffels).HasForeignKey(d => d.RateId).OnDelete(DeleteBehavior.NoAction);
-
-            entity.HasIndex(i => i.Id, "SF_ID").IsUnique();
-            entity.HasIndex(i => i.RateId, "SF_RateId");
         });
 
         modelBuilder.Entity<TariffGroup>(entity =>
