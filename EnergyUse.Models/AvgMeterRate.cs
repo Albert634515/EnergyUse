@@ -2,7 +2,7 @@
 
 public class AvgMeterRate
 {
-    public EnergyType EnergyType { get; set; } = new();
+    public long EnergyTypeId { get; set; } = 0;
     public long AddressId { get; set; } = 0;
     public int Month { get; set; } = 0;
     public int Day { get; set; } = 0;

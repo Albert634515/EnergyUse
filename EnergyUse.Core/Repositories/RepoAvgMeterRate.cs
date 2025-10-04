@@ -1,5 +1,6 @@
 ﻿using EnergyUse.Core.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace EnergyUse.Core.Repositories;
 
@@ -12,16 +13,16 @@ public class RepoAvgMeterRate : RepoGeneral<Models.AvgMeterRate>
         _context = dbContext;
     }
 
-    public IEnumerable<Models.AvgMeterRate> SelectAllByEnergyTypeId(long energyTypeId, long addressId, int month = 0, int week = 0, int day = 0)
+    public async Task<IEnumerable<Models.AvgMeterRate>> SelectAllByEnergyTypeId(long energyTypeId, long addressId, int month = 0, int week = 0, int day = 0)
     {
         if (month > 0 && day == 0)
-            return SelectByAddressAndEnergyTypePerMonth(energyTypeId, addressId, month);
+            return await SelectByAddressAndEnergyTypePerMonth(energyTypeId, addressId, month);
         else if (week > 0)
-            return SelectByAddressAndEnergyTypePerWeek(energyTypeId, addressId, day);
+            return await SelectByAddressAndEnergyTypePerWeek(energyTypeId, addressId, day);
         else if (day > 0)
-            return SelectByAddressAndEnergyTypePerDay(energyTypeId, addressId, month, day);
+            return await SelectByAddressAndEnergyTypePerDay(energyTypeId, addressId, month, day);
         else
-            return SelectByAddressAndEnergyType(energyTypeId, addressId);
+            return await SelectByAddressAndEnergyType(energyTypeId, addressId);
     }
 
     /// <summary>
@@ -32,111 +33,148 @@ public class RepoAvgMeterRate : RepoGeneral<Models.AvgMeterRate>
     /// <param name="correction">Correction of consumed energy</param>
     /// <param name="correctionReturn">Correction over return energy</param>
     /// <returns></returns>
-    public Models.AvgMeterRate? SelectGeneralAvgByAddressAndEnergyType(long energyTypeId, long addressId, decimal correction, decimal correctionReturn)
+    public async Task<Models.AvgMeterRate?> SelectGeneralAvgByAddressAndEnergyType(long energyTypeId, long addressId, decimal correction, decimal correctionReturn)
     {
-        var avgList = _context.MeterReadings
-            .Include(e => e.EnergyType)
+        var meterReadings = await _context.MeterReadings
+            .AsNoTracking()
             .Include(m => m.Meter)
             .Include(a => a.Meter.Address)
-            .Where(n => n.EnergyTypeId == energyTypeId && n.Meter.AddressId == addressId).ToList()
-            .GroupBy(g => new { EnergyType = g.EnergyType, AddressId = g.Meter.Address.Id })
+            .Where(n => n.EnergyTypeId == energyTypeId && n.Meter.AddressId == addressId)
+            .ToListAsync();
+
+        var avgList = meterReadings
+            .GroupBy(g => new { EnergyTypeId = g.EnergyTypeId, AddressId = g.Meter.Address.Id })
             .Select(x => new Models.AvgMeterRate
             {
                 AddressId = x.Key.AddressId,
-                EnergyType = x.Key.EnergyType,
+                EnergyTypeId = x.Key.EnergyTypeId ?? 0,
                 AvgLow = x.Average(t => t.DeltaLow) * correction,
                 AvgNormal = x.Average(t => t.DeltaNormal) * correction,
                 AvgReturnDeliveryLow = x.Average(t => t.ReturnDeliveryDeltaLow) * correctionReturn,
                 AvgReturnDeliveryNormal = x.Average(t => t.ReturnDeliveryDeltaNormal) * correctionReturn
             })
-            .OrderBy(o => o.Month).ThenBy(o => o.Day).FirstOrDefault();
+            .OrderBy(o => o.Month)
+            .ThenBy(o => o.Day)
+            .FirstOrDefault();
 
         return avgList;
     }
 
-    public IEnumerable<Models.AvgMeterRate> SelectByAddressAndEnergyType(long energyTypeId, long addressId)
+    public async Task<IEnumerable<Models.AvgMeterRate>> SelectByAddressAndEnergyType(long energyTypeId, long addressId)
     {
-        var avgList = _context.MeterReadings
-            .Include(e => e.EnergyType)
-            .Include(m => m.Meter)
-            .Include(a => a.Meter.Address)
-            .Where(n => n.EnergyTypeId == energyTypeId && n.Meter.AddressId == addressId).ToList()
-            .GroupBy(g => new { EnergyType = g.EnergyType, AddressId = g.Meter.Address.Id, Month = g.RegistrationDate.Date.Month, Day = g.RegistrationDate.Date.Day })
-            .Select(x => new Models.AvgMeterRate
-            {
-                AddressId = x.Key.AddressId,
-                EnergyType = x.Key.EnergyType,
-                Month = x.Key.Month,
-                Day = x.Key.Day,
-                AvgLow = x.Average(t => t.DeltaLow),
-                AvgNormal = x.Average(t => t.DeltaNormal),
-                AvgReturnDeliveryLow = x.Average(t => t.ReturnDeliveryDeltaLow),
-                AvgReturnDeliveryNormal = x.Average(t => t.ReturnDeliveryDeltaNormal)
-            })
-            .OrderBy(o => o.Month).ThenBy(o => o.Day);
+        var avgList = await _context.MeterReadings
+                                    .AsNoTracking()
+                                    .Include(m => m.Meter)
+                                    .Include(a => a.Meter.Address)
+                                    .Where(n => n.EnergyTypeId == energyTypeId && n.Meter.AddressId == addressId)            
+                                    .GroupBy(g => new { EnergyTypeId = g.EnergyTypeId, AddressId = g.Meter.Address.Id, Month = g.RegistrationDate.Date.Month, Day = g.RegistrationDate.Date.Day })
+                                    .Select(x => new Models.AvgMeterRate
+                                    {
+                                        AddressId = x.Key.AddressId,
+                                        EnergyTypeId = x.Key.EnergyTypeId ?? 0,
+                                        Month = x.Key.Month,
+                                        Day = x.Key.Day,
+                                        AvgLow = x.Average(t => t.DeltaLow),
+                                        AvgNormal = x.Average(t => t.DeltaNormal),
+                                        AvgReturnDeliveryLow = x.Average(t => t.ReturnDeliveryDeltaLow),
+                                        AvgReturnDeliveryNormal = x.Average(t => t.ReturnDeliveryDeltaNormal)
+                                    })
+                                    .OrderBy(o => o.Month)
+                                    .ThenBy(o => o.Day)
+                                    .ToListAsync();
 
         return avgList;
     }
 
-    public IEnumerable<Models.AvgMeterRate> SelectByAddressAndEnergyTypePerMonth(long energyTypeId, long addressId, int month)
+    public async Task<IEnumerable<Models.AvgMeterRate>> SelectByAddressAndEnergyTypePerMonth(long energyTypeId, long addressId, int month)
     {
-        var avgList = _context.MeterReadings
-            .Include(e => e.EnergyType)
-            .Include(a => a.Meter)
-            .Include(a => a.Meter.Address)
-            .Where(w => w.EnergyType.Id == energyTypeId && w.Meter.Address.Id == addressId && w.RegistrationDate.Date.Month == month).ToList()
-            .GroupBy(g => new { EnergyType = g.EnergyType, AddressId = g.Meter.Address.Id, Month = g.RegistrationDate.Month })
-            .Select(x => new Models.AvgMeterRate
-            {
-                AddressId = x.Key.AddressId,
-                EnergyType = x.Key.EnergyType,
-                Month = x.Key.Month,
-                AvgLow = x.Average(t => t.DeltaLow),
-                AvgNormal = x.Average(t => t.DeltaNormal),
-                AvgReturnDeliveryLow = x.Average(t => t.ReturnDeliveryDeltaLow),
-                AvgReturnDeliveryNormal = x.Average(t => t.ReturnDeliveryDeltaNormal)
-            })
-            .OrderBy(o => o.Month).ThenBy(o => o.Day);
+        var avgList = await _context.MeterReadings
+                                    .AsNoTracking()
+                                    .Include(a => a.Meter)
+                                    .Include(a => a.Meter.Address)
+                                    .Where(w => w.EnergyType.Id == energyTypeId && w.Meter.Address.Id == addressId && w.RegistrationDate.Date.Month == month)            
+                                    .GroupBy(g => new { EnergyTypeId = g.EnergyType.Id, AddressId = g.Meter.Address.Id, Month = g.RegistrationDate.Month })
+                                    .Select(x => new Models.AvgMeterRate
+                                    {
+                                        AddressId = x.Key.AddressId,
+                                        EnergyTypeId = x.Key.EnergyTypeId,
+                                        Month = x.Key.Month,
+                                        AvgLow = x.Average(t => t.DeltaLow),
+                                        AvgNormal = x.Average(t => t.DeltaNormal),
+                                        AvgReturnDeliveryLow = x.Average(t => t.ReturnDeliveryDeltaLow),
+                                        AvgReturnDeliveryNormal = x.Average(t => t.ReturnDeliveryDeltaNormal)
+                                    })
+                                    .OrderBy(o => o.Month)
+                                    .ThenBy(o => o.Day)
+                                    .ToListAsync();
 
         return avgList;
     }
 
-    public IEnumerable<Models.AvgMeterRate> SelectByAddressAndEnergyTypePerWeek(long energyTypeId, long addressId, int weekNo)
+    public async Task<IEnumerable<Models.AvgMeterRate>> SelectByAddressAndEnergyTypePerWeek(long energyTypeId, long addressId, int weekNo)
     {
-        var avgList = _context.MeterReadings
-            .Include(e => e.EnergyType)
-            .Include(a => a.Meter)
-            .Include(a => a.Meter.Address)
-            .Where(w => w.EnergyType.Id == energyTypeId && w.Meter.Address.Id == addressId && w.WeekNo == weekNo).ToList()
-            .GroupBy(g => new { EnergyType = g.EnergyType, AddressId = g.Meter.Address.Id, Month = g.RegistrationDate.Month, Day = g.RegistrationDate.Day })
-            .Select(x => new Models.AvgMeterRate
-            {
-                AddressId = x.Key.AddressId,
-                EnergyType = x.Key.EnergyType,
-                Month = x.Key.Month,
-                Day = x.Key.Day,
-                AvgLow = x.Average(t => t.DeltaLow),
-                AvgNormal = x.Average(t => t.DeltaNormal),
-                AvgReturnDeliveryLow = x.Average(t => t.ReturnDeliveryDeltaLow),
-                AvgReturnDeliveryNormal = x.Average(t => t.ReturnDeliveryDeltaNormal)
-            })
-            .OrderBy(o => o.Month).ThenBy(o => o.Day);
+        var avgList = await _context.MeterReadings
+                                    .AsNoTracking()
+                                    .Include(a => a.Meter)
+                                    .Include(a => a.Meter.Address)
+                                    .Where(w => w.EnergyType.Id == energyTypeId && w.Meter.Address.Id == addressId && w.WeekNo == weekNo)
+                                    .GroupBy(g => new { EnergyTypeId = g.EnergyTypeId, AddressId = g.Meter.Address.Id, Month = g.RegistrationDate.Month, Day = g.RegistrationDate.Day })
+                                    .Select(x => new Models.AvgMeterRate
+                                    {
+                                        AddressId = x.Key.AddressId,
+                                        EnergyTypeId = x.Key.EnergyTypeId ?? 0,
+                                        Month = x.Key.Month,
+                                        Day = x.Key.Day,
+                                        AvgLow = x.Average(t => t.DeltaLow),
+                                        AvgNormal = x.Average(t => t.DeltaNormal),
+                                        AvgReturnDeliveryLow = x.Average(t => t.ReturnDeliveryDeltaLow),
+                                        AvgReturnDeliveryNormal = x.Average(t => t.ReturnDeliveryDeltaNormal)
+                                    })
+                                    .OrderBy(o => o.Month)
+                                    .ThenBy(o => o.Day)
+                                    .ToListAsync();
 
         return avgList;
     }
 
-    public IEnumerable<Models.AvgMeterRate> SelectByAddressAndEnergyTypePerDay(long energyTypeId, long addressId, int month, int day)
+    public async Task<IEnumerable<Models.AvgMeterRate>> SelectByAddressAndEnergyTypePerDay(long energyTypeId, long addressId, int month, int day)
     {
-        var avgList = _context.MeterReadings
-                    .Include(e => e.EnergyType)
+        var avgList = await _context.MeterReadings
+                                    .AsNoTracking()
+                                    .Include(a => a.Meter)
+                                    .Include(a => a.Meter.Address)
+                                    .Where(w => w.EnergyType.Id == energyTypeId && w.Meter.Address.Id == addressId && w.RegistrationDate.Date.Month == month && w.RegistrationDate.Date.Day == day)
+                                    .GroupBy(g => new { EnergyTypeId = g.EnergyType.Id, AddressId = g.Meter.Address.Id, Month = g.RegistrationDate.Month, Day = g.RegistrationDate.Date.Day })
+                                    .Select(x => new Models.AvgMeterRate
+                                    {
+                                        AddressId = x.Key.AddressId,
+                                        EnergyTypeId = x.Key.EnergyTypeId,
+                                        Month = x.Key.Month,
+                                        Day = x.Key.Day,
+                                        AvgLow = x.Average(t => t.DeltaLow),
+                                        AvgNormal = x.Average(t => t.DeltaNormal),
+                                        AvgReturnDeliveryLow = x.Average(t => t.ReturnDeliveryDeltaLow),
+                                        AvgReturnDeliveryNormal = x.Average(t => t.ReturnDeliveryDeltaNormal)
+                                    })
+                                    .OrderBy(o => o.Month)
+                                    .ThenBy(o => o.Day)
+                                    .ToListAsync(); 
+
+        return avgList;
+    }
+
+    public async Task<IEnumerable<Models.AvgMeterRate>> SelectByAddressAndEnergyTypePerPeriod(long energyTypeId, long addressId)
+    {
+        var avgList = await _context.MeterReadings
+                    .AsNoTracking()
                     .Include(a => a.Meter)
                     .Include(a => a.Meter.Address)
-                    .Where(w => w.EnergyType.Id == energyTypeId && w.Meter.Address.Id == addressId && w.RegistrationDate.Date.Month == month && w.RegistrationDate.Date.Day == day).ToList()
-                    .GroupBy(g => new { EnergyType = g.EnergyType, AddressId = g.Meter.Address.Id, Month = g.RegistrationDate.Month, Day = g.RegistrationDate.Date.Day })
+                    .Where(w => w.EnergyType.Id == energyTypeId && w.Meter.Address.Id == addressId)
+                    .GroupBy(g => new { EnergyTypeId = g.EnergyType.Id, AddressId = g.Meter.Address.Id, Month = g.RegistrationDate.Month, Day = g.RegistrationDate.Date.Day })
                     .Select(x => new Models.AvgMeterRate
                     {
                         AddressId = x.Key.AddressId,
-                        EnergyType = x.Key.EnergyType,
+                        EnergyTypeId = x.Key.EnergyTypeId,
                         Month = x.Key.Month,
                         Day = x.Key.Day,
                         AvgLow = x.Average(t => t.DeltaLow),
@@ -144,23 +182,25 @@ public class RepoAvgMeterRate : RepoGeneral<Models.AvgMeterRate>
                         AvgReturnDeliveryLow = x.Average(t => t.ReturnDeliveryDeltaLow),
                         AvgReturnDeliveryNormal = x.Average(t => t.ReturnDeliveryDeltaNormal)
                     })
-                    .OrderBy(o => o.Month).ThenBy(o => o.Day);
+                    .OrderBy(o => o.Month)
+                    .ThenBy(o => o.Day)
+                    .ToListAsync();
 
         return avgList;
     }
 
-    public IEnumerable<Models.AvgMeterRate> SelectByAddressAndEnergyTypePerPeriod(long energyTypeId, long addressId)
+    public async Task<IEnumerable<Models.AvgMeterRate>> SelectByAddressAndEnergyTypePerPeriodFromDate(long energyTypeId, long addressId, DateTime fromDate)
     {
-        var avgList = _context.MeterReadings
-                    .Include(e => e.EnergyType)
+        var avgList = await _context.MeterReadings
+                    .AsNoTracking()
                     .Include(a => a.Meter)
                     .Include(a => a.Meter.Address)
-                    .Where(w => w.EnergyType.Id == energyTypeId && w.Meter.Address.Id == addressId).ToList()
-                    .GroupBy(g => new { EnergyType = g.EnergyType, AddressId = g.Meter.Address.Id, Month = g.RegistrationDate.Month, Day = g.RegistrationDate.Date.Day })
+                    .Where(w => w.EnergyType.Id == energyTypeId && w.Meter.Address.Id == addressId && w.RegistrationDate.Date >= fromDate.Date)
+                    .GroupBy(g => new { EnergyTypeId = g.EnergyType.Id, AddressId = g.Meter.Address.Id, Month = g.RegistrationDate.Month, Day = g.RegistrationDate.Date.Day })
                     .Select(x => new Models.AvgMeterRate
                     {
                         AddressId = x.Key.AddressId,
-                        EnergyType = x.Key.EnergyType,
+                        EnergyTypeId = x.Key.EnergyTypeId,
                         Month = x.Key.Month,
                         Day = x.Key.Day,
                         AvgLow = x.Average(t => t.DeltaLow),
@@ -168,31 +208,9 @@ public class RepoAvgMeterRate : RepoGeneral<Models.AvgMeterRate>
                         AvgReturnDeliveryLow = x.Average(t => t.ReturnDeliveryDeltaLow),
                         AvgReturnDeliveryNormal = x.Average(t => t.ReturnDeliveryDeltaNormal)
                     })
-                    .OrderBy(o => o.Month).ThenBy(o => o.Day);
-
-        return avgList;
-    }
-
-    public IEnumerable<Models.AvgMeterRate> SelectByAddressAndEnergyTypePerPeriodFromDate(long energyTypeId, long addressId, DateTime fromDate)
-    {
-        var avgList = _context.MeterReadings
-                    .Include(e => e.EnergyType)
-                    .Include(a => a.Meter)
-                    .Include(a => a.Meter.Address)
-                    .Where(w => w.EnergyType.Id == energyTypeId && w.Meter.Address.Id == addressId && w.RegistrationDate.Date >= fromDate.Date).ToList()
-                    .GroupBy(g => new { EnergyType = g.EnergyType, AddressId = g.Meter.Address.Id, Month = g.RegistrationDate.Month, Day = g.RegistrationDate.Date.Day })
-                    .Select(x => new Models.AvgMeterRate
-                    {
-                        AddressId = x.Key.AddressId,
-                        EnergyType = x.Key.EnergyType,
-                        Month = x.Key.Month,
-                        Day = x.Key.Day,
-                        AvgLow = x.Average(t => t.DeltaLow),
-                        AvgNormal = x.Average(t => t.DeltaNormal),
-                        AvgReturnDeliveryLow = x.Average(t => t.ReturnDeliveryDeltaLow),
-                        AvgReturnDeliveryNormal = x.Average(t => t.ReturnDeliveryDeltaNormal)
-                    })
-                    .OrderBy(o => o.Month).ThenBy(o => o.Day);
+                    .OrderBy(o => o.Month)
+                    .ThenBy(o => o.Day)
+                    .ToListAsync();
 
         return avgList;
     }

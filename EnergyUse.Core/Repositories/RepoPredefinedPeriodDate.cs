@@ -18,6 +18,6 @@ public class RepoPredefinedPeriodDate : RepoGeneral<Models.PreDefinedPeriodDate>
             .Include(e => e.EnergyType)
             .Include(t => t.TariffGroup)
             .Include(p => p.PreDefinedPeriod)
-            .Where(a => a.PreDefinedPeriod.Id == periodId);
+            .Where(a => a.PreDefinedPeriodId == periodId);
     }
 }

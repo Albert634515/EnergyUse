@@ -33,9 +33,9 @@ public partial class frmPayBackTime : Form
         setGeneralSettings();
     }
 
-    private void setComboAddresses()
+    private async void setComboAddresses()
     {
-        var addressList = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
+        var addressList = (await _controller.UnitOfWork.AddressRepo.GetAll()).ToList();
         bsAddresses.DataSource = addressList;
 
         var defaultAddress = addressList.Where(x => x.DefaultAddress == true).FirstOrDefault();
@@ -178,19 +178,19 @@ public partial class frmPayBackTime : Form
 
     #region ButtonEvents
 
-    private void tsbCalculate_Click(object sender, EventArgs e)
+    private async void tsbCalculate_Click(object sender, EventArgs e)
     {
-        if (!validateInput())
+        if (!await validateInputAsync())
             return;
 
-        Cursor = Cursors.WaitCursor;
+        Cursor.Current = Cursors.WaitCursor;
 
         EnergyUse.Models.Address address = (EnergyUse.Models.Address)cmbAddress.SelectedItem;
         EnergyUse.Models.EnergyType energyType = (EnergyUse.Models.EnergyType)cboEnergyType.SelectedItem;
 
-        calculatePayBackTime(energyType, address);
+        await calculatePayBackTimeAsync(energyType, address);
 
-        Cursor = Cursors.Default;
+        Cursor.Current = Cursors.Default;
     }
 
     private void tsbClose_Click(object sender, EventArgs e)
@@ -206,7 +206,7 @@ public partial class frmPayBackTime : Form
 
     #region Methods
 
-    private void calculatePayBackTime(EnergyUse.Models.EnergyType energyType, EnergyUse.Models.Address address)
+    private async Task calculatePayBackTimeAsync(EnergyUse.Models.EnergyType energyType, EnergyUse.Models.Address address)
     {
         List<SettlementData> settlementDataList = new();
         _payBackTimeList = new List<PayBackTime>();
@@ -240,7 +240,7 @@ public partial class frmPayBackTime : Form
                     AverageReturn = decimal.Parse(txtAverageReturn.Text)
                 };
 
-            PayBackTime payBackTime = _controller.CalculatePayBackPeriod(parameterCalcPeriod);
+            PayBackTime payBackTime = await _controller.CalculatePayBackPeriodAsync(parameterCalcPeriod);
 
             lastPeriodStart = payBackTime.StartPeriod;
             payBackTime.ReturnOnInvestmentTotal = lastRoi + payBackTime.ReturnOnInvestment;
@@ -259,7 +259,7 @@ public partial class frmPayBackTime : Form
         bsPayBackTimes.DataSource = _payBackTimeList;
     }
 
-    private bool validateInput()
+    private async Task<bool> validateInputAsync()
     {
         if (cmbAddress.SelectedIndex == -1)
         {
@@ -296,7 +296,7 @@ public partial class frmPayBackTime : Form
         for (int i = startYear; i <= nudMaxYears.Value; i++)
         {
             var defaultTarifGroupId = address.DefaultTariffGroupId ?? 0;
-            var pricePerUnit =  _controller.GetPricePerUnitPerYear(i, defaultTarifGroupId, energyType.Id);
+            var pricePerUnit = await _controller.GetPricePerUnitPerYear(i, defaultTarifGroupId, energyType.Id);
             if (pricePerUnit < 0)
             {
                 var message = Managers.Languages.GetResourceString("PayBackTimeNoPricePerUnit", "There is no price unit for year %s");

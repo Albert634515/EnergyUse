@@ -14,6 +14,7 @@ public partial class ucData : UserControl
 
     private DateTimePicker _dtp = new DateTimePicker();
     private Rectangle _rectangle;
+    private bool _initSettings { get; set; } = false;
 
     #endregion
 
@@ -24,10 +25,12 @@ public partial class ucData : UserControl
         InitializeComponent();
         setBaseControlSettings();
 
+        _initSettings = true;
         initDatePicker();
         dtpFrom.Value = DateTime.Now.AddDays(-365);
 
         InitFormData(address, energyType);
+        _initSettings = false;
     }
 
     private void initDatePicker()
@@ -45,7 +48,10 @@ public partial class ucData : UserControl
     private void cboEnergyType_SelectedIndexChanged(object sender, EventArgs e)
     {
         showHideColumns();
-        RefreshMeterReadingList();
+        if (!_initSettings)
+        {
+            RefreshMeterReadingList();
+        }
     }
 
     private void rbAccumulativeYes_CheckedChanged(object sender, EventArgs e)
@@ -60,12 +66,18 @@ public partial class ucData : UserControl
 
     private void dtpFrom_ValueChanged(object sender, EventArgs e)
     {
-        RefreshMeterReadingList();
+        if (!_initSettings)
+        {
+            RefreshMeterReadingList();
+        }
     }
 
     private void dtpTill_ValueChanged(object sender, EventArgs e)
     {
-        RefreshMeterReadingList();
+        if (!_initSettings)
+        {
+            RefreshMeterReadingList();
+        }
     }
 
     private void dgvMeterReadings_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -126,7 +138,7 @@ public partial class ucData : UserControl
 
     #region Methods
 
-    private void addMeterReading()
+    private async void addMeterReading()
     {
         if (CurrentEnergyType == null)
         {
@@ -135,7 +147,7 @@ public partial class ucData : UserControl
             return;
         }
 
-        var meterList = _unitOfWork.MeterRepo.SelectByAddressAndEnergyType(CurrentAddress.Id, CurrentEnergyType.Id).ToList();
+        var meterList = (await _unitOfWork.MeterRepo.SelectByAddressAndEnergyType(CurrentAddress.Id, CurrentEnergyType.Id)).ToList();
         if (meterList.Count == 0)
         {
             var message = Managers.Languages.GetResourceString("ucDataNoMeter", "The current address does not have a meter for %e.%nFirst add a %e before registering new meter registrations");

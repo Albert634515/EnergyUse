@@ -49,7 +49,7 @@ public class RateController : BaseController, IController
         return priceChange;
     }
 
-    public RateTaxInfo GetRateIncExTax(Models.CostCategory costCategory, Models.Rate rate)
+    public async Task<EnergyUse.Models.Common.RateTaxInfo> GetRateIncExTax(Models.CostCategory costCategory, Models.Rate rate)
     {
         var rateTaxInfo = new EnergyUse.Models.Common.RateTaxInfo();
 
@@ -61,7 +61,7 @@ public class RateController : BaseController, IController
         if (rate == null || costCategory == null)
             return rateTaxInfo;
 
-        var vatTarif = UnitOfWork.RepoVatTarif.GetByCostCategoryIdAndDate(costCategory.Id, rate.StartRate);
+        var vatTarif = await UnitOfWork.RepoVatTarif.GetByCostCategoryIdAndDate(costCategory.Id, rate.StartRate);
         if (vatTarif == null)
             return rateTaxInfo;            
 

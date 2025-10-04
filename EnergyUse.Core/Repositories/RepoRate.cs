@@ -28,9 +28,9 @@ public class RepoRate : RepoGeneral<Models.Rate>
                        .Include(c => c.CostCategory)
                        .Include(t => t.TariffGroup)
                        .Include(e => e.EnergyType)
-                       .Where(x => x.CostCategory.Id == costCategoryId 
-                                && x.EnergyType.Id == energyTypeId 
-                                && x.TariffGroup.Id == tarifGroupId)
+                       .Where(x => x.CostCategoryId == costCategoryId 
+                                && x.EnergyTypeId == energyTypeId 
+                                && x.TariffGroupId == tarifGroupId)
                        .OrderBy(o => o.StartRate);
     }
 
@@ -40,9 +40,9 @@ public class RepoRate : RepoGeneral<Models.Rate>
             .Include(c => c.CostCategory)
             .Include(t => t.TariffGroup)
             .Include(e => e.EnergyType)
-            .Where(x => x.EnergyType.Id == energyTypeId 
-                     && x.CostCategory.Id == costCategoryId 
-                     && x.TariffGroup.Id == tarifGroupId 
+            .Where(x => x.EnergyTypeId == energyTypeId 
+                     && x.CostCategoryId == costCategoryId 
+                     && x.TariffGroupId == tarifGroupId 
                      && (x.StartRate.Date <= endDate.Date && x.EndRate.Date >= startDate.Date));
     }
 
@@ -52,9 +52,9 @@ public class RepoRate : RepoGeneral<Models.Rate>
             .Include(c => c.CostCategory)
             .Include(t => t.TariffGroup)
             .Include(e => e.EnergyType)
-            .Where(x => x.CostCategory.Id == costCategoryId 
-                     && x.TariffGroup.Id == tarifGroupId
-                     && x.EnergyType.Id == energyTypeId
+            .Where(x => x.CostCategoryId == costCategoryId 
+                     && x.TariffGroupId == tarifGroupId
+                     && x.EnergyTypeId == energyTypeId
                      && x.StartRate.Date <= lastDate.Date)
              .OrderByDescending(o=> o.StartRate).FirstOrDefault();
     }
@@ -65,9 +65,9 @@ public class RepoRate : RepoGeneral<Models.Rate>
             .Include(c => c.CostCategory)
             .Include(t => t.TariffGroup)
             .Include(e => e.EnergyType)
-            .Where(x => x.CostCategory.Id == costCategoryId
-                     && x.TariffGroup.Id == tarifGroupId
-                     && x.EnergyType.Id == energyTypeId)
+            .Where(x => x.CostCategoryId == costCategoryId
+                     && x.TariffGroupId == tarifGroupId
+                     && x.EnergyTypeId == energyTypeId)
              .OrderByDescending(o => o.StartRate).FirstOrDefault();
     }
 

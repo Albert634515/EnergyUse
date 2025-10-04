@@ -1,4 +1,5 @@
 ﻿using EnergyUse.Core.Interfaces;
+using EnergyUse.Models;
 
 namespace EnergyUse.Core.Controllers;
 
@@ -26,14 +27,13 @@ public class AddressController : BaseController, IController
         UnitOfWork = new EnergyUse.Core.UnitOfWork.Address(_dbFileName);
     }
 
-    #region Settings
-
-    public List<Models.Address> GetAllAdresses()
+    public async Task<List<Address>> GetAllAdressesAsync()
     {
         if (UnitOfWork?.AddressRepo == null)
             throw new InvalidOperationException("UnitOfWork or AddressRepo is not initialized.");
 
-        UnitOfWork.Addresses = UnitOfWork.AddressRepo.GetAll().ToList();
+        var addresses = await UnitOfWork.AddressRepo.GetAll();
+        UnitOfWork.Addresses = (List<Address>)addresses;
         return UnitOfWork.Addresses;
     }
 
@@ -57,5 +57,5 @@ public class AddressController : BaseController, IController
         return UnitOfWork.AddDefaultEntity(defaultDescription);
     }
 
-    #endregion
+
 }

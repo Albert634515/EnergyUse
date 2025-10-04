@@ -38,16 +38,16 @@ public partial class frmEditMeterReading : Form
         setCurrentDataSource(_CurrentEnergyType, _CurrentAddressId, _meterAddressId);
     }
 
-    private void setMeters()
+    private async void setMeters()
     {
-        bsMeters.DataSource = _controller.UnitOfWork.MeterRepo.SelectByAddressAndEnergyType(_CurrentAddressId, _CurrentEnergyType.Id).ToList();
+        bsMeters.DataSource = (await _controller.UnitOfWork.MeterRepo.SelectByAddressAndEnergyType(_CurrentAddressId, _CurrentEnergyType.Id)).ToList();
         cboMeters.SelectedIndex = -1;
     }
 
-    private void setCurrentDataSource(EnergyUse.Models.EnergyType currentEnergyType, long addressId, long meterReadingId)
+    private async void setCurrentDataSource(EnergyUse.Models.EnergyType currentEnergyType, long addressId, long meterReadingId)
     {
         if (meterReadingId == 0)
-            _controller.UnitOfWork.AddDefaultEntity(addressId, currentEnergyType.Id);
+            await _controller.UnitOfWork.AddDefaultEntity(addressId, currentEnergyType.Id);
         else
             _controller.UnitOfWork.MeterReadingRepo.Get(meterReadingId);
 

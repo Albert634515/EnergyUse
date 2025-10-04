@@ -67,7 +67,7 @@ public partial class frmCalculatedUnitPrice : Form
 
     private void tsbAdd_Click(object sender, EventArgs e)
     {
-        addCalculatedUnitPrice();
+        addCalculatedUnitPriceAsync();
     }
 
     private void tsbSave_Click(object sender, EventArgs e)
@@ -95,25 +95,21 @@ public partial class frmCalculatedUnitPrice : Form
         closeCalculatedUnitPrice();
     }
 
-    #endregion
-
-    #region Methods
-
-    private void initCalculatedUnitPrice()
+    private async void initCalculatedUnitPrice()
     {
         var energyType = (EnergyUse.Models.EnergyType)cboEnergyType.SelectedItem;
         var tarifGroup = (EnergyUse.Models.TariffGroup)cboTarifGroup.SelectedItem;
 
         _controller.UnitOfWork.CalculatedUnitPrices = new List<EnergyUse.Models.CalculatedUnitPrice>();
 
-       if (energyType != null && tarifGroup != null)
-            _controller.UnitOfWork.CalculatedUnitPrices = _controller.UnitOfWork.CalculatedUnitPriceRepo.SelectByEnergyTypeAndTarifGroup(energyType.Id, tarifGroup.Id).ToList();
+        if (energyType != null && tarifGroup != null)
+            _controller.UnitOfWork.CalculatedUnitPrices = (await _controller.UnitOfWork.CalculatedUnitPriceRepo.SelectByEnergyTypeAndTarifGroup(energyType.Id, tarifGroup.Id)).ToList();
 
         _controller.UnitOfWork.SetListSorted();
         bsCalculatedUnitPrice.DataSource = _controller.UnitOfWork.CalculatedUnitPrices;
     }
 
-    private void addCalculatedUnitPrice()
+    private async Task addCalculatedUnitPriceAsync()
     {
         if (!validateInput())
             return;
@@ -121,7 +117,7 @@ public partial class frmCalculatedUnitPrice : Form
         EnergyUse.Models.EnergyType energyType = (EnergyUse.Models.EnergyType)cboEnergyType.SelectedItem;
         EnergyUse.Models.TariffGroup tariffGroup = (EnergyUse.Models.TariffGroup)cboTarifGroup.SelectedItem;
 
-        var entity = _controller.UnitOfWork.AddDefaultEntity(energyType.Id, tariffGroup.Id);
+        var entity = await _controller.UnitOfWork.AddDefaultEntity(energyType.Id, tariffGroup.Id);
 
         bsCalculatedUnitPrice.DataSource = _controller.UnitOfWork.CalculatedUnitPrices;
         bsCalculatedUnitPrice.ResetBindings(false);

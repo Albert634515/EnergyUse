@@ -70,9 +70,9 @@ public partial class ucImport : UserControl
             {
                 TxtImportFile.Text = openFileDialog1.FileName;                    
                 libSettings.SetLastUsedImportFile(TxtImportFile.Text, getKeyForLastImportFile());
-                Cursor = Cursors.WaitCursor;
+                Cursor.Current = Cursors.WaitCursor;
                 importCurrentFile();
-                Cursor = Cursors.Default;
+                Cursor.Current = Cursors.Default;
             }
         }
         catch (Exception ex)
@@ -98,9 +98,9 @@ public partial class ucImport : UserControl
                 if (validateImport() == false)
                     return;
 
-                Cursor = Cursors.WaitCursor;
+                Cursor.Current = Cursors.WaitCursor;
                 importCurrentFile();
-                Cursor = Cursors.Default;
+                Cursor.Current = Cursors.Default;
             }
         }
     }
@@ -142,9 +142,9 @@ public partial class ucImport : UserControl
         if (validateImport() == false)
             return;
 
-        Cursor = Cursors.WaitCursor;
+        Cursor.Current = Cursors.WaitCursor;
         importCurrentFile();
-        Cursor = Cursors.Default;
+        Cursor.Current = Cursors.Default;
     }
 
     private void saveImport()
@@ -161,7 +161,7 @@ public partial class ucImport : UserControl
 
     private void recalculate()
     {
-        Cursor = Cursors.WaitCursor;
+        Cursor.Current = Cursors.WaitCursor;
 
         if (_unitOfWork.meterReadings.Count > 0)
         {
@@ -172,7 +172,7 @@ public partial class ucImport : UserControl
         bsMeterReading.DataSource = _unitOfWork.meterReadings;
         bsMeterReading.ResetBindings(false);
 
-        Cursor = Cursors.Default;
+        Cursor.Current = Cursors.Default;
     }
     private string getKeyForLastImportFile()
     {
@@ -185,14 +185,16 @@ public partial class ucImport : UserControl
         return fileKey;
     }
 
-    private void importCurrentFile()
+    private async void importCurrentFile()
     {
         if (_unitOfWork == null || CurrentEnergyType == null)
             return;
 
         var newId = 0;
         var currentMeter = (EnergyUse.Models.Meter)CboMeters.SelectedItem;
-        var meterlist = _unitOfWork.MeterRepo.SelectByAddressAndEnergyType(CurrentAddress.Id, CurrentEnergyType.Id).OrderByDescending(o => o.ActiveFrom.Date).ToList();
+        var meterlist = (await _unitOfWork.MeterRepo.SelectByAddressAndEnergyType(CurrentAddress.Id, CurrentEnergyType.Id))
+                          .OrderByDescending(o => o.ActiveFrom.Date)
+                          .ToList();
         EnergyUse.Models.MeterReading lastMeterReading = null;
         
         var libMeterReading = new LibMeterReading(Managers.Config.GetDbFileName());
@@ -305,14 +307,14 @@ public partial class ucImport : UserControl
         importCurrentFile();
     }
 
-    private void fillMeterCombo()
+    private async void fillMeterCombo()
     {
         List<EnergyUse.Models.Meter> meters = new();
         EnergyUse.Models.Meter defaultMeter = null;
 
         if (CurrentEnergyType != null && CurrentAddress != null)
         {
-            meters = _unitOfWork.MeterRepo.SelectByAddressAndEnergyType(CurrentAddress.Id, CurrentEnergyType.Id).ToList();
+            meters = (await _unitOfWork.MeterRepo.SelectByAddressAndEnergyType(CurrentAddress.Id, CurrentEnergyType.Id)).ToList();
             bsMeter.DataSource = meters;
             defaultMeter = meters.Where(x => x.Active == true).FirstOrDefault();
             defaultMeter ??= meters.FirstOrDefault();

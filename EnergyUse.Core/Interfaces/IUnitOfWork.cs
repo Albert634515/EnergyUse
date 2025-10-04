@@ -1,4 +1,6 @@
-﻿namespace EnergyUse.Core.Interfaces;
+﻿using EnergyUse.Models;
+
+namespace EnergyUse.Core.Interfaces;
 
 public interface IUnitOfWork : IDisposable
 {
@@ -7,4 +9,5 @@ public interface IUnitOfWork : IDisposable
     bool HasChanges();
 
     void CancelChanges();
+
 }

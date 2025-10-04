@@ -29,9 +29,9 @@ public partial class frmPayments : Form
         setPreSelectePeriods();
     }
 
-    private void setComboAddresses()
+    private async void setComboAddresses()
     {
-        var addressList = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
+        var addressList = (await _controller.UnitOfWork.AddressRepo.GetAll()).ToList();
         bsAddresses.DataSource = addressList;
 
         var defaultAddress = addressList.Where(x => x.DefaultAddress == true).FirstOrDefault();

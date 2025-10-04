@@ -12,39 +12,43 @@ public class RepoVatTarif : RepoGeneral<Models.VatTarif>
         _context = dbContext;
     }
 
-    public Models.VatTarif Get(int id)
+    public async Task<Models.VatTarif?> Get(int id)
     {
-        return _context.Set<Models.VatTarif>()
-                       .Include(s => s.CostCategory)
-                       .Where(s => s.Id == id).FirstOrDefault();
+        return await _context.Set<Models.VatTarif>()
+                             .Include(s => s.CostCategory)
+                             .Where(s => s.Id == id)
+                             .FirstOrDefaultAsync();
     }
 
-    public new IEnumerable<Models.VatTarif> GetAll()
+    public async Task<List<Models.VatTarif>> GetAll()
     {
-        return _context.Set<Models.VatTarif>()
-                       .Include(s => s.CostCategory);
+        return await _context.Set<Models.VatTarif>()
+                             .Include(s => s.CostCategory)
+                             .ToListAsync();
     }
 
-    public IEnumerable<Models.VatTarif> GetByCostCategoryId(long costCategoryId)
+    public async Task<List<Models.VatTarif>> GetByCostCategoryId(long costCategoryId)
     {
-        return _context.Set<Models.VatTarif>()
-                       .Include(s => s.CostCategory)
-                       .Where(x => x.CostCategoryId == costCategoryId);
+        return await _context.Set<Models.VatTarif>()
+                             .Include(s => s.CostCategory)
+                             .Where(x => x.CostCategoryId == costCategoryId)
+                             .ToListAsync();
     }
 
-    public Models.VatTarif? GetByCostCategoryIdAndDate(long costCategoryId, DateTime date)
+    public async Task<Models.VatTarif?> GetByCostCategoryIdAndDate(long costCategoryId, DateTime date)
     {
-        return _context.Set<Models.VatTarif>()
-                       .Include(s => s.CostCategory)
-                       .Where(x => x.CostCategoryId == costCategoryId && x.StartDate.Date <= date.Date && x.EndDate.Date >= date.Date)
-                       .FirstOrDefault();
+        return await _context.Set<Models.VatTarif>()
+                             .Include(s => s.CostCategory)
+                             .Where(x => x.CostCategoryId == costCategoryId && x.StartDate.Date <= date.Date && x.EndDate.Date >= date.Date)
+                             .FirstOrDefaultAsync();
     }
 
-    public Models.VatTarif? GetLastTarif(long costCategoryId, DateTime lastDate)
+    public async Task<Models.VatTarif?> GetLastTarif(long costCategoryId, DateTime lastDate)
     {
-        return _context.Set<Models.VatTarif>()
-                       .Include(c => c.CostCategory)
-                       .Where(x => x.CostCategory.Id == costCategoryId && x.StartDate.Date <= lastDate.Date)
-                       .OrderByDescending(o => o.StartDate).FirstOrDefault();
+        return await _context.Set<Models.VatTarif>()
+                             .Include(c => c.CostCategory)
+                             .Where(x => x.CostCategoryId == costCategoryId && x.StartDate.Date <= lastDate.Date)
+                             .OrderByDescending(o => o.StartDate)
+                             .FirstOrDefaultAsync();
     }
 }

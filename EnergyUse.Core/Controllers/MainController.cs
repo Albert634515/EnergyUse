@@ -18,6 +18,8 @@ public class MainController : BaseController, IController
 
     public void Initialize()
     {
+        InitSettings = true;
+
         setUnitOfWork();
         base.setSettingsManager();
     }
@@ -27,15 +29,15 @@ public class MainController : BaseController, IController
         _unitOfWork = new EnergyUse.Core.UnitOfWork.MainForm(_dbFileName);
     }
 
-
     #region Address
 
-    public IEnumerable<Models.Address> GetAllAddresses()
+    public async Task<IEnumerable<Models.Address>> GetAllAddresses()
     {
         if (_unitOfWork?.AddressRepo == null)
             throw new InvalidOperationException("UnitOfWork or AddressRepo is not initialized.");
 
-        return _unitOfWork.AddressRepo.GetAll().ToList();
+        var addresses = await _unitOfWork.AddressRepo.GetAll();
+        return addresses.ToList();
     }
 
     #endregion
@@ -76,18 +78,18 @@ public class MainController : BaseController, IController
 
     #region Report
 
-    public string GetSettlementPdf(ParameterSelection parameterSelection)
+    public async Task<string> GetSettlementPdfAsync(ParameterSelection parameterSelection)
     {
         if (parameterSelection == null) return string.Empty;
 
         if (parameterSelection.ReportType == EnergyUse.Common.Enums.ReportType.SettlementCompact)
         {
             var LibSettlement = new EnergyUse.Core.Reports.SettlementCompact(_dbFileName);
-            return LibSettlement.GetSettlementPdf(parameterSelection);
+            return await LibSettlement.GetSettlementPdfAsync(parameterSelection);
         } else if (parameterSelection.ReportType == EnergyUse.Common.Enums.ReportType.SettlementSplitByType)
         {
             var LibSettlement = new EnergyUse.Core.Reports.SettlementSplitByType(_dbFileName);
-            return LibSettlement.GetSettlementPdf(parameterSelection);
+            return await LibSettlement.GetSettlementPdfAsync(parameterSelection);
         }
         else
         {

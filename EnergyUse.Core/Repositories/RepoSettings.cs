@@ -13,6 +13,8 @@ public class RepoSettings : RepoGeneral<Models.Setting>
 
     public Models.Setting? GetByKey(string key)
     {
-        return _context.Set<Models.Setting>().Where(s => s.Key == key).FirstOrDefault();
+        return _context.Set<Models.Setting>()
+                       .Where(s => s.Key == key)
+                       .FirstOrDefault();
     }
 }

@@ -12,12 +12,14 @@ public class RepoAdditionalCategoryAndGroupInfo : RepoGeneral<Models.AdditionalC
         _context = dbContext;
     }
 
-    public Models.AdditionalCategoryAndGroupInfo? SelectByPrimaryKey(long energyId, long categoryId, long groupId)
+    public async Task<Models.AdditionalCategoryAndGroupInfo?> SelectByPrimaryKey(long energyId, long categoryId, long groupId)
     {
-        return _context.Set<Models.AdditionalCategoryAndGroupInfo>()
+        return await _context.Set<Models.AdditionalCategoryAndGroupInfo>()
                        .Include(e => e.EnergyType)
                        .Include(c => c.CostCategory)
                        .Include(s => s.TariffGroup)
-                       .Where(w => w.EnergyTypeId == energyId && w.CostCategoryId == categoryId && w.TariffGroupId == groupId).FirstOrDefault();
+                       .Where(w => w.EnergyTypeId == energyId && w.CostCategoryId == categoryId && w.TariffGroupId == groupId)
+                       .FirstOrDefaultAsync()
+                       .ConfigureAwait(false);
     }
 }

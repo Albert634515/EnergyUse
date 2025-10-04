@@ -30,7 +30,7 @@ public partial class frmAddresses : Form
 
     private void setAddresses()
     {
-        bsAddresses.DataSource = _controller.GetAllAdresses();
+        bsAddresses.DataSource = _controller.GetAllAdressesAsync();
     }
 
     private void setTariffGroups()
@@ -93,7 +93,7 @@ public partial class frmAddresses : Form
 
     #region Methods
 
-    private bool validateInput()
+    private async Task<bool> validateInput()
     {
         EnergyUse.Models.Address currentAddress = (EnergyUse.Models.Address)bsAddresses.Current;
 
@@ -104,7 +104,7 @@ public partial class frmAddresses : Form
             return false;
         }
 
-        int addressCount = _controller.UnitOfWork.AddressRepo.GetExistsByDescription(currentAddress.Description.Trim(), currentAddress.Id);
+        int addressCount = await _controller.UnitOfWork.AddressRepo.GetExistsByDescription(currentAddress.Description.Trim(), currentAddress.Id);
         if (addressCount > 0)
         {
             var message = Managers.Languages.GetResourceString("AddressWithDescription", "There already is an address with description %s");
@@ -127,12 +127,12 @@ public partial class frmAddresses : Form
         bsAddresses.Position = index;
     }
 
-    private void setAddress()
+    private async void setAddress()
     {
-        // Set focus on grid to force valdition and update of bindingsource form interfaces
+        // Set focus on grid to force validation and update of bindingsource form interfaces
         dgAddresses.Focus();
 
-        if (!validateInput())
+        if (!await validateInput())
             return;
 
         if (bsAddresses.Current != null)
@@ -142,7 +142,7 @@ public partial class frmAddresses : Form
             //Reload saved address
             EnergyUse.Models.Address address = (EnergyUse.Models.Address)bsAddresses.Current;
             if (address.Id == 0)
-                address = _controller.UnitOfWork.AddressRepo.GetByDescription(address.Description);
+                address = await _controller.UnitOfWork.AddressRepo.GetByDescription(address.Description);
 
             setAddressSettingsTags(address);
 

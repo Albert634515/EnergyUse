@@ -114,7 +114,7 @@ public partial class FrmSetupNewFile : Form
         if (!validateNewSetup())
             return;
 
-        Cursor = Cursors.WaitCursor;
+        Cursor.Current = Cursors.WaitCursor;
 
         if (!Directory.Exists(Path.GetDirectoryName(targetFile)))
             Directory.CreateDirectory(Path.GetDirectoryName(targetFile));
@@ -144,7 +144,7 @@ public partial class FrmSetupNewFile : Form
         else
             setAsDefaultFile(targetFile);
 
-        Cursor = Cursors.Default;
+        Cursor.Current = Cursors.Default;
 
         var message = "Database has been setup";
         MessageBox.Show(this, message);

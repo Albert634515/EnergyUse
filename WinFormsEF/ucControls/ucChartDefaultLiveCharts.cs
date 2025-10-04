@@ -248,7 +248,7 @@ public partial class ucChartDefaultLiveCharts : UserControl
             if (_currentAddress != null && _currentAddress.TariffGroup != null)
                 graphParameter.TarifGroupId = _currentAddress.TariffGroup.Id;
 
-            Cursor = Cursors.WaitCursor;
+            Cursor.Current = Cursors.WaitCursor;
 
             if (graphParameter.ShowBy == ShowBy.Category)
                 getChartSeriesPerPeriod(graphParameter);
@@ -264,7 +264,7 @@ public partial class ucChartDefaultLiveCharts : UserControl
         }
         finally
         {
-            Cursor = Cursors.Default;
+            Cursor.Current = Cursors.Default;
         }
     }
 

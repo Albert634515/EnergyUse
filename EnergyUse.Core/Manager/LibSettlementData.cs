@@ -9,10 +9,10 @@ public class LibSettlementData
     #region Properties
 
     private readonly EnergyUseContext _context;
-    private static List<Models.Rate>? _rates;
+    private List<Models.Rate>? _rates;
 
-    private static Repositories.RepoRate _rateRepo;
-    private static Repositories.RepoStaffel _rateStaffelRepo;
+    private Repositories.RepoRate _rateRepo;
+    private Repositories.RepoStaffel _rateStaffelRepo;
 
     #endregion        
 
@@ -23,7 +23,7 @@ public class LibSettlementData
         _rateStaffelRepo = new Repositories.RepoStaffel(_context);
     }
 
-    public List<SettlementData> GetSettlementCost(long energyTypeId, List<PeriodicData> periodicDataList, Models.CostCategory costCategory, long tarifGroupId)
+    public async Task<List<SettlementData>> GetSettlementCost(long energyTypeId, List<PeriodicData> periodicDataList, Models.CostCategory costCategory, long tarifGroupId)
     {
         List<SettlementData> settlementDataList = new();
 
@@ -39,7 +39,7 @@ public class LibSettlementData
         foreach (PeriodicData periodicData in periodicDataList)
         {
             startRange = DateTime.ParseExact(periodicData.ValueX.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
-            endRange = DateTime.ParseExact(periodicData.ValueX.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
+            endRange = startRange;
 
             if (costCategory.Start > startRange)
                 continue;
@@ -54,11 +54,11 @@ public class LibSettlementData
 
             if (costCategory.CalculateVat)
             {
-                vatTarif = vatTarifRepo.GetByCostCategoryIdAndDate(costCategory.Id, periodicData.ValueXDate);
+                vatTarif = await vatTarifRepo.GetByCostCategoryIdAndDate(costCategory.Id, periodicData.ValueXDate);
 
                 if (vatTarif == null)
                 {
-                    vatTarif = vatTarifRepo.GetLastTarif(costCategory.Id, periodicData.ValueXDate);
+                    vatTarif = await vatTarifRepo.GetLastTarif(costCategory.Id, periodicData.ValueXDate);
                     lastAvailableVatRateUsed = (vatTarif != null);
                 }
 

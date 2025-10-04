@@ -142,9 +142,9 @@ public partial class frmMeters : Form
         Close();
     }
 
-    private void getMeters()
+    private async void getMeters()
     {
-        _controller.UnitOfWork.Meters = _controller.UnitOfWork.MeterRepo.GetAll().ToList();
+        _controller.UnitOfWork.Meters = (await _controller.UnitOfWork.MeterRepo.GetAll()).ToList();
         bsMeters.DataSource = _controller.UnitOfWork.Meters;
     }
 

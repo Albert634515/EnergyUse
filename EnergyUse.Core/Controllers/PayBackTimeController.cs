@@ -35,7 +35,7 @@ public class PayBackTimeController : BaseController, IController
 
     #endregion
 
-    public Models.Common.PayBackTime CalculatePayBackPeriod(ParameterCalcPeriod parameterCalcPeriod)
+    public async Task<PayBackTime> CalculatePayBackPeriodAsync(ParameterCalcPeriod parameterCalcPeriod)
     {
         decimal quantityReduction = 0;
         decimal totalCapacity = parameterCalcPeriod.TotalCapacitySolarPanels;
@@ -73,7 +73,7 @@ public class PayBackTimeController : BaseController, IController
 
             if (_libPeriodicDate != null)
             {
-                periodicData = _libPeriodicDate.GetRange(parameterPeriod);
+                periodicData = await _libPeriodicDate.GetRangeAsync(parameterPeriod);
             }
 
             // Get all cost category with cost and values
@@ -87,7 +87,7 @@ public class PayBackTimeController : BaseController, IController
 
                 // Kolom: Geschatte direct verbruik in kw
                 payBackTime.EstimateDirectUsed = Math.Round((totalCapacity * (parameterCalcPeriod.AverageReturn / 100)) - payBackTime.ValueProduced, 2);
-                payBackTime.ValueProducedEstimateDirectUsed = Math.Round(payBackTime.EstimateDirectUsed * GetPricePerUnitPerYear(parameterCalcPeriod.PeriodStart.Year + parameterCalcPeriod.PeriodId, defaultTarifGroupId, parameterCalcPeriod.EnergyType.Id), 2);
+                payBackTime.ValueProducedEstimateDirectUsed = Math.Round(payBackTime.EstimateDirectUsed * await GetPricePerUnitPerYear(parameterCalcPeriod.PeriodStart.Year + parameterCalcPeriod.PeriodId, defaultTarifGroupId, parameterCalcPeriod.EnergyType.Id), 2);
 
                 // Kolom: Verbruikte energie in Euro                
                 payBackTime.MonetaryValueConsumed = Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 1 || w.CostCategory.EnergySubTypeId == 2).Sum(s => s.Value), 2);
@@ -112,21 +112,21 @@ public class PayBackTimeController : BaseController, IController
         return payBackTime;
     }
 
-    public decimal GetPricePerUnitPerYear(int year, long defaultTarifGroupId, long energyTypeId)
+    public async Task<decimal> GetPricePerUnitPerYear(int year, long defaultTarifGroupId, long energyTypeId)
     {
         decimal price = 0;
         if (UnitOfWork != null)
         {
             if (year <= DateTime.Now.Year)
             {
-                var calculatedUnitPrice = UnitOfWork.CalculatedUnitPriceRepo.GetByYear(year, energyTypeId, defaultTarifGroupId);
+                var calculatedUnitPrice = await UnitOfWork.CalculatedUnitPriceRepo.GetByYear(year, energyTypeId, defaultTarifGroupId);
                 if (calculatedUnitPrice != null)
                     price = calculatedUnitPrice.Price;
             }
 
             if (price == 0)
             {
-                price = UnitOfWork.CalculatedUnitPriceRepo.GetByAverage(energyTypeId, defaultTarifGroupId);
+                price = await UnitOfWork.CalculatedUnitPriceRepo.GetByAverage(energyTypeId, defaultTarifGroupId);
             }
         }
 

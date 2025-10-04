@@ -9,8 +9,6 @@ public partial class MainForm : Form
 {
     #region FormProperties
 
-    private bool _initSettings;
-
     private MainController _controller;
 
     #endregion
@@ -19,6 +17,7 @@ public partial class MainForm : Form
     {
         _controller = new MainController(Managers.Config.GetDbFileName());
         _controller.Initialize();
+        _controller.InitSettings = true;
 
         try
         {
@@ -29,11 +28,18 @@ public partial class MainForm : Form
             setBaseFormSettings();
             setComboAddresses();
             setComboEnergyTypes();
+
+            setLastControl(splitContainer1.Panel1, "ucData");
+            setLastControl(splitContainer1.Panel2, "ucChartRatesLiveChart");
         }
         catch (Exception ex)
         {
             MessageBox.Show(this, ex.Message);
             Environment.Exit(0);
+        }
+        finally
+        {
+            _controller.InitSettings = false;
         }
     }
 
@@ -41,12 +47,12 @@ public partial class MainForm : Form
 
     private void MainForm_Load(object sender, EventArgs e)
     {
-        _initSettings = true;
+        //_initSettings = true;
 
-        setLastControl(splitContainer1.Panel1, "ucData");
-        setLastControl(splitContainer1.Panel2, "ucChartRatesLiveChart");
+        //setLastControl(splitContainer1.Panel1, "ucData");
+        //setLastControl(splitContainer1.Panel2, "ucChartRatesLiveChart");
 
-        _initSettings = false;
+        //_initSettings = false;
     }
 
     #endregion
@@ -68,7 +74,7 @@ public partial class MainForm : Form
     {
         string splitterName;
 
-        if (_initSettings == false && splitContainer1.Panel1.Controls.Count > 0)
+        if (_controller.InitSettings == false && splitContainer1.Panel1.Controls.Count > 0)
         {
             int splitterDistance = splitContainer1.SplitterDistance;
             splitterName = $"{splitContainer1.Panel1.Controls[0].Name}MainSplitter";
@@ -94,12 +100,18 @@ public partial class MainForm : Form
     {
         setComboEnergyTypes();
 
+        if (_controller.InitSettings == false) 
+            return;
+
         RefreshPanel(splitContainer1.Panel1, true, false);
         RefreshPanel(splitContainer1.Panel2, true, false);
     }
 
     private void cboEnergyType_SelectedIndexChanged(object sender, EventArgs e)
     {
+        if (_controller.InitSettings == false)
+            return;
+
         RefreshPanel(splitContainer1.Panel1, false, true);
         RefreshPanel(splitContainer1.Panel2, false, true);
     }
@@ -110,16 +122,16 @@ public partial class MainForm : Form
 
     private void tsbData_Click(object sender, EventArgs e)
     {
-        _initSettings = true;
+        _controller.InitSettings = true;
         getControl("ucData", splitContainer1.Panel1);
-        _initSettings = false;
+        _controller.InitSettings = false;
     }
 
     private void tsbImportData_Click(object sender, EventArgs e)
     {
-        _initSettings = true;
+        _controller.InitSettings = true;
         getControl("ucImport", splitContainer1.Panel1);
-        _initSettings = false;
+        _controller.InitSettings = false;
     }
 
     private void tsbUsageGraph_Click(object sender, EventArgs e)
@@ -145,7 +157,7 @@ public partial class MainForm : Form
 
     private void tsbPdfReport_Click(object sender, EventArgs e)
     {
-        getSettlementReport();
+        getSettlementReportAsync();
     }
 
     private void rateReportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -173,9 +185,9 @@ public partial class MainForm : Form
         using frmSettings frmSettings = new();
         frmSettings.ShowDialog();
 
-        _initSettings = true;
+        _controller.InitSettings = true;
         setBaseFormSettings();
-        _initSettings = false;
+        _controller.InitSettings = false;
     }
 
     private void energyTypesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -270,10 +282,10 @@ public partial class MainForm : Form
         Control myControl1 = findControl(splitContainer1.Panel1, "ucData");
         if (myControl1 != null && myControl1 is ucControls.ucData)
         {
-            Cursor = Cursors.WaitCursor;
+            Cursor.Current = Cursors.WaitCursor;
             ((ucControls.ucData)myControl1).RecalculateCurrentSelection();
             ((ucControls.ucData)myControl1).InitFormData(address, energyType);
-            Cursor = Cursors.Default;
+            Cursor.Current = Cursors.Default;
         }
     }
 
@@ -288,10 +300,10 @@ public partial class MainForm : Form
 
         if (MessageBox.Show(this, message, message2, MessageBoxButtons.YesNo) == DialogResult.Yes)
         {
-            Cursor = Cursors.WaitCursor;
+            Cursor.Current = Cursors.WaitCursor;
             _controller.RecalculateReadingsDiffPreviousDay(DateTime.MinValue, DateTime.MinValue, energyType.Id, address.Id);
             RefreshPanel(splitContainer1.Panel1, false, false);
-            Cursor = Cursors.Default;
+            Cursor.Current = Cursors.Default;
         }
     }
 
@@ -336,7 +348,7 @@ public partial class MainForm : Form
 
     private void settlementToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        getSettlementReport();
+        getSettlementReportAsync();
     }
 
     #endregion
@@ -355,7 +367,7 @@ public partial class MainForm : Form
 
     #region Methods
 
-    private void getSettlementReport()
+    private async Task getSettlementReportAsync()
     {
         var address = (EnergyUse.Models.Address)CboAddress.SelectedItem;
         EnergyUse.Models.Common.ParameterSelection parameterSelection;
@@ -368,9 +380,9 @@ public partial class MainForm : Form
                 parameterSelection = frmSelectParameters.GetSelectedParameters();
         }
 
-        Cursor = Cursors.WaitCursor;
-        var fileName = _controller.GetSettlementPdf(parameterSelection);
-        Cursor = Cursors.Default;
+        Cursor.Current = Cursors.WaitCursor;
+        var fileName = await _controller.GetSettlementPdfAsync(parameterSelection);
+        Cursor.Current = Cursors.Default;
 
         if (!string.IsNullOrWhiteSpace(fileName))
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(fileName) { UseShellExecute = true });
@@ -389,17 +401,17 @@ public partial class MainForm : Form
                 parameterSelection = frmSelectParameters.GetSelectedParameters();
         }
 
-        Cursor = Cursors.WaitCursor; ;
+        Cursor.Current = Cursors.WaitCursor; ;
         var fileName = _controller.GetRatingReportPdf(address, parameterSelection);
-        Cursor = Cursors.Default;
+        Cursor.Current = Cursors.Default;
 
         if (!string.IsNullOrWhiteSpace(fileName))
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(fileName) { UseShellExecute = true });
     }
 
-    private void setComboAddresses()
+    private async void setComboAddresses()
     {
-        var addressList = _controller.GetAllAddresses();
+        var addressList = await _controller.GetAllAddresses();
         bsAddresses.DataSource = addressList;
 
         var defaultAddress = addressList.Where(x => x.DefaultAddress == true).FirstOrDefault();

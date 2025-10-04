@@ -15,6 +15,7 @@ public class RepoMeterReading : RepoGeneral<Models.MeterReading>
     public IEnumerable<Models.MeterReading> SelectByExists(DateTime registrationDate, long energyTypeId, long meterId)
     {
         return _context.MeterReadings
+                .AsNoTracking()
                 .Include(e => e.EnergyType)
                 .Include(t => t.Meter)
                 .Include(a => a.Meter.Address)
@@ -27,7 +28,6 @@ public class RepoMeterReading : RepoGeneral<Models.MeterReading>
     public IEnumerable<Models.MeterReading> SelectByRange(DateTime startRange, DateTime endRange, long energyTypeId, long addressId, int month = 0, int week = 0, int day = 0)
     {
         var meterReadingList = _context.MeterReadings
-            .Include(e => e.EnergyType)
             .Include(t => t.Meter)
             .Include(a => a.Meter.Address)
             .Where(n => n.EnergyType.Id == energyTypeId 
@@ -105,6 +105,7 @@ public class RepoMeterReading : RepoGeneral<Models.MeterReading>
     public long? GetLastId()
     {
        return _context.MeterReadings
+                      .AsNoTracking()
                       .Include(e => e.EnergyType)
                       .Include(t => t.Meter)
                       .Include(a => a.Meter.Address)

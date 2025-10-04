@@ -50,7 +50,7 @@ public class LibPeriodicDate
         _staffelRepo = new Repositories.RepoStaffel(_context);
     }
 
-    public List<PeriodicData> GetRange(ParameterPeriod parameterPeriod)
+    public async Task<List<PeriodicData>> GetRangeAsync(ParameterPeriod parameterPeriod)
     {
         _parameterPeriod = parameterPeriod;
         _meterReading = new();
@@ -61,7 +61,7 @@ public class LibPeriodicDate
         setCorrectionFactorData();
         setNettingData();
 
-        getPeriodicData();
+        await getPeriodicDataAsync();
 
         return getData();
     }
@@ -80,7 +80,7 @@ public class LibPeriodicDate
         return lastRow;
     }
 
-    private void getPeriodicData()
+    private async Task getPeriodicDataAsync()
     {
         //Retrieve data per day
         _meterReading = _meterReadingRepo.SelectByRange(_parameterPeriod.StartRange, _parameterPeriod.EndRange, _parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId, _parameterPeriod.Month, _parameterPeriod.Week, _parameterPeriod.Day).ToList();
@@ -88,7 +88,7 @@ public class LibPeriodicDate
         convertReadingToPeriodicData();
 
         //Retrieve missing data
-        addMissingData();
+        await addMissingDataAsync();
 
         //Splitsen data if missing
         splitMissingPeriods();
@@ -103,7 +103,7 @@ public class LibPeriodicDate
     /// <summary>
     /// Set cost for each day in selection
     /// </summary>
-    private void addCost()
+    private async void addCost()
     {
         List<OtherCost> otherCostList = new();
         var costCategoryList = _costCategoriesRepo.SelectByEnergyTypeAndRange(_parameterPeriod.EnergyType.Id, _parameterPeriod.StartRange, _parameterPeriod.EndRange);
@@ -134,11 +134,11 @@ public class LibPeriodicDate
 
                     if (costCategory.CalculateVat)
                     {
-                        vatTarif = _vatTarifRepo.GetByCostCategoryIdAndDate(costCategory.Id, periodicDate);
+                        vatTarif = await _vatTarifRepo.GetByCostCategoryIdAndDate(costCategory.Id, periodicDate);
 
                         if (vatTarif == null)
                         {
-                            vatTarif = _vatTarifRepo.GetLastTarif(costCategory.Id, periodicDate);
+                            vatTarif = await _vatTarifRepo.GetLastTarif(costCategory.Id, periodicDate);
                             lastAvailableVatRateUsed = (vatTarif != null);
                         }
 
@@ -154,8 +154,8 @@ public class LibPeriodicDate
                         // - Set Initial staffel value cache for previouse period
                         // - Set staffel cache
                         // - Set staffel value
-                        setInitialStaffel(priceRate.RateId, costCategory.EnergySubTypeId.Value);
-                        var staffels = getStaffel(priceRate.RateId, periodicData, costCategory.EnergySubTypeId.Value);
+                        setInitialStaffel(priceRate.RateId, costCategory.EnergySubTypeId.GetValueOrDefault());
+                        var staffels = getStaffel(priceRate.RateId, periodicData, costCategory.EnergySubTypeId.GetValueOrDefault());
 
                         // For now overrule rate value with staffel value
                         if (staffels != null && staffels.Count > 0)
@@ -546,7 +546,7 @@ public class LibPeriodicDate
         }
     }
 
-    private void addMissingData()
+    private async Task addMissingDataAsync()
     {
         AvgMeterRate? avgMeterRate = null;
         PeriodicDataPerDay periodicDataDay;
@@ -564,7 +564,7 @@ public class LibPeriodicDate
 
             if (lastDate < _parameterPeriod.EndRange)
             {
-                List<AvgMeterRate> avgByPeriodList = getAvgByPeriodList(_parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId).ToList();
+                List<AvgMeterRate> avgByPeriodList = await getAvgByPeriodListAsync(_parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId);
 
                 for (var day = lastDate.AddDays(1); day.Date <= _parameterPeriod.EndRange; day = day.AddDays(1))
                 {
@@ -581,7 +581,7 @@ public class LibPeriodicDate
                         continue;
 
                     if (day.Date != _lastrow.RegistrationDate.Date)
-                        avgMeterRate = avgByPeriodList.Where(x => x.EnergyType.Id == _parameterPeriod.EnergyType.Id && x.Day == day.Day && x.Month == day.Month).FirstOrDefault();
+                        avgMeterRate = avgByPeriodList.Where(x => x.EnergyTypeId == _parameterPeriod.EnergyType.Id && x.Day == day.Day && x.Month == day.Month).FirstOrDefault();
 
                     // If not avg is found try general avg
                     if (avgMeterRate == null)
@@ -643,12 +643,12 @@ public class LibPeriodicDate
         }
     }
 
-    private List<AvgMeterRate> getAvgByPeriodList(long energyTypeId, long addressId)
+    private async Task<List<AvgMeterRate>> getAvgByPeriodListAsync(long energyTypeId, long addressId)
     {
         var setting = _settingsRepo.GetByKey("UseAllDataForAvg");
         if (setting != null && setting.KeyValue == "Yes")
         {
-            return _avgRepo.SelectByAddressAndEnergyTypePerPeriod(energyTypeId, addressId).ToList();
+            return (await _avgRepo.SelectByAddressAndEnergyTypePerPeriod(energyTypeId, addressId)).ToList();
         }
         else
         {
@@ -660,14 +660,22 @@ public class LibPeriodicDate
                 defaultFromValue = DateTime.ParseExact(setting.KeyValue, "yyyyMMdd", CultureInfo.InvariantCulture);
             }
 
-            return _avgRepo.SelectByAddressAndEnergyTypePerPeriodFromDate(energyTypeId, addressId, defaultFromValue).ToList();
+            return (await _avgRepo.SelectByAddressAndEnergyTypePerPeriodFromDate(energyTypeId, addressId, defaultFromValue)).ToList();
         }
     }
 
     private AvgMeterRate? getAvgGeneral()
     {
         if (_avgGeneral == null)
-            _avgGeneral = _avgRepo.SelectGeneralAvgByAddressAndEnergyType(_parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId, _avgCorrectionPercentage, _avgCorrectionPercentageReturn);
+        {
+            // Await the asynchronous method to resolve the Task and get the result
+            _avgGeneral = _avgRepo.SelectGeneralAvgByAddressAndEnergyType(
+                _parameterPeriod.EnergyType.Id,
+                _parameterPeriod.AddressId,
+                _avgCorrectionPercentage,
+                _avgCorrectionPercentageReturn
+            ).Result; // Use .Result to get the result of the Task synchronously
+        }
 
         return _avgGeneral;
     }

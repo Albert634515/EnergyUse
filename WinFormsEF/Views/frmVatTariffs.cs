@@ -177,13 +177,13 @@ public partial class frmVatTariffs : Form
         return true;
     }
 
-    private void loadVatTarifs()
+    private async void loadVatTarifs()
     {
         _controller.UnitOfWork.VatTarifs = new List<EnergyUse.Models.VatTarif>();
         var costCategory = (EnergyUse.Models.CostCategory)CboCostCategory.SelectedItem;
 
         if (costCategory != null)
-            _controller.UnitOfWork.VatTarifs = _controller.UnitOfWork.VatTarifRepo.GetByCostCategoryId(costCategory.Id).ToList();
+            _controller.UnitOfWork.VatTarifs = await _controller.UnitOfWork.VatTarifRepo.GetByCostCategoryId(costCategory.Id);
 
         _controller.UnitOfWork.SetListSorted();
         bsVatTarif.DataSource = _controller.UnitOfWork.VatTarifs;

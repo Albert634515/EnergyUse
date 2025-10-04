@@ -41,15 +41,14 @@ public class CalculatedUnitPrice : IUnitOfWork
     public void Delete(Models.CalculatedUnitPrice entity)
     {
         CalculatedUnitPriceRepo.Remove(entity);
-        CalculatedUnitPriceRepo.Remove(entity);
     }
 
-    public Models.CalculatedUnitPrice AddDefaultEntity(long energyTypeId, long tariffGroupId)
+    public async Task<Models.CalculatedUnitPrice> AddDefaultEntity(long energyTypeId, long tariffGroupId)
     {
         var entity = new Models.CalculatedUnitPrice();
         entity.EnergyTypeId = energyTypeId;
         entity.TariffGroupId = tariffGroupId;
-        entity.Year = GetDefaultYear(energyTypeId, tariffGroupId);
+        entity.Year = await GetDefaultYear(energyTypeId, tariffGroupId);
         entity.Price = 0;
 
         CalculatedUnitPriceRepo.Add(entity);
@@ -58,9 +57,9 @@ public class CalculatedUnitPrice : IUnitOfWork
         return entity;
     }
 
-    public int GetDefaultYear(long energyTypeId, long tariffGroupId)
+    public async Task<int> GetDefaultYear(long energyTypeId, long tariffGroupId)
     {
-       var lastCalculatedUnitPrice = CalculatedUnitPriceRepo.SelectLastYear(energyTypeId, tariffGroupId);
+       var lastCalculatedUnitPrice = await CalculatedUnitPriceRepo.SelectLastYear(energyTypeId, tariffGroupId);
         if (lastCalculatedUnitPrice != null)
             return lastCalculatedUnitPrice.Year + 1;
         else

@@ -32,11 +32,11 @@ public class Default : Base
                 ResetSeries();
 
                 if (_graphParameter.ShowBy == ShowBy.Category)
-                    getChartSeriesPerPeriod();
+                    getChartSeriesPerPeriodAsync();
                 if (_graphParameter.ShowBy == ShowBy.SubCategory)
-                    getChartSeriesPeriodBySubCategory();
+                    getChartSeriesPeriodBySubCategoryAsync();
                 else if (_graphParameter.ShowBy == ShowBy.Total)
-                    getChartSeriesPerPeriodBySubTotal();
+                    getChartSeriesPerPeriodBySubTotalAsync();
             }
         }
         catch (Exception)
@@ -47,7 +47,7 @@ public class Default : Base
 
     #region GetChartSeriesPerPeriod
 
-    private void getChartSeriesPerPeriod()
+    private async Task getChartSeriesPerPeriodAsync()
     {
         resetDataPointsPeriod();
         var typeCounter = -1;
@@ -55,7 +55,7 @@ public class Default : Base
         foreach (var energyType in _graphParameter.EnergyTypeList)
         {
             ParameterPeriod parameterPeriod = GetParameterPeriod(energyType);
-            _periodicDataList = _libPeriodicDate.GetRange(parameterPeriod);
+            _periodicDataList = await _libPeriodicDate.GetRangeAsync(parameterPeriod);
            // _axisList.Add(LiveCharts.GetAxis(_graphParameter.PeriodType));
             typeCounter++;
 
@@ -202,7 +202,7 @@ public class Default : Base
 
     #region GetChartSeriesPeriodBySubCategory
 
-    private void getChartSeriesPeriodBySubCategory()
+    private async Task getChartSeriesPeriodBySubCategoryAsync()
     {
         resetDataPointsSubCategory();
         var typeCounter = -1;
@@ -210,7 +210,7 @@ public class Default : Base
         foreach (var energyType in _graphParameter.EnergyTypeList)
         {
             ParameterPeriod parameterPeriod = GetParameterPeriod(energyType);
-            _periodicDataList = _libPeriodicDate.GetRange(parameterPeriod);
+            _periodicDataList = await _libPeriodicDate.GetRangeAsync(parameterPeriod);
             _axisList.Add(GetAxis(energyType.Name));
             typeCounter++;
 
@@ -308,7 +308,7 @@ public class Default : Base
 
     #region GetChartSeriesPerPeriodBySubTotal
 
-    private void getChartSeriesPerPeriodBySubTotal()
+    private async Task getChartSeriesPerPeriodBySubTotalAsync()
     {
         resetDataPointsSubtTotal();
         var typeCounter = -1;
@@ -316,7 +316,7 @@ public class Default : Base
         foreach (var energyType in _graphParameter.EnergyTypeList)
         {
             ParameterPeriod parameterPeriod = GetParameterPeriod(energyType);
-            _periodicDataList = _libPeriodicDate.GetRange(parameterPeriod);
+            _periodicDataList = await _libPeriodicDate.GetRangeAsync(parameterPeriod);
             _axisList.Add(GetAxis(energyType.Name));
             typeCounter++;
 

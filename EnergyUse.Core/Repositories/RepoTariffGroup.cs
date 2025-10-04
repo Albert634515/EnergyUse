@@ -14,12 +14,14 @@ public class RepoTariffGroup : RepoGeneral<Models.TariffGroup>
     public Models.TariffGroup? SelectByDescription(string description)
     {
         return _context.TariffGroups
-                       .Where(s => s.Description == description).FirstOrDefault();
+                       .Where(s => s.Description == description)
+                       .FirstOrDefault();
     }
 
     public Models.TariffGroup? SelectById(long id)
     {
         return _context.TariffGroups
-                       .Where(s => s.Id == id).FirstOrDefault();
+                       .Where(s => s.Id == id)
+                       .FirstOrDefault();
     }
 }

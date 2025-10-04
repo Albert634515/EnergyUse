@@ -28,9 +28,9 @@ public class RepoStaffel : RepoGeneral<Models.Staffel>
                                 && w.ValueTill >= maxRange);
     }
 
-    public void DeleteByRateId(long rateId)
+    public int DeleteByRateId(long rateId)
     {
-        _context.Set<Models.Staffel>()
+        return _context.Set<Models.Staffel>()
                        .Include(p => p.Rate)
                        .Where(w => w.RateId == rateId).ExecuteDelete();
     }

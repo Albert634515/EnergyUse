@@ -284,7 +284,7 @@ public partial class ucChartCompareLiveCharts : UserControl
 
             if (_currentEnergyType != null)
             {
-                Cursor = Cursors.WaitCursor;
+                Cursor.Current = Cursors.WaitCursor;
 
                 if (graphParameter.PeriodType == Period.Day || graphParameter.PeriodType == Period.Month)
                     graphParameter.Month = cboNumbers.SelectedIndex + 1;
@@ -307,7 +307,7 @@ public partial class ucChartCompareLiveCharts : UserControl
         }
         finally
         {
-            Cursor = Cursors.Default;
+            Cursor.Current = Cursors.Default;
         }
     }
 

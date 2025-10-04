@@ -12,7 +12,7 @@ public class RepoEnergyType : RepoGeneral<Models.EnergyType>
         _context = dbContext;
     }
 
-    public Models.EnergyType Get(int id)
+    public Models.EnergyType? Get(int id)
     {
         return _context.Set<Models.EnergyType>().Include(s => s.Unit).Where(s => s.Id == id).FirstOrDefault();
     }
@@ -23,10 +23,12 @@ public class RepoEnergyType : RepoGeneral<Models.EnergyType>
                        .Include(s => s.Unit);
     }
 
-    public Models.EnergyType SelectByName(string energyTypeName)
+    public Models.EnergyType? SelectByName(string energyTypeName)
     {
         return _context.EnergyTypes
-                       .Where(s => s.Name == energyTypeName).FirstOrDefault();
+                       .Where(s => s.Name == energyTypeName)
+                       .AsNoTracking()
+                       .FirstOrDefault();
     }
 
     public IEnumerable<Models.EnergyType> SelectByAddressId(long addressId)
@@ -34,7 +36,8 @@ public class RepoEnergyType : RepoGeneral<Models.EnergyType>
         var energyTypes = _context.Meters
                        .Include(a => a.Address)
                        .Where(m => m.Address.Id == addressId)
-                       .Select(s => s.EnergyType.Id).ToList();
+                       .Select(s => s.EnergyType.Id)
+                       .ToList();
 
         if (energyTypes.Count == 0)
             energyTypes.Add(0);

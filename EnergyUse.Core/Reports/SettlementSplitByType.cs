@@ -13,7 +13,7 @@ public class SettlementSplitByType : SettlementBase
 
     }
 
-    public string GetSettlementPdf(ParameterSelection parameterSelection)
+    public async Task<string> GetSettlementPdfAsync(ParameterSelection parameterSelection)
     {
         Table table;
         DateTime startRange, endRange;
@@ -54,7 +54,7 @@ public class SettlementSplitByType : SettlementBase
             parameterPeriod.TarifGroupId = item.TarifGroup;
             parameterPeriod.QuantityReduction = 1;
 
-            List<PeriodicData> periodicData = LibPeriodicDate.GetRange(parameterPeriod);
+            List<PeriodicData> periodicData = await LibPeriodicDate.GetRangeAsync(parameterPeriod);
             List<SettlementData> settlementDataList = _unitOfWork.CostCategoriesRepo.MapCostCategories(periodicData);
             if (parameterSelection.ShowRates == false)
                 settlementDataList = mergeSettlementData(settlementDataList);

@@ -44,9 +44,9 @@ public partial class frmSelectReportParameters : Form
         _controller.InitSettings = false;
     }
 
-    private void setComboAddresses()
+    private async void setComboAddresses()
     {
-        var addressList = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
+        var addressList = (await _controller.UnitOfWork.AddressRepo.GetAll()).ToList();
         bsAddresses.DataSource = addressList;
         addressComboBox.SelectedIndex = -1;
 

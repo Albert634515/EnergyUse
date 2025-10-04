@@ -117,12 +117,12 @@ public partial class ucChartRatesLiveCharts : UserControl
             graphParameter.CostCategoryList = getSelectedCostCategories();
             graphParameter.TarifGroupId = 1;
 
-            Cursor = Cursors.WaitCursor;
+            Cursor.Current = Cursors.WaitCursor;
             if (rbUnit.Checked)
                 getChartSeriesPerCostCategoryAndUnit(graphParameter);
             else
                 getChartSeriesPerCostCategory(graphParameter);
-            Cursor = Cursors.Default;
+            Cursor.Current = Cursors.Default;
         }
     }
 

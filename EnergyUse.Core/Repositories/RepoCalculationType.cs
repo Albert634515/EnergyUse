@@ -14,6 +14,7 @@ public class RepoCalculationType : RepoGeneral<Models.CalculationType>
     public Models.CalculationType? SelectByDescription(string description)
     {
         return _context.CalculationTypes
-                       .Where(w => w.Description == description).FirstOrDefault();
+                       .Where(w => w.Description == description)
+                       .FirstOrDefault();
     }
 }

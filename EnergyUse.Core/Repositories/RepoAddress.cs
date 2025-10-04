@@ -1,5 +1,6 @@
 ﻿using EnergyUse.Core.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace EnergyUse.Core.Repositories;
 
@@ -12,29 +13,38 @@ public class RepoAddress : RepoGeneral<Models.Address>
         _context = dbContext;
     }
 
-    public Models.Address? Get(int id)
+    public async Task<Models.Address?> Get(int id, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.Address>()
+        return await _context.Set<Models.Address>()        
+                             .Include(a => a.TariffGroup)
+                             .FirstOrDefaultAsync(a => a.Id == id, cancellationToken)
+                             .ConfigureAwait(false);
+    }
+
+    public async Task<Models.Address?> GetByDescription(string description, CancellationToken cancellationToken = default)
+    {
+        return await _context.Set<Models.Address>()
+                       .AsNoTracking()
                        .Include(i => i.TariffGroup)
-                       .Where(w => w.Id == id).FirstOrDefault();
+                       .Where(w => w.Description == description)
+                       .FirstOrDefaultAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 
-    public Models.Address? GetByDescription(string description)
+    public async Task<IEnumerable<Models.Address>> GetAll(CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.Address>()
-                       .Include(i => i.TariffGroup)
-                       .Where(w => w.Description == description).FirstOrDefault();
+        return await _context.Set<Models.Address>()
+                       .Include(a => a.TariffGroup)
+                       .ToListAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 
-    public new IEnumerable<Models.Address> GetAll()
+    public async Task<int> GetExistsByDescription(string description, long addressId, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.Address>()
-                       .Include(a => a.TariffGroup);
-    }
-
-    public int GetExistsByDescription(string description, long addressId)
-    {
-        return _context.Set<Models.Address>()
-                       .Where(w=> w.Description == description && w.Id != addressId).Count();
+        return await _context.Set<Models.Address>()
+                       .AsNoTracking()
+                       .Where(w=> w.Description == description && w.Id != addressId)
+                       .CountAsync()
+                       .ConfigureAwait(false);
     }
 }

@@ -25,9 +25,9 @@ public partial class frmImport : Form
         setComboEnergyTypes();
     }
 
-    private void setComboAddresses()
+    private async void setComboAddresses()
     {
-       var addressList = _unitOfWork.AddressRepo.GetAll().ToList();
+        var addressList = (await _unitOfWork.AddressRepo.GetAll()).ToList();
         bsAddresses.DataSource = addressList;
 
         var defaultAddress = addressList.Where(x => x.DefaultAddress == true).FirstOrDefault();

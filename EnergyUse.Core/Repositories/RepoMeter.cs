@@ -12,26 +12,29 @@ public class RepoMeter : RepoGeneral<Models.Meter>
         _context = dbContext;
     }
 
-    public new IEnumerable<Models.Meter> GetAll()
+    public new async Task<IEnumerable<Models.Meter>> GetAll()
     {
-        return _context.Set<Models.Meter>()
-                       .Include(e => e.EnergyType)
-                       .Include(a => a.Address);
+        return await _context.Set<Models.Meter>()
+                             .Include(e => e.EnergyType)
+                             .Include(a => a.Address)
+                             .ToListAsync();
     }
 
-    public IEnumerable<Models.Meter> SelectByAddressAndEnergyType(long addressId, long energyTypeId)
+    public async Task<IEnumerable<Models.Meter>> SelectByAddressAndEnergyType(long addressId, long energyTypeId)
     {
-        return _context.Meters
-            .Include(e => e.EnergyType)
-            .Include(a => a.Address)
-            .Where(n => n.EnergyType.Id == energyTypeId && n.Address.Id == addressId);
+        return await _context.Meters
+                             .Include(e => e.EnergyType)
+                             .Include(a => a.Address)
+                             .Where(n => n.EnergyType.Id == energyTypeId && n.Address.Id == addressId)
+                             .ToListAsync();
     }
 
-    public Models.Meter SelectDefaultMeterByAddress(long addressId, long energyTypeId)
+    public async Task<Models.Meter?> SelectDefaultMeterByAddress(long addressId, long energyTypeId)
     {
-        return _context.Meters
-            .Include(e => e.EnergyType)
-            .Include(a => a.Address)
-            .Where(n => n.EnergyType.Id == energyTypeId && n.Address.Id == addressId && n.Active == true).FirstOrDefault();
+        return await _context.Meters
+                             .Include(e => e.EnergyType)
+                             .Include(a => a.Address)
+                             .Where(n => n.EnergyType.Id == energyTypeId && n.Address.Id == addressId && n.Active == true)
+                             .FirstOrDefaultAsync();
     }
 }

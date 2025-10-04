@@ -12,36 +12,39 @@ public class RepoCalculatedUnitPrice : RepoGeneral<Models.CalculatedUnitPrice>
         _context = dbContext;
     }
 
-    public Models.CalculatedUnitPrice? GetByYear(int year, long energyTypeId, long tariffGroupId)
+    public async Task<Models.CalculatedUnitPrice?> GetByYear(int year, long energyTypeId, long tariffGroupId)
     {
-        return _context.Set<Models.CalculatedUnitPrice>()
-                       .Include(e => e.EnergyType)
-                       .Include(t => t.TariffGroup)
-                       .Where(w => w.Year == year && w.EnergyTypeId == energyTypeId && w.TariffGroupId == tariffGroupId).FirstOrDefault();
+        return await _context.Set<Models.CalculatedUnitPrice>()
+                             .Include(e => e.EnergyType)
+                             .Include(t => t.TariffGroup)
+                             .Where(w => w.Year == year && w.EnergyTypeId == energyTypeId && w.TariffGroupId == tariffGroupId)
+                             .FirstOrDefaultAsync();
     }
 
-    public decimal GetByAverage(long energyTypeId, long tariffGroupId)
+    public async Task<decimal> GetByAverage(long energyTypeId, long tariffGroupId)
     {
-        return (decimal)_context.Set<Models.CalculatedUnitPrice>()
-                       .Where(w => w.EnergyTypeId == energyTypeId && w.TariffGroupId == tariffGroupId)
-                       .Average(a => (double)a.Price);
+        return (decimal)await _context.Set<Models.CalculatedUnitPrice>()
+                                      .Where(w => w.EnergyTypeId == energyTypeId && w.TariffGroupId == tariffGroupId)
+                                      .AsNoTracking()
+                                      .AverageAsync(a => (double)a.Price);
     }
 
-    public IEnumerable<Models.CalculatedUnitPrice> SelectByEnergyTypeAndTarifGroup(long energyTypeId, long tariffGroupId)
+    public async Task<IEnumerable<Models.CalculatedUnitPrice>> SelectByEnergyTypeAndTarifGroup(long energyTypeId, long tariffGroupId)
     {
-        return _context.Set<Models.CalculatedUnitPrice>()
-                       .Include(e => e.EnergyType)
-                       .Include(t => t.TariffGroup)
-                       .Where(w => w.EnergyTypeId == energyTypeId && w.TariffGroupId == tariffGroupId);
+        return await _context.Set<Models.CalculatedUnitPrice>()
+                             .Include(e => e.EnergyType)
+                             .Include(t => t.TariffGroup)
+                             .Where(w => w.EnergyTypeId == energyTypeId && w.TariffGroupId == tariffGroupId)
+                             .ToListAsync();
     }
 
-    public Models.CalculatedUnitPrice? SelectLastYear(long energyTypeId, long tariffGroupId)
+    public async Task<Models.CalculatedUnitPrice?> SelectLastYear(long energyTypeId, long tariffGroupId)
     {
-        return _context.Set<Models.CalculatedUnitPrice>()
-                       .Include(e => e.EnergyType)
-                       .Include(t => t.TariffGroup)
-                       .Where(w => w.EnergyTypeId == energyTypeId && w.TariffGroupId == tariffGroupId)
-                       .OrderByDescending(o => o.Year)
-                       .FirstOrDefault();
+        return await _context.Set<Models.CalculatedUnitPrice>()
+                             .Include(e => e.EnergyType)
+                             .Include(t => t.TariffGroup)
+                             .Where(w => w.EnergyTypeId == energyTypeId && w.TariffGroupId == tariffGroupId)
+                             .OrderByDescending(o => o.Year)
+                             .FirstOrDefaultAsync();
     }
 }

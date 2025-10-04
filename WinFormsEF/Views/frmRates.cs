@@ -180,7 +180,7 @@ public partial class FrmRates : Form
 
     #region Methods
 
-    private void setRateIncExLabel()
+    private async void setRateIncExLabel()
     {
         rateTaxInfoLabel.Text = "_";
 
@@ -190,7 +190,7 @@ public partial class FrmRates : Form
         var currentRate = (EnergyUse.Models.Rate)bsRates.Current;
         var costCategory = (EnergyUse.Models.CostCategory)CboCostCategory.SelectedItem;
 
-        var rateTaxInfo = _controller.GetRateIncExTax(costCategory, currentRate);
+        var rateTaxInfo = await _controller.GetRateIncExTax(costCategory, currentRate);
         if (rateTaxInfo != null)
         {
             if (costCategory.CalculateVat)
@@ -262,7 +262,7 @@ public partial class FrmRates : Form
         bsRates.ResetBindings(false);
     }
 
-    private void initAdditionalCategoryAndGroupInfo()
+    private async void initAdditionalCategoryAndGroupInfo()
     {
         var costCategory = (EnergyUse.Models.CostCategory)CboCostCategory.SelectedItem;
         var energyType = (EnergyUse.Models.EnergyType)CboEnergyType.SelectedItem;
@@ -272,7 +272,7 @@ public partial class FrmRates : Form
             && costCategory != null && costCategory.Id > 0
             && tarifGroup != null && tarifGroup.Id > 0)
         {
-            var entity = _controller.UnitOfWork.AdditionalCategoryAndGroupInfoRepo.SelectByPrimaryKey(energyType.Id, costCategory.Id, tarifGroup.Id);
+            var entity = await _controller.UnitOfWork.AdditionalCategoryAndGroupInfoRepo.SelectByPrimaryKey(energyType.Id, costCategory.Id, tarifGroup.Id);
             if (entity == null)
             {
                 entity = new EnergyUse.Models.AdditionalCategoryAndGroupInfo
