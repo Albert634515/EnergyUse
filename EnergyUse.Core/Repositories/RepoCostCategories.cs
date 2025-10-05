@@ -149,8 +149,8 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
                         break;
                 }
 
-                if (costCategory.EnergySubType.Id > 4 && otherCost.Rate < 0)
-                    categoryRate = Math.Abs(otherCost.Rate);
+                if (costCategory.EnergySubType.Id > 4)
+                    categoryRate = otherCost.Rate;
 
                 settlementData = settlementDatas.LastOrDefault(x => x.CorrectionFactor == periodicData.CorrectionFactor
                                                      && x.LastAvailableRateUsed == otherCost.LastAvailableRateUsed

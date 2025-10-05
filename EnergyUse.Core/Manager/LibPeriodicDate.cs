@@ -22,6 +22,7 @@ public class LibPeriodicDate
     private Repositories.RepoCostCategories _costCategoriesRepo;
     private Repositories.RepoRate _rateRepo;
     private Repositories.RepoStaffel _staffelRepo;
+    private Repositories.RepoNetting _nettingRepo;
 
     private List<Models.MeterReading> _meterReading;
     private List<PeriodicDataPerDay> _periodicDataList = new();
@@ -48,6 +49,7 @@ public class LibPeriodicDate
         _costCategoriesRepo = new Repositories.RepoCostCategories(_context);
         _rateRepo = new Repositories.RepoRate(_context);
         _staffelRepo = new Repositories.RepoStaffel(_context);
+        _nettingRepo = new Repositories.RepoNetting(_context);
     }
 
     public async Task<List<PeriodicData>> GetRangeAsync(ParameterPeriod parameterPeriod)
@@ -88,7 +90,7 @@ public class LibPeriodicDate
         convertReadingToPeriodicData();
 
         //Retrieve missing data
-        await addMissingDataAsync();
+        await addMissingData();
 
         //Splitsen data if missing
         splitMissingPeriods();
@@ -521,6 +523,12 @@ public class LibPeriodicDate
 
         foreach (PeriodicDataPerDay periodicDataPerDay in _periodicDataList)
         {
+            var nettingUsed = false;
+            // Check if there is netting is used
+            var nettingPerc = _nettingRepo.SelectByEnergyTypeAndDate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX);
+            if (nettingPerc != null && nettingPerc.Rate != 0)
+                nettingUsed = true;
+
             if (_parameterPeriod.ShowType == ShowType.Value)
             {
                 if (_parameterPeriod.EnergyType.HasNormalAndLow)
@@ -530,10 +538,7 @@ public class LibPeriodicDate
                 }
 
                 periodicDataPerDay.RateNormal = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.Normal, _parameterPeriod.TarifGroupId).Rate;
-                periodicDataPerDay.ValueYMonetaryNormal = periodicDataPerDay.ValueYNormal * periodicDataPerDay.RateNormal;
-
-                // Check if there is netting is used
-                var nettingUsed = true;
+                periodicDataPerDay.ValueYMonetaryNormal = periodicDataPerDay.ValueYNormal * periodicDataPerDay.RateNormal;                              
 
                 if (_parameterPeriod.EnergyType.HasEnergyReturn)
                 {
@@ -576,7 +581,7 @@ public class LibPeriodicDate
         }
     }
 
-    private async Task addMissingDataAsync()
+    private async Task addMissingData()
     {
         AvgMeterRate? avgMeterRate = null;
         PeriodicDataPerDay periodicDataDay;
@@ -594,7 +599,7 @@ public class LibPeriodicDate
 
             if (lastDate < _parameterPeriod.EndRange)
             {
-                List<AvgMeterRate> avgByPeriodList = await getAvgByPeriodListAsync(_parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId);
+                List<AvgMeterRate> avgByPeriodList = await getAvgByPeriodList(_parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId);
 
                 for (var day = lastDate.AddDays(1); day.Date <= _parameterPeriod.EndRange; day = day.AddDays(1))
                 {
@@ -673,7 +678,7 @@ public class LibPeriodicDate
         }
     }
 
-    private async Task<List<AvgMeterRate>> getAvgByPeriodListAsync(long energyTypeId, long addressId)
+    private async Task<List<AvgMeterRate>> getAvgByPeriodList(long energyTypeId, long addressId)
     {
         var setting = _settingsRepo.GetByKey("UseAllDataForAvg");
         if (setting != null && setting.KeyValue == "Yes")
