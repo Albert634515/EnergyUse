@@ -105,7 +105,7 @@ public class LibSettlementData
                         rateUsed = periodicData.RateReturnNormal < 0 ? 0 - periodicData.RateReturnNormal : periodicData.RateReturnNormal;
                         break;
                     case 4: //return low
-                        rateUsed = periodicData.RateReturnNormal < 0 ? 0 - periodicData.RateReturnLow : periodicData.RateReturnLow;
+                        rateUsed = periodicData.RateReturnLow < 0 ? 0 - periodicData.RateReturnLow : periodicData.RateReturnLow;
                         break;
                     case 5: //Other
                     case 6: // Return cost normal

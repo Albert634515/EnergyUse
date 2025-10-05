@@ -532,16 +532,46 @@ public class LibPeriodicDate
                 periodicDataPerDay.RateNormal = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.Normal, _parameterPeriod.TarifGroupId).Rate;
                 periodicDataPerDay.ValueYMonetaryNormal = periodicDataPerDay.ValueYNormal * periodicDataPerDay.RateNormal;
 
+                // Check if there is netting is used
+                var nettingUsed = true;
+
                 if (_parameterPeriod.EnergyType.HasEnergyReturn)
                 {
-                    periodicDataPerDay.RateReturnLow = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.ReturnLow, _parameterPeriod.TarifGroupId).Rate;
-                    periodicDataPerDay.ValueYMonetaryReturnLow = periodicDataPerDay.ValueYReturnLow * periodicDataPerDay.RateReturnLow;
+                    if (_parameterPeriod.EnergyType.HasNormalAndLow)
+                    {
+                        if (nettingUsed)
+                        {
+                            // Take into account netting
+                            periodicDataPerDay.RateReturnLow = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.Low, _parameterPeriod.TarifGroupId).Rate;
+                            periodicDataPerDay.ValueYMonetaryReturnLow = periodicDataPerDay.NettingValueYReturnLow * periodicDataPerDay.RateReturnLow;
 
-                    periodicDataPerDay.RateReturnNormal = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.ReturnNormal, _parameterPeriod.TarifGroupId).Rate;
-                    periodicDataPerDay.ValueYMonetaryReturnNormal = periodicDataPerDay.ValueYReturnNormal * periodicDataPerDay.RateReturnNormal;
+                            var rateReturnLow = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.ReturnLow, _parameterPeriod.TarifGroupId).Rate;
+                            periodicDataPerDay.ValueYMonetaryReturnLow = (periodicDataPerDay.ValueYReturnLow - periodicDataPerDay.NettingValueYReturnLow) * rateReturnLow;
+                        }
+                        else
+                        {
+                            periodicDataPerDay.RateReturnLow = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.Low, _parameterPeriod.TarifGroupId).Rate;
+                            periodicDataPerDay.ValueYMonetaryReturnLow = periodicDataPerDay.ValueYReturnLow * periodicDataPerDay.RateReturnLow;
+                        }
+                    }
+
+                    if (nettingUsed)
+                    {
+                        // Take into account netting
+                        periodicDataPerDay.RateReturnNormal = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.Normal, _parameterPeriod.TarifGroupId).Rate;
+                        periodicDataPerDay.ValueYMonetaryReturnNormal = periodicDataPerDay.NettingValueYReturnNormal * periodicDataPerDay.RateReturnNormal;
+
+                        var rateReturnNormal = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.ReturnNormal, _parameterPeriod.TarifGroupId).Rate;
+                        periodicDataPerDay.ValueYMonetaryReturnNormal = (periodicDataPerDay.ValueYReturnNormal - periodicDataPerDay.NettingValueYReturnNormal) * rateReturnNormal;
+                    }
+                    else
+                    {
+                        periodicDataPerDay.RateReturnNormal = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.ReturnNormal, _parameterPeriod.TarifGroupId).Rate;
+                        periodicDataPerDay.ValueYMonetaryReturnNormal = periodicDataPerDay.ValueYReturnNormal * periodicDataPerDay.RateReturnNormal;
+                    }
                 }
 
-                periodicDataPerDay.ValueMonetaryY = periodicDataPerDay.ValueYMonetaryLow + periodicDataPerDay.ValueYMonetaryNormal + periodicDataPerDay.ValueYMonetaryReturnLow + periodicDataPerDay.ValueYMonetaryReturnNormal;
+                periodicDataPerDay.ValueMonetaryY = periodicDataPerDay.ValueYMonetaryLow + periodicDataPerDay.ValueYMonetaryNormal + periodicDataPerDay.ValueYMonetaryReturnNormal + periodicDataPerDay.ValueYMonetaryReturnNormal;
             }
         }
     }

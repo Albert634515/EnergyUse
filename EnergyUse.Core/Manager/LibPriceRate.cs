@@ -58,6 +58,9 @@ public class LibPriceRate
         else
         {
             rate = rates.Where(x => x.StartRate.Date <= costDate.Date && x.EndRate.Date >= costDate.Date).FirstOrDefault();
+            if (rate == null)
+                rate = getLastRateByDate(energyTypeId, costCategory.Id, costDate, tarifGroupId);
+
             if (rate != null)
             {
                 priceRate.Rate = rate.RateValue;
@@ -121,7 +124,7 @@ public class LibPriceRate
                                      && x.TariffGroup.Id == tarifGroupId
                                      && x.EnergyType.Id == energyTypeId
                                      && x.StartRate.Date <= lastDate.Date)
-                                         .OrderByDescending(o => o.StartRate).FirstOrDefault();
+                                     .OrderByDescending(o => o.StartRate).FirstOrDefault();
         if (rate != null)
             return rate;
         else

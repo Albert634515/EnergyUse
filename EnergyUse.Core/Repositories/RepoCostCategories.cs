@@ -124,18 +124,40 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
             foreach (var otherCost in periodicData.OtherCosts)
             {
                 var costCategory = Get(otherCost.CostCategoryId);
+                var categoryRate = 0m;
+
                 if (costCategory is null)
                     throw new Exception($"Cost category {otherCost.CostCategoryId} not found");
 
-                if ((costCategory.EnergySubType.Id == 3 || costCategory.EnergySubType.Id == 4) && otherCost.Rate < 0)
-                    otherCost.Rate = Math.Abs(otherCost.Rate);
+                switch (costCategory.EnergySubType.Id)
+                {
+                    case 1:
+                        //Normal
+                        categoryRate = periodicData.RateNormal;
+                        break;
+                    case 2:
+                        //low
+                        categoryRate = periodicData.RateLow;
+                        break;
+                    case 3:
+                        //return normal
+                        categoryRate = periodicData.RateReturnNormal;
+                        break;
+                    case 4:
+                        //return low
+                        categoryRate = periodicData.RateReturnLow;
+                        break;
+                }
+
+                if (costCategory.EnergySubType.Id > 4 && otherCost.Rate < 0)
+                    categoryRate = Math.Abs(otherCost.Rate);
 
                 settlementData = settlementDatas.LastOrDefault(x => x.CorrectionFactor == periodicData.CorrectionFactor
                                                      && x.LastAvailableRateUsed == otherCost.LastAvailableRateUsed
                                                      && x.LastAvailableVatRateUsed == otherCost.LastAvailableVatRateUsed
                                                      && x.DataPredicted == periodicData.IsPredicted
                                                      && x.VatTarif == otherCost.VatTarif
-                                                     && x.Rate == otherCost.Rate
+                                                     && x.Rate == categoryRate
                                                      && x.CostCategory.Id == otherCost.CostCategoryId);
 
                 if (settlementData is null)
@@ -150,7 +172,7 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
                         LastAvailableVatRateUsed = otherCost.LastAvailableVatRateUsed,
                         DataPredicted = periodicData.IsPredicted,
                         VatTarif = otherCost.VatTarif,
-                        Rate = otherCost.Rate,
+                        Rate = categoryRate,
                         StartDate = periodicData.ValueXDate,
                         EndDate = periodicData.ValueXDate
                     };
@@ -209,7 +231,7 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
                         break;
                 }
 
-                lastRate = otherCost.Rate;
+                lastRate = settlementData.Rate;
                 settlementData.Value = settlementData.ValueBase * settlementData.Rate;
                 if (costCategory.CanNotBeNegative && settlementData.Value < 0)
                     settlementData.Value = 0;
