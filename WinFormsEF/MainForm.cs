@@ -31,6 +31,8 @@ public partial class MainForm : Form
 
             setLastControl(splitContainer1.Panel1, "ucData");
             setLastControl(splitContainer1.Panel2, "ucChartRatesLiveChart");
+
+            splitContainer1.SplitterDistance = _controller.GetMainSpitterDistance("ucData");
         }
         catch (Exception ex)
         {
@@ -47,12 +49,12 @@ public partial class MainForm : Form
 
     private void MainForm_Load(object sender, EventArgs e)
     {
-        //_initSettings = true;
+        _controller.InitSettings = true;
 
         //setLastControl(splitContainer1.Panel1, "ucData");
         //setLastControl(splitContainer1.Panel2, "ucChartRatesLiveChart");
 
-        //_initSettings = false;
+        _controller.InitSettings = false;
     }
 
     #endregion
@@ -72,12 +74,10 @@ public partial class MainForm : Form
 
     private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
     {
-        string splitterName;
-
         if (_controller.InitSettings == false && splitContainer1.Panel1.Controls.Count > 0)
         {
             int splitterDistance = splitContainer1.SplitterDistance;
-            splitterName = $"{splitContainer1.Panel1.Controls[0].Name}MainSplitter";
+            var splitterName = $"{splitContainer1.Panel1.Controls[0].Name}MainSplitter";
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
             libSettings.SaveSetting(splitterName, splitterDistance.ToString());
         }
@@ -86,12 +86,11 @@ public partial class MainForm : Form
     private void splitContainer1_Paint(object sender, PaintEventArgs e)
     {
         SplitContainer s = sender as SplitContainer;
-        Color color;
 
         if (s != null)
         {
             var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            color = libSettings.GetColorSetting("SliderColor", Color.LightGray);
+            var color = libSettings.GetColorSetting("SliderColor", Color.LightGray);
             e.Graphics.FillRectangle(new SolidBrush(color), s.SplitterRectangle);
         }
     }
