@@ -123,11 +123,12 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
         {
             foreach (var otherCost in periodicData.OtherCosts)
             {
-                var costCategory = Get(otherCost.CostCategoryId);
-                var categoryRate = 0m;
+                var costCategory = Get(otherCost.CostCategoryId);                
 
                 if (costCategory is null)
                     throw new Exception($"Cost category {otherCost.CostCategoryId} not found");
+
+                var categoryRate = otherCost.Rate;
 
                 switch (costCategory.EnergySubType.Id)
                 {
@@ -148,9 +149,9 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
                         categoryRate = periodicData.RateReturnLow;
                         break;
                 }
-
-                if (costCategory.EnergySubType.Id > 4)
-                    categoryRate = otherCost.Rate;
+                
+                //if (costCategory.EnergySubType.Id > 4 && categoryRate < 0)
+                //    categoryRate = Math.Abs(categoryRate);
 
                 settlementData = settlementDatas.LastOrDefault(x => x.CorrectionFactor == periodicData.CorrectionFactor
                                                      && x.LastAvailableRateUsed == otherCost.LastAvailableRateUsed
