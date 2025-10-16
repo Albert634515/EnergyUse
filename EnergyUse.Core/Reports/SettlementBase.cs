@@ -13,7 +13,9 @@ public class SettlementBase : ReportBase
     internal static UnitOfWork.Settlement _unitOfWork;
 
     internal static float[] _pointColumnWidths = [250F, 115F, 115F, 60F, 75F, 110F, 90F, 110F];
+    internal static List<SettlementData> _settlementDataList = new();
     internal static List<SettlementSubTotal> _settlementSubTotalList = new();
+    internal static List<PeriodicData> _periodicDataList = new();
     internal static List<FooterText> _footerTextsList = new();
 
     #endregion
@@ -54,7 +56,7 @@ public class SettlementBase : ReportBase
         return mergeSettlementData;
     }
 
-    internal Table getCostTable(SelectedEnergyType item, List<SettlementData> settlementDataList, bool showRates)
+    internal Table getCostTable(SelectedEnergyType item, List<SettlementData> settlementDataList, bool showRates, string subTotalText)
     {
         _footerTextsList = new List<FooterText>();
         var table = new Table(_pointColumnWidths);
@@ -143,7 +145,7 @@ public class SettlementBase : ReportBase
         settlementSubTotal.TotalValue = settlementDataList.Sum(s => s.Value);
         settlementSubTotal.TotalVat = settlementDataList.Sum(s => s.Value * (s.VatTarif / 100));
 
-        setSettlementSubTotal(table, settlementSubTotal, $"Sub total {item.EnergyType.Name}", showRates);
+        setSettlementSubTotal(table, settlementSubTotal, subTotalText, showRates);
 
         return table;
     }
@@ -298,12 +300,18 @@ public class SettlementBase : ReportBase
         {
             case 1:
             case 2:
+                subTotalName = $"Energy {energyType.Name}";
+                break;
             case 3:
             case 4:
-                subTotalName = $"Energy {energyType.Name}";
+                subTotalName = $"Energy return {energyType.Name}";
                 break;
             case 5:
                 subTotalName = $"Other {energyType.Name}";
+                break;
+            case 6:
+            case 7:
+                subTotalName = $"Energy return {energyType.Name}";
                 break;
             default:
                 subTotalName = $"{costCategory.Name} {energyType.Name}";
@@ -432,6 +440,38 @@ public class SettlementBase : ReportBase
                 table.AddFooterCell(GetBoldText(Math.Round(toBePaid / monthsLeft, 2).ToString("#0.00"), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
             }
         }
+
+        return table;
+    }
+
+    internal Table getPricePerKw()
+    {
+        Table table = new(_pointColumnWidths);
+        table.SetKeepTogether(true);
+        GetSectionHeader(table, "Price per kw");
+
+        var totalKw = _periodicDataList.Sum(x => x.ValueYLow + x.ValueYNormal);
+
+        var totalCost = _settlementSubTotalList.Sum(x => x.TotalValue + x.TotalVat);        
+        var pricePerKw = Math.Round(totalCost / totalKw, 5);
+        table.AddCell(GetNormalText("Price", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddCell(GetNormalText(pricePerKw.ToString("##0.00000"), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
+
+        var totalCostExSolar = _settlementDataList.Where(w => w.CostCategory.EnergySubTypeId < 3 || w.CostCategory.EnergySubTypeId == 5).Sum(x => x.Value + x.VatAmount);
+        var pricePerKwExSolar = Math.Round(totalCostExSolar / totalKw, 5);
+        table.AddCell(GetNormalText("Price ex solar", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddCell(GetNormalText(pricePerKwExSolar.ToString("##0.00000"), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
+
+        var totalCostKwOnlyLow = _settlementDataList.Where(w => w.CostCategory.EnergySubTypeId == 2).Sum(x => x.Value + x.VatAmount);
+        var pricePerKWLow = totalCostKwOnlyLow / _periodicDataList.Sum(x => x.ValueYLow);
+
+        var totalCostKwOnlyNormal = _settlementDataList.Where(w => w.CostCategory.EnergySubTypeId == 1).Sum(x => x.Value + x.VatAmount);
+        var pricePerKWNormal = totalCostKwOnlyNormal / _periodicDataList.Sum(x => x.ValueYNormal);
+
+        var pricePerKwOnly = Math.Round(pricePerKWLow + pricePerKWNormal / 2, 5);
+
+        table.AddCell(GetNormalText("Price kw cost only", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddCell(GetNormalText(pricePerKwOnly.ToString("##0.00000"), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
 
         return table;
     }

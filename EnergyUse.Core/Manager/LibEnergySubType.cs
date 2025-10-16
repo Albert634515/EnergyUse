@@ -12,11 +12,13 @@ public class LibEnergySubType
         {
             case 1:
             case 2:
+                combinedType = "Energy";
+                break;
             case 3:
             case 4:
             case 6:
             case 7:
-                combinedType = "Energy";
+                combinedType = "Energy return";
                 break;
             case 5:
                 combinedType = "Other";

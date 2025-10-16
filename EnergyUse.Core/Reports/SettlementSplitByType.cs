@@ -54,12 +54,12 @@ public class SettlementSplitByType : SettlementBase
             parameterPeriod.TarifGroupId = item.TarifGroup;
             parameterPeriod.QuantityReduction = 1;
 
-            List<PeriodicData> periodicData = await LibPeriodicDate.GetRangeAsync(parameterPeriod);
-            List<SettlementData> settlementDataList = _unitOfWork.CostCategoriesRepo.MapCostCategories(periodicData);
+            _periodicDataList = await LibPeriodicDate.GetRangeAsync(parameterPeriod);
+            _settlementDataList = _unitOfWork.CostCategoriesRepo.MapCostCategories(_periodicDataList);
             if (parameterSelection.ShowRates == false)
-                settlementDataList = mergeSettlementData(settlementDataList);
+                _settlementDataList = mergeSettlementData(_settlementDataList);
 
-            if (periodicData.Count == 0)
+            if (_periodicDataList.Count == 0)
             {
                 document.Add(new Paragraph($"No data found for energy type {energyType.Name}"));
                 document.Add(new Paragraph("\n"));
@@ -71,18 +71,23 @@ public class SettlementSplitByType : SettlementBase
                 document.Add(table);
                 document.Add(new Paragraph(""));
 
-                var list1 = settlementDataList.Where(w => w.CostCategory.EnergySubTypeId != 5).ToList();
-                table = getCostTable(item, list1, parameterSelection.ShowRates);
+                var list1 = _settlementDataList.Where(w => w.CostCategory.EnergySubTypeId < 3 || w.CostCategory.EnergySubTypeId > 7).ToList();
+                table = getCostTable(item, list1, parameterSelection.ShowRates, $"Sub total {item.EnergyType.Name}");
                 document.Add(table);
                 document.Add(new Paragraph(""));
 
-                var list2 = settlementDataList.Where(w => w.CostCategory.EnergySubTypeId == 5).ToList();
-                table = getCostTable(item, list2, parameterSelection.ShowRates);
+                var list2 = _settlementDataList.Where(w => !(w.CostCategory.EnergySubTypeId < 3) && (w.CostCategory.EnergySubTypeId >=3 || w.CostCategory.EnergySubTypeId <= 7) && w.CostCategory.EnergySubTypeId != 5).ToList();
+                table = getCostTable(item, list2, parameterSelection.ShowRates, $"Sub total {item.EnergyType.Name} return");
+                document.Add(table);
+                document.Add(new Paragraph(""));
+
+                var list3 = _settlementDataList.Where(w => w.CostCategory.EnergySubTypeId == 5).ToList();
+                table = getCostTable(item, list3, parameterSelection.ShowRates, $"Sub total {item.EnergyType.Name} cost");
                 document.Add(table);
 
                 document.Add(new Paragraph(""));
 
-                setSettlementSubTotal(energyType, settlementDataList);
+                setSettlementSubTotal(energyType, _settlementDataList);
 
                 table = setTotalToTable(energyType, parameterSelection.ShowRates);
                 document.Add(table);
@@ -90,7 +95,10 @@ public class SettlementSplitByType : SettlementBase
         } // End of loop of selected energy types
 
         document.Add(new Paragraph(""));
+        table = getPricePerKw();
+        document.Add(table);
 
+        document.Add(new Paragraph(""));
         table = getPayments(address.Id, parameterSelection.PreSelectedPeriodId, parameterSelection.StartRange, parameterSelection.EndRange);
         document.Add(table);
 

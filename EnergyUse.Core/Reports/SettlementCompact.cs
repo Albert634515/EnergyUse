@@ -71,7 +71,7 @@ public class SettlementCompact : SettlementBase
                 document.Add(table);
                 document.Add(new Paragraph(""));
 
-                table = getCostTable(item, settlementDataList, parameterSelection.ShowRates);
+                table = getCostTable(item, settlementDataList, parameterSelection.ShowRates, $"Sub total {item.EnergyType.Name}");
                 document.Add(table);
 
                 document.Add(new Paragraph(""));
