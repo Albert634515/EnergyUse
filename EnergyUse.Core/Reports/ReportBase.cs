@@ -12,7 +12,7 @@ public class ReportBase
         Text first = new Text(text).SetFont(bold);
         Paragraph paragraph = new Paragraph().Add(first);
         Cell cell = new(rowspan, colspan);
-        cell.SetFontSize(9);
+        cell.SetFontSize(8);
         cell.Add(paragraph);
         cell.SetTextAlignment(cellAlignment);
 
@@ -25,7 +25,7 @@ public class ReportBase
         Text first = new Text(text).SetFont(bold);
         Paragraph paragraph = new Paragraph().Add(first);
         Cell cell = new(rowspan, colspan);
-        cell.SetFontSize(9);
+        cell.SetFontSize(8);
         cell.Add(paragraph);
         cell.SetBackgroundColor(ColorConstants.LIGHT_GRAY);
         cell.SetTextAlignment(cellAlignment);
@@ -39,10 +39,10 @@ public class ReportBase
         Text first = new Text(text).SetFont(normal);
         Paragraph paragraph = new Paragraph().Add(first);
         if (!string.IsNullOrWhiteSpace(footerCounter))
-            paragraph.Add(new Text(footerCounter).SetFont(normal).SetTextRise(7).SetFontSize(6));
+            paragraph.Add(new Text(footerCounter).SetFont(normal).SetTextRise(5).SetFontSize(6));
 
         Cell cell = new(rowspan, colspan);
-        cell.SetFontSize(9);
+        cell.SetFontSize(7);
         cell.Add(paragraph);
         cell.SetTextAlignment(cellAlignment);
 

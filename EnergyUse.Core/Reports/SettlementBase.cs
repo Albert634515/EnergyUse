@@ -243,12 +243,12 @@ public class SettlementBase : ReportBase
 
         foreach (FooterText footerText in footerTextList)
         {
-            _ = paragraph.Add(new Text(footerText.Counter.ToString()).SetFont(normal).SetTextRise(7).SetFontSize(6));
+            _ = paragraph.Add(new Text(footerText.Counter.ToString()).SetFont(normal).SetTextRise(5).SetFontSize(5));
             _ = paragraph.Add(new Text($"{footerText.Text}{Environment.NewLine}").SetFont(normal));
         }
 
         Cell cell = new(rowspan, colspan);
-        cell.SetFontSize(9);
+        cell.SetFontSize(6);
         cell.Add(paragraph);
 
         return cell;
@@ -468,7 +468,10 @@ public class SettlementBase : ReportBase
         var totalCostKwOnlyNormal = _settlementDataList.Where(w => w.CostCategory.EnergySubTypeId == 1).Sum(x => x.Value + x.VatAmount);
         var pricePerKWNormal = totalCostKwOnlyNormal / _periodicDataList.Sum(x => x.ValueYNormal);
 
-        var pricePerKwOnly = Math.Round(pricePerKWLow + pricePerKWNormal / 2, 5);
+        var totalCostperKw = _settlementDataList.Where(w => w.CostCategory.EnergySubTypeId == 5 && w.CostCategory.UnitId == "kWh").Sum(x => x.Value + x.VatAmount);
+        var costPerkw = totalCostperKw / _periodicDataList.Sum(x => x.ValueYNormal + x.ValueYLow);
+
+        var pricePerKwOnly = Math.Round(pricePerKWLow + pricePerKWNormal / 2 + costPerkw, 5);
 
         table.AddCell(GetNormalText("Price kw cost only", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddCell(GetNormalText(pricePerKwOnly.ToString("##0.00000"), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
