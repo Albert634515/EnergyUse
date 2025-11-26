@@ -11,9 +11,9 @@
     <PackageReference Include="EPPlus" Version="7.5.1">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
-    <PackageReference Include="itext" Version="9.3.0" />
-    <PackageReference Include="itext.bouncy-castle-adapter" Version="9.3.0" />
-    <PackageReference Include="itext.bouncy-castle-fips-adapter" Version="9.3.0" />
+    <PackageReference Include="itext" Version="9.4.0" />
+    <PackageReference Include="itext.bouncy-castle-adapter" Version="9.4.0" />
+    <PackageReference Include="itext.bouncy-castle-fips-adapter" Version="9.4.0" />
     <PackageReference Include="LiveChartsCore" Version="2.0.0-rc5.4" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView" Version="2.0.0-rc5.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0">
