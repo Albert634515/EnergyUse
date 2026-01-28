@@ -1,6 +1,4 @@
 ﻿using EnergyUse.Models.Common;
-using LiveChartsCore.Defaults;
-using System.Collections.ObjectModel;
 
 namespace EnergyUse.Core.Graphs.LiveCharts;
 
@@ -45,7 +43,8 @@ public class Rates : Base
             var energyTypeId = energyType.Id;
             typeCounter++;
 
-            List<Models.CostCategory> costCategoryList = [];
+            // use available categories as fallback
+            List<Models.CostCategory> costCategoryList = _graphParameter.CostCategoryList ?? new List<Models.CostCategory>();
             DateTime chartStartDate = startDate;
             DateTime chartEndDate = endDate;
 
@@ -54,15 +53,18 @@ public class Rates : Base
                 if (chartStartDate.Day == 1)
                 {
                     //Loop selected categories
-                    foreach (Models.CostCategory mainCostCategory in _graphParameter.CostCategoryList)
+                    foreach (Models.CostCategory mainCostCategory in costCategoryList)
                     {
                         string unitName = $"{mainCostCategory.Name} {mainCostCategory.Unit}";
-                        var tarifGroup = mainCostCategory.TariffGroup != null && mainCostCategory.TariffGroup.Id <= 0 ? mainCostCategory.TariffGroup : _graphParameter.Address.TariffGroup;
+                        var tarifGroup = mainCostCategory.TariffGroup != null && mainCostCategory.TariffGroup.Id <= 0
+                            ? mainCostCategory.TariffGroup
+                            : _graphParameter.Address?.TariffGroup;
                         if (tarifGroup != null)
                             tarifGroupId = tarifGroup.Id;
 
                         // Calculate per main category
-                        Models.Rate? rate = _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyTypeId, mainCostCategory.Id, chartStartDate, chartStartDate, tarifGroupId).FirstOrDefault();
+                        var ratesEnum = _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyTypeId, mainCostCategory.Id, chartStartDate, chartStartDate, tarifGroupId) ?? Enumerable.Empty<Models.Rate>();
+                        Models.Rate? rate = ratesEnum.FirstOrDefault();
                         PeriodicData? periodicData;
                         if (rate != null)
                         {
@@ -81,14 +83,16 @@ public class Rates : Base
                             periodicData.ValueY += rate.RateValue;
                         }
 
-                        if (mainCostCategory.EnergySubType.Id == 1 || mainCostCategory.EnergySubType.Id == 2)
+                        if (mainCostCategory.EnergySubType != null && (mainCostCategory.EnergySubType.Id == 1 || mainCostCategory.EnergySubType.Id == 2))
                         {
-                            foreach (var otherCostCategory in costCategoryList.Where(m => m.EnergySubType.Id == 5))
+                            foreach (var otherCostCategory in costCategoryList.Where(m => m.EnergySubType != null && m.EnergySubType.Id == 5))
                             {
                                 unitName = $"{mainCostCategory.Name} {otherCostCategory.Unit}";
 
                                 //Toevoegen sub cat
-                                rate = _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyTypeId, otherCostCategory.Id, chartStartDate, chartStartDate, (long)otherCostCategory.TariffGroup.Id).FirstOrDefault();
+                                var tariffGroupIdForOther = otherCostCategory.TariffGroup?.Id ?? 0;
+                                var ratesEnum2 = _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyTypeId, otherCostCategory.Id, chartStartDate, chartStartDate, (long)tariffGroupIdForOther) ?? Enumerable.Empty<Models.Rate>();
+                                rate = ratesEnum2.FirstOrDefault();
                                 if (rate != null)
                                 {
                                     periodicData = _periodicDataList.Where(x => x.ValueXString == unitName && x.ValueXDate == chartStartDate).FirstOrDefault();
@@ -107,22 +111,27 @@ public class Rates : Base
                                 }
                             }
                         }
-
                     }
                 }
 
                 chartStartDate = chartStartDate.AddDays(1);
             }
 
-            // Creating a list of series
+            // Creating a list of series (now core model SeriesModel)
             var typeList = GetTypeList();
             foreach (var item in typeList)
             {
-                var ln = General.GetDefaultLineDateSeries(typeCounter, 2, false);
-                ln.Values = GetValueListY(item);
-                ln.Name = item;
+                var series = new SeriesModel
+                {
+                    Name = item,
+                    SeriesKey = item,
+                    EnergyTypeId = energyTypeId,
+                    Points = GetValueListY(item),
+                    ScalesYAt = typeCounter,
+                    IsLine = true,
+                };
 
-                _serieslist.Add(ln);
+                _serieslist.Add(series);
             }
         }
     }
@@ -140,20 +149,20 @@ public class Rates : Base
             var energyTypeId = energyType.Id;
             typeCounter++;
 
-            foreach (Models.CostCategory costCategory in _graphParameter.CostCategoryList)
+            var costCategories = _graphParameter.CostCategoryList ?? Enumerable.Empty<Models.CostCategory>();
+
+            foreach (Models.CostCategory costCategory in costCategories)
             {
                 long tarifGroupId = 0;
-                Models.Rate? lastRate = new();
+                Models.Rate? lastRate = null;
 
-                var address = new Models.Address();
-                if (_graphParameter.Address != null)
-                    address = _graphParameter.Address;
+                var address = _graphParameter.Address ?? new Models.Address();
 
                 var tarifGroup = costCategory.TariffGroup ?? address.TariffGroup;
                 if (tarifGroup != null)
                     tarifGroupId = tarifGroup.Id;
 
-                var rateList = _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyType.Id, costCategory.Id, _graphParameter.From, _graphParameter.Till, tarifGroupId).ToList();
+                var rateList = _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyType.Id, costCategory.Id, _graphParameter.From, _graphParameter.Till, tarifGroupId) ?? Enumerable.Empty<Models.Rate>();
                 foreach (Models.Rate rate in rateList)
                 {
                     addRateToList(costCategory.Name, rate.RateValue, rate.StartRate);
@@ -169,11 +178,17 @@ public class Rates : Base
             var typeList = GetTypeList();
             foreach (var item in typeList)
             {
-                var ln = General.GetDefaultLineDateSeries(typeCounter, 1, false);
-                ln.Values = GetValueListY2(item);
-                ln.Name = item;
+                var series = new SeriesModel
+                {
+                    Name = item,
+                    SeriesKey = item,
+                    EnergyTypeId = energyTypeId,
+                    Points = GetValueListY2(item),
+                    ScalesYAt = typeCounter,
+                    IsLine = true
+                };
 
-                _serieslist.Add(ln);
+                _serieslist.Add(series);
             }
         }
     }
@@ -187,28 +202,27 @@ public class Rates : Base
         periodicData.ValueY2 += (double)Math.Round(rateValue, 4);
         periodicData.ValueXDate = rateDate;
 
-        if (periodicData.ValueXDate < _graphParameter.From)
-            periodicData.ValueXDate = _graphParameter.From;
-        if (periodicData.ValueXDate > _graphParameter.Till)
-            periodicData.ValueXDate = _graphParameter.Till;
+        if (_graphParameter != null)
+        {
+            if (periodicData.ValueXDate < _graphParameter.From)
+                periodicData.ValueXDate = _graphParameter.From;
+            if (periodicData.ValueXDate > _graphParameter.Till)
+                periodicData.ValueXDate = _graphParameter.Till;
+        }
 
         _periodicDataList.Add(periodicData);
     }
 
-    private ObservableCollection<DateTimePoint> GetValueListY(string itemType)
+    private List<DatePoint> GetValueListY(string itemType)
     {
         var dateList = _periodicDataList.OrderBy(o => o.ValueXDate).Select(x => x.ValueXDate).Distinct().ToList();
-        var valueList = new ObservableCollection<DateTimePoint>();
+        var valueList = new List<DatePoint>();
         foreach (DateTime day in dateList)
         {
             foreach (PeriodicData periodicData2 in _periodicDataList.Where(c => c.ValueXDate == day && c.ValueXString == itemType))
             {
-                var dataPoint = new DateTimePoint
-                {
-                    DateTime = day,
-                    Value = (double?)periodicData2.ValueY
-                };
-
+                var value = periodicData2.ValueY;
+                var dataPoint = new DatePoint(day, (double?)value ?? double.NaN);
                 valueList.Add(dataPoint);
             }
         }
@@ -216,20 +230,16 @@ public class Rates : Base
         return valueList;
     }
 
-    private ObservableCollection<DateTimePoint> GetValueListY2(string itemType)
+    private List<DatePoint> GetValueListY2(string itemType)
     {
         var dateList = _periodicDataList.OrderBy(o => o.ValueXDate).Select(x => x.ValueXDate).Distinct().ToList();
-        var valueList = new ObservableCollection<DateTimePoint>();
+        var valueList = new List<DatePoint>();
         foreach (DateTime day in dateList)
         {
             foreach (PeriodicData periodicData2 in _periodicDataList.Where(c => c.ValueXDate == day && c.ValueXString == itemType))
             {
-                var dataPoint = new DateTimePoint
-                {
-                    DateTime = day,
-                    Value = (double?)periodicData2.ValueY2
-                };
-
+                var value = periodicData2.ValueY2;
+                var dataPoint = new DatePoint(day, (double?)value ?? double.NaN);
                 valueList.Add(dataPoint);
             }
         }

@@ -1,11 +1,6 @@
 ﻿using EnergyUse.Common.Enums;
 using EnergyUse.Core.Manager;
 using EnergyUse.Models.Common;
-using LiveChartsCore;
-using LiveChartsCore.Defaults;
-using LiveChartsCore.Kernel.Sketches;
-using LiveChartsCore.SkiaSharpView;
-using System.Collections.ObjectModel;
 using System.Drawing;
 
 namespace EnergyUse.Core.Graphs.LiveCharts;
@@ -13,14 +8,17 @@ namespace EnergyUse.Core.Graphs.LiveCharts;
 public class Base
 {
     #region ChartProperties
-            
+
     internal UnitOfWork.Graphs? _unitOfWork { get; set; }
     internal ParameterGraph _graphParameter { get; set; } = new();
-    internal LibPeriodicDate _libPeriodicDate { get; set; }
+    // LibPeriodicDate is created by derived classes (needs db name)
+    internal LibPeriodicDate? _libPeriodicDate { get; set; }
     internal List<PeriodicData> _periodicDataList { get; set; } = new();
-    internal List<ISeries> _serieslist { get; set; } = new();
-    internal List<ICartesianAxis> _axisList { get; set; } = new();
-    internal Dictionary<string, ObservableCollection<DateTimePoint>> _datePoints { get; set; } = [];
+
+    // UI-agnostic models stored in EnergyUse.Models.Common
+    internal List<SeriesModel> _serieslist { get; set; } = new();
+    internal List<AxisModel> _axisList { get; set; } = new();
+    internal Dictionary<string, List<DatePoint>> _datePoints { get; set; } = new Dictionary<string, List<DatePoint>>();
 
     #endregion
 
@@ -28,35 +26,44 @@ public class Base
 
     internal void AddColumnSeriesToList(ChartSeriesType serieType, long energyTypeId, int scalesYAt, bool showStacked = false)
     {
-        ISeries columnSerie;
         var serieName = GetSeriesKey(serieType, energyTypeId);
 
-        if (_datePoints.ContainsKey(serieName) && _datePoints[serieName].Count > 0)
+        if (_datePoints.TryGetValue(serieName, out var points) && points.Count > 0)
         {
             Color color = GetColor(serieType, energyTypeId);
 
-            if (showStacked)
+            var series = new SeriesModel
             {
-                int stackedGroupId = (int)LibGraphGeneral.GetChartGroup(serieType) + 100 + (int)energyTypeId;
-                columnSerie = General.GetStackedColumnDateSerie(serieType, energyTypeId, stackedGroupId, color, scalesYAt);
-            }
-            else
-                columnSerie = General.GetColumnDateSerie(serieType, color, scalesYAt);
+                Name = serieName,
+                SeriesKey = serieName,
+                EnergyTypeId = energyTypeId,
+                Points = points.Select(dp => new DatePoint(dp.DateTime, dp.Value)).ToList(),
+                Color = color,
+                IsStacked = showStacked,
+                ScalesYAt = scalesYAt,
+                IsLine = false,
+            };
 
-            columnSerie.Values = _datePoints[serieName];
-            _serieslist.Add(columnSerie);
+            _serieslist.Add(series);
         }
     }
 
     internal void AddLineSeriesToList(ChartSeriesType serieType, long energyTypeId, int scalesYAt)
     {
-          var serieName = GetSeriesKey(serieType, energyTypeId);
+        var serieName = GetSeriesKey(serieType, energyTypeId);
 
-        if (_datePoints.ContainsKey(serieName) && _datePoints[serieName].Count > 0)
+        if (_datePoints.TryGetValue(serieName, out var points) && points.Count > 0)
         {
-            var lineserie = General.GetLineDateSerie(serieType, scalesYAt);
-            lineserie.Values = _datePoints[serieName];
-            _serieslist.Add(lineserie);
+            var series = new SeriesModel
+            {
+                Name = serieName,
+                SeriesKey = serieName,
+                EnergyTypeId = energyTypeId,
+                Points = points.Select(dp => new DatePoint(dp.DateTime, dp.Value)).ToList(),
+                ScalesYAt = scalesYAt,
+                IsLine = true,
+            };
+            _serieslist.Add(series);
         }
     }
 
@@ -64,18 +71,32 @@ public class Base
     {
         var serieName = GetSeriesKey(serieType, energyTypeId);
 
-        if (_datePoints.ContainsKey(serieName) && _datePoints[serieName].Count > 0)
+        if (_datePoints.TryGetValue(serieName, out var points) && points.Count > 0)
         {
             Color color = GetColor(serieType, energyTypeId);
-            var lineserie = General.GetLineSerieAvgDate(serieType, color, scalesYAt);
-            lineserie.Values = _datePoints[serieName];
-            _serieslist.Add(lineserie);
+            var series = new SeriesModel
+            {
+                Name = serieName,
+                SeriesKey = serieName,
+                EnergyTypeId = energyTypeId,
+                Points = points.Select(dp => new DatePoint(dp.DateTime, dp.Value)).ToList(),
+                Color = color,
+                ScalesYAt = scalesYAt,
+                IsLine = true,
+            };
+            _serieslist.Add(series);
         }
     }
 
-    internal void AddDataPoint(ChartSeriesType seriesType, long energyTypeId, ShowType showType, PeriodicData periodicData, Period periodType = Period.Unknown, int roundingDigit = 2)
+    internal void AddDataPoint(
+        ChartSeriesType seriesType,
+        long energyTypeId,
+        ShowType showType,
+        PeriodicData periodicData,
+        Period periodType = Period.Unknown,
+        int roundingDigit = 2)
     {
-        DateTimePoint? ratePeriod;
+        DatePoint? ratePeriod = null;
         string seriesKey = GetSeriesKey(seriesType, energyTypeId);
 
         if (showType == ShowType.Rate)
@@ -83,7 +104,10 @@ public class Base
         else if (showType == ShowType.Value)
             ratePeriod = GetValueByPeriod(periodicData, seriesType, roundingDigit);
         else if (showType == ShowType.Efficiency)
+        {
+            if (_libPeriodicDate == null) throw new InvalidOperationException("LibPeriodicDate not initialized");
             ratePeriod = GetEfficiencyByPeriod(periodicData, seriesType, _graphParameter.Address.TotalCapacity, roundingDigit);
+        }
         else if (showType == ShowType.AvgRate)
             ratePeriod = GetAvgRateByPeriod(periodicData, seriesType, periodType, roundingDigit);
         else if (showType == ShowType.AvgValue)
@@ -93,14 +117,26 @@ public class Base
 
         if (ratePeriod != null)
         {
+            double value = ratePeriod.Value;
             if (seriesType.ToString().ToLower().Contains("return"))
-                ratePeriod.Value = 0 - ratePeriod.Value;
+                value = -value;
 
-            var periodExits = _datePoints[seriesKey].Where(x => x.DateTime.Date == periodicData.ValueXDate).FirstOrDefault();
-            if (periodExits != null && ratePeriod != null)
-                periodExits.Value += Math.Round((double)ratePeriod.Value, roundingDigit);
+            if (!_datePoints.ContainsKey(seriesKey))
+                _datePoints[seriesKey] = new List<DatePoint>();
+
+            var list = _datePoints[seriesKey];
+            int idx = list.FindIndex(x => x.DateTime.Date == periodicData.ValueXDate);
+            if (idx >= 0)
+            {
+                var existing = list[idx];
+                var updated = new DatePoint(existing.DateTime, Math.Round(existing.Value + Math.Round(value, roundingDigit), roundingDigit));
+                list[idx] = updated;
+            }
             else
-                _datePoints[seriesKey].Add(ratePeriod);
+            {
+                var dp = new DatePoint(periodicData.ValueXDate, Math.Round(value, roundingDigit));
+                list.Add(dp);
+            }
         }
     }
 
@@ -108,7 +144,7 @@ public class Base
 
     #region GetPeriodData
 
-    internal DateTimePoint GetEfficiencyByPeriod(PeriodicData periodicData, ChartSeriesType chartSeriesType, decimal totalCapacity, int roundingDigit = 2)
+    internal DatePoint GetEfficiencyByPeriod(PeriodicData periodicData, ChartSeriesType chartSeriesType, decimal totalCapacity, int roundingDigit = 2)
     {
         double rate = double.NaN;
 
@@ -116,28 +152,28 @@ public class Base
         {
             case ChartSeriesType.ReturnLowPredicted:
                 if (periodicData.IsPredicted == true)
-                    rate = (double)_libPeriodicDate.GetEfficiency(periodicData, SubEnergyType.ReturnLow, totalCapacity);
+                    rate = (double)_libPeriodicDate!.GetEfficiency(periodicData, SubEnergyType.ReturnLow, totalCapacity);
                 break;
             case ChartSeriesType.ReturnNormalPredicted:
                 if (periodicData.IsPredicted == true)
-                    rate = (double)_libPeriodicDate.GetEfficiency(periodicData, SubEnergyType.ReturnNormal, totalCapacity);
+                    rate = (double)_libPeriodicDate!.GetEfficiency(periodicData, SubEnergyType.ReturnNormal, totalCapacity);
                 break;
             case ChartSeriesType.ReturnLow:
                 if (periodicData.IsPredicted == false)
-                    rate = (double)_libPeriodicDate.GetEfficiency(periodicData, SubEnergyType.ReturnLow, totalCapacity);
+                    rate = (double)_libPeriodicDate!.GetEfficiency(periodicData, SubEnergyType.ReturnLow, totalCapacity);
                 break;
             case ChartSeriesType.ReturnNormal:
                 if (periodicData.IsPredicted == false)
-                    rate = (double)_libPeriodicDate.GetEfficiency(periodicData, SubEnergyType.ReturnNormal, totalCapacity);
+                    rate = (double)_libPeriodicDate!.GetEfficiency(periodicData, SubEnergyType.ReturnNormal, totalCapacity);
                 break;
             default:
                 break;
         }
 
-        return new DateTimePoint(periodicData.ValueXDate, Math.Round(rate, roundingDigit));
+        return new DatePoint(periodicData.ValueXDate, Math.Round(rate, roundingDigit));
     }
 
-    internal DateTimePoint GetValueByPeriod(PeriodicData periodicData, ChartSeriesType chartSeriesType, int roundingDigit = 2)
+    internal DatePoint GetValueByPeriod(PeriodicData periodicData, ChartSeriesType chartSeriesType, int roundingDigit = 2)
     {
         double rate = double.NaN;
 
@@ -149,10 +185,6 @@ public class Base
             case ChartSeriesType.Low:
                 rate = (double)periodicData.ValueYMonetaryLow;
                 break;
-            case ChartSeriesType.AvgLow:
-                break;
-            case ChartSeriesType.AvgValueLow:
-                break;
             case ChartSeriesType.LowPredicted:
                 rate = (double)periodicData.ValueYMonetaryLow;
                 break;
@@ -161,10 +193,6 @@ public class Base
                 break;
             case ChartSeriesType.Normal:
                 rate = (double)periodicData.ValueYMonetaryNormal;
-                break;
-            case ChartSeriesType.AvgNormal:
-                break;
-            case ChartSeriesType.AvgValueNormal:
                 break;
             case ChartSeriesType.NormalPredicted:
                 rate = (double)periodicData.ValueYMonetaryNormal;
@@ -175,33 +203,17 @@ public class Base
             case ChartSeriesType.ReturnLow:
                 rate = (double)periodicData.ValueYMonetaryReturnLow;
                 break;
-            case ChartSeriesType.ReturnAvgLowDelivery:
-                break;
             case ChartSeriesType.ReturnNormal:
                 rate = (double)periodicData.ValueYMonetaryReturnNormal;
-                break;
-            case ChartSeriesType.ReturnAvgNormalDelivery:
-                break;
-            case ChartSeriesType.Consumed:
-                break;
-            case ChartSeriesType.ConsumedPredicted:
-                break;
-            case ChartSeriesType.Produced:
-                break;
-            case ChartSeriesType.ProducedPredicted:
-                break;
-            case ChartSeriesType.Total:
-                break;
-            case ChartSeriesType.TotalPredicted:
                 break;
             default:
                 break;
         }
 
-        return new DateTimePoint(periodicData.ValueXDate, Math.Round(rate, roundingDigit));
+        return new DatePoint(periodicData.ValueXDate, Math.Round(rate, roundingDigit));
     }
 
-    internal DateTimePoint GetRateByPeriod(PeriodicData periodicData, ChartSeriesType chartSeriesType, int digitRounding = 2)
+    internal DatePoint GetRateByPeriod(PeriodicData periodicData, ChartSeriesType chartSeriesType, int digitRounding = 2)
     {
         double rate = double.NaN;
 
@@ -214,10 +226,6 @@ public class Base
                 if (periodicData.IsPredicted == false)
                     rate = (double)periodicData.ValueYLow;
                 break;
-            case ChartSeriesType.AvgLow:
-                break;
-            case ChartSeriesType.AvgValueLow:
-                break;
             case ChartSeriesType.LowPredicted:
                 if (periodicData.IsPredicted == true)
                     rate = (double)periodicData.ValueYLow;
@@ -229,10 +237,6 @@ public class Base
             case ChartSeriesType.Normal:
                 if (periodicData.IsPredicted == false)
                     rate = (double)periodicData.ValueYNormal;
-                break;
-            case ChartSeriesType.AvgNormal:
-                break;
-            case ChartSeriesType.AvgValueNormal:
                 break;
             case ChartSeriesType.NormalPredicted:
                 if (periodicData.IsPredicted == true)
@@ -246,44 +250,22 @@ public class Base
                 if (periodicData.IsPredicted == false)
                     rate = (double)periodicData.ValueYReturnLow;
                 break;
-            case ChartSeriesType.ReturnAvgLowDelivery:
-                break;
             case ChartSeriesType.ReturnNormal:
                 if (periodicData.IsPredicted == false)
                     rate = (double)periodicData.ValueYReturnNormal;
-                break;
-            case ChartSeriesType.ReturnAvgNormalDelivery:
-                break;
-            case ChartSeriesType.Consumed:
-                break;
-            case ChartSeriesType.ConsumedPredicted:
-                break;
-            case ChartSeriesType.Produced:
-                break;
-            case ChartSeriesType.ProducedPredicted:
                 break;
             case ChartSeriesType.Total:
                 if (periodicData.IsPredicted == false)
                     rate = (double)(Math.Round(periodicData.ValueYLow + periodicData.ValueYNormal, digitRounding) - Math.Round(periodicData.ValueYReturnLow + periodicData.ValueYReturnNormal, digitRounding));
                 break;
-            case ChartSeriesType.TotalPredicted:
-                break;
             default:
                 break;
         }
 
-        return new DateTimePoint(periodicData.ValueXDate, Math.Round(rate, digitRounding));
+        return new DatePoint(periodicData.ValueXDate, Math.Round(rate, digitRounding));
     }
 
-    /// <summary>
-    /// Calculate average rate by period
-    /// </summary>
-    /// <remarks>Take into account incomplete periode as this will suppress avg too much</remarks>
-    /// <param name="periodicData"></param>
-    /// <param name="chartSeriesType"></param>
-    /// <param name="periodType"></param>
-    /// <returns></returns>
-    internal DateTimePoint? GetAvgRateByPeriod(PeriodicData periodicData, ChartSeriesType chartSeriesType, Period periodType, int roundingDigit = 2)
+    internal DatePoint? GetAvgRateByPeriod(PeriodicData periodicData, ChartSeriesType chartSeriesType, Period periodType, int roundingDigit = 2)
     {
         double rate = double.NaN;
         DateTime maxDate = _periodicDataList.Max(x => x.ValueXDate);
@@ -314,13 +296,12 @@ public class Base
                 break;
         }
 
-        return new DateTimePoint(periodicData.ValueXDate, Math.Round(rate, roundingDigit));
+        return new DatePoint(periodicData.ValueXDate, Math.Round(rate, roundingDigit));
     }
 
-    internal DateTimePoint? GetAvgValueByPeriod(PeriodicData periodicData, ChartSeriesType chartSeriesType, Period periodType, int roundingDigit = 2)
+    internal DatePoint? GetAvgValueByPeriod(PeriodicData periodicData, ChartSeriesType chartSeriesType, Period periodType, int roundingDigit = 2)
     {
         double rate = double.NaN;
-        //Take into account incomplete periode as this will suppress avg too much
         var maxAvgValue = LibGraphGeneral.GetMaxAvg(periodType, _graphParameter.Till, _periodicDataList.Count);
         var periodicDataList = _periodicDataList.Where(x => x.ValueX <= maxAvgValue).ToList();
         if (periodicDataList.Count == 0)
@@ -344,7 +325,7 @@ public class Base
                 break;
         }
 
-        return new DateTimePoint(periodicData.ValueXDate, Math.Round(rate, roundingDigit));
+        return new DatePoint(periodicData.ValueXDate, Math.Round(rate, roundingDigit));
     }
 
     #endregion
@@ -356,32 +337,31 @@ public class Base
         return $"{seriesType}_{energyId}";
     }
 
-    public List<ISeries> GetSeries()
+    // public API returns model series
+    public List<SeriesModel> GetSeries()
     {
         return _serieslist;
     }
 
-    public void AddAxis(ICartesianAxis axis)
+    public void AddAxis(AxisModel axis)
     {
         _axisList.Add(axis);
     }
 
-    public ICartesianAxis GetAxis(string name)
+    public AxisModel GetAxis(string name)
     {
-        return new Axis
+        return new AxisModel
         {
             Name = name,
-            NameTextSize = 14,
-            NamePadding = new LiveChartsCore.Drawing.Padding(0, 20),
-            Padding = new LiveChartsCore.Drawing.Padding(20, 0, 0, 0),
-            TextSize = 12,
-            DrawTicksPath = true,
-            ShowSeparatorLines = false,
-            Position = LiveChartsCore.Measure.AxisPosition.End
+            Position = 0,
+            TextSize = 14,
+            PaddingLeft = 20,
+            PaddingTop = 0,
+            ShowSeparatorLines = false
         };
     }
 
-    public List<ICartesianAxis> GetAxisLists()
+    public List<AxisModel> GetAxisLists()
     {
         return _axisList;
     }
@@ -398,7 +378,7 @@ public class Base
 
     internal void ResetSeries()
     {
-        _serieslist = new ObservableCollection<ISeries>().ToList();
+        _serieslist = new List<SeriesModel>();
     }
 
     internal List<string> GetTypeList()
@@ -458,15 +438,6 @@ public class Base
         return color;
     }
 
-    /// <summary>
-    /// Creates color with corrected brightness.
-    /// </summary>
-    /// <param name="color">Color to correct.</param>
-    /// <param name="correctionFactor">The brightness correction factor. Must be between -1 and 1. 
-    /// Negative values produce darker colors.</param>
-    /// <returns>
-    /// Corrected <see cref="Color"/> structure.
-    /// </returns>
     internal static Color ChangeColorBrightness(Color color, float correctionFactor)
     {
         float red = (float)color.R;

@@ -1,8 +1,6 @@
 ﻿using EnergyUse.Common.Enums;
 using EnergyUse.Core.Manager;
 using EnergyUse.Models.Common;
-using LiveChartsCore.Defaults;
-using System.Collections.ObjectModel;
 using System.Drawing;
 
 namespace EnergyUse.Core.Graphs.LiveCharts;
@@ -15,10 +13,11 @@ public class Default : Base
         _unitOfWork = new UnitOfWork.Graphs(graphParameter.DbName);
         _libPeriodicDate = new(_graphParameter.DbName);
 
-        setChart();
+        // Keep existing synchronous constructor behaviour while awaiting async work.
+        setChart().GetAwaiter().GetResult();
     }
 
-    private void setChart()
+    private async Task setChart()
     {
         try
         {
@@ -32,11 +31,11 @@ public class Default : Base
                 ResetSeries();
 
                 if (_graphParameter.ShowBy == ShowBy.Category)
-                    getChartSeriesPerPeriodAsync();
-                if (_graphParameter.ShowBy == ShowBy.SubCategory)
-                    getChartSeriesPeriodBySubCategoryAsync();
+                    await getChartSeriesPerPeriodAsync();
+                else if (_graphParameter.ShowBy == ShowBy.SubCategory)
+                    await getChartSeriesPeriodBySubCategoryAsync();
                 else if (_graphParameter.ShowBy == ShowBy.Total)
-                    getChartSeriesPerPeriodBySubTotalAsync();
+                    await getChartSeriesPerPeriodBySubTotalAsync();
             }
         }
         catch (Exception)
@@ -55,8 +54,8 @@ public class Default : Base
         foreach (var energyType in _graphParameter.EnergyTypeList)
         {
             ParameterPeriod parameterPeriod = GetParameterPeriod(energyType);
-            _periodicDataList = await _libPeriodicDate.GetRangeAsync(parameterPeriod);
-           // _axisList.Add(LiveCharts.GetAxis(_graphParameter.PeriodType));
+            // _libPeriodicDate is initialized in ctor; guard with null-forgiving
+            _periodicDataList = await _libPeriodicDate!.GetRangeAsync(parameterPeriod);
             typeCounter++;
 
             foreach (PeriodicData periodicData in _periodicDataList)
@@ -164,35 +163,35 @@ public class Default : Base
 
     private void resetDataPointsPeriod()
     {
-        _datePoints = new Dictionary<string, ObservableCollection<DateTimePoint>>();
+        _datePoints = new Dictionary<string, List<DatePoint>>();
 
         foreach (var energyType in _graphParameter.EnergyTypeList)
-        {                
+        {
             var energyTypeId = energyType.Id;
 
-            _datePoints.Add(GetSeriesKey(ChartSeriesType.GrossValue, energyTypeId), new ObservableCollection<DateTimePoint>());
-            _datePoints.Add(GetSeriesKey(ChartSeriesType.Low, energyTypeId), new ObservableCollection<DateTimePoint>());
-            _datePoints.Add(GetSeriesKey(ChartSeriesType.LowPredicted, energyTypeId), new ObservableCollection<DateTimePoint>());
-            _datePoints.Add(GetSeriesKey(ChartSeriesType.Normal, energyTypeId), new ObservableCollection<DateTimePoint>());
-            _datePoints.Add(GetSeriesKey(ChartSeriesType.NormalPredicted, energyTypeId), new ObservableCollection<DateTimePoint>());
+            _datePoints.Add(GetSeriesKey(ChartSeriesType.GrossValue, energyTypeId), new List<DatePoint>());
+            _datePoints.Add(GetSeriesKey(ChartSeriesType.Low, energyTypeId), new List<DatePoint>());
+            _datePoints.Add(GetSeriesKey(ChartSeriesType.LowPredicted, energyTypeId), new List<DatePoint>());
+            _datePoints.Add(GetSeriesKey(ChartSeriesType.Normal, energyTypeId), new List<DatePoint>());
+            _datePoints.Add(GetSeriesKey(ChartSeriesType.NormalPredicted, energyTypeId), new List<DatePoint>());
 
             if (energyType.HasEnergyReturn)
             {
-                _datePoints.Add(GetSeriesKey(ChartSeriesType.ReturnLow, energyTypeId), new ObservableCollection<DateTimePoint>());
-                _datePoints.Add(GetSeriesKey(ChartSeriesType.ReturnLowPredicted, energyTypeId), new ObservableCollection<DateTimePoint>());
-                _datePoints.Add(GetSeriesKey(ChartSeriesType.ReturnNormal, energyTypeId), new ObservableCollection<DateTimePoint>());
-                _datePoints.Add(GetSeriesKey(ChartSeriesType.ReturnNormalPredicted, energyTypeId), new ObservableCollection<DateTimePoint>());
+                _datePoints.Add(GetSeriesKey(ChartSeriesType.ReturnLow, energyTypeId), new List<DatePoint>());
+                _datePoints.Add(GetSeriesKey(ChartSeriesType.ReturnLowPredicted, energyTypeId), new List<DatePoint>());
+                _datePoints.Add(GetSeriesKey(ChartSeriesType.ReturnNormal, energyTypeId), new List<DatePoint>());
+                _datePoints.Add(GetSeriesKey(ChartSeriesType.ReturnNormalPredicted, energyTypeId), new List<DatePoint>());
             }
 
             if (_graphParameter.ShowAvg)
             {
-                _datePoints.Add(GetSeriesKey(ChartSeriesType.AvgLow, energyTypeId), new ObservableCollection<DateTimePoint>());
-                _datePoints.Add(GetSeriesKey(ChartSeriesType.AvgNormal, energyTypeId), new ObservableCollection<DateTimePoint>());
+                _datePoints.Add(GetSeriesKey(ChartSeriesType.AvgLow, energyTypeId), new List<DatePoint>());
+                _datePoints.Add(GetSeriesKey(ChartSeriesType.AvgNormal, energyTypeId), new List<DatePoint>());
 
                 if (energyType.HasEnergyReturn)
                 {
-                    _datePoints.Add(GetSeriesKey(ChartSeriesType.ReturnAvgLowDelivery, energyTypeId), new ObservableCollection<DateTimePoint>());
-                    _datePoints.Add(GetSeriesKey(ChartSeriesType.ReturnAvgNormalDelivery, energyTypeId), new ObservableCollection<DateTimePoint>());
+                    _datePoints.Add(GetSeriesKey(ChartSeriesType.ReturnAvgLowDelivery, energyTypeId), new List<DatePoint>());
+                    _datePoints.Add(GetSeriesKey(ChartSeriesType.ReturnAvgNormalDelivery, energyTypeId), new List<DatePoint>());
                 }
             }
         }
@@ -210,7 +209,7 @@ public class Default : Base
         foreach (var energyType in _graphParameter.EnergyTypeList)
         {
             ParameterPeriod parameterPeriod = GetParameterPeriod(energyType);
-            _periodicDataList = await _libPeriodicDate.GetRangeAsync(parameterPeriod);
+            _periodicDataList = await _libPeriodicDate!.GetRangeAsync(parameterPeriod);
             _axisList.Add(GetAxis(energyType.Name));
             typeCounter++;
 
@@ -225,43 +224,39 @@ public class Default : Base
             {
                 if (_graphParameter.ShowType == ShowType.Rate && periodicData.IsPredicted == false)
                 {
-                    _datePoints[consumedKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYLow + periodicData.ValueYNormal, 2))));
-                    _datePoints[grossKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueY, 2)));
-
-                    if (energyType.HasEnergyReturn)
-                        _datePoints[producedKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYReturnLow + periodicData.ValueYReturnNormal, 2))));
+                    _datePoints[consumedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYLow + periodicData.ValueYNormal, 2)));
+                    _datePoints[producedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYReturnLow + periodicData.ValueYReturnNormal, 2)));
+                    _datePoints[grossKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueY, 2)));
                 }
                 else if (_graphParameter.ShowType == ShowType.Rate && periodicData.IsPredicted == true)
                 {
-                    _datePoints[producedPredictedKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYLow + periodicData.ValueYNormal, 2))));
-                    _datePoints[grossKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueY, 2)));
+                    _datePoints[producedPredictedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYLow + periodicData.ValueYNormal, 2)));
+                    _datePoints[grossKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueY, 2)));
 
                     if (energyType.HasEnergyReturn)
-                        _datePoints[producedPredictedKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYReturnLow + periodicData.ValueYReturnNormal, 2))));
+                        _datePoints[producedPredictedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYReturnLow + periodicData.ValueYReturnNormal, 2)));
                 }
                 else if (_graphParameter.ShowType == ShowType.Value && periodicData.IsPredicted == false)
                 {
-                    _datePoints[consumedKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYMonetaryLow + periodicData.ValueYMonetaryNormal, 2))));
-                    _datePoints[grossKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueMonetaryY, 2)));
+                    _datePoints[consumedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYMonetaryLow + periodicData.ValueYMonetaryNormal, 2)));
+                    _datePoints[grossKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueMonetaryY, 2)));
 
                     if (energyType.HasEnergyReturn)
-                        _datePoints[producedKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYMonetaryReturnLow + periodicData.ValueYMonetaryReturnNormal, 2))));
+                        _datePoints[producedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYMonetaryReturnLow + periodicData.ValueYMonetaryReturnNormal, 2)));
                 }
                 else if (_graphParameter.ShowType == ShowType.Value && periodicData.IsPredicted == true)
                 {
-                    _datePoints[consumedPredictedKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYMonetaryLow + periodicData.ValueYMonetaryNormal, 2))));
-                    _datePoints[grossKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueMonetaryY, 2)));
-
-                    if (energyType.HasEnergyReturn)
-                        _datePoints[producedPredictedKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYMonetaryReturnLow + periodicData.ValueYMonetaryReturnNormal, 2))));
+                    _datePoints[consumedPredictedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYMonetaryLow + periodicData.ValueYMonetaryNormal, 2)));
+                    _datePoints[producedPredictedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYMonetaryReturnLow + periodicData.ValueYMonetaryReturnNormal, 2)));
+                    _datePoints[grossKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueMonetaryY, 2)));
                 }
                 else if (_graphParameter.ShowType == ShowType.Efficiency && periodicData.IsPredicted == false && energyType.HasEnergyReturn)
                 {
-                    _datePoints[producedKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)_libPeriodicDate.GetEfficiencyTotal(periodicData, _graphParameter.Address.TotalCapacity)));
+                    _datePoints[producedKey].Add(new DatePoint(periodicData.ValueXDate, (double)_libPeriodicDate!.GetEfficiencyTotal(periodicData, _graphParameter.Address.TotalCapacity)));
                 }
                 else if (_graphParameter.ShowType == ShowType.Efficiency && periodicData.IsPredicted == true && energyType.HasEnergyReturn)
                 {
-                    _datePoints[producedPredictedKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)_libPeriodicDate.GetEfficiencyTotal(periodicData, _graphParameter.Address.TotalCapacity)));
+                    _datePoints[producedPredictedKey].Add(new DatePoint(periodicData.ValueXDate, (double)_libPeriodicDate!.GetEfficiencyTotal(periodicData, _graphParameter.Address.TotalCapacity)));
                 }
             }
 
@@ -286,20 +281,20 @@ public class Default : Base
 
     private void resetDataPointsSubCategory()
     {
-        _datePoints = new Dictionary<string, ObservableCollection<DateTimePoint>>();
+        _datePoints = new Dictionary<string, List<DatePoint>>();
 
         foreach (var energyType in _graphParameter.EnergyTypeList)
         {
             var energyTypeId = energyType.Id;
 
-            _datePoints.Add(GetSeriesKey(ChartSeriesType.GrossValue, energyTypeId), new ObservableCollection<DateTimePoint>());
-            _datePoints.Add(GetSeriesKey(ChartSeriesType.Consumed, energyTypeId), new ObservableCollection<DateTimePoint>());
-            _datePoints.Add(GetSeriesKey(ChartSeriesType.ConsumedPredicted, energyTypeId), new ObservableCollection<DateTimePoint>());
+            _datePoints.Add(GetSeriesKey(ChartSeriesType.GrossValue, energyTypeId), new List<DatePoint>());
+            _datePoints.Add(GetSeriesKey(ChartSeriesType.Consumed, energyTypeId), new List<DatePoint>());
+            _datePoints.Add(GetSeriesKey(ChartSeriesType.ConsumedPredicted, energyTypeId), new List<DatePoint>());
 
             if (energyType.HasEnergyReturn)
             {
-                _datePoints.Add(GetSeriesKey(ChartSeriesType.Produced, energyTypeId), new ObservableCollection<DateTimePoint>());
-                _datePoints.Add(GetSeriesKey(ChartSeriesType.ProducedPredicted, energyTypeId), new ObservableCollection<DateTimePoint>());
+                _datePoints.Add(GetSeriesKey(ChartSeriesType.Produced, energyTypeId), new List<DatePoint>());
+                _datePoints.Add(GetSeriesKey(ChartSeriesType.ProducedPredicted, energyTypeId), new List<DatePoint>());
             }
         }
     }
@@ -316,7 +311,7 @@ public class Default : Base
         foreach (var energyType in _graphParameter.EnergyTypeList)
         {
             ParameterPeriod parameterPeriod = GetParameterPeriod(energyType);
-            _periodicDataList = await _libPeriodicDate.GetRangeAsync(parameterPeriod);
+            _periodicDataList = await _libPeriodicDate!.GetRangeAsync(parameterPeriod);
             _axisList.Add(GetAxis(energyType.Name));
             typeCounter++;
 
@@ -329,31 +324,31 @@ public class Default : Base
             {
                 if (_graphParameter.ShowType == ShowType.Rate && periodicData.IsPredicted == false)
                 {
-                    _datePoints[totalKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYLow + periodicData.ValueYNormal, 2) - Math.Round(periodicData.ValueYReturnLow + periodicData.ValueYReturnNormal, 2))));
-                    _datePoints[totalGrossKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueY, 2)));
+                    _datePoints[totalKey].Add(new DatePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYLow + periodicData.ValueYNormal, 2) - Math.Round(periodicData.ValueYReturnLow + periodicData.ValueYReturnNormal, 2))));
+                    _datePoints[totalGrossKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueY, 2)));
                 }
                 else if (_graphParameter.ShowType == ShowType.Rate && periodicData.IsPredicted == true)
                 {
-                    _datePoints[totalPredictedKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYLow + periodicData.ValueYNormal, 2) - Math.Round(periodicData.ValueYReturnLow + periodicData.ValueYReturnNormal, 2))));
-                    _datePoints[totalGrossKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueY, 2)));
+                    _datePoints[totalPredictedKey].Add(new DatePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYLow + periodicData.ValueYNormal, 2) - Math.Round(periodicData.ValueYReturnLow + periodicData.ValueYReturnNormal, 2))));
+                    _datePoints[totalGrossKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueY, 2)));
                 }
                 else if (_graphParameter.ShowType == ShowType.Value && periodicData.IsPredicted == false)
                 {
-                    _datePoints[totalKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYMonetaryLow + periodicData.ValueYMonetaryNormal, 2) - Math.Round(periodicData.ValueYMonetaryReturnLow + periodicData.ValueYMonetaryReturnNormal, 2))));
-                    _datePoints[totalGrossKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueMonetaryY, 2)));
+                    _datePoints[totalKey].Add(new DatePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYMonetaryLow + periodicData.ValueYMonetaryNormal, 2) - Math.Round(periodicData.ValueYMonetaryReturnLow + periodicData.ValueYMonetaryReturnNormal, 2))));
+                    _datePoints[totalGrossKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueMonetaryY, 2)));
                 }
                 else if (_graphParameter.ShowType == ShowType.Value && periodicData.IsPredicted == true)
                 {
-                    _datePoints[totalPredictedKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYMonetaryLow + periodicData.ValueYMonetaryNormal, 2) - Math.Round(periodicData.ValueYMonetaryReturnLow + periodicData.ValueYMonetaryReturnNormal, 2))));
-                    _datePoints[totalGrossKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueMonetaryY, 2)));
+                    _datePoints[totalPredictedKey].Add(new DatePoint(periodicData.ValueXDate, (double)(Math.Round(periodicData.ValueYMonetaryLow + periodicData.ValueYMonetaryNormal, 2) - Math.Round(periodicData.ValueYMonetaryReturnLow + periodicData.ValueYMonetaryReturnNormal, 2))));
+                    _datePoints[totalGrossKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueMonetaryY, 2)));
                 }
                 else if (_graphParameter.ShowType == ShowType.Efficiency && periodicData.IsPredicted == false)
                 {
-                    _datePoints[totalKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)_libPeriodicDate.GetEfficiencyTotal(periodicData, _graphParameter.Address.TotalCapacity)));
+                    _datePoints[totalKey].Add(new DatePoint(periodicData.ValueXDate, (double)_libPeriodicDate!.GetEfficiencyTotal(periodicData, _graphParameter.Address.TotalCapacity)));
                 }
                 else if (_graphParameter.ShowType == ShowType.Efficiency && periodicData.IsPredicted == true)
                 {
-                    _datePoints[totalPredictedKey].Add(new DateTimePoint(periodicData.ValueXDate, (double)_libPeriodicDate.GetEfficiencyTotal(periodicData, _graphParameter.Address.TotalCapacity)));
+                    _datePoints[totalPredictedKey].Add(new DatePoint(periodicData.ValueXDate, (double)_libPeriodicDate!.GetEfficiencyTotal(periodicData, _graphParameter.Address.TotalCapacity)));
                 }
 
                 AddColumnSeriesToList(ChartSeriesType.Total, energyType.Id, typeCounter, _graphParameter.ShowStacked);
@@ -367,15 +362,15 @@ public class Default : Base
 
     private void resetDataPointsSubtTotal()
     {
-        _datePoints = new Dictionary<string, ObservableCollection<DateTimePoint>>();
+        _datePoints = new Dictionary<string, List<DatePoint>>();
 
         foreach (var energyType in _graphParameter.EnergyTypeList)
         {
             var energyTypeId = energyType.Id;
 
-            _datePoints.Add(GetSeriesKey(ChartSeriesType.GrossValue, energyTypeId), new ObservableCollection<DateTimePoint>());
-            _datePoints.Add(GetSeriesKey(ChartSeriesType.Total, energyTypeId), new ObservableCollection<DateTimePoint>());
-            _datePoints.Add(GetSeriesKey(ChartSeriesType.TotalPredicted, energyTypeId), new ObservableCollection<DateTimePoint>());
+            _datePoints.Add(GetSeriesKey(ChartSeriesType.GrossValue, energyTypeId), new List<DatePoint>());
+            _datePoints.Add(GetSeriesKey(ChartSeriesType.Total, energyTypeId), new List<DatePoint>());
+            _datePoints.Add(GetSeriesKey(ChartSeriesType.TotalPredicted, energyTypeId), new List<DatePoint>());
         }
     }
 

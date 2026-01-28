@@ -309,6 +309,7 @@ public partial class ucChartDefaultLiveCharts : UserControl
         List<LiveChartsCore.SkiaSharpView.Axis> axisList = getYAxis(graphParameter);
 
         setLabels(_chartDefaultPerPeriod.GetResultLabelsPerPeriod(_currentEnergyType));
+        // new overload handles SeriesModel -> ISeries conversion
         addChart(graphParameter.PeriodType, graphParameter.ShowType, _chartDefaultPerPeriod.GetSeries(), axisList);
     }
 
@@ -387,9 +388,20 @@ public partial class ucChartDefaultLiveCharts : UserControl
         lblNetto.Left = (lblProduction.Left + lblProduction.Width) + 10;
     }
 
+    // Overload: accept core SeriesModel list, convert to LiveCharts ISeries, delegate to existing addChart
+    private void addChart(Period periodType, ShowType showType, List<SeriesModel> seriesModels, List<LiveChartsCore.SkiaSharpView.Axis> axislist)
+    {
+        if (seriesModels == null || seriesModels.Count == 0)
+            return;
+
+        var serieslist = Managers.LiveCharts.ConvertSeriesModelsToISeries(seriesModels);
+        addChart(periodType, showType, serieslist, axislist);
+    }
+
+    // Existing method: create chart from ISeries and axis list
     private void addChart(Period periodType, ShowType showType, List<ISeries> serieslist, List<LiveChartsCore.SkiaSharpView.Axis> axislist)
     {
-        if (serieslist.Count == 0)
+        if (serieslist == null || serieslist.Count == 0)
             return;
 
         string title = $"{Managers.Languages.GetResourceString("ChartDefaultTitle", "Data per")} {periodType}";
@@ -400,20 +412,123 @@ public partial class ucChartDefaultLiveCharts : UserControl
         pnChartContainer.Controls.Add(_cartesianChart);
     }
 
-    public void ResetCurrentAddress(EnergyUse.Models.Address address, EnergyUse.Models.EnergyType energyType)
-    {
-        _currentAddress = address;
-        _currentEnergyType = energyType;
+    //private List<ISeries> ConvertSeriesModelsToISeries(List<SeriesModel> models)
+    //{
+    //    var result = new List<ISeries>();
+    //    foreach (var sm in models ?? Enumerable.Empty<SeriesModel>())
+    //    {
+    //        if (sm == null) continue;
 
-        resetChart();
+    //        // Convert core DatePoint -> LiveCharts DateTimePoint
+    //        var datePoints = new List<DateTimePoint>();
+    //        foreach (var dp in sm.Points ?? Enumerable.Empty<DatePoint>())
+    //            datePoints.Add(new DateTimePoint(dp.DateTime, dp.Value));
+
+    //        // Try parse chart series type from series key: "ChartSeriesType_energyId"
+    //        ChartSeriesType? chartSeriesType = null;
+    //        var keyParts = (sm.SeriesKey ?? "").Split('_');
+    //        if (keyParts.Length > 0 && Enum.TryParse<ChartSeriesType>(keyParts[0], out var parsed))
+    //            chartSeriesType = parsed;
+
+    //        // Decide line vs column: treat GrossValue and Avg* as lines
+    //        bool isLine = false;
+    //        if (chartSeriesType == ChartSeriesType.GrossValue)
+    //            isLine = true;
+    //        else if (chartSeriesType != null && (chartSeriesType.ToString().StartsWith("Avg") || chartSeriesType.ToString().Contains("Avg")))
+    //            isLine = true;
+
+    //        if (isLine)
+    //        {
+    //            var line = new LineSeries<DateTimePoint>
+    //            {
+    //                Values = new ObservableCollection<DateTimePoint>(datePoints),
+    //                Name = sm.Name,
+    //                ScalesYAt = sm.ScalesYAt,
+    //                LineSmoothness = 0
+    //            };
+
+    //            if (sm.Color != System.Drawing.Color.Empty)
+    //                line.Stroke = new SolidColorPaint((uint)sm.Color.ToArgb()) { StrokeThickness = 2 };
+
+    //            result.Add(line);
+    //        }
+    //        else
+    //        {
+    //            if (sm.IsStacked)
+    //            {
+    //                var stacked = new StackedColumnSeries<DateTimePoint>
+    //                {
+    //                    Values = new ObservableCollection<DateTimePoint>(datePoints),
+    //                    Name = sm.Name,
+    //                    ScalesYAt = sm.ScalesYAt,
+    //                    StackGroup = 0
+    //                };
+    //                if (sm.Color != System.Drawing.Color.Empty)
+    //                    stacked.Fill = new SolidColorPaint((uint)sm.Color.ToArgb());
+    //                result.Add(stacked);
+    //            }
+    //            else
+    //            {
+    //                var column = new ColumnSeries<DateTimePoint>
+    //                {
+    //                    Values = new ObservableCollection<DateTimePoint>(datePoints),
+    //                    Name = sm.Name,
+    //                    ScalesYAt = sm.ScalesYAt
+    //                };
+    //                if (sm.Color != System.Drawing.Color.Empty)
+    //                    column.Fill = new SolidColorPaint((uint)sm.Color.ToArgb());
+    //                result.Add(column);
+    //            }
+    //        }
+    //    }
+
+    //    return result;
+    //}
+
+    private void setCurrentPanelTypeValue()
+    {
+        Period periodType = getSelectedPeriodType();
+        var currentSettingId = getCurrentSettingIdByPeriodType(TypePanel.Tag.ToString(), periodType);
+        var setting = getCurrentSetting(currentSettingId);
+
+        if (_currentEnergyType != null)
+            EfficiencyRadioButton.Visible = _currentEnergyType.HasEnergyReturn;
+
+        if (setting == null && EfficiencyRadioButton.Visible && EfficiencyRadioButton.Checked)
+            RateRadioButton.Checked = true;
+
+        if (setting != null && setting.KeyValue == RateRadioButton.Tag.ToString())
+            RateRadioButton.Checked = true;
+        else if (setting != null && setting.KeyValue == ValueRadioButton.Tag.ToString())
+            ValueRadioButton.Checked = true;
+        else if (setting != null && setting.KeyValue == EfficiencyRadioButton.Tag.ToString())
+            EfficiencyRadioButton.Checked = true;
     }
 
-    public void ResetCurrentEnergyType(EnergyUse.Models.EnergyType energyType)
+    private void setDefaultPanelShowByValue()
     {
-        _currentEnergyType = energyType;
+        Period periodType = getSelectedPeriodType();
+        var currentSettingId = getCurrentSettingIdByPeriodType(ShowByPanel.Tag.ToString(), periodType);
+        var setting = getCurrentSetting(currentSettingId);
 
-        setDefaultEnergyTypeSettings();
-        resetChart();
+        if (setting == null && EfficiencyRadioButton.Visible && EfficiencyRadioButton.Checked)
+            RateRadioButton.Checked = true;
+
+        if (setting != null && setting.KeyValue == CategoryRadioButton.Tag.ToString())
+            CategoryRadioButton.Checked = true;
+        else if (setting != null && setting.KeyValue == SubCategoryRadioButton.Tag.ToString())
+            SubCategoryRadioButton.Checked = true;
+        else if (setting != null && setting.KeyValue == TotalsRadioButton.Tag.ToString())
+            TotalsRadioButton.Checked = true;
+    }
+
+    private string getCurrentSettingValue(string settingId)
+    {
+        var setting = getCurrentSetting(settingId);
+        if (setting != null)
+            return setting.KeyValue;
+        else
+            return "";
     }
 
     private DateTime getDefaulStartDateByPeriod(Period periodType)
@@ -537,57 +652,6 @@ public partial class ucChartDefaultLiveCharts : UserControl
             EfficiencyRadioButton.Checked = true;
     }
 
-    private void setDefaultPanelShowByValue()
-    {
-        Period periodType = getSelectedPeriodType();
-        var currentSettingId = getCurrentSettingIdByPeriodType(ShowByPanel.Tag.ToString(), periodType);
-        var setting = getCurrentSetting(currentSettingId);
-
-        if (setting == null && EfficiencyRadioButton.Visible && EfficiencyRadioButton.Checked)
-            RateRadioButton.Checked = true;
-
-        if (setting != null && setting.KeyValue == CategoryRadioButton.Tag.ToString())
-            CategoryRadioButton.Checked = true;
-        else if (setting != null && setting.KeyValue == SubCategoryRadioButton.Tag.ToString())
-            SubCategoryRadioButton.Checked = true;
-        else if (setting != null && setting.KeyValue == TotalsRadioButton.Tag.ToString())
-            TotalsRadioButton.Checked = true;
-    }
-
-    private string getCurrentSettingValue(string settingId)
-    {
-        var setting = getCurrentSetting(settingId);
-        if (setting != null)
-            return setting.KeyValue;
-        else
-            return "";
-    }
-
-    private DateTime getCurrentDateByDatePicker(DateTimePicker dateTimePicker, Period periodType)
-    {
-        var currentSettingId = getCurrentSettingIdByPeriodType(dateTimePicker.Tag.ToString(), periodType);
-        var setting = getCurrentSetting(currentSettingId);
-        if (setting != null)
-        {
-            var year = int.Parse(setting.KeyValue.Substring(0, 4));
-            var month = int.Parse(setting.KeyValue.Substring(4, 2));
-            var day = int.Parse(setting.KeyValue.Substring(6, 2));
-
-            return new DateTime(year, month, day);
-        }
-        else
-            return DateTime.MinValue;
-    }
-
-    private void setCurrentDateTimePicker(DateTimePicker dtp)
-    {
-        var currentValue = dtp.Value.ToString("yyyyMMdd");
-        var currentPeriodType = getSelectedPeriodType();
-        var currentSettingId = getCurrentSettingIdByPeriodType(dtp.Tag.ToString(), currentPeriodType);
-
-        setCurrentSetting(currentSettingId, currentValue);
-    }
-
     private string getCurrentSettingIdByPeriodType(string tag, Period periodType)
     {
         var currentSettingId = tag;
@@ -623,7 +687,6 @@ public partial class ucChartDefaultLiveCharts : UserControl
     {
         var currentValue = combobox.Text.ToUpper();
         var currentSettingId = $"{combobox.Tag.ToString()}{periodType.ToUpper()}";
-
         if (!string.IsNullOrWhiteSpace(currentValue))
             setCurrentSetting(currentSettingId, currentValue);
     }
@@ -633,7 +696,6 @@ public partial class ucChartDefaultLiveCharts : UserControl
         Period periodType = getSelectedPeriodType();
         var currentSettingId = getCurrentSettingIdByPeriodType(panel.Tag.ToString(), periodType);
         var currentValue = radioButton.Tag.ToString();
-
         if (!string.IsNullOrWhiteSpace(currentValue))
             setCurrentSetting(currentSettingId, currentValue);
     }
@@ -665,6 +727,62 @@ public partial class ucChartDefaultLiveCharts : UserControl
             var fileName = Managers.GeneralDialogs.GetExportFileName("ChartDefault", currentEnergyType);
             EnergyUse.Core.Manager.LibExport.ExportDataDefaultLiveChartToExcel(fileName, currentEnergyType, dataList);
         }
+    }
+
+    private DateTime getCurrentDateByDatePicker(DateTimePicker dateTimePicker, Period periodType)
+    {
+        if (dateTimePicker == null || dateTimePicker.Tag == null)
+            return DateTime.MinValue;
+
+        var currentSettingId = getCurrentSettingIdByPeriodType(dateTimePicker.Tag.ToString(), periodType);
+        var setting = getCurrentSetting(currentSettingId);
+        if (setting == null || string.IsNullOrWhiteSpace(setting.KeyValue) || setting.KeyValue.Length < 8)
+            return DateTime.MinValue;
+
+        if (int.TryParse(setting.KeyValue.Substring(0, 4), out int year)
+            && int.TryParse(setting.KeyValue.Substring(4, 2), out int month)
+            && int.TryParse(setting.KeyValue.Substring(6, 2), out int day))
+        {
+            try
+            {
+                return new DateTime(year, month, day);
+            }
+            catch
+            {
+                return DateTime.MinValue;
+            }
+        }
+
+        return DateTime.MinValue;
+    }
+
+    private void setCurrentDateTimePicker(DateTimePicker dtp)
+    {
+        if (dtp == null || dtp.Tag == null)
+            return;
+
+        var currentValue = dtp.Value.ToString("yyyyMMdd");
+        var currentPeriodType = getSelectedPeriodType();
+        var currentSettingId = getCurrentSettingIdByPeriodType(dtp.Tag.ToString(), currentPeriodType);
+
+        setCurrentSetting(currentSettingId, currentValue);
+    }
+
+    public void ResetCurrentAddress(EnergyUse.Models.Address address, EnergyUse.Models.EnergyType energyType)
+    {
+        _currentAddress = address;
+        _currentEnergyType = energyType;
+
+        setDefaultEnergyTypeSettings();
+        resetChart();
+    }
+
+    public void ResetCurrentEnergyType(EnergyUse.Models.EnergyType energyType)
+    {
+        _currentEnergyType = energyType;
+
+        setDefaultEnergyTypeSettings();
+        resetChart();
     }
 
     #endregion

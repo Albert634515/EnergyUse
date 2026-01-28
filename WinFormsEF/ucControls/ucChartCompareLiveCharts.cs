@@ -237,9 +237,20 @@ public partial class ucChartCompareLiveCharts : UserControl
         lblNetto.Left = (lblProduction.Left + lblProduction.Width) + 10;
     }
 
+    // new overload: accepts core SeriesModel list and converts to LiveCharts ISeries
+    private void addChart(Period periodType, ShowType showType, List<SeriesModel> seriesModels)
+    {
+        if (seriesModels == null || seriesModels.Count == 0)
+            return;
+
+        var serieslist = Managers.LiveCharts.ConvertSeriesModelsToISeries(seriesModels);
+        addChart(periodType, showType, serieslist);
+    }
+
+    // existing method kept - receives ISeries and creates the UI chart
     private void addChart(Period periodType, ShowType showType, List<ISeries> serieslist)
     {
-        if (serieslist.Count == 0)
+        if (serieslist == null || serieslist.Count == 0)
             return;
 
         string title = getChartTitle(periodType, cboNumbers.SelectedIndex + 1);

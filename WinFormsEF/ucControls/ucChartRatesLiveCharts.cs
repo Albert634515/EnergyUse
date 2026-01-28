@@ -128,7 +128,7 @@ public partial class ucChartRatesLiveCharts : UserControl
 
     private void addChart(Period periodType, List<ISeries> serieslist)
     {
-        if (serieslist.Count == 0)
+        if (serieslist == null || serieslist.Count == 0)
             return;
 
         string title = Managers.Languages.GetResourceString("ChartRatesTitle", "Rates");
@@ -139,10 +139,21 @@ public partial class ucChartRatesLiveCharts : UserControl
         panel1.Controls.Add(_cartesianChart);
     }
 
+    // New overload: accepts core SeriesModel list and converts to ISeries
+    private void addChart(Period periodType, List<SeriesModel> seriesModels)
+    {
+        if (seriesModels == null || seriesModels.Count == 0)
+            return;
+
+        var serieslist = Managers.LiveCharts.ConvertSeriesModelsToISeries(seriesModels);
+        addChart(periodType, serieslist);
+    }
+
     private void getChartSeriesPerCostCategory(ParameterGraph graphParameter)
     {
         _chartRates = new EnergyUse.Core.Graphs.LiveCharts.Rates(graphParameter);
 
+        // Convert core SeriesModel -> ISeries via overload
         addChart(Period.Day, _chartRates.GetSeries());
     }
 
@@ -150,6 +161,7 @@ public partial class ucChartRatesLiveCharts : UserControl
     {
         _chartRates = new EnergyUse.Core.Graphs.LiveCharts.Rates(graphParameter);
 
+        // Convert core SeriesModel -> ISeries via overload
         addChart(Period.Day, _chartRates.GetSeries());
     }
 
