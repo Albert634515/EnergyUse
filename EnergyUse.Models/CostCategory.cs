@@ -24,6 +24,11 @@ public partial class CostCategory
     public DateTime? Start { get; set; }
     public DateTime? End { get; set; }
 
+    public byte ColorA { get; set; }
+    public byte ColorR { get; set; }
+    public byte ColorG { get; set; }
+    public byte ColorB { get; set; }
+
     public virtual Unit Unit { get; set; }
     public virtual CalculationType CalculationType { get; set; }
     public virtual EnergySubType EnergySubType { get; set; }

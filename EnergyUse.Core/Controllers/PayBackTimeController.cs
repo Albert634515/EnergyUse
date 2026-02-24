@@ -105,7 +105,8 @@ public class PayBackTimeController : BaseController, IController
                 // Kolom: ROI
                 payBackTime.ReturnOnInvestment = Math.Abs(payBackTime.MonetaryValueProduced) + Math.Abs(payBackTime.OtherCostProduced) + Math.Abs(payBackTime.ValueProducedEstimateDirectUsed);
 
-                payBackTime.Return = Math.Round((payBackTime.ReturnOnInvestment / parameterCalcPeriod.InitialInvestment) * 100, 2);
+                if (parameterCalcPeriod.InitialInvestment != 0)
+                    payBackTime.Return = Math.Round((payBackTime.ReturnOnInvestment / parameterCalcPeriod.InitialInvestment) * 100, 2);
             }
         }
 

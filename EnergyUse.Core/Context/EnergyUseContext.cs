@@ -93,6 +93,12 @@ public partial class EnergyUseContext : DbContext
             entity.Property(e => e.Start).HasColumnType("DATE");
             entity.Property(e => e.End).HasColumnType("DATE");
 
+            // 🎨 Kleurvelden
+            entity.Property(e => e.ColorA).HasColumnType("INTEGER").HasDefaultValue(255);
+            entity.Property(e => e.ColorR).HasColumnType("INTEGER").HasDefaultValue(0);
+            entity.Property(e => e.ColorG).HasColumnType("INTEGER").HasDefaultValue(0);
+            entity.Property(e => e.ColorB).HasColumnType("INTEGER").HasDefaultValue(0);
+
             entity.HasOne(d => d.CalculationType).WithMany(p => p.CostCategories).HasForeignKey(d => d.CalculationTypeId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne(d => d.EnergySubType).WithMany(p => p.CostCategories).HasForeignKey(d => d.EnergySubTypeId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne(d => d.EnergyType).WithMany(p => p.CostCategories).HasForeignKey(d => d.EnergyTypeId).OnDelete(DeleteBehavior.NoAction);
@@ -142,6 +148,10 @@ public partial class EnergyUseContext : DbContext
             entity.Property(e => e.HasNormalAndLow).HasColumnType("BOOLEAN").HasDefaultValueSql("false");
             entity.Property(e => e.Name).HasColumnType("VARCHAR (25)");
             entity.Property(e => e.UnitId).HasColumnType("VARCHAR (15)");
+            entity.Property(e => e.ColorA).HasColumnType("INTEGER").HasDefaultValue(255);
+            entity.Property(e => e.ColorR).HasColumnType("INTEGER").HasDefaultValue(0);
+            entity.Property(e => e.ColorG).HasColumnType("INTEGER").HasDefaultValue(0);
+            entity.Property(e => e.ColorB).HasColumnType("INTEGER").HasDefaultValue(0);
 
             entity.HasIndex(i => i.Id, "ET_ID").IsUnique();
             entity.HasOne(d => d.Unit).WithMany(p => p.EnergyTypes).HasForeignKey(d => d.UnitId);

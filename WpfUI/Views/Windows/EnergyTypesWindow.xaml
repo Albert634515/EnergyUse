@@ -1,0 +1,150 @@
+﻿<Window x:Class="WpfUI.Views.Windows.EnergyTypesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Energy Types" Height="700" Width="1100">
+
+    <DockPanel>
+
+        <!-- Toolbar -->
+        <ToolBar DockPanel.Dock="Top">
+
+            <Button Command="{Binding AddCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Height="20"
+                           Source="pack://application:,,,/WpfUI;component/Resources/add_24x24.png"/>
+                    <TextBlock Text="Add" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding SaveCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Height="20"
+                           Source="pack://application:,,,/WpfUI;component/Resources/tick-mark_24x24.png"/>
+                    <TextBlock Text="Save" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding CancelCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Height="20"
+                           Source="pack://application:,,,/WpfUI;component/Resources/clear_24x24.png"/>
+                    <TextBlock Text="Cancel" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding DeleteCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Height="20"
+                           Source="pack://application:,,,/WpfUI;component/Resources/delete_24x24.png"/>
+                    <TextBlock Text="Delete" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding RefreshCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Height="20"
+                           Source="pack://application:,,,/WpfUI;component/Resources/clock_24x24.png"/>
+                    <TextBlock Text="Refresh" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding CloseCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Height="20"
+                           Source="pack://application:,,,/WpfUI;component/Resources/crossed_24x24.png"/>
+                    <TextBlock Text="Close" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+
+        </ToolBar>
+
+        <!-- Status bar -->
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem Content="{Binding StatusMessage}" />
+        </StatusBar>
+
+        <!-- Main layout -->
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Left side -->
+            <DataGrid Grid.Column="0"
+                      ItemsSource="{Binding EnergyTypes}"
+                      SelectedItem="{Binding SelectedEnergyType}"
+                      AutoGenerateColumns="False">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="60"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="Unit" Binding="{Binding Unit.Description}" Width="120"/>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+            <!-- Right side -->
+            <GroupBox Header="Energy Type" Grid.Column="1">
+                <Grid Margin="10">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Name -->
+                    <TextBlock Text="Name" Grid.Row="0"/>
+                    <TextBox Grid.Row="0" Grid.Column="1"
+                             Text="{Binding SelectedEnergyType.Name}"/>
+
+                    <!-- Unit -->
+                    <TextBlock Text="Unit" Grid.Row="1"/>
+                    <ComboBox Grid.Row="1" Grid.Column="1"
+                              ItemsSource="{Binding Units}"
+                              SelectedItem="{Binding SelectedEnergyType.Unit}"
+                              DisplayMemberPath="Description"/>
+
+                    <!-- Color -->
+                    <TextBlock Text="Color" Grid.Row="2"/>
+                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                        <xctk:ColorPicker 
+                            SelectedColor="{Binding SelectedColor, Mode=TwoWay}"
+                            ShowStandardColors="True"
+                            ShowAvailableColors="True"
+                            ShowRecentColors="True"
+                            UsingAlphaChannel="False"
+                            Width="160"
+                            Margin="0 0 10 0"/>
+
+                        <Border Width="40" Height="20"
+                                BorderBrush="Black" BorderThickness="1"
+                                Background="{Binding SelectedColor}"/>
+                    </StackPanel>
+
+                    <!-- HasNormalAndLow -->
+                    <CheckBox Grid.Row="3" Grid.ColumnSpan="2"
+                              Content="Has Normal and Low"
+                              IsChecked="{Binding SelectedEnergyType.HasNormalAndLow}"/>
+
+                    <!-- HasEnergyReturn -->
+                    <CheckBox Grid.Row="4" Grid.ColumnSpan="2"
+                              Content="Has Energy Return"
+                              IsChecked="{Binding SelectedEnergyType.HasEnergyReturn}"/>
+
+                </Grid>
+            </GroupBox>
+
+        </Grid>
+
+    </DockPanel>
+</Window>

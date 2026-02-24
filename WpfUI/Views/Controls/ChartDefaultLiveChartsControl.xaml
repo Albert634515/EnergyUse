@@ -1,0 +1,137 @@
+﻿<UserControl x:Class="WpfUI.Views.Controls.ChartDefaultLiveChartsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+             xmlns:vm="clr-namespace:WpfUI.ViewModels"
+             xmlns:conv="clr-namespace:WpfUI.Converters"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <!-- DataContext wordt in code-behind gezet via constructor met Address/EnergyTypes -->
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Labels -->
+            <RowDefinition Height="Auto"/>
+            <!-- Period + Compare -->
+            <RowDefinition Height="Auto"/>
+            <!-- ShowBy/Type/Options -->
+            <RowDefinition Height="*"/>
+            <!-- Chart -->
+        </Grid.RowDefinitions>
+
+        <!-- LABELS -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0 0 0 10">
+            <Border Background="{Binding ConsumptionLabel.BackColor}"
+                    Padding="5"
+                    Margin="0 0 20 0"
+                    Visibility="{Binding ConsumptionLabel.Visible, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock Text="{Binding ConsumptionLabel.Text}"
+                           Foreground="{Binding ConsumptionLabel.ForeColor}"/>
+            </Border>
+
+            <Border Background="{Binding ProductionLabel.BackColor}"
+                    Padding="5"
+                    Margin="0 0 20 0"
+                    Visibility="{Binding ProductionLabel.Visible, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock Text="{Binding ProductionLabel.Text}"
+                           Foreground="{Binding ProductionLabel.ForeColor}"/>
+            </Border>
+
+            <Border Background="{Binding NettoLabel.BackColor}"
+                    Padding="5"
+                    Visibility="{Binding NettoLabel.Visible, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock Text="{Binding NettoLabel.Text}"
+                           Foreground="{Binding NettoLabel.ForeColor}"/>
+            </Border>
+        </StackPanel>
+
+        <!-- PERIOD + COMPARE -->
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 0 0 10">
+
+            <StackPanel Margin="0 20 20 0">
+                <TextBlock Text="Period type"/>
+                <ComboBox ItemsSource="{Binding PeriodTypes}"
+                          SelectedItem="{Binding SelectedPeriodType}"
+                          DisplayMemberPath="Description"
+                          Width="140"/>
+            </StackPanel>
+
+            <StackPanel Margin="0 20 20 0">
+                <TextBlock Text="From"/>
+                <DatePicker SelectedDate="{Binding FromDate}"
+                            Width="130"/>
+            </StackPanel>
+
+            <StackPanel Margin="0 20 20 0">
+                <TextBlock Text="Till"/>
+                <DatePicker SelectedDate="{Binding TillDate}"
+                            Width="130"/>
+            </StackPanel>
+
+            <StackPanel Margin="0 20 20 0">
+                <TextBlock Text="Compare with"/>
+                <ComboBox ItemsSource="{Binding EnergyTypes}"
+                          SelectedItem="{Binding SelectedCompareEnergyType}"
+                          DisplayMemberPath="Name"
+                          Width="160"
+                          IsEditable="False"
+                          IsReadOnly="True"
+                          SelectedIndex="-1"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <!-- SHOWBY / TYPE / OPTIONS / BUTTONS -->
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 0 0 10">
+
+            <StackPanel Margin="0 0 40 0">
+                <TextBlock Text="Show by"/>
+                <RadioButton Content="Category" IsChecked="{Binding ShowByCategory}"/>
+                <RadioButton Content="Subcategory" IsChecked="{Binding ShowBySubCategory}"/>
+                <RadioButton Content="Total" IsChecked="{Binding ShowByTotal}"/>
+            </StackPanel>
+
+            <StackPanel Margin="0 0 40 0">
+                <TextBlock Text="Type"/>
+                <RadioButton Content="Rate" IsChecked="{Binding ShowTypeRate}"/>
+                <RadioButton Content="Value" IsChecked="{Binding ShowTypeValue}"/>
+                <RadioButton Content="Efficiency"
+                             IsChecked="{Binding ShowTypeEfficiency}"
+                             Visibility="{Binding IsEfficiencyVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            </StackPanel>
+
+            <StackPanel Margin="0 0 40 0">
+                <CheckBox Content="Predict missing data"
+                          IsChecked="{Binding PredictMissingData}"/>
+                <CheckBox Content="Show stacked"
+                          IsChecked="{Binding ShowStacked}"/>
+                <CheckBox Content="Show average"
+                          IsChecked="{Binding ShowAverage}"/>
+            </StackPanel>
+
+            <StackPanel>
+                <Button Content="Reset"
+                        Command="{Binding ResetCommand}"
+                        Width="90"
+                        Margin="0 0 0 5"/>
+                <Button Content="Export"
+                        Command="{Binding ExportCommand}"
+                        Width="90"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <!-- CHART -->
+        <lvc:CartesianChart Grid.Row="3"
+                            Series="{Binding ChartSeries}"
+                            XAxes="{Binding XAxes}"
+                            YAxes="{Binding YAxes}"/>
+    </Grid>
+</UserControl>

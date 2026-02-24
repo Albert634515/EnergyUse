@@ -1,0 +1,61 @@
+﻿<Window x:Class="WpfUI.Views.Windows.InfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Info"
+        Width="420"
+        Height="500"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanMinimize">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Logo -->
+            <RowDefinition Height="Auto"/>
+            <!-- Info text -->
+            <RowDefinition Height="Auto"/>
+            <!-- Checkbox -->
+            <RowDefinition Height="*"/>
+            <!-- Dynamic content -->
+            <RowDefinition Height="Auto"/>
+            <!-- Close button -->
+        </Grid.RowDefinitions>
+
+        <!-- Logo -->
+        <Image Grid.Row="0"
+               Source="/Resources/EnergyUse.png"
+               Height="64"
+               Width="64"
+               HorizontalAlignment="Left"
+               Margin="0,0,0,10"/>
+
+        <!-- Static info text -->
+        <TextBlock Grid.Row="1"
+                   TextWrapping="Wrap"
+                   Margin="0,0,0,10"
+                   FontSize="14">
+            <Run Text="This program is freeware."/><LineBreak/>
+            <Run Text="No rights can be claimed from the result for the reports or the calculations."/><LineBreak/>
+            <Run Text="The author takes no responsibility for errors or misinterpretation of the data."/>
+        </TextBlock>
+
+        <!-- Checkbox -->
+        <CheckBox x:Name="chkHideInfoFormOnStart"
+                  Grid.Row="2"
+                  Content="Hide info form on start"
+                  Margin="0,0,0,10"/>
+
+        <!-- Dynamic content area -->
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="stackContent" />
+        </ScrollViewer>
+
+        <!-- Close button -->
+        <Button Grid.Row="4"
+                Content="Close"
+                Width="100"
+                HorizontalAlignment="Right"
+                Margin="0,15,0,0"
+                Click="cmdClose_Click"/>
+    </Grid>
+</Window>

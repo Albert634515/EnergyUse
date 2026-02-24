@@ -1,0 +1,157 @@
+﻿<Window x:Class="WpfUI.Views.Windows.PayBackTimeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:conv="clr-namespace:WpfUI.Converters"
+        xmlns:controls="clr-namespace:WpfUI.Views.Controls"
+        Title="Payback Time"
+        Height="800" Width="1200">
+
+    <Window.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conv:RoiToBrushConverter x:Key="RoiToBrushConverter"/>
+    </Window.Resources>
+
+    <DockPanel>
+
+        <!-- ⭐ ACTIEKNOPPEN BOVENAAN -->
+        <ToolBar DockPanel.Dock="Top">
+            <Button Command="{Binding CalculateCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/calculator_24x24.png" Width="20" Height="20"/>
+                    <TextBlock Text="Calculate" Margin="6,0,0,0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding CloseCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/crossed_24x24.png" Width="20" Height="20"/>
+                    <TextBlock Text="Close" Margin="6,0,0,0"/>
+                </StackPanel>
+            </Button>
+        </ToolBar>
+
+        <!-- ⭐ STATUSBALK -->
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <ProgressBar Width="200"
+                             Height="16"
+                             Minimum="0"
+                             Maximum="100"
+                             Value="{Binding ProgressValue}"
+                             Visibility="{Binding IsProgressVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Text="{Binding ProgressText}"/>
+            </StatusBarItem>
+        </StatusBar>
+
+        <!-- ⭐ HOOFDLAYOUT -->
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- ⭐ FORM FIELDS -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+
+                <StackPanel Margin="0,0,20,0">
+                    <TextBlock Text="Address"/>
+                    <ComboBox ItemsSource="{Binding Addresses}"
+                              SelectedItem="{Binding SelectedAddress}"
+                              DisplayMemberPath="Description"
+                              Width="200"/>
+                </StackPanel>
+
+                <StackPanel Margin="0,0,20,0">
+                    <TextBlock Text="Energy Type"/>
+                    <ComboBox ItemsSource="{Binding EnergyTypes}"
+                              SelectedItem="{Binding SelectedEnergyType}"
+                              DisplayMemberPath="Name"
+                              Width="200"/>
+                </StackPanel>
+
+                <StackPanel Margin="0,0,20,0">
+                    <TextBlock Text="Purchase Date"/>
+                    <DatePicker SelectedDate="{Binding PurchaseDate}" Width="150"/>
+                </StackPanel>
+
+                <StackPanel Margin="0,0,20,0">
+                    <TextBlock Text="Max Years"/>
+                    <controls:NumericUpDown Value="{Binding MaxYears}" Width="80"/>
+                </StackPanel>
+
+            </StackPanel>
+
+            <!-- ⭐ FINANCIAL INPUTS -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,20,0,20">
+
+                <StackPanel Margin="0,0,20,0">
+                    <TextBlock Text="Purchase Amount"/>
+                    <TextBox Text="{Binding PurchaseAmount}" Width="120"/>
+                </StackPanel>
+
+                <StackPanel Margin="0,0,20,0">
+                    <TextBlock Text="Subsidy Amount"/>
+                    <TextBox Text="{Binding SubsidyAmount}" Width="120"/>
+                </StackPanel>
+
+                <StackPanel Margin="0,0,20,0">
+                    <TextBlock Text="Quality Reduction"/>
+                    <TextBox Text="{Binding QualityReduction}" Width="120"/>
+                </StackPanel>
+
+                <StackPanel Margin="0,0,20,0">
+                    <TextBlock Text="Total Capacity"/>
+                    <TextBox Text="{Binding TotalCapacity}" Width="120" IsReadOnly="True"/>
+                </StackPanel>
+
+            </StackPanel>
+
+            <!-- ⭐ DATAGRID MET ALLE KOLOMMEN + KLEURLOGICA -->
+            <DataGrid Grid.Row="2"
+                      ItemsSource="{Binding PayBackTimes}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True">
+
+                <!-- ⭐ KLEURLOGICA -->
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background"
+                                Value="{Binding ReturnOnInvestmentTotal, Converter={StaticResource RoiToBrushConverter}}"/>
+                        <Setter Property="Foreground" Value="White"/>
+                    </Style>
+                </DataGrid.RowStyle>
+
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="Period" Binding="{Binding PeriodId}"/>
+                    <DataGridTextColumn Header="Start" Binding="{Binding StartPeriod}"/>
+                    <DataGridTextColumn Header="End" Binding="{Binding EndPeriod}"/>
+
+                    <DataGridTextColumn Header="Produced" Binding="{Binding ValueProduced, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Consumed" Binding="{Binding ValueConsumed, StringFormat=N2}"/>
+
+                    <DataGridTextColumn Header="Estimate Direct Used" Binding="{Binding EstimateDirectUsed, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Monetary Produced" Binding="{Binding MonetaryValueProduced, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Produced Est. Direct Used" Binding="{Binding ValueProducedEstimateDirectUsed, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Monetary Consumed" Binding="{Binding MonetaryValueConsumed, StringFormat=N2}"/>
+
+                    <DataGridTextColumn Header="Netto Produced" Binding="{Binding NettoProduced, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Other Cost Produced" Binding="{Binding OtherCostProduced, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Other Cost Consumed" Binding="{Binding OtherCostConsumed, StringFormat=N2}"/>
+
+                    <DataGridTextColumn Header="Total Cost" Binding="{Binding TotalCost, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="ROI" Binding="{Binding ReturnOnInvestment, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="ROI Total" Binding="{Binding ReturnOnInvestmentTotal, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Return" Binding="{Binding Return, StringFormat=N2}"/>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </Grid>
+
+    </DockPanel>
+</Window>

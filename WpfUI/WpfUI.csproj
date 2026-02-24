@@ -1,0 +1,108 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\EnergyUse.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\add_24x24.png" />
+    <None Remove="Resources\calculator_24x24.png" />
+    <None Remove="Resources\clear_24x24.png" />
+    <None Remove="Resources\clock_24x24.png" />
+    <None Remove="Resources\crossed_24x24.png" />
+    <None Remove="Resources\database.png" />
+    <None Remove="Resources\delete_24x24.png" />
+    <None Remove="Resources\downloading-data.png" />
+    <None Remove="Resources\download_24x24.png" />
+    <None Remove="Resources\editing_24x24.png" />
+    <None Remove="Resources\EnergyUse.png" />
+    <None Remove="Resources\export_24x24.png" />
+    <None Remove="Resources\open-file-folder-icon.png" />
+    <None Remove="Resources\open-file-icon.png" />
+    <None Remove="Resources\paper-list_24x24.png" />
+    <None Remove="Resources\pdf.png" />
+    <None Remove="Resources\plus-sign_24x24.png" />
+    <None Remove="Resources\reload.png" />
+    <None Remove="Resources\remove_24x24.png" />
+    <None Remove="Resources\save_24x24.png" />
+    <None Remove="Resources\settings.png" />
+    <None Remove="Resources\solar-energy_24x24.png" />
+    <None Remove="Resources\square_24x24.png" />
+    <None Remove="Resources\statistics_24x24.png" />
+    <None Remove="Resources\switch_16x16.png" />
+    <None Remove="Resources\switch_24x24.png" />
+    <None Remove="Resources\tick-mark_24x24.png" />
+    <None Remove="Resources\upload_16x16.png" />
+    <None Remove="Resources\upload_24x24.png" />
+    <None Remove="Views\Windows\EnergyUse.ico" />
+    <None Remove="Views\Windows\EnergyUse.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="5.0.0" />
+    <PackageReference Include="LiveChartsCore" Version="2.0.0-rc5.4" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc5.4" />
+    <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EnergyUse.Common\EnergyUse.Common.csproj" />
+    <ProjectReference Include="..\EnergyUse.Core\EnergyUse.Core.csproj" />
+    <ProjectReference Include="..\EnergyUse.Models\EnergyUse.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\switch_24x24.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\clear_24x24.png" />
+    <Resource Include="Resources\clock_24x24.png" />
+    <Resource Include="Resources\crossed_24x24.png" />
+    <Resource Include="Resources\database.png" />
+    <Resource Include="Resources\delete_24x24.png" />
+    <Resource Include="Resources\downloading-data.png" />
+    <Resource Include="Resources\download_24x24.png" />
+    <Resource Include="Resources\editing_24x24.png" />
+    <Resource Include="Resources\EnergyUse.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\add_24x24.png" />
+    <Resource Include="Resources\calculator_24x24.png" />
+    <Resource Include="Resources\EnergyUse.png" />
+    <Resource Include="Resources\export_24x24.png" />
+    <Resource Include="Resources\open-file-folder-icon.png" />
+    <Resource Include="Resources\open-file-icon.png" />
+    <Resource Include="Resources\paper-list_24x24.png" />
+    <Resource Include="Resources\pdf.png" />
+    <Resource Include="Resources\plus-sign_24x24.png" />
+    <Resource Include="Resources\reload.png" />
+    <Resource Include="Resources\remove_24x24.png" />
+    <Resource Include="Resources\save_24x24.png" />
+    <Resource Include="Resources\settings.png" />
+    <Resource Include="Resources\solar-energy_24x24.png" />
+    <Resource Include="Resources\square_24x24.png" />
+    <Resource Include="Resources\statistics_24x24.png" />
+    <Resource Include="Resources\switch_16x16.png" />
+    <Resource Include="Resources\tick-mark_24x24.png" />
+    <Resource Include="Resources\upload_16x16.png" />
+    <Resource Include="Resources\upload_24x24.png" />
+    <Resource Include="Views\Windows\EnergyUse.ico" />
+    <Resource Include="Views\Windows\EnergyUse.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

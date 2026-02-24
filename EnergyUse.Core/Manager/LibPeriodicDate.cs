@@ -860,10 +860,10 @@ public class LibPeriodicDate
     #region Netting
 
     private List<Models.Netting> _nettingList;
-    private void setNettingData()
+    private async Task setNettingData()
     {
         Repositories.RepoNetting? nettingRepo = new(_context);
-        _nettingList = nettingRepo.SelectByEnergyType(_parameterPeriod.EnergyType.Id).ToList();
+        _nettingList = (await nettingRepo.SelectByEnergyType(_parameterPeriod.EnergyType.Id)).ToList();
     }
 
     private decimal getNettingPerc(DateTime day)

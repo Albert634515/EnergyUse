@@ -19,13 +19,13 @@ public partial class frmCalculatedUnitPrice : Form
 
         InitializeComponent();
         setBaseFormSettings();
-        setComboEnergyTypes();
+        _ = setComboEnergyTypesAsync();
         setComboTarifGroups();
     }
 
-    private void setComboEnergyTypes()
+    private async Task setComboEnergyTypesAsync()
     {
-        var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
+        var energyTypes = (await _controller.UnitOfWork.EnergyTypeRepo.GetAll()).ToList();
         bsEnergyTypes.DataSource = energyTypes;
 
         cboEnergyType.SelectedIndex = -1;

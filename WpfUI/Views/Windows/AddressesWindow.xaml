@@ -1,0 +1,96 @@
+﻿<Window x:Class="WpfUI.Views.Windows.AddressesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Addresses"
+        Height="700"
+        Width="1000"
+        Loaded="Addresses_Loaded">
+
+    <DockPanel>
+
+        <!-- Toolbar -->
+        <ToolBar DockPanel.Dock="Top">
+            <Button Content="Add" Command="{Binding AddCommand}" />
+            <Button Content="Save" Command="{Binding SaveCommand}" />
+            <Button Content="Delete" Command="{Binding DeleteCommand}" />
+            <Button Content="Refresh" Command="{Binding RefreshCommand}" />
+            <Button Content="Close" Command="{Binding CloseCommand}" />
+        </ToolBar>
+
+        <!-- Main layout -->
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Address list -->
+            <DataGrid Grid.Column="0"
+                      ItemsSource="{Binding Addresses}"
+                      SelectedItem="{Binding SelectedAddress}"
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- Details -->
+            <StackPanel Grid.Column="1" Margin="20">
+
+                <TextBlock Text="Description" />
+                <TextBox Text="{Binding SelectedAddress.Description}" />
+
+                <TextBlock Text="Street" />
+                <TextBox Text="{Binding SelectedAddress.Street}" />
+
+                <TextBlock Text="City" />
+                <TextBox Text="{Binding SelectedAddress.City}" />
+
+                <TextBlock Text="Postal Code" />
+                <TextBox Text="{Binding SelectedAddress.PostalCode}" />
+
+                <TextBlock Text="House Number" />
+                <TextBox Text="{Binding SelectedAddress.HouseNumber}" />
+
+                <CheckBox Content="Default Address"
+                          IsChecked="{Binding SelectedAddress.DefaultAddress}" />
+
+                <GroupBox Header="Solar Panels">
+                    <StackPanel>
+                        <CheckBox Content="Available"
+                                  IsChecked="{Binding SelectedAddress.SolarPanelsAvailable}" />
+
+                        <TextBlock Text="Purchase Amount" />
+                        <TextBox Text="{Binding SelectedAddress.PurchaseAmount}" />
+
+                        <TextBlock Text="Subsidy Amount" />
+                        <TextBox Text="{Binding SelectedAddress.SubsidyAmount}" />
+
+                        <TextBlock Text="Total Capacity" />
+                        <TextBox Text="{Binding SelectedAddress.TotalCapacity}" />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Tariff Groups">
+                    <StackPanel>
+                        <TextBlock Text="General" />
+                        <ComboBox ItemsSource="{Binding GeneralTariffs}"
+                                  DisplayMemberPath="Description"
+                                  SelectedValuePath="Id"
+                                  SelectedValue="{Binding SelectedAddress.GeneralTariffGroupId}" />
+
+                        <TextBlock Text="Energy" />
+                        <ComboBox ItemsSource="{Binding EnergyTariffs}"
+                                  DisplayMemberPath="Description"
+                                  SelectedValuePath="Id"
+                                  SelectedValue="{Binding SelectedAddress.DefaultTariffGroupId}" />
+                    </StackPanel>
+                </GroupBox>
+
+            </StackPanel>
+
+        </Grid>
+
+    </DockPanel>
+</Window>

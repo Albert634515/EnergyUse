@@ -19,8 +19,13 @@ public partial class EnergyType
     public bool HasNormalAndLow { get; set; }
     public bool HasEnergyReturn { get; set; }
     public bool DefaultType { get; set; }
-
     public string? UnitId { get; set; }
+
+    public byte ColorA { get; set; }
+    public byte ColorR { get; set; }
+    public byte ColorG { get; set; }
+    public byte ColorB { get; set; }
+
 
     public virtual Unit Unit { get; set; }
 

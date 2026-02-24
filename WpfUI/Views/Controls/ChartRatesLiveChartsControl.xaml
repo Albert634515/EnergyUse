@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="WpfUI.Views.Controls.ChartRatesLiveChartsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+             xmlns:conv="clr-namespace:WpfUI.Converters">
+
+    <!-- Converter moet HIER staan -->
+    <UserControl.Resources>
+        <conv:CostCategorySelectionConverter x:Key="CostCategorySelectionConverter" />
+    </UserControl.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- TYPE -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0 0 0 10">
+            <StackPanel Margin="0 0 20 0">
+                <TextBlock Text="Type"/>
+                <RadioButton Content="Rate" IsChecked="{Binding ShowTypeRate}"/>
+                <RadioButton Content="Unit" IsChecked="{Binding ShowTypeUnit}"/>
+            </StackPanel>
+
+            <StackPanel Margin="0 0 20 0">
+                <TextBlock Text="From"/>
+                <DatePicker SelectedDate="{Binding FromDate}" Width="130"/>
+            </StackPanel>
+
+            <StackPanel>
+                <TextBlock Text="Till"/>
+                <DatePicker SelectedDate="{Binding TillDate}" Width="130"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- COST CATEGORIES -->
+        <!--
+        <StackPanel Grid.Row="1" Margin="0 0 0 10">
+            <TextBlock Text="Cost categories"/>
+            <ItemsControl ItemsSource="{Binding CostCategories}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding Name}"
+          IsChecked="{Binding 
+              Converter={StaticResource CostCategorySelectionConverter},
+              ConverterParameter={Binding RelativeSource={RelativeSource AncestorType=UserControl}}}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+        -->
+    
+        <!-- CHART -->
+        <lvc:CartesianChart Grid.Row="2"
+                            Series="{Binding ChartSeries}"
+                            XAxes="{Binding XAxes}"
+                            YAxes="{Binding YAxes}"/>
+    </Grid>
+</UserControl>

@@ -18,10 +18,10 @@ public partial class ucDatePredefined : UserControl
         InitializeComponent();
     }
 
-    private void setEnergyTypes()
+    private async Task setEnergyTypes()
     {
-        bsEnergyTypes.DataSource = _unitOfWork.EnergyTypeRepo.GetAll().ToList();
-
+        var list = await _unitOfWork.EnergyTypeRepo.GetAll();
+        bsEnergyTypes.DataSource = list.ToList();
     }
 
     private void setTarifGroups()

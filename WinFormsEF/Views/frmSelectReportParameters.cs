@@ -1,5 +1,6 @@
 ﻿using EnergyUse.Core.Controllers;
 using System.Data;
+using System.ComponentModel;
 
 namespace WinFormsEF.Views;
 
@@ -7,7 +8,9 @@ public partial class frmSelectReportParameters : Form
 {
     #region FormProperties
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public EnergyUse.Models.Address CurrentAddress { get; set; }
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public int ReturnValue { get; set; } = 0;
 
     private SelectReportParametersController _controller;

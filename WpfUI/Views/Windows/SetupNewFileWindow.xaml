@@ -1,0 +1,279 @@
+﻿<Window x:Class="WpfUI.Views.Windows.SetupNewFileWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Setup New File"
+        Height="650" Width="900"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False">
+
+    <Grid>
+
+        <!-- 2 rijen: inhoud + navigatie -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!-- Wizard content -->
+            <RowDefinition Height="Auto" />
+            <!-- Navigation -->
+        </Grid.RowDefinitions>
+
+        <!-- WIZARD CONTENT -->
+        <TabControl x:Name="TabControl"
+                    SelectedIndex="{Binding SelectedTabIndex}"
+                    Grid.Row="0"
+                    Margin="10">
+
+            <!-- TAB 1: Bestand -->
+            <TabItem Header="Db file">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Kies een nieuw of bestaand databasebestand."
+                                   FontWeight="Bold"/>
+
+                        <!-- Nieuw / Bestaand -->
+                        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,10,0,0">
+                            <RadioButton Content="Nieuw bestand" IsChecked="{Binding IsNewFile}" />
+                            <RadioButton Content="Bestaand bestand" Margin="0,5,0,0" IsChecked="{Binding IsExistingFile}" />
+                        </StackPanel>
+
+                        <!-- Bestandsnaam -->
+                        <Grid Grid.Row="2" Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Databasebestand:" VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="1"
+                                     Margin="10,0,10,0"
+                                     Text="{Binding NewFilePath}" />
+
+                            <Button Grid.Column="2"
+                                    Command="{Binding SelectFileCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Resources/open-file-icon.png" Width="16" Height="16" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Select file"/>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+
+                        <!-- Doelmap -->
+                        <Grid Grid.Row="3" Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Doelmap:" VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="1"
+                                     Margin="10,0,10,0"
+                                     Text="{Binding TargetDirectory}" />
+
+                            <Button Grid.Column="2"
+                                    Command="{Binding SelectDirectoryCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Resources/open-file-folder-icon.png" Width="16" Height="16" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Select directory"/>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+
+                        <!-- Opties -->
+                        <StackPanel Grid.Row="4" Margin="0,15,0,0">
+                            <CheckBox Content="Voeg basisgegevens toe"
+                                      IsChecked="{Binding AddBaseData}" />
+                            <CheckBox Content="Instellen als standaardbestand"
+                                      Margin="0,5,0,0"
+                                      IsChecked="{Binding SetAsDefaultFileOption}" />
+                        </StackPanel>
+
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- TAB 2: Adres -->
+            <TabItem Header="Adress">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Adresgegevens -->
+                        <GroupBox Header="Adresgegevens">
+                            <Grid Margin="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Straat:"/>
+                                <TextBox Grid.Column="1" Margin="10,2" Text="{Binding Address.Street}" />
+
+                                <TextBlock Grid.Row="1" Text="Huisnummer:"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Margin="10,2" Text="{Binding Address.HouseNumber}" />
+
+                                <TextBlock Grid.Row="2" Text="Plaats:"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Margin="10,2" Text="{Binding Address.City}" />
+
+                                <TextBlock Grid.Row="3" Text="Postcode:"/>
+                                <TextBox Grid.Row="3" Grid.Column="1" Margin="10,2" Text="{Binding Address.PostalCode}" />
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- Zonnepanelen -->
+                        <GroupBox Header="Zonnepanelen" Grid.Row="1" Margin="0,10,0,0">
+                            <Grid Margin="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Aanwezig:"/>
+                                <CheckBox Grid.Column="1" Margin="10,0" IsChecked="{Binding Address.SolarPanelsAvailable}" />
+
+                                <TextBlock Grid.Row="1" Text="Totale capaciteit (Wp):"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Margin="10,2" Text="{Binding Address.TotalCapacity}" />
+
+                                <TextBlock Grid.Row="2" Text="Kwaliteitsreductie (%):"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Margin="10,2" Text="{Binding Address.QualityReductionSolarPanels}" />
+
+                                <TextBlock Grid.Row="3" Text="Aanschafbedrag:"/>
+                                <TextBox Grid.Row="3" Grid.Column="1" Margin="10,2" Text="{Binding Address.PurchaseAmount}" />
+
+                                <TextBlock Grid.Row="4" Text="Subsidie:"/>
+                                <TextBox Grid.Row="4" Grid.Column="1" Margin="10,2" Text="{Binding Address.SubsidyAmount}" />
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- Beschrijving -->
+                        <GroupBox Header="Beschrijving" Grid.Row="2" Margin="0,10,0,0">
+                            <TextBox Margin="10"
+                                     TextWrapping="Wrap"
+                                     AcceptsReturn="True"
+                                     VerticalScrollBarVisibility="Auto"
+                                     Text="{Binding Address.Description}" />
+                        </GroupBox>
+
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- TAB 3: Energietypen -->
+            <TabItem Header="Energietypes">
+                <Grid Margin="15">
+                    <GroupBox Header="Selecteer energietypen">
+                        <ListBox ItemsSource="{Binding EnergyTypes}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Name}"
+                                              IsChecked="{Binding IsSelected}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+            <!-- TAB 4: Aanmaken -->
+            <TabItem Header="Create db file">
+                <Grid Margin="15">
+                    <TextBlock Text="{Binding SummaryText}"
+                               TextWrapping="Wrap"
+                               FontSize="14"/>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+        <!-- NAVIGATION -->
+        <Border Grid.Row="1"
+        Background="#F5F5F5"
+        Padding="10"
+        BorderThickness="1,1,0,0"
+        BorderBrush="#DDDDDD">
+
+            <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Right">
+
+                <!-- VORIGE -->
+                <Button Content="Vorige"
+                Width="120"
+                Margin="0,0,10,0"
+                Command="{Binding PreviousCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <!-- Verberg op tab 0 -->
+                                <DataTrigger Binding="{Binding SelectedTabIndex}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- VOLGENDE -->
+                <Button Content="Volgende"
+                Width="120"
+                Margin="0,0,10,0"
+                Command="{Binding NextCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <!-- Verberg op laatste tab -->
+                                <DataTrigger Binding="{Binding SelectedTabIndex}" Value="3">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- SETUP FILE (alleen op tab 3) -->
+                <Button Content="Setup file"
+                Width="120"
+                Command="{Binding CreateDbCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedTabIndex}" Value="3">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</Window>

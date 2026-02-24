@@ -1,0 +1,179 @@
+﻿<Window x:Class="WpfUI.Views.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfUI.Views.Windows"
+        xmlns:controls="clr-namespace:WpfUI.Views.Controls"
+        mc:Ignorable="d"
+        Title="EnergyUse"
+        WindowState="Maximized"
+        Topmost="False"
+        Icon="/Views/Windows/EnergyUse.png">
+
+    <DockPanel>
+
+        <!-- ============================
+             MENU (1-op-1 WinForms)
+        ============================ -->
+        <Menu DockPanel.Dock="Top">
+
+            <!-- FILE -->
+            <MenuItem Header="_File">
+
+                <MenuItem Header="Settings">
+                    <MenuItem Header="General" Command="{Binding SettingsGeneralCommand}"/>
+                    <MenuItem Header="Energy Types" Command="{Binding SettingsEnergyTypesCommand}"/>
+                    <MenuItem Header="Addresses" Command="{Binding SettingsAddressesCommand}"/>
+                    <MenuItem Header="Meters" Command="{Binding SettingsMetersCommand}"/>
+                    <MenuItem Header="Cost Categories" Command="{Binding SettingsCostCategoriesCommand}"/>
+                    <MenuItem Header="Tariff Groups" Command="{Binding SettingsTariffGroupsCommand}"/>
+                    <MenuItem Header="Energy Rates and Tariffs" Command="{Binding SettingsRatesCommand}"/>
+                    <MenuItem Header="Predefined Periods" Command="{Binding SettingsPredefinedPeriodsCommand}"/>
+                    <MenuItem Header="Correction Factors" Command="{Binding SettingsCorrectionFactorsCommand}"/>
+                    <MenuItem Header="Netting" Command="{Binding SettingsNettingCommand}"/>
+                    <MenuItem Header="VAT Tariffs" Command="{Binding SettingsVatTariffsCommand}"/>
+                    <MenuItem Header="Calculated Unit Price" Command="{Binding SettingsCalculatedUnitPriceCommand}"/>
+                    <MenuItem Header="Payments" Command="{Binding SettingsPaymentsCommand}"/>
+                </MenuItem>
+
+                <MenuItem Header="Backup and Restore" Command="{Binding BackupRestoreCommand}"/>
+
+                <MenuItem Header="Import">
+                    <MenuItem Header="Import Meter Rates" Command="{Binding ImportMeterRatesCommand}"/>
+                </MenuItem>
+
+                <MenuItem Header="Export">
+                    <MenuItem Header="Rates" Command="{Binding ExportRatesCommand}"/>
+                </MenuItem>
+
+                <MenuItem Header="Maintenance">
+                    <MenuItem Header="Recalculate Current Selection" Command="{Binding RecalculateCurrentSelectionCommand}"/>
+                    <MenuItem Header="Recalculate All" Command="{Binding RecalculateAllCommand}"/>
+                    <MenuItem Header="Setup New File" Command="{Binding SetupNewFileCommand}"/>
+                    <MenuItem Header="Create Demo Data" Command="{Binding CreateDemoDataCommand}"/>
+                </MenuItem>
+
+            </MenuItem>
+
+            <!-- GRAPHS -->
+            <MenuItem Header="_Graphs">
+                <MenuItem Header="Usage" Command="{Binding ShowLeftUsageGraphCommand}"/>
+                <MenuItem Header="Compare" Command="{Binding ShowLeftCompareGraphCommand}"/>
+                <MenuItem Header="Rates" Command="{Binding ShowLeftRatesGraphCommand}"/>
+            </MenuItem>
+
+            <!-- REPORTS -->
+            <MenuItem Header="_Reports">
+                <MenuItem Header="Settlement" Command="{Binding PdfReportCommand}"/>
+                <MenuItem Header="Rate Report" Command="{Binding RateReportCommand}"/>
+            </MenuItem>
+
+            <!-- INFO -->
+            <MenuItem Header="_Info">
+                <MenuItem Header="Info" Command="{Binding InfoCommand}"/>
+            </MenuItem>
+
+        </Menu>
+
+        <!-- ============================
+             TOOLBAR (1-op-1 WinForms)
+        ============================ -->
+        <ToolBar DockPanel.Dock="Top">
+
+            <Button Command="{Binding ShowLeftDataCommand}">
+                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/square_24x24.png"/>
+            </Button>
+
+            <Separator/>
+
+            <Button Command="{Binding ShowLeftImportCommand}">
+                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/download_24x24.png"/>
+            </Button>
+
+            <Separator/>
+
+            <Button Command="{Binding ShowLeftUsageGraphCommand}">
+                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/statistics_24x24.png"/>
+            </Button>
+
+            <Button Command="{Binding ShowLeftCompareGraphCommand}">
+                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/statistics_24x24.png"/>
+            </Button>
+
+            <Button Command="{Binding ShowLeftRatesGraphCommand}">
+                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/statistics_24x24.png"/>
+            </Button>
+
+            <Separator/>
+
+            <Button Command="{Binding PdfReportCommand}">
+                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/paper-list_24x24.png"/>
+            </Button>
+
+            <Button Command="{Binding PaybackCommand}">
+                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/calculator_24x24.png"/>
+            </Button>
+
+            <Separator/>
+
+            <Button Command="{Binding RefreshCommand}">
+                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/clock_24x24.png"/>
+            </Button>
+
+            <Button Command="{Binding CloseCommand}">
+                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/crossed_24x24.png"/>
+            </Button>
+
+        </ToolBar>
+
+        <!-- ============================
+             ADDRESS + ENERGYTYPE SELECTOR
+        ============================ -->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10">
+
+            <TextBlock Text="Address:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <ComboBox Width="250"
+                      ItemsSource="{Binding Addresses}"
+                      SelectedItem="{Binding SelectedAddress}"
+                      DisplayMemberPath="Description"/>
+
+            <TextBlock Text="Energy Type:" VerticalAlignment="Center" Margin="20,0,5,0"/>
+            <ComboBox Width="200"
+                      ItemsSource="{Binding EnergyTypes}"
+                      SelectedItem="{Binding SelectedEnergyType}"
+                      DisplayMemberPath="Name"/>
+
+        </StackPanel>
+
+        <!-- ============================
+             MAIN LAYOUT (SplitContainer)
+        ============================ -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- LEFT VIEW -->
+            <ContentControl Grid.Column="0"
+                            Content="{Binding LeftView}"
+                            Margin="5"/>
+
+            <!-- SPLITTER -->
+            <GridSplitter Grid.Column="1"
+                          Width="5"
+                          HorizontalAlignment="Stretch"
+                          Background="LightGray"/>
+
+            <!-- RIGHT VIEW -->
+            <ContentControl Grid.Column="2"
+                            Content="{Binding RightView}"
+                            Margin="5"/>
+
+        </Grid>
+
+    </DockPanel>
+
+</Window>

@@ -31,9 +31,9 @@ public partial class frmVatTariffs : Form
         _controller.InitSettings = false;
     }
 
-    private void setComboEnergyTypes()
+    private async void setComboEnergyTypes()
     {
-        var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
+        var energyTypes = (await _controller.UnitOfWork.EnergyTypeRepo.GetAll()).ToList();
         bsEnergyTypes.DataSource = energyTypes;
 
         CboEnergyType.SelectedIndex = -1;

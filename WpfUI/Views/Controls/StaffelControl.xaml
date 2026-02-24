@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="WpfUI.Views.Controls.StaffelControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:WpfUI.Views.Controls"
+             mc:Ignorable="d"
+             Height="350">
+
+    <DockPanel>
+
+        <!-- Toolbar -->
+        <ToolBar DockPanel.Dock="Top">
+            <Button Content="Add" Command="{Binding AddCommand}" />
+            <Button Content="Save" Command="{Binding SaveCommand}" />
+            <Button Content="Cancel" Command="{Binding CancelCommand}" />
+            <Button Content="Delete" Command="{Binding DeleteCommand}" />
+            <Button Content="Refresh" Command="{Binding RefreshCommand}" />
+        </ToolBar>
+
+        <!-- DataGrid -->
+        <DataGrid ItemsSource="{Binding Staffels}"
+                  SelectedItem="{Binding SelectedStaffel}"
+                  AutoGenerateColumns="False"
+                  Margin="5">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Value From" Binding="{Binding ValueFrom}" />
+                <DataGridTextColumn Header="Value Till" Binding="{Binding ValueTill}" />
+                <DataGridTextColumn Header="Rate" Binding="{Binding StaffelValue}" />
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+    </DockPanel>
+</UserControl>

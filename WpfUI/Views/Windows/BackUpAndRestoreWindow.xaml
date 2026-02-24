@@ -1,0 +1,55 @@
+﻿<Window x:Class="WpfUI.Views.Windows.BackUpAndRestoreWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:WpfUI.ViewModels"
+        Title="Backup en Restore"
+        Height="350" Width="600"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- BACKUP DIRECTORY -->
+        <StackPanel Orientation="Horizontal" Margin="0 5">
+            <Label Content="Backup map:" Width="150"/>
+            <TextBox Text="{Binding BackupDirectory, UpdateSourceTrigger=PropertyChanged}"
+                     Width="320"/>
+            <Button Content="..." Width="40"
+                    Command="{Binding SelectBackupDirCommand}"/>
+        </StackPanel>
+
+        <!-- CREATE BACKUP -->
+        <Button Grid.Row="1"
+                Content="Maak Backup"
+                Width="150"
+                Margin="0 10 0 0"
+                Command="{Binding CreateBackupCommand}"/>
+
+        <!-- RESTORE FILE -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 10">
+            <Label Content="Restore bestand:" Width="150"/>
+            <TextBox Text="{Binding RestoreFile, UpdateSourceTrigger=PropertyChanged}"
+                     Width="320"/>
+            <Button Content="..." Width="40"
+                    Command="{Binding SelectRestoreFileCommand}"/>
+        </StackPanel>
+
+        <!-- RESTORE + CHECKBOX -->
+        <StackPanel Grid.Row="3" Margin="0 10">
+            <CheckBox Content="Eerst backup maken voor restore"
+                      IsChecked="{Binding BackupBeforeRestore}"/>
+
+            <Button Content="Restore uitvoeren"
+                    Width="150"
+                    Margin="0 10 0 0"
+                    Command="{Binding RestoreBackupCommand}"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

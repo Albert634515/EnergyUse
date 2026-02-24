@@ -44,9 +44,9 @@ public partial class frmCreateDemoData : Form
         cboTargetAddress.SelectedIndex = -1;
     }
 
-    private void setComboEnergyTypes()
+    private async void setComboEnergyTypes()
     {
-        var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
+        var energyTypes = (await _controller.UnitOfWork.EnergyTypeRepo.GetAll()).ToList();
         cboEnergyType.DataSource = energyTypes;
         cboEnergyType.DisplayMember = "Name";
         cboEnergyType.ValueMember = "Id";

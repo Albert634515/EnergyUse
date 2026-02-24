@@ -17,10 +17,12 @@ public class RepoEnergyType : RepoGeneral<Models.EnergyType>
         return _context.Set<Models.EnergyType>().Include(s => s.Unit).Where(s => s.Id == id).FirstOrDefault();
     }
 
-    public new IEnumerable<Models.EnergyType> GetAll()
+    public async Task<IEnumerable<Models.EnergyType>> GetAll(CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.EnergyType>()
-                       .Include(s => s.Unit);
+        return await _context.Set<Models.EnergyType>()
+                       .Include(s => s.Unit)
+                       .ToListAsync(cancellationToken)
+                       .ConfigureAwait(false); 
     }
 
     public Models.EnergyType? SelectByName(string energyTypeName)

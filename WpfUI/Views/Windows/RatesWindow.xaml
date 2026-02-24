@@ -1,0 +1,148 @@
+﻿<Window x:Class="WpfUI.Views.Windows.EnergyRatesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfUI.Views.Windows"
+        xmlns:controls="clr-namespace:WpfUI.Views.Controls"
+        xmlns:conv="clr-namespace:WpfUI.Converters"
+        mc:Ignorable="d"
+        Title="Energy Rates"
+        Height="800"
+        Width="1200">
+
+    <Window.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Window.Resources>
+
+    <DockPanel>
+
+        <!-- Toolbar -->
+        <ToolBar DockPanel.Dock="Top">
+            <Button Content="Add" Command="{Binding AddRateCommand}" />
+            <Button Content="Save" Command="{Binding SaveRateCommand}" />
+            <Button Content="Cancel" Command="{Binding CancelRateCommand}" />
+            <Button Content="Delete" Command="{Binding DeleteRateCommand}" />
+            <Button Content="Refresh" Command="{Binding RefreshRatesCommand}" />
+            <Button Content="Close" Command="{Binding CloseCommand}" />
+        </ToolBar>
+
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock Text="{Binding RateTaxInfoText}" />
+            </StatusBarItem>
+        </StatusBar>
+
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Filters -->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <StackPanel Margin="0,0,20,0">
+                    <TextBlock Text="Energy Type"/>
+                    <ComboBox ItemsSource="{Binding EnergyTypes}"
+                              SelectedItem="{Binding SelectedEnergyType}"
+                              DisplayMemberPath="Name"
+                              Width="180"/>
+                </StackPanel>
+
+                <StackPanel Margin="0,0,20,0">
+                    <TextBlock Text="Cost Category"/>
+                    <ComboBox ItemsSource="{Binding CostCategories}"
+                              SelectedItem="{Binding SelectedCostCategory}"
+                              DisplayMemberPath="Name"
+                              Width="180"/>
+                </StackPanel>
+
+                <StackPanel Margin="0,0,20,0">
+                    <TextBlock Text="Tariff Group"/>
+                    <ComboBox ItemsSource="{Binding TariffGroups}"
+                              SelectedItem="{Binding SelectedTariffGroup}"
+                              DisplayMemberPath="Description"
+                              Width="180"/>
+                </StackPanel>
+
+                <TextBlock Text="{Binding AlwaysCalculatedWithText}"
+                           Visibility="{Binding IsAlwaysCalculatedWithVisible, Converter={StaticResource BoolToVisibilityConverter}}"
+                           VerticalAlignment="Bottom"
+                           Margin="20,0,0,0"
+                           FontStyle="Italic"/>
+            </StackPanel>
+
+            <!-- Rates Grid -->
+            <DataGrid Grid.Row="1"
+                      ItemsSource="{Binding Rates}"
+                      SelectedItem="{Binding SelectedRate}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="False"
+                      Margin="0,0,0,10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Start" Binding="{Binding StartRate}" />
+                    <DataGridTextColumn Header="End" Binding="{Binding EndRate}" />
+                    <DataGridTextColumn Header="Rate" Binding="{Binding RateValue, StringFormat=N5}" />
+                    <DataGridTextColumn Header="Expected Change" Binding="{Binding ExpectedPriceChange, StringFormat=N3}" />
+                    <DataGridTextColumn Header="Price Change" Binding="{Binding PriceChange, StringFormat=N3}" />
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- Rate Details -->
+            <GroupBox Grid.Row="2" Header="Rate Details">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Rate Type" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Row="0" Grid.Column="1"
+                              ItemsSource="{Binding RateTypes}"
+                              SelectedItem="{Binding SelectedRateType}"
+                              DisplayMemberPath="Description"
+                              Width="200"/>
+
+                    <TextBlock Grid.Row="1" Text="Rate" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="1" Grid.Column="1"
+                             Text="{Binding SelectedRate.RateValue, UpdateSourceTrigger=PropertyChanged}"
+                             Visibility="{Binding IsStaffel, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Invert}"/>
+
+                    <TextBlock Grid.Row="2" Text="Expected Price Change" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="2" Grid.Column="1"
+                             Text="{Binding SelectedRate.ExpectedPriceChange, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Grid.Row="3" Text="Price Change" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="3" Grid.Column="1"
+                             Text="{Binding SelectedRate.PriceChange}"
+                             IsReadOnly="True"/>
+
+                    <TextBlock Grid.Row="4" Text="Future Price" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding SelectedRate.FutureRate}" />
+
+
+                    <TextBlock Grid.Row="5" Text="Description" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="5" Grid.Column="1"
+                             Text="{Binding SelectedRate.Description}"/>
+
+                    <!-- Staffel control -->
+                    <controls:StaffelControl Grid.Row="6" Grid.ColumnSpan="2"
+                                             Visibility="{Binding IsStaffel, Converter={StaticResource BoolToVisibilityConverter}}"
+                                             RateId="{Binding SelectedRate.Id}"/>
+                </Grid>
+            </GroupBox>
+
+        </Grid>
+    </DockPanel>
+</Window>

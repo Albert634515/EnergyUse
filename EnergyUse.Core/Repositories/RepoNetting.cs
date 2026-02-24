@@ -12,10 +12,13 @@ public class RepoNetting : RepoGeneral<Models.Netting>
         _context = dbContext;
     }
 
-    public IEnumerable<Models.Netting> SelectByEnergyType(long energyTypeId)
+    public async Task<IEnumerable<Models.Netting>> SelectByEnergyType(long energyTypeId)
     {
-        return _context.Nettings.Include(e => e.EnergyType).Where(n => n.EnergyTypeId == energyTypeId).OrderBy(o => o.StartDate)
-                                .ToList();
+        return await _context.Nettings
+                             .Include(e => e.EnergyType)
+                             .Where(n => n.EnergyTypeId == energyTypeId)
+                             .OrderBy(o => o.StartDate)
+                             .ToListAsync();
     }
 
     public Models.Netting? SelectByEnergyTypeAndDate(long energyTypeId, DateTime nettingDate)

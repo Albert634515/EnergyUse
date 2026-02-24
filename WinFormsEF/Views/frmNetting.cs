@@ -32,9 +32,9 @@ public partial class frmNetting : Form
         _controller.InitSettings = false;
     }
 
-    private void setComboEnergyTypes()
+    private async void setComboEnergyTypes()
     {
-        var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
+        var energyTypes = (await _controller.UnitOfWork.EnergyTypeRepo.GetAll()).ToList();
         cboEnergyType.DataSource = energyTypes;
         cboEnergyType.DisplayMember = "Name";
         cboEnergyType.ValueMember = "Id";
@@ -172,12 +172,12 @@ public partial class frmNetting : Form
         return true;
     }
 
-    private void InitNetting(long energyTypeId)
+    private async void InitNetting(long energyTypeId)
     {
         if (energyTypeId == 0)
             _controller.UnitOfWork.Nettings = new List<EnergyUse.Models.Netting>();
         else
-            _controller.UnitOfWork.Nettings = _controller.UnitOfWork.NettingRepo.SelectByEnergyType(energyTypeId).ToList();
+            _controller.UnitOfWork.Nettings = (await _controller.UnitOfWork.NettingRepo.SelectByEnergyType(energyTypeId)).ToList();
 
         _controller.UnitOfWork.SetListSorted();
 

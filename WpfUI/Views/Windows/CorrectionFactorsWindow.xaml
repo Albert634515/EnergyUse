@@ -1,0 +1,124 @@
+﻿<Window x:Class="WpfUI.Views.Windows.CorrectionFactorsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Correction Factors"
+        Height="600" Width="900">
+
+    <DockPanel>
+
+        <!-- TOOLBAR -->
+        <ToolBar DockPanel.Dock="Top">
+
+            <Button Command="{Binding AddCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/add_24x24.png" Width="20" Height="20"/>
+                    <TextBlock Text="Add" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding SaveCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/tick-mark_24x24.png" Width="20" Height="20"/>
+                    <TextBlock Text="Save" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding CancelCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/clear_24x24.png" Width="20" Height="20"/>
+                    <TextBlock Text="Cancel" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding DeleteCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/delete_24x24.png" Width="20" Height="20"/>
+                    <TextBlock Text="Delete" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding RefreshCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/clock_24x24.png" Width="20" Height="20"/>
+                    <TextBlock Text="Refresh" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding CloseCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/crossed_24x24.png" Width="20" Height="20"/>
+                    <TextBlock Text="Close" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Button>
+
+        </ToolBar>
+
+        <!-- STATUS BAR -->
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem Content="{Binding StatusMessage}" />
+        </StatusBar>
+
+        <!-- MAIN CONTENT -->
+        <StackPanel Margin="10">
+
+            <!-- ENERGY TYPE -->
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Energy Type:" Width="120"/>
+                <ComboBox Width="200"
+                          ItemsSource="{Binding EnergyTypes}"
+                          DisplayMemberPath="Name"
+                          SelectedItem="{Binding SelectedEnergyType}" />
+            </StackPanel>
+
+            <!-- GRID -->
+            <DataGrid ItemsSource="{Binding CorrectionFactors}"
+                      SelectedItem="{Binding SelectedCorrectionFactor}"
+                      AutoGenerateColumns="False"
+                      Margin="0,10,0,10"
+                      IsReadOnly="True">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Start"
+                                        Binding="{Binding StartFactor, StringFormat=d}" />
+                    <DataGridTextColumn Header="End"
+                                        Binding="{Binding EndFactor, StringFormat=d}" />
+                    <DataGridTextColumn Header="Factor"
+                                        Binding="{Binding Factor, StringFormat=N5}" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- EDIT PANEL -->
+            <GroupBox Header="Correction Factor">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Content="Start Date:" Grid.Row="0" Grid.Column="0"/>
+                    <DatePicker SelectedDate="{Binding SelectedCorrectionFactor.StartFactor}"
+                                Grid.Row="0" Grid.Column="1"/>
+
+                    <Label Content="End Date:" Grid.Row="1" Grid.Column="0"/>
+                    <DatePicker SelectedDate="{Binding SelectedCorrectionFactor.EndFactor}"
+                                Grid.Row="1" Grid.Column="1"/>
+
+                    <Label Content="Factor:" Grid.Row="2" Grid.Column="0"/>
+                    <TextBox Text="{Binding SelectedCorrectionFactor.Factor}"
+                             Grid.Row="2" Grid.Column="1"/>
+                </Grid>
+            </GroupBox>
+
+        </StackPanel>
+
+    </DockPanel>
+</Window>
