@@ -39,8 +39,6 @@
     <None Remove="Resources\tick-mark_24x24.png" />
     <None Remove="Resources\upload_16x16.png" />
     <None Remove="Resources\upload_24x24.png" />
-    <None Remove="Views\Windows\EnergyUse.ico" />
-    <None Remove="Views\Windows\EnergyUse.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -95,8 +93,6 @@
     <Resource Include="Resources\tick-mark_24x24.png" />
     <Resource Include="Resources\upload_16x16.png" />
     <Resource Include="Resources\upload_24x24.png" />
-    <Resource Include="Views\Windows\EnergyUse.ico" />
-    <Resource Include="Views\Windows\EnergyUse.png" />
   </ItemGroup>
 
   <ItemGroup>

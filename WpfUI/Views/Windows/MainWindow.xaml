@@ -8,8 +8,7 @@
         mc:Ignorable="d"
         Title="EnergyUse"
         WindowState="Maximized"
-        Topmost="False"
-        Icon="/Views/Windows/EnergyUse.png">
+        Topmost="False">
 
     <DockPanel>
 
@@ -77,55 +76,95 @@
         </Menu>
 
         <!-- ============================
-             TOOLBAR (1-op-1 WinForms)
+             TOOLBAR
         ============================ -->
-        <ToolBar DockPanel.Dock="Top">
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-            <Button Command="{Binding ShowLeftDataCommand}">
-                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/square_24x24.png"/>
-            </Button>
+            <!-- Linker toolbar -->
+            <ToolBar Grid.Column="0">
 
-            <Separator/>
+                <Button Command="{Binding ShowLeftDataCommand}">
+                    <DockPanel LastChildFill="False">
+                        <Image Width="20" Height="20" Source="/WpfUI;component/Resources/square_24x24.png" DockPanel.Dock="Left"/>
+                        <TextBlock Text="Data" Margin="5,0,0,0"/>
+                    </DockPanel>
+                </Button>
 
-            <Button Command="{Binding ShowLeftImportCommand}">
-                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/download_24x24.png"/>
-            </Button>
+                <Separator/>
 
-            <Separator/>
+                <Button Command="{Binding ShowLeftImportCommand}">
+                    <DockPanel LastChildFill="False">
+                        <Image Width="20" Height="20" Source="/WpfUI;component/Resources/download_24x24.png" DockPanel.Dock="Left"/>
+                        <TextBlock Text="Import data" Margin="5,0,0,0"/>
+                    </DockPanel>
+                </Button>
 
-            <Button Command="{Binding ShowLeftUsageGraphCommand}">
-                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/statistics_24x24.png"/>
-            </Button>
+                <Separator/>
 
-            <Button Command="{Binding ShowLeftCompareGraphCommand}">
-                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/statistics_24x24.png"/>
-            </Button>
+                <Button Command="{Binding ShowLeftUsageGraphCommand}">
+                    <DockPanel LastChildFill="False">
+                        <Image Width="20" Height="20" Source="/WpfUI;component/Resources/statistics_24x24.png" DockPanel.Dock="Left"/>
+                        <TextBlock Text="Usage" Margin="5,0,0,0"/>
+                    </DockPanel>
+                </Button>
 
-            <Button Command="{Binding ShowLeftRatesGraphCommand}">
-                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/statistics_24x24.png"/>
-            </Button>
+                <Button Command="{Binding ShowLeftCompareGraphCommand}">
+                    <DockPanel LastChildFill="False">
+                        <Image Width="20" Height="20" Source="/WpfUI;component/Resources/statistics_24x24.png" DockPanel.Dock="Left"/>
+                        <TextBlock Text="Compare" Margin="5,0,0,0"/>
+                    </DockPanel>
+                </Button>
 
-            <Separator/>
+                <Button Command="{Binding ShowLeftRatesGraphCommand}">
+                    <DockPanel LastChildFill="False">
+                        <Image Width="20" Height="20" Source="/WpfUI;component/Resources/statistics_24x24.png" DockPanel.Dock="Left"/>
+                        <TextBlock Text="Tariffs" Margin="5,0,0,0"/>
+                    </DockPanel>
+                </Button>
 
-            <Button Command="{Binding PdfReportCommand}">
-                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/paper-list_24x24.png"/>
-            </Button>
+                <Separator/>
 
-            <Button Command="{Binding PaybackCommand}">
-                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/calculator_24x24.png"/>
-            </Button>
+                <Button Command="{Binding PdfReportCommand}">
+                    <DockPanel LastChildFill="False">
+                        <Image Width="20" Height="20" Source="/WpfUI;component/Resources/paper-list_24x24.png" DockPanel.Dock="Left"/>
+                        <TextBlock Text="Settlement" Margin="5,0,0,0"/>
+                    </DockPanel>
+                </Button>
 
-            <Separator/>
+                <Button Command="{Binding PaybackCommand}">
+                    <DockPanel LastChildFill="False">
+                        <Image Width="20" Height="20" Source="/WpfUI;component/Resources/calculator_24x24.png" DockPanel.Dock="Left"/>
+                        <TextBlock Text="ROI" Margin="5,0,0,0"/>
+                    </DockPanel>
+                </Button>
 
-            <Button Command="{Binding RefreshCommand}">
-                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/clock_24x24.png"/>
-            </Button>
+                <Separator/>
 
-            <Button Command="{Binding CloseCommand}">
-                <Image Width="20" Height="20" Source="/WpfUI;component/Resources/crossed_24x24.png"/>
-            </Button>
+                <Button Command="{Binding RefreshCommand}">
+                    <DockPanel LastChildFill="False">
+                        <Image Width="20" Height="20" Source="/WpfUI;component/Resources/clock_24x24.png" DockPanel.Dock="Left"/>
+                        <TextBlock Text="Refresh" Margin="5,0,0,0"/>
+                    </DockPanel>
+                </Button>
 
-        </ToolBar>
+            </ToolBar>
+
+            <!-- Rechter toolbar -->
+            <ToolBar Grid.Column="1">
+
+                <Button Command="{Binding CloseCommand}">
+                    <DockPanel LastChildFill="False">
+                        <Image Width="20" Height="20" Source="/WpfUI;component/Resources/crossed_24x24.png" DockPanel.Dock="Left"/>
+                        <TextBlock Text="Refresh" Margin="5,0,0,0"/>
+                    </DockPanel>
+                </Button>
+
+            </ToolBar>
+        </Grid>
 
         <!-- ============================
              ADDRESS + ENERGYTYPE SELECTOR

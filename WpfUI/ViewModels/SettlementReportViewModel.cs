@@ -21,7 +21,7 @@ public class SettlementReportViewModel : ViewModelBase
         set
         {
             if (SetProperty(ref _selectedAddress, value))
-                LoadEnergyTypeSelections();
+                setEnergyTypeSelections();
         }
     }
     private Address _selectedAddress;
@@ -64,10 +64,10 @@ public class SettlementReportViewModel : ViewModelBase
         SelectCommand = new RelayCommand(_ => Select());
         CancelCommand = new RelayCommand(_ => Cancel());
 
-        LoadInitialData();
+        setInitialData();
     }
 
-    private async void LoadInitialData()
+    private async void setInitialData()
     {
         var addresses = await _controller.UnitOfWork.AddressRepo.GetAll();
         foreach (var a in addresses)
@@ -80,7 +80,7 @@ public class SettlementReportViewModel : ViewModelBase
             ReportTypes.Add(r);
     }
 
-    private void LoadEnergyTypeSelections()
+    private void setEnergyTypeSelections()
     {
         DateSelections.Clear();
 

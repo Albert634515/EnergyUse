@@ -4,11 +4,11 @@ using WpfUI.ViewModels;
 namespace WpfUI.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for VatTarifsWindow.xaml
+    /// Interaction logic for VatTariffsWindow.xaml
     /// </summary>
-    public partial class VatTarifsWindow : Window
+    public partial class VatTariffsWindow : Window
     {
-        public VatTarifsWindow()
+        public VatTariffsWindow()
         {
             InitializeComponent();
             DataContext = new VatTarifsViewModel();

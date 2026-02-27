@@ -9,12 +9,9 @@
             <ResourceDictionary.MergedDictionaries>
 
                 <!-- Fluent Theme -->
-                <ResourceDictionary Source="Styles/Fluent/FluentLight.xaml" />
-
-       
+                <ResourceDictionary Source="Styles/Fluent/FluentLight.xaml" />       
 
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        </ResourceDictionary>        
     </Application.Resources>
-
 </Application>

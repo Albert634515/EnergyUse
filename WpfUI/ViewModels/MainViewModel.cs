@@ -1,4 +1,5 @@
 ﻿using EnergyUse.Core.Controllers;
+using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -13,27 +14,57 @@ namespace WpfUI.ViewModels;
 public class MainViewModel : ViewModelBase
 {
     private readonly MainController _controller;
+    private readonly ISettingsService _settings;
 
     public MainViewModel()
     {
+        _settings = new SettingsService();
         _controller = new MainController(Config.GetDbFileName());
         _controller.Initialize();
 
-        LoadAddresses();
+        setInitialSettings();
+        setAddresses();
+        setLastViews();
 
         // Toolbar + Menu commands
-        ShowLeftDataCommand = new RelayCommand(_ => LoadDataControl());
-        ShowLeftImportCommand = new RelayCommand(_ => LoadDataImport());
-        ShowLeftUsageGraphCommand = new RelayCommand(_ => LoadChartUsageControl());
-        ShowLeftCompareGraphCommand = new RelayCommand(_ => LoadChartCompare());
-        ShowLeftRatesGraphCommand = new RelayCommand(_ => LoadRatesControl());
+        ShowLeftDataCommand = new RelayCommand(_ => setDataControl());
+        ShowLeftImportCommand = new RelayCommand(_ => setDataImport());
+        ShowLeftUsageGraphCommand = new RelayCommand(_ => setChartUsageControl());
+        ShowLeftCompareGraphCommand = new RelayCommand(_ => setChartCompare());
+        ShowLeftRatesGraphCommand = new RelayCommand(_ => setRatesControl());
 
         PdfReportCommand = new RelayCommand(_ => ShowPdfReport());
         PaybackCommand = new RelayCommand(_ => ShowPayback());
         RecalculateCommand = new RelayCommand(_ => RecalculateCurrentSelection());
+        RecalculateAllCommand = new RelayCommand(_ => RecalculateAll());
 
-        RefreshCommand = new RelayCommand(_ => RefreshViews(false));
+        RefreshCommand = new RelayCommand(_ => refreshViews(false));
         CloseCommand = new RelayCommand(_ => Application.Current.Shutdown());
+
+        // Settings menu
+        //SettingsGeneralCommand = new RelayCommand(_ => new SettingsWindow().ShowDialog());
+        SettingsEnergyTypesCommand = new RelayCommand(_ => new EnergyTypesWindow().ShowDialog());
+        SettingsAddressesCommand = new RelayCommand(_ => new AddressesWindow().ShowDialog());
+        SettingsMetersCommand = new RelayCommand(_ => new MetersWindow().ShowDialog());
+        SettingsCostCategoriesCommand = new RelayCommand(_ => new CostCategoriesWindow().ShowDialog());
+        //SettingsTariffGroupsCommand = new RelayCommand(_ => new TariffGroupsWindow().ShowDialog());
+        //SettingsRatesCommand = new RelayCommand(_ => new RatesWindow().ShowDialog());
+        SettingsPredefinedPeriodsCommand = new RelayCommand(_ => new PredefinedPeriodsWindow().ShowDialog());
+        SettingsCorrectionFactorsCommand = new RelayCommand(_ => new CorrectionFactorsWindow().ShowDialog());
+        SettingsNettingCommand = new RelayCommand(_ => new NettingWindow().ShowDialog());
+        SettingsVatTariffsCommand = new RelayCommand(_ => new VatTariffsWindow().ShowDialog());
+        SettingsCalculatedUnitPriceCommand = new RelayCommand(_ => new CalculatedUnitPriceWindow().ShowDialog());
+        SettingsPaymentsCommand = new RelayCommand(_ => new PaymentsWindow().ShowDialog());
+
+        // Import / Export
+        BackupRestoreCommand = new RelayCommand(_ => new BackUpAndRestoreWindow().ShowDialog());
+        //ImportMeterRatesCommand = new RelayCommand(_ => new ImportWindow().ShowDialog());
+        //ExportRatesCommand = new RelayCommand(_ => new ExportWindow().ShowDialog());
+
+        // Misc
+        SetupNewFileCommand = new RelayCommand(_ => new SetupNewFileWindow().ShowDialog());
+        //CreateDemoDataCommand = new RelayCommand(_ => new CreateDemoDataWindow().ShowDialog());
+        InfoCommand = new RelayCommand(_ => new InfoWindow().ShowDialog());
     }
 
     #region Address + EnergyType
@@ -49,9 +80,9 @@ public class MainViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedAddress, value))
             {
-                LoadEnergyTypes();
-                LoadDefaultViews();
-                RefreshViews(true);
+                _settings.Save("SelectedAddress", value?.Id.ToString() ?? "");
+                setEnergyTypes();
+                refreshViews(true);
             }
         }
     }
@@ -64,24 +95,29 @@ public class MainViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedEnergyType, value))
             {
-                LoadDefaultViews();
-                RefreshViews(false);
+                _settings.Save("SelectedEnergyType", value?.Id.ToString() ?? "");
+                refreshViews(false);
             }
         }
     }
 
-    private async void LoadAddresses()
+    private async void setAddresses()
     {
         var list = await _controller.GetAllAddresses();
         Addresses.Clear();
+
         foreach (var a in list)
             Addresses.Add(a);
 
-        SelectedAddress = Addresses.FirstOrDefault(x => x.DefaultAddress == true)
-                       ?? Addresses.FirstOrDefault();
+        var saved = _settings.Get("SelectedAddress");
+
+        SelectedAddress =
+            Addresses.FirstOrDefault(x => x.Id.ToString() == saved)
+            ?? Addresses.FirstOrDefault(x => x.DefaultAddress == true)
+            ?? Addresses.FirstOrDefault();
     }
 
-    private void LoadEnergyTypes()
+    private void setEnergyTypes()
     {
         EnergyTypes.Clear();
 
@@ -92,7 +128,9 @@ public class MainViewModel : ViewModelBase
         foreach (var e in list)
             EnergyTypes.Add(e);
 
-        SelectedEnergyType = EnergyTypes.FirstOrDefault(x => x.DefaultType == true)
+        var saved = _settings.Get("SelectedEnergyType");
+        SelectedEnergyType = EnergyTypes.FirstOrDefault(x => x.Id.ToString() == saved)
+                          ?? EnergyTypes.FirstOrDefault(x => x.DefaultType)
                           ?? EnergyTypes.FirstOrDefault();
     }
 
@@ -114,60 +152,118 @@ public class MainViewModel : ViewModelBase
         set => SetProperty(ref _rightView, value);
     }
 
-    private void LoadDefaultViews()
+    private void SaveLeftView(string key) => _settings.Save("LastLeftView", key);
+    private void SaveRightView(string key) => _settings.Save("LastRightView", key);
+
+    private void setLastViews()
     {
-        if (SelectedAddress == null || SelectedEnergyType == null)
-            return;
+        var left = _settings.Get("LastLeftView") ?? "ucData";
+        var right = _settings.Get("LastRightView") ?? "ucChartDefaultLiveCharts";
 
-        // Left view
-        LoadDataControl();
-
-        // Right
-        LoadChartUsageControl();
+        setLeftView(left);
+        LoadRightView(right);
     }
 
-    private void LoadDataControl()
+    private void setLeftView(string key)
+    {
+        switch (key)
+        {
+            case "ucData":
+                setDataControl();
+                break;
+            case "ucImport":
+                setDataImport();
+                break;
+        }
+    }
+
+    private void LoadRightView(string key)
+    {
+        switch (key)
+        {
+            case "ucChartDefaultLiveCharts":
+                setChartUsageControl();
+                break;
+            case "ucChartCompareLiveCharts":
+                setChartCompare();
+                break;
+            case "ucChartRatesLiveCharts":
+                setRatesControl();
+                break;
+        }
+    }
+
+    private void setDataControl()
     {
         LeftView = new DataControl(SelectedAddress, SelectedEnergyType);
+        SaveLeftView("ucData");
     }
 
-    private void LoadDataImport()
+    private void setDataImport()
     {
-       // LeftView = new ImportControl(SelectedAddress, SelectedEnergyType);
+        //LeftView = new ImportControl(SelectedAddress, SelectedEnergyType);
+        //SaveLeftView("ucImport");
     }
 
-    private void LoadChartUsageControl()
+    private void setChartUsageControl()
     {
         RightView = new ChartDefaultLiveChartsControl(
             SelectedAddress,
             SelectedEnergyType,
             EnergyTypes.ToList()
         );
+        SaveRightView("ucChartDefaultLiveCharts");
     }
 
-    private void LoadChartCompare()
+    private void setChartCompare()
     {
         RightView = new ChartCompareLiveChartsControl(
             SelectedAddress,
             SelectedEnergyType
         );
+        SaveRightView("ucChartCompareLiveCharts");
     }
 
-    private void LoadRatesControl()
+    private void setRatesControl()
     {
         RightView = new ChartRatesLiveChartsControl(
             SelectedAddress,
             SelectedEnergyType
         );
+        SaveRightView("ucChartRatesLiveCharts");
     }
 
-    private void RefreshViews(bool addressChanged)
+    private void refreshViews(bool addressChanged)
     {
         if (LeftView is IRefreshable left)
             left.Refresh(SelectedAddress, SelectedEnergyType, addressChanged);
 
         if (RightView is IRefreshable right)
             right.Refresh(SelectedAddress, SelectedEnergyType, addressChanged);
+    }
+
+    #endregion
+
+    #region Splitter
+
+    private GridLength _leftWidth;
+    public GridLength LeftWidth
+    {
+        get => _leftWidth;
+        set
+        {
+            if (SetProperty(ref _leftWidth, value))
+                _settings.Save("MainSplitter", value.Value.ToString());
+        }
+    }
+
+    private void setInitialSettings()
+    {
+        var saved = _settings.Get("MainSplitter");
+        if (double.TryParse(saved, out double width))
+            LeftWidth = new GridLength(width, GridUnitType.Star);
+        else
+            LeftWidth = new GridLength(1, GridUnitType.Star);
     }
 
     #endregion
@@ -183,17 +279,42 @@ public class MainViewModel : ViewModelBase
     public ICommand PdfReportCommand { get; }
     public ICommand PaybackCommand { get; }
     public ICommand RecalculateCommand { get; }
+    public ICommand RecalculateAllCommand { get; }
 
     public ICommand RefreshCommand { get; }
     public ICommand CloseCommand { get; }
 
+    public ICommand SettingsGeneralCommand { get; }
+    public ICommand SettingsEnergyTypesCommand { get; }
+    public ICommand SettingsAddressesCommand { get; }
+    public ICommand SettingsMetersCommand { get; }
+    public ICommand SettingsCostCategoriesCommand { get; }
+    public ICommand SettingsTariffGroupsCommand { get; }
+    public ICommand SettingsRatesCommand { get; }
+    public ICommand SettingsPredefinedPeriodsCommand { get; }
+    public ICommand SettingsCorrectionFactorsCommand { get; }
+    public ICommand SettingsNettingCommand { get; }
+    public ICommand SettingsVatTariffsCommand { get; }
+    public ICommand SettingsCalculatedUnitPriceCommand { get; }
+    public ICommand SettingsPaymentsCommand { get; }
+
+    public ICommand BackupRestoreCommand { get; }
+    public ICommand ImportMeterRatesCommand { get; }
+    public ICommand ExportRatesCommand { get; }
+
+    public ICommand SetupNewFileCommand { get; }
+    public ICommand CreateDemoDataCommand { get; }
+    public ICommand InfoCommand { get; }
+
     #endregion
 
-    #region WinForms-equivalent Methods
+    #region Methods
 
     private void ShowPdfReport()
     {
-        MessageBox.Show("PDF Report nog te implementeren in WPF");
+        //var win = new SettlementReportWindow(SelectedAddress, EnergyUse.Common.Enums.ReportType.SettlementSplitByType);
+        var win = new SettlementReportWindow();
+        win.ShowDialog();
     }
 
     private void ShowPayback()
@@ -205,6 +326,24 @@ public class MainViewModel : ViewModelBase
     private void RecalculateCurrentSelection()
     {
         MessageBox.Show("Recalculate nog te implementeren in WPF");
+    }
+
+    private void RecalculateAll()
+    {
+        if (SelectedAddress == null || SelectedEnergyType == null)
+            return;
+
+        var msg = $"Wil je alle data opnieuw berekenen voor energietype '{SelectedEnergyType.Name}'?";
+        if (MessageBox.Show(msg, "Alles herberekenen", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+        {
+            _controller.RecalculateReadingsDiffPreviousDay(
+                DateTime.MinValue,
+                DateTime.MinValue,
+                SelectedEnergyType.Id,
+                SelectedAddress.Id);
+
+            refreshViews(false);
+        }
     }
 
     #endregion
