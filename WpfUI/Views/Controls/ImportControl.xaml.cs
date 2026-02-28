@@ -1,26 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using EnergyUse.Core.Interfaces;
+using EnergyUse.Models;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WpfUI.Interfaces;
+using WpfUI.ViewModels;
 
 namespace WpfUI.Views.Controls
 {
-    /// <summary>
-    /// Interaction logic for Import.xaml
-    /// </summary>
     public partial class ImportControl : UserControl
     {
-        public ImportControl()
+        public ImportControlViewModel ViewModel => (ImportControlViewModel)DataContext;
+
+        public ImportControl(Address address, EnergyType energyType)
         {
-            //InitializeComponent();
+            InitializeComponent();
+
+            DataContext = new ImportControlViewModel(
+                address,
+                energyType,
+                App.Services.GetRequiredService<ISettingsService>(),
+                App.Services.GetRequiredService<IDialogService>(),
+                App.Services.GetRequiredService<IImportService>());
         }
     }
 }

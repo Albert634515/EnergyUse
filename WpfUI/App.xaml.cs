@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using EnergyUse.Core.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using System.Windows;
 using WpfUI.Services;
 using WpfUI.Views.Windows;
 
@@ -9,6 +11,20 @@ namespace WpfUI
     /// </summary>
     public partial class App : Application
     {
+        public static IServiceProvider Services { get; private set; }
+
+        public App()
+        {
+            var services = new ServiceCollection();
+
+            // Registraties
+            services.AddSingleton<ISettingsService, SettingsService>();
+            services.AddSingleton<IDialogService, DialogService>();
+            services.AddSingleton<IImportService, ImportService>();
+
+            Services = services.BuildServiceProvider();
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);

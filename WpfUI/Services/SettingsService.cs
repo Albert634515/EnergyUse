@@ -9,7 +9,10 @@ public class SettingsService : ISettingsService
 
     public string? Get(string key) => Lib.GetSetting(key)?.KeyValue;
     public void Save(string key, string value) => Lib.SaveSetting(key, value);
-    public void SaveDate(string key, DateTime value) => Lib.SaveSetting(key, value.ToString("yyyyMMdd"));
+
+    public string? GetLastUsedImportFile(string key) => Lib.GetLastUsedImportFile(key);
+    public void SaveLastUsedImportFile(string key, string file) => Lib.SetLastUsedImportFile(file, key);
+
     public DateTime GetDate(string key, DateTime defaultValue)
     {
         var setting = Lib.GetSetting(key);
@@ -20,7 +23,9 @@ public class SettingsService : ISettingsService
             ? parsed
             : defaultValue;
     }
-    public decimal GetSettingDecimal(string key, decimal defaultValue = 0)
+    public void SaveDate(string key, DateTime value) => Lib.SaveSetting(key, value.ToString("yyyyMMdd"));
+
+    public decimal GetDecimal(string key, decimal defaultValue = 0)
     {
         var setting = Lib.GetSetting(key);
         if (setting == null) return defaultValue;
@@ -32,4 +37,6 @@ public class SettingsService : ISettingsService
             ? result
             : defaultValue;
     }
+    public void SaveDecimal(string key, decimal value) => Lib.SaveSetting(key, value.ToString(CultureInfo.InvariantCulture));
+
 }

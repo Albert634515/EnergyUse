@@ -201,8 +201,8 @@ public class MainViewModel : ViewModelBase
 
     private void setDataImport()
     {
-        //LeftView = new ImportControl(SelectedAddress, SelectedEnergyType);
-        //SaveLeftView("ucImport");
+        LeftView = new ImportControl(SelectedAddress, SelectedEnergyType);
+        SaveLeftView("ucImport");
     }
 
     private void setChartUsageControl()

@@ -4,8 +4,14 @@
     {
         string? Get(string key);
         void Save(string key, string value);
-        void SaveDate(string key, DateTime value);
+
+        string? GetLastUsedImportFile(string key);
+        void SaveLastUsedImportFile(string key, string file);
+
         DateTime GetDate(string key, DateTime defaultValue);
-        decimal GetSettingDecimal(string key, decimal defaultValue = 0);
+        void SaveDate(string key, DateTime value);
+
+        decimal GetDecimal(string key, decimal defaultValue = 0);
+        void SaveDecimal(string key, decimal value);
     }
 }

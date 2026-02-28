@@ -6,12 +6,9 @@ namespace WpfUI.Services;
 
 public class DialogService : IDialogService
 {
-    public string? OpenFolder()
+    public void Show(string message, string title)
     {
-        using var dialog = new System.Windows.Forms.FolderBrowserDialog();
-        dialog.ShowNewFolderButton = true;
-
-        return dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK ? dialog.SelectedPath : null;
+        MessageBox.Show(message, title);
     }
 
     public bool ShowYesNo(string message, string title)
@@ -19,9 +16,15 @@ public class DialogService : IDialogService
         return MessageBox.Show(message, title, MessageBoxButton.YesNo) == MessageBoxResult.Yes;
     }
 
-    public void Show(string message, string title)
+    public string? OpenFile(string filter, string title)
     {
-        MessageBox.Show(message, title);
+        var dialog = new OpenFileDialog
+        {
+            Filter = filter,
+            Title = title
+        };
+
+        return dialog.ShowDialog() == true ? dialog.FileName : null;
     }
 
     public string? SaveFile(string filter, string title)
@@ -33,5 +36,13 @@ public class DialogService : IDialogService
         };
 
         return dialog.ShowDialog() == true ? dialog.FileName : null;
+    }
+
+    public string? OpenFolder()
+    {
+        using var dialog = new System.Windows.Forms.FolderBrowserDialog();
+        dialog.ShowNewFolderButton = true;
+
+        return dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK ? dialog.SelectedPath : null;
     }
 }
