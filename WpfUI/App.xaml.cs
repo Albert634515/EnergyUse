@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using WpfUI.Services;
+using WpfUI.ViewModels;
 using WpfUI.Views.Windows;
 
 namespace WpfUI
@@ -21,6 +22,8 @@ namespace WpfUI
             services.AddSingleton<ISettingsService, SettingsService>();
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IImportService, ImportService>();
+
+            services.AddTransient<SettlementReportViewModel>();
 
             Services = services.BuildServiceProvider();
         }

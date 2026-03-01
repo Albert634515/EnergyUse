@@ -1,19 +1,33 @@
-﻿using System.Windows;
+﻿using EnergyUse.Models.Common;
+using System.Windows;
 using WpfUI.ViewModels;
 
 namespace WpfUI.Views.Windows
 {
-    /// <summary>
-    /// Interaction logic for SettlementReportWindow.xaml
-    /// </summary>
     public partial class SettlementReportWindow : Window
     {
-        public SettlementReportWindow()
+        public ParameterSelection? SelectedParameters { get; private set; }
+
+        public SettlementReportWindow(SettlementReportViewModel vm)
         {
             InitializeComponent();
+            DataContext = vm;
+        }
 
-            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
-                DataContext = new SettlementReportViewModel();
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            var vm = (SettlementReportViewModel)DataContext;
+
+            vm.CloseRequested += result =>
+            {
+                if (result)
+                    SelectedParameters = vm.GetSelectedParameters();
+
+                DialogResult = result;   // ✔️ nu is het venster volledig actief
+                Close();
+            };
         }
     }
 }

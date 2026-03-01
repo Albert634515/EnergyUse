@@ -40,8 +40,8 @@
         <!-- File selection -->
         <Grid Grid.Row="1" Margin="0 0 0 10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
@@ -62,7 +62,7 @@
         <!-- Meter selection -->
         <Grid Grid.Row="2" Margin="0 0 0 15">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
 

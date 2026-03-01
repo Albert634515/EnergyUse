@@ -10,7 +10,7 @@ public class SelectParameter : IUnitOfWork
 
     public RepoAddress AddressRepo;
     public RepoEnergyType EnergyTypeRepo;
-    public RepoTariffGroup TarifGroupRepo;
+    public RepoTariffGroup TariffGroupRepo;
     public RepoPreDefinedPeriod PreDefinedPeriodRepo;
     public RepoPredefinedPeriodDate PreDefinedPeriodDateRepo;
 
@@ -20,7 +20,7 @@ public class SelectParameter : IUnitOfWork
 
         AddressRepo = new RepoAddress(_context);
         EnergyTypeRepo = new RepoEnergyType(_context);
-        TarifGroupRepo = new RepoTariffGroup(_context);
+        TariffGroupRepo = new RepoTariffGroup(_context);
         PreDefinedPeriodRepo = new RepoPreDefinedPeriod(_context);
         PreDefinedPeriodDateRepo = new RepoPredefinedPeriodDate(_context);
     }
@@ -39,7 +39,7 @@ public class SelectParameter : IUnitOfWork
     {
         AddressRepo.RejectChanges();
         EnergyTypeRepo.RejectChanges();
-        TarifGroupRepo.RejectChanges();
+        TariffGroupRepo.RejectChanges();
         PreDefinedPeriodRepo.RejectChanges();
         PreDefinedPeriodDateRepo.RejectChanges();
     }

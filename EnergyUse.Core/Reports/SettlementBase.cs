@@ -451,9 +451,11 @@ public class SettlementBase : ReportBase
         GetSectionHeader(table, "Price per kw");
 
         var totalKw = _periodicDataList.Sum(x => x.ValueYLow + x.ValueYNormal);
+        var totalCost = _settlementSubTotalList.Sum(x => x.TotalValue + x.TotalVat);
+        var pricePerKw = 0;
+        if (totalKw != 0)
+            Math.Round(totalCost / totalKw, 5);
 
-        var totalCost = _settlementSubTotalList.Sum(x => x.TotalValue + x.TotalVat);        
-        var pricePerKw = Math.Round(totalCost / totalKw, 5);
         table.AddCell(GetNormalText("Price", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddCell(GetNormalText(pricePerKw.ToString("##0.00000"), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
 

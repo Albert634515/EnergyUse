@@ -1,7 +1,10 @@
 ﻿using EnergyUse.Core.Controllers;
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
+using EnergyUse.Models.Common;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using WpfUI.Interfaces;
@@ -33,7 +36,7 @@ public class MainViewModel : ViewModelBase
         ShowLeftCompareGraphCommand = new RelayCommand(_ => setChartCompare());
         ShowLeftRatesGraphCommand = new RelayCommand(_ => setRatesControl());
 
-        PdfReportCommand = new RelayCommand(_ => ShowPdfReport());
+        PdfReportCommand = new RelayCommand(async _ => await OpenSettlementReport());
         PaybackCommand = new RelayCommand(_ => ShowPayback());
         RecalculateCommand = new RelayCommand(_ => RecalculateCurrentSelection());
         RecalculateAllCommand = new RelayCommand(_ => RecalculateAll());
@@ -310,11 +313,36 @@ public class MainViewModel : ViewModelBase
 
     #region Methods
 
-    private void ShowPdfReport()
+    private async Task OpenSettlementReport()
     {
-        //var win = new SettlementReportWindow(SelectedAddress, EnergyUse.Common.Enums.ReportType.SettlementSplitByType);
-        var win = new SettlementReportWindow();
-        win.ShowDialog();
+        var vm = App.Services.GetRequiredService<SettlementReportViewModel>();
+        var win = new SettlementReportWindow(vm);
+
+        if (win.ShowDialog() == true)
+        {
+            var parameters = win.SelectedParameters;
+            if (parameters == null)
+                return;
+
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+
+                var fileName = await _controller.GetSettlementPdfAsync(parameters);
+
+                if (!string.IsNullOrWhiteSpace(fileName))
+                {
+                    Process.Start(new ProcessStartInfo(fileName)
+                    {
+                        UseShellExecute = true
+                    });
+                }
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
+            }
+        }
     }
 
     private void ShowPayback()

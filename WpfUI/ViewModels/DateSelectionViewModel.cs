@@ -1,23 +1,14 @@
 ﻿using EnergyUse.Common.Enums;
+using EnergyUse.Models;
 using System.Windows.Input;
 using WpfUI.ViewModels;
-using EnergyUse.Models;
 
 public class DateSelectionViewModel : ViewModelBase
 {
-    private List<EnergyType> _energyTypeList;
-    public List<EnergyType> EnergyTypeList
-    {
-        get => _energyTypeList;
-        set => SetProperty(ref _energyTypeList, value);
-    }
+    public event Action<DateSelectionViewModel>? RemoveRequested;
 
-    private List<TariffGroup> _tarifGroupsList;
-    public List<TariffGroup> TarifGroupsList
-    {
-        get => _tarifGroupsList;
-        set => SetProperty(ref _tarifGroupsList, value);
-    }
+    public List<EnergyType> EnergyTypeList { get; set; } = new();
+    public List<TariffGroup> TarifGroupsList { get; set; } = new();
 
     private EnergyType _selectedEnergyType;
     public EnergyType SelectedEnergyType
@@ -58,50 +49,28 @@ public class DateSelectionViewModel : ViewModelBase
 
     public DateSelectionViewModel()
     {
-        RemoveCommand = new RelayCommand(_ => OnRemove());
-    }
-
-    private void OnRemove()
-    {
-        // Eventueel callback naar parent
+        RemoveCommand = new RelayCommand(_ => RemoveRequested?.Invoke(this));
     }
 
     public void SetTarifGroups()
     {
-        if (TarifGroupsList == null)
-            TarifGroupsList = new List<TariffGroup>();
-
         TarifGroupsList = TarifGroupsList
             .Where(w => w.TypeId == (int)TariffGroupType.EnergyCosts)
             .ToList();
-
-        SelectedTariffGroup = null;
-    }
-
-    public void SetEnergyTypes()
-    {
-        if (EnergyTypeList == null)
-            EnergyTypeList = new List<EnergyType>();
-
-        SelectedEnergyType = null;
     }
 
     public void SetDefaultEnergyType()
     {
-        SelectedEnergyType = EnergyTypeList?
-            .FirstOrDefault(x => x.DefaultType == true);
+        SelectedEnergyType = EnergyTypeList.FirstOrDefault(x => x.DefaultType);
     }
 
     public void SetEnergyType(long id)
     {
-        SelectedEnergyType = EnergyTypeList?
-            .FirstOrDefault(x => x.Id == id);
+        SelectedEnergyType = EnergyTypeList.FirstOrDefault(x => x.Id == id);
     }
 
     public void SetTarifGroup(long id)
     {
-        SelectedTariffGroup = TarifGroupsList?
-            .FirstOrDefault(x => x.Id == id &&
-                                 x.TypeId == (int)TariffGroupType.EnergyCosts);
+        SelectedTariffGroup = TarifGroupsList.FirstOrDefault(x => x.Id == id);
     }
 }
