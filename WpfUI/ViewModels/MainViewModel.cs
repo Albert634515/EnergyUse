@@ -1,7 +1,6 @@
 ﻿using EnergyUse.Core.Controllers;
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
-using EnergyUse.Models.Common;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Diagnostics;

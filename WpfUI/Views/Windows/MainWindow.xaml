@@ -12,9 +12,7 @@
 
     <DockPanel>
 
-        <!-- ============================
-             MENU (1-op-1 WinForms)
-        ============================ -->
+        <!-- Menu ============================ -->
         <Menu DockPanel.Dock="Top">
 
             <!-- FILE -->
@@ -75,9 +73,7 @@
 
         </Menu>
 
-        <!-- ============================
-             TOOLBAR
-        ============================ -->
+        <!-- TOOLBAR ============================ -->
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -165,10 +161,8 @@
 
             </ToolBar>
         </Grid>
-
-        <!-- ============================
-             ADDRESS + ENERGYTYPE SELECTOR
-        ============================ -->
+            
+        <!-- Address + Energytype selector ============================ -->
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10">
 
             <TextBlock Text="Address:" VerticalAlignment="Center" Margin="0,0,5,0"/>
@@ -185,9 +179,7 @@
 
         </StackPanel>
 
-        <!-- ============================
-             MAIN LAYOUT (SplitContainer)
-        ============================ -->
+        <!-- Main layout (SplitContainer) ============================ -->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -195,18 +187,18 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <!-- LEFT VIEW -->
+            <!-- Left view -->
             <ContentControl Grid.Column="0"
                             Content="{Binding LeftView}"
                             Margin="5"/>
 
-            <!-- SPLITTER -->
+            <!-- Splitter -->
             <GridSplitter Grid.Column="1"
                           Width="5"
                           HorizontalAlignment="Stretch"
                           Background="LightGray"/>
 
-            <!-- RIGHT VIEW -->
+            <!-- Right view -->
             <ContentControl Grid.Column="2"
                             Content="{Binding RightView}"
                             Margin="5"/>

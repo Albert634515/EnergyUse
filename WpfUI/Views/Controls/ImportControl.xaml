@@ -78,11 +78,29 @@
 
         <!-- DataGrid -->
         <DataGrid Grid.Row="3"
-                  ItemsSource="{Binding MeterReadings}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False">
+          ItemsSource="{Binding MeterReadings}"
+          AutoGenerateColumns="False"
+          IsReadOnly="True"
+          CanUserAddRows="False"
+          CanUserDeleteRows="False">
+
+            <!-- Header style voor twee regels tekst -->
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="MinHeight" Value="45"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Top"/>
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"
+                                   TextWrapping="Wrap"
+                                   TextAlignment="Center"/>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
 
             <!-- Rij-kleur zonder converter -->
             <DataGrid.RowStyle>
@@ -98,124 +116,101 @@
 
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="Date" Binding="{Binding RegistrationDate}" Width="120"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding RegistrationDate, StringFormat={}{0:dd-MM-yyyy}}" Width="80"/>
 
-                <DataGridTextColumn Header="Rate Normal" Binding="{Binding RateNormal}" Width="120"/>
+                <DataGridTextColumn Header="Rate Normal" Binding="{Binding RateNormal}" Width="60"/>
 
                 <!-- Delta Normal -->
-                <DataGridTextColumn Header="Delta Normal" Binding="{Binding DeltaNormal}" Width="120">
+                <DataGridTextColumn Header="Delta Normal" Binding="{Binding DeltaNormal}" Width="60">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="Padding" Value="4"/>
                             <Setter Property="Background" Value="White"/>
-
                             <Style.Triggers>
-
-                                <!-- Negatief -->
                                 <DataTrigger Binding="{Binding DeltaNormal, StringFormat={}{0}}" Value="-">
                                     <Setter Property="Background" Value="LightCoral"/>
                                 </DataTrigger>
-
-                                <!-- Positief -->
                                 <DataTrigger Binding="{Binding DeltaNormal, StringFormat={}{0}}" Value="0">
                                     <Setter Property="Background" Value="White"/>
                                 </DataTrigger>
-
-                                <!-- Positief (niet 0 en niet negatief) -->
                                 <DataTrigger Binding="{Binding DeltaNormal, StringFormat={}{0}}" Value="">
                                     <Setter Property="Background" Value="LightGreen"/>
                                 </DataTrigger>
-
                             </Style.Triggers>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Rate Low" Binding="{Binding RateLow}" Width="120"/>
+                <DataGridTextColumn Header="Rate Low" Binding="{Binding RateLow}" Width="60"/>
 
                 <!-- Delta Low -->
-                <DataGridTextColumn Header="Delta Low" Binding="{Binding DeltaLow}" Width="120">
+                <DataGridTextColumn Header="Delta Low" Binding="{Binding DeltaLow}" Width="60">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="Padding" Value="4"/>
                             <Setter Property="Background" Value="White"/>
-
                             <Style.Triggers>
-
                                 <DataTrigger Binding="{Binding DeltaLow, StringFormat={}{0}}" Value="-">
                                     <Setter Property="Background" Value="LightCoral"/>
                                 </DataTrigger>
-
                                 <DataTrigger Binding="{Binding DeltaLow, StringFormat={}{0}}" Value="0">
                                     <Setter Property="Background" Value="White"/>
                                 </DataTrigger>
-
                                 <DataTrigger Binding="{Binding DeltaLow, StringFormat={}{0}}" Value="">
                                     <Setter Property="Background" Value="LightGreen"/>
                                 </DataTrigger>
-
                             </Style.Triggers>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Return Low" Binding="{Binding ReturnDeliveryLow}" Width="120"/>
+                <DataGridTextColumn Header="Return Low" Binding="{Binding ReturnDeliveryLow}" Width="60"/>
 
                 <!-- Return Δ Low -->
-                <DataGridTextColumn Header="Return Δ Low" Binding="{Binding ReturnDeliveryDeltaLow}" Width="120">
+                <DataGridTextColumn Header="Return Δ Low" Binding="{Binding ReturnDeliveryDeltaLow}" Width="60">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="Padding" Value="4"/>
                             <Setter Property="Background" Value="White"/>
-
                             <Style.Triggers>
-
                                 <DataTrigger Binding="{Binding ReturnDeliveryDeltaLow, StringFormat={}{0}}" Value="-">
                                     <Setter Property="Background" Value="LightCoral"/>
                                 </DataTrigger>
-
                                 <DataTrigger Binding="{Binding ReturnDeliveryDeltaLow, StringFormat={}{0}}" Value="0">
                                     <Setter Property="Background" Value="White"/>
                                 </DataTrigger>
-
                                 <DataTrigger Binding="{Binding ReturnDeliveryDeltaLow, StringFormat={}{0}}" Value="">
                                     <Setter Property="Background" Value="LightGreen"/>
                                 </DataTrigger>
-
                             </Style.Triggers>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Return Normal" Binding="{Binding ReturnDeliveryNormal}" Width="120"/>
+                <DataGridTextColumn Header="Return Normal" Binding="{Binding ReturnDeliveryNormal}" Width="60"/>
 
                 <!-- Return Δ Normal -->
-                <DataGridTextColumn Header="Return Δ Normal" Binding="{Binding ReturnDeliveryDeltaNormal}" Width="120">
+                <DataGridTextColumn Header="Return Δ Normal" Binding="{Binding ReturnDeliveryDeltaNormal}" Width="60">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="Padding" Value="4"/>
                             <Setter Property="Background" Value="White"/>
-
                             <Style.Triggers>
-
                                 <DataTrigger Binding="{Binding ReturnDeliveryDeltaNormal, StringFormat={}{0}}" Value="-">
                                     <Setter Property="Background" Value="LightCoral"/>
                                 </DataTrigger>
-
                                 <DataTrigger Binding="{Binding ReturnDeliveryDeltaNormal, StringFormat={}{0}}" Value="0">
                                     <Setter Property="Background" Value="White"/>
                                 </DataTrigger>
-
                                 <DataTrigger Binding="{Binding ReturnDeliveryDeltaNormal, StringFormat={}{0}}" Value="">
                                     <Setter Property="Background" Value="LightGreen"/>
                                 </DataTrigger>
-
                             </Style.Triggers>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="80"/>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="80" Visibility="Collapsed"/>
 
             </DataGrid.Columns>
 
