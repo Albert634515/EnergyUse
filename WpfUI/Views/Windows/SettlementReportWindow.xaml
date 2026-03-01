@@ -14,53 +14,70 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <!-- =======================
+             BOVENSTE PARAMETER-RIJ
+             ======================= -->
         <GroupBox Header="Parameters" Grid.Row="0" Padding="10">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250"/>
-                    <ColumnDefinition Width="250"/>
-                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="350"/>
+                    <!-- Labels + comboboxen -->
                     <ColumnDefinition Width="*"/>
+                    <!-- Checkboxes -->
                 </Grid.ColumnDefinitions>
 
+                <!-- COMBOBOXEN MET LABELS ERNAAST -->
                 <StackPanel Grid.Column="0" Margin="0 0 20 0">
-                    <TextBlock Text="Address"/>
-                    <ComboBox ItemsSource="{Binding AddressList}"
-                              SelectedItem="{Binding SelectedAddress}"
-                              DisplayMemberPath="Description"/>
-                </StackPanel>
 
-                <StackPanel Grid.Column="1" Margin="0 0 20 0">
-                    <TextBlock Text="Predefined period"/>
-                    <StackPanel Orientation="Horizontal">
+                    <!-- Address -->
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                        <TextBlock Text="Address:" Width="120" VerticalAlignment="Center"/>
+                        <ComboBox ItemsSource="{Binding AddressList}"
+                                  SelectedItem="{Binding SelectedAddress}"
+                                  DisplayMemberPath="Description"
+                                  Width="200"/>
+                    </StackPanel>
+
+                    <!-- Predefined period -->
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                        <TextBlock Text="Predefined period:" Width="120" VerticalAlignment="Center"/>
                         <ComboBox ItemsSource="{Binding PredefinedPeriods}"
                                   SelectedItem="{Binding SelectedPredefinedPeriod}"
                                   DisplayMemberPath="Description"
-                                  Width="150"/>
+                                  Width="160"/>
                         <Button Content="X"
                                 Width="30"
                                 Height="25"
                                 Margin="5 0 0 0"
                                 Command="{Binding ClearPredefinedPeriodCommand}"/>
                     </StackPanel>
+
+                    <!-- Report type -->
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Report type:" Width="120" VerticalAlignment="Center"/>
+                        <ComboBox ItemsSource="{Binding ReportTypes}"
+                                  SelectedItem="{Binding SelectedReportType}"
+                                  DisplayMemberPath="Description"
+                                  Width="200"/>
+                    </StackPanel>
+
                 </StackPanel>
 
-                <StackPanel Grid.Column="2" Margin="0 0 20 0">
-                    <TextBlock Text="Report type"/>
-                    <ComboBox ItemsSource="{Binding ReportTypes}"
-                              SelectedItem="{Binding SelectedReportType}"
-                              DisplayMemberPath="Description"/>
-                </StackPanel>
-
-                <StackPanel Grid.Column="3">
+                <!-- CHECKBOXEN RECHTS -->
+                <StackPanel Grid.Column="1" VerticalAlignment="Top">
                     <CheckBox Content="Predict missing data"
-                              IsChecked="{Binding PredictMissingData}"/>
+                              IsChecked="{Binding PredictMissingData}"
+                              Margin="0 0 0 5"/>
                     <CheckBox Content="Show rates"
                               IsChecked="{Binding ShowRates}"/>
                 </StackPanel>
+
             </Grid>
         </GroupBox>
 
+        <!-- =======================
+             DATE SELECTIONS
+             ======================= -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding DateSelections}">
                 <ItemsControl.ItemTemplate>
@@ -71,10 +88,19 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-            <Button Content="Add" Width="100" Margin="5" Command="{Binding AddDateSelectionCommand}"/>
-            <Button Content="Select" Width="100" Margin="5" Command="{Binding SelectCommand}"/>
-            <Button Content="Cancel" Width="100" Margin="5" Command="{Binding CancelCommand}"/>
+        <!-- =======================
+             BUTTONS ONDERAAN
+             ======================= -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,10,0,0">
+            <Button Content="Add" Width="100" Margin="5"
+                    Command="{Binding AddDateSelectionCommand}"/>
+            <Button Content="Select" Width="100" Margin="5"
+                    Command="{Binding SelectCommand}"/>
+            <Button Content="Cancel" Width="100" Margin="5"
+                    Command="{Binding CancelCommand}"/>
         </StackPanel>
 
     </Grid>
