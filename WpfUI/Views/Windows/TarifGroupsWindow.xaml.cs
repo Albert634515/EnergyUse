@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using WpfUI.Services;
+using WpfUI.ViewModels;
 
 namespace WpfUI.Views.Windows
 {
-    /// <summary>
-    /// Interaction logic for TarifGroupsWindow.xaml
-    /// </summary>
     public partial class TarifGroupsWindow : Window
     {
         public TarifGroupsWindow()
         {
             InitializeComponent();
+
+            // Maak de dialogservice aan
+            var dialogService = new DialogService();
+
+            // Maak het viewmodel aan en geef de service door
+            var vm = new TarifGroupsViewModel(dialogService);
+
+            // Koppel de sluit-actie zodat het ViewModel het venster kan sluiten
+            vm.CloseAction = () => this.Close();
+
+            // Zet het viewmodel als DataContext
+            DataContext = vm;
         }
     }
 }

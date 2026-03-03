@@ -12,7 +12,7 @@ namespace WpfUI.ViewModels
     {
         private readonly CostcategoriesController _controller;
 
-        public ObservableCollection<EnergyType> EnergyTypes { get; }
+        public ObservableCollection<EnergyType> EnergyTypes { get; private set; }
         public ObservableCollection<CostCategory> CostCategories { get; private set; }
         public ObservableCollection<Unit> Units { get; }
         public ObservableCollection<TariffGroup> TariffGroups { get; }
@@ -76,7 +76,8 @@ namespace WpfUI.ViewModels
             _controller = new CostcategoriesController(Managers.Config.GetDbFileName());
             _controller.Initialize();
 
-            EnergyTypes = new ObservableCollection<EnergyType>((IEnumerable<EnergyType>)_controller.UnitOfWork.EnergyTypeRepo.GetAll());
+            setEnergyTypesAsync();
+            
             Units = new ObservableCollection<Unit>(_controller.UnitOfWork.UnitRepo.GetAll());
             TariffGroups = new ObservableCollection<TariffGroup>(_controller.UnitOfWork.TariffGroupRepo.GetAll());
             EnergySubTypes = new ObservableCollection<EnergySubType>(_controller.UnitOfWork.EnergySubTypeRepo.GetAll());
@@ -88,6 +89,12 @@ namespace WpfUI.ViewModels
             DeleteCommand = new RelayCommand(_ => Delete());
             RefreshCommand = new RelayCommand(_ => Refresh());
             CloseCommand = new RelayCommand(_ => Close());
+        }
+
+        public async Task setEnergyTypesAsync()
+        {
+            var energyTypes = await _controller.UnitOfWork.EnergyTypeRepo.GetAll();
+            EnergyTypes = new ObservableCollection<EnergyType>(energyTypes);
         }
 
         private void LoadCostCategories()

@@ -196,7 +196,6 @@ public class SettlementReportViewModel : ViewModelBase
         if (SelectedReportType?.Description == "Rates")
             ShowRates = true;
     }
-
    
     public ParameterSelection GetSelectedParameters()
     {

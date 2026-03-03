@@ -1,16 +1,14 @@
 ﻿using System.Windows;
 using WpfUI.ViewModels;
 
-namespace WpfUI.Views.Windows;
-
-/// <summary>
-/// Interaction logic for EnergyRatesWindow.xaml
-/// </summary>
-public partial class EnergyRatesWindow : Window
+namespace WpfUI.Views.Windows
 {
-    public EnergyRatesWindow()
+    public partial class RatesWindow : Window
     {
-        InitializeComponent();
-        DataContext = new RatesViewModel(this);
+        public RatesWindow()
+        {
+            InitializeComponent();
+            DataContext = new RatesViewModel(this);
+        }
     }
 }

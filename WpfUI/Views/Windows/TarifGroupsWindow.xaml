@@ -3,10 +3,138 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfUI.Views.Windows"
+        xmlns:vm="clr-namespace:WpfUI.ViewModels"
         mc:Ignorable="d"
-        Title="TarifGroupsWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Tariff groups"
+        Height="450"
+        Width="800">
+
+    <DockPanel>
+
+        <!-- Toolbar -->
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Command="{Binding AddCommand}" ToolTip="Add">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/WpfUI;component/Resources/add_24x24.png"
+                               Width="16" Height="16" Margin="0,0,4,0"/>
+                        <TextBlock Text="Add"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Command="{Binding SaveCommand}" ToolTip="Save">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/WpfUI;component/Resources/tick_mark_24x24.png"
+                               Width="16" Height="16" Margin="0,0,4,0"/>
+                        <TextBlock Text="Save"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Command="{Binding CancelCommand}" ToolTip="Cancel">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/WpfUI;component/Resources/clear_24x24.png"
+                               Width="16" Height="16" Margin="0,0,4,0"/>
+                        <TextBlock Text="Cancel"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Command="{Binding DeleteCommand}" ToolTip="Delete">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/WpfUI;component/Resources/delete_24x24.png"
+                               Width="16" Height="16" Margin="0,0,4,0"/>
+                        <TextBlock Text="Delete"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Command="{Binding RefreshCommand}" ToolTip="Refresh">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/WpfUI;component/Resources/clock_24x24.png"
+                               Width="16" Height="16" Margin="0,0,4,0"/>
+                        <TextBlock Text="Refresh"/>
+                    </StackPanel>
+                </Button>
+
+                <Separator/>
+
+                <Button Command="{Binding CloseCommand}" ToolTip="Close"
+                        HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/WpfUI;component/Resources/crossed_24x24.png"
+                               Width="16" Height="16" Margin="0,0,4,0"/>
+                        <TextBlock Text="Close"/>
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+
+        <!-- Statusbar -->
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock Text="{Binding StatusText}" />
+            </StatusBarItem>
+        </StatusBar>
+
+        <!-- Main content -->
+        <Grid Margin="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- DataGrid (TariffGroups) -->
+            <DataGrid Grid.Column="0"
+                      ItemsSource="{Binding TariffGroups}"
+                      SelectedItem="{Binding SelectedTariffGroup, Mode=TwoWay}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      Margin="0,0,8,0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id"
+                                        Binding="{Binding Id}"
+                                        Width="Auto"/>
+                    <DataGridTextColumn Header="Description"
+                                        Binding="{Binding Description}"
+                                        Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- Detail / edit group -->
+            <GroupBox Grid.Column="1"
+                      Header="Tariff group"
+                      Padding="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Type -->
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                               Margin="0,0,8,4"
+                               VerticalAlignment="Center"
+                               Text="Type:"/>
+                    <ComboBox Grid.Row="0" Grid.Column="1"
+                              ItemsSource="{Binding TariffGroupTypes}"
+                              DisplayMemberPath="Description"
+                              SelectedValuePath="Id"
+                              SelectedValue="{Binding SelectedTariffGroup.TypeId, Mode=TwoWay}"
+                              Margin="0,0,0,4"/>
+
+                    <!-- Description -->
+                    <TextBlock Grid.Row="1" Grid.Column="0"
+                               Margin="0,0,8,4"
+                               VerticalAlignment="Center"
+                               Text="Description:"/>
+                    <TextBox Grid.Row="1" Grid.Column="1"
+                             Text="{Binding SelectedTariffGroup.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,4"/>
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </DockPanel>
 </Window>

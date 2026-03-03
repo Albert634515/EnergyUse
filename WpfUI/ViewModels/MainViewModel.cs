@@ -49,8 +49,8 @@ public class MainViewModel : ViewModelBase
         SettingsAddressesCommand = new RelayCommand(_ => new AddressesWindow().ShowDialog());
         SettingsMetersCommand = new RelayCommand(_ => new MetersWindow().ShowDialog());
         SettingsCostCategoriesCommand = new RelayCommand(_ => new CostCategoriesWindow().ShowDialog());
-        //SettingsTariffGroupsCommand = new RelayCommand(_ => new TariffGroupsWindow().ShowDialog());
-        //SettingsRatesCommand = new RelayCommand(_ => new RatesWindow().ShowDialog());
+        SettingsTariffGroupsCommand = new RelayCommand(_ => new TarifGroupsWindow().ShowDialog());
+        SettingsRatesCommand = new RelayCommand(_ => new RatesWindow().ShowDialog());
         SettingsPredefinedPeriodsCommand = new RelayCommand(_ => new PredefinedPeriodsWindow().ShowDialog());
         SettingsCorrectionFactorsCommand = new RelayCommand(_ => new CorrectionFactorsWindow().ShowDialog());
         SettingsNettingCommand = new RelayCommand(_ => new NettingWindow().ShowDialog());

@@ -16,6 +16,22 @@ public class DialogService : IDialogService
         return MessageBox.Show(message, title, MessageBoxButton.YesNo) == MessageBoxResult.Yes;
     }
 
+    public bool WarningUnsavedChanges()
+    {
+        var message = Managers.Languages.GetResourceString(
+            "UnsavedChanges",
+            "There are unsaved changes are you sure you want to close this form?");
+
+        var title = Managers.Languages.GetResourceString(
+            "UnsavedChangesTitle",
+            "Unsaved changes");
+
+        // WinForms had: return true when user chooses NO
+        // WPF equivalent:
+        return ShowYesNo(message, title);
+    }
+
+
     public string? OpenFile(string filter, string title)
     {
         var dialog = new OpenFileDialog

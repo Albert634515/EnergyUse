@@ -1,5 +1,4 @@
 ﻿using EnergyUse.Models.Common;
-using WinFormsEF.Managers;
 
 namespace WpfUI.Managers;
 
@@ -10,8 +9,8 @@ public class SelectionItemList
         var list = EnergyUse.Core.Manager.LibSelectionItemList.GetRateTypeList();
 
         // Add translationss
-        foreach (var item in list)
-            item.Description = Languages.GetResourceString(item.Key, item.Description);
+        //foreach (var item in list)
+        //    item.Description = Languages.GetResourceString(item.Key, item.Description);
 
         return list;
     }
@@ -21,8 +20,8 @@ public class SelectionItemList
         var list = EnergyUse.Core.Manager.LibSelectionItemList.GetPeriodList();
 
         // Add translationss
-        foreach (var item in list)
-            item.Description = Languages.GetResourceString(item.Key, item.Key);
+        //foreach (var item in list)
+        //    item.Description = Languages.GetResourceString(item.Key, item.Key);
 
         return list;
     }
@@ -32,8 +31,8 @@ public class SelectionItemList
         var list = EnergyUse.Core.Manager.LibSelectionItemList.GetTariffGroupTypeList();
 
         // Add translationss
-        foreach (var item in list)
-            item.Description = Languages.GetResourceString(item.Key, item.Key);
+        //foreach (var item in list)
+        //    item.Description = Languages.GetResourceString(item.Key, item.Key);
 
         return list;
     }
@@ -43,8 +42,8 @@ public class SelectionItemList
         var list = EnergyUse.Core.Manager.LibSelectionItemList.GetReportTypeList();
 
         // Add translationss
-        foreach (var item in list)
-            item.Description = Languages.GetResourceString(item.Key, item.Key);
+        //foreach (var item in list)
+        //    item.Description = Languages.GetResourceString(item.Key, item.Key);
 
         return list;
     }
