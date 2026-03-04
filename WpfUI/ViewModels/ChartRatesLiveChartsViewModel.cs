@@ -3,9 +3,7 @@ using EnergyUse.Models;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using System.Collections.ObjectModel;
-using System.Windows.Data;
 using System.Windows.Input;
-using WpfUI.Converters;
 using WpfUI.Managers;
 using WpfUI.Services;
 

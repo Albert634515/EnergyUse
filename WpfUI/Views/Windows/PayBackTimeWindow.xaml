@@ -6,11 +6,6 @@
         Title="Payback Time"
         Height="800" Width="1200">
 
-    <Window.Resources>
-        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-        <conv:RoiToBrushConverter x:Key="RoiToBrushConverter"/>
-    </Window.Resources>
-
     <DockPanel>
 
         <!-- ⭐ ACTIEKNOPPEN BOVENAAN -->
