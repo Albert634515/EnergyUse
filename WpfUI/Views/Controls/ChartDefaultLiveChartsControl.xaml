@@ -5,6 +5,7 @@
 
     <UserControl.Resources>
 
+        <!-- Algemene marges -->
         <Style TargetType="StackPanel">
             <Setter Property="Margin" Value="4"/>
         </Style>
@@ -27,12 +28,22 @@
             <Setter Property="Margin" Value="4"/>
         </Style>
 
-        <!-- Visibility zonder converter -->
+        <!-- Efficiency radiobutton verbergen zonder converter -->
         <Style x:Key="EfficiencyVisibilityStyle" TargetType="RadioButton">
             <Setter Property="Visibility" Value="Visible"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsEfficiencyVisible}" Value="False">
                     <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Bool → Visibility zonder converter -->
+        <Style x:Key="BoolToVisibilityStyle" TargetType="Label">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Visible}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -62,11 +73,10 @@
             <StackPanel>
                 <Label Content="Periode"/>
                 <ComboBox Width="150"
-          ItemsSource="{Binding PeriodTypes}"
-          SelectedItem="{Binding SelectedPeriodType}"
-          DisplayMemberPath="Description"
-          SelectedValuePath="Key"/>
-
+                          ItemsSource="{Binding PeriodTypes}"
+                          SelectedItem="{Binding SelectedPeriodType}"
+                          DisplayMemberPath="Description"
+                          SelectedValuePath="Key"/>
             </StackPanel>
 
             <StackPanel>
@@ -83,7 +93,8 @@
                 <Label Content="Vergelijk met"/>
                 <ComboBox Width="150"
                           ItemsSource="{Binding EnergyTypes}"
-                          SelectedItem="{Binding SelectedCompareEnergyType}"/>
+                          SelectedItem="{Binding SelectedCompareEnergyType}"
+                          DisplayMemberPath="Name"/>
             </StackPanel>
 
         </StackPanel>
@@ -128,20 +139,25 @@
 
         <!-- LABELS -->
         <StackPanel Grid.Row="4" Orientation="Horizontal">
-            <Label Content="{Binding ConsumptionLabel.Text}"
-                   Background="{Binding ConsumptionLabel.BackColor}"
-                   Foreground="{Binding ConsumptionLabel.ForeColor}"
-                   Visibility="{Binding ConsumptionLabel.Visible}"/>
 
-            <Label Content="{Binding ProductionLabel.Text}"
-                   Background="{Binding ProductionLabel.BackColor}"
-                   Foreground="{Binding ProductionLabel.ForeColor}"
-                   Visibility="{Binding ProductionLabel.Visible}"/>
+            <Label DataContext="{Binding ConsumptionLabel}"
+                   Content="{Binding Text}"
+                   Background="{Binding BackColor}"
+                   Foreground="{Binding ForeColor}"
+                   Style="{StaticResource BoolToVisibilityStyle}"/>
 
-            <Label Content="{Binding NettoLabel.Text}"
-                   Background="{Binding NettoLabel.BackColor}"
-                   Foreground="{Binding NettoLabel.ForeColor}"
-                   Visibility="{Binding NettoLabel.Visible}"/>
+            <Label DataContext="{Binding ProductionLabel}"
+                   Content="{Binding Text}"
+                   Background="{Binding BackColor}"
+                   Foreground="{Binding ForeColor}"
+                   Style="{StaticResource BoolToVisibilityStyle}"/>
+
+            <Label DataContext="{Binding NettoLabel}"
+                   Content="{Binding Text}"
+                   Background="{Binding BackColor}"
+                   Foreground="{Binding ForeColor}"
+                   Style="{StaticResource BoolToVisibilityStyle}"/>
+
         </StackPanel>
 
         <!-- CHART -->
