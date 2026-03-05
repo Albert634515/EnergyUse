@@ -119,36 +119,16 @@ namespace WpfUI.Services
 
         private Axis CreateDateTimeAxis(Period period, List<SeriesModel> models)
         {
-            var allDates = models
-                .Where(m => m?.Points != null)
-                .SelectMany(m => m.Points)
-                .Select(p => p.DateTime)
-                .OrderBy(d => d)
-                .ToList();
-
-            if (!allDates.Any())
-                return new Axis();
-
-            var min = allDates.First();
-            var max = allDates.Last();
-
-            return new Axis
+            return period switch
             {
-                MinLimit = min.Ticks,
-                MaxLimit = max.Ticks,
-
-                Labeler = value =>
-                {
-                    var dt = new DateTime((long)value);
-                    return dt.ToString("dd-MM-yyyy");
-                },
-
-                UnitWidth = TimeSpan.FromDays(1).Ticks,
-                LabelsRotation = 45,
-                TextSize = 12,
-                SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200))
+                Period.Day => ChartAxis.GetDateAxis(),
+                Period.Week => ChartAxis.GetWeekAxis(),
+                Period.Month => ChartAxis.GetMonthAxis(),
+                Period.Year => ChartAxis.GetYearAxis(),
+                _ => ChartAxis.GetDateAxis()
             };
         }
+
 
         private List<Axis> CreateYAxes(IEnumerable<EnergyType> energyTypes)
         {

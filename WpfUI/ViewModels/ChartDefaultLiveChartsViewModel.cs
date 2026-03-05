@@ -8,6 +8,7 @@ using LiveChartsCore.SkiaSharpView;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Media;
+using WpfUI.Managers;
 using WpfUI.Models;
 using WpfUI.Services;
 using WpfUI.ViewModels;
@@ -327,6 +328,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         if (CurrentAddress == null || CurrentEnergyType == null || SelectedPeriodType == null)
             return;
 
+        // ⭐ BELANGRIJK: correcte periode op basis van SelectedPeriodType
         var period = LibGraphGeneral.GetPeriodType(SelectedPeriodType.Key);
 
         var energyTypes = new List<EnergyType> { CurrentEnergyType };
@@ -433,7 +435,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
 
     private void LoadPeriodTypes()
     {
-        foreach (var p in WpfUI.Managers.SelectionItemList.GetPeriodList())
+        foreach (var p in SelectionItemList.GetPeriodList())
             PeriodTypes.Add(p);
     }
 }
