@@ -1,24 +1,36 @@
 ﻿using EnergyUse.Models;
 using System.Windows.Controls;
 using WpfUI.Interfaces;
+using WpfUI.Services;
 using WpfUI.ViewModels;
 
-namespace WpfUI.Views.Controls;
-
-public partial class ChartDefaultLiveChartsControl : UserControl, IRefreshable
+namespace WpfUI.Views.Controls
 {
-    public ChartDefaultLiveChartsViewModel ViewModel => (ChartDefaultLiveChartsViewModel)DataContext;
-
-    public ChartDefaultLiveChartsControl(Address address, EnergyType energyType, IEnumerable<EnergyType> energyTypes)
+    public partial class ChartDefaultLiveChartsControl : UserControl, IRefreshable
     {
-        InitializeComponent();
-        DataContext = new ChartDefaultLiveChartsViewModel(address, energyType, energyTypes);
-    }
+        public ChartDefaultLiveChartsViewModel ViewModel => (ChartDefaultLiveChartsViewModel)DataContext;
 
-    public void Refresh(Address address, EnergyType energyType, bool addressChanged)
-    {
-        ViewModel.CurrentAddress = address;
-        ViewModel.CurrentEnergyType = energyType;
-        ViewModel.UpdateChart();
+        public ChartDefaultLiveChartsControl(Address address, EnergyType energyType, IEnumerable<EnergyType> energyTypes)
+        {
+            InitializeComponent();
+
+            var vm = new ChartDefaultLiveChartsViewModel(
+                address,
+                energyType,
+                energyTypes,
+                new SettingsService());
+
+            DataContext = vm;
+
+            // voorkomt infinite loops tijdens laden
+            vm.MarkLoaded();
+        }
+
+        public void Refresh(Address address, EnergyType energyType, bool addressChanged)
+        {
+            ViewModel.CurrentAddress = address;
+            ViewModel.CurrentEnergyType = energyType;
+            ViewModel.SafeUpdateChart();
+        }
     }
 }

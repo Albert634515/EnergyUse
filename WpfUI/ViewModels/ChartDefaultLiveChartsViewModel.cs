@@ -1,4 +1,5 @@
 ﻿using EnergyUse.Common.Enums;
+using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Manager;
 using EnergyUse.Models;
 using EnergyUse.Models.Common;
@@ -9,47 +10,67 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WpfUI.Models;
 using WpfUI.Services;
-
-namespace WpfUI.ViewModels;
+using WpfUI.ViewModels;
 
 public class ChartDefaultLiveChartsViewModel : ViewModelBase
 {
     private readonly DefaultChartService _service;
+    private readonly ISettingsService _settings;
+    private bool _isLoaded;
 
-    public ChartDefaultLiveChartsViewModel(Address address,
-                                           EnergyType energyType,
-                                           IEnumerable<EnergyType> energyTypes)
+    public ChartDefaultLiveChartsViewModel(
+        Address address,
+        EnergyType energyType,
+        IEnumerable<EnergyType> energyTypes,
+        ISettingsService settings)
     {
         _service = new DefaultChartService();
+        _settings = settings;
 
         CurrentAddress = address;
         CurrentEnergyType = energyType;
         EnergyTypes = new ObservableCollection<EnergyType>(energyTypes ?? Enumerable.Empty<EnergyType>());
 
         LoadPeriodTypes();
-        InitDefaults();
+        LoadSettings();
 
         ResetCommand = new RelayCommand(_ => ResetChart());
         ExportCommand = new RelayCommand(_ => ExportChart());
+    }
 
+    public void MarkLoaded()
+    {
+        _isLoaded = true;
         UpdateChart();
     }
 
-    #region External
+    public void SafeUpdateChart()
+    {
+        if (_isLoaded)
+            UpdateChart();
+    }
+
+    // ---------------------------------------------------------
+    // ADDRESS + ENERGYTYPE
+    // ---------------------------------------------------------
 
     public Address CurrentAddress
     {
         get => _currentAddress;
-        set => SetProperty(ref _currentAddress, value);
+        set { if (SetProperty(ref _currentAddress, value)) SafeUpdateChart(); }
     }
     private Address _currentAddress;
 
     public EnergyType CurrentEnergyType
     {
         get => _currentEnergyType;
-        set => SetProperty(ref _currentEnergyType, value);
+        set { if (SetProperty(ref _currentEnergyType, value)) SafeUpdateChart(); }
     }
     private EnergyType _currentEnergyType;
+
+    // ---------------------------------------------------------
+    // COMPARE WITH
+    // ---------------------------------------------------------
 
     public ObservableCollection<EnergyType> EnergyTypes { get; }
 
@@ -57,12 +78,19 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
     public EnergyType SelectedCompareEnergyType
     {
         get => _selectedCompareEnergyType;
-        set { if (SetProperty(ref _selectedCompareEnergyType, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _selectedCompareEnergyType, value))
+            {
+                _settings.Save("DefaultChartPeriodCompareWith", value?.Id.ToString() ?? "");
+                SafeUpdateChart();
+            }
+        }
     }
 
-    #endregion
-
-    #region Labels
+    // ---------------------------------------------------------
+    // LABELS
+    // ---------------------------------------------------------
 
     public ChartLabel ConsumptionLabel { get; } = new();
     public ChartLabel ProductionLabel { get; } = new();
@@ -97,9 +125,9 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
             src.LabelBackColor.B));
     }
 
-    #endregion
-
-    #region Period / Options
+    // ---------------------------------------------------------
+    // PERIOD
+    // ---------------------------------------------------------
 
     public ObservableCollection<SelectionItem> PeriodTypes { get; } = new();
 
@@ -107,98 +135,195 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
     public SelectionItem SelectedPeriodType
     {
         get => _selectedPeriodType;
-        set { if (SetProperty(ref _selectedPeriodType, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _selectedPeriodType, value))
+            {
+                _settings.Save("DefaultChartPeriodPeriodType", value?.Key ?? "");
+                SafeUpdateChart();
+            }
+        }
     }
 
     private DateTime _fromDate;
     public DateTime FromDate
     {
         get => _fromDate;
-        set { if (SetProperty(ref _fromDate, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _fromDate, value))
+            {
+                _settings.SaveDate("DefaultChartPeriodPeriodStart", value);
+                SafeUpdateChart();
+            }
+        }
     }
 
     private DateTime _tillDate;
     public DateTime TillDate
     {
         get => _tillDate;
-        set { if (SetProperty(ref _tillDate, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _tillDate, value))
+            {
+                _settings.SaveDate("DefaultChartPeriodPeriodEnd", value);
+                SafeUpdateChart();
+            }
+        }
     }
 
-    private bool _predictMissingData = true;
+    // ---------------------------------------------------------
+    // CHECKBOXES
+    // ---------------------------------------------------------
+
     public bool PredictMissingData
     {
         get => _predictMissingData;
-        set { if (SetProperty(ref _predictMissingData, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _predictMissingData, value))
+            {
+                _settings.Save("DefaultChartPeriodPredictMissing", value.ToString());
+                SafeUpdateChart();
+            }
+        }
     }
+    private bool _predictMissingData;
 
-    private bool _showStacked = true;
     public bool ShowStacked
     {
         get => _showStacked;
-        set { if (SetProperty(ref _showStacked, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _showStacked, value))
+            {
+                _settings.Save("DefaultChartPeriodShowStacked", value.ToString());
+                SafeUpdateChart();
+            }
+        }
     }
+    private bool _showStacked;
 
-    private bool _showAverage = true;
     public bool ShowAverage
     {
         get => _showAverage;
-        set { if (SetProperty(ref _showAverage, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _showAverage, value))
+            {
+                _settings.Save("DefaultChartPeriodShowAverage", value.ToString());
+                SafeUpdateChart();
+            }
+        }
     }
+    private bool _showAverage;
+
+    // ---------------------------------------------------------
+    // SHOWBY
+    // ---------------------------------------------------------
 
     public bool ShowByCategory
     {
         get => _sbCat;
-        set { if (SetProperty(ref _sbCat, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _sbCat, value))
+            {
+                _settings.Save("DefaultChartCategoryShowBy", value.ToString());
+                SafeUpdateChart();
+            }
+        }
     }
-    private bool _sbCat = true;
+    private bool _sbCat;
 
     public bool ShowBySubCategory
     {
         get => _sbSub;
-        set { if (SetProperty(ref _sbSub, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _sbSub, value))
+            {
+                _settings.Save("DefaultChartSubCategoryShowBy", value.ToString());
+                SafeUpdateChart();
+            }
+        }
     }
     private bool _sbSub;
 
     public bool ShowByTotal
     {
         get => _sbTot;
-        set { if (SetProperty(ref _sbTot, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _sbTot, value))
+            {
+                _settings.Save("DefaultChartTotalsShowBy", value.ToString());
+                SafeUpdateChart();
+            }
+        }
     }
     private bool _sbTot;
+
+    // ---------------------------------------------------------
+    // SHOWTYPE
+    // ---------------------------------------------------------
 
     public bool ShowTypeRate
     {
         get => _stRate;
-        set { if (SetProperty(ref _stRate, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _stRate, value))
+            {
+                _settings.Save("DefaultChartRateType", value.ToString());
+                SafeUpdateChart();
+            }
+        }
     }
-    private bool _stRate = true;
+    private bool _stRate;
 
     public bool ShowTypeValue
     {
         get => _stValue;
-        set { if (SetProperty(ref _stValue, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _stValue, value))
+            {
+                _settings.Save("DefaultChartValueType", value.ToString());
+                SafeUpdateChart();
+            }
+        }
     }
     private bool _stValue;
 
     public bool ShowTypeEfficiency
     {
         get => _stEff;
-        set { if (SetProperty(ref _stEff, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _stEff, value))
+            {
+                _settings.Save("DefaultChartEfficiencyType", value.ToString());
+                SafeUpdateChart();
+            }
+        }
     }
     private bool _stEff;
 
     public bool IsEfficiencyVisible => CurrentEnergyType?.HasEnergyReturn ?? false;
 
-    #endregion
+    // ---------------------------------------------------------
+    // CHART
+    // ---------------------------------------------------------
 
-    #region Chart
-
-    public ObservableCollection<ISeries> ChartSeries { get; } = new();
-    public ObservableCollection<Axis> XAxes { get; } = new();
-    public ObservableCollection<Axis> YAxes { get; } = new();
+    public ObservableCollection<ISeries> ChartSeries { get; set; } = new();
+    public ObservableCollection<Axis> XAxes { get; set; } = new();
+    public ObservableCollection<Axis> YAxes { get; set; } = new();
 
     public void UpdateChart()
     {
+        if (!_isLoaded) return;
         if (CurrentAddress == null || CurrentEnergyType == null || SelectedPeriodType == null)
             return;
 
@@ -221,19 +346,15 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
             GetShowType()
         );
 
-        ChartSeries.Clear();
-        foreach (var s in result.Series)
-            ChartSeries.Add(s);
-
-        XAxes.Clear();
-        foreach (var ax in result.XAxes)
-            XAxes.Add(ax);
-
-        YAxes.Clear();
-        foreach (var ay in result.YAxes)
-            YAxes.Add(ay);
+        ChartSeries = new ObservableCollection<ISeries>(result.Series);
+        XAxes = new ObservableCollection<Axis>(result.XAxes);
+        YAxes = new ObservableCollection<Axis>(result.YAxes);
 
         UpdateLabels(result.Labels);
+
+        OnPropertyChanged(nameof(ChartSeries));
+        OnPropertyChanged(nameof(XAxes));
+        OnPropertyChanged(nameof(YAxes));
     }
 
     private ShowBy GetShowBy() =>
@@ -247,17 +368,17 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         ShowTypeEfficiency ? ShowType.Efficiency :
         ShowType.Unknown;
 
-    #endregion
-
-    #region Commands
+    // ---------------------------------------------------------
+    // COMMANDS
+    // ---------------------------------------------------------
 
     public ICommand ResetCommand { get; }
     public ICommand ExportCommand { get; }
 
     private void ResetChart()
     {
-        InitDefaults();
-        UpdateChart();
+        LoadDefaults();
+        SafeUpdateChart();
     }
 
     private void ExportChart()
@@ -265,24 +386,54 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         _service.ExportToExcel(CurrentEnergyType);
     }
 
-    #endregion
+    // ---------------------------------------------------------
+    // SETTINGS
+    // ---------------------------------------------------------
 
-    #region Helpers
-
-    private void LoadPeriodTypes()
+    private void LoadSettings()
     {
-        foreach (var p in LibSelectionItemList.GetPeriodList())
-            PeriodTypes.Add(p);
+        LoadDefaults();
+
+        ShowStacked = GetBool("DefaultChartPeriodShowStacked", true);
+        ShowAverage = GetBool("DefaultChartPeriodShowAverage", true);
+        PredictMissingData = GetBool("DefaultChartPeriodPredictMissing", true);
+
+        ShowByCategory = GetBool("DefaultChartCategoryShowBy", true);
+        ShowBySubCategory = GetBool("DefaultChartSubCategoryShowBy", false);
+        ShowByTotal = GetBool("DefaultChartTotalsShowBy", false);
+
+        ShowTypeRate = GetBool("DefaultChartRateType", true);
+        ShowTypeValue = GetBool("DefaultChartValueType", false);
+        ShowTypeEfficiency = GetBool("DefaultChartEfficiencyType", false);
+
+        var compareId = _settings.Get("DefaultChartPeriodCompareWith");
+        if (int.TryParse(compareId, out int id))
+            SelectedCompareEnergyType = EnergyTypes.FirstOrDefault(e => e.Id == id);
     }
 
-    private void InitDefaults()
+    private void LoadDefaults()
     {
-        FromDate = DateTime.Now.AddMonths(-12);
-        TillDate = DateTime.Now;
+        FromDate = _settings.GetDate("DefaultChartPeriodPeriodStart", DateTime.Now.AddMonths(-12));
+        TillDate = _settings.GetDate("DefaultChartPeriodPeriodEnd", DateTime.Now);
 
-        SelectedPeriodType = PeriodTypes.FirstOrDefault(p => p.Key == "MONTH")
+        var key = _settings.Get("DefaultChartPeriodPeriodType") ?? "MONTH";
+        SelectedPeriodType = PeriodTypes.FirstOrDefault(p => p.Key == key)
                              ?? PeriodTypes.FirstOrDefault();
     }
 
-    #endregion
+    private bool GetBool(string key, bool defaultValue)
+    {
+        var v = _settings.Get(key);
+        return v == null ? defaultValue : v.ToLower() == "true";
+    }
+
+    // ---------------------------------------------------------
+    // HELPERS
+    // ---------------------------------------------------------
+
+    private void LoadPeriodTypes()
+    {
+        foreach (var p in WpfUI.Managers.SelectionItemList.GetPeriodList())
+            PeriodTypes.Add(p);
+    }
 }
