@@ -1,0 +1,251 @@
+﻿<Window x:Class="WpfUI.Views.Windows.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Settings"
+        Width="800"
+        Height="550"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        ResizeMode="CanResize"
+        Background="White">
+
+    <DockPanel>
+
+        <!-- TOOLBAR -->
+        <ToolBar DockPanel.Dock="Top">
+            <Button Command="{Binding CloseCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/crossed_24x24.png" Width="16"/>
+                    <TextBlock Text="Close" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+
+            <Separator/>
+
+            <Button Command="{Binding ResetAllCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/switch_24x24.png" Width="16"/>
+                    <TextBlock Text="Reset All" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+        </ToolBar>
+
+        <!-- MAIN CONTENT -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="20" Orientation="Vertical">
+
+                <!-- GENERAL SETTINGS -->
+                <GroupBox Header="General" Margin="0 0 0 20">
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Language -->
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="0 5 0 0">
+                            <TextBlock Text="Language:" Width="150"/>
+                            <ComboBox ItemsSource="{Binding Languages}"
+                                      SelectedItem="{Binding SelectedLanguage}"
+                                      Width="200"/>
+                        </StackPanel>
+
+                        <!-- Currency -->
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Margin="0 5 0 0">
+                            <TextBlock Text="Currency:" Width="150"/>
+                            <TextBox Text="{Binding Currency}" Width="200"/>
+                        </StackPanel>
+
+                        <!-- Export Directory -->
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Margin="0 5 0 0">
+                            <TextBlock Text="Export Directory:" Width="150"/>
+                            <TextBox Text="{Binding ExportDirectory}" Width="300" IsReadOnly="True"/>
+                            <Button Content="..." Width="30" Margin="5 0 0 0"
+                                    Command="{Binding SelectExportDirCommand}"/>
+                        </StackPanel>
+
+                        <!-- Import Directory -->
+                        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Margin="0 5 0 0">
+                            <TextBlock Text="Import Directory:" Width="150"/>
+                            <TextBox Text="{Binding ImportDirectory}" Width="300" IsReadOnly="True"/>
+                            <Button Content="..." Width="30" Margin="5 0 0 0"
+                                    Command="{Binding SelectImportDirCommand}"/>
+                        </StackPanel>
+
+                        <!-- Reset -->
+                        <Button Grid.Row="3" Grid.Column="1"
+                                Command="{Binding ResetAllCommand}"
+                                HorizontalAlignment="Right"
+                                Margin="10 5 0 0">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Resources/switch_24x24.png" Width="20"/>
+                                <TextBlock Text="Reset" Margin="5 0 0 0"/>
+                            </StackPanel>
+                        </Button>
+
+                    </Grid>
+                </GroupBox>
+
+                <!-- COLORS -->
+                <GroupBox Header="Colors &amp; Layout" Margin="0 0 0 20">
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Form Background -->
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="0 5 0 0">
+                            <TextBlock Text="Form Background:" Width="150"/>
+                            <Border Background="{Binding FormBackgroundColor}"
+                                    Width="80" Height="25" BorderBrush="Black" BorderThickness="1"/>
+                            <Button Content="Pick"
+                                    Command="{Binding PickFormBackgroundColorCommand}"
+                                    Margin="10 0 0 0"/>
+                        </StackPanel>
+
+                        <!-- Slider Color -->
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Margin="0 5 0 0">
+                            <TextBlock Text="Slider Color:" Width="150"/>
+                            <Border Background="{Binding SliderColor}"
+                                    Width="80" Height="25" BorderBrush="Black" BorderThickness="1"/>
+                            <Button Content="Pick"
+                                    Command="{Binding PickSliderColorCommand}"
+                                    Margin="10 0 0 0"/>
+                        </StackPanel>
+
+                        <!-- Reset -->
+                        <Button Grid.Row="2" Grid.Column="1"
+                                Command="{Binding ResetColorsCommand}"
+                                HorizontalAlignment="Right"
+                                Margin="10 5 0 0">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Resources/switch_24x24.png" Width="20"/>
+                                <TextBlock Text="Reset" Margin="5 0 0 0"/>
+                            </StackPanel>
+                        </Button>
+
+                    </Grid>
+                </GroupBox>
+
+                <!-- CHART -->
+                <GroupBox Header="Chart Settings" Margin="0 0 0 20">
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Chart Background -->
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="0 5 0 0">
+                            <TextBlock Text="Chart Background:" Width="150"/>
+                            <Border Background="{Binding ChartBackgroundColor}"
+                                    Width="80" Height="25" BorderBrush="Black" BorderThickness="1"/>
+                            <Button Content="Pick"
+                                    Command="{Binding PickChartBackgroundColorCommand}"
+                                    Margin="10 0 0 0"/>
+                        </StackPanel>
+
+                        <!-- Line Color -->
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Margin="0 5 0 0">
+                            <TextBlock Text="Line Color:" Width="150"/>
+                            <Border Background="{Binding ChartLineColor}"
+                                    Width="80" Height="25" BorderBrush="Black" BorderThickness="1"/>
+                            <Button Content="Pick"
+                                    Command="{Binding PickChartLineColorCommand}"
+                                    Margin="10 0 0 0"/>
+                        </StackPanel>
+
+                        <!-- Reset -->
+                        <Button Grid.Row="2" Grid.Column="1"
+                                Command="{Binding ResetChartCommand}"
+                                HorizontalAlignment="Right"
+                                Margin="10 5 0 0">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Resources/switch_24x24.png" Width="20"/>
+                                <TextBlock Text="Reset" Margin="5 0 0 0"/>
+                            </StackPanel>
+                        </Button>
+
+                    </Grid>
+                </GroupBox>
+
+                <!-- PREDICTION -->
+                <GroupBox Header="Data Prediction" Margin="0 0 0 20">
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Radio buttons -->
+                        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0 5 0 0">
+                            <RadioButton Content="Use all data"
+                                         IsChecked="{Binding UseAllDataForAvg}"/>
+                            <RadioButton Content="Use data from date"
+                                         IsChecked="{Binding UseDataFromDate}"/>
+                        </StackPanel>
+
+                        <!-- Date -->
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Margin="0 5 0 0">
+                            <TextBlock Text="Date from:" Width="150"/>
+                            <DatePicker SelectedDate="{Binding AvgDateFrom}"/>
+                        </StackPanel>
+
+                        <!-- Correction % -->
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Margin="0 5 0 0">
+                            <TextBlock Text="Correction %:" Width="150"/>
+                            <TextBox Text="{Binding AvgCorrectionPercentage}" Width="80"/>
+                        </StackPanel>
+
+                        <!-- Return Correction % -->
+                        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Margin="0 5 0 0">
+                            <TextBlock Text="Return Correction %:" Width="150"/>
+                            <TextBox Text="{Binding AvgCorrectionPercentageReturn}" Width="80"/>
+                        </StackPanel>
+
+                        <!-- Reset -->
+                        <Button Grid.Row="3" Grid.Column="1"
+                                Command="{Binding ResetPredictionCommand}"
+                                HorizontalAlignment="Right"
+                                Margin="10 5 0 0">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Resources/switch_24x24.png" Width="20"/>
+                                <TextBlock Text="Reset" Margin="5 0 0 0"/>
+                            </StackPanel>
+                        </Button>
+
+                    </Grid>
+                </GroupBox>
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </DockPanel>
+</Window>

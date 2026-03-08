@@ -47,7 +47,7 @@ public class MainViewModel : ViewModelBase
         CloseCommand = new RelayCommand(_ => Application.Current.Shutdown());
 
         // Settings menu
-        //SettingsGeneralCommand = new RelayCommand(_ => new SettingsWindow().ShowDialog());
+        SettingsGeneralCommand = new RelayCommand(_ => new SettingsWindow(Application.Current.MainWindow).ShowDialog());
         SettingsEnergyTypesCommand = new RelayCommand(_ => new EnergyTypesWindow().ShowDialog());
         SettingsAddressesCommand = new RelayCommand(_ => new AddressesWindow().ShowDialog());
         SettingsMetersCommand = new RelayCommand(_ => new MetersWindow().ShowDialog());
