@@ -479,25 +479,25 @@ public class LibPeriodicDate
             labelXDate = periodicDataPerDay.ValueX;
             labelXString = "";
         }
-        else if (_parameterPeriod.PeriodType == Period.Day && _parameterPeriod.Day > 0 && _parameterPeriod.SetMiddleOfYear == false)
+        else if (_parameterPeriod.PeriodType == Period.Day && _parameterPeriod.Day > 0)
         {
             labelX = int.Parse(periodicDataPerDay.ValueX.ToString("yyyydd"));
             labelXDate = periodicDataPerDay.ValueX;
             labelXString = periodicDataPerDay.ValueX.ToString("dd yyyy");
         }
-        else if (_parameterPeriod.PeriodType == Period.Week && _parameterPeriod.SetMiddleOfYear == false)
+        else if (_parameterPeriod.PeriodType == Period.Week)
         {
             labelX = int.Parse($"{periodicDataPerDay.ValueX:yyyy}{periodicDataPerDay.ValueWeek.ToString().PadLeft(2, '0')}");
             labelXString = $"{periodicDataPerDay.ValueX:yyyy}{periodicDataPerDay.ValueWeek.ToString().PadLeft(2, '0')}";
             labelXDate = periodicDataPerDay.ValueX.StartOfWeek(DayOfWeek.Monday).AddDays(3);
         }
-        else if (_parameterPeriod.PeriodType == Period.Month && _parameterPeriod.SetMiddleOfYear == false)
+        else if (_parameterPeriod.PeriodType == Period.Month)
         {
             labelX = int.Parse(periodicDataPerDay.ValueX.ToString("yyyyMM"));
             labelXString = periodicDataPerDay.ValueX.ToString("MMM yy");
             labelXDate = new DateTime(periodicDataPerDay.ValueX.Year, periodicDataPerDay.ValueX.Month, 16);
         }
-        else if (_parameterPeriod.PeriodType == Period.Year || _parameterPeriod.SetMiddleOfYear == true)
+        else if (_parameterPeriod.PeriodType == Period.Year)
         {
             labelX = periodicDataPerDay.ValueX.Year;
             labelXString = periodicDataPerDay.ValueX.ToString("yyyy");

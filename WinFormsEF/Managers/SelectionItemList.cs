@@ -1,7 +1,7 @@
 ﻿using EnergyUse.Models.Common;
 using WinFormsEF.Managers;
 
-namespace WpfUI.Managers;
+namespace WinFormsEF.Managers;
 
 public class SelectionItemList
 {

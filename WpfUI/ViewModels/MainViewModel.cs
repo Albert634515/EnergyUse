@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using WpfUI.Interfaces;
 using WpfUI.Managers;
+using WpfUI.Services;
 using WpfUI.Views.Controls;
 using WpfUI.Views.Windows;
 
@@ -17,10 +18,12 @@ public class MainViewModel : ViewModelBase
 {
     private readonly MainController _controller;
     private readonly ISettingsService _settings;
+    private ILanguageService _LanguageService { get; set; }
 
     public MainViewModel()
     {
         _settings = new SettingsService();
+        _LanguageService = new LanguageService();
         _controller = new MainController(Config.GetDbFileName());
         _controller.Initialize();
 
@@ -221,7 +224,8 @@ public class MainViewModel : ViewModelBase
     {
         RightView = new ChartCompareLiveChartsControl(
             SelectedAddress,
-            SelectedEnergyType
+            SelectedEnergyType,
+            _LanguageService
         );
         SaveRightView("ucChartCompareLiveCharts");
     }

@@ -3,15 +3,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
+using EnergyUse.Common.Enums;
 using EnergyUse.Models;
 using EnergyUse.Models.Common;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.Measure;
-using SkiaSharp;
 using WpfUI.Models;
-using EnergyUse.Common.Enums;
+using WpfUI.Services;
 
 namespace WpfUI.ViewModels;
 
@@ -19,42 +17,71 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
 {
     private readonly CompareChartService _service;
 
-    // ✔ Deze twee horen bij jouw project
-    public Address CurrentAddress { get; set; }
-    public EnergyType CurrentEnergyType { get; set; }
+    public Address CurrentAddress { get; }
+    public EnergyType CurrentEnergyType { get; }
 
-    // ✔ Constructor met 2 parameters (zoals jouw project verwacht)
-    public ChartCompareLiveChartsViewModel(Address address, EnergyType energyType)
+    private ObservableCollection<PeriodicData> _exportData = new();
+
+    // ---------------------------------------------------------
+    // MEMORY FOR DAY/WEEK/MONTH SELECTIONS
+    // ---------------------------------------------------------
+    private int _lastSelectedDay = 1;
+    private int _lastSelectedWeek = 1;      // ← jouw keuze A
+    private int _lastSelectedMonth = DateTime.Now.Month;
+
+    public ChartCompareLiveChartsViewModel(
+        Address address,
+        EnergyType energyType,
+        ILanguageService languageService)
     {
         CurrentAddress = address;
         CurrentEnergyType = energyType;
 
-        _service = new CompareChartService();
+        _service = new CompareChartService(languageService);
 
-        LoadPeriodTypes();
+        LoadPeriodTypes(languageService);
         LoadYears();
 
         ResetCommand = new RelayCommand(_ => ResetChart());
-        ExportCommand = new RelayCommand(_ => ExportChart());
-
-        PredictMissingData = true;
-        ShowStacked = true;
-        ShowByCategory = true;
-        ShowTypeRate = true;
+        ExportCommand = new RelayCommand(_ => ExportChart(), _ => _exportData.Any());
 
         ResetChart();
     }
 
-    #region Labels
+    // ---------------------------------------------------------
+    // PERIOD KEY
+    // ---------------------------------------------------------
+    private string PeriodKey => (SelectedPeriodType?.Key ?? "").ToUpperInvariant();
 
+    // ---------------------------------------------------------
+    // LABELS
+    // ---------------------------------------------------------
     public ChartLabel ConsumptionLabel { get; } = new();
     public ChartLabel ProductionLabel { get; } = new();
     public ChartLabel NettoLabel { get; } = new();
 
-    #endregion
+    private void UpdateLabels(CompareChartResult result)
+    {
+        void Apply(ChartLabel target, ResultLabel src)
+        {
+            target.Visible = src.LabelVisibility;
+            target.Text = src.LabelText;
+            target.BackColor = new SolidColorBrush(Color.FromArgb(src.LabelBackColor.A, src.LabelBackColor.R, src.LabelBackColor.G, src.LabelBackColor.B));
+            target.ForeColor = new SolidColorBrush(Color.FromArgb(src.LabelForeColor.A, src.LabelForeColor.R, src.LabelForeColor.G, src.LabelForeColor.B));
+        }
 
-    #region Selecties
+        if (result.Labels.TryGetValue("Consumption", out var c)) Apply(ConsumptionLabel, c);
+        if (result.Labels.TryGetValue("Production", out var p)) Apply(ProductionLabel, p);
+        if (result.Labels.TryGetValue("Netto", out var n)) Apply(NettoLabel, n);
 
+        OnPropertyChanged(nameof(ConsumptionLabel));
+        OnPropertyChanged(nameof(ProductionLabel));
+        OnPropertyChanged(nameof(NettoLabel));
+    }
+
+    // ---------------------------------------------------------
+    // SELECTIES
+    // ---------------------------------------------------------
     public ObservableCollection<SelectionItem> PeriodTypes { get; } = new();
     public ObservableCollection<int> Years { get; } = new();
     public ObservableCollection<int> NumberList { get; } = new();
@@ -68,13 +95,57 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedPeriodType, value))
             {
-                UpdateNumberList();
-                OnPropertyChanged(nameof(NumberLabel));
-                OnPropertyChanged(nameof(IsDayVisible));
+                UpdateNumberList();   // ← BELANGRIJK
+
+                ApplyPeriodChange();
                 UpdateChart();
             }
         }
     }
+
+    private void ApplyPeriodChange()
+    {
+        switch (PeriodKey)
+        {
+            case "DAY":
+                SelectedNumber = _lastSelectedMonth;
+                UpdateDayList();
+                SelectedDay = _lastSelectedDay;
+                break;
+
+            case "WEEK":
+                if (_lastSelectedWeek <= 0)
+                    _lastSelectedWeek = 1;   // ← jouw keuze A
+                SelectedNumber = _lastSelectedWeek;
+                SelectedDay = 0;
+                break;
+
+            case "MONTH":
+                SelectedNumber = _lastSelectedMonth;
+                SelectedDay = 0;
+                break;
+
+            case "YEAR":
+                SelectedNumber = 0;
+                SelectedDay = 0;
+                break;
+        }
+
+        OnPropertyChanged(nameof(IsNumberVisible));
+        OnPropertyChanged(nameof(IsDayVisible));
+        OnPropertyChanged(nameof(NumberLabel));
+    }
+
+    public bool IsNumberVisible => PeriodKey != "YEAR";
+    public bool IsDayVisible => PeriodKey == "DAY";
+
+    public string NumberLabel => PeriodKey switch
+    {
+        "DAY" => "Month",
+        "WEEK" => "Week",
+        "MONTH" => "Month",
+        _ => ""
+    };
 
     private int _startYear;
     public int StartYear
@@ -98,8 +169,22 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedNumber, value))
             {
-                if (SelectedPeriodType?.Key == "DAY")
+                if (PeriodKey == "DAY")
+                {
+                    _lastSelectedMonth = value;
                     UpdateDayList();
+                }
+
+                if (PeriodKey == "WEEK")
+                {
+                    if (value <= 0)
+                        value = 1;   // ← nooit week 0
+                    _lastSelectedWeek = value;
+                }
+
+                if (PeriodKey == "MONTH")
+                    _lastSelectedMonth = value;
+
                 UpdateChart();
             }
         }
@@ -109,17 +194,26 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
     public int SelectedDay
     {
         get => _selectedDay;
-        set { if (SetProperty(ref _selectedDay, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _selectedDay, value))
+            {
+                if (PeriodKey == "DAY")
+                    _lastSelectedDay = value;
+
+                UpdateChart();
+            }
+        }
     }
 
-    private bool _predict;
+    private bool _predict = true;
     public bool PredictMissingData
     {
         get => _predict;
         set { if (SetProperty(ref _predict, value)) UpdateChart(); }
     }
 
-    private bool _stacked;
+    private bool _stacked = true;
     public bool ShowStacked
     {
         get => _stacked;
@@ -170,20 +264,9 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
 
     public bool IsEfficiencyVisible => CurrentEnergyType?.HasEnergyReturn ?? false;
 
-    public string NumberLabel => SelectedPeriodType?.Key switch
-    {
-        "DAY" => "Month",
-        "WEEK" => "Week",
-        "MONTH" => "Month",
-        _ => ""
-    };
-
-    public bool IsDayVisible => SelectedPeriodType?.Key == "DAY";
-
-    #endregion
-
-    #region Chart
-
+    // ---------------------------------------------------------
+    // CHART
+    // ---------------------------------------------------------
     public ObservableCollection<ISeries> ChartSeries { get; } = new();
     public ObservableCollection<Axis> XAxes { get; } = new();
     public ObservableCollection<Axis> YAxes { get; } = new();
@@ -218,21 +301,11 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         foreach (var ay in result.YAxes)
             YAxes.Add(ay);
 
-        // Labels (placeholder)
-        ConsumptionLabel.Visible = true;
-        ConsumptionLabel.Text = "Delivery: 12279";
-        ConsumptionLabel.BackColor = Brushes.Orange;
-        ConsumptionLabel.ForeColor = Brushes.Black;
+        _exportData = new ObservableCollection<PeriodicData>(result.ExportData);
 
-        ProductionLabel.Visible = true;
-        ProductionLabel.Text = "Return: 11490";
-        ProductionLabel.BackColor = Brushes.LightGreen;
-        ProductionLabel.ForeColor = Brushes.Black;
+        UpdateLabels(result);
 
-        NettoLabel.Visible = true;
-        NettoLabel.Text = "Net: 789";
-        NettoLabel.BackColor = Brushes.LightBlue;
-        NettoLabel.ForeColor = Brushes.Black;
+        CommandManager.InvalidateRequerySuggested();
     }
 
     private ShowBy GetShowBy() =>
@@ -246,10 +319,9 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         ShowTypeEfficiency ? ShowType.Efficiency :
         ShowType.Unknown;
 
-    #endregion
-
-    #region Commands
-
+    // ---------------------------------------------------------
+    // COMMANDS
+    // ---------------------------------------------------------
     public ICommand ResetCommand { get; }
     public ICommand ExportCommand { get; }
 
@@ -264,31 +336,29 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         ShowTypeValue = false;
         ShowTypeEfficiency = false;
 
-        if (PeriodTypes.Any())
-            SelectedPeriodType = PeriodTypes.First();
-
+        SelectedPeriodType = PeriodTypes.FirstOrDefault();
         UpdateChart();
     }
 
     private void ExportChart()
     {
-        _service.ExportToExcel();
+        _service.ExportToExcel(_exportData.ToList(), CurrentEnergyType);
     }
 
-    #endregion
-
-    #region Helpers
-
-    private void LoadPeriodTypes()
+    // ---------------------------------------------------------
+    // HELPERS
+    // ---------------------------------------------------------
+    private void LoadPeriodTypes(ILanguageService languageService)
     {
-        PeriodTypes.Add(new SelectionItem(1, "DAY", "Day"));
-        PeriodTypes.Add(new SelectionItem(2, "WEEK", "Week"));
-        PeriodTypes.Add(new SelectionItem(3, "MONTH", "Month"));
-        PeriodTypes.Add(new SelectionItem(4, "YEAR", "Year"));
+        var service = new SelectionItemService(languageService);
+        PeriodTypes.Clear();
+        foreach (var item in service.GetPeriodList())
+            PeriodTypes.Add(item);
     }
 
     private void LoadYears()
     {
+        Years.Clear();
         for (int y = 2020; y <= DateTime.Now.Year; y++)
             Years.Add(y);
 
@@ -301,23 +371,24 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         NumberList.Clear();
         DayList.Clear();
 
-        switch (SelectedPeriodType?.Key)
+        switch (PeriodKey)
         {
-            case "MONTH":
-                for (int i = 1; i <= 12; i++) NumberList.Add(i);
-                SelectedNumber = DateTime.Now.Month;
+            case "DAY":
+                for (int i = 1; i <= 12; i++)
+                    NumberList.Add(i);
                 break;
 
             case "WEEK":
-                for (int i = 1; i <= 53; i++) NumberList.Add(i);
-                SelectedNumber = 1;
+                for (int i = 1; i <= 53; i++)
+                    NumberList.Add(i);
                 break;
 
-            case "DAY":
-                for (int i = 1; i <= 12; i++) NumberList.Add(i);
-                SelectedNumber = DateTime.Now.Month;
-                UpdateDayList();
-                SelectedDay = DateTime.Now.Day;
+            case "MONTH":
+                for (int i = 1; i <= 12; i++)
+                    NumberList.Add(i);
+                break;
+
+            case "YEAR":
                 break;
         }
     }
@@ -325,12 +396,13 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
     private void UpdateDayList()
     {
         DayList.Clear();
+        if (SelectedNumber <= 0) return;
+
         int days = DateTime.DaysInMonth(DateTime.Now.Year, SelectedNumber);
-        for (int d = 1; d <= days; d++) DayList.Add(d);
+        for (int d = 1; d <= days; d++)
+            DayList.Add(d);
 
         if (!DayList.Contains(SelectedDay))
             SelectedDay = DayList.FirstOrDefault();
     }
-
-    #endregion
 }

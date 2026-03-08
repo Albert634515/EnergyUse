@@ -155,7 +155,7 @@
                 <Button Command="{Binding CloseCommand}">
                     <DockPanel LastChildFill="False">
                         <Image Width="20" Height="20" Source="/WpfUI;component/Resources/crossed_24x24.png" DockPanel.Dock="Left"/>
-                        <TextBlock Text="Refresh" Margin="5,0,0,0"/>
+                        <TextBlock Text="Close" Margin="5,0,0,0"/>
                     </DockPanel>
                 </Button>
 

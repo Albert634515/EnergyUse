@@ -404,7 +404,7 @@ public partial class ucChartCompareLiveCharts : UserControl
 
     private void setComboPeriodTypes(string currentValue)
     {
-        var periodTypes = WinFormsEF.Managers.SelectionItemList.GetPeriodList();
+        var periodTypes = Managers.SelectionItemList.GetPeriodList();
         bsPeriodType.DataSource = periodTypes;
 
         if (currentValue == null)

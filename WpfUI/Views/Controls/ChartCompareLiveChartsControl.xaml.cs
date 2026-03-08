@@ -1,27 +1,24 @@
-﻿using EnergyUse.Models;
-using System.Windows.Controls;
-using WpfUI.Interfaces;
+﻿using System.Windows.Controls;
 using WpfUI.ViewModels;
+using EnergyUse.Models;
+using WpfUI.Services;
 
-namespace WpfUI.Views.Controls;
-
-/// <summary>
-/// Interaction logic for ChartCompareLiveCharts.xaml
-/// </summary>
-public partial class ChartCompareLiveChartsControl : UserControl, IRefreshable
+namespace WpfUI.Views.Controls
 {
-    public ChartCompareLiveChartsViewModel ViewModel => (ChartCompareLiveChartsViewModel)DataContext;
-
-    public ChartCompareLiveChartsControl(Address address, EnergyType energyType)
+    public partial class ChartCompareLiveChartsControl : UserControl
     {
-        InitializeComponent();
-        DataContext = new ChartCompareLiveChartsViewModel(address, energyType);
-    }
+        public ChartCompareLiveChartsControl(
+            Address address,
+            EnergyType energyType,
+            ILanguageService languageService)
+        {
+            InitializeComponent();
 
-    public void Refresh(Address address, EnergyType energyType, bool addressChanged)
-    {
-        ViewModel.CurrentAddress = address;
-        ViewModel.CurrentEnergyType = energyType;
-        ViewModel.UpdateChart();
+            // ViewModel injecteren
+            DataContext = new ChartCompareLiveChartsViewModel(
+                address,
+                energyType,
+                languageService);
+        }
     }
 }

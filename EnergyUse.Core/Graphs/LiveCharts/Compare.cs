@@ -14,10 +14,10 @@ public class Compare : Base
         _libPeriodicDate = new(graphParameter.DbName);
 
         // run async load synchronously from constructor (keep existing API)
-        loadChart().GetAwaiter().GetResult();
+        getChart().GetAwaiter().GetResult();
     }
 
-    private async Task loadChart()
+    private async Task getChart()
     {
         if (_graphParameter.YearEnd <= 0 || _graphParameter.YearStart <= 0)
             return;
