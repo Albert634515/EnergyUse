@@ -49,7 +49,7 @@ public class MainViewModel : ViewModelBase
         // Settings menu
         SettingsGeneralCommand = new RelayCommand(_ => new SettingsWindow(Application.Current.MainWindow).ShowDialog());
         SettingsEnergyTypesCommand = new RelayCommand(_ => new EnergyTypesWindow().ShowDialog());
-        SettingsAddressesCommand = new RelayCommand(_ => new AddressesWindow().ShowDialog());
+        SettingsAddressesCommand = new RelayCommand(_ => new AddressesWindow(Application.Current.MainWindow).ShowDialog());
         SettingsMetersCommand = new RelayCommand(_ => new MetersWindow().ShowDialog());
         SettingsCostCategoriesCommand = new RelayCommand(_ => new CostCategoriesWindow().ShowDialog());
         SettingsTariffGroupsCommand = new RelayCommand(_ => new TarifGroupsWindow().ShowDialog());

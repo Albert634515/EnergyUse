@@ -8,9 +8,12 @@ namespace WpfUI.Views.Windows;
 /// </summary>
 public partial class AddressesWindow : Window
 {
-    public AddressesWindow()
+    public AddressesWindow(Window owner)
     {
         InitializeComponent();
+        Owner = owner;
+        WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
         Loaded += Addresses_Loaded;
     }
 
