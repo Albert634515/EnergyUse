@@ -36,10 +36,6 @@
 
                 <MenuItem Header="Backup and Restore" Command="{Binding BackupRestoreCommand}"/>
 
-                <MenuItem Header="Import">
-                    <MenuItem Header="Import Meter Rates" Command="{Binding ImportMeterRatesCommand}"/>
-                </MenuItem>
-
                 <MenuItem Header="Export">
                     <MenuItem Header="Rates" Command="{Binding ExportRatesCommand}"/>
                 </MenuItem>

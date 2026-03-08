@@ -63,7 +63,6 @@ public class MainViewModel : ViewModelBase
 
         // Import / Export
         BackupRestoreCommand = new RelayCommand(_ => new BackUpAndRestoreWindow().ShowDialog());
-        //ImportMeterRatesCommand = new RelayCommand(_ => new ImportWindow().ShowDialog());
         //ExportRatesCommand = new RelayCommand(_ => new ExportWindow().ShowDialog());
 
         // Misc
