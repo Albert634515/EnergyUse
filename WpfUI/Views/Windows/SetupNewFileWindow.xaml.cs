@@ -6,9 +6,12 @@ namespace WpfUI.Views.Windows
 {
     public partial class SetupNewFileWindow : Window
     {
-        public SetupNewFileWindow()
+        public SetupNewFileWindow(Window owner)
         {
             InitializeComponent();
+            Owner = owner;
+            WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
             var vm = new SetupNewFileViewModel(new DialogService());
             DataContext = vm;
 

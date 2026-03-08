@@ -8,8 +8,7 @@
         Height="420"
         Width="650"
         WindowStartupLocation="CenterOwner"
-        ShowInTaskbar="False"
-        ResizeMode="NoResize">
+        ShowInTaskbar="False">
 
     <Window.Resources>
         <BitmapImage x:Key="IconClose" UriSource="/Resources/crossed_24x24.png"/>

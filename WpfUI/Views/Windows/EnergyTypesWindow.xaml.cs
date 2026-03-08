@@ -8,9 +8,12 @@ namespace WpfUI.Views.Windows
     /// </summary>
     public partial class EnergyTypesWindow : Window
     {
-        public EnergyTypesWindow()
+        public EnergyTypesWindow(Window owner)
         {
             InitializeComponent();
+            Owner = owner;
+            WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
             DataContext = new EnergyTypesViewModel();
         }
     }

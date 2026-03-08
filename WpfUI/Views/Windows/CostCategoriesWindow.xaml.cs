@@ -7,9 +7,12 @@ namespace WpfUI.Views.Windows
     {
         private readonly CostCategoriesViewModel _vm;
 
-        public CostCategoriesWindow()
+        public CostCategoriesWindow(Window owner)
         {
             InitializeComponent();
+            Owner = owner;
+            WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
             _vm = new CostCategoriesViewModel();
             DataContext = _vm;
         }

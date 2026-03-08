@@ -8,9 +8,12 @@ namespace WpfUI.Views.Windows
     /// </summary>
     public partial class VatTariffsWindow : Window
     {
-        public VatTariffsWindow()
+        public VatTariffsWindow(Window owner)
         {
             InitializeComponent();
+            Owner = owner;
+            WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
             DataContext = new VatTarifsViewModel();
         }
     }

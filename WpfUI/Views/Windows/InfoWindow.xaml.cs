@@ -10,9 +10,11 @@ namespace WpfUI.Views.Windows;
 
 public partial class InfoWindow : Window
 {
-    public InfoWindow()
+    public InfoWindow(Window owner)
     {
         InitializeComponent();
+        Owner = owner;
+        WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
         DataContext = new InfoWindowViewModel();
 

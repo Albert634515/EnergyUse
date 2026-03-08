@@ -6,9 +6,11 @@ namespace WpfUI.Views.Windows
 {
     public partial class TarifGroupsWindow : Window
     {
-        public TarifGroupsWindow()
+        public TarifGroupsWindow(Window owner)
         {
             InitializeComponent();
+            Owner = owner;
+            WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
             // Maak de dialogservice aan
             var dialogService = new DialogService();

@@ -8,9 +8,12 @@ namespace WpfUI.Views.Windows
     /// </summary>
     public partial class PayBackTimeWindow : Window
     {
-        public PayBackTimeWindow()
+        public PayBackTimeWindow(Window owner)
         {
             InitializeComponent();
+            Owner = owner;
+
+            WindowStartupLocation = WindowStartupLocation.CenterOwner;
             DataContext = new PayBackTimeViewModel();
         }
     }

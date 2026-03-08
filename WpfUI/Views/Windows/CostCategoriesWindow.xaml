@@ -2,7 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Title="Cost Categories" Height="700" Width="1100">
+        Title="Cost Categories" 
+        Height="600" Width="900"
+        ShowInTaskbar="False">
 
     <DockPanel>
 

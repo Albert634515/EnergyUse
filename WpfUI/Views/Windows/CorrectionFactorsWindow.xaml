@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Correction Factors"
-        Height="600" Width="900">
+        Height="600" 
+        Width="850"
+        ShowInTaskbar="False">
 
     <DockPanel>
 

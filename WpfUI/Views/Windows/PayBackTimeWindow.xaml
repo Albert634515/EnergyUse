@@ -4,7 +4,8 @@
         xmlns:conv="clr-namespace:WpfUI.Converters"
         xmlns:controls="clr-namespace:WpfUI.Views.Controls"
         Title="Payback Time"
-        Height="800" Width="1200">
+        Height="800" Width="1200"
+        ShowInTaskbar="False">
 
     <DockPanel>
 

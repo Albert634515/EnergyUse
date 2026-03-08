@@ -8,9 +8,12 @@ namespace WpfUI.Views.Windows;
 /// </summary>
 public partial class CorrectionFactorsWindow : Window
 {
-    public CorrectionFactorsWindow()
+    public CorrectionFactorsWindow(Window owner)
     {
         InitializeComponent();
+        Owner = owner;
+        WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
         if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             DataContext = new CorrectionFactorViewModel();
     }

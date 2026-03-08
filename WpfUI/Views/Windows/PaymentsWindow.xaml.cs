@@ -8,9 +8,11 @@ namespace WpfUI.Views.Windows;
 /// </summary>
 public partial class PaymentsWindow : Window
 {
-    public PaymentsWindow()
+    public PaymentsWindow(Window owner)
     {
         InitializeComponent();
+        Owner = owner;
+        WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
         if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             DataContext = new PaymentsViewModel();

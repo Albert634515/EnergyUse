@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:WpfUI.ViewModels"
         Title="Payments"
-        Height="650" Width="900">
+        Height="650" Width="850"
+        ShowInTaskbar="False">
 
     <DockPanel>
 

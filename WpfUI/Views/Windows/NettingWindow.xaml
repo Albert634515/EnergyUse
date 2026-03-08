@@ -2,9 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Netting"
-        Width="1100"
-        Height="650"
-        WindowStartupLocation="CenterOwner">
+        Width="850" Height="650"
+        ShowInTaskbar="False">
 
     <DockPanel>
 

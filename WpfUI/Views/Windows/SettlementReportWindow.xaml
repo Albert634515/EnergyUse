@@ -4,7 +4,7 @@
         xmlns:controls="clr-namespace:WpfUI.Views.Controls"
         Title="Select Report Parameters"
         Height="650"
-        Width="900"
+        Width="850"
         ShowInTaskbar="False">
 
     <Grid Margin="10">

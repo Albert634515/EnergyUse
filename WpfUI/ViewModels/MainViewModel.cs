@@ -39,7 +39,7 @@ public class MainViewModel : ViewModelBase
         ShowLeftRatesGraphCommand = new RelayCommand(_ => setRatesControl());
 
         PdfReportCommand = new RelayCommand(async _ => await OpenSettlementReport());
-        PaybackCommand = new RelayCommand(_ => ShowPayback());
+        PaybackCommand = new RelayCommand(_ => new PayBackTimeWindow(Application.Current.MainWindow).ShowDialog());
         RecalculateCommand = new RelayCommand(_ => RecalculateCurrentSelection());
         RecalculateAllCommand = new RelayCommand(_ => RecalculateAll());
 
@@ -48,27 +48,27 @@ public class MainViewModel : ViewModelBase
 
         // Settings menu
         SettingsGeneralCommand = new RelayCommand(_ => new SettingsWindow(Application.Current.MainWindow).ShowDialog());
-        SettingsEnergyTypesCommand = new RelayCommand(_ => new EnergyTypesWindow().ShowDialog());
+        SettingsEnergyTypesCommand = new RelayCommand(_ => new EnergyTypesWindow(Application.Current.MainWindow).ShowDialog());
         SettingsAddressesCommand = new RelayCommand(_ => new AddressesWindow(Application.Current.MainWindow).ShowDialog());
-        SettingsMetersCommand = new RelayCommand(_ => new MetersWindow().ShowDialog());
-        SettingsCostCategoriesCommand = new RelayCommand(_ => new CostCategoriesWindow().ShowDialog());
-        SettingsTariffGroupsCommand = new RelayCommand(_ => new TarifGroupsWindow().ShowDialog());
-        SettingsRatesCommand = new RelayCommand(_ => new RatesWindow().ShowDialog());
-        SettingsPredefinedPeriodsCommand = new RelayCommand(_ => new PredefinedPeriodsWindow().ShowDialog());
-        SettingsCorrectionFactorsCommand = new RelayCommand(_ => new CorrectionFactorsWindow().ShowDialog());
-        SettingsNettingCommand = new RelayCommand(_ => new NettingWindow().ShowDialog());
-        SettingsVatTariffsCommand = new RelayCommand(_ => new VatTariffsWindow().ShowDialog());
-        SettingsCalculatedUnitPriceCommand = new RelayCommand(_ => new CalculatedUnitPriceWindow().ShowDialog());
-        SettingsPaymentsCommand = new RelayCommand(_ => new PaymentsWindow().ShowDialog());
+        SettingsMetersCommand = new RelayCommand(_ => new MetersWindow(Application.Current.MainWindow).ShowDialog());
+        SettingsCostCategoriesCommand = new RelayCommand(_ => new CostCategoriesWindow(Application.Current.MainWindow).ShowDialog());
+        SettingsTariffGroupsCommand = new RelayCommand(_ => new TarifGroupsWindow(Application.Current.MainWindow).ShowDialog());
+        SettingsRatesCommand = new RelayCommand(_ => new RatesWindow(Application.Current.MainWindow).ShowDialog());
+        SettingsPredefinedPeriodsCommand = new RelayCommand(_ => new PredefinedPeriodsWindow(Application.Current.MainWindow).ShowDialog());
+        SettingsCorrectionFactorsCommand = new RelayCommand(_ => new CorrectionFactorsWindow(Application.Current.MainWindow).ShowDialog());
+        SettingsNettingCommand = new RelayCommand(_ => new NettingWindow(Application.Current.MainWindow).ShowDialog());
+        SettingsVatTariffsCommand = new RelayCommand(_ => new VatTariffsWindow(Application.Current.MainWindow).ShowDialog());
+        SettingsCalculatedUnitPriceCommand = new RelayCommand(_ => new CalculatedUnitPriceWindow(Application.Current.MainWindow).ShowDialog());
+        SettingsPaymentsCommand = new RelayCommand(_ => new PaymentsWindow(Application.Current.MainWindow).ShowDialog());
 
         // Import / Export
         BackupRestoreCommand = new RelayCommand(_ => new BackUpAndRestoreWindow(Application.Current.MainWindow).ShowDialog());
         ExportRatesCommand = new RelayCommand(_ => new ExportWindow(Application.Current.MainWindow).ShowDialog());
 
         // Misc
-        SetupNewFileCommand = new RelayCommand(_ => new SetupNewFileWindow().ShowDialog());
+        SetupNewFileCommand = new RelayCommand(_ => new SetupNewFileWindow(Application.Current.MainWindow).ShowDialog());
         //CreateDemoDataCommand = new RelayCommand(_ => new CreateDemoDataWindow().ShowDialog());
-        InfoCommand = new RelayCommand(_ => new InfoWindow().ShowDialog());
+        InfoCommand = new RelayCommand(_ => new InfoWindow(Application.Current.MainWindow).ShowDialog());
     }
 
     #region Address + EnergyType
@@ -345,12 +345,6 @@ public class MainViewModel : ViewModelBase
                 Mouse.OverrideCursor = null;
             }
         }
-    }
-
-    private void ShowPayback()
-    {
-        var win = new PayBackTimeWindow();
-        win.ShowDialog();
     }
 
     private void RecalculateCurrentSelection()

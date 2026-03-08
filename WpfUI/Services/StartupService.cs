@@ -50,7 +50,7 @@ namespace WpfUI.Services
         private void RunSetup()
         {
             // Hier open je jouw setup window
-            var setupWindow = new Views.Windows.SetupNewFileWindow();
+            var setupWindow = new Views.Windows.SetupNewFileWindow(Application.Current.MainWindow);
             setupWindow.ShowDialog();
         }
     }
