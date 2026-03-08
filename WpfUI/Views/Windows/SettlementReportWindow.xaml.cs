@@ -8,9 +8,12 @@ namespace WpfUI.Views.Windows
     {
         public ParameterSelection? SelectedParameters { get; private set; }
 
-        public SettlementReportWindow(SettlementReportViewModel vm)
+        public SettlementReportWindow(Window owner, SettlementReportViewModel vm)
         {
             InitializeComponent();
+            Owner = owner;
+            WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
             DataContext = vm;
         }
 
@@ -25,7 +28,7 @@ namespace WpfUI.Views.Windows
                 if (result)
                     SelectedParameters = vm.GetSelectedParameters();
 
-                DialogResult = result;   // ✔️ nu is het venster volledig actief
+                DialogResult = result;
                 Close();
             };
         }

@@ -5,6 +5,7 @@
         Title="Predefined Periods"
         Width="1100"
         Height="650"
+        ShowInTaskbar="False"
         WindowStartupLocation="CenterOwner">
 
     <DockPanel>

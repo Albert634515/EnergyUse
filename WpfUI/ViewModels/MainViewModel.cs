@@ -318,7 +318,7 @@ public class MainViewModel : ViewModelBase
     private async Task OpenSettlementReport()
     {
         var vm = App.Services.GetRequiredService<SettlementReportViewModel>();
-        var win = new SettlementReportWindow(vm);
+        var win = new SettlementReportWindow(Application.Current.MainWindow, vm);
 
         if (win.ShowDialog() == true)
         {
