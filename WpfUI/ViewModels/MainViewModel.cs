@@ -62,8 +62,8 @@ public class MainViewModel : ViewModelBase
         SettingsPaymentsCommand = new RelayCommand(_ => new PaymentsWindow().ShowDialog());
 
         // Import / Export
-        BackupRestoreCommand = new RelayCommand(_ => new BackUpAndRestoreWindow().ShowDialog());
-        //ExportRatesCommand = new RelayCommand(_ => new ExportWindow().ShowDialog());
+        BackupRestoreCommand = new RelayCommand(_ => new BackUpAndRestoreWindow(Application.Current.MainWindow).ShowDialog());
+        ExportRatesCommand = new RelayCommand(_ => new ExportWindow(Application.Current.MainWindow).ShowDialog());
 
         // Misc
         SetupNewFileCommand = new RelayCommand(_ => new SetupNewFileWindow().ShowDialog());

@@ -6,9 +6,12 @@ namespace WpfUI.Views.Windows;
 
 public partial class BackUpAndRestoreWindow : Window
 {
-    public BackUpAndRestoreWindow()
+    public BackUpAndRestoreWindow(Window owner)
     {
         InitializeComponent();
+        Owner = owner;
+        WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
         DataContext = new BackupAndRestoreViewModel(new DialogService());
     }
 }

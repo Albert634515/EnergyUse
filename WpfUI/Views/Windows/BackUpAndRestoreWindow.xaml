@@ -5,6 +5,7 @@
         Title="Backup en Restore"
         Height="350" Width="600"
         WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False"
         ResizeMode="NoResize">
 
     <Grid Margin="15">
