@@ -21,4 +21,13 @@ public class PayBackTime
     public decimal ReturnOnInvestment { get; set; } = 0.0m;
     public decimal ReturnOnInvestmentTotal { get; set; } = 0.0m;
     public decimal Return { get; set; } = 0.0m;
+
+    public string RoiColor =>
+            ReturnOnInvestmentTotal < 0 ? "Red" :
+            ReturnOnInvestmentTotal > 0 ? "Green" :
+            "White";
+
+    public string RoiForeground =>
+        ReturnOnInvestmentTotal == 0 ? "Black" : "White";
+
 }
