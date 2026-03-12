@@ -1,24 +1,14 @@
 ﻿<UserControl x:Class="WpfUI.Views.Controls.DateSelectionControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:conv="clr-namespace:WpfUI.Converters">
-
-    <UserControl.Resources>
-        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-    </UserControl.Resources>
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
-            <!-- Energy type -->
             <ColumnDefinition Width="150"/>
-            <!-- Tariff group -->
             <ColumnDefinition Width="140"/>
-            <!-- DateFrom -->
             <ColumnDefinition Width="140"/>
-            <!-- DateTill -->
             <ColumnDefinition Width="Auto"/>
-            <!-- Remove button -->
         </Grid.ColumnDefinitions>
 
         <!-- Energy type -->
@@ -55,7 +45,17 @@
                 Width="30"
                 Height="30"
                 VerticalAlignment="Bottom"
-                Command="{Binding RemoveCommand}"
-                Visibility="{Binding RemoveButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                Command="{Binding RemoveCommand}">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RemoveButtonVisible}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
     </Grid>
 </UserControl>

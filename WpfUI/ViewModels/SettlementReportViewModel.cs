@@ -1,262 +1,270 @@
-﻿using EnergyUse.Core.Controllers;
-using EnergyUse.Core.Interfaces;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
+using EnergyUse.Core.Controllers;
 using EnergyUse.Models;
 using EnergyUse.Models.Common;
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Input;
-using WpfUI.Services;
 
 namespace WpfUI.ViewModels;
 
 public class SettlementReportViewModel : ViewModelBase
 {
     private readonly SelectReportParametersController _controller;
-    private readonly ISettingsService _settings;
 
-    private bool _isInitializing = true;
-
-    public event Action<bool>? CloseRequested;
-
-    public ObservableCollection<Address> AddressList { get; } = new();
-    public ObservableCollection<PreDefinedPeriod> PredefinedPeriods { get; } = new();
-    public ObservableCollection<SelectionItem> ReportTypes { get; } = new();
     public ObservableCollection<DateSelectionViewModel> DateSelections { get; } = new();
 
-    public Address SelectedAddress
+    public IList<Address> AddressList { get; private set; } = new List<Address>();
+    public IList<PreDefinedPeriod> PredefinedPeriods { get; private set; } = new List<PreDefinedPeriod>();
+    public IList<SelectionItem> ReportTypes { get; private set; } = new List<SelectionItem>();
+
+    private Address? _selectedAddress;
+    public Address? SelectedAddress
     {
         get => _selectedAddress;
         set
         {
-            if (SetProperty(ref _selectedAddress, value))
-            {
-                if (!_isInitializing)
-                    getEnergyTypeSelections();
-            }
+            if (SetProperty(ref _selectedAddress, value) && value != null)
+                LoadDateSelectionsForAddress(value.Id);
+            OnPropertyChanged(nameof(IsValid));
         }
     }
-    private Address _selectedAddress;
 
-    public PreDefinedPeriod SelectedPredefinedPeriod
+    private PreDefinedPeriod? _selectedPredefinedPeriod;
+    public PreDefinedPeriod? SelectedPredefinedPeriod
     {
         get => _selectedPredefinedPeriod;
         set
         {
-            if (SetProperty(ref _selectedPredefinedPeriod, value))
-            {
-                if (!_isInitializing)
-                    applyPredefinedPeriod();
-            }
+            if (SetProperty(ref _selectedPredefinedPeriod, value) && value != null)
+                ApplyPredefinedPeriod(value);
+            OnPropertyChanged(nameof(IsValid));
         }
     }
-    private PreDefinedPeriod _selectedPredefinedPeriod;
 
-    public SelectionItem SelectedReportType
+    private SelectionItem? _selectedReportType;
+    public SelectionItem? SelectedReportType
     {
         get => _selectedReportType;
         set
         {
             if (SetProperty(ref _selectedReportType, value))
             {
-                if (!_isInitializing)
-                    applyReportTypeSettings();
+                // ShowRates‑logica koppelen aan ReportType
+                if (value?.Description?.Contains("Cost", StringComparison.OrdinalIgnoreCase) == true)
+                    ShowRates = true;
+                else
+                    ShowRates = false;
+
+                OnPropertyChanged(nameof(ShowRates));
+                OnPropertyChanged(nameof(IsValid));
             }
         }
     }
-    private SelectionItem _selectedReportType;
 
-    public bool PredictMissingData { get; set; } = true;
-    public bool ShowRates { get; set; } = true;
+    private bool _predictMissingData = true;
+    public bool PredictMissingData
+    {
+        get => _predictMissingData;
+        set { SetProperty(ref _predictMissingData, value); OnPropertyChanged(nameof(IsValid)); }
+    }
+
+    private bool _showRates = true;
+    public bool ShowRates
+    {
+        get => _showRates;
+        set { SetProperty(ref _showRates, value); OnPropertyChanged(nameof(IsValid)); }
+    }
+
+    public bool IsValid
+    {
+        get
+        {
+            if (SelectedAddress == null)
+                return false;
+
+            if (SelectedReportType == null)
+                return false;
+
+            if (!DateSelections.Any())
+                return false;
+
+            if (DateSelections.Any(d => !d.IsValid()))
+                return false;
+
+            return true;
+        }
+    }
 
     public ICommand AddDateSelectionCommand { get; }
     public ICommand ClearPredefinedPeriodCommand { get; }
     public ICommand SelectCommand { get; }
     public ICommand CancelCommand { get; }
 
-    public SettlementReportViewModel(ISettingsService settings)
-    {
-        _settings = settings;
+    public event Action<bool>? CloseRequested;
 
-        _controller = new SelectReportParametersController(WpfUI.Managers.Config.GetDbFileName());
+    public SettlementReportViewModel()
+    {
+        _controller = new SelectReportParametersController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
-        AddDateSelectionCommand = new RelayCommand(_ => AddDateSelection());
-        ClearPredefinedPeriodCommand = new RelayCommand(_ => clearPredefinedPeriod());
-        SelectCommand = new RelayCommand(_ => Select());
-        CancelCommand = new RelayCommand(_ => Cancel());
+        AddDateSelectionCommand = new RelayCommand(_ =>
+        {
+            if (SelectedAddress != null)
+                AddDateSelectionForAddress(SelectedAddress.Id);
+        });
 
-        setInitialData();
+        ClearPredefinedPeriodCommand = new RelayCommand(_ => SelectedPredefinedPeriod = null);
+        SelectCommand = new RelayCommand(_ => OnSelect(), _ => IsValid);
+        CancelCommand = new RelayCommand(_ => OnCancel());
     }
 
-    private async void setInitialData()
+    public async Task InitializeAsync(Address currentAddress, EnergyUse.Common.Enums.ReportType defaultReport)
     {
-        foreach (var a in await _controller.UnitOfWork.AddressRepo.GetAll())
-            AddressList.Add(a);
+        AddressList = (await _controller.UnitOfWork.AddressRepo.GetAll()).ToList();
+        OnPropertyChanged(nameof(AddressList));
 
-        foreach (var p in _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll())
-            PredefinedPeriods.Add(p);
+        SelectedAddress = currentAddress
+            ?? AddressList.FirstOrDefault(a => a.DefaultAddress == true)
+            ?? AddressList.FirstOrDefault();
 
-        foreach (var r in EnergyUse.Core.Manager.LibSelectionItemList.GetReportTypeList())
-            ReportTypes.Add(r);
+        PredefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
+        OnPropertyChanged(nameof(PredefinedPeriods));
 
-        initializeSettings();
+        ReportTypes = EnergyUse.Core.Manager.LibSelectionItemList.GetReportTypeList();
+        OnPropertyChanged(nameof(ReportTypes));
 
-        _isInitializing = false;
+        SelectedReportType = ReportTypes.FirstOrDefault(r => r.Description == defaultReport.ToString());
 
-        if (SelectedAddress != null)
-            getEnergyTypeSelections();
+        OnPropertyChanged(nameof(IsValid));
     }
 
-    private void initializeSettings()
-    {
-        SelectedAddress = AddressList.FirstOrDefault(a => a.Id.ToString() == _settings.Get("LastSelectedAddress"));
-        SelectedPredefinedPeriod = PredefinedPeriods.FirstOrDefault(p => p.Id.ToString() == _settings.Get("LastPreSelectedPeriod"));
-        SelectedReportType = ReportTypes.FirstOrDefault(r => r.Id.ToString() == _settings.Get("LastSelectedReportType"));
-    }
-
-    private void getEnergyTypeSelections()
+    private void LoadDateSelectionsForAddress(long addressId)
     {
         DateSelections.Clear();
 
-        if (SelectedAddress == null)
-            return;
-
-        var energyTypes = _controller.UnitOfWork.EnergyTypeRepo
-            .SelectByAddressId(SelectedAddress.Id)
-            .ToList();
-
-        foreach (var et in energyTypes)
+        if (addressId == 0)
         {
-            var vm = new DateSelectionViewModel
-            {
-                EnergyTypeList = energyTypes,
-                TarifGroupsList = _controller.UnitOfWork.TariffGroupRepo.GetAll().ToList(),
-                RemoveButtonVisible = DateSelections.Count > 0
-            };
-
-            vm.SetTarifGroups();
-            vm.SetEnergyType(et.Id);
-            vm.RemoveRequested += removeDateSelection;
-
-            DateSelections.Add(vm);
+            OnPropertyChanged(nameof(IsValid));
+            return;
         }
+
+        int count = GetDateSelectionCount(addressId);
+
+        for (int i = 0; i < count; i++)
+            AddDateSelectionForAddress(addressId);
+
+        OnPropertyChanged(nameof(IsValid));
     }
 
-    private void AddDateSelection()
+    private int GetDateSelectionCount(long addressId)
     {
-        if (SelectedAddress == null)
-            return;
+        var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+        int count = libSettings.GetNumberOfEnergyTypesOnReport(addressId);
 
-        var vm = new DateSelectionViewModel
+        if (count == 0)
         {
-            EnergyTypeList = _controller.UnitOfWork.EnergyTypeRepo
-                .SelectByAddressId(SelectedAddress.Id).ToList(),
-            TarifGroupsList = _controller.UnitOfWork.TariffGroupRepo.GetAll().ToList(),
-            RemoveButtonVisible = true
+            var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList();
+            count = energyTypes.Count;
+            libSettings.SaveSetting($"NumberOfEnergyTypesOnReport_A{addressId}", count.ToString());
+        }
+
+        return count;
+    }
+
+    private void AddDateSelectionForAddress(long addressId)
+    {
+        var vm = new DateSelectionViewModel(() => OnPropertyChanged(nameof(IsValid)))
+        {
+            EnergyTypeList = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList(),
+            TarifGroupsList = _controller.UnitOfWork.TariffGroupRepo.GetAll().ToList()
         };
 
         vm.SetTarifGroups();
-        vm.RemoveRequested += removeDateSelection;
+        vm.SetDefaultEnergyType();
+
+        vm.RemoveButtonVisible = DateSelections.Count > 0;
+        vm.RemoveCommand = new RelayCommand(_ => RemoveDateSelection(vm));
 
         DateSelections.Add(vm);
+
+        if (DateSelections.Count == 1)
+            vm.RemoveButtonVisible = false;
+
+        OnPropertyChanged(nameof(IsValid));
     }
 
-    private void removeDateSelection(DateSelectionViewModel vm)
+    private void RemoveDateSelection(DateSelectionViewModel vm)
     {
         DateSelections.Remove(vm);
+
+        if (DateSelections.Count == 1)
+            DateSelections[0].RemoveButtonVisible = false;
+
+        OnPropertyChanged(nameof(IsValid));
     }
 
-    private void clearPredefinedPeriod()
+    private void ApplyPredefinedPeriod(PreDefinedPeriod period)
     {
-        SelectedPredefinedPeriod = null;
-    }
-
-    private void applyPredefinedPeriod()
-    {
-        if (SelectedPredefinedPeriod == null)
+        if (SelectedAddress == null)
             return;
 
-        var dates = _controller.UnitOfWork.PreDefinedPeriodDateRepo
-            .GetByPeriodId(SelectedPredefinedPeriod.Id)
-            .ToList();
+        var list = _controller.UnitOfWork.PreDefinedPeriodDateRepo.GetByPeriodId(period.Id).ToList();
 
-        for (int i = 0; i < dates.Count && i < DateSelections.Count; i++)
+        while (DateSelections.Count < list.Count)
+            AddDateSelectionForAddress(SelectedAddress.Id);
+
+        for (int i = 0; i < list.Count; i++)
         {
+            var d = list[i];
             var vm = DateSelections[i];
-            vm.DateFrom = dates[i].StartDate;
-            vm.DateTill = dates[i].EndDate;
-            vm.SetEnergyType(dates[i].EnergyType.Id);
-            vm.SetTarifGroup(dates[i].TariffGroup?.Id ?? 0);
+
+            vm.DateFrom = d.StartDate;
+            vm.DateTill = d.EndDate;
+
+            vm.SetEnergyType(d.EnergyType.Id);
+
+            if (d.TariffGroup != null)
+                vm.SetTarifGroup(d.TariffGroup.Id);
         }
+
+        OnPropertyChanged(nameof(IsValid));
     }
 
-    private void applyReportTypeSettings()
-    {
-        if (SelectedReportType?.Description == "Rates")
-            ShowRates = true;
-    }
-   
     public ParameterSelection GetSelectedParameters()
     {
-        var parameterSelection = new ParameterSelection();
-
-        // Algemene instellingen
-        parameterSelection.StartRange = DateTime.Now.AddMonths(-6);
-        parameterSelection.EndRange = parameterSelection.StartRange.AddMonths(6);
-        parameterSelection.PredictMissingData = PredictMissingData;
-        parameterSelection.ShowRates = ShowRates;
-
-        // Report type
-        if (SelectedReportType != null)
+        var result = new ParameterSelection
         {
-            if (Enum.TryParse(SelectedReportType.Description, out EnergyUse.Common.Enums.ReportType reportType))
-                parameterSelection.ReportType = reportType;
-        }
+            AddressId = SelectedAddress?.Id ?? 0,
+            PredictMissingData = PredictMissingData,
+            ShowRates = ShowRates,
+            ReportType = Enum.Parse<EnergyUse.Common.Enums.ReportType>(SelectedReportType?.Description ?? "None")
+        };
 
-        // Address
-        if (SelectedAddress != null)
-            parameterSelection.AddressId = SelectedAddress.Id;
-
-        // Predefined period
         if (SelectedPredefinedPeriod != null)
-            parameterSelection.PreSelectedPeriodId = SelectedPredefinedPeriod.Id;
+            result.PreSelectedPeriodId = SelectedPredefinedPeriod.Id;
 
-        // DateSelections (EnergyTypes)
-        foreach (var ds in DateSelections)
+        foreach (var vm in DateSelections)
         {
-            if (ds.SelectedEnergyType == null)
+            if (!vm.IsValid())
                 continue;
 
-            var selectedEnergyType = new SelectedEnergyType
+            result.SelectedEnergyTypeList.Add(new SelectedEnergyType
             {
-                EnergyType = ds.SelectedEnergyType,
-                StartRange = ds.DateFrom ?? DateTime.Today,
-                EndRange = ds.DateTill ?? DateTime.Today,
-                TarifGroup = ds.SelectedTariffGroup?.Id ?? 0
-            };
-
-            parameterSelection.SelectedEnergyTypeList.Add(selectedEnergyType);
+                EnergyType = vm.SelectedEnergyType!,
+                StartRange = vm.DateFrom ?? DateTime.Now,
+                EndRange = vm.DateTill ?? DateTime.Now,
+                TarifGroup = vm.SelectedTariffGroup?.Id ?? 0
+            });
         }
 
-        return parameterSelection;
+        return result;
     }
 
-    public event Action<ParameterSelection>? ParametersSelected;
-
-    private void Select()
+    private void OnSelect()
     {
-        _settings.Save("LastSelectedAddress", SelectedAddress?.Id.ToString() ?? "");
-        _settings.Save("LastPreSelectedPeriod", SelectedPredefinedPeriod?.Id.ToString() ?? "");
-        _settings.Save("LastSelectedReportType", SelectedReportType?.Id.ToString() ?? "");
-
-        var parameters = GetSelectedParameters();
-
-        ParametersSelected?.Invoke(parameters);
         CloseRequested?.Invoke(true);
     }
 
-    private void Cancel()
+    private void OnCancel()
     {
         CloseRequested?.Invoke(false);
     }

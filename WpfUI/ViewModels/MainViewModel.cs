@@ -1,7 +1,6 @@
 ﻿using EnergyUse.Core.Controllers;
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
-using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
@@ -317,33 +316,31 @@ public class MainViewModel : ViewModelBase
 
     private async Task OpenSettlementReport()
     {
-        var vm = App.Services.GetRequiredService<SettlementReportViewModel>();
-        var win = new SettlementReportWindow(Application.Current.MainWindow, vm);
+        var parameters = await SettlementReportWindow.ShowDialogAsync(Application.Current.MainWindow,
+                                                                        _selectedAddress,
+                                                                        EnergyUse.Common.Enums.ReportType.SettlementCompact        
+                                                                    );
 
-        if (win.ShowDialog() == true)
+        if (parameters == null)
+            return;
+
+        try
         {
-            var parameters = win.SelectedParameters;
-            if (parameters == null)
-                return;
+            Mouse.OverrideCursor = Cursors.Wait;
 
-            try
+            var fileName = await _controller.GetSettlementPdfAsync(parameters);
+
+            if (!string.IsNullOrWhiteSpace(fileName))
             {
-                Mouse.OverrideCursor = Cursors.Wait;
-
-                var fileName = await _controller.GetSettlementPdfAsync(parameters);
-
-                if (!string.IsNullOrWhiteSpace(fileName))
+                Process.Start(new ProcessStartInfo(fileName)
                 {
-                    Process.Start(new ProcessStartInfo(fileName)
-                    {
-                        UseShellExecute = true
-                    });
-                }
+                    UseShellExecute = true
+                });
             }
-            finally
-            {
-                Mouse.OverrideCursor = null;
-            }
+        }
+        finally
+        {
+            Mouse.OverrideCursor = null;
         }
     }
 
@@ -361,10 +358,10 @@ public class MainViewModel : ViewModelBase
         if (MessageBox.Show(msg, "Alles herberekenen", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
         {
             _controller.RecalculateReadingsDiffPreviousDay(
-                DateTime.MinValue,
-                DateTime.MinValue,
-                SelectedEnergyType.Id,
-                SelectedAddress.Id);
+                                                            DateTime.MinValue,
+                                                            DateTime.MinValue,
+                                                            SelectedEnergyType.Id,
+                                                            SelectedAddress.Id);
 
             refreshViews(false);
         }

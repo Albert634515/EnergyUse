@@ -14,19 +14,14 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- =======================
-             BOVENSTE PARAMETER-RIJ
-             ======================= -->
+        <!-- Bovenste parameters -->
         <GroupBox Header="Parameters" Grid.Row="0" Padding="10">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="350"/>
-                    <!-- Labels + comboboxen -->
                     <ColumnDefinition Width="*"/>
-                    <!-- Checkboxes -->
                 </Grid.ColumnDefinitions>
 
-                <!-- COMBOBOXEN MET LABELS ERNAAST -->
                 <StackPanel Grid.Column="0" Margin="0 0 20 0">
 
                     <!-- Address -->
@@ -63,7 +58,6 @@
 
                 </StackPanel>
 
-                <!-- CHECKBOXEN RECHTS -->
                 <StackPanel Grid.Column="1" VerticalAlignment="Top">
                     <CheckBox Content="Predict missing data"
                               IsChecked="{Binding PredictMissingData}"
@@ -75,9 +69,7 @@
             </Grid>
         </GroupBox>
 
-        <!-- =======================
-             DATE SELECTIONS
-             ======================= -->
+        <!-- Date selections -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding DateSelections}">
                 <ItemsControl.ItemTemplate>
@@ -88,9 +80,7 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <!-- =======================
-             BUTTONS ONDERAAN
-             ======================= -->
+        <!-- Buttons -->
         <StackPanel Grid.Row="2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
@@ -98,7 +88,8 @@
             <Button Content="Add" Width="100" Margin="5"
                     Command="{Binding AddDateSelectionCommand}"/>
             <Button Content="Select" Width="100" Margin="5"
-                    Command="{Binding SelectCommand}"/>
+                    Command="{Binding SelectCommand}"
+                    IsEnabled="{Binding IsValid}"/>
             <Button Content="Cancel" Width="100" Margin="5"
                     Command="{Binding CancelCommand}"/>
         </StackPanel>

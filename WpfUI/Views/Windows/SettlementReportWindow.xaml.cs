@@ -1,36 +1,45 @@
-﻿using EnergyUse.Models.Common;
+﻿using EnergyUse.Models;
+using EnergyUse.Models.Common;
 using System.Windows;
 using WpfUI.ViewModels;
 
-namespace WpfUI.Views.Windows
+namespace WpfUI.Views.Windows;
+
+public partial class SettlementReportWindow : Window
 {
-    public partial class SettlementReportWindow : Window
+    public SettlementReportWindow(Window owner, SettlementReportViewModel vm)
     {
-        public ParameterSelection? SelectedParameters { get; private set; }
+        InitializeComponent();
+        Owner = owner;
+        WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
-        public SettlementReportWindow(Window owner, SettlementReportViewModel vm)
+        DataContext = vm;
+
+        vm.CloseRequested += result =>
         {
-            InitializeComponent();
-            Owner = owner;
-            WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            DialogResult = result;
+            Close();
+        };
+    }
 
-            DataContext = vm;
-        }
+    public static async Task<ParameterSelection?> ShowDialogAsync(
+        Window owner,
+        Address currentAddress,
+        EnergyUse.Common.Enums.ReportType defaultReport)
+    {
+        // 1. ViewModel maken
+        var vm = new SettlementReportViewModel();
 
-        protected override void OnSourceInitialized(EventArgs e)
-        {
-            base.OnSourceInitialized(e);
+        // 2. ViewModel initialiseren (BELANGRIJK!)
+        await vm.InitializeAsync(currentAddress, defaultReport);
 
-            var vm = (SettlementReportViewModel)DataContext;
+        // 3. Window maken met ViewModel
+        var win = new SettlementReportWindow(owner, vm);
 
-            vm.CloseRequested += result =>
-            {
-                if (result)
-                    SelectedParameters = vm.GetSelectedParameters();
+        // 4. Window tonen
+        bool? result = win.ShowDialog();
 
-                DialogResult = result;
-                Close();
-            };
-        }
+        // 5. Parameters teruggeven
+        return result == true ? vm.GetSelectedParameters() : null;
     }
 }
