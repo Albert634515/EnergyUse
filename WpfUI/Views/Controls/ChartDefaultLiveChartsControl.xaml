@@ -4,63 +4,15 @@
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF">
 
     <UserControl.Resources>
-
-        <!-- Algemene marges -->
-        <Style TargetType="StackPanel">
-            <Setter Property="Margin" Value="4"/>
-        </Style>
-        <Style TargetType="ComboBox">
-            <Setter Property="Margin" Value="4"/>
-        </Style>
-        <Style TargetType="DatePicker">
-            <Setter Property="Margin" Value="4"/>
-        </Style>
-        <Style TargetType="CheckBox">
-            <Setter Property="Margin" Value="4"/>
-        </Style>
-        <Style TargetType="Button">
-            <Setter Property="Margin" Value="4"/>
-        </Style>
-        <Style TargetType="RadioButton">
-            <Setter Property="Margin" Value="4"/>
-        </Style>
-        <Style TargetType="Label">
-            <Setter Property="Margin" Value="4"/>
-        </Style>
-
-        <!-- Efficiency radiobutton verbergen zonder converter -->
-        <Style x:Key="EfficiencyVisibilityStyle" TargetType="RadioButton">
-            <Setter Property="Visibility" Value="Visible"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding IsEfficiencyVisible}" Value="False">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
-        <!-- Bool → Visibility zonder converter -->
-        <Style x:Key="BoolToVisibilityStyle" TargetType="Label">
-            <Setter Property="Visibility" Value="Collapsed"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Visible}" Value="True">
-                    <Setter Property="Visibility" Value="Visible"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
 
-    <Grid>
-
+    <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Periode + Compare -->
+            <!-- Periode -->
             <RowDefinition Height="Auto"/>
-            <!-- Type + ShowBy -->
-            <RowDefinition Height="Auto"/>
-            <!-- Checkboxes -->
-            <RowDefinition Height="Auto"/>
-            <!-- Buttons -->
+            <!-- Type + ShowBy + Options + Buttons -->
             <RowDefinition Height="Auto"/>
             <!-- Labels -->
             <RowDefinition Height="*"/>
@@ -68,100 +20,103 @@
         </Grid.RowDefinitions>
 
         <!-- PERIODE -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <Grid Grid.Row="0" Margin="0 0 0 12"
+              ColumnDefinitions="Auto,150,20,Auto,150,20,Auto,150,20,Auto,150">
 
-            <StackPanel>
-                <Label Content="Periode"/>
-                <ComboBox Width="150"
-                          ItemsSource="{Binding PeriodTypes}"
-                          SelectedItem="{Binding SelectedPeriodType}"
-                          DisplayMemberPath="Description"
-                          SelectedValuePath="Key"/>
+            <TextBlock Grid.Column="0" Text="Periode" FontWeight="SemiBold"/>
+            <ComboBox Grid.Column="1"
+                      ItemsSource="{Binding PeriodTypes}"
+                      SelectedItem="{Binding SelectedPeriodType}"
+                      DisplayMemberPath="Description"/>
+
+            <TextBlock Grid.Column="3" Text="Van" FontWeight="SemiBold"/>
+            <DatePicker Grid.Column="4" SelectedDate="{Binding FromDate}"/>
+
+            <TextBlock Grid.Column="6" Text="Tot" FontWeight="SemiBold"/>
+            <DatePicker Grid.Column="7" SelectedDate="{Binding TillDate}"/>
+
+            <TextBlock Grid.Column="9" Text="Vergelijk met" FontWeight="SemiBold"/>
+            <ComboBox Grid.Column="10"
+                      ItemsSource="{Binding EnergyTypes}"
+                      SelectedItem="{Binding SelectedCompareEnergyType}"
+                      DisplayMemberPath="Name"/>
+        </Grid>
+
+        <!-- TYPE + SHOWBY + OPTIONS + BUTTONS -->
+        <Grid Grid.Row="1" Margin="0 0 0 12"
+              ColumnDefinitions="Auto,200,40,Auto,200,40,Auto,200,*">
+
+            <!-- TYPE -->
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Type" FontWeight="SemiBold"/>
+                <RadioButton Content="Rate" IsChecked="{Binding ShowTypeRate}"/>
+                <RadioButton Content="Value" IsChecked="{Binding ShowTypeValue}"/>
+                <RadioButton Content="Efficiency"
+                             IsChecked="{Binding ShowTypeEfficiency}"
+                             Visibility="{Binding IsEfficiencyVisible,
+                                Converter={StaticResource BoolToVisibilityConverter}}"/>
             </StackPanel>
 
-            <StackPanel>
-                <Label Content="Van"/>
-                <DatePicker SelectedDate="{Binding FromDate}" Width="140"/>
+            <!-- SHOW BY -->
+            <StackPanel Grid.Column="3">
+                <TextBlock Text="Weergave" FontWeight="SemiBold"/>
+                <RadioButton Content="Categorie" IsChecked="{Binding ShowByCategory}"/>
+                <RadioButton Content="Subcategorie" IsChecked="{Binding ShowBySubCategory}"/>
+                <RadioButton Content="Totaal" IsChecked="{Binding ShowByTotal}"/>
             </StackPanel>
 
-            <StackPanel>
-                <Label Content="Tot"/>
-                <DatePicker SelectedDate="{Binding TillDate}" Width="140"/>
+            <!-- OPTIONS -->
+            <StackPanel Grid.Column="6">
+                <TextBlock Text="Options" FontWeight="SemiBold"/>
+                <CheckBox Content="Stacked" IsChecked="{Binding ShowStacked}"/>
+                <CheckBox Content="Gemiddelde lijn" IsChecked="{Binding ShowAverage}"/>
+                <CheckBox Content="Voorspel ontbrekende data" IsChecked="{Binding PredictMissingData}"/>
             </StackPanel>
 
-            <StackPanel>
-                <Label Content="Vergelijk met"/>
-                <ComboBox Width="150"
-                          ItemsSource="{Binding EnergyTypes}"
-                          SelectedItem="{Binding SelectedCompareEnergyType}"
-                          DisplayMemberPath="Name"/>
+            <!-- BUTTONS -->
+            <StackPanel Grid.Column="8"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center">
+                <Button Content="Reset"
+                        Width="140"
+                        Command="{Binding ResetCommand}"
+                        Margin="0 0 0 5"/>
+
+                <Button Content="Export"
+                        Width="140"
+                        Command="{Binding ExportCommand}"/>
             </StackPanel>
 
-        </StackPanel>
-
-        <!-- TYPE + SHOWBY -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-
-            <StackPanel>
-                <Label Content="Type"/>
-                <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="Rate" IsChecked="{Binding ShowTypeRate}"/>
-                    <RadioButton Content="Value" IsChecked="{Binding ShowTypeValue}"/>
-                    <RadioButton Content="Efficiency"
-                                 IsChecked="{Binding ShowTypeEfficiency}"
-                                 Style="{StaticResource EfficiencyVisibilityStyle}"/>
-                </StackPanel>
-            </StackPanel>
-
-            <StackPanel>
-                <Label Content="Weergave"/>
-                <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="Categorie" IsChecked="{Binding ShowByCategory}"/>
-                    <RadioButton Content="Subcategorie" IsChecked="{Binding ShowBySubCategory}"/>
-                    <RadioButton Content="Totaal" IsChecked="{Binding ShowByTotal}"/>
-                </StackPanel>
-            </StackPanel>
-
-        </StackPanel>
-
-        <!-- CHECKBOXES -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <CheckBox Content="Stacked" IsChecked="{Binding ShowStacked}"/>
-            <CheckBox Content="Gemiddelde lijn" IsChecked="{Binding ShowAverage}"/>
-            <CheckBox Content="Voorspel ontbrekende data" IsChecked="{Binding PredictMissingData}"/>
-        </StackPanel>
-
-        <!-- BUTTONS -->
-        <StackPanel Grid.Row="3" Orientation="Horizontal">
-            <Button Content="Reset" Width="120" Command="{Binding ResetCommand}"/>
-            <Button Content="Exporteren naar Excel" Width="180" Command="{Binding ExportCommand}"/>
-        </StackPanel>
+        </Grid>
 
         <!-- LABELS -->
-        <StackPanel Grid.Row="4" Orientation="Horizontal">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 0 0 12">
 
-            <Label DataContext="{Binding ConsumptionLabel}"
-                   Content="{Binding Text}"
-                   Background="{Binding BackColor}"
-                   Foreground="{Binding ForeColor}"
-                   Style="{StaticResource BoolToVisibilityStyle}"/>
+            <Border DataContext="{Binding ConsumptionLabel}"
+                    Background="{Binding BackColor}"
+                    Visibility="{Binding Visible, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Padding="6" CornerRadius="4" Margin="0 0 12 0">
+                <TextBlock Text="{Binding Text}" Foreground="{Binding ForeColor}"/>
+            </Border>
 
-            <Label DataContext="{Binding ProductionLabel}"
-                   Content="{Binding Text}"
-                   Background="{Binding BackColor}"
-                   Foreground="{Binding ForeColor}"
-                   Style="{StaticResource BoolToVisibilityStyle}"/>
+            <Border DataContext="{Binding ProductionLabel}"
+                    Background="{Binding BackColor}"
+                    Visibility="{Binding Visible, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Padding="6" CornerRadius="4" Margin="0 0 12 0">
+                <TextBlock Text="{Binding Text}" Foreground="{Binding ForeColor}"/>
+            </Border>
 
-            <Label DataContext="{Binding NettoLabel}"
-                   Content="{Binding Text}"
-                   Background="{Binding BackColor}"
-                   Foreground="{Binding ForeColor}"
-                   Style="{StaticResource BoolToVisibilityStyle}"/>
+            <Border DataContext="{Binding NettoLabel}"
+                    Background="{Binding BackColor}"
+                    Visibility="{Binding Visible, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Padding="6" CornerRadius="4">
+                <TextBlock Text="{Binding Text}" Foreground="{Binding ForeColor}"/>
+            </Border>
 
         </StackPanel>
 
         <!-- CHART -->
-        <Border Grid.Row="5" BorderBrush="LightGray" BorderThickness="1" Padding="10">
+        <Border Grid.Row="3" BorderBrush="#DDD" BorderThickness="1" Padding="10">
             <lvc:CartesianChart
                 Series="{Binding ChartSeries}"
                 XAxes="{Binding XAxes}"

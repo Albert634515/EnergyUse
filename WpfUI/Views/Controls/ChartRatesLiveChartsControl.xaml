@@ -4,58 +4,66 @@
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              xmlns:conv="clr-namespace:WpfUI.Converters">
 
-    <!-- Converter moet HIER staan -->
     <UserControl.Resources>
         <conv:CostCategorySelectionConverter x:Key="CostCategorySelectionConverter" />
     </UserControl.Resources>
 
-    <Grid Margin="10">
+    <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <!-- Form -->
             <RowDefinition Height="Auto"/>
+            <!-- Buttons -->
             <RowDefinition Height="*"/>
+            <!-- Chart -->
         </Grid.RowDefinitions>
 
-        <!-- TYPE -->
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0 0 0 10">
-            <StackPanel Margin="0 0 20 0">
-                <TextBlock Text="Type"/>
+        <!-- FORM -->
+        <Grid Grid.Row="0" Margin="0 0 0 12"
+              ColumnDefinitions="Auto,110,20,Auto,130,20,Auto,130,*">
+
+            <!-- TYPE -->
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Type" FontWeight="SemiBold"/>
                 <RadioButton Content="Rate" IsChecked="{Binding ShowTypeRate}"/>
                 <RadioButton Content="Unit" IsChecked="{Binding ShowTypeUnit}"/>
             </StackPanel>
 
-            <StackPanel Margin="0 0 20 0">
-                <TextBlock Text="From"/>
+            <!-- FROM -->
+            <StackPanel Grid.Column="3">
+                <TextBlock Text="From" FontWeight="SemiBold"/>
                 <DatePicker SelectedDate="{Binding FromDate}" Width="130"/>
             </StackPanel>
 
-            <StackPanel>
-                <TextBlock Text="Till"/>
+            <!-- TILL -->
+            <StackPanel Grid.Column="6">
+                <TextBlock Text="Till" FontWeight="SemiBold"/>
                 <DatePicker SelectedDate="{Binding TillDate}" Width="130"/>
             </StackPanel>
-        </StackPanel>
 
-        <!-- COST CATEGORIES -->
-        <!--
-        <StackPanel Grid.Row="1" Margin="0 0 0 10">
-            <TextBlock Text="Cost categories"/>
-            <ItemsControl ItemsSource="{Binding CostCategories}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <CheckBox Content="{Binding Name}"
-          IsChecked="{Binding 
-              Converter={StaticResource CostCategorySelectionConverter},
-              ConverterParameter={Binding RelativeSource={RelativeSource AncestorType=UserControl}}}" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
-        -->
-    
+            <!-- BUTTONS -->
+            <StackPanel Grid.Column="8"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center">
+                <Button Content="Reset"
+                        Width="120"
+                        Command="{Binding ResetCommand}"
+                        Margin="0 0 0 5"/>
+
+                <Button Content="Export"
+                        Width="120"
+                        Command="{Binding ExportCommand}"/>
+            </StackPanel>
+
+        </Grid>
+
         <!-- CHART -->
-        <lvc:CartesianChart Grid.Row="2"
-                            Series="{Binding ChartSeries}"
-                            XAxes="{Binding XAxes}"
-                            YAxes="{Binding YAxes}"/>
+        <Border Grid.Row="2" BorderBrush="#DDD" BorderThickness="1" Padding="10">
+            <lvc:CartesianChart
+                Series="{Binding ChartSeries}"
+                XAxes="{Binding XAxes}"
+                YAxes="{Binding YAxes}"/>
+        </Border>
+
     </Grid>
 </UserControl>

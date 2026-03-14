@@ -4,154 +4,120 @@
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF">
 
     <UserControl.Resources>
-
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-
-        <!-- Labels bovenaan -->
-        <Style x:Key="InfoLabelBox" TargetType="Border">
-            <Setter Property="Height" Value="26"/>
-            <Setter Property="Padding" Value="6 2"/>
-            <Setter Property="Margin" Value="0 0 12 0"/>
-            <Setter Property="CornerRadius" Value="3"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Visibility" Value="Collapsed"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Visible}" Value="True">
-                    <Setter Property="Visibility" Value="Visible"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
-        <!-- Form labels -->
-        <Style TargetType="TextBlock" x:Key="FormLabel">
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Margin" Value="0 0 6 0"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-
-        <!-- Comboboxen -->
-        <Style TargetType="ComboBox" x:Key="FormComboBox">
-            <Setter Property="Height" Value="26"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0 0 20 0"/>
-        </Style>
-
-        <!-- Day panel -->
-        <Style x:Key="DayPanelVisibilityStyle" TargetType="StackPanel">
-            <Setter Property="Visibility" Value="Collapsed"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding IsDayVisible}" Value="True">
-                    <Setter Property="Visibility" Value="Visible"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
     </UserControl.Resources>
 
     <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <!-- Labels -->
             <RowDefinition Height="Auto"/>
+            <!-- Form -->
             <RowDefinition Height="Auto"/>
+            <!-- Options + Buttons -->
             <RowDefinition Height="*"/>
+            <!-- Chart -->
         </Grid.RowDefinitions>
 
         <!-- LABELS -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0 0 0 12">
-            <Border DataContext="{Binding ConsumptionLabel}" Style="{StaticResource InfoLabelBox}" Background="{Binding BackColor}">
-                <TextBlock Text="{Binding Text}" Foreground="{Binding ForeColor}" VerticalAlignment="Center"/>
+
+            <Border DataContext="{Binding ConsumptionLabel}"
+                    Background="{Binding BackColor}"
+                    Visibility="{Binding Visible, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Padding="6" CornerRadius="4" Margin="0 0 12 0">
+                <TextBlock Text="{Binding Text}" Foreground="{Binding ForeColor}"/>
             </Border>
 
-            <Border DataContext="{Binding ProductionLabel}" Style="{StaticResource InfoLabelBox}" Background="{Binding BackColor}">
-                <TextBlock Text="{Binding Text}" Foreground="{Binding ForeColor}" VerticalAlignment="Center"/>
+            <Border DataContext="{Binding ProductionLabel}"
+                    Background="{Binding BackColor}"
+                    Visibility="{Binding Visible, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Padding="6" CornerRadius="4" Margin="0 0 12 0">
+                <TextBlock Text="{Binding Text}" Foreground="{Binding ForeColor}"/>
             </Border>
 
-            <Border DataContext="{Binding NettoLabel}" Style="{StaticResource InfoLabelBox}" Background="{Binding BackColor}">
-                <TextBlock Text="{Binding Text}" Foreground="{Binding ForeColor}" VerticalAlignment="Center"/>
+            <Border DataContext="{Binding NettoLabel}"
+                    Background="{Binding BackColor}"
+                    Visibility="{Binding Visible, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Padding="6" CornerRadius="4">
+                <TextBlock Text="{Binding Text}" Foreground="{Binding ForeColor}"/>
             </Border>
+
         </StackPanel>
 
         <!-- FORM -->
         <Grid Grid.Row="1" Margin="0 0 0 12"
-              ColumnDefinitions="Auto,150,20,Auto,100,20,Auto,100,20,Auto,100,20,Auto,100">
+              ColumnDefinitions="Auto,150,20,Auto,150,20,Auto,150,20,Auto,150">
 
-            <!-- Period type -->
-            <TextBlock Grid.Column="0" Text="Period type" Style="{StaticResource FormLabel}"/>
+            <TextBlock Grid.Column="0" Text="Period type" FontWeight="SemiBold"/>
             <ComboBox Grid.Column="1"
-                      Style="{StaticResource FormComboBox}"
                       ItemsSource="{Binding PeriodTypes}"
                       SelectedItem="{Binding SelectedPeriodType}"
                       DisplayMemberPath="Description"/>
 
-            <!-- Start year -->
-            <TextBlock Grid.Column="3" Text="Start year" Style="{StaticResource FormLabel}"/>
+            <TextBlock Grid.Column="3" Text="Start year" FontWeight="SemiBold"/>
             <ComboBox Grid.Column="4"
-                      Style="{StaticResource FormComboBox}"
                       ItemsSource="{Binding Years}"
                       SelectedItem="{Binding StartYear}"/>
 
-            <!-- End year -->
-            <TextBlock Grid.Column="6" Text="End year" Style="{StaticResource FormLabel}"/>
+            <TextBlock Grid.Column="6" Text="End year" FontWeight="SemiBold"/>
             <ComboBox Grid.Column="7"
-                      Style="{StaticResource FormComboBox}"
                       ItemsSource="{Binding Years}"
                       SelectedItem="{Binding EndYear}"/>
 
-            <!-- Number (Month/Week) -->
             <TextBlock Grid.Column="9"
                        Text="{Binding NumberLabel}"
-                       Style="{StaticResource FormLabel}"
+                       FontWeight="SemiBold"
                        Visibility="{Binding IsNumberVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
             <ComboBox Grid.Column="10"
-                      Style="{StaticResource FormComboBox}"
                       ItemsSource="{Binding NumberList}"
                       SelectedItem="{Binding SelectedNumber}"
                       Visibility="{Binding IsNumberVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
-
-            <!-- Day -->
-            <StackPanel Grid.Column="12"
-            Orientation="Horizontal"
-            Style="{StaticResource DayPanelVisibilityStyle}">
-                <TextBlock Text="Day" Style="{StaticResource FormLabel}" Margin="0 0 6 0"/>
-                <ComboBox Style="{StaticResource FormComboBox}"
-              ItemsSource="{Binding DayList}"
-              SelectedItem="{Binding SelectedDay}"/>
-            </StackPanel>
-
-
         </Grid>
 
-        <!-- OPTIONS -->
+        <!-- OPTIONS + BUTTONS -->
         <Grid Grid.Row="2" Margin="0 0 0 12"
-              ColumnDefinitions="Auto,150,40,Auto,150,40,Auto,150,*">
+              ColumnDefinitions="Auto,200,40,Auto,200,40,Auto,200,*">
 
-            <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                <TextBlock Text="Show by" Style="{StaticResource FormLabel}"/>
+            <!-- SHOW BY -->
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Show by" FontWeight="SemiBold"/>
                 <RadioButton Content="Category" IsChecked="{Binding ShowByCategory}"/>
                 <RadioButton Content="Subcategory" IsChecked="{Binding ShowBySubCategory}"/>
                 <RadioButton Content="Total" IsChecked="{Binding ShowByTotal}"/>
             </StackPanel>
 
-            <StackPanel Grid.Column="3" VerticalAlignment="Center">
-                <TextBlock Text="Type" Style="{StaticResource FormLabel}"/>
+            <!-- TYPE -->
+            <StackPanel Grid.Column="3">
+                <TextBlock Text="Type" FontWeight="SemiBold"/>
                 <RadioButton Content="Rate" IsChecked="{Binding ShowTypeRate}"/>
                 <RadioButton Content="Value" IsChecked="{Binding ShowTypeValue}"/>
                 <RadioButton Content="Efficiency"
                              IsChecked="{Binding ShowTypeEfficiency}"
-                             Visibility="{Binding IsEfficiencyVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                             Visibility="{Binding IsEfficiencyVisible,
+                                Converter={StaticResource BoolToVisibilityConverter}}"/>
             </StackPanel>
 
-            <StackPanel Grid.Column="6" VerticalAlignment="Center">
-                <TextBlock Text="Options" Style="{StaticResource FormLabel}"/>
+            <!-- OPTIONS -->
+            <StackPanel Grid.Column="6">
+                <TextBlock Text="Options" FontWeight="SemiBold"/>
                 <CheckBox Content="Predict missing data" IsChecked="{Binding PredictMissingData}"/>
                 <CheckBox Content="Show stacked" IsChecked="{Binding ShowStacked}"/>
             </StackPanel>
 
-            <StackPanel Grid.Column="8" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <Button Content="Reset" Command="{Binding ResetCommand}" Width="100" Margin="0 0 0 5"/>
-                <Button Content="Export" Command="{Binding ExportCommand}" Width="100"/>
+            <!-- BUTTONS -->
+            <StackPanel Grid.Column="8"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center">
+                <Button Content="Reset"
+                        Width="140"
+                        Command="{Binding ResetCommand}"
+                        Margin="0 0 0 5"/>
+
+                <Button Content="Export"
+                        Width="140"
+                        Command="{Binding ExportCommand}"/>
             </StackPanel>
 
         </Grid>
