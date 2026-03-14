@@ -286,7 +286,7 @@ public partial class frmSelectReportParameters : Form
     {
         ucControls.ucDateSelection ucDateSelection = new ucControls.ucDateSelection();
         ucDateSelection.EnergyTypeList = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList();
-        ucDateSelection.TarifGroupsList = _controller.UnitOfWork.TarifGroupRepo.GetAll().ToList();
+        ucDateSelection.TarifGroupsList = _controller.UnitOfWork.TariffGroupRepo.GetAll().ToList();
         ucDateSelection.SetTarifGroups();
 
         ucDateSelection.Name = getDateSelectionKey(lineCount, addressId);

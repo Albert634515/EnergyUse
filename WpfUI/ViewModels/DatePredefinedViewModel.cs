@@ -1,122 +1,143 @@
-﻿using EnergyUse.Core.UnitOfWork;
+﻿using EnergyUse.Core.Controllers;
 using EnergyUse.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using WpfUI.Managers;
 
-namespace WpfUI.ViewModels;
-
-public class DatePredefinedViewModel : ViewModelBase
+namespace WpfUI.ViewModels
 {
-    private readonly PredefinedPeriodDate _unitOfWork;
-
-    public ObservableCollection<EnergyUse.Models.PreDefinedPeriodDate> Dates { get; set; } = new();
-    public ObservableCollection<EnergyUse.Models.EnergyType> EnergyTypes { get; set; } = new();
-    public ObservableCollection<EnergyUse.Models.TariffGroup> TariffGroups { get; set; } = new();
-
-    private EnergyUse.Models.PreDefinedPeriodDate _selectedDate;
-    public EnergyUse.Models.PreDefinedPeriodDate SelectedDate
+    public class DatePredefinedViewModel : ViewModelBase
     {
-        get => _selectedDate;
-        set { _selectedDate = value; OnPropertyChanged(); }
-    }
+        private readonly PreDefinedPeriodController _controller;
 
-    private long _currentPeriodId;
+        public ObservableCollection<PreDefinedPeriodDate> Dates { get; private set; } = new();
+        public ObservableCollection<EnergyType> EnergyTypes { get; private set; } = new();
+        public ObservableCollection<TariffGroup> TariffGroups { get; private set; } = new();
 
-    public ICommand AddCommand { get; }
-    public ICommand SaveCommand { get; }
-    public ICommand CancelCommand { get; }
-    public ICommand DeleteCommand { get; }
-    public ICommand RefreshCommand { get; }
-
-    public DatePredefinedViewModel()
-    {
-        _unitOfWork = new PredefinedPeriodDate(Config.GetDbFileName());
-
-        AddCommand = new RelayCommand(_ => addDate());
-        SaveCommand = new RelayCommand(_ => saveDate());
-        CancelCommand = new RelayCommand(_ => cancelDate());
-        DeleteCommand = new RelayCommand(_ => deleteDate());
-        RefreshCommand = new RelayCommand(_ => LoadDates(_currentPeriodId));
-
-        getTarifGroups();
-        _= InitializeAsync();
-    }
-
-    private async Task InitializeAsync()
-    {
-        getTarifGroups();                 // sync
-        await getDataEnergyTypes();   // async
-    }
-
-
-    private void getTarifGroups()
-    {
-        var list = new ObservableCollection<EnergyUse.Models.TariffGroup>(_unitOfWork.TarifGroupRepo.GetAll().ToList());
-        TariffGroups = list;
-
-        OnPropertyChanged(nameof(TariffGroups));
-    }
-
-    private async Task getDataEnergyTypes()
-    {
-        var list = await _unitOfWork.EnergyTypeRepo.GetAll();
-        EnergyTypes = new ObservableCollection<EnergyUse.Models.EnergyType>(list.ToList());
-
-        OnPropertyChanged(nameof(EnergyTypes));
-    }
-
-    public void LoadDates(long periodId)
-    {
-        _currentPeriodId = periodId;
-
-        if (periodId <= 0)
+        private PreDefinedPeriodDate? _selectedDate;
+        public PreDefinedPeriodDate? SelectedDate
         {
-            Dates.Clear();
-            return;
+            get => _selectedDate;
+            set { _selectedDate = value; OnPropertyChanged(); }
         }
 
-        var list = _unitOfWork.PreDefinedPeriodDateRepo.GetByPeriodId(periodId).ToList();
-        Dates = new ObservableCollection<PreDefinedPeriodDate>(list);
-        OnPropertyChanged(nameof(Dates));
-    }
+        private long _currentPeriodId;
 
-    private void addDate()
-    {
-        if (_currentPeriodId <= 0)
-            return;
+        public ICommand AddCommand { get; }
+        public ICommand SaveCommand { get; }
+        public ICommand CancelCommand { get; }
+        public ICommand DeleteCommand { get; }
+        public ICommand RefreshCommand { get; }
 
-        var entity = new EnergyUse.Models.PreDefinedPeriodDate
+        public DatePredefinedViewModel(PreDefinedPeriodController controller)
         {
-            PreDefinedPeriodId = _currentPeriodId,
-            StartDate = DateTime.Now.Date,
-            EndDate = DateTime.Now.Date.AddYears(1)
-        };
+            _controller = controller;
 
-        _unitOfWork.PreDefinedPeriodDateRepo.Add(entity);
-        Dates.Add(entity);
-        SelectedDate = entity;
-    }
+            AddCommand = new RelayCommand(_ => addDate());
+            SaveCommand = new RelayCommand(_ => SaveDates());
+            CancelCommand = new RelayCommand(_ => CancelDates());
+            DeleteCommand = new RelayCommand(_ => deleteDate());
+            RefreshCommand = new RelayCommand(_ => SetDates(_currentPeriodId));
 
-    private void saveDate()
-    {
-        _unitOfWork.Complete();
-    }
+            setTariffGroups();
+            _ = setEnergyTypesAsync();
+        }
 
-    private void cancelDate()
-    {
-        _unitOfWork.CancelChanges();
-        LoadDates(_currentPeriodId);
-    }
+        public void SetDates(long periodId)
+        {
+            _currentPeriodId = periodId;
 
-    private void deleteDate()
-    {
-        if (SelectedDate == null)
-            return;
+            if (periodId <= 0)
+            {
+                Dates.Clear();
+                return;
+            }
 
-        if (SelectedDate.Id > 0)
-            _unitOfWork.PreDefinedPeriodDateRepo.Remove(SelectedDate);
+            var list = _controller.UnitOfWorkPd.PreDefinedPeriodDateRepo.GetByPeriodId(periodId).ToList();
 
-        Dates.Remove(SelectedDate);
+            Dates = new ObservableCollection<PreDefinedPeriodDate>(list);
+            OnPropertyChanged(nameof(Dates));
+
+            if (Dates.Any())
+                SelectedDate = Dates.FirstOrDefault();
+        }
+
+        private void addDate()
+        {
+            if (_currentPeriodId <= 0)
+                return;
+
+            var entity = new PreDefinedPeriodDate
+            {
+                PreDefinedPeriodId = _currentPeriodId,
+                StartDate = DateTime.Now.Date,
+                EndDate = DateTime.Now.Date.AddYears(1)
+            };
+
+            _controller.UnitOfWorkPd.PreDefinedPeriodDateRepo.Add(entity);
+            Dates.Add(entity);
+            SelectedDate = entity;
+        }
+
+        public void SaveDates()
+        {
+            _controller.UnitOfWorkPd.Complete();
+            StatusCallback?.Invoke("Dates saved");
+        }
+
+        public void CancelDates()
+        {
+            _controller.UnitOfWorkPd.CancelChanges();
+            SetDates(_currentPeriodId);
+            StatusCallback?.Invoke("Changes cancelled");
+        }
+
+        private void deleteDate()
+        {
+            if (SelectedDate == null)
+                return;
+
+            if (SelectedDate.Id > 0)
+                _controller.UnitOfWorkPd.PreDefinedPeriodDateRepo.Remove(SelectedDate);
+
+            Dates.Remove(SelectedDate);
+            StatusCallback?.Invoke("Date deleted");
+        }
+
+        public void DeleteByPeriodId(long periodId)
+        {
+            var datesToDelete = _controller.UnitOfWorkPd.PreDefinedPeriodDateRepo
+                .GetByPeriodId(periodId)
+                .ToList();
+
+            if (datesToDelete.Count == 0)
+                return;
+
+            foreach (var date in datesToDelete)
+            {
+                _controller.UnitOfWorkPd.PreDefinedPeriodDateRepo.Remove(date);
+            }
+
+            _controller.UnitOfWorkPd.Complete();
+
+            SetDates(periodId);
+            StatusCallback?.Invoke("Dates deleted");
+        }
+
+        private void setTariffGroups()
+        {
+            var list = _controller.UnitOfWorkPd.TarifGroupRepo.GetAll().ToList();
+            TariffGroups = new ObservableCollection<TariffGroup>(list);
+            OnPropertyChanged(nameof(TariffGroups));
+        }
+
+        private async Task setEnergyTypesAsync()
+        {
+            var list = await _controller.UnitOfWorkPd.EnergyTypeRepo.GetAll();
+            EnergyTypes = new ObservableCollection<EnergyType>(list.ToList());
+            OnPropertyChanged(nameof(EnergyTypes));
+        }
+
+        public Action<string>? StatusCallback { get; set; }
+
     }
 }

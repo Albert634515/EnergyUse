@@ -1,16 +1,17 @@
 ﻿using System.Windows;
 using WpfUI.ViewModels;
 
-namespace WpfUI.Views.Windows;
-
-public partial class PredefinedPeriodsWindow : Window
+namespace WpfUI.Views.Windows
 {
-    public PredefinedPeriodsWindow(Window owner)
+    public partial class PredefinedPeriodsWindow : Window
     {
-        InitializeComponent();
-        Owner = owner;
-        WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        public PredefinedPeriodsWindow(Window owner)
+        {
+            InitializeComponent();
+            Owner = owner;
+            WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
-        DataContext = new PredefinedPeriodsViewModel();
+            DataContext = new PredefinedPeriodsViewModel(this);
+        }
     }
 }

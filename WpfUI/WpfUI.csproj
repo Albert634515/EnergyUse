@@ -102,4 +102,9 @@
     </None>
   </ItemGroup>
 
+  <Target Name="UnblockOutputAssemblies" AfterTargets="AfterBuild" Condition=" '$(OS)' == 'Windows_NT' ">
+    <!-- Call the unblock script to remove Zone.Identifier / unblock files in output -->
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(ProjectDir)build-scripts\unblock-output.ps1&quot; &quot;$(TargetPath)&quot;" ContinueOnError="true" />
+  </Target>
+
 </Project>

@@ -3,11 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:uc="clr-namespace:WpfUI.Views.Controls"
         Title="Predefined Periods"
-        Width="850" Height="650"
-        ShowInTaskbar="False"
+        Width="900" Height="750"
         WindowStartupLocation="CenterOwner">
 
     <DockPanel>
+
+        <!-- STATUSBALK -->
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem Content="{Binding StatusMessage}" />
+        </StatusBar>
 
         <!-- TOOLBAR -->
         <ToolBar DockPanel.Dock="Top">
@@ -35,18 +39,18 @@
         </ToolBar>
 
         <!-- MAIN CONTENT -->
-        <Grid Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
+        <StackPanel Margin="10">
 
-            <!-- DATAGRID -->
-            <DataGrid Grid.Column="0"
-                      ItemsSource="{Binding PredefinedPeriods}"
-                      SelectedItem="{Binding SelectedPeriod, Mode=TwoWay}"
+            <TextBlock Text="Predefined Periods"
+                       FontWeight="Bold"
+                       Margin="0,0,0,5"/>
+
+            <!-- PERIOD GRID -->
+            <DataGrid ItemsSource="{Binding PredefinedPeriods}"
+                      SelectedItem="{Binding SelectedPeriod}"
                       AutoGenerateColumns="False"
-                      Margin="0,0,10,0">
+                      Height="250"
+                      Margin="0,0,0,20">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="80"/>
@@ -54,10 +58,17 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <!-- RIGHT SIDE USERCONTROL -->
-            <uc:DatePredefinedControl Grid.Column="1"
-                          DataContext="{Binding DatePredefinedVM}"
-                          SelectedPeriodId="{Binding SelectedPeriodId}" />
-        </Grid>
+            <TextBlock Text="Period Dates"
+                       FontWeight="Bold"
+                       Margin="0,0,0,5"/>
+
+            <!-- SUBCONTROL -->
+            <uc:DatePredefinedControl
+                DataContext="{Binding DatePredefinedVM}"
+                SelectedPeriodId="{Binding SelectedPeriodId}" />
+
+        </StackPanel>
+
     </DockPanel>
+
 </Window>
