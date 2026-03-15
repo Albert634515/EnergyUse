@@ -21,7 +21,7 @@ public class VatTarifsViewModel : ViewModelBase
         RefreshCommand = new RelayCommand(_ => Refresh());
         CloseCommand = new RelayCommand(_ => CloseWindow());
 
-        getEnergyTypes();
+        _ = getEnergyTypes();
     }
 
     #region Collections

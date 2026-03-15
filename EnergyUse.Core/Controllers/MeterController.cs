@@ -6,7 +6,7 @@ public class MeterController : BaseController, IController
 {
     #region ControlerProperties
 
-    public EnergyUse.Core.UnitOfWork.Meter? UnitOfWork { get; set; } = null;
+    public EnergyUse.Core.UnitOfWork.Meter UnitOfWork { get; set; }
 
     #endregion
 
@@ -14,18 +14,12 @@ public class MeterController : BaseController, IController
 
     public MeterController(string dbFileName) : base(dbFileName)
     {
-
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.Meter(_dbFileName);
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.Meter(_dbFileName);
     }
 
     #endregion

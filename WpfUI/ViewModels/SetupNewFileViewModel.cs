@@ -1,12 +1,9 @@
-﻿using WpfUI.ViewModels;
-using EnergyUse.Common.Enums;
+﻿using EnergyUse.Common.Enums;
 using EnergyUse.Core.Controllers;
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace WpfUI.ViewModels;
@@ -14,9 +11,9 @@ namespace WpfUI.ViewModels;
 public class SetupNewFileViewModel : ViewModelBase
 {
     private readonly IDialogService _dialogService;
-    private SetupNewFileController _controller;
+    private SetupNewFileController? _controller;
 
-    public event Action RequestClose;
+    public event Action? RequestClose;
 
     public SetupNewFileViewModel(IDialogService dialogService)
     {
@@ -36,7 +33,7 @@ public class SetupNewFileViewModel : ViewModelBase
 
         Address = new Address();
 
-        EnergyTypes = new ObservableCollection<SelectableEnergyType>();
+        EnergyTypes = new ObservableCollection<SelectableEnergyTypeViewModel>();
         foreach (var t in new[]
         {
             new EnergyType { Name = "Elektriciteit" },
@@ -45,7 +42,7 @@ public class SetupNewFileViewModel : ViewModelBase
             new EnergyType { Name = "Zonnepanelen" }
         })
         {
-            var selectable = new SelectableEnergyType(t);
+            var selectable = new SelectableEnergyTypeViewModel(t);
             selectable.PropertyChanged += (_, __) => UpdateSummary();
             EnergyTypes.Add(selectable);
         }
@@ -76,14 +73,14 @@ public class SetupNewFileViewModel : ViewModelBase
     public ICommand SelectFileCommand { get; }
     public ICommand SelectDirectoryCommand { get; }
 
-    private string _newFilePath;
+    private string _newFilePath = string.Empty;
     public string NewFilePath
     {
         get => _newFilePath;
         set { _newFilePath = value; OnPropertyChanged(); UpdateSummary(); }
     }
 
-    private string _targetDirectory;
+    private string _targetDirectory = string.Empty;
     public string TargetDirectory
     {
         get => _targetDirectory;
@@ -147,6 +144,8 @@ public class SetupNewFileViewModel : ViewModelBase
         try
         {
             var folder = Path.GetDirectoryName(targetFile);
+            if (folder == null) return false;
+
             if (!Directory.Exists(folder))
                 Directory.CreateDirectory(folder);
 
@@ -156,21 +155,21 @@ public class SetupNewFileViewModel : ViewModelBase
                 _controller = new SetupNewFileController(targetFile);
                 _controller.UnitOfWork = new EnergyUse.Core.UnitOfWork.SetupNewFile(targetFile);
 
-                SetAsDefaultFile(targetFile);
+                setAsDefaultFile(targetFile);
 
-                SetupNewAddress();
-                SetupNewMeters();
+                setupNewAddress();
+                setupNewMeters();
 
                 if (AddBaseData)
-                    SetupCostCategory();
+                    setupCostCategory();
             }
 
             if (!IsNewFile)
-                SetAsDefaultFile(targetFile);
+                setAsDefaultFile(targetFile);
             else if (!SetAsDefaultFileOption && !string.IsNullOrWhiteSpace(currentFile))
-                SetAsDefaultFile(currentFile);
+                setAsDefaultFile(currentFile);
             else
-                SetAsDefaultFile(targetFile);
+                setAsDefaultFile(targetFile);
 
             UpdateSummary();
             StatusMessage = "Database succesvol created!";
@@ -214,7 +213,7 @@ public class SetupNewFileViewModel : ViewModelBase
         return true;
     }
 
-    private void SetAsDefaultFile(string file)
+    private void setAsDefaultFile(string file)
     {
         if (!File.Exists(file))
             _dialogService.Show($"Bestand {file} bestaat niet of is niet toegankelijk.", "Fout");
@@ -222,15 +221,18 @@ public class SetupNewFileViewModel : ViewModelBase
             Managers.Config.SetDbFileName(file);
     }
 
-    private void SetupNewAddress()
+    private void setupNewAddress()
     {
+        if (_controller == null || Address == null)
+            return;
+
         var address = Address;
 
         var defaultTariffGroup = _controller.UnitOfWork.TarifGroupRepo
-            .SelectById((long)TariffGroupType.EnergyCosts);
+                                            .SelectById((long)TariffGroupType.EnergyCosts);
 
         var generalTariffGroup = _controller.UnitOfWork.TarifGroupRepo
-            .SelectById((long)TariffGroupType.GeneralCosts);
+                                            .SelectById((long)TariffGroupType.GeneralCosts);
 
         address.DefaultTariffGroupId = defaultTariffGroup?.Id ?? 0;
         address.GeneralTariffGroupId = generalTariffGroup?.Id ?? 0;
@@ -240,16 +242,22 @@ public class SetupNewFileViewModel : ViewModelBase
         _controller.UnitOfWork.Complete();
     }
 
-    private void SetupNewMeters()
+    private void setupNewMeters()
     {
+        if (Address == null)
+            return;
+
         var addressId = Address.Id;
 
         foreach (var et in EnergyTypes.Where(e => e.IsSelected).Select(e => e.EnergyType))
-            SetupMeter(et, addressId);
+            setupMeter(et, addressId);
     }
 
-    private void SetupMeter(EnergyType type, long addressId)
+    private void setupMeter(EnergyType type, long addressId)
     {
+        if (_controller == null)
+            return;
+
         var meter = new Meter
         {
             Description = $"{type.Name} meter",
@@ -262,8 +270,11 @@ public class SetupNewFileViewModel : ViewModelBase
         _controller.UnitOfWork.Complete();
     }
 
-    private void SetupCostCategory()
+    private void setupCostCategory()
     {
+        if (_controller == null)
+            return;
+
         var categories = GetListOfNewCostCategories();
         int id = 1;
 
@@ -302,8 +313,8 @@ public class SetupNewFileViewModel : ViewModelBase
     // -----------------------------
     // Address
     // -----------------------------
-    private Address _address;
-    public Address Address
+    private Address? _address;
+    public Address? Address
     {
         get => _address;
         set
@@ -317,12 +328,12 @@ public class SetupNewFileViewModel : ViewModelBase
     // -----------------------------
     // Energy types
     // -----------------------------
-    public ObservableCollection<SelectableEnergyType> EnergyTypes { get; }
+    public ObservableCollection<SelectableEnergyTypeViewModel> EnergyTypes { get; }
 
     // -----------------------------
     // Summary
     // -----------------------------
-    private string _summaryText;
+    private string _summaryText = string.Empty;
     public string SummaryText
     {
         get => _summaryText;
@@ -332,24 +343,24 @@ public class SetupNewFileViewModel : ViewModelBase
     private void UpdateSummary()
     {
         var selectedEnergyTypes =
-            (EnergyTypes ?? Enumerable.Empty<SelectableEnergyType>())
+            (EnergyTypes ?? Enumerable.Empty<SelectableEnergyTypeViewModel>())
             .Where(e => e.IsSelected)
             .Select(e => e.EnergyType.Name);
 
         SummaryText =
-            $"Bestand: {NewFilePath}\n" +
-            $"Doelmap: {TargetDirectory}\n" +
-            $"Adres: {Address?.Street} {Address?.HouseNumber}, {Address?.PostalCode} {Address?.City}\n" +
-            $"Zonnepanelen: {(Address?.SolarPanelsAvailable == true ? "Ja" : "Nee")}\n" +
-            $"Energietypen: {string.Join(", ", selectedEnergyTypes)}\n" +
-            $"Basisgegevens toevoegen: {(AddBaseData ? "Ja" : "Nee")}\n" +
-            $"Instellen als standaardbestand: {(SetAsDefaultFileOption ? "Ja" : "Nee")}";
+            $"File: {NewFilePath}\n" +
+            $"Target: {TargetDirectory}\n" +
+            $"Address: {Address?.Street} {Address?.HouseNumber}, {Address?.PostalCode} {Address?.City}\n" +
+            $"Solarpanels: {(Address?.SolarPanelsAvailable == true ? "Ja" : "Nee")}\n" +
+            $"Energytypes: {string.Join(", ", selectedEnergyTypes)}\n" +
+            $"Add base data: {(AddBaseData ? "Ja" : "Nee")}\n" +
+            $"Set as standard file: {(SetAsDefaultFileOption ? "Ja" : "Nee")}";
     }
 
     // -----------------------------
     // Status
     // -----------------------------
-    private string _statusMessage;
+    private string _statusMessage = string.Empty;
     public string StatusMessage
     {
         get => _statusMessage;

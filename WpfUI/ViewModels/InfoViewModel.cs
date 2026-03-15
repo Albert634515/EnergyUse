@@ -5,8 +5,8 @@ namespace WpfUI.ViewModels;
 
 public class InfoWindowViewModel : ViewModelBase
 {
-    public ObservableCollection<InfoReferenceItem> IconReferences { get; }
-    public ObservableCollection<InfoReferenceItem> PluginReferences { get; }
+    public ObservableCollection<InfoReferenceItem> IconReferences { get; } = new ObservableCollection<InfoReferenceItem>();
+    public ObservableCollection<InfoReferenceItem> PluginReferences { get; } = new ObservableCollection<InfoReferenceItem>();
 
     public InfoWindowViewModel()
     {

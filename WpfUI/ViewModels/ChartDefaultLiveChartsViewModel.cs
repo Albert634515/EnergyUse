@@ -54,20 +54,20 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
     // ---------------------------------------------------------
     // ADDRESS + ENERGYTYPE
     // ---------------------------------------------------------
-
-    public Address CurrentAddress
+    
+    private Address? _currentAddress;
+    public Address? CurrentAddress
     {
         get => _currentAddress;
         set { if (SetProperty(ref _currentAddress, value)) SafeUpdateChart(); }
     }
-    private Address _currentAddress;
 
-    public EnergyType CurrentEnergyType
+    private EnergyType? _currentEnergyType;
+    public EnergyType? CurrentEnergyType
     {
         get => _currentEnergyType;
         set { if (SetProperty(ref _currentEnergyType, value)) SafeUpdateChart(); }
-    }
-    private EnergyType _currentEnergyType;
+    }    
 
     // ---------------------------------------------------------
     // COMPARE WITH
@@ -75,8 +75,8 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
 
     public ObservableCollection<EnergyType> EnergyTypes { get; }
 
-    private EnergyType _selectedCompareEnergyType;
-    public EnergyType SelectedCompareEnergyType
+    private EnergyType? _selectedCompareEnergyType;
+    public EnergyType? SelectedCompareEnergyType
     {
         get => _selectedCompareEnergyType;
         set
@@ -97,14 +97,14 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
     public ChartLabel ProductionLabel { get; } = new();
     public ChartLabel NettoLabel { get; } = new();
 
-    private void UpdateLabels(Dictionary<string, ResultLabel> labels)
+    private void updateLabels(Dictionary<string, ResultLabel> labels)
     {
-        ApplyLabel(labels, "Consumption", ConsumptionLabel);
-        ApplyLabel(labels, "Production", ProductionLabel);
-        ApplyLabel(labels, "Netto", NettoLabel);
+        applyLabel(labels, "Consumption", ConsumptionLabel);
+        applyLabel(labels, "Production", ProductionLabel);
+        applyLabel(labels, "Netto", NettoLabel);
     }
 
-    private void ApplyLabel(Dictionary<string, ResultLabel> labels, string key, ChartLabel target)
+    private void applyLabel(Dictionary<string, ResultLabel> labels, string key, ChartLabel target)
     {
         if (!labels.TryGetValue(key, out var src))
         {
@@ -132,8 +132,8 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
 
     public ObservableCollection<SelectionItem> PeriodTypes { get; } = new();
 
-    private SelectionItem _selectedPeriodType;
-    public SelectionItem SelectedPeriodType
+    private SelectionItem? _selectedPeriodType;
+    public SelectionItem? SelectedPeriodType
     {
         get => _selectedPeriodType;
         set
@@ -325,10 +325,10 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
     public void UpdateChart()
     {
         if (!_isLoaded) return;
+
         if (CurrentAddress == null || CurrentEnergyType == null || SelectedPeriodType == null)
             return;
 
-        // ⭐ BELANGRIJK: correcte periode op basis van SelectedPeriodType
         var period = LibGraphGeneral.GetPeriodType(SelectedPeriodType.Key);
 
         var energyTypes = new List<EnergyType> { CurrentEnergyType };
@@ -352,7 +352,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         XAxes = new ObservableCollection<Axis>(result.XAxes);
         YAxes = new ObservableCollection<Axis>(result.YAxes);
 
-        UpdateLabels(result.Labels);
+        updateLabels(result.Labels);
 
         OnPropertyChanged(nameof(ChartSeries));
         OnPropertyChanged(nameof(XAxes));
@@ -385,6 +385,9 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
 
     private void ExportChart()
     {
+        if (CurrentEnergyType == null)
+            return;
+
         _service.ExportToExcel(CurrentEnergyType);
     }
 

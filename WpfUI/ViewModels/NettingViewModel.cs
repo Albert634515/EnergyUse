@@ -1,8 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+﻿using EnergyUse.Core.Controllers;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using EnergyUse.Core.Controllers;
 using WpfUI.Managers;
 
 namespace WpfUI.ViewModels;
@@ -27,8 +26,8 @@ public class NettingViewModel : ViewModelBase
         }
     }
 
-    private EnergyUse.Models.Netting _selectedNetting;
-    public EnergyUse.Models.Netting SelectedNetting
+    private EnergyUse.Models.Netting? _selectedNetting;
+    public EnergyUse.Models.Netting? SelectedNetting
     {
         get => _selectedNetting;
         set { _selectedNetting = value; OnPropertyChanged(); }
@@ -61,11 +60,11 @@ public class NettingViewModel : ViewModelBase
 
     private async Task initializeAsync()
     {
-        await loadEnergyTypes();
+        await setEnergyTypes();
         await refreshNetting();
     }
 
-    private async Task loadEnergyTypes()
+    private async Task setEnergyTypes()
     {
         var list = await _controller.UnitOfWork.EnergyTypeRepo.GetAll();
         EnergyTypes = new ObservableCollection<EnergyUse.Models.EnergyType>(list);

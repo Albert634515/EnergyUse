@@ -7,7 +7,7 @@ public class RateController : BaseController, IController
 {
     #region ControlerProperties
 
-    public EnergyUse.Core.UnitOfWork.Rate? UnitOfWork { get; set; } = null;
+    public EnergyUse.Core.UnitOfWork.Rate UnitOfWork { get; set; }
 
     #endregion
 
@@ -15,18 +15,12 @@ public class RateController : BaseController, IController
 
     public RateController(string dbFileName) : base(dbFileName)
     {
-
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.Rate(_dbFileName);
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.Rate(_dbFileName);
     }
 
     #endregion

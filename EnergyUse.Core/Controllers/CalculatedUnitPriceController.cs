@@ -6,7 +6,7 @@ public class CalculatedUnitPriceController : BaseController, IController
 {
     #region ControlerProperties
 
-    public EnergyUse.Core.UnitOfWork.CalculatedUnitPrice? UnitOfWork { get; set; } = null;
+    public EnergyUse.Core.UnitOfWork.CalculatedUnitPrice? UnitOfWork { get; set; }
 
     #endregion
 
@@ -14,18 +14,12 @@ public class CalculatedUnitPriceController : BaseController, IController
 
     public CalculatedUnitPriceController(string dbFileName) : base(dbFileName)
     {
-
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.CalculatedUnitPrice(_dbFileName);
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.CalculatedUnitPrice(_dbFileName);
     }
 
     #endregion

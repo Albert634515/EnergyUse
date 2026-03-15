@@ -7,24 +7,18 @@ public class AddressController : BaseController, IController
 {
     #region ControlerProperties
 
-    public EnergyUse.Core.UnitOfWork.Address? UnitOfWork { get; set; } = null;
+    public EnergyUse.Core.UnitOfWork.Address UnitOfWork { get; set; }
 
     #endregion
 
     public AddressController(string dbFileName) : base(dbFileName)
     {
-
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.Address(_dbFileName);
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.Address(_dbFileName);
     }
 
     public async Task<List<Address>> GetAllAdressesAsync()

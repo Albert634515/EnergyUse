@@ -4,6 +4,7 @@ using EnergyUse.Models.Common;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using WpfUI.Services;
 using WpfUI.ViewModels;
 
 public class PayBackTimeViewModel : ViewModelBase
@@ -21,7 +22,7 @@ public class PayBackTimeViewModel : ViewModelBase
 
         PayBackTimes = new ObservableCollection<PayBackTime>();
 
-        LoadAddresses();
+        setAddresses();
     }
 
     // ---------------------------------------------------------
@@ -30,28 +31,28 @@ public class PayBackTimeViewModel : ViewModelBase
 
     public ObservableCollection<Address> Addresses { get; set; } = new();
     public ObservableCollection<EnergyType> EnergyTypes { get; set; } = new();
-    public ObservableCollection<PayBackTime> PayBackTimes { get; }
+    public ObservableCollection<PayBackTime> PayBackTimes { get; }  = new();
 
     // ---------------------------------------------------------
     // FORM FIELDS
     // ---------------------------------------------------------
 
-    private Address _selectedAddress;
-    public Address SelectedAddress
+    private Address? _selectedAddress;
+    public Address? SelectedAddress
     {
         get => _selectedAddress;
         set
         {
             if (SetProperty(ref _selectedAddress, value))
             {
-                LoadEnergyTypes();
-                LoadAddressSettings();
+                setEnergyTypes();
+                setAddressSettings();
             }
         }
     }
 
-    private EnergyType _selectedEnergyType;
-    public EnergyType SelectedEnergyType
+    private EnergyType? _selectedEnergyType;
+    public EnergyType? SelectedEnergyType
     {
         get => _selectedEnergyType;
         set => SetProperty(ref _selectedEnergyType, value);
@@ -117,7 +118,7 @@ public class PayBackTimeViewModel : ViewModelBase
         set => SetProperty(ref _progressValue, value);
     }
 
-    private string _progressText;
+    private string _progressText = string.Empty;
     public string ProgressText
     {
         get => _progressText;
@@ -149,17 +150,18 @@ public class PayBackTimeViewModel : ViewModelBase
     // INITIAL LOAD
     // ---------------------------------------------------------
 
-    private async void LoadAddresses()
+    private async void setAddresses()
     {
         var list = (await _controller.UnitOfWork.AddressRepo.GetAll()).ToList();
         Addresses.Clear();
         foreach (var a in list)
             Addresses.Add(a);
 
-        SelectedAddress = list.FirstOrDefault(x => x.DefaultAddress == true) ?? list.FirstOrDefault();
+        if (list.Any())
+            SelectedAddress = list.FirstOrDefault(x => x.DefaultAddress == true) ?? list.FirstOrDefault();
     }
 
-    private void LoadEnergyTypes()
+    private void setEnergyTypes()
     {
         if (SelectedAddress == null)
             return;
@@ -173,10 +175,11 @@ public class PayBackTimeViewModel : ViewModelBase
         foreach (var e in list)
             EnergyTypes.Add(e);
 
-        SelectedEnergyType = EnergyTypes.FirstOrDefault();
+        if (EnergyTypes.Any())    
+            SelectedEnergyType = EnergyTypes.FirstOrDefault();
     }
 
-    private void LoadAddressSettings()
+    private void setAddressSettings()
     {
         if (SelectedAddress == null)
             return;
@@ -199,6 +202,19 @@ public class PayBackTimeViewModel : ViewModelBase
     {
         if (!await ValidateInputAsync())
             return;
+
+        if (SelectedAddress == null)
+        {
+            MessageBox.Show("Select an address");
+            return;
+        }
+
+        if (SelectedEnergyType == null)
+        {
+            MessageBox.Show("Select an energy type");
+            return;
+        }
+
 
         PayBackTimes.Clear();
         IsProgressVisible = true;
@@ -250,6 +266,12 @@ public class PayBackTimeViewModel : ViewModelBase
         if (SelectedAddress == null)
         {
             MessageBox.Show("Select an address");
+            return false;
+        }
+
+        if (SelectedEnergyType == null)
+        {
+            MessageBox.Show("Select an energy type");
             return false;
         }
 

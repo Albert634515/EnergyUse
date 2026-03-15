@@ -13,8 +13,8 @@ namespace WpfUI.ViewModels
 
         public ObservableCollection<EnergyUse.Models.PreDefinedPeriod> PredefinedPeriods { get; set; } = new();
 
-        private EnergyUse.Models.PreDefinedPeriod _selectedPeriod;
-        public EnergyUse.Models.PreDefinedPeriod SelectedPeriod
+        private EnergyUse.Models.PreDefinedPeriod? _selectedPeriod;
+        public EnergyUse.Models.PreDefinedPeriod? SelectedPeriod
         {
             get => _selectedPeriod;
             set
@@ -35,7 +35,7 @@ namespace WpfUI.ViewModels
             set { _selectedPeriodId = value; OnPropertyChanged(); }
         }
 
-        private string _statusMessage;
+        private string _statusMessage = string.Empty;
         public string StatusMessage
         {
             get => _statusMessage;
@@ -100,6 +100,7 @@ namespace WpfUI.ViewModels
         {
             _controller.UnitOfWork.CancelChanges();
             DatePredefinedVM.SetDates(SelectedPeriodId);
+            StatusMessage = "Cancelled successfully";
             getPeriods();
         }
 

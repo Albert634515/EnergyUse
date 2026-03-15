@@ -6,7 +6,6 @@ using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
-using SkiaSharp;
 using WpfUI.Managers;
 using WpfUI.Models;
 

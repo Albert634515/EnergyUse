@@ -1,6 +1,5 @@
 ﻿using EnergyUse.Common.Enums;
 using EnergyUse.Models;
-using EnergyUse.Models.Common;
 using System.Windows.Input;
 
 namespace WpfUI.ViewModels;

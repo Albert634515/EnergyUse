@@ -12,27 +12,29 @@ namespace WpfUI.ViewModels
     {
         private readonly CostcategoriesController _controller;
 
-        public ObservableCollection<EnergyType> EnergyTypes { get; private set; }
-        public ObservableCollection<CostCategory> CostCategories { get; private set; }
+        public ObservableCollection<EnergyType> EnergyTypes { get; private set; } = [];
+
+        public ObservableCollection<CostCategory> CostCategories { get; private set; } = [];
+
         public ObservableCollection<Unit> Units { get; }
         public ObservableCollection<TariffGroup> TariffGroups { get; }
         public ObservableCollection<EnergySubType> EnergySubTypes { get; }
         public ObservableCollection<CalculationType> CalculationTypes { get; }
 
-        private EnergyType _selectedEnergyType;
-        public EnergyType SelectedEnergyType
+        private EnergyType? _selectedEnergyType;
+        public EnergyType? SelectedEnergyType
         {
             get => _selectedEnergyType;
             set
             {
                 _selectedEnergyType = value;
                 OnPropertyChanged();
-                LoadCostCategories();
+                setCostCategories();
             }
         }
 
-        private CostCategory _selectedCostCategory;
-        public CostCategory SelectedCostCategory
+        private CostCategory? _selectedCostCategory;
+        public CostCategory? SelectedCostCategory
         {
             get => _selectedCostCategory;
             set
@@ -57,12 +59,12 @@ namespace WpfUI.ViewModels
             }
         }
 
+        private string _statusMessage = string.Empty;
         public string StatusMessage
         {
             get => _statusMessage;
             set { _statusMessage = value; OnPropertyChanged(); }
-        }
-        private string _statusMessage;
+        }        
 
         public ICommand AddCommand { get; }
         public ICommand SaveCommand { get; }
@@ -76,18 +78,18 @@ namespace WpfUI.ViewModels
             _controller = new CostcategoriesController(Managers.Config.GetDbFileName());
             _controller.Initialize();
 
-            setEnergyTypesAsync();
+            _ = setEnergyTypesAsync();
             
             Units = new ObservableCollection<Unit>(_controller.UnitOfWork.UnitRepo.GetAll());
             TariffGroups = new ObservableCollection<TariffGroup>(_controller.UnitOfWork.TariffGroupRepo.GetAll());
             EnergySubTypes = new ObservableCollection<EnergySubType>(_controller.UnitOfWork.EnergySubTypeRepo.GetAll());
             CalculationTypes = new ObservableCollection<CalculationType>(_controller.UnitOfWork.CalculationTypeRepo.GetAll());
 
-            AddCommand = new RelayCommand(_ => Add());
-            SaveCommand = new RelayCommand(_ => Save());
-            CancelCommand = new RelayCommand(_ => Cancel());
-            DeleteCommand = new RelayCommand(_ => Delete());
-            RefreshCommand = new RelayCommand(_ => Refresh());
+            AddCommand = new RelayCommand(_ => add());
+            SaveCommand = new RelayCommand(_ => save());
+            CancelCommand = new RelayCommand(_ => cancel());
+            DeleteCommand = new RelayCommand(_ => delete());
+            RefreshCommand = new RelayCommand(_ => refresh());
             CloseCommand = new RelayCommand(_ => Close());
         }
 
@@ -97,7 +99,7 @@ namespace WpfUI.ViewModels
             EnergyTypes = new ObservableCollection<EnergyType>(energyTypes);
         }
 
-        private void LoadCostCategories()
+        private void setCostCategories()
         {
             if (SelectedEnergyType == null)
                 return;
@@ -110,7 +112,7 @@ namespace WpfUI.ViewModels
             OnPropertyChanged(nameof(CostCategories));
         }
 
-        private void Add()
+        private void add()
         {
             if (SelectedEnergyType == null)
             {
@@ -123,30 +125,32 @@ namespace WpfUI.ViewModels
             SelectedCostCategory = entity;
         }
 
-        private void Save()
+        private void save()
         {
             _controller.UnitOfWork.Complete();
             StatusMessage = "Saved successfully.";
         }
 
-        private void Cancel()
+        private void cancel()
         {
             _controller.UnitOfWork.CancelChanges();
-            Refresh();
+            refresh();
+            StatusMessage = "Cancelled successfully";
         }
 
-        private void Delete()
+        private void delete()
         {
             if (SelectedCostCategory == null)
                 return;
 
             _controller.UnitOfWork.Delete(SelectedCostCategory);
             CostCategories.Remove(SelectedCostCategory);
+            StatusMessage = "Cost category deleted";
         }
 
-        private void Refresh()
+        private void refresh()
         {
-            LoadCostCategories();
+            setCostCategories();
             StatusMessage = "Refreshed.";
         }
 

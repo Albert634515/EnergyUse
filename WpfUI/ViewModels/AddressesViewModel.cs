@@ -10,7 +10,7 @@ public class AddressesViewModel : ViewModelBase
 {
     private readonly AddressController _controller;
 
-    private ObservableCollection<Address> _addresses;
+    private ObservableCollection<Address> _addresses = new ObservableCollection<Address>();
     public ObservableCollection<Address> Addresses
     {
         get => _addresses;
@@ -21,8 +21,8 @@ public class AddressesViewModel : ViewModelBase
         }
     }
 
-    private Address _selectedAddress;
-    public Address SelectedAddress
+    private Address? _selectedAddress;
+    public Address? SelectedAddress
     {
         get => _selectedAddress;
         set
@@ -32,8 +32,8 @@ public class AddressesViewModel : ViewModelBase
         }
     }
 
-    public ObservableCollection<TariffGroup> GeneralTariffs { get; set; }
-    public ObservableCollection<TariffGroup> EnergyTariffs { get; set; }
+    public ObservableCollection<TariffGroup> GeneralTariffs { get; set; } = new ObservableCollection<TariffGroup>();
+    public ObservableCollection<TariffGroup> EnergyTariffs { get; set; } = new ObservableCollection<TariffGroup>();
 
     public ICommand AddCommand { get; }
     public ICommand SaveCommand { get; }
@@ -43,29 +43,20 @@ public class AddressesViewModel : ViewModelBase
 
     public AddressesViewModel()
     {
-        try
-        {
+        _controller = new AddressController(Managers.Config.GetDbFileName());
+        _controller.Initialize();
 
-            _controller = new AddressController(Managers.Config.GetDbFileName());
-            _controller.Initialize();
+        getAddresses();
+        getTariffGroups();
 
-            getAddresses();
-            getTariffGroups();
-
-            AddCommand = new RelayCommand(_ => addAddress());
-            SaveCommand = new RelayCommand(_ => saveAddress());
-            DeleteCommand = new RelayCommand(_ => deleteAddress());
-            RefreshCommand = new RelayCommand(_ => getAddresses());
-            CloseCommand = new RelayCommand(_ => CloseRequested?.Invoke());
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.ToString());
-        }
-
+        AddCommand = new RelayCommand(_ => addAddress());
+        SaveCommand = new RelayCommand(_ => saveAddress());
+        DeleteCommand = new RelayCommand(_ => deleteAddress());
+        RefreshCommand = new RelayCommand(_ => getAddresses());
+        CloseCommand = new RelayCommand(_ => CloseRequested?.Invoke());
     }
 
-    public event Action CloseRequested;
+    public event Action? CloseRequested;
 
     private async void getAddresses()
     {

@@ -6,7 +6,7 @@ public class VatTariffController : BaseController, IController
 {
     #region ControlerProperties
 
-    public EnergyUse.Core.UnitOfWork.VatTarif? UnitOfWork { get; set; } = null;
+    public EnergyUse.Core.UnitOfWork.VatTarif UnitOfWork { get; set; }
 
     #endregion
 
@@ -14,18 +14,12 @@ public class VatTariffController : BaseController, IController
 
     public VatTariffController(string dbFileName) : base(dbFileName)
     {
-
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.VatTarif(_dbFileName);
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.VatTarif(_dbFileName);
     }
 
     #endregion

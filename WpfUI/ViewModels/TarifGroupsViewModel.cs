@@ -2,11 +2,8 @@
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
 using EnergyUse.Models.Common;
-using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
-using WpfUI.Services;
 
 namespace WpfUI.ViewModels
 {
@@ -15,20 +12,17 @@ namespace WpfUI.ViewModels
         private readonly TariffGroupController _controller;
         private readonly IDialogService _dialogService;
 
-        public ObservableCollection<TariffGroup> TariffGroups { get; } =
-            new ObservableCollection<TariffGroup>();
+        public ObservableCollection<TariffGroup> TariffGroups { get; } = new();
+        public ObservableCollection<SelectionItem> TariffGroupTypes { get; } = new();
 
-        public ObservableCollection<SelectionItem> TariffGroupTypes { get; } =
-            new ObservableCollection<SelectionItem>();
-
-        private TariffGroup _selectedTariffGroup;
-        public TariffGroup SelectedTariffGroup
+        private TariffGroup? _selectedTariffGroup;
+        public TariffGroup? SelectedTariffGroup
         {
             get => _selectedTariffGroup;
             set => SetProperty(ref _selectedTariffGroup, value);
         }
 
-        private string _statusText;
+        private string _statusText = string.Empty;
         public string StatusText
         {
             get => _statusText;
@@ -42,7 +36,7 @@ namespace WpfUI.ViewModels
         public ICommand RefreshCommand { get; }
         public ICommand CloseCommand { get; }
 
-        public Action CloseAction { get; set; }
+        public Action? CloseAction { get; set; }
 
         public TarifGroupsViewModel(IDialogService dialogService)
         {

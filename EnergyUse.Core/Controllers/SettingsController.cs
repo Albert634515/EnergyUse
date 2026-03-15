@@ -6,7 +6,7 @@ public class SettingsController : BaseController, IController
 {
     #region ControlerProperties
 
-    private EnergyUse.Core.UnitOfWork.Setting? _unitOfWork { get; set; } = null;
+    private EnergyUse.Core.UnitOfWork.Setting _unitOfWork { get; set; }
 
     #endregion
 
@@ -14,18 +14,12 @@ public class SettingsController : BaseController, IController
 
     public SettingsController(string dbFileName) : base(dbFileName)
     {
-
+        _unitOfWork = new EnergyUse.Core.UnitOfWork.Setting(_dbFileName);
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        _unitOfWork = new EnergyUse.Core.UnitOfWork.Setting(_dbFileName);
     }
 
     #endregion

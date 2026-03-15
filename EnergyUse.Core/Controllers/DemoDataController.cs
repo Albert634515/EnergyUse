@@ -6,7 +6,7 @@ public class DemoDataController : BaseController, IController
 {
     #region ControlerProperties
 
-    public EnergyUse.Core.UnitOfWork.DemoData? UnitOfWork { get; set; } = null;
+    public EnergyUse.Core.UnitOfWork.DemoData UnitOfWork { get; set; }
 
     #endregion
 
@@ -14,18 +14,12 @@ public class DemoDataController : BaseController, IController
 
     public DemoDataController(string dbFileName): base(dbFileName)
     {
-
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.DemoData(_dbFileName);
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.DemoData(_dbFileName);
     }
 
     #endregion

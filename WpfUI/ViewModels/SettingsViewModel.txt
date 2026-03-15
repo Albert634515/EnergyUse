@@ -228,9 +228,9 @@ namespace WpfUI.ViewModels
 
         private void setSettings()
         { 
-            Currency = _settings.Get("Currency") ?? "";
-            ExportDirectory = _settings.Get("ExportDirectory") ?? "";
-            ImportDirectory = _settings.Get("ImportDirectory") ?? "";
+            Currency = _settings.Get("Currency");
+            ExportDirectory = _settings.Get("ExportDirectory");
+            ImportDirectory = _settings.Get("ImportDirectory");
 
             SelectedLanguage = _settings.Get("Language") ?? "English";
 

@@ -7,33 +7,27 @@ public class MainController : BaseController, IController
 {
     #region ControlerProperties
 
-    private EnergyUse.Core.UnitOfWork.MainForm? _unitOfWork { get; set; } = null;
+    private EnergyUse.Core.UnitOfWork.MainForm _unitOfWork { get; set; }
 
     #endregion
 
     public MainController(string dbFileName) : base(dbFileName)
     {
-
+        _unitOfWork = new EnergyUse.Core.UnitOfWork.MainForm(_dbFileName);
     }
 
     public void Initialize()
     {
         InitSettings = true;
 
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        _unitOfWork = new EnergyUse.Core.UnitOfWork.MainForm(_dbFileName);
     }
 
     #region Address
 
     public async Task<IEnumerable<Models.Address>> GetAllAddresses()
     {
-        if (_unitOfWork?.AddressRepo == null)
+        if (_unitOfWork.AddressRepo == null)
             throw new InvalidOperationException("UnitOfWork or AddressRepo is not initialized.");
 
         var addresses = await _unitOfWork.AddressRepo.GetAll();

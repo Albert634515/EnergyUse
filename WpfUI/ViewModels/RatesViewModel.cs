@@ -2,8 +2,6 @@
 using EnergyUse.Core.Controllers;
 using EnergyUse.Models;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -39,8 +37,8 @@ namespace WpfUI.ViewModels
 
         #region Properties
 
-        private EnergyType _selectedEnergyType;
-        public EnergyType SelectedEnergyType
+        private EnergyType? _selectedEnergyType;
+        public EnergyType? SelectedEnergyType
         {
             get => _selectedEnergyType;
             set
@@ -54,8 +52,8 @@ namespace WpfUI.ViewModels
             }
         }
 
-        private CostCategory _selectedCostCategory;
-        public CostCategory SelectedCostCategory
+        private CostCategory? _selectedCostCategory;
+        public CostCategory? SelectedCostCategory
         {
             get => _selectedCostCategory;
             set
@@ -69,8 +67,8 @@ namespace WpfUI.ViewModels
             }
         }
 
-        private TariffGroup _selectedTariffGroup;
-        public TariffGroup SelectedTariffGroup
+        private TariffGroup? _selectedTariffGroup;
+        public TariffGroup? SelectedTariffGroup
         {
             get => _selectedTariffGroup;
             set
@@ -84,8 +82,8 @@ namespace WpfUI.ViewModels
             }
         }
 
-        private Rate _selectedRate;
-        public Rate SelectedRate
+        private Rate? _selectedRate;
+        public Rate? SelectedRate
         {
             get => _selectedRate;
             set
@@ -99,8 +97,8 @@ namespace WpfUI.ViewModels
             }
         }
 
-        private EnergyUse.Models.Common.SelectionItem _selectedRateType;
-        public EnergyUse.Models.Common.SelectionItem SelectedRateType
+        private EnergyUse.Models.Common.SelectionItem? _selectedRateType;
+        public EnergyUse.Models.Common.SelectionItem? SelectedRateType
         {
             get => _selectedRateType;
             set
@@ -125,7 +123,7 @@ namespace WpfUI.ViewModels
             set { _rateTaxInfoText = value; OnPropertyChanged(); }
         }
 
-        private string _alwaysCalculatedWithText;
+        private string _alwaysCalculatedWithText = string.Empty;
         public string AlwaysCalculatedWithText
         {
             get => _alwaysCalculatedWithText;
@@ -224,6 +222,9 @@ namespace WpfUI.ViewModels
         {
             Rates.Clear();
 
+            if (SelectedEnergyType == null || SelectedCostCategory == null)
+                return;
+
             var costCategory = SelectedCostCategory;
             var energyType = SelectedEnergyType;
             var tarifGroup = SelectedTariffGroup;
@@ -246,7 +247,8 @@ namespace WpfUI.ViewModels
             foreach (var r in _controller.UnitOfWork.RateList)
                 Rates.Add(r);
 
-            SelectedRate = Rates.FirstOrDefault();
+            if (Rates.Any())
+                SelectedRate = Rates.FirstOrDefault();
         }
 
         private async Task setRateIncExLabelAsync()
@@ -261,15 +263,14 @@ namespace WpfUI.ViewModels
                 RateTaxInfoText = rateTaxInfo.RateIncTax.ToString();
         }
 
-        private void setLabelAlwaysCalculatedWith(TariffGroup tarifGroup)
+        private void setLabelAlwaysCalculatedWith(TariffGroup? tarifGroup)
         {
             IsAlwaysCalculatedWithVisible = false;
             AlwaysCalculatedWithText = string.Empty;
 
             if (tarifGroup != null && tarifGroup.Id > 0)
             {
-                AlwaysCalculatedWithText =
-                    $"Category is always calculated with tarif group: {tarifGroup.Description}";
+                AlwaysCalculatedWithText = $"Category is always calculated with tarif group: {tarifGroup.Description}";
                 IsAlwaysCalculatedWithVisible = true;
             }
         }
@@ -307,6 +308,9 @@ namespace WpfUI.ViewModels
         private void addRate()
         {
             if (!ValidateInput())
+                return;
+
+            if (SelectedCostCategory == null || SelectedEnergyType == null)
                 return;
 
             var costCategory = SelectedCostCategory;

@@ -6,7 +6,7 @@ public class PaymentsController : BaseController, IController
 {
     #region ControlerProperties
 
-    public EnergyUse.Core.UnitOfWork.Payment? UnitOfWork { get; set; } = null;
+    public EnergyUse.Core.UnitOfWork.Payment UnitOfWork { get; set; }
 
     #endregion
 
@@ -15,17 +15,12 @@ public class PaymentsController : BaseController, IController
     public PaymentsController(string dbFileName) : base(dbFileName)
     {
         _dbFileName = dbFileName;
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.Payment(dbFileName);
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.Payment(_dbFileName);
     }
 
     #endregion

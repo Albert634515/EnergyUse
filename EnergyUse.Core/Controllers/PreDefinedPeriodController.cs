@@ -6,8 +6,8 @@ public class PreDefinedPeriodController : BaseController, IController
 {
     #region ControlerProperties
 
-    public EnergyUse.Core.UnitOfWork.PreDefinedPeriod? UnitOfWork { get; set; } = null;
-    public EnergyUse.Core.UnitOfWork.PredefinedPeriodDate? UnitOfWorkPd { get; set; } = null;
+    public EnergyUse.Core.UnitOfWork.PreDefinedPeriod UnitOfWork { get; set; }
+    public EnergyUse.Core.UnitOfWork.PredefinedPeriodDate UnitOfWorkPd { get; set; }
 
     #endregion
 
@@ -15,19 +15,13 @@ public class PreDefinedPeriodController : BaseController, IController
 
     public PreDefinedPeriodController(string dbFileName) : base(dbFileName)
     {
-
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.PreDefinedPeriod(_dbFileName);
+        UnitOfWorkPd = new EnergyUse.Core.UnitOfWork.PredefinedPeriodDate(_dbFileName);
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.PreDefinedPeriod(_dbFileName);
-        UnitOfWorkPd = new EnergyUse.Core.UnitOfWork.PredefinedPeriodDate(_dbFileName);
     }
 
     #endregion

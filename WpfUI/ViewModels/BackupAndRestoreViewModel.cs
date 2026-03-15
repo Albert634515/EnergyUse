@@ -17,24 +17,24 @@ namespace WpfApp.ViewModels
             _controller.Initialize();
             _dialogService = dialogService;
 
-            LoadInitialSettings();
+            setInitialSettings();
 
-            SelectBackupDirCommand = new RelayCommand(_ => SelectBackupDir());
-            CreateBackupCommand = new RelayCommand(_ => CreateBackup());
-            SelectRestoreFileCommand = new RelayCommand(_ => SelectRestoreFile());
-            RestoreBackupCommand = new RelayCommand(_ => RestoreBackup());
+            SelectBackupDirCommand = new RelayCommand(_ => selectBackupDir());
+            CreateBackupCommand = new RelayCommand(_ => createBackup());
+            SelectRestoreFileCommand = new RelayCommand(_ => selectRestoreFile());
+            RestoreBackupCommand = new RelayCommand(_ => restoreBackup());
         }
 
         #region Properties
 
-        private string _backupDirectory;
+        private string _backupDirectory = string.Empty;
         public string BackupDirectory
         {
             get => _backupDirectory;
             set { _backupDirectory = value; OnPropertyChanged(); }
         }
 
-        private string _restoreFile;
+        private string _restoreFile = string.Empty;
         public string RestoreFile
         {
             get => _restoreFile;
@@ -61,14 +61,14 @@ namespace WpfApp.ViewModels
 
         #region Methods
 
-        private void LoadInitialSettings()
+        private void setInitialSettings()
         {
             var setting = _controller.getSettingBackUpDir("BackUpDir");
             if (!string.IsNullOrWhiteSpace(setting))
                 BackupDirectory = setting;
         }
 
-        private void SelectBackupDir()
+        private void selectBackupDir()
         {
             var dlg = new FolderBrowserDialog();
             var setting = _controller.getSettingBackUpDir("BackUpDirectory");
@@ -83,7 +83,7 @@ namespace WpfApp.ViewModels
             }
         }
 
-        private void CreateBackup()
+        private void createBackup()
         {
             if (string.IsNullOrWhiteSpace(BackupDirectory))
             {
@@ -97,7 +97,7 @@ namespace WpfApp.ViewModels
             _dialogService.Show("Backup created", "Backup created");
         }
 
-        private void SelectRestoreFile()
+        private void selectRestoreFile()
         {
             var dlg = new Microsoft.Win32.OpenFileDialog
             {
@@ -113,10 +113,10 @@ namespace WpfApp.ViewModels
                 RestoreFile = dlg.FileName;
         }
 
-        private void RestoreBackup()
+        private void restoreBackup()
         {
             if (BackupBeforeRestore)
-                CreateBackup();
+                createBackup();
 
             if (string.IsNullOrWhiteSpace(RestoreFile))
             {

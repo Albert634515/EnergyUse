@@ -6,7 +6,7 @@ public class ExportController : BaseController, IController
 {
     #region ControlerProperties
 
-    public EnergyUse.Core.UnitOfWork.Export? UnitOfWork { get; set; } = null;
+    public EnergyUse.Core.UnitOfWork.Export UnitOfWork { get; set; }
 
     #endregion
 
@@ -14,18 +14,12 @@ public class ExportController : BaseController, IController
 
     public ExportController(string dbFileName) : base(dbFileName)
     {
-
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.Export(_dbFileName);
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.Export(_dbFileName);
     }
 
     #endregion

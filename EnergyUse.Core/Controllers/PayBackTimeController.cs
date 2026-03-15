@@ -8,7 +8,7 @@ public class PayBackTimeController : BaseController, IController
 {
     #region ControlerProperties
 
-    public UnitOfWork.PayBackTime? UnitOfWork { get; set; } = null;
+    public UnitOfWork.PayBackTime UnitOfWork { get; set; }
 
     private LibPeriodicDate? _libPeriodicDate = null;
 
@@ -19,18 +19,13 @@ public class PayBackTimeController : BaseController, IController
     public PayBackTimeController(string dbFileName) : base(dbFileName)
     {
         _libPeriodicDate = new LibPeriodicDate(_dbFileName);
-        
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.PayBackTime(_dbFileName);
+
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.PayBackTime(_dbFileName);
     }
 
     #endregion

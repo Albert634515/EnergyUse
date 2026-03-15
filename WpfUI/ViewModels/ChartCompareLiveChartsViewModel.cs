@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Input;
-using System.Windows.Media;
-using EnergyUse.Common.Enums;
+﻿using EnergyUse.Common.Enums;
 using EnergyUse.Models;
 using EnergyUse.Models.Common;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.Windows.Media;
 using WpfUI.Models;
 using WpfUI.Services;
 
@@ -17,8 +15,8 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
 {
     private readonly CompareChartService _service;
 
-    public Address CurrentAddress { get; }
-    public EnergyType CurrentEnergyType { get; }
+    public Address? CurrentAddress { get; }
+    public EnergyType? CurrentEnergyType { get; }
 
     private ObservableCollection<PeriodicData> _exportData = new();
 
@@ -29,18 +27,15 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
     private int _lastSelectedWeek = 1;      // ← jouw keuze A
     private int _lastSelectedMonth = DateTime.Now.Month;
 
-    public ChartCompareLiveChartsViewModel(
-        Address address,
-        EnergyType energyType,
-        ILanguageService languageService)
+    public ChartCompareLiveChartsViewModel(Address address, EnergyType energyType, ILanguageService languageService)
     {
         CurrentAddress = address;
         CurrentEnergyType = energyType;
 
         _service = new CompareChartService(languageService);
 
-        LoadPeriodTypes(languageService);
-        LoadYears();
+        setPeriodTypes(languageService);
+        setYears();
 
         ResetCommand = new RelayCommand(_ => ResetChart());
         ExportCommand = new RelayCommand(_ => ExportChart(), _ => _exportData.Any());
@@ -87,15 +82,15 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
     public ObservableCollection<int> NumberList { get; } = new();
     public ObservableCollection<int> DayList { get; } = new();
 
-    private SelectionItem _selectedPeriodType;
-    public SelectionItem SelectedPeriodType
+    private SelectionItem? _selectedPeriodType;
+    public SelectionItem? SelectedPeriodType
     {
         get => _selectedPeriodType;
         set
         {
             if (SetProperty(ref _selectedPeriodType, value))
             {
-                UpdateNumberList();   // ← BELANGRIJK
+                updateNumberList();   // ← BELANGRIJK
 
                 ApplyPeriodChange();
                 UpdateChart();
@@ -109,7 +104,7 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         {
             case "DAY":
                 SelectedNumber = _lastSelectedMonth;
-                UpdateDayList();
+                updateDayList();
                 SelectedDay = _lastSelectedDay;
                 break;
 
@@ -172,7 +167,7 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
                 if (PeriodKey == "DAY")
                 {
                     _lastSelectedMonth = value;
-                    UpdateDayList();
+                    updateDayList();
                 }
 
                 if (PeriodKey == "WEEK")
@@ -273,7 +268,7 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
 
     public void UpdateChart()
     {
-        if (SelectedPeriodType == null)
+        if (SelectedPeriodType == null || CurrentAddress == null || CurrentEnergyType == null)
             return;
 
         var result = _service.BuildChart(
@@ -336,19 +331,23 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         ShowTypeValue = false;
         ShowTypeEfficiency = false;
 
-        SelectedPeriodType = PeriodTypes.FirstOrDefault();
+        if (PeriodTypes.Any())
+            SelectedPeriodType = PeriodTypes.FirstOrDefault();
+
         UpdateChart();
     }
 
     private void ExportChart()
     {
+        if (CurrentEnergyType == null) return;
+
         _service.ExportToExcel(_exportData.ToList(), CurrentEnergyType);
     }
 
     // ---------------------------------------------------------
     // HELPERS
     // ---------------------------------------------------------
-    private void LoadPeriodTypes(ILanguageService languageService)
+    private void setPeriodTypes(ILanguageService languageService)
     {
         var service = new SelectionItemService(languageService);
         PeriodTypes.Clear();
@@ -356,7 +355,7 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
             PeriodTypes.Add(item);
     }
 
-    private void LoadYears()
+    private void setYears()
     {
         Years.Clear();
         for (int y = 2020; y <= DateTime.Now.Year; y++)
@@ -366,7 +365,7 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         EndYear = DateTime.Now.Year;
     }
 
-    private void UpdateNumberList()
+    private void updateNumberList()
     {
         NumberList.Clear();
         DayList.Clear();
@@ -393,7 +392,7 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         }
     }
 
-    private void UpdateDayList()
+    private void updateDayList()
     {
         DayList.Clear();
         if (SelectedNumber <= 0) return;

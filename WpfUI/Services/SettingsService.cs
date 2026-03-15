@@ -3,6 +3,8 @@ using EnergyUse.Core.Manager;
 using System.Globalization;
 using WpfUI.Managers;
 
+namespace WpfUI.Services;
+
 public class SettingsService : ISettingsService
 {
     private LibSettings Lib => new(Config.GetDbFileName());

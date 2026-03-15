@@ -1,9 +1,7 @@
 ﻿using EnergyUse.Core.Controllers;
 using Microsoft.Win32;
-using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using WpfUI.ViewModels;
 
@@ -16,12 +14,12 @@ public class ExportViewModel : ViewModelBase
         _controller = new ExportController(WpfUI.Managers.Config.GetDbFileName());
         _controller.Initialize();
 
-        CloseCommand = new RelayCommand(_ => CloseWindow());
-        SelectExportFileCommand = new RelayCommand(_ => SelectExportFile());
-        ExportCommand = new RelayCommand(_ => Export());
+        CloseCommand = new RelayCommand(_ => closeWindow());
+        SelectExportFileCommand = new RelayCommand(_ => selectExportFile());
+        ExportCommand = new RelayCommand(_ => export());
 
-        LoadAddresses();
-        LoadDefaultExportFile();
+        setAddresses();
+        setDefaultExportFile();
     }
 
     // -------------------------------------------------------
@@ -50,8 +48,8 @@ public class ExportViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedAddress, value))
             {
-                LoadEnergyTypes();
-                LoadDefaultExportFile();
+                setEnergyTypes();
+                setDefaultExportFile();
             }
         }
     }
@@ -63,7 +61,7 @@ public class ExportViewModel : ViewModelBase
         set
         {
             if (SetProperty(ref _selectedEnergyType, value))
-                LoadDefaultExportFile();
+                setDefaultExportFile();
         }
     }
 
@@ -128,7 +126,7 @@ public class ExportViewModel : ViewModelBase
     // Methods
     // -------------------------------------------------------
 
-    private void LoadAddresses()
+    private void setAddresses()
     {
         var list = _controller.UnitOfWork.AddressRepo.GetAll();
         Addresses = new ObservableCollection<EnergyUse.Models.Address>(list);
@@ -136,7 +134,7 @@ public class ExportViewModel : ViewModelBase
         SelectedAddress = list.FirstOrDefault(x => x.DefaultAddress == true);
     }
 
-    private void LoadEnergyTypes()
+    private void setEnergyTypes()
     {
         EnergyTypes.Clear();
 
@@ -152,15 +150,15 @@ public class ExportViewModel : ViewModelBase
         SelectedEnergyType = list.FirstOrDefault(x => x.DefaultType);
     }
 
-    private void LoadDefaultExportFile()
+    private void setDefaultExportFile()
     {
-        string dir = GetInitialExportDirectory();
-        string file = GetInitialExportFileName();
+        string dir = getInitialExportDirectory();
+        string file = getInitialExportFileName();
 
         ExportFileName = Path.Combine(dir, file);
     }
 
-    private string GetInitialExportDirectory()
+    private string getInitialExportDirectory()
     {
         var libSettings = new EnergyUse.Core.Manager.LibSettings(WpfUI.Managers.Config.GetDbFileName());
         var setting = libSettings.GetSetting("ExportDirectory");
@@ -170,7 +168,7 @@ public class ExportViewModel : ViewModelBase
             : string.Empty;
     }
 
-    private string GetInitialExportFileName()
+    private string getInitialExportFileName()
     {
         if (SelectedEnergyType != null)
             return $"ExcelSheet_{DateTime.Now:dd-MM-yyyy}_{SelectedEnergyType.Name}.xlsx";
@@ -178,25 +176,25 @@ public class ExportViewModel : ViewModelBase
         return $"ExcelSheet_{DateTime.Now:dd-MM-yyyy}.xlsx";
     }
 
-    private void SelectExportFile()
+    private void selectExportFile()
     {
         var dlg = new SaveFileDialog
         {
-            InitialDirectory = GetInitialExportDirectory(),
+            InitialDirectory = getInitialExportDirectory(),
             Filter = "Excel files|*.xlsx|All files|*.*",
-            FileName = GetInitialExportFileName()
+            FileName = getInitialExportFileName()
         };
 
         if (dlg.ShowDialog() == true)
             ExportFileName = dlg.FileName;
     }
 
-    private void Export()
+    private void export()
     {
         StatusMessage = "Export completed.";
     }
 
-    private void CloseWindow()
+    private void closeWindow()
     {
         Application.Current.Windows
             .OfType<Window>()

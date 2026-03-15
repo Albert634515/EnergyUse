@@ -6,7 +6,7 @@ public class SelectReportParametersController : BaseController, IController
 {
     #region ControlerProperties
 
-    public EnergyUse.Core.UnitOfWork.SelectParameter? UnitOfWork { get; set; } = null;
+    public EnergyUse.Core.UnitOfWork.SelectParameter UnitOfWork { get; set; }
 
 
     #endregion
@@ -14,19 +14,13 @@ public class SelectReportParametersController : BaseController, IController
     #region InitControler
 
     public SelectReportParametersController(string dbFileName) : base(dbFileName)
-    { 
-
+    {
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.SelectParameter(_dbFileName);
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.SelectParameter(_dbFileName);
     }
 
     #endregion

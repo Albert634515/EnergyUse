@@ -1,8 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+﻿using EnergyUse.Core.Controllers;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using EnergyUse.Core.Controllers;
 using WpfUI.Managers;
 
 namespace WpfUI.ViewModels;
@@ -16,8 +15,8 @@ public class MetersViewModel : ViewModelBase
     public ObservableCollection<EnergyUse.Models.EnergyType> EnergyTypes { get; set; } = new();
     public ObservableCollection<EnergyUse.Models.Address> Addresses { get; set; } = new();
 
-    private EnergyUse.Models.Meter _selectedMeter;
-    public EnergyUse.Models.Meter SelectedMeter
+    private EnergyUse.Models.Meter? _selectedMeter;
+    public EnergyUse.Models.Meter? SelectedMeter
     {
         get => _selectedMeter;
         set { _selectedMeter = value; OnPropertyChanged(); }

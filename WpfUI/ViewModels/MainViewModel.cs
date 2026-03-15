@@ -75,8 +75,8 @@ public class MainViewModel : ViewModelBase
     public ObservableCollection<Address> Addresses { get; } = new();
     public ObservableCollection<EnergyType> EnergyTypes { get; } = new();
 
-    private Address _selectedAddress;
-    public Address SelectedAddress
+    private Address? _selectedAddress;
+    public Address? SelectedAddress
     {
         get => _selectedAddress;
         set
@@ -90,8 +90,8 @@ public class MainViewModel : ViewModelBase
         }
     }
 
-    private EnergyType _selectedEnergyType;
-    public EnergyType SelectedEnergyType
+    private EnergyType? _selectedEnergyType;
+    public EnergyType? SelectedEnergyType
     {
         get => _selectedEnergyType;
         set
@@ -114,10 +114,11 @@ public class MainViewModel : ViewModelBase
 
         var saved = _settings.Get("SelectedAddress");
 
-        SelectedAddress =
-            Addresses.FirstOrDefault(x => x.Id.ToString() == saved)
-            ?? Addresses.FirstOrDefault(x => x.DefaultAddress == true)
-            ?? Addresses.FirstOrDefault();
+        if (Addresses.Any())
+            SelectedAddress =
+                Addresses.FirstOrDefault(x => x.Id.ToString() == saved)
+                ?? Addresses.FirstOrDefault(x => x.DefaultAddress == true)
+                ?? Addresses.FirstOrDefault();
     }
 
     private void setEnergyTypes()
@@ -132,31 +133,33 @@ public class MainViewModel : ViewModelBase
             EnergyTypes.Add(e);
 
         var saved = _settings.Get("SelectedEnergyType");
-        SelectedEnergyType = EnergyTypes.FirstOrDefault(x => x.Id.ToString() == saved)
-                          ?? EnergyTypes.FirstOrDefault(x => x.DefaultType)
-                          ?? EnergyTypes.FirstOrDefault();
+
+        if (EnergyTypes.Any())
+            SelectedEnergyType = EnergyTypes.FirstOrDefault(x => x.Id.ToString() == saved)
+                              ?? EnergyTypes.FirstOrDefault(x => x.DefaultType)
+                              ?? EnergyTypes.FirstOrDefault();
     }
 
     #endregion
 
     #region Views
 
-    private object _leftView;
-    public object LeftView
+    private object? _leftView;
+    public object? LeftView
     {
         get => _leftView;
         set => SetProperty(ref _leftView, value);
     }
 
-    private object _rightView;
-    public object RightView
+    private object? _rightView;
+    public object? RightView
     {
         get => _rightView;
         set => SetProperty(ref _rightView, value);
     }
 
-    private void SaveLeftView(string key) => _settings.Save("LastLeftView", key);
-    private void SaveRightView(string key) => _settings.Save("LastRightView", key);
+    private void saveLeftView(string key) => _settings.Save("LastLeftView", key);
+    private void saveRightView(string key) => _settings.Save("LastRightView", key);
 
     private void setLastViews()
     {
@@ -164,7 +167,7 @@ public class MainViewModel : ViewModelBase
         var right = _settings.Get("LastRightView") ?? "ucChartDefaultLiveCharts";
 
         setLeftView(left);
-        LoadRightView(right);
+        setRightView(right);
     }
 
     private void setLeftView(string key)
@@ -180,7 +183,7 @@ public class MainViewModel : ViewModelBase
         }
     }
 
-    private void LoadRightView(string key)
+    private void setRightView(string key)
     {
         switch (key)
         {
@@ -198,47 +201,65 @@ public class MainViewModel : ViewModelBase
 
     private void setDataControl()
     {
+        if (SelectedAddress == null || SelectedEnergyType == null)
+            return;
+
         LeftView = new DataControl(SelectedAddress, SelectedEnergyType);
-        SaveLeftView("ucData");
+        saveLeftView("ucData");
     }
 
     private void setDataImport()
     {
+        if (SelectedAddress == null || SelectedEnergyType == null)
+            return;
+
         LeftView = new ImportControl(SelectedAddress, SelectedEnergyType);
-        SaveLeftView("ucImport");
+        saveLeftView("ucImport");
     }
 
     private void setChartUsageControl()
     {
+        if (SelectedAddress == null || SelectedEnergyType == null)
+            return;
+
         RightView = new ChartDefaultLiveChartsControl(
             SelectedAddress,
             SelectedEnergyType,
             EnergyTypes.ToList()
         );
-        SaveRightView("ucChartDefaultLiveCharts");
+        saveRightView("ucChartDefaultLiveCharts");
     }
 
     private void setChartCompare()
     {
+        if (SelectedAddress == null || SelectedEnergyType == null)
+            return;
+
         RightView = new ChartCompareLiveChartsControl(
             SelectedAddress,
             SelectedEnergyType,
             _LanguageService
         );
-        SaveRightView("ucChartCompareLiveCharts");
+        saveRightView("ucChartCompareLiveCharts");
     }
 
     private void setRatesControl()
     {
+        if (SelectedAddress == null || SelectedEnergyType == null)
+            return;
+
         RightView = new ChartRatesLiveChartsControl(
             SelectedAddress,
             SelectedEnergyType
         );
-        SaveRightView("ucChartRatesLiveCharts");
+        saveRightView("ucChartRatesLiveCharts");
     }
 
     private void refreshViews(bool addressChanged)
     {
+        if (SelectedAddress == null || SelectedEnergyType == null)
+            return;
+
         if (LeftView is IRefreshable left)
             left.Refresh(SelectedAddress, SelectedEnergyType, addressChanged);
 
@@ -303,11 +324,10 @@ public class MainViewModel : ViewModelBase
     public ICommand SettingsPaymentsCommand { get; }
 
     public ICommand BackupRestoreCommand { get; }
-    public ICommand ImportMeterRatesCommand { get; }
     public ICommand ExportRatesCommand { get; }
 
     public ICommand SetupNewFileCommand { get; }
-    public ICommand CreateDemoDataCommand { get; }
+    //public ICommand CreateDemoDataCommand { get; }
     public ICommand InfoCommand { get; }
 
     #endregion
@@ -316,10 +336,13 @@ public class MainViewModel : ViewModelBase
 
     private async Task OpenSettlementReport()
     {
+        if (_selectedAddress == null)
+            return;
+
         var parameters = await SettlementReportWindow.ShowDialogAsync(Application.Current.MainWindow,
-                                                                        _selectedAddress,
-                                                                        EnergyUse.Common.Enums.ReportType.SettlementCompact        
-                                                                    );
+                                                                      _selectedAddress,
+                                                                      EnergyUse.Common.Enums.ReportType.SettlementCompact        
+                                                                     );
 
         if (parameters == null)
             return;

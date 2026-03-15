@@ -13,21 +13,21 @@ public class PaymentsViewModel : ViewModelBase
 
     public PaymentsViewModel()
     {
-        // 🔥 Belangrijk: voorkom dat de designer database opent
-        if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
-            return;
+        // Belangrijk: voorkom dat de designer database opent
+        //if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+        //    return;
 
         _controller = new PaymentsController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
-        LoadAddresses();
-        LoadPeriods();
+        setAddresses();
+        setPeriods();
 
-        AddCommand = new RelayCommand(_ => AddPayment());
-        SaveCommand = new RelayCommand(_ => SavePayment());
-        CancelCommand = new RelayCommand(_ => CancelPayment());
-        DeleteCommand = new RelayCommand(_ => DeletePayment());
-        RefreshCommand = new RelayCommand(_ => RefreshPayments());
+        AddCommand = new RelayCommand(_ => addPayment());
+        SaveCommand = new RelayCommand(_ => savePayment());
+        CancelCommand = new RelayCommand(_ => cancelPayment());
+        DeleteCommand = new RelayCommand(_ => deletePayment());
+        RefreshCommand = new RelayCommand(_ => refreshPayments());
         CloseCommand = new RelayCommand(_ => CloseRequested?.Invoke());
     }
 
@@ -41,32 +41,32 @@ public class PaymentsViewModel : ViewModelBase
 
     #region Selected Items
 
-    private Address _selectedAddress;
-    public Address SelectedAddress
+    private Address? _selectedAddress;
+    public Address? SelectedAddress
     {
         get => _selectedAddress;
         set
         {
             _selectedAddress = value;
             OnPropertyChanged();
-            LoadPayments();
+            setPayments();
         }
     }
 
-    private PreDefinedPeriod _selectedPeriod;
-    public PreDefinedPeriod SelectedPeriod
+    private PreDefinedPeriod? _selectedPeriod;
+    public PreDefinedPeriod? SelectedPeriod
     {
         get => _selectedPeriod;
         set
         {
             _selectedPeriod = value;
             OnPropertyChanged();
-            LoadPayments();
+            setPayments();
         }
     }
 
-    private Payment _selectedPayment;
-    public Payment SelectedPayment
+    private Payment? _selectedPayment;
+    public Payment? SelectedPayment
     {
         get => _selectedPayment;
         set { _selectedPayment = value; OnPropertyChanged(); }
@@ -76,17 +76,18 @@ public class PaymentsViewModel : ViewModelBase
 
     #region Loaders
 
-    private async void LoadAddresses()
+    private async void setAddresses()
     {
         var list = await _controller.UnitOfWork.AddressRepo.GetAll();
         Addresses.Clear();
         foreach (var a in list)
             Addresses.Add(a);
 
-        SelectedAddress = Addresses.FirstOrDefault(x => x.DefaultAddress == true);
+        if (Addresses.Any())
+            SelectedAddress = Addresses.FirstOrDefault(x => x.DefaultAddress == true);
     }
 
-    private void LoadPeriods()
+    private void setPeriods()
     {
         var list = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll();
         PreDefinedPeriods.Clear();
@@ -94,15 +95,14 @@ public class PaymentsViewModel : ViewModelBase
             PreDefinedPeriods.Add(p);
     }
 
-    private void LoadPayments()
+    private void setPayments()
     {
         if (SelectedAddress == null || SelectedPeriod == null)
             return;
 
         Payments.Clear();
 
-        var list = _controller.UnitOfWork.PaymentRepo
-            .SelectByAddressAndPeriod(SelectedAddress.Id, SelectedPeriod.Id);
+        var list = _controller.UnitOfWork.PaymentRepo.SelectByAddressAndPeriod(SelectedAddress.Id, SelectedPeriod.Id);
 
         foreach (var p in list)
             Payments.Add(p);
@@ -119,9 +119,9 @@ public class PaymentsViewModel : ViewModelBase
     public ICommand RefreshCommand { get; }
     public ICommand CloseCommand { get; }
 
-    public event Action CloseRequested;
+    public event Action? CloseRequested;
 
-    private void AddPayment()
+    private void addPayment()
     {
         if (SelectedAddress == null || SelectedPeriod == null)
             return;
@@ -135,18 +135,18 @@ public class PaymentsViewModel : ViewModelBase
         SelectedPayment = entity;
     }
 
-    private void SavePayment()
+    private void savePayment()
     {
         _controller.UnitOfWork.Complete();
     }
 
-    private void CancelPayment()
+    private void cancelPayment()
     {
         _controller.UnitOfWork.CancelChanges();
-        LoadPayments();
+        setPayments();
     }
 
-    private void DeletePayment()
+    private void deletePayment()
     {
         if (SelectedPayment == null)
             return;
@@ -155,9 +155,9 @@ public class PaymentsViewModel : ViewModelBase
         Payments.Remove(SelectedPayment);
     }
 
-    private void RefreshPayments()
+    private void refreshPayments()
     {
-        LoadPayments();
+        setPayments();
     }
 
     #endregion

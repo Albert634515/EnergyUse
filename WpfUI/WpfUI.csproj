@@ -42,7 +42,7 @@
     <None Remove="Resources\upload_24x24.png" />
   </ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="5.0.0" />
     <PackageReference Include="LiveChartsCore" Version="2.0.0-rc5.4" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc5.4" />

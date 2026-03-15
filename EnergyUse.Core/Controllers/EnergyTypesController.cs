@@ -6,7 +6,7 @@ public class EnergyTypesController : BaseController, IController
 {
     #region ControlerProperties
 
-    public EnergyUse.Core.UnitOfWork.EnergyType? UnitOfWork { get; set; } = null;
+    public EnergyUse.Core.UnitOfWork.EnergyType UnitOfWork { get; set; }
 
     #endregion
 
@@ -14,18 +14,12 @@ public class EnergyTypesController : BaseController, IController
 
     public EnergyTypesController(string dbFileName) : base(dbFileName)
     {
-
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.EnergyType(_dbFileName);
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.EnergyType(_dbFileName);
     }
 
     #endregion

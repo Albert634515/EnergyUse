@@ -14,12 +14,11 @@ public class ImportControlViewModel : ViewModelBase
     private readonly IDialogService _dialog;
     private readonly IImportService _importService;
 
-    public ImportControlViewModel(
-        Address address,
-        EnergyType energyType,
-        ISettingsService settings,
-        IDialogService dialog,
-        IImportService importService)
+    public ImportControlViewModel(Address address,
+                                    EnergyType energyType,
+                                    ISettingsService settings,
+                                    IDialogService dialog,
+                                    IImportService importService)
     {
         _uow = new EnergyUse.Core.UnitOfWork.Import(Config.GetDbFileName());
         _settings = settings;
@@ -32,29 +31,29 @@ public class ImportControlViewModel : ViewModelBase
         MeterReadings = new ObservableCollection<MeterReading>();
         Meters = new ObservableCollection<Meter>();
 
-        ImportCommand = new RelayCommand(_ => LoadData());
-        RecalculateCommand = new RelayCommand(_ => Recalculate());
-        SaveCommand = new RelayCommand(_ => SaveImport());
-        BrowseFileCommand = new RelayCommand(_ => BrowseFile());
+        ImportCommand = new RelayCommand(_ => setData());
+        RecalculateCommand = new RelayCommand(_ => recalculate());
+        SaveCommand = new RelayCommand(_ => saveImport());
+        BrowseFileCommand = new RelayCommand(_ => browseFile());
 
         ResetSelection(address, energyType);
     }
 
-    public Address CurrentAddress { get; set; }
-    public EnergyType CurrentEnergyType { get; set; }
+    public Address? CurrentAddress { get; set; }
+    public EnergyType? CurrentEnergyType { get; set; }
 
-    private Meter _selectedMeter;
-    public Meter SelectedMeter
+    private Meter? _selectedMeter;
+    public Meter? SelectedMeter
     {
         get => _selectedMeter;
         set
         {
             if (SetProperty(ref _selectedMeter, value))
-                LoadLastUsedFileAndAutoImport();
+                setLastUsedFileAndAutoImport();
         }
     }
 
-    private string _importFile;
+    private string _importFile = String.Empty;
     public string ImportFile
     {
         get => _importFile;
@@ -75,11 +74,11 @@ public class ImportControlViewModel : ViewModelBase
         CurrentEnergyType = energyType;
 
         MeterReadings.Clear();
-        LoadMeters();
-        LoadLastUsedFileAndAutoImport();
+        setMeters();
+        setLastUsedFileAndAutoImport();
     }
 
-    private async void LoadMeters()
+    private async void setMeters()
     {
         Meters.Clear();
 
@@ -95,36 +94,41 @@ public class ImportControlViewModel : ViewModelBase
         SelectedMeter = Meters.FirstOrDefault(x => x.Active) ?? Meters.FirstOrDefault();
     }
 
-    private void LoadLastUsedFileAndAutoImport()
+    private void setLastUsedFileAndAutoImport()
     {
         if (SelectedMeter == null)
             return;
 
-        ImportFile = _settings.GetLastUsedImportFile(GetKey()) ?? "";
+        ImportFile = _settings.GetLastUsedImportFile(getKey()) ?? "";
 
         if (!string.IsNullOrWhiteSpace(ImportFile))
-            LoadData();
+            setData();
     }
 
-    public async void LoadData()
+    public async void setData()
     {
-        if (!ValidateImport())
+        if (!validateImport())
             return;
 
-        var result = await _importService.ImportAsync(
-            ImportFile,
-            CurrentAddress,
-            CurrentEnergyType,
-            SelectedMeter,
-            _uow);
+        var result = await _importService.ImportAsync(ImportFile,
+                                                        CurrentAddress!,
+                                                        CurrentEnergyType!,
+                                                        SelectedMeter!,
+                                                        _uow);
 
         MeterReadings.Clear();
         foreach (var r in result)
             MeterReadings.Add(r);
     }
 
-    private bool ValidateImport()
+    private bool validateImport()
     {
+        if (CurrentAddress == null)
+        {
+            _dialog.Show("Please select an address", "Import");
+            return false;
+        }
+
         if (string.IsNullOrWhiteSpace(ImportFile))
         {
             _dialog.Show("Please select a file to import", "Import");
@@ -152,9 +156,9 @@ public class ImportControlViewModel : ViewModelBase
         return true;
     }
 
-    private void Recalculate()
+    private void recalculate()
     {
-        if (_uow.meterReadings.Count == 0)
+        if (_uow.meterReadings == null || _uow.meterReadings.Count == 0 || CurrentEnergyType == null || CurrentAddress ==null)
             return;
 
         var lib = new LibMeterReading(Config.GetDbFileName());
@@ -170,8 +174,11 @@ public class ImportControlViewModel : ViewModelBase
             MeterReadings.Add(r);
     }
 
-    private void SaveImport()
+    private void saveImport()
     {
+        if (_uow.meterReadings == null || _uow.meterReadings.Count == 0)
+            return;
+
         foreach (var r in _uow.meterReadings.Where(x => x.Id == null))
         {
             _uow.MeterReadingRepo.Add(r);
@@ -181,7 +188,7 @@ public class ImportControlViewModel : ViewModelBase
         _dialog.Show("Data has been saved", "Import");
     }
 
-    private void BrowseFile()
+    private void browseFile()
     {
         var file = _dialog.OpenFile(
             "CSV files (*.csv)|*.csv|Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*",
@@ -190,12 +197,12 @@ public class ImportControlViewModel : ViewModelBase
         if (file != null)
         {
             ImportFile = file;
-            _settings.SaveLastUsedImportFile(GetKey(), file);
-            LoadData();
+            _settings.SaveLastUsedImportFile(getKey(), file);
+            setData();
         }
     }
 
-    private string GetKey() =>
+    private string getKey() =>
         SelectedMeter == null
             ? "LastImportFile"
             : $"{SelectedMeter.Id}LastImportFile";

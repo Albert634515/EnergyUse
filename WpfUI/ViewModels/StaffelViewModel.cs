@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using EnergyUse.Core;
 
 namespace WpfUI.ViewModels;
 
@@ -11,7 +10,7 @@ public class StaffelViewModel : ViewModelBase
     private readonly EnergyUse.Core.UnitOfWork.Staffel _unitOfWork;
 
     public ObservableCollection<Staffel> Staffels { get; } = new();
-    public Staffel SelectedStaffel { get; set; }
+    public Staffel? SelectedStaffel { get; set; }
 
     private long _rateId;
 
@@ -30,7 +29,7 @@ public class StaffelViewModel : ViewModelBase
         SaveCommand = new RelayCommand(_ => SaveStaffel());
         CancelCommand = new RelayCommand(_ => CancelStaffel());
         DeleteCommand = new RelayCommand(_ => DeleteStaffel(), _ => SelectedStaffel != null);
-        RefreshCommand = new RelayCommand(_ => RefreshStaffels());
+        RefreshCommand = new RelayCommand(_ => refreshStaffels());
     }
 
     public void LoadStaffels(long rateId)
@@ -93,7 +92,7 @@ public class StaffelViewModel : ViewModelBase
         }
     }
 
-    private void RefreshStaffels()
+    private void refreshStaffels()
     {
         LoadStaffels(_rateId);
     }

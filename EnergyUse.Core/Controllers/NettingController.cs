@@ -6,7 +6,7 @@ public class NettingController : BaseController, IController
 {
     #region ControlerProperties
 
-    public EnergyUse.Core.UnitOfWork.Netting? UnitOfWork { get; set; } = null;
+    public EnergyUse.Core.UnitOfWork.Netting UnitOfWork { get; set; }
 
     #endregion
 
@@ -14,18 +14,12 @@ public class NettingController : BaseController, IController
 
     public NettingController(string dbFileName) : base(dbFileName)
     {
-
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.Netting(_dbFileName);
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.Netting(_dbFileName);
     }
 
     #endregion

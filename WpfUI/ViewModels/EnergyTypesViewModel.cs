@@ -1,11 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
+﻿using EnergyUse.Core.Controllers;
+using EnergyUse.Models;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using EnergyUse.Core.Controllers;
-using EnergyUse.Models;
-using WpfUI.Extensions;
 using System.Windows.Media;
+using WpfUI.Extensions;
 
 namespace WpfUI.ViewModels
 {
@@ -13,11 +12,11 @@ namespace WpfUI.ViewModels
     {
         private readonly EnergyTypesController _controller;
 
-        public ObservableCollection<EnergyType> EnergyTypes { get; private set; }
-        public ObservableCollection<Unit> Units { get; }
+        public ObservableCollection<EnergyType> EnergyTypes { get; private set; } = new ObservableCollection<EnergyType>();
+        public ObservableCollection<Unit> Units { get; } = new ObservableCollection<Unit>();
 
-        private EnergyType _selectedEnergyType;
-        public EnergyType SelectedEnergyType
+        private EnergyType? _selectedEnergyType;
+        public EnergyType? SelectedEnergyType
         {
             get => _selectedEnergyType;
             set
@@ -41,12 +40,12 @@ namespace WpfUI.ViewModels
             }
         }
 
+        private string _statusMessage = string.Empty;
         public string StatusMessage
         {
             get => _statusMessage;
             set { _statusMessage = value; OnPropertyChanged(); }
         }
-        private string _statusMessage;
 
         public ICommand AddCommand { get; }
         public ICommand SaveCommand { get; }
@@ -81,12 +80,13 @@ namespace WpfUI.ViewModels
         private void Save()
         {
             _controller.UnitOfWork.Complete();
-            StatusMessage = "Saved.";
+            StatusMessage = "Saved successfully";
         }
 
         private void Cancel()
         {
             _controller.UnitOfWork.CancelChanges();
+            StatusMessage = "Cancelled successfully";
             Refresh();
         }
 
@@ -97,6 +97,7 @@ namespace WpfUI.ViewModels
 
             _controller.UnitOfWork.Delete(SelectedEnergyType);
             EnergyTypes.Remove(SelectedEnergyType);
+            StatusMessage = "Energy type deleted";
         }
 
         private void Refresh()

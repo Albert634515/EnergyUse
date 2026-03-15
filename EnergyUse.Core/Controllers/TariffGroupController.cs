@@ -6,7 +6,7 @@ public class TariffGroupController : BaseController, IController
 {
     #region ControlerProperties
 
-    public EnergyUse.Core.UnitOfWork.TariffGroup? UnitOfWork { get; set; } = null;
+    public EnergyUse.Core.UnitOfWork.TariffGroup UnitOfWork { get; set; }
 
     #endregion
 
@@ -14,18 +14,12 @@ public class TariffGroupController : BaseController, IController
 
     public TariffGroupController(string dbFileName) : base(dbFileName)
     {
-
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.TariffGroup(_dbFileName);
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.TariffGroup(_dbFileName);
     }
 
     #endregion

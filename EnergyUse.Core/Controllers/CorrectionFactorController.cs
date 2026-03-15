@@ -6,7 +6,7 @@ public class CorrectionFactorController : BaseController, IController
 {
     #region ControlerProperties
 
-    public EnergyUse.Core.UnitOfWork.CorrectionFactor? UnitOfWork { get; set; } = null;
+    public EnergyUse.Core.UnitOfWork.CorrectionFactor? UnitOfWork { get; set; }
 
     #endregion
 
@@ -14,18 +14,12 @@ public class CorrectionFactorController : BaseController, IController
 
     public CorrectionFactorController(string dbFileName) : base(dbFileName)
     {
-
+        UnitOfWork = new EnergyUse.Core.UnitOfWork.CorrectionFactor(_dbFileName);
     }
 
     public void Initialize()
     {
-        setUnitOfWork();
         base.setSettingsManager();
-    }
-
-    private void setUnitOfWork()
-    {
-        UnitOfWork = new EnergyUse.Core.UnitOfWork.CorrectionFactor(_dbFileName);
     }
 
     #endregion
