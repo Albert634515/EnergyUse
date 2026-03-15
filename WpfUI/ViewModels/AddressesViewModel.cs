@@ -30,6 +30,13 @@ public class AddressesViewModel : ViewModelBase
         }
     }
 
+    private string _statusMessage = string.Empty;
+    public string StatusMessage
+    {
+        get => _statusMessage;
+        set { _statusMessage = value; OnPropertyChanged(); }
+    }
+
     public ICommand AddCommand { get; }
     public ICommand SaveCommand { get; }
     public ICommand CancelCommand { get; }

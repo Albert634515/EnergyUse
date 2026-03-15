@@ -1,8 +1,6 @@
 ﻿using EnergyUse.Core.Controllers;
 using EnergyUse.Models;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows;
 using System.Windows.Input;
 
 namespace WpfUI.ViewModels;
@@ -14,8 +12,8 @@ public class CorrectionFactorViewModel : ViewModelBase
     public ObservableCollection<EnergyType> EnergyTypes { get; set; }
     public ObservableCollection<CorrectionFactor> CorrectionFactors { get; set; }
 
-    private EnergyType _selectedEnergyType;
-    public EnergyType SelectedEnergyType
+    private EnergyType? _selectedEnergyType;
+    public EnergyType? SelectedEnergyType
     {
         get => _selectedEnergyType;
         set
@@ -26,14 +24,19 @@ public class CorrectionFactorViewModel : ViewModelBase
         }
     }
 
-    private CorrectionFactor _selectedCorrectionFactor;
-    public CorrectionFactor SelectedCorrectionFactor
+    private CorrectionFactor? _selectedCorrectionFactor;
+    public CorrectionFactor? SelectedCorrectionFactor
     {
         get => _selectedCorrectionFactor;
         set { _selectedCorrectionFactor = value; OnPropertyChanged(); }
     }
 
-    public string StatusMessage { get; set; }
+    private string _statusMessage = string.Empty;
+    public string StatusMessage
+    {
+        get => _statusMessage;
+        set { _statusMessage = value; OnPropertyChanged(); }
+    }
 
     public ICommand AddCommand { get; }
     public ICommand SaveCommand { get; }
@@ -44,10 +47,6 @@ public class CorrectionFactorViewModel : ViewModelBase
 
     public CorrectionFactorViewModel()
     {
-        // 🔥 Belangrijk: voorkom dat de designer database opent
-        if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
-            return;
-
         _controller = new CorrectionFactorController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
@@ -61,15 +60,15 @@ public class CorrectionFactorViewModel : ViewModelBase
         CloseCommand = new RelayCommand(_ => CloseRequested?.Invoke());
     }
 
-    public event Action CloseRequested;
+    public event Action? CloseRequested;
 
     private void getCorrectionFactors()
     {
         if (SelectedEnergyType == null) return;
 
         var list = _controller.UnitOfWork.CorrectionFactorRepo
-            .SelectByEnergyType(SelectedEnergyType.Id)
-            .ToList();
+                                         .SelectByEnergyType(SelectedEnergyType.Id)
+                                         .ToList();
 
         CorrectionFactors = new ObservableCollection<CorrectionFactor>(list);
         OnPropertyChanged(nameof(CorrectionFactors));
@@ -77,6 +76,8 @@ public class CorrectionFactorViewModel : ViewModelBase
 
     private void Add()
     {
+        if (SelectedEnergyType == null) return;
+
         var entity = _controller.UnitOfWork.AddDefaultEntity(SelectedEnergyType.Id);
         CorrectionFactors.Add(entity);
         SelectedCorrectionFactor = entity;

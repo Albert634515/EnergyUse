@@ -6,7 +6,7 @@ public class CorrectionFactorController : BaseController, IController
 {
     #region ControlerProperties
 
-    public EnergyUse.Core.UnitOfWork.CorrectionFactor? UnitOfWork { get; set; }
+    public EnergyUse.Core.UnitOfWork.CorrectionFactor UnitOfWork { get; set; }
 
     #endregion
 
