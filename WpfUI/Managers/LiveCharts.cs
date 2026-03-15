@@ -1,10 +1,8 @@
-﻿using EnergyUse.Core.Graphs.LiveCharts;
-using EnergyUse.Models.Common;
+﻿using EnergyUse.Models.Common;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace WpfUI.Managers;
