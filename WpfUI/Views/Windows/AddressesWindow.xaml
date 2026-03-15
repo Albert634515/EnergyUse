@@ -3,19 +3,54 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Addresses"
         Height="650"
-        Width="800"
-        ShowInTaskbar="False"
-        Loaded="Addresses_Loaded">
+        Width="900"
+        ShowInTaskbar="False">
 
     <DockPanel>
 
         <!-- Toolbar -->
         <ToolBar DockPanel.Dock="Top">
-            <Button Content="Add" Command="{Binding AddCommand}" />
-            <Button Content="Save" Command="{Binding SaveCommand}" />
-            <Button Content="Delete" Command="{Binding DeleteCommand}" />
-            <Button Content="Refresh" Command="{Binding RefreshCommand}" />
-            <Button Content="Close" Command="{Binding CloseCommand}" />
+            <Button Command="{Binding AddCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/add_24x24.png" Width="20" Height="20"/>
+                    <TextBlock Text="Add" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding SaveCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/tick-mark_24x24.png" Width="20" Height="20"/>
+                    <TextBlock Text="Save" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding CancelCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/clear_24x24.png" Width="20" Height="20"/>
+                    <TextBlock Text="Cancel" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding DeleteCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/delete_24x24.png" Width="20" Height="20"/>
+                    <TextBlock Text="Delete" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding RefreshCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/clock_24x24.png" Width="20" Height="20"/>
+                    <TextBlock Text="Refresh" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding CloseCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/crossed_24x24.png" Width="20" Height="20"/>
+                    <TextBlock Text="Close" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Button>
         </ToolBar>
 
         <!-- Main layout -->
@@ -29,67 +64,117 @@
             <DataGrid Grid.Column="0"
                       ItemsSource="{Binding Addresses}"
                       SelectedItem="{Binding SelectedAddress}"
-                      AutoGenerateColumns="False">
+                      AutoGenerateColumns="False"
+                      Margin="0,0,10,0">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
-                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="80" />
                 </DataGrid.Columns>
             </DataGrid>
 
-            <!-- Details -->
-            <StackPanel Grid.Column="1" Margin="20">
+            <!-- Details panel -->
+            <ScrollViewer Grid.Column="1">
+                <StackPanel Margin="10">
 
-                <TextBlock Text="Description" />
-                <TextBox Text="{Binding SelectedAddress.Description}" />
+                    <!-- Basic info -->
+                    <GroupBox Header="Address Details" Margin="0 0 0 15">
+                        <Grid Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Street" />
-                <TextBox Text="{Binding SelectedAddress.Street}" />
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                <TextBlock Text="City" />
-                <TextBox Text="{Binding SelectedAddress.City}" />
+                            <TextBlock Text="Description" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding SelectedAddress.Description}" Grid.Row="0" Grid.Column="1"/>
 
-                <TextBlock Text="Postal Code" />
-                <TextBox Text="{Binding SelectedAddress.PostalCode}" />
+                            <TextBlock Text="Street" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding SelectedAddress.Street}" Grid.Row="1" Grid.Column="1"/>
 
-                <TextBlock Text="House Number" />
-                <TextBox Text="{Binding SelectedAddress.HouseNumber}" />
+                            <TextBlock Text="City" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding SelectedAddress.City}" Grid.Row="2" Grid.Column="1"/>
 
-                <CheckBox Content="Default Address"
-                          IsChecked="{Binding SelectedAddress.DefaultAddress}" />
+                            <TextBlock Text="Postal Code" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding SelectedAddress.PostalCode}" Grid.Row="3" Grid.Column="1"/>
 
-                <GroupBox Header="Solar Panels">
-                    <StackPanel>
-                        <CheckBox Content="Available"
-                                  IsChecked="{Binding SelectedAddress.SolarPanelsAvailable}" />
+                            <TextBlock Text="House Number" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding SelectedAddress.HouseNumber}" Grid.Row="4" Grid.Column="1"/>
 
-                        <TextBlock Text="Purchase Amount" />
-                        <TextBox Text="{Binding SelectedAddress.PurchaseAmount}" />
+                            <CheckBox Content="Default Address"
+                                      IsChecked="{Binding SelectedAddress.DefaultAddress}"
+                                      Grid.Row="5" Grid.Column="1"/>
+                        </Grid>
+                    </GroupBox>
 
-                        <TextBlock Text="Subsidy Amount" />
-                        <TextBox Text="{Binding SelectedAddress.SubsidyAmount}" />
+                    <!-- Solar Panels -->
+                    <GroupBox Header="Solar Panels" Margin="0 0 0 15">
+                        <Grid Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="Total Capacity" />
-                        <TextBox Text="{Binding SelectedAddress.TotalCapacity}" />
-                    </StackPanel>
-                </GroupBox>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                <GroupBox Header="Tariff Groups">
-                    <StackPanel>
-                        <TextBlock Text="General" />
-                        <ComboBox ItemsSource="{Binding GeneralTariffs}"
-                                  DisplayMemberPath="Description"
-                                  SelectedValuePath="Id"
-                                  SelectedValue="{Binding SelectedAddress.GeneralTariffGroupId}" />
+                            <TextBlock Text="Available" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                            <CheckBox IsChecked="{Binding SelectedAddress.SolarPanelsAvailable}"
+                                      Grid.Row="0" Grid.Column="1"/>
 
-                        <TextBlock Text="Energy" />
-                        <ComboBox ItemsSource="{Binding EnergyTariffs}"
-                                  DisplayMemberPath="Description"
-                                  SelectedValuePath="Id"
-                                  SelectedValue="{Binding SelectedAddress.DefaultTariffGroupId}" />
-                    </StackPanel>
-                </GroupBox>
+                            <TextBlock Text="Purchase Amount" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding SelectedAddress.PurchaseAmount}" Grid.Row="1" Grid.Column="1"/>
 
-            </StackPanel>
+                            <TextBlock Text="Subsidy Amount" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding SelectedAddress.SubsidyAmount}" Grid.Row="2" Grid.Column="1"/>
+
+                            <TextBlock Text="Total Capacity" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding SelectedAddress.TotalCapacity}" Grid.Row="3" Grid.Column="1"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <!-- Tariff Groups -->
+                    <GroupBox Header="Tariff Groups">
+                        <Grid Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="General" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                            <ComboBox ItemsSource="{Binding GeneralTariffs}"
+                                      DisplayMemberPath="Description"
+                                      SelectedValuePath="Id"
+                                      SelectedValue="{Binding SelectedAddress.GeneralTariffGroupId}"
+                                      Grid.Row="0" Grid.Column="1"/>
+
+                            <TextBlock Text="Energy" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                            <ComboBox ItemsSource="{Binding EnergyTariffs}"
+                                      DisplayMemberPath="Description"
+                                      SelectedValuePath="Id"
+                                      SelectedValue="{Binding SelectedAddress.DefaultTariffGroupId}"
+                                      Grid.Row="1" Grid.Column="1"/>
+                        </Grid>
+                    </GroupBox>
+
+                </StackPanel>
+            </ScrollViewer>
 
         </Grid>
 

@@ -1,4 +1,5 @@
 ﻿using EnergyUse.Core.Controllers;
+using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -9,17 +10,11 @@ namespace WpfUI.ViewModels;
 public class AddressesViewModel : ViewModelBase
 {
     private readonly AddressController _controller;
+    private readonly ISettingsService _settings;
 
-    private ObservableCollection<Address> _addresses = new ObservableCollection<Address>();
-    public ObservableCollection<Address> Addresses
-    {
-        get => _addresses;
-        set
-        {
-            _addresses = value;
-            OnPropertyChanged();
-        }
-    }
+    public ObservableCollection<Address> Addresses { get; set; } = new();
+    public ObservableCollection<TariffGroup> GeneralTariffs { get; set; } = new();
+    public ObservableCollection<TariffGroup> EnergyTariffs { get; set; } = new();
 
     private Address? _selectedAddress;
     public Address? SelectedAddress
@@ -29,34 +24,38 @@ public class AddressesViewModel : ViewModelBase
         {
             _selectedAddress = value;
             OnPropertyChanged();
+
+            if (value != null)
+                _settings.Save("LastSelectedAddressId", value.Id.ToString());
         }
     }
 
-    public ObservableCollection<TariffGroup> GeneralTariffs { get; set; } = new ObservableCollection<TariffGroup>();
-    public ObservableCollection<TariffGroup> EnergyTariffs { get; set; } = new ObservableCollection<TariffGroup>();
-
     public ICommand AddCommand { get; }
     public ICommand SaveCommand { get; }
+    public ICommand CancelCommand { get; }
     public ICommand DeleteCommand { get; }
     public ICommand RefreshCommand { get; }
     public ICommand CloseCommand { get; }
 
-    public AddressesViewModel()
+    public event Action? CloseRequested;
+
+    public AddressesViewModel(ISettingsService settings)
     {
+        _settings = settings;
+
         _controller = new AddressController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
+        getTariffs();
         getAddresses();
-        getTariffGroups();
 
         AddCommand = new RelayCommand(_ => addAddress());
         SaveCommand = new RelayCommand(_ => saveAddress());
+        CancelCommand = new RelayCommand(_ => cancel());
         DeleteCommand = new RelayCommand(_ => deleteAddress());
         RefreshCommand = new RelayCommand(_ => getAddresses());
         CloseCommand = new RelayCommand(_ => CloseRequested?.Invoke());
     }
-
-    public event Action? CloseRequested;
 
     private async void getAddresses()
     {
@@ -64,6 +63,15 @@ public class AddressesViewModel : ViewModelBase
         {
             var list = await _controller.GetAllAdressesAsync();
             Addresses = new ObservableCollection<Address>(list);
+            OnPropertyChanged(nameof(Addresses));
+
+            // Restore last selected
+            var savedId = _settings.Get("LastSelectedAddressId");
+            if (int.TryParse(savedId, out int id))
+                SelectedAddress = Addresses.FirstOrDefault(a => a.Id == id);
+
+            if (SelectedAddress == null)
+                SelectedAddress = Addresses.FirstOrDefault();
         }
         catch (Exception ex)
         {
@@ -71,7 +79,7 @@ public class AddressesViewModel : ViewModelBase
         }
     }
 
-    private void getTariffGroups()
+    private void getTariffs()
     {
         GeneralTariffs = new ObservableCollection<TariffGroup>(
             _controller.GetTariffGroups((int)EnergyUse.Common.Enums.TariffGroupType.GeneralCosts));
@@ -95,6 +103,11 @@ public class AddressesViewModel : ViewModelBase
         _controller.UnitOfWork.Complete();
     }
 
+    private void cancel()
+    {
+        _controller.UnitOfWork.CancelChanges();
+    }
+
     private void deleteAddress()
     {
         if (SelectedAddress == null)
@@ -102,5 +115,6 @@ public class AddressesViewModel : ViewModelBase
 
         _controller.UnitOfWork.Delete(SelectedAddress);
         Addresses.Remove(SelectedAddress);
+        SelectedAddress = Addresses.FirstOrDefault();
     }
 }

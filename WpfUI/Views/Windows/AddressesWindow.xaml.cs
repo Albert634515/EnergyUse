@@ -1,25 +1,25 @@
 ﻿using System.Windows;
+using WpfUI.Services;
 using WpfUI.ViewModels;
 
-namespace WpfUI.Views.Windows;
-
-/// <summary>
-/// Interaction logic for AddressesWindow.xaml
-/// </summary>
-public partial class AddressesWindow : Window
+namespace WpfUI.Views.Windows
 {
-    public AddressesWindow(Window owner)
+    public partial class AddressesWindow : Window
     {
-        InitializeComponent();
-        Owner = owner;
-        WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        private readonly AddressesViewModel _viewModel;
 
-        Loaded += Addresses_Loaded;
-    }
+        public AddressesWindow(Window owner)
+        {
+            InitializeComponent();
 
-    private void Addresses_Loaded(object sender, RoutedEventArgs e)
-    {
-        if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
-            DataContext = new AddressesViewModel();
+            Owner = owner;
+            WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+            // Inject SettingsService
+            _viewModel = new AddressesViewModel(new SettingsService());
+            _viewModel.CloseRequested += () => Close();
+
+            DataContext = _viewModel;
+        }
     }
 }
