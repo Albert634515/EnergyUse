@@ -61,7 +61,7 @@ public class LibPeriodicDate
 
         setAvgCorrectionFactor();
         setCorrectionFactorData();
-        setNettingData();
+        await setNettingData();
 
         await getPeriodicDataAsync();
 

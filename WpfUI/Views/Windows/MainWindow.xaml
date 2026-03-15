@@ -41,10 +41,10 @@
                 </MenuItem>
 
                 <MenuItem Header="Maintenance">
-                    <MenuItem Header="Recalculate Current Selection" Command="{Binding RecalculateCurrentSelectionCommand}"/>
+                    <MenuItem Header="Recalculate Current Selection" Command="{Binding RecalculateAllCommand}"/>
                     <MenuItem Header="Recalculate All" Command="{Binding RecalculateAllCommand}"/>
                     <MenuItem Header="Setup New File" Command="{Binding SetupNewFileCommand}"/>
-                    <MenuItem Header="Create Demo Data" Command="{Binding CreateDemoDataCommand}"/>
+                    <!--<MenuItem Header="Create Demo Data" Command="{Binding CreateDemoDataCommand}"/> -->
                 </MenuItem>
 
             </MenuItem>

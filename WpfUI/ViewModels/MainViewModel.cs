@@ -38,6 +38,7 @@ public class MainViewModel : ViewModelBase
         ShowLeftRatesGraphCommand = new RelayCommand(_ => setRatesControl());
 
         PdfReportCommand = new RelayCommand(async _ => await OpenSettlementReport());
+        RateReportCommand = new RelayCommand(async _ => await OpenRateReport());
         PaybackCommand = new RelayCommand(_ => new PayBackTimeWindow(Application.Current.MainWindow).ShowDialog());
         RecalculateCommand = new RelayCommand(_ => RecalculateCurrentSelection());
         RecalculateAllCommand = new RelayCommand(_ => RecalculateAll());
@@ -302,6 +303,7 @@ public class MainViewModel : ViewModelBase
     public ICommand ShowLeftRatesGraphCommand { get; }
 
     public ICommand PdfReportCommand { get; }
+    public ICommand RateReportCommand { get; }
     public ICommand PaybackCommand { get; }
     public ICommand RecalculateCommand { get; }
     public ICommand RecalculateAllCommand { get; }
@@ -341,7 +343,7 @@ public class MainViewModel : ViewModelBase
 
         var parameters = await SettlementReportWindow.ShowDialogAsync(Application.Current.MainWindow,
                                                                       _selectedAddress,
-                                                                      EnergyUse.Common.Enums.ReportType.SettlementCompact        
+                                                                      EnergyUse.Common.Enums.ReportType.SettlementCompact
                                                                      );
 
         if (parameters == null)
@@ -352,6 +354,40 @@ public class MainViewModel : ViewModelBase
             Mouse.OverrideCursor = Cursors.Wait;
 
             var fileName = await _controller.GetSettlementPdfAsync(parameters);
+
+            if (!string.IsNullOrWhiteSpace(fileName))
+            {
+                Process.Start(new ProcessStartInfo(fileName)
+                {
+                    UseShellExecute = true
+                });
+            }
+        }
+        finally
+        {
+            Mouse.OverrideCursor = null;
+        }
+    }
+
+    private async Task OpenRateReport()
+    {
+        if (SelectedAddress == null)
+            return;
+
+        var parameters = await SettlementReportWindow.ShowDialogAsync(
+            Application.Current.MainWindow,
+            SelectedAddress,
+            EnergyUse.Common.Enums.ReportType.Rates
+        );
+
+        if (parameters == null)
+            return;
+
+        try
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+
+            var fileName = _controller.GetRatingReportPdf(SelectedAddress, parameters);
 
             if (!string.IsNullOrWhiteSpace(fileName))
             {

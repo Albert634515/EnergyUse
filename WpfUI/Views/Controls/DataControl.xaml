@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="900">
+             mc:Ignorable="d">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -21,32 +20,28 @@
 
             <Button Command="{Binding AddCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20"
-                           Source="/WpfUI;component/Resources/add_24x24.png"/>
+                    <Image Width="20" Height="20" Source="/WpfUI;component/Resources/add_24x24.png"/>
                     <TextBlock Text="Add" Margin="5,0,0,0"/>
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding EditCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20"
-                           Source="/WpfUI;component/Resources/editing_24x24.png"/>
+                    <Image Width="20" Height="20" Source="/WpfUI;component/Resources/editing_24x24.png"/>
                     <TextBlock Text="Edit" Margin="5,0,0,0"/>
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding DeleteCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20"
-                           Source="/WpfUI;component/Resources/delete_24x24.png"/>
+                    <Image Width="20" Height="20" Source="/WpfUI;component/Resources/delete_24x24.png"/>
                     <TextBlock Text="Delete" Margin="5,0,0,0"/>
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding RefreshCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20"
-                           Source="/WpfUI;component/Resources/clock_24x24.png"/>
+                    <Image Width="20" Height="20" Source="/WpfUI;component/Resources/clock_24x24.png"/>
                     <TextBlock Text="Refresh" Margin="5,0,0,0"/>
                 </StackPanel>
             </Button>

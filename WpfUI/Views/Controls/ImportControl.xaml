@@ -124,7 +124,6 @@
                 <DataGridTextColumn Header="Delta Normal" Binding="{Binding DeltaNormal}" Width="60">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
-                            <Setter Property="Padding" Value="4"/>
                             <Setter Property="Background" Value="White"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding DeltaNormal, StringFormat={}{0}}" Value="-">
@@ -147,7 +146,6 @@
                 <DataGridTextColumn Header="Delta Low" Binding="{Binding DeltaLow}" Width="60">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
-                            <Setter Property="Padding" Value="4"/>
                             <Setter Property="Background" Value="White"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding DeltaLow, StringFormat={}{0}}" Value="-">
@@ -170,7 +168,6 @@
                 <DataGridTextColumn Header="Return Δ Low" Binding="{Binding ReturnDeliveryDeltaLow}" Width="60">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
-                            <Setter Property="Padding" Value="4"/>
                             <Setter Property="Background" Value="White"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ReturnDeliveryDeltaLow, StringFormat={}{0}}" Value="-">
@@ -193,7 +190,6 @@
                 <DataGridTextColumn Header="Return Δ Normal" Binding="{Binding ReturnDeliveryDeltaNormal}" Width="60">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
-                            <Setter Property="Padding" Value="4"/>
                             <Setter Property="Background" Value="White"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ReturnDeliveryDeltaNormal, StringFormat={}{0}}" Value="-">
