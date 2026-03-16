@@ -43,7 +43,7 @@ namespace WpfUI.Services
             var chart = new Default(p);
 
             var seriesModels = chart.GetSeries();
-            var series = ConvertSeries(seriesModels);
+            var series = ConvertDefaultChartSeries(seriesModels);
 
             var labels = chart.GetResultLabelsPerPeriod(energyTypes.First());
 
@@ -53,7 +53,7 @@ namespace WpfUI.Services
             return new DefaultChartResult(series, new List<Axis> { xAxis }, yAxes, labels);
         }
 
-        private List<ISeries> ConvertSeries(List<SeriesModel> models)
+        private List<ISeries> ConvertDefaultChartSeries(List<SeriesModel> models)
         {
             var result = new List<ISeries>();
 
