@@ -23,7 +23,10 @@ public class SettlementReportViewModel : ViewModelBase
         set
         {
             if (SetProperty(ref _selectedAddress, value) && value != null)
+            {
                 LoadDateSelectionsForAddress(value.Id);
+                LoadLastSelectedPeriod(value.Id);
+            }
             OnPropertyChanged(nameof(IsValid));
         }
     }
@@ -36,6 +39,7 @@ public class SettlementReportViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedPredefinedPeriod, value) && value != null)
                 ApplyPredefinedPeriod(value);
+
             OnPropertyChanged(nameof(IsValid));
         }
     }
@@ -46,17 +50,35 @@ public class SettlementReportViewModel : ViewModelBase
         get => _selectedReportType;
         set
         {
-            if (SetProperty(ref _selectedReportType, value))
-            {
-                // ShowRates‑logica koppelen aan ReportType
-                if (value?.Description?.Contains("Cost", StringComparison.OrdinalIgnoreCase) == true)
-                    ShowRates = true;
-                else
-                    ShowRates = false;
+            if (!SetProperty(ref _selectedReportType, value))
+                return;
 
-                OnPropertyChanged(nameof(ShowRates));
-                OnPropertyChanged(nameof(IsValid));
+            if (value == null || value.Description == null)
+                return;
+
+            var report = Enum.Parse<EnergyUse.Common.Enums.ReportType>(value.Description);
+
+            switch (report)
+            {
+                case EnergyUse.Common.Enums.ReportType.Rates:
+                    ShowRates = true;
+                    ShowRatesVisible = false;
+                    break;
+
+                case EnergyUse.Common.Enums.ReportType.SettlementCompact:
+                    ShowRates = false;
+                    ShowRatesVisible = true;
+                    break;
+
+                default:
+                    ShowRates = true;
+                    ShowRatesVisible = true;
+                    break;
             }
+
+            OnPropertyChanged(nameof(ShowRates));
+            OnPropertyChanged(nameof(ShowRatesVisible));
+            OnPropertyChanged(nameof(IsValid));
         }
     }
 
@@ -72,6 +94,13 @@ public class SettlementReportViewModel : ViewModelBase
     {
         get => _showRates;
         set { SetProperty(ref _showRates, value); OnPropertyChanged(nameof(IsValid)); }
+    }
+
+    private bool _showRatesVisible = true;
+    public bool ShowRatesVisible
+    {
+        get => _showRatesVisible;
+        set { SetProperty(ref _showRatesVisible, value); }
     }
 
     public bool IsValid
@@ -135,6 +164,16 @@ public class SettlementReportViewModel : ViewModelBase
         SelectedReportType = ReportTypes.FirstOrDefault(r => r.Description == defaultReport.ToString());
 
         OnPropertyChanged(nameof(IsValid));
+    }
+
+    private void LoadLastSelectedPeriod(long addressId)
+    {
+        var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+        var key = $"{addressId}LastPreSelectedPeriod";
+        var setting = libSettings.GetSetting(key);
+
+        if (setting != null && long.TryParse(setting.KeyValue, out long periodId))
+            SelectedPredefinedPeriod = PredefinedPeriods.FirstOrDefault(p => p.Id == periodId);
     }
 
     private void LoadDateSelectionsForAddress(long addressId)
@@ -240,7 +279,13 @@ public class SettlementReportViewModel : ViewModelBase
         };
 
         if (SelectedPredefinedPeriod != null)
+        {
             result.PreSelectedPeriodId = SelectedPredefinedPeriod.Id;
+
+            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+            var key = $"{SelectedAddress?.Id}LastPreSelectedPeriod";
+            libSettings.SaveSetting(key, SelectedPredefinedPeriod.Id.ToString());
+        }
 
         foreach (var vm in DateSelections)
         {

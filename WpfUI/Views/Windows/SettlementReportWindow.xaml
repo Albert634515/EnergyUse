@@ -7,6 +7,10 @@
         Width="850"
         ShowInTaskbar="False">
 
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -14,7 +18,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Bovenste parameters -->
+        <!-- Parameters -->
         <GroupBox Header="Parameters" Grid.Row="0" Padding="10">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -62,8 +66,10 @@
                     <CheckBox Content="Predict missing data"
                               IsChecked="{Binding PredictMissingData}"
                               Margin="0 0 0 5"/>
+
                     <CheckBox Content="Show rates"
-                              IsChecked="{Binding ShowRates}"/>
+                              IsChecked="{Binding ShowRates}"
+                              Visibility="{Binding ShowRatesVisible, Converter={StaticResource BoolToVis}}"/>
                 </StackPanel>
 
             </Grid>
