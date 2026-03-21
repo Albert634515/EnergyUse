@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="WpfUI.Views.Controls.WizardPage3_EnergyTypes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Margin="10">
+        <GroupBox Header="Selecteer energietypen" FontSize="16">
+            <ListBox ItemsSource="{Binding EnergyTypes}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding EnergyType.Name}"
+                                  FontSize="16"
+                                  IsChecked="{Binding IsSelected}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </GroupBox>
+    </Grid>
+
+</UserControl>

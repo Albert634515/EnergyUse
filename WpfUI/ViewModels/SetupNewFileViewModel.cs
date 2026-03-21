@@ -4,7 +4,10 @@ using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+using WpfUI.Views.Controls;
 
 namespace WpfUI.ViewModels;
 
@@ -19,57 +22,195 @@ public class SetupNewFileViewModel : ViewModelBase
     {
         _dialogService = dialogService;
 
-        NextCommand = new RelayCommand(_ => Next(), _ => SelectedTabIndex < 3);
-        PreviousCommand = new RelayCommand(_ => Previous(), _ => SelectedTabIndex > 0);
+        // Commands
+        NextCommand = new RelayCommand(_ => NextStep(), _ => CanGoNext);
+        PreviousCommand = new RelayCommand(_ => PreviousStep(), _ => CanGoPrevious);
+        CreateDbCommand = new RelayCommand(_ => Finish(), _ => CanFinish);
         SelectFileCommand = new RelayCommand(_ => SelectFile());
         SelectDirectoryCommand = new RelayCommand(_ => SelectDirectory());
-        CreateDbCommand = new RelayCommand(_ =>
-            {
-                if (CreateDatabase())
-                    RequestClose?.Invoke();
-            },
-            _ => true
-        );
 
-        Address = new Address();
+        // Load demo address
+        Address = EnergyUse.Core.Manager.LibBaseData.GetDemoAddress(1);
 
+        // Load energy types
         EnergyTypes = new ObservableCollection<SelectableEnergyTypeViewModel>();
-        foreach (var t in new[]
-        {
-            new EnergyType { Name = "Elektriciteit" },
-            new EnergyType { Name = "Gas" },
-            new EnergyType { Name = "Warmtepomp" },
-            new EnergyType { Name = "Zonnepanelen" }
-        })
-        {
-            var selectable = new SelectableEnergyTypeViewModel(t);
-            selectable.PropertyChanged += (_, __) => UpdateSummary();
-            EnergyTypes.Add(selectable);
-        }
+        foreach (var t in EnergyUse.Core.Manager.LibBaseData.GetDefaultEnergyTypes(true, false))
+            EnergyTypes.Add(new SelectableEnergyTypeViewModel(t));
 
+        // Initial step
+        CurrentStep = WizardStep.FileSelection;
+        LoadPageForStep();
+
+        UpdateStepVisibility();
+        UpdateStepIndicator();
+        UpdateNavigationVisibility();
         UpdateSummary();
-        StatusMessage = "Klaar om te beginnen.";
     }
 
-    // -----------------------------
-    // Wizard navigation
-    // -----------------------------
-    private int _selectedTabIndex;
-    public int SelectedTabIndex
+    // ---------------------------------------------------------
+    // Wizard steps
+    // ---------------------------------------------------------
+    public enum WizardStep
     {
-        get => _selectedTabIndex;
-        set { _selectedTabIndex = value; OnPropertyChanged(); }
+        FileSelection = 1,
+        Address = 2,
+        EnergyTypes = 3,
+        Summary = 4
     }
 
+    private WizardStep _currentStep;
+    public WizardStep CurrentStep
+    {
+        get => _currentStep;
+        set
+        {
+            _currentStep = value;
+            OnPropertyChanged();
+            LoadPageForStep();
+            UpdateStepIndicator();
+            UpdateNavigationVisibility();
+        }
+    }
+
+    // ---------------------------------------------------------
+    // Dynamic step visibility
+    // ---------------------------------------------------------
+    public Visibility Step2Visible => IsNewFile ? Visibility.Visible : Visibility.Collapsed;
+    public Visibility Step3Visible => IsNewFile ? Visibility.Visible : Visibility.Collapsed;
+
+    private void UpdateStepVisibility()
+    {
+        OnPropertyChanged(nameof(Step2Visible));
+        OnPropertyChanged(nameof(Step3Visible));
+    }
+
+    // ---------------------------------------------------------
+    // Step indicator colors
+    // ---------------------------------------------------------
+    public Brush Step1Background => CurrentStep == WizardStep.FileSelection ? Brushes.SteelBlue : Brushes.LightGray;
+    public Brush Step2Background => CurrentStep == WizardStep.Address ? Brushes.SteelBlue : Brushes.LightGray;
+    public Brush Step3Background => CurrentStep == WizardStep.EnergyTypes ? Brushes.SteelBlue : Brushes.LightGray;
+    public Brush Step4Background => CurrentStep == WizardStep.Summary ? Brushes.SteelBlue : Brushes.LightGray;
+
+    public Brush Step1Foreground => Brushes.White;
+    public Brush Step2Foreground => Brushes.White;
+    public Brush Step3Foreground => Brushes.White;
+    public Brush Step4Foreground => Brushes.White;
+
+    private void UpdateStepIndicator()
+    {
+        OnPropertyChanged(nameof(Step1Background));
+        OnPropertyChanged(nameof(Step2Background));
+        OnPropertyChanged(nameof(Step3Background));
+        OnPropertyChanged(nameof(Step4Background));
+
+        OnPropertyChanged(nameof(Step1Foreground));
+        OnPropertyChanged(nameof(Step2Foreground));
+        OnPropertyChanged(nameof(Step3Foreground));
+        OnPropertyChanged(nameof(Step4Foreground));
+    }
+
+    // ---------------------------------------------------------
+    // Wizard navigation
+    // ---------------------------------------------------------
     public ICommand NextCommand { get; }
     public ICommand PreviousCommand { get; }
+    public ICommand CreateDbCommand { get; }
 
-    private void Next() => SelectedTabIndex++;
-    private void Previous() => SelectedTabIndex--;
+    public bool CanGoNext => CurrentStep != WizardStep.Summary;
+    public bool CanGoPrevious => CurrentStep != WizardStep.FileSelection;
+    public bool CanFinish => CurrentStep == WizardStep.Summary;
 
-    // -----------------------------
+    public Visibility PreviousVisible => CanGoPrevious ? Visibility.Visible : Visibility.Collapsed;
+    public Visibility NextVisible => CanGoNext && !CanFinish ? Visibility.Visible : Visibility.Collapsed;
+    public Visibility FinishVisible => CanFinish ? Visibility.Visible : Visibility.Collapsed;
+
+    private void UpdateNavigationVisibility()
+    {
+        OnPropertyChanged(nameof(PreviousVisible));
+        OnPropertyChanged(nameof(NextVisible));
+        OnPropertyChanged(nameof(FinishVisible));
+    }
+
+    private void NextStep()
+    {
+        if (CurrentStep == WizardStep.FileSelection)
+        {
+            if (IsExistingFile)
+            {
+                CurrentStep = WizardStep.Summary;
+                return;
+            }
+
+            CurrentStep = WizardStep.Address;
+            return;
+        }
+
+        if (CurrentStep == WizardStep.Address)
+        {
+            CurrentStep = WizardStep.EnergyTypes;
+            return;
+        }
+
+        if (CurrentStep == WizardStep.EnergyTypes)
+        {
+            CurrentStep = WizardStep.Summary;
+            return;
+        }
+    }
+
+    private void PreviousStep()
+    {
+        if (CurrentStep == WizardStep.Summary)
+        {
+            if (IsExistingFile)
+            {
+                CurrentStep = WizardStep.FileSelection;
+                return;
+            }
+
+            CurrentStep = WizardStep.EnergyTypes;
+            return;
+        }
+
+        if (CurrentStep == WizardStep.EnergyTypes)
+        {
+            CurrentStep = WizardStep.Address;
+            return;
+        }
+
+        if (CurrentStep == WizardStep.Address)
+        {
+            CurrentStep = WizardStep.FileSelection;
+            return;
+        }
+    }
+
+    // ---------------------------------------------------------
+    // Page loading
+    // ---------------------------------------------------------
+    private object? _currentPage;
+    public object? CurrentPage
+    {
+        get => _currentPage;
+        set { _currentPage = value; OnPropertyChanged(); }
+    }
+
+    private void LoadPageForStep()
+    {
+        CurrentPage = CurrentStep switch
+        {
+            WizardStep.FileSelection => new WizardPage1_FileSelection(),
+            WizardStep.Address => new WizardPage2_Address(),
+            WizardStep.EnergyTypes => new WizardPage3_EnergyTypes(),
+            WizardStep.Summary => new WizardPage4_Summary(),
+            _ => null
+        };
+    }
+
+    // ---------------------------------------------------------
     // File selection
-    // -----------------------------
+    // ---------------------------------------------------------
     public ICommand SelectFileCommand { get; }
     public ICommand SelectDirectoryCommand { get; }
 
@@ -96,6 +237,7 @@ public class SetupNewFileViewModel : ViewModelBase
             _isNewFile = value;
             OnPropertyChanged();
             OnPropertyChanged(nameof(IsExistingFile));
+            UpdateStepVisibility();
             UpdateSummary();
         }
     }
@@ -107,14 +249,14 @@ public class SetupNewFileViewModel : ViewModelBase
         {
             IsNewFile = !value;
             OnPropertyChanged();
+            UpdateStepVisibility();
             UpdateSummary();
         }
     }
 
     private void SelectFile()
     {
-        var file = _dialogService.SaveFile("Database file (*.db)|*.db", "Choose database file");
-
+        var file = _dialogService.SaveFile("Database file (*.db)|*.db", "Kies databasebestand");
         if (!string.IsNullOrEmpty(file))
             NewFilePath = file;
     }
@@ -126,15 +268,88 @@ public class SetupNewFileViewModel : ViewModelBase
             TargetDirectory = folder;
     }
 
-    // -----------------------------
-    // Create DB
-    // -----------------------------
-    public ICommand CreateDbCommand { get; }
+    // ---------------------------------------------------------
+    // Options
+    // ---------------------------------------------------------
+    private bool _addBaseData = true;
+    public bool AddBaseData
+    {
+        get => _addBaseData;
+        set { _addBaseData = value; OnPropertyChanged(); UpdateSummary(); }
+    }
+
+    private bool _setAsDefaultFile = true;
+    public bool SetAsDefaultFileOption
+    {
+        get => _setAsDefaultFile;
+        set { _setAsDefaultFile = value; OnPropertyChanged(); UpdateSummary(); }
+    }
+
+    // ---------------------------------------------------------
+    // Address
+    // ---------------------------------------------------------
+    private Address? _address;
+    public Address? Address
+    {
+        get => _address;
+        set { _address = value; OnPropertyChanged(); UpdateSummary(); }
+    }
+
+    // ---------------------------------------------------------
+    // Energy types
+    // ---------------------------------------------------------
+    public ObservableCollection<SelectableEnergyTypeViewModel> EnergyTypes { get; }
+
+    // ---------------------------------------------------------
+    // Summary
+    // ---------------------------------------------------------
+    private string _summaryText = string.Empty;
+    public string SummaryText
+    {
+        get => _summaryText;
+        set { _summaryText = value; OnPropertyChanged(); }
+    }
+
+    private void UpdateSummary()
+    {
+        var selectedEnergyTypes =
+            (EnergyTypes ?? Enumerable.Empty<SelectableEnergyTypeViewModel>())
+            .Where(e => e.IsSelected)
+            .Select(e => e.EnergyType.Name);
+
+        SummaryText =
+            $"Bestand: {NewFilePath}\n" +
+            $"Doelmap: {TargetDirectory}\n" +
+            $"Adres: {Address?.Street} {Address?.HouseNumber}, {Address?.PostalCode} {Address?.City}\n" +
+            $"Zonnepanelen: {(Address?.SolarPanelsAvailable == true ? "Ja" : "Nee")}\n" +
+            $"Energietypen: {string.Join(", ", selectedEnergyTypes)}\n" +
+            $"Basisgegevens toevoegen: {(AddBaseData ? "Ja" : "Nee")}\n" +
+            $"Instellen als standaardbestand: {(SetAsDefaultFileOption ? "Ja" : "Nee")}";
+    }
+
+    // ---------------------------------------------------------
+    // Status
+    // ---------------------------------------------------------
+    private string _statusMessage = string.Empty;
+    public string StatusMessage
+    {
+        get => _statusMessage;
+        set { _statusMessage = value; OnPropertyChanged(); }
+    }
+
+    // ---------------------------------------------------------
+    // Create database (vervolg)
+    // ---------------------------------------------------------
+    private void Finish()
+    {
+        if (!CreateDatabase())
+            return;
+
+        RequestClose?.Invoke();
+    }
 
     private bool CreateDatabase()
     {
-        StatusMessage = "Database is being created...";
-
         var targetFile = Path.Combine(TargetDirectory ?? "", Path.GetFileName(NewFilePath) ?? "");
         var currentFile = Managers.Config.GetDbFileName()?.Trim();
 
@@ -144,7 +359,8 @@ public class SetupNewFileViewModel : ViewModelBase
         try
         {
             var folder = Path.GetDirectoryName(targetFile);
-            if (folder == null) return false;
+            if (folder == null)
+                return false;
 
             if (!Directory.Exists(folder))
                 Directory.CreateDirectory(folder);
@@ -171,13 +387,12 @@ public class SetupNewFileViewModel : ViewModelBase
             else
                 setAsDefaultFile(targetFile);
 
-            UpdateSummary();
-            StatusMessage = "Database succesvol created!";
+            StatusMessage = "Database succesvol aangemaakt.";
             return true;
         }
         catch (Exception ex)
         {
-            StatusMessage = "Error during creating of database: " + ex.Message;
+            StatusMessage = "Fout bij aanmaken database: " + ex.Message;
             return false;
         }
     }
@@ -188,7 +403,7 @@ public class SetupNewFileViewModel : ViewModelBase
 
         if (IsNewFile && string.IsNullOrWhiteSpace(targetFile))
         {
-            StatusMessage = "Select a filename";
+            StatusMessage = "Selecteer een bestandsnaam.";
             return false;
         }
 
@@ -229,10 +444,10 @@ public class SetupNewFileViewModel : ViewModelBase
         var address = Address;
 
         var defaultTariffGroup = _controller.UnitOfWork.TarifGroupRepo
-                                            .SelectById((long)TariffGroupType.EnergyCosts);
+            .SelectById((long)TariffGroupType.EnergyCosts);
 
         var generalTariffGroup = _controller.UnitOfWork.TarifGroupRepo
-                                            .SelectById((long)TariffGroupType.GeneralCosts);
+            .SelectById((long)TariffGroupType.GeneralCosts);
 
         address.DefaultTariffGroupId = defaultTariffGroup?.Id ?? 0;
         address.GeneralTariffGroupId = generalTariffGroup?.Id ?? 0;
@@ -270,6 +485,9 @@ public class SetupNewFileViewModel : ViewModelBase
         _controller.UnitOfWork.Complete();
     }
 
+    // ---------------------------------------------------------
+    // Cost categories (volledig)
+    // ---------------------------------------------------------
     private void setupCostCategory()
     {
         if (_controller == null)
@@ -289,81 +507,190 @@ public class SetupNewFileViewModel : ViewModelBase
 
     private List<CostCategory> GetListOfNewCostCategories()
     {
-        // jouw bestaande code blijft hier staan
-        return new List<CostCategory>();
-    }
+        if (_controller == null)
+            return new List<CostCategory>();
 
-    // -----------------------------
-    // Options
-    // -----------------------------
-    private bool _addBaseData = true;
-    public bool AddBaseData
-    {
-        get => _addBaseData;
-        set { _addBaseData = value; OnPropertyChanged(); UpdateSummary(); }
-    }
+        var costCategories = new List<CostCategory>();
 
-    private bool _setAsDefaultFile = true;
-    public bool SetAsDefaultFileOption
-    {
-        get => _setAsDefaultFile;
-        set { _setAsDefaultFile = value; OnPropertyChanged(); UpdateSummary(); }
-    }
+        var calTypePU = _controller.UnitOfWork.CalculationTypeRepo.SelectByDescription("Per Unit");
+        var calTypePd = _controller.UnitOfWork.CalculationTypeRepo.SelectByDescription("Per Day");
+        var energySubType = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Normal");
+        var energySubTypeOther = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Other");
+        var tarifGroupDefault = _controller.UnitOfWork.TarifGroupRepo.SelectById((long)TariffGroupType.EnergyCosts);
+        var tarifGroupGeneral = _controller.UnitOfWork.TarifGroupRepo.SelectById((long)TariffGroupType.GeneralCosts);
 
-    // -----------------------------
-    // Address
-    // -----------------------------
-    private Address? _address;
-    public Address? Address
-    {
-        get => _address;
-        set
+        // ELECTRICITY
+        var electricity = _controller.UnitOfWork.EnergyTypeRepo.SelectByName("Electricity");
+        if (electricity != null)
         {
-            _address = value;
-            OnPropertyChanged();
-            UpdateSummary();
+            costCategories.Add(new CostCategory
+            {
+                Name = "Energy rate normal",
+                SortOrder = 1,
+                CalculationTypeId = calTypePU.Id,
+                EnergyTypeId = electricity.Id,
+                EnergySubTypeId = energySubType.Id,
+                UnitId = "kWh",
+                TariffGroupId = tarifGroupDefault.Id
+            });
+
+            var low = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Low");
+            costCategories.Add(new CostCategory
+            {
+                Name = "Energy rate low",
+                SortOrder = 2,
+                CalculationTypeId = calTypePU.Id,
+                EnergyTypeId = electricity.Id,
+                EnergySubTypeId = low.Id,
+                UnitId = "kWh",
+                TariffGroupId = tarifGroupDefault.Id
+            });
+
+            var retNorm = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("ReturnNormal");
+            costCategories.Add(new CostCategory
+            {
+                Name = "Return delivery normal rate",
+                SortOrder = 3,
+                CalculationTypeId = calTypePU.Id,
+                EnergyTypeId = electricity.Id,
+                EnergySubTypeId = retNorm.Id,
+                UnitId = "kWh",
+                TariffGroupId = tarifGroupDefault.Id
+            });
+
+            var retLow = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("ReturnLow");
+            costCategories.Add(new CostCategory
+            {
+                Name = "Return delivery low rate",
+                SortOrder = 4,
+                CalculationTypeId = calTypePU.Id,
+                EnergyTypeId = electricity.Id,
+                EnergySubTypeId = retLow.Id,
+                UnitId = "kWh",
+                TariffGroupId = tarifGroupDefault.Id
+            });
+
+            costCategories.Add(new CostCategory
+            {
+                Name = "Delivery costs",
+                SortOrder = 7,
+                CalculationTypeId = calTypePd.Id,
+                EnergyTypeId = electricity.Id,
+                EnergySubTypeId = energySubTypeOther.Id,
+                UnitId = "Day",
+                TariffGroupId = tarifGroupGeneral.Id,
+                CalculateVat = true
+            });
+
+            costCategories.Add(new CostCategory
+            {
+                Name = "Network costs",
+                SortOrder = 8,
+                CalculationTypeId = calTypePd.Id,
+                EnergyTypeId = electricity.Id,
+                EnergySubTypeId = energySubTypeOther.Id,
+                UnitId = "Day",
+                TariffGroupId = tarifGroupGeneral.Id,
+                CalculateVat = true
+            });
+
+            costCategories.Add(new CostCategory
+            {
+                Name = "Reduction energy tax",
+                SortOrder = 9,
+                CalculationTypeId = calTypePd.Id,
+                EnergyTypeId = electricity.Id,
+                EnergySubTypeId = energySubTypeOther.Id,
+                UnitId = "Day",
+                TariffGroupId = tarifGroupGeneral.Id,
+                CalculateVat = true
+            });
+
+            costCategories.Add(new CostCategory
+            {
+                Name = "Energy tax",
+                SortOrder = 5,
+                CalculationTypeId = calTypePU.Id,
+                EnergyTypeId = electricity.Id,
+                EnergySubTypeId = energySubTypeOther.Id,
+                UnitId = "kWh",
+                TariffGroupId = tarifGroupGeneral.Id,
+                CalculateVat = true,
+                CanNotBeNegative = true,
+                NotCalculateOverReturn = true
+            });
         }
-    }
 
-    // -----------------------------
-    // Energy types
-    // -----------------------------
-    public ObservableCollection<SelectableEnergyTypeViewModel> EnergyTypes { get; }
+        // GAS
+        var gas = _controller.UnitOfWork.EnergyTypeRepo.SelectByName("Gas");
+        if (gas != null)
+        {
+            costCategories.Add(new CostCategory
+            {
+                Name = "Energy rate gas",
+                SortOrder = 2,
+                CalculationTypeId = calTypePU.Id,
+                EnergyTypeId = gas.Id,
+                EnergySubTypeId = energySubType.Id,
+                UnitId = "m3",
+                TariffGroupId = tarifGroupDefault.Id,
+                CalculateVat = true
+            });
 
-    // -----------------------------
-    // Summary
-    // -----------------------------
-    private string _summaryText = string.Empty;
-    public string SummaryText
-    {
-        get => _summaryText;
-        set { _summaryText = value; OnPropertyChanged(); }
-    }
+            costCategories.Add(new CostCategory
+            {
+                Name = "Fixed delivery costs",
+                SortOrder = 4,
+                CalculationTypeId = calTypePd.Id,
+                EnergyTypeId = gas.Id,
+                EnergySubTypeId = energySubTypeOther.Id,
+                UnitId = "Day",
+                TariffGroupId = tarifGroupGeneral.Id,
+                CalculateVat = true
+            });
 
-    private void UpdateSummary()
-    {
-        var selectedEnergyTypes =
-            (EnergyTypes ?? Enumerable.Empty<SelectableEnergyTypeViewModel>())
-            .Where(e => e.IsSelected)
-            .Select(e => e.EnergyType.Name);
+            costCategories.Add(new CostCategory
+            {
+                Name = "Network costs",
+                SortOrder = 5,
+                CalculationTypeId = calTypePd.Id,
+                EnergyTypeId = gas.Id,
+                EnergySubTypeId = energySubTypeOther.Id,
+                UnitId = "Day",
+                TariffGroupId = tarifGroupGeneral.Id,
+                CalculateVat = true
+            });
 
-        SummaryText =
-            $"File: {NewFilePath}\n" +
-            $"Target: {TargetDirectory}\n" +
-            $"Address: {Address?.Street} {Address?.HouseNumber}, {Address?.PostalCode} {Address?.City}\n" +
-            $"Solarpanels: {(Address?.SolarPanelsAvailable == true ? "Ja" : "Nee")}\n" +
-            $"Energytypes: {string.Join(", ", selectedEnergyTypes)}\n" +
-            $"Add base data: {(AddBaseData ? "Ja" : "Nee")}\n" +
-            $"Set as standard file: {(SetAsDefaultFileOption ? "Ja" : "Nee")}";
-    }
+            costCategories.Add(new CostCategory
+            {
+                Name = "Energy tax",
+                SortOrder = 3,
+                CalculationTypeId = calTypePU.Id,
+                EnergyTypeId = gas.Id,
+                EnergySubTypeId = energySubTypeOther.Id,
+                UnitId = "m3",
+                TariffGroupId = tarifGroupGeneral.Id,
+                CalculateVat = true
+            });
+        }
 
-    // -----------------------------
-    // Status
-    // -----------------------------
-    private string _statusMessage = string.Empty;
-    public string StatusMessage
-    {
-        get => _statusMessage;
-        set { _statusMessage = value; OnPropertyChanged(); }
+        // WATER
+        var water = _controller.UnitOfWork.EnergyTypeRepo.SelectByName("Water");
+        if (water != null)
+        {
+            costCategories.Add(new CostCategory
+            {
+                Name = "Water rate",
+                SortOrder = 3,
+                CalculationTypeId = calTypePU.Id,
+                EnergyTypeId = water.Id,
+                EnergySubTypeId = energySubType.Id,
+                UnitId = "m3",
+                TariffGroupId = tarifGroupDefault.Id,
+                CalculateVat = true
+            });
+        }
+
+        return costCategories;
     }
 }
