@@ -24,8 +24,8 @@ public class SettlementReportViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedAddress, value) && value != null)
             {
-                LoadDateSelectionsForAddress(value.Id);
-                LoadLastSelectedPeriod(value.Id);
+                setDateSelectionsForAddress(value.Id);
+                setLastSelectedPeriod(value.Id);
             }
             OnPropertyChanged(nameof(IsValid));
         }
@@ -38,7 +38,7 @@ public class SettlementReportViewModel : ViewModelBase
         set
         {
             if (SetProperty(ref _selectedPredefinedPeriod, value) && value != null)
-                ApplyPredefinedPeriod(value);
+                applyPredefinedPeriod(value);
 
             OnPropertyChanged(nameof(IsValid));
         }
@@ -138,7 +138,7 @@ public class SettlementReportViewModel : ViewModelBase
         AddDateSelectionCommand = new RelayCommand(_ =>
         {
             if (SelectedAddress != null)
-                AddDateSelectionForAddress(SelectedAddress.Id);
+                addDateSelectionForAddress(SelectedAddress.Id);
         });
 
         ClearPredefinedPeriodCommand = new RelayCommand(_ => SelectedPredefinedPeriod = null);
@@ -166,7 +166,7 @@ public class SettlementReportViewModel : ViewModelBase
         OnPropertyChanged(nameof(IsValid));
     }
 
-    private void LoadLastSelectedPeriod(long addressId)
+    private void setLastSelectedPeriod(long addressId)
     {
         var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
         var key = $"{addressId}LastPreSelectedPeriod";
@@ -176,7 +176,7 @@ public class SettlementReportViewModel : ViewModelBase
             SelectedPredefinedPeriod = PredefinedPeriods.FirstOrDefault(p => p.Id == periodId);
     }
 
-    private void LoadDateSelectionsForAddress(long addressId)
+    private void setDateSelectionsForAddress(long addressId)
     {
         DateSelections.Clear();
 
@@ -186,15 +186,15 @@ public class SettlementReportViewModel : ViewModelBase
             return;
         }
 
-        int count = GetDateSelectionCount(addressId);
+        int count = getDateSelectionCount(addressId);
 
         for (int i = 0; i < count; i++)
-            AddDateSelectionForAddress(addressId);
+            addDateSelectionForAddress(addressId);
 
         OnPropertyChanged(nameof(IsValid));
     }
 
-    private int GetDateSelectionCount(long addressId)
+    private int getDateSelectionCount(long addressId)
     {
         var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
         int count = libSettings.GetNumberOfEnergyTypesOnReport(addressId);
@@ -209,7 +209,7 @@ public class SettlementReportViewModel : ViewModelBase
         return count;
     }
 
-    private void AddDateSelectionForAddress(long addressId)
+    private void addDateSelectionForAddress(long addressId)
     {
         var vm = new DateSelectionViewModel(() => OnPropertyChanged(nameof(IsValid)))
         {
@@ -221,7 +221,7 @@ public class SettlementReportViewModel : ViewModelBase
         vm.SetDefaultEnergyType();
 
         vm.RemoveButtonVisible = DateSelections.Count > 0;
-        vm.RemoveCommand = new RelayCommand(_ => RemoveDateSelection(vm));
+        vm.RemoveCommand = new RelayCommand(_ => removeDateSelection(vm));
 
         DateSelections.Add(vm);
 
@@ -231,7 +231,7 @@ public class SettlementReportViewModel : ViewModelBase
         OnPropertyChanged(nameof(IsValid));
     }
 
-    private void RemoveDateSelection(DateSelectionViewModel vm)
+    private void removeDateSelection(DateSelectionViewModel vm)
     {
         DateSelections.Remove(vm);
 
@@ -241,7 +241,7 @@ public class SettlementReportViewModel : ViewModelBase
         OnPropertyChanged(nameof(IsValid));
     }
 
-    private void ApplyPredefinedPeriod(PreDefinedPeriod period)
+    private void applyPredefinedPeriod(PreDefinedPeriod period)
     {
         if (SelectedAddress == null)
             return;
@@ -249,7 +249,7 @@ public class SettlementReportViewModel : ViewModelBase
         var list = _controller.UnitOfWork.PreDefinedPeriodDateRepo.GetByPeriodId(period.Id).ToList();
 
         while (DateSelections.Count < list.Count)
-            AddDateSelectionForAddress(SelectedAddress.Id);
+            addDateSelectionForAddress(SelectedAddress.Id);
 
         for (int i = 0; i < list.Count; i++)
         {
