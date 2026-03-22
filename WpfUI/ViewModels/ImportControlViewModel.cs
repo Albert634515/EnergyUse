@@ -49,7 +49,10 @@ public class ImportControlViewModel : ViewModelBase
         set
         {
             if (SetProperty(ref _selectedMeter, value))
+            {
+                _settings.Save("LastSelectedMeter", value?.Id.ToString() ?? "");
                 setLastUsedFileAndAutoImport();
+            }
         }
     }
 
@@ -81,17 +84,27 @@ public class ImportControlViewModel : ViewModelBase
     private async void setMeters()
     {
         Meters.Clear();
+        var savedId = _settings.Get("LastSelectedMeter");
 
         if (CurrentAddress == null || CurrentEnergyType == null)
             return;
 
-        var list = await _uow.MeterRepo
-            .SelectByAddressAndEnergyType(CurrentAddress.Id, CurrentEnergyType.Id);
+        var list = await _uow.MeterRepo.SelectByAddressAndEnergyType(CurrentAddress.Id, CurrentEnergyType.Id);
 
         foreach (var m in list)
             Meters.Add(m);
 
-        SelectedMeter = Meters.FirstOrDefault(x => x.Active) ?? Meters.FirstOrDefault();
+        if (int.TryParse(savedId, out int id))
+        {
+            SelectedMeter = Meters.FirstOrDefault(m => m.Id == id)
+                                                    ?? Meters.FirstOrDefault(x => x.Active)
+                                                    ?? Meters.FirstOrDefault();
+        }
+        else
+        {
+            SelectedMeter = Meters.FirstOrDefault(x => x.Active)
+                                                  ?? Meters.FirstOrDefault();
+        }
     }
 
     private void setLastUsedFileAndAutoImport()
