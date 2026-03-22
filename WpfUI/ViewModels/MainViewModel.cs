@@ -343,7 +343,7 @@ public class MainViewModel : ViewModelBase
 
         var parameters = await SettlementReportWindow.ShowDialogAsync(Application.Current.MainWindow,
                                                                       _selectedAddress,
-                                                                      EnergyUse.Common.Enums.ReportType.SettlementCompact
+                                                                      EnergyUse.Common.Enums.ReportType.SettlementSplitByType
                                                                      );
 
         if (parameters == null)

@@ -3,12 +3,14 @@ using System.Windows.Input;
 using EnergyUse.Core.Controllers;
 using EnergyUse.Models;
 using EnergyUse.Models.Common;
+using EnergyUse.Core.Interfaces;
 
 namespace WpfUI.ViewModels;
 
 public class SettlementReportViewModel : ViewModelBase
 {
     private readonly SelectReportParametersController _controller;
+    private readonly ISettingsService _settings;
 
     public ObservableCollection<DateSelectionViewModel> DateSelections { get; } = new();
 
@@ -22,11 +24,19 @@ public class SettlementReportViewModel : ViewModelBase
         get => _selectedAddress;
         set
         {
-            if (SetProperty(ref _selectedAddress, value) && value != null)
+            if (!SetProperty(ref _selectedAddress, value))
+                return;
+
+            if (value != null)
             {
+                // Adres onthouden
+                _settings.Save("LastSelectedAddress", value.Id.ToString());
+
+                // Zoals in je oorspronkelijke code:
                 setDateSelectionsForAddress(value.Id);
                 setLastSelectedPeriod(value.Id);
             }
+
             OnPropertyChanged(nameof(IsValid));
         }
     }
@@ -53,7 +63,7 @@ public class SettlementReportViewModel : ViewModelBase
             if (!SetProperty(ref _selectedReportType, value))
                 return;
 
-            if (value == null || value.Description == null)
+            if (value?.Description == null)
                 return;
 
             var report = Enum.Parse<EnergyUse.Common.Enums.ReportType>(value.Description);
@@ -103,25 +113,11 @@ public class SettlementReportViewModel : ViewModelBase
         set { SetProperty(ref _showRatesVisible, value); }
     }
 
-    public bool IsValid
-    {
-        get
-        {
-            if (SelectedAddress == null)
-                return false;
-
-            if (SelectedReportType == null)
-                return false;
-
-            if (!DateSelections.Any())
-                return false;
-
-            if (DateSelections.Any(d => !d.IsValid()))
-                return false;
-
-            return true;
-        }
-    }
+    public bool IsValid =>
+        SelectedAddress != null &&
+        SelectedReportType != null &&
+        DateSelections.Any() &&
+        DateSelections.All(d => d.IsValid());
 
     public ICommand AddDateSelectionCommand { get; }
     public ICommand ClearPredefinedPeriodCommand { get; }
@@ -130,8 +126,10 @@ public class SettlementReportViewModel : ViewModelBase
 
     public event Action<bool>? CloseRequested;
 
-    public SettlementReportViewModel()
+    public SettlementReportViewModel(ISettingsService settings)
     {
+        _settings = settings;
+
         _controller = new SelectReportParametersController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
@@ -146,20 +144,31 @@ public class SettlementReportViewModel : ViewModelBase
         CancelCommand = new RelayCommand(_ => OnCancel());
     }
 
-    public async Task InitializeAsync(Address currentAddress, EnergyUse.Common.Enums.ReportType defaultReport)
+    public async Task InitializeAsync(Address? currentAddress, EnergyUse.Common.Enums.ReportType defaultReport)
     {
         AddressList = (await _controller.UnitOfWork.AddressRepo.GetAll()).ToList();
         OnPropertyChanged(nameof(AddressList));
 
-        SelectedAddress = currentAddress
-            ?? AddressList.FirstOrDefault(a => a.DefaultAddress == true)
-            ?? AddressList.FirstOrDefault();
-
+        // Eerst predefined periods laden
         PredefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
         OnPropertyChanged(nameof(PredefinedPeriods));
 
+        // Dan report types
         ReportTypes = EnergyUse.Core.Manager.LibSelectionItemList.GetReportTypeList();
         OnPropertyChanged(nameof(ReportTypes));
+
+        // Laatst geselecteerde adres ophalen
+        var saved = _settings.Get("LastSelectedAddress");
+        Address? last = null;
+
+        if (saved != null && long.TryParse(saved, out long id))
+            last = AddressList.FirstOrDefault(a => a.Id == id);
+
+        // Pas nu SelectedAddress zetten (roept setDateSelections + setLastSelectedPeriod aan)
+        SelectedAddress = last
+                        ?? currentAddress
+                        ?? AddressList.FirstOrDefault(a => a.DefaultAddress == true)
+                        ?? AddressList.FirstOrDefault();
 
         SelectedReportType = ReportTypes.FirstOrDefault(r => r.Description == defaultReport.ToString());
 
@@ -168,11 +177,10 @@ public class SettlementReportViewModel : ViewModelBase
 
     private void setLastSelectedPeriod(long addressId)
     {
-        var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-        var key = $"{addressId}LastPreSelectedPeriod";
-        var setting = libSettings.GetSetting(key);
+        var key = $"{addressId}_LastPreSelectedPeriod";
+        var saved = _settings.Get(key);
 
-        if (setting != null && long.TryParse(setting.KeyValue, out long periodId))
+        if (saved != null && long.TryParse(saved, out long periodId))
             SelectedPredefinedPeriod = PredefinedPeriods.FirstOrDefault(p => p.Id == periodId);
     }
 
@@ -196,17 +204,17 @@ public class SettlementReportViewModel : ViewModelBase
 
     private int getDateSelectionCount(long addressId)
     {
-        var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-        int count = libSettings.GetNumberOfEnergyTypesOnReport(addressId);
+        var key = $"NumberOfEnergyTypesOnReport_A{addressId}";
+        var saved = _settings.Get(key);
 
-        if (count == 0)
-        {
-            var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList();
-            count = energyTypes.Count;
-            libSettings.SaveSetting($"NumberOfEnergyTypesOnReport_A{addressId}", count.ToString());
-        }
+        if (saved != null && int.TryParse(saved, out int count))
+            return count;
 
-        return count;
+        var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList();
+        int newCount = energyTypes.Count;
+
+        _settings.Save(key, newCount.ToString());
+        return newCount;
     }
 
     private void addDateSelectionForAddress(long addressId)
@@ -282,9 +290,8 @@ public class SettlementReportViewModel : ViewModelBase
         {
             result.PreSelectedPeriodId = SelectedPredefinedPeriod.Id;
 
-            var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-            var key = $"{SelectedAddress?.Id}LastPreSelectedPeriod";
-            libSettings.SaveSetting(key, SelectedPredefinedPeriod.Id.ToString());
+            var key = $"{SelectedAddress?.Id}_LastPreSelectedPeriod";
+            _settings.Save(key, SelectedPredefinedPeriod.Id.ToString());
         }
 
         foreach (var vm in DateSelections)
@@ -304,13 +311,6 @@ public class SettlementReportViewModel : ViewModelBase
         return result;
     }
 
-    private void OnSelect()
-    {
-        CloseRequested?.Invoke(true);
-    }
-
-    private void OnCancel()
-    {
-        CloseRequested?.Invoke(false);
-    }
+    private void OnSelect() => CloseRequested?.Invoke(true);
+    private void OnCancel() => CloseRequested?.Invoke(false);
 }
