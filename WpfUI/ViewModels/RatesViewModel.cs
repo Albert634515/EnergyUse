@@ -18,6 +18,9 @@ namespace WpfUI.ViewModels
         public ObservableCollection<Rate> Rates { get; } = new();
         public ObservableCollection<EnergyUse.Models.Common.SelectionItem> RateTypes { get; } = new();
 
+        // ⭐ Staffel ViewModel geïntegreerd
+        public StaffelViewModel StaffelVM { get; } = new();
+
         public RatesViewModel(Window window)
         {
             _window = window;
@@ -92,7 +95,18 @@ namespace WpfUI.ViewModels
                 {
                     _selectedRate = value;
                     OnPropertyChanged();
+
+                    // ⭐ Koppel RateType aan RateTypes lijst
+                    if (_selectedRate != null)
+                    {
+                        SelectedRateType = RateTypes
+                            .FirstOrDefault(r => r.Id == (int)_selectedRate.RateTypeId);
+                    }
+
                     _ = setRateIncExLabelAsync();
+
+                    // ⭐ Staffel laden
+                    StaffelVM.LoadStaffels(_selectedRate?.Id ?? 0);
                 }
             }
         }
@@ -107,7 +121,11 @@ namespace WpfUI.ViewModels
                 {
                     _selectedRateType = value;
                     OnPropertyChanged();
-                    changeRateType();
+
+                    // ⭐ Schrijf terug naar Rate
+                    if (SelectedRate != null && value != null)
+                        SelectedRate.RateTypeId = value.Id;
+
                     OnPropertyChanged(nameof(IsStaffel));
                 }
             }

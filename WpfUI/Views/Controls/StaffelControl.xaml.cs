@@ -26,7 +26,6 @@ namespace WpfUI.Views.Controls
         public StaffelControl()
         {
             InitializeComponent();
-            DataContext = new StaffelViewModel();
         }
     }
 }

@@ -3,56 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:WpfUI.Views.Controls"
         Title="Energy Rates"
-        Height="800" Width="850"
+        Height="800" Width="1100"
         ShowInTaskbar="False">
 
     <DockPanel>
 
         <!-- Toolbar -->
         <ToolBar DockPanel.Dock="Top">
-
-            <Button Command="{Binding AddRateCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/Resources/add_24x24.png" Width="20" Height="20"/>
-                    <TextBlock Text="Add" Margin="5,0,0,0"/>
-                </StackPanel>
-            </Button>
-
-            <Button Command="{Binding SaveRateCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/Resources/tick-mark_24x24.png" Width="20" Height="20"/>
-                    <TextBlock Text="Save" Margin="5,0,0,0"/>
-                </StackPanel>
-            </Button>
-
-            <Button Command="{Binding CancelRateCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/Resources/clear_24x24.png" Width="20" Height="20"/>
-                    <TextBlock Text="Cancel" Margin="5,0,0,0"/>
-                </StackPanel>
-            </Button>
-
-            <Button Command="{Binding DeleteRateCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/Resources/delete_24x24.png" Width="20" Height="20"/>
-                    <TextBlock Text="Delete" Margin="5,0,0,0"/>
-                </StackPanel>
-            </Button>
-
-            <Button Command="{Binding RefreshRatesCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/Resources/clock_24x24.png" Width="20" Height="20"/>
-                    <TextBlock Text="Refresh" Margin="5,0,0,0"/>
-                </StackPanel>
-            </Button>
-
-            <Button Command="{Binding CloseCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/Resources/crossed_24x24.png" Width="20" Height="20"/>
-                    <TextBlock Text="Close" Margin="5,0,0,0"/>
-                </StackPanel>
-            </Button>
-
+            <Button Command="{Binding AddRateCommand}" Content="Add"/>
+            <Button Command="{Binding SaveRateCommand}" Content="Save"/>
+            <Button Command="{Binding CancelRateCommand}" Content="Cancel"/>
+            <Button Command="{Binding DeleteRateCommand}" Content="Delete"/>
+            <Button Command="{Binding RefreshRatesCommand}" Content="Refresh"/>
+            <Button Command="{Binding CloseCommand}" Content="Close"/>
         </ToolBar>
 
         <!-- Statusbar -->
@@ -62,15 +25,17 @@
             </StatusBarItem>
         </StatusBar>
 
+        <!-- Main Layout -->
         <Grid Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <!-- Filters -->
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
+                <!-- Content -->
             </Grid.RowDefinitions>
 
-            <!-- Filters -->
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <!-- FILTERS -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
 
                 <StackPanel Margin="0,0,20,0">
                     <TextBlock Text="Energy Type"/>
@@ -96,7 +61,6 @@
                               Width="180"/>
                 </StackPanel>
 
-                <!-- AlwaysCalculatedWith -->
                 <TextBlock Text="{Binding AlwaysCalculatedWithText}"
                            VerticalAlignment="Bottom"
                            Margin="20,0,0,0"
@@ -115,104 +79,202 @@
 
             </StackPanel>
 
-            <!-- Rates Grid -->
-            <DataGrid Grid.Row="1"
-                      ItemsSource="{Binding Rates}"
-                      SelectedItem="{Binding SelectedRate}"
-                      AutoGenerateColumns="False"
-                      IsReadOnly="False"
-                      Margin="0,0,0,10">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Start" Binding="{Binding StartRate}" />
-                    <DataGridTextColumn Header="End" Binding="{Binding EndRate}" />
-                    <DataGridTextColumn Header="Rate" Binding="{Binding RateValue, StringFormat=N5}" />
-                    <DataGridTextColumn Header="Expected Change" Binding="{Binding ExpectedPriceChange, StringFormat=N3}" />
-                    <DataGridTextColumn Header="Price Change" Binding="{Binding PriceChange, StringFormat=N3}" />
-                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
-                </DataGrid.Columns>
-            </DataGrid>
+            <!-- CONTENT: LEFT = Rates + Staffel, RIGHT = Details -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <!-- Left -->
+                    <ColumnDefinition Width="420"/>
+                    <!-- Right -->
+                </Grid.ColumnDefinitions>
 
-            <!-- Rate Details -->
-            <GroupBox Grid.Row="2" Header="Rate Details">
-                <Grid Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
+                <!-- LEFT SIDE -->
+                <Grid Grid.Column="0" Margin="0,0,10,0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="2*"/>
+                        <!-- Rates -->
+                        <RowDefinition Height="*"/>
+                        <!-- Staffel -->
                     </Grid.RowDefinitions>
 
-                    <!-- Rate Type -->
-                    <TextBlock Grid.Row="0" Text="Rate Type" VerticalAlignment="Center"/>
-                    <ComboBox Grid.Row="0" Grid.Column="1"
-                              ItemsSource="{Binding RateTypes}"
-                              SelectedItem="{Binding SelectedRateType}"
-                              DisplayMemberPath="Description"
-                              Width="200"/>
+                    <!-- RATES GRID -->
+                    <DataGrid Grid.Row="0"
+                              ItemsSource="{Binding Rates}"
+                              SelectedItem="{Binding SelectedRate}"
+                              AutoGenerateColumns="False"
+                              Margin="0,0,0,10">
 
-                    <!-- Rate -->
-                    <TextBlock Grid.Row="1" Text="Rate" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="1" Grid.Column="1"
-                             Text="{Binding SelectedRate.RateValue, UpdateSourceTrigger=PropertyChanged}">
-                        <TextBox.Style>
-                            <Style TargetType="TextBox">
-                                <Setter Property="Visibility" Value="Visible"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsStaffel}" Value="True">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Start"
+                                                Binding="{Binding StartRate, StringFormat=\{0:dd-MM-yyyy\}}"/>
+                            <DataGridTextColumn Header="End"
+                                                Binding="{Binding EndRate, StringFormat=\{0:dd-MM-yyyy\}}"/>
+                            <DataGridTextColumn Header="Rate"
+                                                Binding="{Binding RateValue, StringFormat=N5}" />
+                            <DataGridTextColumn Header="Expected Change"
+                                                Binding="{Binding ExpectedPriceChange, StringFormat=N3}" />
+                            <DataGridTextColumn Header="Price Change"
+                                                Binding="{Binding PriceChange, StringFormat=N3}" />
+                            <DataGridTextColumn Header="Description"
+                                                Binding="{Binding Description}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
 
-                    <!-- Expected Price Change -->
-                    <TextBlock Grid.Row="2" Text="Expected Price Change" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="2" Grid.Column="1"
-                             Text="{Binding SelectedRate.ExpectedPriceChange, UpdateSourceTrigger=PropertyChanged}"/>
-
-                    <!-- Price Change -->
-                    <TextBlock Grid.Row="3" Text="Price Change" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="3" Grid.Column="1"
-                             Text="{Binding SelectedRate.PriceChange}"
-                             IsReadOnly="True"/>
-
-                    <!-- Future Price -->
-                    <TextBlock Grid.Row="4" Text="Future Price" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1"
-                               Text="{Binding SelectedRate.FutureRate}"/>
-
-                    <!-- Description -->
-                    <TextBlock Grid.Row="5" Text="Description" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="5" Grid.Column="1"
-                             Text="{Binding SelectedRate.Description}"/>
-
-                    <!-- Staffel Control -->
-                    <controls:StaffelControl Grid.Row="6" Grid.ColumnSpan="2"
-                                             RateId="{Binding SelectedRate.Id}">
-                        <controls:StaffelControl.Style>
-                            <Style TargetType="controls:StaffelControl">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsStaffel}" Value="True">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </controls:StaffelControl.Style>
-                    </controls:StaffelControl>
-
+                    <!-- STAFFEL GRID -->
+                    <GroupBox Grid.Row="1" Header="Staffel">
+                        <controls:StaffelControl DataContext="{Binding StaffelVM}">
+                            <controls:StaffelControl.Style>
+                                <Style TargetType="controls:StaffelControl">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding DataContext.IsStaffel,
+                                                               RelativeSource={RelativeSource AncestorType=Window}}"
+                                                     Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:StaffelControl.Style>
+                        </controls:StaffelControl>
+                    </GroupBox>
                 </Grid>
-            </GroupBox>
 
+                <!-- RIGHT SIDE: RATE DETAILS -->
+                <GroupBox Grid.Column="1" Header="Rate Details">
+                    <Grid Margin="10">
+
+                        <Grid.Resources>
+
+                            <!-- Labels -->
+                            <Style x:Key="DetailLabelStyle" TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Margin" Value="0,4"/>
+                                <Setter Property="FontSize" Value="14"/>
+                            </Style>
+
+                            <!-- TextBox -->
+                            <Style x:Key="DetailTextBoxStyle" TargetType="TextBox">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Margin" Value="0,4"/>
+                                <Setter Property="Height" Value="26"/>
+                                <Setter Property="FontSize" Value="14"/>
+                            </Style>
+
+                            <!-- ComboBox -->
+                            <Style x:Key="DetailComboBoxStyle" TargetType="ComboBox">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Margin" Value="0,4"/>
+                                <Setter Property="Height" Value="26"/>
+                                <Setter Property="FontSize" Value="14"/>
+                            </Style>
+
+                            <!-- DatePicker -->
+                            <Style x:Key="DetailDatePickerStyle" TargetType="DatePicker">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Margin" Value="0,4"/>
+                                <Setter Property="Height" Value="26"/>
+                                <Setter Property="FontSize" Value="14"/>
+                            </Style>
+
+                        </Grid.Resources>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <!-- Rate Type -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- Start -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- End -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- Rate -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- Expected -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- Price Change -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- Future -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- Description -->
+                        </Grid.RowDefinitions>
+
+                        <!-- Rate Type -->
+                        <TextBlock Grid.Row="0" Text="Rate Type"
+                                   Style="{StaticResource DetailLabelStyle}"/>
+                        <ComboBox Grid.Row="0" Grid.Column="1"
+                                  ItemsSource="{Binding RateTypes}"
+                                  SelectedItem="{Binding SelectedRateType}"
+                                  DisplayMemberPath="Description"
+                                  Style="{StaticResource DetailComboBoxStyle}"/>
+
+                        <!-- Start Date -->
+                        <TextBlock Grid.Row="1" Text="Start Date"
+                                   Style="{StaticResource DetailLabelStyle}"/>
+                        <DatePicker Grid.Row="1" Grid.Column="1"
+                                    SelectedDate="{Binding SelectedRate.StartRate}"
+                                    Style="{StaticResource DetailDatePickerStyle}"/>
+
+                        <!-- End Date -->
+                        <TextBlock Grid.Row="2" Text="End Date"
+                                   Style="{StaticResource DetailLabelStyle}"/>
+                        <DatePicker Grid.Row="2" Grid.Column="1"
+                                    SelectedDate="{Binding SelectedRate.EndRate}"
+                                    Style="{StaticResource DetailDatePickerStyle}"/>
+
+                        <!-- Rate -->
+                        <TextBlock Grid.Row="3" Text="Rate"
+                                   Style="{StaticResource DetailLabelStyle}"/>
+                        <TextBox Grid.Row="3" Grid.Column="1"
+                                 Text="{Binding SelectedRate.RateValue, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox.Style>
+                                <Style TargetType="TextBox" BasedOn="{StaticResource DetailTextBoxStyle}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsStaffel}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+
+                        <!-- Expected Price Change -->
+                        <TextBlock Grid.Row="4" Text="Expected Price Change"
+                                   Style="{StaticResource DetailLabelStyle}"/>
+                        <TextBox Grid.Row="4" Grid.Column="1"
+                                 Text="{Binding SelectedRate.ExpectedPriceChange, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource DetailTextBoxStyle}"/>
+
+                        <!-- Price Change -->
+                        <TextBlock Grid.Row="5" Text="Price Change"
+                                   Style="{StaticResource DetailLabelStyle}"/>
+                        <TextBox Grid.Row="5" Grid.Column="1"
+                                 Text="{Binding SelectedRate.PriceChange}"
+                                 IsReadOnly="True"
+                                 Style="{StaticResource DetailTextBoxStyle}"/>
+
+                        <!-- Future Price -->
+                        <TextBlock Grid.Row="6" Text="Future Price"
+                                   Style="{StaticResource DetailLabelStyle}"/>
+                        <TextBlock Grid.Row="6" Grid.Column="1"
+                                   Text="{Binding SelectedRate.FutureRate}"
+                                   Style="{StaticResource DetailLabelStyle}"/>
+
+                        <!-- Description -->
+                        <TextBlock Grid.Row="7" Text="Description"
+                                   Style="{StaticResource DetailLabelStyle}"/>
+                        <TextBox Grid.Row="7" Grid.Column="1"
+                                 Text="{Binding SelectedRate.Description}"
+                                 Style="{StaticResource DetailTextBoxStyle}"/>
+
+                    </Grid>
+                </GroupBox>
+
+            </Grid>
         </Grid>
     </DockPanel>
 </Window>
