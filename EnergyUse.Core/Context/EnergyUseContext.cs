@@ -38,7 +38,6 @@ public partial class EnergyUseContext : DbContext
             entity.HasIndex(i => i.EnergyTypeId, "ACG_EnergyTypeId");
         });
 
-
         modelBuilder.Entity<Address>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
@@ -51,13 +50,14 @@ public partial class EnergyUseContext : DbContext
 
             entity.Property(e => e.SolarPanelsAvailable).HasColumnType("BOOLEAN").HasDefaultValueSql("false");
             entity.Property(e => e.TotalCapacity).HasColumnType("INTEGER (5)").HasDefaultValueSql("0");
+            entity.Property(e => e.SubsidyAmount).HasColumnType("NUMERIC").HasDefaultValueSql("0");
+            entity.Property(e => e.SolarPurchaseAmount).HasColumnType("NUMERIC").HasDefaultValueSql("0");
 
             entity.HasOne(d => d.TariffGroup).WithMany(p => p.Addresses).HasForeignKey(d => d.DefaultTariffGroupId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne(d => d.TariffGroup).WithMany(p => p.Addresses).HasForeignKey(d => d.GeneralTariffGroupId).OnDelete(DeleteBehavior.NoAction);
 
             entity.HasIndex(i => i.Id, "AD_ID").IsUnique();
         });
-
 
         modelBuilder.Entity<CalculationType>(entity =>
         {

@@ -134,7 +134,7 @@
                                       Grid.Row="0" Grid.Column="1"/>
 
                             <TextBlock Text="Purchase Amount" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
-                            <TextBox Text="{Binding SelectedAddress.PurchaseAmount}" Grid.Row="1" Grid.Column="1"/>
+                            <TextBox Text="{Binding SelectedAddress.SolarPurchaseAmount}" Grid.Row="1" Grid.Column="1"/>
 
                             <TextBlock Text="Subsidy Amount" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
                             <TextBox Text="{Binding SelectedAddress.SubsidyAmount}" Grid.Row="2" Grid.Column="1"/>

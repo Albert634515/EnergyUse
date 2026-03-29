@@ -8,7 +8,6 @@ public partial class CalculatedUnitPrice
     public decimal Price { get; set; }
     public int Year { get; set; }
 
-
     public virtual EnergyType? EnergyType { get; set; }
     public virtual TariffGroup? TariffGroup { get; set; }
 }

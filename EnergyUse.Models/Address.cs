@@ -13,6 +13,8 @@ public partial class Address
     public bool? DefaultAddress { get; set; }
     public bool SolarPanelsAvailable { get; set; }
     public long TotalCapacity { get; set; }
+    public decimal SubsidyAmount { get; set; }
+    public decimal SolarPurchaseAmount { get; set; }
 
     public long? DefaultTariffGroupId { get; set; }
     public long? GeneralTariffGroupId { get; set; }
