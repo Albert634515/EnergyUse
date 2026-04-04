@@ -116,7 +116,12 @@ internal class Settings
         if (setting != null && setting.Id > 0)
         {
             if (!string.IsNullOrWhiteSpace(setting.KeyValue))
-                textBox.BackColor = System.Drawing.ColorTranslator.FromWin32(int.Parse(setting.KeyValue));
+            {
+                if (setting.KeyValue.StartsWith("#"))
+                    textBox.BackColor = System.Drawing.ColorTranslator.FromHtml(setting.KeyValue);
+                else
+                    textBox.BackColor = System.Drawing.ColorTranslator.FromWin32(int.Parse(setting.KeyValue));
+            }
         }
     }
 
