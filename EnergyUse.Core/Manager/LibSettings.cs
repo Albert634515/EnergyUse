@@ -96,7 +96,7 @@ public class LibSettings
         var setting = GetSetting(settingKey);
         if (setting != null && setting.KeyValue != null)
         {
-            color = ColorTranslator.FromWin32(int.Parse(setting.KeyValue));
+            color = ColorTranslator.FromHtml(setting.KeyValue);
         }
 
         return color.Value;
