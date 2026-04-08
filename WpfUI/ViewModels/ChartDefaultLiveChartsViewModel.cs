@@ -33,7 +33,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         EnergyTypes = new ObservableCollection<EnergyType>(energyTypes ?? Enumerable.Empty<EnergyType>());
 
         setPeriodTypes();
-        LoadSettings();
+        setSettings();
 
         ResetCommand = new RelayCommand(_ => ResetChart());
         ExportCommand = new RelayCommand(_ => ExportChart());
@@ -395,7 +395,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
     // SETTINGS
     // ---------------------------------------------------------
 
-    private void LoadSettings()
+    private void setSettings()
     {
         getDefaults();
 
