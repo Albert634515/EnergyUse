@@ -32,7 +32,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         CurrentEnergyType = energyType;
         EnergyTypes = new ObservableCollection<EnergyType>(energyTypes ?? Enumerable.Empty<EnergyType>());
 
-        LoadPeriodTypes();
+        setPeriodTypes();
         LoadSettings();
 
         ResetCommand = new RelayCommand(_ => ResetChart());
@@ -379,7 +379,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
 
     private void ResetChart()
     {
-        LoadDefaults();
+        getDefaults();
         SafeUpdateChart();
     }
 
@@ -397,7 +397,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        LoadDefaults();
+        getDefaults();
 
         ShowStacked = GetBool("DefaultChartPeriodShowStacked", true);
         ShowAverage = GetBool("DefaultChartPeriodShowAverage", true);
@@ -416,7 +416,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
             SelectedCompareEnergyType = EnergyTypes.FirstOrDefault(e => e.Id == id);
     }
 
-    private void LoadDefaults()
+    private void getDefaults()
     {
         FromDate = _settings.GetDate("DefaultChartPeriodPeriodStart", DateTime.Now.AddMonths(-12));
         TillDate = _settings.GetDate("DefaultChartPeriodPeriodEnd", DateTime.Now);
@@ -432,11 +432,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         return v == null ? defaultValue : v.ToLower() == "true";
     }
 
-    // ---------------------------------------------------------
-    // HELPERS
-    // ---------------------------------------------------------
-
-    private void LoadPeriodTypes()
+    private void setPeriodTypes()
     {
         foreach (var p in SelectionItemList.GetPeriodList())
             PeriodTypes.Add(p);
