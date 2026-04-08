@@ -21,9 +21,9 @@ public class SettingsService : ISettingsService
         if (setting == null) return defaultValue;
 
         return DateTime.TryParseExact(setting.KeyValue, "yyyyMMdd", null,
-            System.Globalization.DateTimeStyles.None, out var parsed)
-            ? parsed
-            : defaultValue;
+                                        System.Globalization.DateTimeStyles.None, out var parsed)
+                                        ? parsed
+                                        : defaultValue;
     }
     public void SaveDate(string key, DateTime value) => Lib.SaveSetting(key, value.ToString("yyyyMMdd"));
 
@@ -33,12 +33,13 @@ public class SettingsService : ISettingsService
         if (setting == null) return defaultValue;
 
         return decimal.TryParse(setting.KeyValue,
-            NumberStyles.Any,
-            CultureInfo.InvariantCulture,
-            out var result)
-            ? result
-            : defaultValue;
+                                NumberStyles.Any,
+                                CultureInfo.InvariantCulture,
+                                out var result)
+                                ? result
+                                : defaultValue;
     }
+
     public void SaveDecimal(string key, decimal value) => Lib.SaveSetting(key, value.ToString(CultureInfo.InvariantCulture));
 
 }

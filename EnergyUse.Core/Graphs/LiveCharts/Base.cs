@@ -431,7 +431,7 @@ public class Base
 
         var libSettings = new LibSettings(_graphParameter.DbName);
         Color color = libSettings.GetChartColor(colorKey);
-
+       
         if (isPredicted)
             color = ChangeColorBrightness(color, 40.45E-2f);
 

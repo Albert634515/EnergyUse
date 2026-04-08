@@ -88,18 +88,29 @@ public class LibSettings
         return color;
     }
 
-    public Color GetColorSetting(string settingKey, Color? color = null)
+    public Color GetColorSetting(string settingKey, Color? fallback = null)
     {
-        if (color == null)
-            color = Color.Empty;
-
         var setting = GetSetting(settingKey);
-        if (setting != null && setting.KeyValue != null)
+        if (setting?.KeyValue == null)
+            return fallback ?? Color.Empty;
+
+        string value = setting.KeyValue.Trim();
+
+        // 1. HTML color (#RRGGBB of name)
+        if (value.StartsWith("#") || value.All(char.IsLetter))
+            return ColorTranslator.FromHtml(value);
+
+        // 2. Decimaal ARGB or RGB
+        if (int.TryParse(value, out int dec))
         {
-            color = ColorTranslator.FromHtml(setting.KeyValue);
+            // if 24-bit RGB value is → force Alpha = 255
+            if (dec <= 0xFFFFFF)
+                dec |= unchecked((int)0xFF000000);
+
+            return Color.FromArgb(dec);
         }
 
-        return color.Value;
+        return fallback ?? Color.Empty;
     }
 
     public string GetCurrentLanguage()
