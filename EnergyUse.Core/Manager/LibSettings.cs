@@ -178,16 +178,20 @@ public class LibSettings
         var repo = new Repositories.RepoSettings(_context);
         var setting = repo.GetByKey(settingTag);
 
+        string html = ColorTranslator.ToHtml(newColor);
+
         if (setting == null || setting.Id == 0)
         {
-            setting = new Models.Setting();
-            setting.Key = settingTag;
-            setting.KeyValue = ColorTranslator.ToWin32(newColor).ToString();
+            setting = new Models.Setting
+            {
+                Key = settingTag,
+                KeyValue = html
+            };
             repo.Add(setting);
         }
         else
         {
-            setting.KeyValue = ColorTranslator.ToWin32(newColor).ToString();
+            setting.KeyValue = html;
         }
 
         _context.SaveChanges();
