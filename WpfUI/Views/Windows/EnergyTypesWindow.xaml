@@ -118,20 +118,15 @@
 
                     <!-- Color -->
                     <TextBlock Text="Color" Grid.Row="2"/>
-                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-                        <xctk:ColorPicker 
-                            SelectedColor="{Binding SelectedColor, Mode=TwoWay}"
-                            ShowStandardColors="True"
-                            ShowAvailableColors="True"
-                            ShowRecentColors="True"
-                            UsingAlphaChannel="False"
-                            Width="160"
-                            Margin="0 0 10 0"/>
-
-                        <Border Width="40" Height="20"
-                                BorderBrush="Black" BorderThickness="1"
-                                Background="{Binding SelectedColor}"/>
-                    </StackPanel>
+                    <xctk:ColorPicker 
+                        Grid.Row="2" Grid.Column="1"
+                        SelectedColor="{Binding SelectedColor, Mode=TwoWay}"
+                        ShowStandardColors="True"
+                        ShowAvailableColors="True"
+                        ShowRecentColors="True"
+                        UsingAlphaChannel="False"
+                        Width="160"
+                        HorizontalAlignment="Left"/>
 
                     <!-- HasNormalAndLow -->
                     <CheckBox Grid.Row="3" Grid.ColumnSpan="2"

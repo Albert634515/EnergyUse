@@ -24,9 +24,13 @@ namespace WpfUI.ViewModels
                 _selectedEnergyType = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SelectedColor));
+                OnPropertyChanged(nameof(SelectedBrush));
             }
         }
 
+        // -----------------------------
+        // COLOR (WPF Color)
+        // -----------------------------
         public Color SelectedColor
         {
             get => SelectedEnergyType?.ToWpfColor() ?? Colors.Black;
@@ -36,9 +40,15 @@ namespace WpfUI.ViewModels
                 {
                     SelectedEnergyType.FromWpfColor(value);
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(SelectedBrush));
                 }
             }
         }
+
+        // -----------------------------
+        // BRUSH (voor XAML preview)
+        // -----------------------------
+        public Brush SelectedBrush => new SolidColorBrush(SelectedColor);
 
         private string _statusMessage = string.Empty;
         public string StatusMessage
@@ -68,6 +78,17 @@ namespace WpfUI.ViewModels
             DeleteCommand = new RelayCommand(_ => Delete());
             RefreshCommand = new RelayCommand(_ => Refresh());
             CloseCommand = new RelayCommand(_ => Close());
+
+            // ⭐ Selecteer eerste record bij laden
+            SelectFirstRecord();
+        }
+
+        private void SelectFirstRecord()
+        {
+            if (EnergyTypes.Any())
+                SelectedEnergyType = EnergyTypes.First();
+            else
+                SelectedEnergyType = null;
         }
 
         private void Add()
@@ -98,12 +119,17 @@ namespace WpfUI.ViewModels
             _controller.UnitOfWork.Delete(SelectedEnergyType);
             EnergyTypes.Remove(SelectedEnergyType);
             StatusMessage = "Energy type deleted";
+
+            SelectFirstRecord();
         }
 
         private void Refresh()
         {
             EnergyTypes = new ObservableCollection<EnergyType>(_controller.UnitOfWork.EnergyTypeRepo.GetAll());
             OnPropertyChanged(nameof(EnergyTypes));
+
+            // ⭐ Selecteer eerste record na refresh
+            SelectFirstRecord();
         }
 
         private void Close()
