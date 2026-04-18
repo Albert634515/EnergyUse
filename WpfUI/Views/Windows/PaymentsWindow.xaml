@@ -1,7 +1,6 @@
 ﻿<Window x:Class="WpfUI.Views.Windows.PaymentsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="clr-namespace:WpfUI.ViewModels"
         Title="Payments"
         Height="650" Width="850"
         ShowInTaskbar="False">
@@ -21,7 +20,7 @@
 
             <Button Command="{Binding SaveCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/WpfUI;component/Resources/tick_mark_24x24.png"
+                    <Image Source="/WpfUI;component/Resources/tick-mark_24x24.png"
                            Width="20" Height="20"/>
                     <TextBlock Text="Save" Margin="5 0 0 0"/>
                 </StackPanel>
@@ -90,10 +89,20 @@
                   IsReadOnly="True">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="60"/>
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="200"/>
-                <DataGridTextColumn Header="Pay Date" Binding="{Binding PayDate}" Width="120"/>
-                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="120"/>
+
+                <!-- Id-kolom verwijderd -->
+
+                <DataGridTextColumn Header="Description"
+                                    Binding="{Binding Description}"
+                                    Width="200"/>
+
+                <DataGridTextColumn Header="Pay Date"
+                                    Binding="{Binding PayDate}"
+                                    Width="120"/>
+
+                <DataGridTextColumn Header="Amount"
+                                    Binding="{Binding Amount}"
+                                    Width="120"/>
             </DataGrid.Columns>
 
         </DataGrid>
@@ -114,15 +123,15 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="Description" Grid.Row="0" Grid.Column="0"/>
-                <TextBox Text="{Binding SelectedPayment.Description}"
+                <TextBox Text="{Binding SelectedPayment.Description, UpdateSourceTrigger=PropertyChanged}"
                          Grid.Row="0" Grid.Column="1"/>
 
                 <TextBlock Text="Pay Date" Grid.Row="1" Grid.Column="0"/>
-                <DatePicker SelectedDate="{Binding SelectedPayment.PayDate}"
+                <DatePicker SelectedDate="{Binding SelectedPayment.PayDate, UpdateSourceTrigger=PropertyChanged}"
                             Grid.Row="1" Grid.Column="1"/>
 
                 <TextBlock Text="Amount" Grid.Row="2" Grid.Column="0"/>
-                <TextBox Text="{Binding SelectedPayment.Amount}"
+                <TextBox Text="{Binding SelectedPayment.Amount, UpdateSourceTrigger=PropertyChanged}"
                          Grid.Row="2" Grid.Column="1"/>
 
             </Grid>
