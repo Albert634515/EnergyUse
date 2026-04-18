@@ -1,8 +1,7 @@
 ﻿using EnergyUse.Core.Controllers;
+using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows;
 using System.Windows.Input;
 
 namespace WpfUI.ViewModels;
@@ -10,12 +9,11 @@ namespace WpfUI.ViewModels;
 public class PaymentsViewModel : ViewModelBase
 {
     private readonly PaymentsController _controller;
+    private readonly ISettingsService _settings;
 
-    public PaymentsViewModel()
+    public PaymentsViewModel(ISettingsService settings)
     {
-        // Belangrijk: voorkom dat de designer database opent
-        //if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
-        //    return;
+        _settings = settings;
 
         _controller = new PaymentsController(Managers.Config.GetDbFileName());
         _controller.Initialize();
@@ -61,6 +59,10 @@ public class PaymentsViewModel : ViewModelBase
         {
             _selectedPeriod = value;
             OnPropertyChanged();
+
+            if (value != null)
+                _settings.Save("LastPaymentPeriodId", value.Id.ToString());
+
             setPayments();
         }
     }
@@ -93,6 +95,18 @@ public class PaymentsViewModel : ViewModelBase
         PreDefinedPeriods.Clear();
         foreach (var p in list)
             PreDefinedPeriods.Add(p);
+
+        var last = _settings.Get("LastPaymentPeriodId");
+
+        if (int.TryParse(last, out int lastId))
+        {
+            SelectedPeriod = PreDefinedPeriods.FirstOrDefault(p => p.Id == lastId)
+                             ?? PreDefinedPeriods.FirstOrDefault();
+        }
+        else
+        {
+            SelectedPeriod = PreDefinedPeriods.FirstOrDefault();
+        }
     }
 
     private void setPayments()
@@ -102,10 +116,13 @@ public class PaymentsViewModel : ViewModelBase
 
         Payments.Clear();
 
-        var list = _controller.UnitOfWork.PaymentRepo.SelectByAddressAndPeriod(SelectedAddress.Id, SelectedPeriod.Id);
+        var list = _controller.UnitOfWork.PaymentRepo
+            .SelectByAddressAndPeriod(SelectedAddress.Id, SelectedPeriod.Id);
 
         foreach (var p in list)
             Payments.Add(p);
+
+        SelectedPayment = Payments.FirstOrDefault();
     }
 
     #endregion

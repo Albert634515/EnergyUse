@@ -1,11 +1,9 @@
 ﻿using System.Windows;
 using WpfUI.ViewModels;
+using WpfUI.Services;
 
 namespace WpfUI.Views.Windows;
 
-/// <summary>
-/// Interaction logic for PaymentsWindow.xaml
-/// </summary>
 public partial class PaymentsWindow : Window
 {
     public PaymentsWindow(Window owner)
@@ -15,6 +13,6 @@ public partial class PaymentsWindow : Window
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
         if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
-            DataContext = new PaymentsViewModel();
+            DataContext = new PaymentsViewModel(new SettingsService());
     }
 }
