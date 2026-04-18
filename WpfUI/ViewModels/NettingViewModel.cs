@@ -1,4 +1,5 @@
 ﻿using EnergyUse.Core.Controllers;
+using EnergyUse.Core.Interfaces;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -10,6 +11,7 @@ public class NettingViewModel : ViewModelBase
 {
     private readonly Window _window;
     private readonly NettingController _controller;
+    private readonly ISettingsService _settings;
 
     public ObservableCollection<EnergyUse.Models.Netting> Nettings { get; set; } = new();
     public ObservableCollection<EnergyUse.Models.EnergyType> EnergyTypes { get; set; } = new();
@@ -22,6 +24,10 @@ public class NettingViewModel : ViewModelBase
         {
             _selectedEnergyTypeId = value;
             OnPropertyChanged();
+
+            if (value > 0)
+                _settings.Save("LastNettingEnergyTypeId", value.ToString());
+
             _ = refreshNetting();
         }
     }
@@ -41,9 +47,10 @@ public class NettingViewModel : ViewModelBase
     public ICommand RefreshCommand { get; }
     public ICommand CloseCommand { get; }
 
-    public NettingViewModel(Window window)
+    public NettingViewModel(Window window, ISettingsService settings)
     {
         _window = window;
+        _settings = settings;
 
         _controller = new NettingController(Config.GetDbFileName());
         _controller.Initialize();
@@ -61,6 +68,7 @@ public class NettingViewModel : ViewModelBase
     private async Task initializeAsync()
     {
         await setEnergyTypes();
+        restoreLastEnergyType();
         await refreshNetting();
     }
 
@@ -69,6 +77,23 @@ public class NettingViewModel : ViewModelBase
         var list = await _controller.UnitOfWork.EnergyTypeRepo.GetAll();
         EnergyTypes = new ObservableCollection<EnergyUse.Models.EnergyType>(list);
         OnPropertyChanged(nameof(EnergyTypes));
+    }
+
+    private void restoreLastEnergyType()
+    {
+        var last = _settings.Get("LastNettingEnergyTypeId");
+
+        if (long.TryParse(last, out long id))
+        {
+            if (EnergyTypes.Any(e => e.Id == id))
+            {
+                SelectedEnergyTypeId = id;
+                return;
+            }
+        }
+
+        // fallback: eerste type
+        SelectedEnergyTypeId = EnergyTypes.FirstOrDefault()?.Id ?? 0;
     }
 
     private async Task refreshNetting()
@@ -84,6 +109,9 @@ public class NettingViewModel : ViewModelBase
         }
 
         OnPropertyChanged(nameof(Nettings));
+
+        // automatisch eerste record selecteren
+        SelectedNetting = Nettings.FirstOrDefault();
     }
 
     private void addNetting()

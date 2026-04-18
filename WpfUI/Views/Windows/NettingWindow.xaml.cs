@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using WpfUI.ViewModels;
+using WpfUI.Services;
 
 namespace WpfUI.Views.Windows;
 
@@ -11,6 +12,7 @@ public partial class NettingWindow : Window
         Owner = owner;
 
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        DataContext = new NettingViewModel(this);
+
+        DataContext = new NettingViewModel(this, new SettingsService());
     }
 }
