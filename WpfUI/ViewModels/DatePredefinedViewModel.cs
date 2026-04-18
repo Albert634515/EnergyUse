@@ -21,6 +21,16 @@ namespace WpfUI.ViewModels
         }
 
         private long _currentPeriodId;
+        public long CurrentPeriodId
+        {
+            get => _currentPeriodId;
+            set
+            {
+                _currentPeriodId = value;
+                OnPropertyChanged();
+                SetDates(value);
+            }
+        }
 
         public ICommand AddCommand { get; }
         public ICommand SaveCommand { get; }
@@ -138,6 +148,5 @@ namespace WpfUI.ViewModels
         }
 
         public Action<string>? StatusCallback { get; set; }
-
     }
 }

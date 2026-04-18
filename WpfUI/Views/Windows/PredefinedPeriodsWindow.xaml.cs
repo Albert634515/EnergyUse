@@ -10,6 +10,7 @@ namespace WpfUI.Views.Windows
             InitializeComponent();
             Owner = owner;
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            ShowInTaskbar = false;
 
             DataContext = new PredefinedPeriodsViewModel(this);
         }

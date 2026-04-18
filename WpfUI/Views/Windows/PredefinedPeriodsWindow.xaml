@@ -4,16 +4,15 @@
         xmlns:uc="clr-namespace:WpfUI.Views.Controls"
         Title="Predefined Periods"
         Width="900" Height="750"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False">
 
     <DockPanel>
 
-        <!-- STATUSBALK -->
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem Content="{Binding StatusMessage}" />
         </StatusBar>
 
-        <!-- TOOLBAR -->
         <ToolBar DockPanel.Dock="Top">
             <Button Command="{Binding AddCommand}">
                 <Image Source="/Resources/add_24x24.png" Width="20"/>
@@ -38,14 +37,12 @@
             </Button>
         </ToolBar>
 
-        <!-- MAIN CONTENT -->
         <StackPanel Margin="10">
 
             <TextBlock Text="Predefined Periods"
                        FontWeight="Bold"
                        Margin="0,0,0,5"/>
 
-            <!-- PERIOD GRID -->
             <DataGrid ItemsSource="{Binding PredefinedPeriods}"
                       SelectedItem="{Binding SelectedPeriod}"
                       AutoGenerateColumns="False"
@@ -62,10 +59,8 @@
                        FontWeight="Bold"
                        Margin="0,0,0,5"/>
 
-            <!-- SUBCONTROL -->
             <uc:DatePredefinedControl
-                DataContext="{Binding DatePredefinedVM}"
-                SelectedPeriodId="{Binding SelectedPeriodId}" />
+                DataContext="{Binding DatePredefinedVM}" />
 
         </StackPanel>
 

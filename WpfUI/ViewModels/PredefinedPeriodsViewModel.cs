@@ -20,19 +20,10 @@ namespace WpfUI.ViewModels
             set
             {
                 _selectedPeriod = value;
-                SelectedPeriodId = value?.Id ?? 0;
-
-                DatePredefinedVM.SetDates(SelectedPeriodId);
-
                 OnPropertyChanged();
-            }
-        }
 
-        private long _selectedPeriodId;
-        public long SelectedPeriodId
-        {
-            get => _selectedPeriodId;
-            set { _selectedPeriodId = value; OnPropertyChanged(); }
+                DatePredefinedVM.CurrentPeriodId = value?.Id ?? 0;
+            }
         }
 
         private string _statusMessage = string.Empty;
@@ -68,10 +59,10 @@ namespace WpfUI.ViewModels
             RefreshCommand = new RelayCommand(_ => refreshPeriods());
             CloseCommand = new RelayCommand(_ => _window.Close());
 
-            getPeriods();
+            loadPeriods();
         }
 
-        private void getPeriods()
+        private void loadPeriods()
         {
             var list = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
             PredefinedPeriods = new ObservableCollection<EnergyUse.Models.PreDefinedPeriod>(list);
@@ -84,7 +75,7 @@ namespace WpfUI.ViewModels
         private void addPeriod()
         {
             var entity = _controller.UnitOfWork.AddDefaultEntity("New period");
-            getPeriods();
+            loadPeriods();
             SelectedPeriod = entity;
         }
 
@@ -93,15 +84,14 @@ namespace WpfUI.ViewModels
             DatePredefinedVM.SaveDates();
             _controller.UnitOfWork.Complete();
             StatusMessage = "Saved successfully";
-            getPeriods();
+            loadPeriods();
         }
 
         private void cancelPeriod()
         {
             _controller.UnitOfWork.CancelChanges();
-            DatePredefinedVM.SetDates(SelectedPeriodId);
             StatusMessage = "Cancelled successfully";
-            getPeriods();
+            loadPeriods();
         }
 
         private void deletePeriod()
@@ -113,14 +103,13 @@ namespace WpfUI.ViewModels
 
                 _controller.UnitOfWork.Delete(SelectedPeriod);
                 StatusMessage = "Period deleted";
-                getPeriods();
+                loadPeriods();
             }
         }
 
         private void refreshPeriods()
         {
-            getPeriods();            
-            DatePredefinedVM.SetDates(SelectedPeriodId);
+            loadPeriods();
             StatusMessage = "Refreshed";
         }
     }
