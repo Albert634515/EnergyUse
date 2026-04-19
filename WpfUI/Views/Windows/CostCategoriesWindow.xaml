@@ -13,48 +13,42 @@
 
             <Button Command="{Binding AddCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20"
-                           Source="pack://application:,,,/WpfUI;component/Resources/add_24x24.png"/>
+                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/add_24x24.png"/>
                     <TextBlock Text="Add" Margin="5 0 0 0"/>
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding SaveCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20"
-                           Source="pack://application:,,,/WpfUI;component/Resources/tick-mark_24x24.png"/>
+                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/tick-mark_24x24.png"/>
                     <TextBlock Text="Save" Margin="5 0 0 0"/>
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding CancelCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20"
-                           Source="pack://application:,,,/WpfUI;component/Resources/clear_24x24.png"/>
+                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/clear_24x24.png"/>
                     <TextBlock Text="Cancel" Margin="5 0 0 0"/>
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding DeleteCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20"
-                           Source="pack://application:,,,/WpfUI;component/Resources/delete_24x24.png"/>
+                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/delete_24x24.png"/>
                     <TextBlock Text="Delete" Margin="5 0 0 0"/>
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding RefreshCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20"
-                           Source="pack://application:,,,/WpfUI;component/Resources/clock_24x24.png"/>
+                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/clock_24x24.png"/>
                     <TextBlock Text="Refresh" Margin="5 0 0 0"/>
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding CloseCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20"
-                           Source="pack://application:,,,/WpfUI;component/Resources/crossed_24x24.png"/>
+                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/crossed_24x24.png"/>
                     <TextBlock Text="Close" Margin="5 0 0 0"/>
                 </StackPanel>
             </Button>
