@@ -42,4 +42,19 @@ public class SettingsService : ISettingsService
 
     public void SaveDecimal(string key, decimal value) => Lib.SaveSetting(key, value.ToString(CultureInfo.InvariantCulture));
 
+    public long GetLong(string key, long defaultValue = 0)
+    {
+        var setting = Lib.GetSetting(key);
+        if (setting == null) return defaultValue;
+
+        return long.TryParse(setting.KeyValue, out var result)
+            ? result
+            : defaultValue;
+    }
+
+    public void SaveLong(string key, long value)
+    {
+        Lib.SaveSetting(key, value.ToString());
+    }
+
 }

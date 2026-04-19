@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using WpfUI.Services;
 using WpfUI.ViewModels;
 
 namespace WpfUI.Views.Windows
@@ -13,7 +14,8 @@ namespace WpfUI.Views.Windows
             Owner = owner;
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
-            _vm = new CostCategoriesViewModel();
+            var settingsService = new SettingsService();
+            _vm = new CostCategoriesViewModel(settingsService);
             DataContext = _vm;
         }
     }

@@ -13,5 +13,8 @@
 
         decimal GetDecimal(string key, decimal defaultValue = 0);
         void SaveDecimal(string key, decimal value);
+
+        long GetLong(string key, long defaultValue = 0);
+        void SaveLong(string key, long value);
     }
 }

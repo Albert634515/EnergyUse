@@ -1,19 +1,21 @@
 ﻿using EnergyUse.Core.Controllers;
+using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfUI.Extensions;
+using WpfUI.Services;
 
 namespace WpfUI.ViewModels
 {
     public class CostCategoriesViewModel : ViewModelBase
     {
         private readonly CostcategoriesController _controller;
+        private readonly ISettingsService _settings;
 
         public ObservableCollection<EnergyType> EnergyTypes { get; private set; } = [];
-
         public ObservableCollection<CostCategory> CostCategories { get; private set; } = [];
 
         public ObservableCollection<Unit> Units { get; }
@@ -29,6 +31,10 @@ namespace WpfUI.ViewModels
             {
                 _selectedEnergyType = value;
                 OnPropertyChanged();
+
+                if (value != null)
+                    _settings.SaveLong("LastEnergyTypeId", value.Id);
+
                 setCostCategories();
             }
         }
@@ -42,10 +48,11 @@ namespace WpfUI.ViewModels
                 _selectedCostCategory = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SelectedColor));
+                OnPropertyChanged(nameof(SelectedColorBrush));
             }
         }
 
-        // Wrapper property for ColorPicker
+        // Color for ColorPicker
         public Color SelectedColor
         {
             get => SelectedCostCategory?.ToWpfColor() ?? Colors.White;
@@ -55,16 +62,20 @@ namespace WpfUI.ViewModels
                 {
                     SelectedCostCategory.FromWpfColor(value);
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(SelectedColorBrush));
                 }
             }
         }
+
+        // Brush for Border preview
+        public Brush SelectedColorBrush => new SolidColorBrush(SelectedColor);
 
         private string _statusMessage = string.Empty;
         public string StatusMessage
         {
             get => _statusMessage;
             set { _statusMessage = value; OnPropertyChanged(); }
-        }        
+        }
 
         public ICommand AddCommand { get; }
         public ICommand SaveCommand { get; }
@@ -73,13 +84,15 @@ namespace WpfUI.ViewModels
         public ICommand RefreshCommand { get; }
         public ICommand CloseCommand { get; }
 
-        public CostCategoriesViewModel()
+        public CostCategoriesViewModel(ISettingsService settings)
         {
+            _settings = settings;
+
             _controller = new CostcategoriesController(Managers.Config.GetDbFileName());
             _controller.Initialize();
 
             _ = setEnergyTypesAsync();
-            
+
             Units = new ObservableCollection<Unit>(_controller.UnitOfWork.UnitRepo.GetAll());
             TariffGroups = new ObservableCollection<TariffGroup>(_controller.UnitOfWork.TariffGroupRepo.GetAll());
             EnergySubTypes = new ObservableCollection<EnergySubType>(_controller.UnitOfWork.EnergySubTypeRepo.GetAll());
@@ -97,6 +110,11 @@ namespace WpfUI.ViewModels
         {
             var energyTypes = await _controller.UnitOfWork.EnergyTypeRepo.GetAll();
             EnergyTypes = new ObservableCollection<EnergyType>(energyTypes);
+            OnPropertyChanged(nameof(EnergyTypes));
+
+            var lastId = _settings.GetLong("LastEnergyTypeId", 0);
+            SelectedEnergyType = EnergyTypes.FirstOrDefault(e => e.Id == lastId)
+                                 ?? EnergyTypes.FirstOrDefault();
         }
 
         private void setCostCategories()
@@ -110,6 +128,8 @@ namespace WpfUI.ViewModels
 
             CostCategories = new ObservableCollection<CostCategory>(list);
             OnPropertyChanged(nameof(CostCategories));
+
+            SelectedCostCategory = CostCategories.FirstOrDefault();
         }
 
         private void add()
