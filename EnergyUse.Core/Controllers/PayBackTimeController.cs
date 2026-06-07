@@ -30,79 +30,148 @@ public class PayBackTimeController : BaseController, IController
 
     #endregion
 
-    public async Task<PayBackTime> CalculatePayBackPeriodAsync(ParameterCalcPeriod parameterCalcPeriod)
+    public async Task<PayBackTime> CalculatePayBackPeriodAsync(ParameterCalcPeriod p)
     {
         decimal quantityReduction = 0;
-        decimal totalCapacity = parameterCalcPeriod.TotalCapacitySolarPanels;
+        decimal totalCapacity = p.TotalCapacitySolarPanels;
 
-        Models.Common.PayBackTime payBackTime = new();
-        payBackTime.PeriodId = parameterCalcPeriod.PeriodId;
-        payBackTime.StartPeriod = parameterCalcPeriod.PeriodStart;
-        payBackTime.EndPeriod = parameterCalcPeriod.PeriodStart.AddYears(1);
-
-        var settlementDataList = new List<SettlementData>();
-        List<PeriodicData> periodicData = new();
-
-        if (parameterCalcPeriod.Address.TariffGroup != null)
+        var payBackTime = new PayBackTime
         {
-            long defaultTarifGroupId = parameterCalcPeriod.Address.DefaultTariffGroupId.HasValue ? parameterCalcPeriod.Address.DefaultTariffGroupId.Value : 0;
+            PeriodId = p.PeriodId,
+            StartPeriod = p.PeriodStart,
+            EndPeriod = p.PeriodStart.AddYears(1)
+        };
 
-            if (payBackTime.StartPeriod >= DateTime.Now)
-                quantityReduction = Common.Libs.LibGeneral.GetQuantityReduction(parameterCalcPeriod.QualityReductionSolarPanels, parameterCalcPeriod.PeriodId);
+        long defaultTariffGroupId = p.Address.DefaultTariffGroupId ?? 0;
 
-            if (quantityReduction != 0)
-                totalCapacity = totalCapacity * (quantityReduction / 100);
+        // ---------------------------------------------------------
+        // 1. Apply degradation (only for future periods)
+        // ---------------------------------------------------------
+        if (payBackTime.StartPeriod >= DateTime.Now)
+            quantityReduction = Common.Libs.LibGeneral.GetQuantityReduction(p.QualityReductionSolarPanels, p.PeriodId);
 
-            ParameterPeriod parameterPeriod = new()
+        if (quantityReduction != 0)
+            totalCapacity *= (quantityReduction / 100);
+
+        // ---------------------------------------------------------
+        // 2. Load periodic data (measured or predicted)
+        // ---------------------------------------------------------
+        List<PeriodicData> periodicData = new();
+        if (_libPeriodicDate != null)
+        {
+            var parameterPeriod = new ParameterPeriod
             {
-                EnergyType = parameterCalcPeriod.EnergyType,
-                AddressId = parameterCalcPeriod.Address.Id,
+                EnergyType = p.EnergyType,
+                AddressId = p.Address.Id,
                 StartRange = payBackTime.StartPeriod,
                 EndRange = payBackTime.EndPeriod,
                 ShowType = EnergyUse.Common.Enums.ShowType.Value,
                 PeriodType = EnergyUse.Common.Enums.Period.SettlementDay,
                 PredictMissingData = true,
-                TarifGroupId = defaultTarifGroupId,
-                QuantityReduction = quantityReduction / 100
+                TarifGroupId = defaultTariffGroupId,
+                QuantityReduction = quantityReduction / 100m
             };
 
-            if (_libPeriodicDate != null)
-            {
-                periodicData = await _libPeriodicDate.GetRangeAsync(parameterPeriod);
-            }
+            periodicData = await _libPeriodicDate.GetRangeAsync(parameterPeriod);
+        }
 
-            // Get all cost category with cost and values
-            var costCategories = UnitOfWork?.CostCategoryRepo.MapCostCategories(periodicData);
-            if (costCategories != null)
-            {
-                // Kolom: verbruikte energie in kw
-                payBackTime.ValueConsumed = Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 1 || w.CostCategory.EnergySubTypeId == 2).Sum(s => s.ValueBaseConsumed), 2);
-                // Kolom: Opgewekte energie in kw
-                payBackTime.ValueProduced = Math.Abs(Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 3 || w.CostCategory.EnergySubTypeId == 4).Sum(s => s.ValueBaseProduced), 2));
+        var costCategories = UnitOfWork?.CostCategoryRepo.MapCostCategories(periodicData);
+        if (costCategories == null)
+            return payBackTime;
 
-                // Kolom: Geschatte direct verbruik in kw
-                payBackTime.EstimateDirectUsed = Math.Round((totalCapacity * (parameterCalcPeriod.AverageReturn / 100)) - payBackTime.ValueProduced, 2);
-                payBackTime.ValueProducedEstimateDirectUsed = Math.Round(payBackTime.EstimateDirectUsed * await GetPricePerUnitPerYear(parameterCalcPeriod.PeriodStart.Year + parameterCalcPeriod.PeriodId, defaultTarifGroupId, parameterCalcPeriod.EnergyType.Id), 2);
+        // ---------------------------------------------------------
+        // 3. Consumption & production from periodic data
+        // ---------------------------------------------------------
+        payBackTime.ValueConsumed = Math.Round(
+            costCategories.Where(w => w.CostCategory.EnergySubTypeId is 1 or 2)
+                          .Sum(s => s.ValueBaseConsumed), 2);
 
-                // Kolom: Verbruikte energie in Euro                
-                payBackTime.MonetaryValueConsumed = Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 1 || w.CostCategory.EnergySubTypeId == 2).Sum(s => s.Value), 2);
-                // Kolom: Overige (vast) kosten in euro
-                payBackTime.OtherCostConsumed = Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 5).Sum(s => s.Value), 2);
+        payBackTime.ValueProduced = Math.Abs(Math.Round(
+            costCategories.Where(w => w.CostCategory.EnergySubTypeId is 3 or 4)
+                          .Sum(s => s.ValueBaseProduced), 2));
 
-                // Kolom: Opgewekte energie in Euro (inc kosten)
-                payBackTime.MonetaryValueProduced = Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 3 || w.CostCategory.EnergySubTypeId == 4).Sum(s => s.Value), 2);
-                payBackTime.OtherCostProduced = Math.Round(costCategories.Where(w => w.CostCategory.EnergySubTypeId == 6 || w.CostCategory.EnergySubTypeId == 7).Sum(s => s.Value), 2);
-                payBackTime.NettoProduced = payBackTime.MonetaryValueProduced + payBackTime.OtherCostProduced;
+        // ---------------------------------------------------------
+        // 4. Theoretical yearly production (kWh)
+        // totalCapacity is in Wp → convert to kWp
+        // AverageReturn = kWh per kWp per year
+        // ---------------------------------------------------------
+        decimal yearlyEstimateProduction = totalCapacity - payBackTime.ValueProduced;
+        payBackTime.EstimateDirectUsed = yearlyEstimateProduction;
 
-                // Kolom: Total kosten in euro
-                payBackTime.TotalCost = payBackTime.MonetaryValueConsumed + payBackTime.MonetaryValueProduced + payBackTime.OtherCostConsumed + payBackTime.OtherCostProduced;
+        // ---------------------------------------------------------
+        // 6. Feed-in = remaining production
+        // ---------------------------------------------------------
+        decimal feedInKwh = Math.Max(0, payBackTime.ValueProduced - payBackTime.EstimateDirectUsed);
 
-                // Kolom: ROI
-                payBackTime.ReturnOnInvestment = Math.Abs(payBackTime.MonetaryValueProduced) + Math.Abs(payBackTime.OtherCostProduced) + Math.Abs(payBackTime.ValueProducedEstimateDirectUsed);
+        // ---------------------------------------------------------
+        // 7. Determine tariffs
+        // ---------------------------------------------------------
+        decimal pricePerKwh = await GetPricePerUnitPerYear(payBackTime.StartPeriod.Year, defaultTariffGroupId, p.EnergyType.Id);
 
-                if (parameterCalcPeriod.InitialInvestment != 0)
-                    payBackTime.Return = Math.Round((payBackTime.ReturnOnInvestment / parameterCalcPeriod.InitialInvestment) * 100, 2);
-            }
+        // ---------------------------------------------------------
+        // 8. Determine feed-in tariff from periodic data
+        // Works for measured AND predicted data (IsPredicted = true)
+        // ---------------------------------------------------------
+        decimal producedKwhDb = Math.Abs(
+                                        costCategories.Where(x => x.CostCategory.EnergySubTypeId is 3 or 4)
+                                                      .Sum(x => x.ValueBaseProduced));
+
+        decimal producedEuroDb = Math.Abs(
+                                        costCategories.Where(x => x.CostCategory.EnergySubTypeId is 3 or 4)
+                                                      .Sum(x => x.Value));
+
+        // €/kWh = total € / total kWh
+        decimal feedInTariff = producedKwhDb > 0 ? producedEuroDb / producedKwhDb : 0m;
+
+        // ---------------------------------------------------------
+        // 9. Monetary values
+        // ---------------------------------------------------------
+
+        // Savings from direct consumption (self-use)
+        payBackTime.MonetaryValueConsumed = Math.Round(payBackTime.EstimateDirectUsed * pricePerKwh, 2);
+
+        // Income from feed-in (use predicted/measured € directly)
+        payBackTime.MonetaryValueProduced = Math.Abs(
+            costCategories.Where(x => x.CostCategory.EnergySubTypeId is 3 or 4)
+                          .Sum(x => x.Value));
+
+        // NEW: Monetary value of direct-used solar energy
+        payBackTime.ValueProducedEstimateDirectUsed = Math.Round(payBackTime.EstimateDirectUsed * pricePerKwh, 2);
+
+        // NEW: Percentage of solar energy used directly
+        payBackTime.EstimateDirectUsedPercentage = payBackTime.EstimateDirectUsed > 0 ? Math.Round((payBackTime.EstimateDirectUsed / totalCapacity) * 100m, 2) : 0;
+
+        payBackTime.OtherCostConsumed = Math.Round(
+            costCategories.Where(w => w.CostCategory.EnergySubTypeId == 5)
+                          .Sum(s => s.Value), 2);
+
+        payBackTime.OtherCostProduced = Math.Round(
+            costCategories.Where(w => w.CostCategory.EnergySubTypeId is 6 or 7)
+                          .Sum(s => s.Value), 2);
+
+        // ---------------------------------------------------------
+        // 10. Net produced value and total cost
+        // ---------------------------------------------------------
+        payBackTime.NettoProduced =
+            payBackTime.MonetaryValueProduced + payBackTime.OtherCostProduced;
+
+        payBackTime.TotalCost =
+            payBackTime.MonetaryValueConsumed +
+            payBackTime.MonetaryValueProduced +
+            payBackTime.OtherCostConsumed +
+            payBackTime.OtherCostProduced;
+
+        // ---------------------------------------------------------
+        // 11. ROI calculation
+        // ---------------------------------------------------------
+        payBackTime.ReturnOnInvestment =
+            payBackTime.MonetaryValueConsumed +   // savings from self-consumption
+            payBackTime.MonetaryValueProduced;    // income from feed-in
+
+        if (p.InitialInvestment != 0)
+        {
+            payBackTime.Return = Math.Round(
+                (payBackTime.ReturnOnInvestment / p.InitialInvestment) * 100m, 2);
         }
 
         return payBackTime;

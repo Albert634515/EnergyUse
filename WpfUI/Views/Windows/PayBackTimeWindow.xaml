@@ -119,6 +119,24 @@
                       AutoGenerateColumns="False"
                       IsReadOnly="True">
 
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Height" Value="Auto"/>
+                        <Setter Property="Padding" Value="6"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"/>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+
                 <!-- ⭐ KLEURLOGICA ZONDER CONVERTER -->
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
@@ -129,26 +147,27 @@
 
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn Header="Period" Binding="{Binding PeriodId}"/>
-                    <DataGridTextColumn Header="Start" Binding="{Binding StartPeriod}"/>
-                    <DataGridTextColumn Header="End" Binding="{Binding EndPeriod}"/>
+                    <DataGridTextColumn Header="Period" Width="50" Binding="{Binding PeriodId}"/>
+                    <DataGridTextColumn Header="Start" Width="80" Binding="{Binding StartPeriod, StringFormat={}{0:dd-MM-yyyy}}"/>
+                    <DataGridTextColumn Header="End" Width="80" Binding="{Binding EndPeriod, StringFormat={}{0:dd-MM-yyyy}}"/>
 
                     <DataGridTextColumn Header="Produced" Binding="{Binding ValueProduced, StringFormat=N2}"/>
                     <DataGridTextColumn Header="Consumed" Binding="{Binding ValueConsumed, StringFormat=N2}"/>
 
-                    <DataGridTextColumn Header="Estimate Direct Used" Binding="{Binding EstimateDirectUsed, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="Monetary Produced" Binding="{Binding MonetaryValueProduced, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="Produced Est. Direct Used" Binding="{Binding ValueProducedEstimateDirectUsed, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="Monetary Consumed" Binding="{Binding MonetaryValueConsumed, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Estimate Direct Used" Width="100" Binding="{Binding EstimateDirectUsed, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Estimate Direct Used perc." Width="90" Binding="{Binding EstimateDirectUsedPercentage, StringFormat=N0}"/>
+                    <DataGridTextColumn Header="Monetary Produced" Width="100" Binding="{Binding MonetaryValueProduced, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Produced Est. Direct Used" Width="100" Binding="{Binding ValueProducedEstimateDirectUsed, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Monetary Consumed" Width="100" Binding="{Binding MonetaryValueConsumed, StringFormat=N2}"/>
 
-                    <DataGridTextColumn Header="Netto Produced" Binding="{Binding NettoProduced, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="Other Cost Produced" Binding="{Binding OtherCostProduced, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="Other Cost Consumed" Binding="{Binding OtherCostConsumed, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Netto Produced" Width="100" Binding="{Binding NettoProduced, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Other Cost Produced" Width="100" Binding="{Binding OtherCostProduced, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Other Cost Consumed" Width="100" Binding="{Binding OtherCostConsumed, StringFormat=N2}"/>
 
-                    <DataGridTextColumn Header="Total Cost" Binding="{Binding TotalCost, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="ROI" Binding="{Binding ReturnOnInvestment, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="ROI Total" Binding="{Binding ReturnOnInvestmentTotal, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="Return" Binding="{Binding Return, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Total Cost" Width="70" Binding="{Binding TotalCost, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="ROI" Width="70" Binding="{Binding ReturnOnInvestment, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="ROI Total" Width="80" Binding="{Binding ReturnOnInvestmentTotal, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Return" Width="60" Binding="{Binding Return, StringFormat=N2}"/>
 
                 </DataGrid.Columns>
 

@@ -58,39 +58,20 @@ public class PayBackTimeViewModel : ViewModelBase
         set => SetProperty(ref _selectedEnergyType, value);
     }
 
-    private DateTime _purchaseDate = DateTime.Today;
-    public DateTime PurchaseDate
-    {
-        get => _purchaseDate;
-        set => SetProperty(ref _purchaseDate, value);
-    }
-
     private int _maxYears = 5;
     public int MaxYears
     {
         get => _maxYears;
-        set => SetProperty(ref _maxYears, value);
-    }
+        set
+        {
+            _maxYears = value;
+            OnPropertyChanged();
 
-    private decimal _purchaseAmount;
-    public decimal PurchaseAmount
-    {
-        get => _purchaseAmount;
-        set => SetProperty(ref _purchaseAmount, value);
-    }
-
-    private decimal _subsidyAmount;
-    public decimal SubsidyAmount
-    {
-        get => _subsidyAmount;
-        set => SetProperty(ref _subsidyAmount, value);
-    }
-
-    private decimal _qualityReduction;
-    public decimal QualityReduction
-    {
-        get => _qualityReduction;
-        set => SetProperty(ref _qualityReduction, value);
+            if (SelectedEnergyType != null)
+            {
+                _settings.Save($"PayBackMaxYearsToCalculate_A{SelectedAddress?.Id}", value.ToString());
+            }
+        }
     }
 
     private decimal _totalCapacity;
@@ -100,11 +81,84 @@ public class PayBackTimeViewModel : ViewModelBase
         set => SetProperty(ref _totalCapacity, value);
     }
 
+    private DateTime _purchaseDate = DateTime.Today;
+    public DateTime PurchaseDate
+    {
+        get => _purchaseDate;
+        set
+        {
+            _purchaseDate = value;
+            OnPropertyChanged();
+
+            if (SelectedEnergyType != null)
+            {
+                _settings.SaveDate($"PurchaseDate_A{SelectedAddress?.Id}", value);
+            }
+        }
+    }
+
+    private decimal _purchaseAmount;
+    public decimal PurchaseAmount
+    {
+        get => _purchaseAmount;
+        set
+        {
+            _purchaseAmount = value;
+            OnPropertyChanged();
+
+            if (SelectedEnergyType != null)
+            {
+                _settings.Save($"PurchaseAmount_A{SelectedAddress?.Id}", value.ToString());
+            }
+        }
+    }
+
+    private decimal _subsidyAmount;
+    public decimal SubsidyAmount
+    {
+        get => _subsidyAmount;
+        set
+        {
+            _subsidyAmount = value;
+            OnPropertyChanged();
+
+            if (SelectedEnergyType != null)
+            {
+                _settings.Save($"SubsidyAmount_A{SelectedAddress?.Id}", value.ToString());
+            }
+        }
+    }
+
+    private decimal _qualityReduction;
+    public decimal QualityReduction
+    {
+        get => _qualityReduction;
+        set
+        {
+            _qualityReduction = value;
+            OnPropertyChanged();
+
+            if (SelectedEnergyType != null)
+            {
+                _settings.Save($"QualityReductionSolarPanels_A{SelectedAddress?.Id}", value.ToString());
+            }
+        }
+    }
+
     private decimal _averageReturn;
     public decimal AverageReturn
     {
         get => _averageReturn;
-        set => SetProperty(ref _averageReturn, value);
+        set
+        {
+            _averageReturn = value;
+            OnPropertyChanged();
+
+            if (SelectedEnergyType != null)
+            {
+                _settings.Save($"AverageReturnSolarPanels_A{SelectedAddress?.Id}", value.ToString());
+            }            
+        }
     }
 
     // ---------------------------------------------------------
@@ -190,8 +244,8 @@ public class PayBackTimeViewModel : ViewModelBase
         PurchaseAmount = _settings.GetDecimal($"PurchaseAmount_A{SelectedAddress.Id}", 0);
         SubsidyAmount = _settings.GetDecimal($"SubsidyAmount_A{SelectedAddress.Id}", 0);
         PurchaseDate = _settings.GetDate($"PurchaseDate_A{SelectedAddress.Id}", DateTime.Today);
-
-        // AverageReturn bestond in WinForms maar werd niet opgeslagen → dus niet laden
+        AverageReturn = _settings.GetDecimal($"AverageReturnSolarPanels_A{SelectedAddress.Id}", 0);
+        MaxYears = _settings.GetInteger($"PayBackMaxYearsToCalculate_A{SelectedAddress.Id}", 5);
     }
 
     // ---------------------------------------------------------

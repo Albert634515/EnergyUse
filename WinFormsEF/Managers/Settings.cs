@@ -110,6 +110,23 @@ internal class Settings
         }
     }
 
+    public static void GetNumericUpDown(NumericUpDown numericUpDown)
+    {
+        var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+        EnergyUse.Models.Setting setting = libSettings.GetSetting(numericUpDown.Tag.ToString());
+        SetNumericUpDown(numericUpDown, setting);
+    }
+
+    public static void SetNumericUpDown(NumericUpDown numericUpDown, EnergyUse.Models.Setting setting)
+    {
+        numericUpDown.Text = string.Empty;
+        if (setting != null && setting.Id > 0)
+        {
+            if (!string.IsNullOrWhiteSpace(setting.KeyValue))
+                numericUpDown.Text = setting.KeyValue;
+        }
+    }
+
     public static void SetTextBoxColor(TextBox textBox, EnergyUse.Models.Setting setting)
     {
         textBox.BackColor = Color.Empty;

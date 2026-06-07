@@ -426,7 +426,8 @@
             // 
             resources.ApplyResources(txtAverageReturn, "txtAverageReturn");
             txtAverageReturn.Name = "txtAverageReturn";
-            txtAverageReturn.Tag = "QualityReductionSolarPanels";
+            txtAverageReturn.Tag = "AverageReturnSolarPanels";
+            txtAverageReturn.TextChanged += txtAverageReturn_TextChanged;
             // 
             // label4
             // 

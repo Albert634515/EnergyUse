@@ -10,6 +10,7 @@ public class PayBackTime
     public decimal NettoProduced { get; set; } = 0.0m;
     public decimal EstimateDirectUsed { get; set; } = 0.0m;
     public decimal ValueProducedEstimateDirectUsed { get; set; } = 0.0m;
+    public decimal EstimateDirectUsedPercentage { get; set; } = 0.0m;
     public decimal MonetaryValueConsumed { get; set; } = 0.0m;
     public decimal ValueConsumed { get; set; } = 0.0m;
     public decimal TotalCost { get; set; } = 0.0m;

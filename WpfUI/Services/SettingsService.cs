@@ -47,12 +47,23 @@ public class SettingsService : ISettingsService
         var setting = Lib.GetSetting(key);
         if (setting == null) return defaultValue;
 
-        return long.TryParse(setting.KeyValue, out var result)
-            ? result
-            : defaultValue;
+        return long.TryParse(setting.KeyValue, out var result) ? result : defaultValue;
     }
 
     public void SaveLong(string key, long value)
+    {
+        Lib.SaveSetting(key, value.ToString());
+    }
+
+    public int GetInteger(string key, int defaultValue = 0)
+    {
+        var setting = Lib.GetSetting(key);
+        if (setting == null) return defaultValue;
+
+        return int.TryParse(setting.KeyValue, out var result) ? result : defaultValue;
+    }
+
+    public void SaveInteger(string key, int value)
     {
         Lib.SaveSetting(key, value.ToString());
     }

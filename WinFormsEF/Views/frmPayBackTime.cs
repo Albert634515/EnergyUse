@@ -30,7 +30,6 @@ public partial class frmPayBackTime : Form
         setFormSettings();
         setComboAddresses();
         setComboEnergyTypes();
-        setGeneralSettings();
     }
 
     private async void setComboAddresses()
@@ -67,14 +66,6 @@ public partial class frmPayBackTime : Form
         }
     }
 
-    private void setGeneralSettings()
-    {
-        var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
-        var setting = libSettings.GetSetting(nudMaxYears.Tag.ToString());
-        if (setting != null && !string.IsNullOrWhiteSpace(setting.KeyValue))
-            nudMaxYears.Value = int.Parse(setting.KeyValue);
-    }
-
     private void setAddressSettings()
     {
         var address = (EnergyUse.Models.Address)cmbAddress.SelectedItem;
@@ -83,6 +74,8 @@ public partial class frmPayBackTime : Form
         txtPurchaseAmount.Tag = "PurchaseAmount_A";
         txtSubsidyAmount.Tag = "SubsidyAmount_A";
         dtpPurchaseDate.Tag = "PurchaseDate_A";
+        txtAverageReturn.Tag = "AverageReturnSolarPanels_A";
+        nudMaxYears.Tag = "PayBackMaxYearsToCalculate_A";
 
         if (address != null && address.Id > 0)
         {
@@ -90,6 +83,8 @@ public partial class frmPayBackTime : Form
             txtQualityReductionSolarPanels.Tag = $"{txtQualityReductionSolarPanels.Tag}{address.Id}";
             txtPurchaseAmount.Tag = $"{txtPurchaseAmount.Tag}{address.Id}";
             txtSubsidyAmount.Tag = $"{txtSubsidyAmount.Tag}{address.Id}";
+            txtAverageReturn.Tag = $"{txtAverageReturn.Tag}{address.Id}";
+            nudMaxYears.Tag = $"{nudMaxYears.Tag}{address.Id}";
 
             Managers.Settings.GetSettingTextBox(txtQualityReductionSolarPanels);
             if (string.IsNullOrWhiteSpace(txtQualityReductionSolarPanels.Text))
@@ -102,6 +97,14 @@ public partial class frmPayBackTime : Form
             Managers.Settings.GetSettingTextBox(txtSubsidyAmount);
             if (string.IsNullOrWhiteSpace(txtSubsidyAmount.Text))
                 txtSubsidyAmount.Text = "0";
+
+            Managers.Settings.GetSettingTextBox(txtAverageReturn);
+            if (string.IsNullOrWhiteSpace(txtAverageReturn.Text))
+                txtAverageReturn.Text = "0";
+
+            Managers.Settings.GetNumericUpDown(nudMaxYears);
+            if (string.IsNullOrWhiteSpace(nudMaxYears.Text))
+                nudMaxYears.Text = "5";
 
             Managers.Settings.GetSettingDateBox(dtpPurchaseDate, DateTime.Now);
         }
@@ -152,6 +155,12 @@ public partial class frmPayBackTime : Form
         libSettings.SaveDateSetting(dtpPurchaseDate.Tag.ToString(), dtpPurchaseDate.Value);
     }
 
+    private void txtAverageReturn_TextChanged(object sender, EventArgs e)
+    {
+        var libSettings = new EnergyUse.Core.Manager.LibSettings(Managers.Config.GetDbFileName());
+        libSettings.SaveSetting(txtAverageReturn.Tag.ToString(), txtAverageReturn.Text);
+    }
+
     private void dgvPayBackTime_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
     {
         DataGridViewRow row = dgPayBackTime.Rows[e.RowIndex];
@@ -200,10 +209,6 @@ public partial class frmPayBackTime : Form
 
     #endregion
 
-    #region Toolbar
-
-    #endregion
-
     #region Methods
 
     private async Task calculatePayBackTimeAsync(EnergyUse.Models.EnergyType energyType, EnergyUse.Models.Address address)
@@ -218,7 +223,7 @@ public partial class frmPayBackTime : Form
         toolStripStatusLabel1.Visible = true;
         toolStripStatusLabel1.Text = "";
         var message = Managers.Languages.GetResourceString("Progress", "Progress");
-        
+
 
         for (int i = 1; i <= nudMaxYears.Value; i++)
         {
