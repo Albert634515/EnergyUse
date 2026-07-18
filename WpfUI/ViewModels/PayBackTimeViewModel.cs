@@ -295,13 +295,14 @@ public class PayBackTimeViewModel : ViewModelBase
                 AverageReturn = AverageReturn
             };
 
-            var result = await Task.Run(() => _controller.CalculatePayBackPeriodAsync(parameters).Result);
+            var result = await Task.Run(() => _controller.CalculatePayBackPeriodAsync(parameters));
 
 
             result.ReturnOnInvestmentTotal = lastRoi + result.ReturnOnInvestment;
             lastRoi = result.ReturnOnInvestmentTotal;
 
             PayBackTimes.Add(result);
+            await Task.Yield();
 
             lastPeriodStart = result.EndPeriod.AddDays(1);
         }

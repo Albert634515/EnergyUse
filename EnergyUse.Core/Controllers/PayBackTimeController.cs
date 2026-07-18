@@ -39,15 +39,15 @@ public class PayBackTimeController : BaseController, IController
         {
             PeriodId = p.PeriodId,
             StartPeriod = p.PeriodStart,
-            EndPeriod = p.PeriodStart.AddYears(1)
+            EndPeriod = p.PeriodStart.AddYears(1).AddDays(-1)
         };
 
         long defaultTariffGroupId = p.Address.DefaultTariffGroupId ?? 0;
 
         // ---------------------------------------------------------
-        // 1. Apply degradation (only for future periods)
+        // 1. Apply degradation by installation age
         // ---------------------------------------------------------
-        if (payBackTime.StartPeriod >= DateTime.Now)
+        if (p.QualityReductionSolarPanels != 0)
             quantityReduction = Common.Libs.LibGeneral.GetQuantityReduction(p.QualityReductionSolarPanels, p.PeriodId);
 
         if (quantityReduction != 0)
@@ -92,16 +92,15 @@ public class PayBackTimeController : BaseController, IController
 
         // ---------------------------------------------------------
         // 4. Theoretical yearly production (kWh)
-        // totalCapacity is in Wp → convert to kWp
-        // AverageReturn = kWh per kWp per year
+        // TotalCapacity is Wp; AverageReturn is the expected yearly yield percentage.
         // ---------------------------------------------------------
-        decimal yearlyEstimateProduction = totalCapacity - payBackTime.ValueProduced;
-        payBackTime.EstimateDirectUsed = yearlyEstimateProduction;
+        decimal yearlyEstimateProduction = totalCapacity * (p.AverageReturn / 100m);
+        payBackTime.EstimateDirectUsed = Math.Max(0, yearlyEstimateProduction - payBackTime.ValueProduced);
 
         // ---------------------------------------------------------
         // 6. Feed-in = remaining production
         // ---------------------------------------------------------
-        decimal feedInKwh = Math.Max(0, payBackTime.ValueProduced - payBackTime.EstimateDirectUsed);
+        decimal feedInKwh = payBackTime.ValueProduced;
 
         // ---------------------------------------------------------
         // 7. Determine tariffs
@@ -131,15 +130,13 @@ public class PayBackTimeController : BaseController, IController
         payBackTime.MonetaryValueConsumed = Math.Round(payBackTime.EstimateDirectUsed * pricePerKwh, 2);
 
         // Income from feed-in (use predicted/measured € directly)
-        payBackTime.MonetaryValueProduced = Math.Abs(
-            costCategories.Where(x => x.CostCategory.EnergySubTypeId is 3 or 4)
-                          .Sum(x => x.Value));
+        payBackTime.MonetaryValueProduced = Math.Round(feedInKwh * feedInTariff, 2);
 
         // NEW: Monetary value of direct-used solar energy
         payBackTime.ValueProducedEstimateDirectUsed = Math.Round(payBackTime.EstimateDirectUsed * pricePerKwh, 2);
 
         // NEW: Percentage of solar energy used directly
-        payBackTime.EstimateDirectUsedPercentage = payBackTime.EstimateDirectUsed > 0 ? Math.Round((payBackTime.EstimateDirectUsed / totalCapacity) * 100m, 2) : 0;
+        payBackTime.EstimateDirectUsedPercentage = yearlyEstimateProduction > 0 ? Math.Round((payBackTime.EstimateDirectUsed / yearlyEstimateProduction) * 100m, 2) : 0;
 
         payBackTime.OtherCostConsumed = Math.Round(
             costCategories.Where(w => w.CostCategory.EnergySubTypeId == 5)

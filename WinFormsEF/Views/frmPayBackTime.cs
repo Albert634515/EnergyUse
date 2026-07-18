@@ -10,7 +10,7 @@ public partial class frmPayBackTime : Form
     #region FormProperties
 
     private PayBackTimeController _controller;
-    private List<PayBackTime> _payBackTimeList = new();
+    private System.ComponentModel.BindingList<PayBackTime> _payBackTimeList = new();
 
     #endregion
 
@@ -213,10 +213,9 @@ public partial class frmPayBackTime : Form
 
     private async Task calculatePayBackTimeAsync(EnergyUse.Models.EnergyType energyType, EnergyUse.Models.Address address)
     {
-        List<SettlementData> settlementDataList = new();
-        _payBackTimeList = new List<PayBackTime>();
+        _payBackTimeList = new System.ComponentModel.BindingList<PayBackTime>();
+        bsPayBackTimes.DataSource = _payBackTimeList;
         DateTime lastPeriodStart = dtpPurchaseDate.Value;
-        int startYear = dtpPurchaseDate.Value.Year - 1;
         decimal initialInvestment = getInitialInvestement();
         decimal lastRoi = 0 - Math.Abs(initialInvestment);
         toolStripProgressBar1.Visible = true;
@@ -251,6 +250,9 @@ public partial class frmPayBackTime : Form
             payBackTime.ReturnOnInvestmentTotal = lastRoi + payBackTime.ReturnOnInvestment;
 
             _payBackTimeList.Add(payBackTime);
+            bsPayBackTimes.ResetBindings(false);
+            dgPayBackTime.Refresh();
+
             lastPeriodStart = payBackTime.EndPeriod.AddDays(1);
             lastRoi = payBackTime.ReturnOnInvestmentTotal;
 
@@ -261,7 +263,6 @@ public partial class frmPayBackTime : Form
 
         toolStripProgressBar1.Visible = false;
         toolStripStatusLabel1.Visible = false;
-        bsPayBackTimes.DataSource = _payBackTimeList;
     }
 
     private async Task<bool> validateInputAsync()
@@ -298,7 +299,8 @@ public partial class frmPayBackTime : Form
         EnergyUse.Models.EnergyType energyType = (EnergyUse.Models.EnergyType)cboEnergyType.SelectedItem;
 
         int startYear = dtpPurchaseDate.Value.Year;
-        for (int i = startYear; i <= nudMaxYears.Value; i++)
+        int endYear = dtpPurchaseDate.Value.Year + (int)nudMaxYears.Value;
+        for (int i = startYear; i <= endYear; i++)
         {
             var defaultTarifGroupId = address.DefaultTariffGroupId ?? 0;
             var pricePerUnit = await _controller.GetPricePerUnitPerYear(i, defaultTarifGroupId, energyType.Id);
