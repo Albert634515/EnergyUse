@@ -3,6 +3,7 @@ using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using WpfUI.Interfaces;
@@ -146,6 +147,7 @@ public class MainViewModel : ViewModelBase
     #region Views
 
     private object? _leftView;
+    private string _leftViewKey = "ucData";
     public object? LeftView
     {
         get => _leftView;
@@ -205,6 +207,7 @@ public class MainViewModel : ViewModelBase
         if (SelectedAddress == null || SelectedEnergyType == null)
             return;
 
+        restoreLeftWidth("ucData");
         LeftView = new DataControl(SelectedAddress, SelectedEnergyType);
         saveLeftView("ucData");
     }
@@ -214,6 +217,7 @@ public class MainViewModel : ViewModelBase
         if (SelectedAddress == null || SelectedEnergyType == null)
             return;
 
+        restoreLeftWidth("ucImport");
         LeftView = new ImportControl(SelectedAddress, SelectedEnergyType);
         saveLeftView("ucImport");
     }
@@ -279,17 +283,25 @@ public class MainViewModel : ViewModelBase
         set
         {
             if (SetProperty(ref _leftWidth, value))
-                _settings.Save("MainSplitter", value.Value.ToString());
+                _settings.Save($"{_leftViewKey}MainSplitter", value.Value.ToString(CultureInfo.InvariantCulture));
         }
     }
 
     private void setInitialSettings()
     {
-        var saved = _settings.Get("MainSplitter");
-        if (double.TryParse(saved, out double width))
-            LeftWidth = new GridLength(width, GridUnitType.Star);
-        else
-            LeftWidth = new GridLength(1, GridUnitType.Star);
+        var leftViewKey = _settings.Get("LastLeftView") ?? "ucData";
+        restoreLeftWidth(leftViewKey);
+    }
+
+    private void restoreLeftWidth(string leftViewKey)
+    {
+        _leftViewKey = leftViewKey;
+
+        var saved = _settings.Get($"{leftViewKey}MainSplitter");
+        if (!double.TryParse(saved, NumberStyles.Float, CultureInfo.InvariantCulture, out var width))
+            width = 360;
+
+        LeftWidth = new GridLength(width, GridUnitType.Pixel);
     }
 
     #endregion
