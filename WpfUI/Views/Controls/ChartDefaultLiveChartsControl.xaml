@@ -19,74 +19,72 @@
             <!-- Chart -->
         </Grid.RowDefinitions>
 
-        <!-- PERIODE -->
-        <Grid Grid.Row="0" Margin="0 0 0 12"
-              ColumnDefinitions="Auto,150,20,Auto,150,20,Auto,150,20,Auto,150">
+        <!-- Filters en opties, gegroepeerd zoals in de WinForms-versie. -->
+        <Grid Grid.Row="0" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="215"/>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="95"/>
+            </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Text="Periode" FontWeight="SemiBold"/>
-            <ComboBox Grid.Column="1"
-                      ItemsSource="{Binding PeriodTypes}"
-                      SelectedItem="{Binding SelectedPeriodType}"
-                      DisplayMemberPath="Description"/>
-
-            <TextBlock Grid.Column="3" Text="Van" FontWeight="SemiBold"/>
-            <DatePicker Grid.Column="4" SelectedDate="{Binding FromDate}"/>
-
-            <TextBlock Grid.Column="6" Text="Tot" FontWeight="SemiBold"/>
-            <DatePicker Grid.Column="7" SelectedDate="{Binding TillDate}"/>
-
-            <TextBlock Grid.Column="9" Text="Vergelijk met" FontWeight="SemiBold"/>
-            <ComboBox Grid.Column="10"
-                      ItemsSource="{Binding EnergyTypes}"
-                      SelectedItem="{Binding SelectedCompareEnergyType}"
-                      DisplayMemberPath="Name"/>
-        </Grid>
-
-        <!-- TYPE + SHOWBY + OPTIONS + BUTTONS -->
-        <Grid Grid.Row="1" Margin="0 0 0 12"
-              ColumnDefinitions="Auto,200,40,Auto,200,40,Auto,200,*">
-
-            <!-- TYPE -->
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Type" FontWeight="SemiBold"/>
-                <RadioButton Content="Rate" IsChecked="{Binding ShowTypeRate}"/>
-                <RadioButton Content="Value" IsChecked="{Binding ShowTypeValue}"/>
-                <RadioButton Content="Efficiency"
-                             IsChecked="{Binding ShowTypeEfficiency}"
-                             Visibility="{Binding IsEfficiencyVisible,
-                                Converter={StaticResource BoolToVisibilityConverter}}"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                    <TextBlock Text="Periode:" Width="60" VerticalAlignment="Center"/>
+                    <ComboBox Width="145" ItemsSource="{Binding PeriodTypes}" SelectedItem="{Binding SelectedPeriodType}" DisplayMemberPath="Description"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Vergelijk met:" Width="90" VerticalAlignment="Center"/>
+                    <ComboBox Width="115" ItemsSource="{Binding EnergyTypes}" SelectedItem="{Binding SelectedCompareEnergyType}" DisplayMemberPath="Name"/>
+                </StackPanel>
             </StackPanel>
 
-            <!-- SHOW BY -->
+            <StackPanel Grid.Column="1">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                    <TextBlock Text="Van:" Width="45" VerticalAlignment="Center"/>
+                    <DatePicker Width="130" SelectedDate="{Binding FromDate}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Tot:" Width="45" VerticalAlignment="Center"/>
+                    <DatePicker Width="130" SelectedDate="{Binding TillDate}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" VerticalAlignment="Center"/>
+                <RadioButton Grid.Row="0" Grid.Column="1" Content="Rate" GroupName="ShowType" IsChecked="{Binding ShowTypeRate}" Margin="0,0,0,6"/>
+                <RadioButton Grid.Row="0" Grid.Column="2" Content="Value" GroupName="ShowType" IsChecked="{Binding ShowTypeValue}" Margin="0,0,0,6"/>
+                <RadioButton Grid.Row="0" Grid.Column="3" Content="Efficiency" IsChecked="{Binding ShowTypeEfficiency}"
+                             GroupName="ShowType" Margin="0,0,0,6" Visibility="{Binding IsEfficiencyVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Weergave:" VerticalAlignment="Center"/>
+                <RadioButton Grid.Row="1" Grid.Column="1" Content="Categorie" GroupName="ShowBy" IsChecked="{Binding ShowByCategory}"/>
+                <RadioButton Grid.Row="1" Grid.Column="2" Content="Subcategorie" GroupName="ShowBy" IsChecked="{Binding ShowBySubCategory}"/>
+                <RadioButton Grid.Row="1" Grid.Column="3" Content="Totaal" GroupName="ShowBy" IsChecked="{Binding ShowByTotal}"/>
+            </Grid>
+
             <StackPanel Grid.Column="3">
-                <TextBlock Text="Weergave" FontWeight="SemiBold"/>
-                <RadioButton Content="Categorie" IsChecked="{Binding ShowByCategory}"/>
-                <RadioButton Content="Subcategorie" IsChecked="{Binding ShowBySubCategory}"/>
-                <RadioButton Content="Totaal" IsChecked="{Binding ShowByTotal}"/>
-            </StackPanel>
-
-            <!-- OPTIONS -->
-            <StackPanel Grid.Column="6">
-                <TextBlock Text="Options" FontWeight="SemiBold"/>
-                <CheckBox Content="Stacked" IsChecked="{Binding ShowStacked}"/>
+                <CheckBox Content="Voorspel ontbrekende data" IsChecked="{Binding PredictMissingData}" Margin="0,0,0,5"/>
+                <CheckBox Content="Stacked" IsChecked="{Binding ShowStacked}" Margin="0,0,0,5"/>
                 <CheckBox Content="Gemiddelde lijn" IsChecked="{Binding ShowAverage}"/>
-                <CheckBox Content="Voorspel ontbrekende data" IsChecked="{Binding PredictMissingData}"/>
             </StackPanel>
 
-            <!-- BUTTONS -->
-            <StackPanel Grid.Column="8"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center">
-                <Button Content="Reset"
-                        Width="140"
-                        Command="{Binding ResetCommand}"
-                        Margin="0 0 0 5"/>
-
-                <Button Content="Export"
-                        Width="140"
-                        Command="{Binding ExportCommand}"/>
+            <StackPanel Grid.Column="4">
+                <Button Content="Reset" Width="90" Command="{Binding ResetCommand}" Margin="0,0,0,6"/>
+                <Button Content="Export" Width="90" Command="{Binding ExportCommand}"/>
             </StackPanel>
-
         </Grid>
 
         <!-- LABELS -->

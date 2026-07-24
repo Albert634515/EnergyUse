@@ -4,8 +4,10 @@ using EnergyUse.Models;
 using EnergyUse.Models.Common;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
+using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
 using WpfUI.Managers;
 using WpfUI.Models;
 
@@ -66,26 +68,29 @@ namespace WpfUI.Services
                     .Select(dp => new DateTimePoint(dp.DateTime, dp.Value))
                     .ToList();
 
-                bool isLine =
-                    sm.SeriesKey.StartsWith("GrossValue") ||
-                    sm.SeriesKey.Contains("Avg");
-
-                if (isLine)
+                if (sm.IsLine)
                 {
-                    result.Add(new LineSeries<DateTimePoint>
+                    var line = new LineSeries<DateTimePoint>
                     {
                         Values = points,
                         Name = sm.Name,
                         ScalesYAt = sm.ScalesYAt,
                         LineSmoothness = 0,
-                        GeometryFill = null,
-                        GeometryStroke = null,
+                        GeometrySize = 12,
+                        GeometryFill = new SolidColorPaint(SKColors.White),
                         Fill = null,
-                        Stroke = new SolidColorPaint((uint)sm.Color.ToArgb())
-                        {
-                            StrokeThickness = 2
-                        }
-                    });
+                    };
+
+                    // Een lege kleur betekent in WinForms: gebruik de standaard lijnkleur,
+                    // niet een volledig transparante lijn.
+                    var color = sm.Color.IsEmpty || sm.Color.A == 0
+                        ? GetFallbackLineColor(sm.SeriesKey)
+                        : new SKColor(sm.Color.R, sm.Color.G, sm.Color.B, sm.Color.A);
+                    var paint = new SolidColorPaint(color) { StrokeThickness = 2 };
+                    line.Stroke = paint;
+                    line.GeometryStroke = paint;
+
+                    result.Add(line);
                 }
                 else if (sm.IsStacked)
                 {
@@ -94,8 +99,7 @@ namespace WpfUI.Services
                         Values = points,
                         Name = sm.Name,
                         ScalesYAt = sm.ScalesYAt,
-                        MaxBarWidth = 40,
-                        Padding = 0,
+                        StackGroup = 0,
                         Fill = new SolidColorPaint((uint)sm.Color.ToArgb())
                     });
                 }
@@ -106,14 +110,24 @@ namespace WpfUI.Services
                         Values = points,
                         Name = sm.Name,
                         ScalesYAt = sm.ScalesYAt,
-                        MaxBarWidth = 40,
-                        Padding = 0,
                         Fill = new SolidColorPaint((uint)sm.Color.ToArgb())
                     });
                 }
             }
 
             return result;
+        }
+
+        private static SKColor GetFallbackLineColor(string seriesKey)
+        {
+            if (seriesKey.StartsWith("GrossValue", StringComparison.Ordinal))
+                return SKColors.SlateGray;
+            if (seriesKey.StartsWith("ReturnAvg", StringComparison.Ordinal))
+                return seriesKey.Contains("Low", StringComparison.Ordinal) ? SKColors.YellowGreen : SKColors.DarkCyan;
+            if (seriesKey.StartsWith("Avg", StringComparison.Ordinal))
+                return seriesKey.Contains("Low", StringComparison.Ordinal) ? SKColors.Turquoise : SKColors.DodgerBlue;
+
+            return SKColors.SlateGray;
         }
 
         private Axis CreateDateTimeAxis(Period period, List<SeriesModel> models)
@@ -133,19 +147,17 @@ namespace WpfUI.Services
         {
             var axes = new List<Axis>();
 
+            var axisPosition = AxisPosition.End;
             foreach (var et in energyTypes)
             {
+                axisPosition = axisPosition == AxisPosition.End ? AxisPosition.Start : AxisPosition.End;
+
                 axes.Add(new Axis
                 {
                     Name = et.Unit.Description,
-                    Labeler = value =>
-                    {
-                        if (value > 1000)
-                            return (Math.Round(value / 1000) * 1000).ToString("N0");
-                        return (Math.Round(value / 100) * 100).ToString("N0");
-                    },
                     MinLimit = et.HasEnergyReturn ? null : 0,
-                    TextSize = 12
+                    Position = axisPosition,
+                    TextSize = 15
                 });
             }
 
