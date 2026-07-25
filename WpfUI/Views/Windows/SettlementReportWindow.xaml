@@ -3,15 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:WpfUI.Views.Controls"
         Title="Select Report Parameters"
-        Height="650"
+        Height="273"
+        MinHeight="273"
         Width="850"
+        SizeToContent="Height"
         ShowInTaskbar="False">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </Window.Resources>
 
-    <Grid Margin="10">
+    <Grid Margin="10,10,5,5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -91,12 +93,12 @@
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     Margin="0,10,0,0">
-            <Button Content="Add" Width="100" Margin="5"
+            <Button Content="Add" Width="100"
                     Command="{Binding AddDateSelectionCommand}"/>
-            <Button Content="Select" Width="100" Margin="5"
+            <Button Content="Select" Width="100" Margin="5,0,0,0"
                     Command="{Binding SelectCommand}"
-                    IsEnabled="{Binding IsValid}"/>
-            <Button Content="Cancel" Width="100" Margin="5"
+                    IsEnabled="{Binding IsValid}" Height="18"/>
+            <Button Content="Cancel" Width="100" Margin="5,0,0,0"
                     Command="{Binding CancelCommand}"/>
         </StackPanel>
 

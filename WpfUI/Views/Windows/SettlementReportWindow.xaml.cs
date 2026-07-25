@@ -14,6 +14,7 @@ public partial class SettlementReportWindow : Window
         InitializeComponent();
         Owner = owner;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        MaxHeight = SystemParameters.WorkArea.Height;
 
         DataContext = vm;
 
