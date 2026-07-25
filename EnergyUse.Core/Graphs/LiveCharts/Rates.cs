@@ -155,7 +155,6 @@ public class Rates : Base
             {
                 long tarifGroupId = 0;
                 Models.Rate? lastRate = null;
-
                 var address = _graphParameter.Address ?? new Models.Address();
 
                 var tarifGroup = costCategory.TariffGroup ?? address.TariffGroup;
@@ -163,14 +162,22 @@ public class Rates : Base
                     tarifGroupId = tarifGroup.Id;
 
                 var rateList = _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyType.Id, costCategory.Id, _graphParameter.From, _graphParameter.Till, tarifGroupId) ?? Enumerable.Empty<Models.Rate>();
-                foreach (Models.Rate rate in rateList)
+                foreach (Models.Rate rate in rateList.OrderBy(rate => rate.StartRate))
                 {
-                    addRateToList(costCategory.Name, rate.RateValue, rate.StartRate);
+                    if (_graphParameter.ShowMonthlyDataPoints)
+                    {
+                        foreach (var pointDate in GetMonthlyPointDates(rate, _graphParameter.From, _graphParameter.Till))
+                            addRateToList(costCategory.Name, rate.RateValue, pointDate);
+                    }
+                    else
+                    {
+                        addRateToList(costCategory.Name, rate.RateValue, rate.StartRate);
+                    }
+
                     lastRate = rate;
                 }
 
-                // Add last rate by enddate
-                if (lastRate != null && lastRate.Id > 0)
+                if (!_graphParameter.ShowMonthlyDataPoints && lastRate != null && lastRate.Id > 0)
                     addRateToList(costCategory.Name, lastRate.RateValue, lastRate.EndRate);
             }
 
@@ -211,6 +218,26 @@ public class Rates : Base
         }
 
         _periodicDataList.Add(periodicData);
+    }
+
+    private static IEnumerable<DateTime> GetMonthlyPointDates(Models.Rate rate, DateTime from, DateTime till)
+    {
+        var start = rate.StartRate.Date < from.Date ? from.Date : rate.StartRate.Date;
+        var end = rate.EndRate.Date > till.Date ? till.Date : rate.EndRate.Date;
+        if (start > end)
+            yield break;
+
+        yield return start;
+
+        var monthStart = new DateTime(start.Year, start.Month, 1).AddMonths(1);
+        while (monthStart < end)
+        {
+            yield return monthStart;
+            monthStart = monthStart.AddMonths(1);
+        }
+
+        if (end != start)
+            yield return end;
     }
 
     private List<DatePoint> GetValueListY(string itemType)

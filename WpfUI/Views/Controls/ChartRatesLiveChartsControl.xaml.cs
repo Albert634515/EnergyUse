@@ -1,4 +1,4 @@
-﻿using EnergyUse.Models;
+using EnergyUse.Models;
 using System.Windows.Controls;
 using WpfUI.Interfaces;
 using WpfUI.ViewModels;

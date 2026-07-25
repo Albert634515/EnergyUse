@@ -10,6 +10,7 @@ namespace EnergyUse.Models.Common
         public bool ShowStacked { get; set; }
         public bool ShowAvg { get; set; }
         public bool PredictMissingData { get; set; }
+        public bool ShowMonthlyDataPoints { get; set; }
         public DateTime From { get; set; }
         public DateTime Till { get; set; }
         public int YearStart { get; set; }

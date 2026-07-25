@@ -1,69 +1,80 @@
-﻿<UserControl x:Class="WpfUI.Views.Controls.ChartRatesLiveChartsControl"
+<UserControl x:Class="WpfUI.Views.Controls.ChartRatesLiveChartsControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
-             xmlns:conv="clr-namespace:WpfUI.Converters">
-
-    <UserControl.Resources>
-        <conv:CostCategorySelectionConverter x:Key="CostCategorySelectionConverter" />
-    </UserControl.Resources>
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF">
 
     <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Form -->
-            <RowDefinition Height="Auto"/>
-            <!-- Buttons -->
             <RowDefinition Height="*"/>
-            <!-- Chart -->
         </Grid.RowDefinitions>
 
-        <!-- FORM -->
-        <Grid Grid.Row="0" Margin="0 0 0 12"
-              ColumnDefinitions="Auto,110,20,Auto,130,20,Auto,130,*">
+        <Grid Grid.Row="0" Margin="0,0,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="165"/>
+                <ColumnDefinition Width="240"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="95"/>
+            </Grid.ColumnDefinitions>
 
-            <!-- TYPE -->
-            <StackPanel Grid.Column="0">
-                <TextBlock Text="Type" FontWeight="SemiBold"/>
-                <RadioButton Content="Rate" IsChecked="{Binding ShowTypeRate}"/>
-                <RadioButton Content="Unit" IsChecked="{Binding ShowTypeUnit}"/>
+            <TextBlock Grid.Column="0" Text="Kostencategorie:" FontWeight="SemiBold"/>
+            <TextBlock Grid.Column="1" Text="Type:" FontWeight="SemiBold"/>
+            <TextBlock Grid.Column="2" Text="Period:" FontWeight="SemiBold"/>
+
+            <ComboBox Grid.Row="1" Grid.Column="0"
+                      ItemsSource="{Binding CostCategoryOptions}"
+                      Text="{Binding SelectedCostCategoriesText, Mode=OneWay}"
+                      IsEditable="True"
+                      IsReadOnly="True"
+                      StaysOpenOnEdit="True"
+                      Height="51"
+                      Width="205">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding Name}"
+                                  IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <RadioButton Content="Rate" GroupName="RatesShowType" IsChecked="{Binding ShowTypeRate}" Margin="0,0,12,0"/>
+                <RadioButton Content="Unit" GroupName="RatesShowType" IsChecked="{Binding ShowTypeUnit}"/>
             </StackPanel>
 
-            <!-- FROM -->
-            <StackPanel Grid.Column="3">
-                <TextBlock Text="From" FontWeight="SemiBold"/>
-                <DatePicker SelectedDate="{Binding FromDate}" Width="130"/>
+            <Grid Grid.Row="1" Grid.Column="2" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="130"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Van:" VerticalAlignment="Center"/>
+                <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding FromDate}" Width="130"/>
+                <TextBlock Grid.Row="1" Text="Tot:" VerticalAlignment="Center" Margin="0,5,0,0"/>
+                <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding TillDate}" Width="130" Margin="0,5,0,0"/>
+            </Grid>
+
+            <CheckBox Grid.Row="1" Grid.Column="3" Content="Punten per maand" IsChecked="{Binding ShowMonthlyDataPoints}" VerticalAlignment="Center"/>
+
+            <StackPanel Grid.Row="1" Grid.Column="4" VerticalAlignment="Top" HorizontalAlignment="Right">
+                <Button Content="Reset" Width="90" Command="{Binding ResetCommand}" Margin="0,0,0,5"/>
+                <Button Content="Export" Width="90" Command="{Binding ExportCommand}"/>
             </StackPanel>
-
-            <!-- TILL -->
-            <StackPanel Grid.Column="6">
-                <TextBlock Text="Till" FontWeight="SemiBold"/>
-                <DatePicker SelectedDate="{Binding TillDate}" Width="130"/>
-            </StackPanel>
-
-            <!-- BUTTONS -->
-            <StackPanel Grid.Column="8"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center">
-                <Button Content="Reset"
-                        Width="120"
-                        Command="{Binding ResetCommand}"
-                        Margin="0 0 0 5"/>
-
-                <Button Content="Export"
-                        Width="120"
-                        Command="{Binding ExportCommand}"/>
-            </StackPanel>
-
         </Grid>
 
-        <!-- CHART -->
-        <Border Grid.Row="2" BorderBrush="#DDD" BorderThickness="1" Padding="10">
+        <Border Grid.Row="1" BorderBrush="#DDD" BorderThickness="1" Padding="10">
             <lvc:CartesianChart
                 Series="{Binding ChartSeries}"
                 XAxes="{Binding XAxes}"
                 YAxes="{Binding YAxes}"/>
         </Border>
-
     </Grid>
 </UserControl>

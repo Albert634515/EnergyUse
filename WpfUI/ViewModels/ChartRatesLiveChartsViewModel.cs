@@ -53,6 +53,10 @@ public class ChartRatesLiveChartsViewModel : ViewModelBase
 
     public ObservableCollection<CostCategory> CostCategories { get; } = new();
     public ObservableCollection<CostCategory> SelectedCostCategories { get; } = new();
+    public ObservableCollection<CostCategoryOption> CostCategoryOptions { get; } = new();
+
+    public string SelectedCostCategoriesText => $"{SelectedCostCategories.Count} geselecteerd";
+    private bool _updatingCostCategorySelection;
 
     private DateTime _fromDate;
     public DateTime FromDate
@@ -82,6 +86,13 @@ public class ChartRatesLiveChartsViewModel : ViewModelBase
     }
     private bool _stUnit;
 
+    public bool ShowMonthlyDataPoints
+    {
+        get => _showMonthlyDataPoints;
+        set { if (SetProperty(ref _showMonthlyDataPoints, value)) UpdateChart(); }
+    }
+    private bool _showMonthlyDataPoints;
+
     #endregion
 
     #region Chart
@@ -103,7 +114,8 @@ public class ChartRatesLiveChartsViewModel : ViewModelBase
             SelectedCostCategories,
             FromDate,
             TillDate,
-            showType
+            showType,
+            ShowMonthlyDataPoints
         );
 
         ChartSeries.Clear();
@@ -144,13 +156,20 @@ public class ChartRatesLiveChartsViewModel : ViewModelBase
     private void LoadCostCategories()
     {
         CostCategories.Clear();
+        CostCategoryOptions.Clear();
 
         var list = _unitOfWork.CostCategoryRepo
             .SelectByEnergyTypeId(CurrentEnergyType.Id)
             .ToList();
 
         foreach (var c in list)
+        {
             CostCategories.Add(c);
+
+            var option = new CostCategoryOption(c);
+            option.SelectionChanged += (_, _) => UpdateSelectedCostCategories();
+            CostCategoryOptions.Add(option);
+        }
     }
 
     private void InitDefaults()
@@ -158,10 +177,47 @@ public class ChartRatesLiveChartsViewModel : ViewModelBase
         FromDate = DateTime.Now.AddYears(-4);
         TillDate = DateTime.Now;
 
+        _updatingCostCategorySelection = true;
+        foreach (var option in CostCategoryOptions)
+            option.IsSelected = true;
+        _updatingCostCategorySelection = false;
+
+        UpdateSelectedCostCategories();
+    }
+
+    private void UpdateSelectedCostCategories()
+    {
+        if (_updatingCostCategorySelection)
+            return;
+
         SelectedCostCategories.Clear();
-        foreach (var c in CostCategories)
-            SelectedCostCategories.Add(c);
+        foreach (var option in CostCategoryOptions.Where(option => option.IsSelected))
+            SelectedCostCategories.Add(option.Category);
+
+        OnPropertyChanged(nameof(SelectedCostCategoriesText));
+        UpdateChart();
     }
 
     #endregion
+}
+
+public sealed class CostCategoryOption : ViewModelBase
+{
+    public CostCategoryOption(CostCategory category) => Category = category;
+
+    public CostCategory Category { get; }
+    public string Name => Category.Name;
+
+    private bool _isSelected;
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set
+        {
+            if (SetProperty(ref _isSelected, value))
+                SelectionChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public event EventHandler? SelectionChanged;
 }

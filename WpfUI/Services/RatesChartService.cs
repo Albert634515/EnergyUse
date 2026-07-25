@@ -20,7 +20,8 @@ public class RatesChartService : ChartBaseService
         IEnumerable<CostCategory> costCategories,
         DateTime from,
         DateTime till,
-        ShowType showType)
+        ShowType showType,
+        bool showMonthlyDataPoints)
     {
         var p = new ParameterGraph
         {
@@ -31,6 +32,7 @@ public class RatesChartService : ChartBaseService
             Till = till,
             CostCategoryList = costCategories.ToList(),
             ShowType = showType,
+            ShowMonthlyDataPoints = showMonthlyDataPoints,
             TarifGroupId = address?.TariffGroup?.Id ?? 1
         };
 
