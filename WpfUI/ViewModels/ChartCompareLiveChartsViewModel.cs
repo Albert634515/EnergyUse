@@ -271,6 +271,12 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         if (SelectedPeriodType == null || CurrentAddress == null || CurrentEnergyType == null)
             return;
 
+        var showType = GetShowType();
+        // Bij een radiobutton-wissel zet WPF eerst de oude keuze uit en
+        // daarna pas de nieuwe aan. Ververs niet in die tussentoestand.
+        if (showType == ShowType.Unknown)
+            return;
+
         var result = _service.BuildChart(
             CurrentAddress,
             CurrentEnergyType,
@@ -282,7 +288,7 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
             PredictMissingData,
             ShowStacked,
             GetShowBy(),
-            GetShowType());
+            showType);
 
         ChartSeries.Clear();
         foreach (var s in result.Series)
@@ -312,7 +318,7 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         ShowTypeRate ? ShowType.Rate :
         ShowTypeValue ? ShowType.Value :
         ShowTypeEfficiency ? ShowType.Efficiency :
-        ShowType.Unknown;
+        ShowType.Rate;
 
     // ---------------------------------------------------------
     // COMMANDS
