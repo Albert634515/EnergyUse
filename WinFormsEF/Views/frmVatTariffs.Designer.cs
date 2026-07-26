@@ -1,4 +1,4 @@
-﻿namespace WinFormsEF.Views
+namespace WinFormsEF.Views
 {
     partial class frmVatTariffs
     {
@@ -180,7 +180,7 @@
             // StartDate
             // 
             StartDate.DataPropertyName = "StartDate";
-            dataGridViewCellStyle1.Format = "dd/MM/yyyy";
+            dataGridViewCellStyle1.Format = "dd-MM-yyyy";
             dataGridViewCellStyle1.NullValue = null;
             StartDate.DefaultCellStyle = dataGridViewCellStyle1;
             resources.ApplyResources(StartDate, "StartDate");

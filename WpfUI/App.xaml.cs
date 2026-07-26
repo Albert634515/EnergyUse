@@ -1,5 +1,6 @@
-﻿using EnergyUse.Core.Interfaces;
+using EnergyUse.Core.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
 using System.Windows;
 using WpfUI.Services;
 using WpfUI.ViewModels;
@@ -16,6 +17,12 @@ namespace WpfUI
 
         public App()
         {
+            var culture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+            culture.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
+            culture.DateTimeFormat.DateSeparator = "-";
+            CultureInfo.CurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+
             var services = new ServiceCollection();
 
             // Registraties

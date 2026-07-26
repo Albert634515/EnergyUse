@@ -158,7 +158,7 @@ public partial class frmAddresses : Form
 
     {
         var settingValue = Managers.Settings.GetSetting((TextBox)sender);
-        _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
+        _controller.SetSetting(settingValue.Item1, settingValue.Item2);
     }
 
     private void cancelAddress()

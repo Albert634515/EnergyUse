@@ -1,4 +1,4 @@
-﻿using EnergyUse.Common.Enums;
+using EnergyUse.Common.Enums;
 using EnergyUse.Common.Extensions;
 using EnergyUse.Common.Libs;
 using EnergyUse.Core.Context;
@@ -99,15 +99,14 @@ public class LibPeriodicDate
         addRateToData();
 
         // Add addital cost data
-        addCost();
+        await addCost();
     }
 
     /// <summary>
     /// Set cost for each day in selection
     /// </summary>
-    private async void addCost()
+    private async Task addCost()
     {
-        List<OtherCost> otherCostList = new();
         var costCategoryList = _costCategoriesRepo.SelectByEnergyTypeAndRange(_parameterPeriod.EnergyType.Id, _parameterPeriod.StartRange, _parameterPeriod.EndRange);
         var libPriceRate = new LibPriceRate(_dbFileName);
 
@@ -172,7 +171,7 @@ public class LibPeriodicDate
                     {
                         CostCategoryId = costCategory.Id,
                         CorrectionFactor = periodicData.CorrectionFactor,
-                        LastAvailableRateUsed = lastAvailableVatRateUsed,
+                        LastAvailableRateUsed = priceRate?.LastRateUsed ?? false,
                         LastAvailableVatRateUsed = lastAvailableVatRateUsed
                     };
 
@@ -180,6 +179,7 @@ public class LibPeriodicDate
                     {
                         otherCost.RateId = priceRate.RateId;
                         otherCost.Rate = priceRate.Rate;
+                        otherCost.PriceAdjustmentFactor = priceRate.PriceAdjustmentFactor;
                     }
 
                     if (vatTarif is not null)

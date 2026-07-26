@@ -83,7 +83,7 @@ public partial class frmSettings : Form
         if (_controller.InitSettings == false)
         {
             var settingValue = Managers.Settings.GetSetting((TextBox)sender);
-            _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
+            _controller.SetSetting(settingValue.Item1, settingValue.Item2);
         }
     }
 
@@ -92,7 +92,7 @@ public partial class frmSettings : Form
         if (_controller.InitSettings == false)
         {
             var settingValue = Managers.Settings.GetSetting((ComboBox)sender);
-            _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
+            _controller.SetSetting(settingValue.Item1, settingValue.Item2);
         }
     }
 
@@ -101,7 +101,7 @@ public partial class frmSettings : Form
         if (_controller.InitSettings == false)
         {
             var settingValue = Managers.Settings.GetSetting((RadioButton)sender);
-            _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
+            _controller.SetSetting(settingValue.Item1, settingValue.Item2);
         }
     }
 
@@ -110,7 +110,7 @@ public partial class frmSettings : Form
         if (_controller.InitSettings == false)
         {
             var settingValue = Managers.Settings.GetSetting((RadioButton)sender);
-            _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
+            _controller.SetSetting(settingValue.Item1, settingValue.Item2);
         }
     }
 
@@ -119,7 +119,7 @@ public partial class frmSettings : Form
         if (_controller.InitSettings == false)
         {
             var settingValues = Managers.Settings.GetSetting((DateTimePicker)sender);
-            _controller.SaveSetting(settingValues.Item1, settingValues.Item2);
+            _controller.SetSetting(settingValues.Item1, settingValues.Item2);
         }
     }
 
@@ -136,7 +136,7 @@ public partial class frmSettings : Form
             if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
             {
                 txtExportDirectory.Text = fbd.SelectedPath;
-                _controller.SaveSetting(txtExportDirectory.Tag.ToString(), fbd.SelectedPath);
+                _controller.SetSetting(txtExportDirectory.Tag.ToString(), fbd.SelectedPath);
             }
         }
     }
@@ -150,24 +150,24 @@ public partial class frmSettings : Form
             if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
             {
                 txtImportDirectory.Text = fbd.SelectedPath;
-                _controller.SaveSetting(txtImportDirectory.Tag.ToString(), fbd.SelectedPath);
+                _controller.SetSetting(txtImportDirectory.Tag.ToString(), fbd.SelectedPath);
             }
         }
     }
 
     private void cmdResetColorsAndLayout_Click(object sender, EventArgs e)
     {
-        _controller.resetColorsAndLayout();
+        _controller.ResetColorsAndLayout();
     }
 
     private void cmdResetChart_Click(object sender, EventArgs e)
     {
-        _controller.resetChartSettings();
+        _controller.ResetChartSettings();
     }
 
     private void resetDataPredictionButton_Click(object sender, EventArgs e)
     {
-        _controller.resetDataPredictionSettings();
+        _controller.ResetDataPredictionSettings();
     }
 
     private void avgCorrectionPercentageTextBox_TextChanged(object sender, EventArgs e)
@@ -175,7 +175,7 @@ public partial class frmSettings : Form
         if (_controller.InitSettings == false)
         {
             var settingValue = Managers.Settings.GetSetting((TextBox)sender);
-            _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
+            _controller.SetSetting(settingValue.Item1, settingValue.Item2);
         }
     }
 
@@ -184,7 +184,7 @@ public partial class frmSettings : Form
         if (_controller.InitSettings == false)
         {
             var settingValue = Managers.Settings.GetSetting((TextBox)sender);
-            _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
+            _controller.SetSetting(settingValue.Item1, settingValue.Item2);
         }
     }
 
@@ -199,9 +199,9 @@ public partial class frmSettings : Form
         _controller.DeleteSetting("VatPerc");
         _controller.DeleteSetting("Currency");
 
-        _controller.resetColorsAndLayout();
-        _controller.resetChartSettings();
-        _controller.resetDataPredictionSettings();
+        _controller.ResetColorsAndLayout();
+        _controller.ResetChartSettings();
+        _controller.ResetDataPredictionSettings();
 
         setSettings();
     }

@@ -56,7 +56,7 @@ public partial class frmBackUpAndRestore : Form
         if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
         {
             txtBackUpDir.Text = fbd.SelectedPath;
-            _controller.SaveSetting(txtBackUpDir.Tag.ToString(), fbd.SelectedPath);
+            _controller.SetSetting(txtBackUpDir.Tag.ToString(), fbd.SelectedPath);
         }
     }
 

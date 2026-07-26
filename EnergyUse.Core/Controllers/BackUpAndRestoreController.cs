@@ -24,7 +24,7 @@ public class BackUpAndRestoreController : BaseController, IController
 
     #region Methods
 
-    public string getSettingBackUpDir(string settingKey)
+    public string GetSettingBackUpDir(string settingKey)
     {
         if (string.IsNullOrWhiteSpace(settingKey))
             throw new ArgumentException("SettingKey cannot be null or empty.", nameof(settingKey));

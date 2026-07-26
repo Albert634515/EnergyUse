@@ -1,6 +1,5 @@
-﻿using EnergyUse.Models.Common;
+using EnergyUse.Models.Common;
 using OfficeOpenXml;
-using System.Globalization;
 
 namespace EnergyUse.Core.Manager;
 
@@ -19,7 +18,7 @@ public class LibExport
             {
                 s.PeriodType,
                 Value_X = s.ValueX,
-                Value_X_Date = s.ValueXDate.ToShortDateString(),
+                Value_X_Date = s.ValueXDate.ToString("dd-MM-yyyy"),
                 Value_Y_Low = s.ValueYLow,
                 Value_Y_Normal = s.ValueYNormal,
                 Value_Y_Return_Low = s.ValueYReturnLow,
@@ -109,7 +108,7 @@ public class LibExport
                 {
                     PeriodType = s.PeriodType,
                     Value_X = s.ValueX,
-                    Value_X_Date = s.ValueXDate.ToShortDateString(),
+                    Value_X_Date = s.ValueXDate.ToString("dd-MM-yyyy"),
                     Value_Y_Low = s.ValueYLow,
                     Value_Y_Normal = s.ValueYNormal,
                     Value_Y_Return_Low = s.ValueYReturnLow,
@@ -152,7 +151,7 @@ public class LibExport
                     {
                         PeriodType = s.PeriodType,
                         Value_X = s.ValueX,
-                        Value_X_Date = s.ValueXDate.ToString("yyyy-mm-dd"),
+                        Value_X_Date = s.ValueXDate.ToString("dd-MM-yyyy"),
                         Value_Y_Normal = s.ValueYNormal,
                         Value_Y_Monetary = s.ValueMonetaryY,
                         ValueY_Monetary_Normal = s.ValueYMonetaryNormal,
@@ -168,7 +167,7 @@ public class LibExport
                 {
                     PeriodType = s.PeriodType,
                     Value_X = s.ValueX,
-                    Value_X_Date = s.ValueXDate.ToString("yyyy-mm-dd"),
+                    Value_X_Date = s.ValueXDate.ToString("dd-MM-yyyy"),
                     Value_Y_Low = s.ValueYLow,
                     Value_Y_Normal = s.ValueYNormal,
                     Value_Y_Monetary = s.ValueMonetaryY,
@@ -224,7 +223,7 @@ public class LibExport
                 // Format columns
                 var property = properties[i-1];
                 if (property.PropertyType == typeof(DateTime))
-                    energyExport.Column(i).Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                    energyExport.Column(i).Style.Numberformat.Format = "dd-mm-yyyy";
 
             }
 

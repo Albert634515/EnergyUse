@@ -26,13 +26,13 @@ public class SettingsController : BaseController, IController
 
     #region Methods
 
-    public void resetColorsAndLayout()
+    public void ResetColorsAndLayout()
     {
         DeleteSetting("BackgroundColorForms");
         DeleteSetting("SliderColor");
     }
 
-    public void resetChartSettings()
+    public void ResetChartSettings()
     {
         DeleteSetting("BackgroundColorChart");
         DeleteSetting("ForeColorChart");
@@ -42,7 +42,7 @@ public class SettingsController : BaseController, IController
         DeleteSetting("UseAllDataForAvg");
     }
 
-    public void resetDataPredictionSettings()
+    public void ResetDataPredictionSettings()
     {
         DeleteSetting("AvgCorrectionPercentage");
         DeleteSetting("AvgCorrectionPercentageReturn");

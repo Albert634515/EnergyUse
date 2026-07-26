@@ -1,4 +1,4 @@
-﻿namespace EnergyUse.Models.Common;
+namespace EnergyUse.Models.Common;
 
 public class SettlementData
 {
@@ -26,7 +26,7 @@ public class SettlementData
     public decimal VatAmount { get; set; } = 0.0m;
     public bool LastAvailableVatRateUsed { get; set; } = false;        
     public bool DataPredicted { get; set; } = false;
-    public decimal PriceIncrease { get; set; } = 0;
+    public decimal PriceAdjustmentFactor { get; set; } = 0;
     public Staffel? Staffel { get; set; } = null;
     public decimal MaxStaffelRange {  get; set; } = 0;
 }

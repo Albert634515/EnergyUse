@@ -1,4 +1,4 @@
-﻿using EnergyUse.Models.Common;
+using EnergyUse.Models.Common;
 using iText.Kernel.Font;
 using iText.Layout.Element;
 
@@ -10,13 +10,13 @@ public class SettlementBase : ReportBase
 
     //private readonly EnergyUseContext _context;
     internal readonly string _dbFileName;
-    internal static UnitOfWork.Settlement _unitOfWork;
+    internal readonly UnitOfWork.Settlement _unitOfWork;
 
-    internal static float[] _pointColumnWidths = [250F, 115F, 115F, 60F, 75F, 110F, 90F, 110F];
-    internal static List<SettlementData> _settlementDataList = new();
-    internal static List<SettlementSubTotal> _settlementSubTotalList = new();
-    internal static List<PeriodicData> _periodicDataList = new();
-    internal static List<FooterText> _footerTextsList = new();
+    internal static readonly float[] _pointColumnWidths = [250F, 115F, 115F, 60F, 75F, 110F, 90F, 110F];
+    internal List<SettlementData> _settlementDataList = new();
+    internal List<SettlementSubTotal> _settlementSubTotalList = new();
+    internal List<PeriodicData> _periodicDataList = new();
+    internal List<FooterText> _footerTextsList = new();
 
     #endregion
 
@@ -34,14 +34,26 @@ public class SettlementBase : ReportBase
             var mergeSettlementDataItem = mergeSettlementData.LastOrDefault(x => x.CostCategory.Id == settlementData.CostCategory.Id);
             if (mergeSettlementDataItem is null)
             {
-                mergeSettlementDataItem = new SettlementData();
-                mergeSettlementDataItem.CostCategory = settlementData.CostCategory;
-                mergeSettlementDataItem.Description = settlementData.Description;
-                mergeSettlementDataItem.ValueBaseConsumed = settlementData.ValueBaseConsumed;
-                mergeSettlementDataItem.ValueBaseProduced = settlementData.ValueBaseProduced;
-                mergeSettlementDataItem.VatAmount = settlementData.VatAmount;
-                mergeSettlementDataItem.StartDate = settlementData.StartDate;
-                mergeSettlementDataItem.EndDate = settlementData.EndDate;
+                mergeSettlementDataItem = new SettlementData
+                {
+                    CostCategory = settlementData.CostCategory,
+                    Description = settlementData.Description,
+                    ValueBaseConsumed = settlementData.ValueBaseConsumed,
+                    ValueBaseProduced = settlementData.ValueBaseProduced,
+                    CorrectionFactor = settlementData.CorrectionFactor,
+                    Rate = settlementData.Rate,
+                    LastAvailableRateUsed = settlementData.LastAvailableRateUsed,
+                    Value = settlementData.Value,
+                    VatTarif = settlementData.VatTarif,
+                    VatAmount = settlementData.VatAmount,
+                    LastAvailableVatRateUsed = settlementData.LastAvailableVatRateUsed,
+                    DataPredicted = settlementData.DataPredicted,
+                    PriceAdjustmentFactor = settlementData.PriceAdjustmentFactor,
+                    Staffel = settlementData.Staffel,
+                    MaxStaffelRange = settlementData.MaxStaffelRange,
+                    StartDate = settlementData.StartDate,
+                    EndDate = settlementData.EndDate
+                };
 
                 mergeSettlementData.Add(mergeSettlementDataItem);
             }
@@ -50,7 +62,18 @@ public class SettlementBase : ReportBase
                 mergeSettlementDataItem.ValueBaseConsumed += settlementData.ValueBaseConsumed;
                 mergeSettlementDataItem.ValueBaseProduced += settlementData.ValueBaseProduced;
                 mergeSettlementDataItem.Value += settlementData.Value;
-                mergeSettlementDataItem.EndDate = settlementData.EndDate;
+                mergeSettlementDataItem.VatAmount += settlementData.VatAmount;
+                mergeSettlementDataItem.LastAvailableRateUsed |= settlementData.LastAvailableRateUsed;
+                mergeSettlementDataItem.LastAvailableVatRateUsed |= settlementData.LastAvailableVatRateUsed;
+                mergeSettlementDataItem.DataPredicted |= settlementData.DataPredicted;
+                if (mergeSettlementDataItem.PriceAdjustmentFactor == 0 && settlementData.PriceAdjustmentFactor != 0)
+                    mergeSettlementDataItem.PriceAdjustmentFactor = settlementData.PriceAdjustmentFactor;
+                mergeSettlementDataItem.StartDate = mergeSettlementDataItem.StartDate < settlementData.StartDate
+                    ? mergeSettlementDataItem.StartDate
+                    : settlementData.StartDate;
+                mergeSettlementDataItem.EndDate = mergeSettlementDataItem.EndDate > settlementData.EndDate
+                    ? mergeSettlementDataItem.EndDate
+                    : settlementData.EndDate;
             }
         }
         return mergeSettlementData;
@@ -73,12 +96,12 @@ public class SettlementBase : ReportBase
                 footerText = footerTextCorrection.Counter.ToString();
             }
 
-            if (settlementData.LastAvailableRateUsed && settlementData.PriceIncrease != 0)
+            if (settlementData.LastAvailableRateUsed)
             {
                 if (!string.IsNullOrWhiteSpace(footerText))
                     footerText = $"{footerText} ";
 
-                footerTextCorrection = getFooterTextLastAvailableRateUsed(settlementData.PriceIncrease);
+                footerTextCorrection = getFooterTextLastAvailableRateUsed(settlementData.PriceAdjustmentFactor);
                 footerText = $"{footerText}{footerTextCorrection.Counter}";
             }
 
@@ -117,6 +140,9 @@ public class SettlementBase : ReportBase
                 footerText = $"{footerText}{footerTextCorrection.Counter}";
             }
 
+            var roundedValue = roundMoney(settlementData.Value);
+            var roundedVat = roundMoney(settlementData.VatAmount);
+
             table.AddCell(GetNormalText(settlementData.Description, 1, showRates ? 1 : 2, iText.Layout.Properties.TextAlignment.LEFT, footerText));
             table.AddCell(GetNormalText(settlementData.StartDate.ToString("dd-MM-yyyy"), 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
             table.AddCell(GetNormalText(settlementData.EndDate.ToString("dd-MM-yyyy"), 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
@@ -124,14 +150,14 @@ public class SettlementBase : ReportBase
 
             if (showRates)
                 table.AddCell(GetNormalText(settlementData.Rate.ToString("##0.00000")));
-            table.AddCell(GetNormalText(Math.Round(settlementData.Value, 2).ToString("##0.00")));
+            table.AddCell(GetNormalText(roundedValue.ToString("##0.00")));
 
             if (!settlementData.CostCategory.CalculateVat)
                 table.AddCell(GetNormalText(""));
             else
-                table.AddCell(GetNormalText(Math.Round(settlementData.VatAmount, 2).ToString("##0.00")));
+                table.AddCell(GetNormalText(roundedVat.ToString("##0.00")));
 
-            table.AddCell(GetNormalText(Math.Round(settlementData.Value + settlementData.VatAmount, 2).ToString("##0.00")));
+            table.AddCell(GetNormalText((roundedValue + roundedVat).ToString("##0.00")));
         }
 
         // Add Footer to table
@@ -142,8 +168,8 @@ public class SettlementBase : ReportBase
         var settlementSubTotal = new SettlementSubTotal();
         settlementSubTotal.EngergyTypeId = item.EnergyType.Id;
         settlementSubTotal.ValueBase = settlementDataList.Sum(s => s.ValueBase);
-        settlementSubTotal.TotalValue = settlementDataList.Sum(s => s.Value);
-        settlementSubTotal.TotalVat = settlementDataList.Sum(s => s.Value * (s.VatTarif / 100));
+        settlementSubTotal.TotalValue = settlementDataList.Sum(s => roundMoney(s.Value));
+        settlementSubTotal.TotalVat = settlementDataList.Sum(s => roundMoney(s.VatAmount));
 
         setSettlementSubTotal(table, settlementSubTotal, subTotalText, showRates);
 
@@ -181,27 +207,55 @@ public class SettlementBase : ReportBase
 
     internal void setSettlementSubTotal(Models.EnergyType energyType, List<SettlementData> settlementDataList)
     {
-        foreach (var settlementData in settlementDataList)
+        foreach (var itemSubTotal in getSettlementSubTotals(energyType, settlementDataList))
         {
-            var subTotalKey = $"{Manager.LibEnergySubType.GetCombinedType(settlementData.CostCategory.EnergySubType.Id)}{energyType.Id}";
-            SettlementSubTotal? settlementSubTotal = _settlementSubTotalList.FirstOrDefault(x => x.SubTotalType == subTotalKey && x.EngergyTypeId == energyType.Id);
+            var settlementSubTotal = _settlementSubTotalList.FirstOrDefault(
+                x => x.SubTotalType == itemSubTotal.SubTotalType && x.EngergyTypeId == energyType.Id);
+
             if (settlementSubTotal == null)
             {
-                settlementSubTotal = new SettlementSubTotal();
-                settlementSubTotal.EngergyTypeId = energyType.Id;
-                settlementSubTotal.SubTotalType = subTotalKey;
-                settlementSubTotal.Description = getSubTotalName(settlementData.CostCategory, energyType);
-
-                _settlementSubTotalList.Add(settlementSubTotal);
+                _settlementSubTotalList.Add(itemSubTotal);
+                continue;
             }
 
-            settlementSubTotal.ValueBase += settlementData.ValueBase;
-            settlementSubTotal.TotalValue += settlementData.Value;
-            settlementSubTotal.TotalVat += settlementData.VatAmount;
+            settlementSubTotal.ValueBase += itemSubTotal.ValueBase;
+            settlementSubTotal.TotalValue += itemSubTotal.TotalValue;
+            settlementSubTotal.TotalVat += itemSubTotal.TotalVat;
         }
     }
 
-    internal Table setTotalToTable(Models.EnergyType energyType, bool showRates)
+    private List<SettlementSubTotal> getSettlementSubTotals(Models.EnergyType energyType,
+                                                            List<SettlementData> settlementDataList)
+    {
+        var result = new List<SettlementSubTotal>();
+
+        foreach (var settlementData in settlementDataList)
+        {
+            var subTotalKey = $"{Manager.LibEnergySubType.GetCombinedType(settlementData.CostCategory.EnergySubType.Id)}{energyType.Id}";
+            var settlementSubTotal = result.FirstOrDefault(x => x.SubTotalType == subTotalKey);
+
+            if (settlementSubTotal == null)
+            {
+                settlementSubTotal = new SettlementSubTotal
+                {
+                    EngergyTypeId = energyType.Id,
+                    SubTotalType = subTotalKey,
+                    Description = getSubTotalName(settlementData.CostCategory, energyType)
+                };
+                result.Add(settlementSubTotal);
+            }
+
+            settlementSubTotal.ValueBase += settlementData.ValueBase;
+            settlementSubTotal.TotalValue += roundMoney(settlementData.Value);
+            settlementSubTotal.TotalVat += roundMoney(settlementData.VatAmount);
+        }
+
+        return result;
+    }
+
+    internal Table setTotalToTable(SelectedEnergyType item,
+                                   List<SettlementData> settlementDataList,
+                                   bool showRates)
     {
         Table table = new(_pointColumnWidths);
         table.SetKeepTogether(true);
@@ -212,7 +266,7 @@ public class SettlementBase : ReportBase
         table.AddHeaderCell(GetBoldText("Vat"));
         table.AddHeaderCell(GetBoldText("Money inc."));
 
-        var settlementSubTotalList = _settlementSubTotalList.Where(x => x.EngergyTypeId == energyType.Id).ToList();
+        var settlementSubTotalList = getSettlementSubTotals(item.EnergyType, settlementDataList);
         foreach (SettlementSubTotal settlementSubTotal in settlementSubTotalList)
         {
             table.AddCell(GetNormalText(settlementSubTotal.Description, 1, showRates ? 5 : 5, iText.Layout.Properties.TextAlignment.LEFT));
@@ -222,14 +276,18 @@ public class SettlementBase : ReportBase
         }
 
         table.AddFooterCell(GetBoldTextGrey("Total", 1, showRates ? 5 : 5, iText.Layout.Properties.TextAlignment.LEFT));
-        table.AddFooterCell(GetBoldTextGrey(Math.Round(_settlementSubTotalList.Sum(x => x.TotalValue), 2).ToString("##0.00")));
-        table.AddFooterCell(GetBoldTextGrey(Math.Round(_settlementSubTotalList.Sum(x => x.TotalVat), 2).ToString("##0.00")));
-        table.AddFooterCell(GetBoldTextGrey(Math.Round(_settlementSubTotalList.Sum(x => x.TotalValue) + _settlementSubTotalList.Sum(x => x.TotalVat), 2).ToString("##0.00")));
+        var totalValue = settlementSubTotalList.Sum(x => x.TotalValue);
+        var totalVat = settlementSubTotalList.Sum(x => x.TotalVat);
+        var monthCount = getMonthCount(item.StartRange, item.EndRange);
+
+        table.AddFooterCell(GetBoldTextGrey(Math.Round(totalValue, 2).ToString("##0.00")));
+        table.AddFooterCell(GetBoldTextGrey(Math.Round(totalVat, 2).ToString("##0.00")));
+        table.AddFooterCell(GetBoldTextGrey(Math.Round(totalValue + totalVat, 2).ToString("##0.00")));
 
         table.AddFooterCell(GetBoldText("Per Month", 1, showRates ? 5 : 5, iText.Layout.Properties.TextAlignment.LEFT));
-        table.AddFooterCell(GetBoldText(Math.Round(_settlementSubTotalList.Sum(x => x.TotalValue) / 12, 2).ToString("##0.00")));
-        table.AddFooterCell(GetBoldText(Math.Round(_settlementSubTotalList.Sum(x => x.TotalVat) / 12, 2).ToString("##0.00")));
-        table.AddFooterCell(GetBoldText(Math.Round((_settlementSubTotalList.Sum(x => x.TotalValue) + _settlementSubTotalList.Sum(x => x.TotalVat)) / 12, 2).ToString("##0.00")));
+        table.AddFooterCell(GetBoldText(Math.Round(totalValue / monthCount, 2).ToString("##0.00")));
+        table.AddFooterCell(GetBoldText(Math.Round(totalVat / monthCount, 2).ToString("##0.00")));
+        table.AddFooterCell(GetBoldText(Math.Round((totalValue + totalVat) / monthCount, 2).ToString("##0.00")));
 
         return table;
     }
@@ -254,14 +312,17 @@ public class SettlementBase : ReportBase
         return cell;
     }
 
-    private FooterText getFooterTextLastAvailableRateUsed(decimal priceIncrease)
+    private FooterText getFooterTextLastAvailableRateUsed(decimal priceAdjustmentFactor)
     {
         string text = $"Last available rate used";
-        decimal percChange = (priceIncrease - 1);
-        if ((priceIncrease - 1) > 0)
-            text += $", increased with {percChange:#0.00%}";
-        else if ((priceIncrease - 1) < 0)
-            text += $", decreased with {percChange:#0.00%}";
+        if (priceAdjustmentFactor != 0)
+        {
+            decimal percChange = priceAdjustmentFactor - 1;
+            if (percChange > 0)
+                text += $", increased with {percChange:#0.00%}";
+            else if (percChange < 0)
+                text += $", decreased with {percChange:#0.00%}";
+        }
 
         return addFooterText(text);
     }
@@ -355,7 +416,7 @@ public class SettlementBase : ReportBase
         return headerText;
     }
 
-    private static string getMeterPositionRange(SelectedEnergyType item, long addressId, Common.Enums.SubEnergyType subEnergyType)
+    private string getMeterPositionRange(SelectedEnergyType item, long addressId, Common.Enums.SubEnergyType subEnergyType)
     {
         var positionRange = string.Empty;
 
@@ -368,7 +429,7 @@ public class SettlementBase : ReportBase
         return positionRange;
     }
 
-    private static decimal getMeterPosition(DateTime registrationDate, long energyTypeId, long addressId, Common.Enums.SubEnergyType subEnergyType)
+    private decimal getMeterPosition(DateTime registrationDate, long energyTypeId, long addressId, Common.Enums.SubEnergyType subEnergyType)
     {
         decimal position = -1;
 
@@ -400,9 +461,27 @@ public class SettlementBase : ReportBase
         table.AddHeaderCell(GetBoldText("Amount", 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
 
         List<Models.Payment> payments = new();
+        var monthsLeft = 0;
 
         if (periodId > 0)
+        {
             payments = _unitOfWork.PaymentRepo.SelectByAddressAndPeriod(addressId, periodId).ToList();
+            var predefinedPeriodDates = _unitOfWork.PredefinedPeriodDateRepo.GetByPeriodId(periodId).ToList();
+
+            if (predefinedPeriodDates.Count > 0)
+            {
+                var periodStart = predefinedPeriodDates.Min(x => x.StartDate);
+                var periodEnd = predefinedPeriodDates.Max(x => x.EndDate);
+                var predefinedMonthCount = getCalendarMonthCount(periodStart, periodEnd);
+                var paidMonthCount = payments
+                    .Where(p => p.PayDate >= periodStart && p.PayDate <= periodEnd)
+                    .Select(p => (p.PayDate.Year, p.PayDate.Month))
+                    .Distinct()
+                    .Count();
+
+                monthsLeft = Math.Max(0, predefinedMonthCount - paidMonthCount);
+            }
+        }
         else
             payments = _unitOfWork.PaymentRepo.SelectByAddressAndRange(addressId, startRange, endRange).ToList();
 
@@ -412,10 +491,9 @@ public class SettlementBase : ReportBase
         }
         else
         {
-            var totalToPay = Math.Round(_settlementSubTotalList.Sum(x => x.TotalValue) + _settlementSubTotalList.Sum(x => x.TotalVat));
+            var totalToPay = Math.Round(_settlementSubTotalList.Sum(x => x.TotalValue + x.TotalVat), 2);
             var total = (decimal)payments.Sum(s => s.Amount);
             var toBePaid = totalToPay - total;
-            var monthsLeft = 12 - payments.Count;
 
             foreach (var payment in payments)
             {
@@ -444,40 +522,82 @@ public class SettlementBase : ReportBase
         return table;
     }
 
-    internal Table getPricePerKw()
+    internal Table getPricePerUnit(SelectedEnergyType item,
+                                   List<PeriodicData> periodicDataList,
+                                   List<SettlementData> settlementDataList)
     {
         Table table = new(_pointColumnWidths);
         table.SetKeepTogether(true);
-        GetSectionHeader(table, "Price per kw");
+        var unit = string.IsNullOrWhiteSpace(item.EnergyType.UnitId) ? "unit" : item.EnergyType.UnitId;
+        GetSectionHeader(table, $"Price per {unit}");
 
-        var totalKw = _periodicDataList.Sum(x => x.ValueYLow + x.ValueYNormal);
-        var totalCost = _settlementSubTotalList.Sum(x => x.TotalValue + x.TotalVat);
-        var pricePerKw = 0;
-        if (totalKw != 0)
-            Math.Round(totalCost / totalKw, 5);
+        var totalUnits = periodicDataList.Sum(x => x.ValueYLow + x.ValueYNormal);
+        var totalCost = settlementDataList.Sum(x => roundMoney(x.Value) + roundMoney(x.VatAmount));
+        var pricePerUnit = divideOrZero(totalCost, totalUnits);
 
         table.AddCell(GetNormalText("Price", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
-        table.AddCell(GetNormalText(pricePerKw.ToString("##0.00000"), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
+        table.AddCell(GetNormalText(formatUnitPrice(pricePerUnit, totalUnits), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
 
-        var totalCostExSolar = _settlementDataList.Where(w => w.CostCategory.EnergySubTypeId < 3 || w.CostCategory.EnergySubTypeId == 5).Sum(x => x.Value + x.VatAmount);
-        var pricePerKwExSolar = Math.Round(totalCostExSolar / totalKw, 5);
-        table.AddCell(GetNormalText("Price ex solar", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
-        table.AddCell(GetNormalText(pricePerKwExSolar.ToString("##0.00000"), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
+        var totalCostExReturn = settlementDataList
+            .Where(w => w.CostCategory.EnergySubTypeId is not 3 and not 4 and not 6 and not 7)
+            .Sum(x => roundMoney(x.Value) + roundMoney(x.VatAmount));
+        var pricePerUnitExReturn = divideOrZero(totalCostExReturn, totalUnits);
+        table.AddCell(GetNormalText("Price excluding return", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddCell(GetNormalText(formatUnitPrice(pricePerUnitExReturn, totalUnits), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
 
-        var totalCostKwOnlyLow = _settlementDataList.Where(w => w.CostCategory.EnergySubTypeId == 2).Sum(x => x.Value + x.VatAmount);
-        var pricePerKWLow = totalCostKwOnlyLow / _periodicDataList.Sum(x => x.ValueYLow);
-
-        var totalCostKwOnlyNormal = _settlementDataList.Where(w => w.CostCategory.EnergySubTypeId == 1).Sum(x => x.Value + x.VatAmount);
-        var pricePerKWNormal = totalCostKwOnlyNormal / _periodicDataList.Sum(x => x.ValueYNormal);
-
-        var totalCostperKw = _settlementDataList.Where(w => w.CostCategory.EnergySubTypeId == 5 && w.CostCategory.UnitId == "kWh").Sum(x => x.Value + x.VatAmount);
-        var costPerkw = totalCostperKw / _periodicDataList.Sum(x => x.ValueYNormal + x.ValueYLow);
-
-        var pricePerKwOnly = Math.Round(pricePerKWLow + pricePerKWNormal / 2 + costPerkw, 5);
-
-        table.AddCell(GetNormalText("Price kw cost only", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
-        table.AddCell(GetNormalText(pricePerKwOnly.ToString("##0.00000"), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
+        var variableCost = settlementDataList
+            .Where(w => w.CostCategory.EnergySubTypeId is 1 or 2
+                     || (w.CostCategory.EnergySubTypeId == 5 && w.CostCategory.UnitId == item.EnergyType.UnitId))
+            .Sum(x => roundMoney(x.Value) + roundMoney(x.VatAmount));
+        var variablePricePerUnit = divideOrZero(variableCost, totalUnits);
+        table.AddCell(GetNormalText($"Variable cost per {unit}", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddCell(GetNormalText(formatUnitPrice(variablePricePerUnit, totalUnits), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
 
         return table;
+    }
+
+    private static decimal divideOrZero(decimal numerator, decimal denominator)
+    {
+        return denominator == 0 ? 0 : Math.Round(numerator / denominator, 5);
+    }
+
+    private static decimal roundMoney(decimal value)
+    {
+        return Math.Round(value, 2, MidpointRounding.AwayFromZero);
+    }
+
+    private static string formatUnitPrice(decimal price, decimal totalUnits)
+    {
+        return totalUnits == 0 ? "N/A" : price.ToString("##0.00000");
+    }
+
+    private static int getCalendarMonthCount(DateTime startRange, DateTime endRange)
+    {
+        if (startRange == DateTime.MinValue || endRange == DateTime.MinValue || endRange < startRange)
+            return 0;
+
+        return ((endRange.Year - startRange.Year) * 12) + endRange.Month - startRange.Month + 1;
+    }
+
+    private static decimal getMonthCount(DateTime startRange, DateTime endRange)
+    {
+        if (startRange == DateTime.MinValue || endRange == DateTime.MinValue || endRange < startRange)
+            return 1;
+
+        var endExclusive = endRange.Date.AddDays(1);
+        var wholeMonths = ((endExclusive.Year - startRange.Year) * 12) + endExclusive.Month - startRange.Month;
+        var anchor = startRange.Date.AddMonths(wholeMonths);
+
+        if (anchor > endExclusive)
+        {
+            wholeMonths--;
+            anchor = startRange.Date.AddMonths(wholeMonths);
+        }
+
+        var daysInRemainderMonth = DateTime.DaysInMonth(anchor.Year, anchor.Month);
+        var partialMonth = (endExclusive - anchor).Days / (decimal)daysInRemainderMonth;
+        var result = wholeMonths + partialMonth;
+
+        return result > 0 ? result : 1;
     }
 }

@@ -130,7 +130,7 @@ public class MainViewModel : ViewModelBase
         if (SelectedAddress == null)
             return;
 
-        var list = _controller.getEnergyTypesByAddressId(SelectedAddress.Id);
+        var list = _controller.GetEnergyTypesByAddressId(SelectedAddress.Id);
         foreach (var e in list)
             EnergyTypes.Add(e);
 

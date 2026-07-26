@@ -1,4 +1,4 @@
-﻿using EnergyUse.Models.Common;
+using EnergyUse.Models.Common;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Layout;
@@ -78,7 +78,7 @@ public class SettlementCompact : SettlementBase
 
                 setSettlementSubTotal(energyType, settlementDataList);
 
-                table = setTotalToTable(energyType, parameterSelection.ShowRates);
+                table = setTotalToTable(item, settlementDataList, parameterSelection.ShowRates);
                 document.Add(table);
             }
         } // End of loop of selected energy types     

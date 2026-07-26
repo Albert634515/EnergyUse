@@ -97,7 +97,7 @@
                                     Width="200"/>
 
                 <DataGridTextColumn Header="Pay Date"
-                                    Binding="{Binding PayDate}"
+                                    Binding="{Binding PayDate, StringFormat={}{0:dd-MM-yyyy}}"
                                     Width="120"/>
 
                 <DataGridTextColumn Header="Amount"

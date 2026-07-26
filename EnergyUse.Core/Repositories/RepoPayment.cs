@@ -1,4 +1,4 @@
-﻿using EnergyUse.Core.Context;
+using EnergyUse.Core.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace EnergyUse.Core.Repositories;
@@ -32,6 +32,6 @@ public class RepoPayment : RepoGeneral<Models.Payment>
         return _context.Set<Models.Payment>()
                        .Include(p => p.PreDefinedPeriod)
                        .Include(a => a.Address)
-                       .Where(w => w.AddressId == addressId && (w.PayDate >= startDate || w.PayDate <= endDate));
+                       .Where(w => w.AddressId == addressId && w.PayDate >= startDate && w.PayDate <= endDate);
     }
 }

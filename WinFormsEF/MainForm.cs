@@ -431,7 +431,7 @@ public partial class MainForm : Form
         var address = (Address)CboAddress.SelectedItem;
         if (address != null)
         {
-            var energyTypes = _controller.getEnergyTypesByAddressId(address.Id);
+            var energyTypes = _controller.GetEnergyTypesByAddressId(address.Id);
 
             bsEnergyTypes.DataSource = energyTypes;
             bsEnergyTypes.ResetBindings(false);
@@ -506,7 +506,7 @@ public partial class MainForm : Form
         if (!string.IsNullOrWhiteSpace(splitterName))
             splitContainer1.SplitterDistance = _controller.GetMainSpitterDistance(splitterName);
 
-        _controller.SaveSetting($"LastUcLoaded_{targetPanel.Tag}", controlName);
+        _controller.SetSetting($"LastUcLoaded_{targetPanel.Tag}", controlName);
     }
 
     private void getChartControl(string controlName, SplitterPanel targetPanel)

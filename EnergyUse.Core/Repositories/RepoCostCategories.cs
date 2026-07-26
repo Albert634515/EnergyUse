@@ -1,4 +1,4 @@
-﻿using EnergyUse.Core.Context;
+using EnergyUse.Core.Context;
 using EnergyUse.Models.Common;
 using Microsoft.EntityFrameworkCore;
 
@@ -85,7 +85,9 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
                        .Include(t => t.TariffGroup)
                        .Include(s => s.EnergySubType)
                        .Include(c => c.CalculationType)
-                       .Where(w => w.EnergyType.Id == energyTypeId && (w.Start.Value.Date <= endDate.Date || w.End.Value.Date >= startDate.Date))
+                       .Where(w => w.EnergyType.Id == energyTypeId
+                                && (w.Start == null || w.Start.Value.Date <= endDate.Date)
+                                && (w.End == null || w.End.Value.Date >= startDate.Date))
                        .OrderBy(o => o.EnergyType.Id).ThenBy(o => o.SortOrder);
     }
 
@@ -171,6 +173,7 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
                         CorrectionFactor = periodicData.CorrectionFactor,
                         LastAvailableRateUsed = otherCost.LastAvailableRateUsed,
                         LastAvailableVatRateUsed = otherCost.LastAvailableVatRateUsed,
+                        PriceAdjustmentFactor = otherCost.PriceAdjustmentFactor,
                         DataPredicted = periodicData.IsPredicted,
                         VatTarif = otherCost.VatTarif,
                         Rate = categoryRate,

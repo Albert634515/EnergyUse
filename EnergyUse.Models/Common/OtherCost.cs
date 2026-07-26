@@ -1,4 +1,4 @@
-﻿namespace EnergyUse.Models.Common;
+namespace EnergyUse.Models.Common;
 
 public class OtherCost
 {
@@ -9,6 +9,7 @@ public class OtherCost
     public bool LastAvailableRateUsed { get; set; }
     public bool LastAvailableVatRateUsed { get; set; }
     public decimal Rate { get; set; }
+    public decimal PriceAdjustmentFactor { get; set; }
     public decimal CorrectionFactor { get; set; }
     public decimal MaxStaffel { get; set; }
 }

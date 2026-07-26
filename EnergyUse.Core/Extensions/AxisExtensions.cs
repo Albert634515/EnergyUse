@@ -1,4 +1,4 @@
-﻿using LiveChartsCore;
+using LiveChartsCore;
 using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
 
@@ -13,7 +13,7 @@ public static class AxisExtensions
         // Als het een DateTimeAxis is, maak een nieuwe DateTimeAxis en kopieer relevante properties
         if (axis is DateTimeAxis dtAxis)
         {
-            var clone = new DateTimeAxis(TimeSpan.FromTicks((long)dtAxis.UnitWidth), dt => dt.ToString("dd/MM/yyyy"))
+            var clone = new DateTimeAxis(TimeSpan.FromTicks((long)dtAxis.UnitWidth), dt => dt.ToString("dd-MM-yyyy"))
             {
                 Labels = dtAxis.Labels,
                 LabelsRotation = dtAxis.LabelsRotation,

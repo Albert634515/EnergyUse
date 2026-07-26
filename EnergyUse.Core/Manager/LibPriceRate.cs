@@ -1,4 +1,4 @@
-﻿using EnergyUse.Core.Context;
+using EnergyUse.Core.Context;
 using EnergyUse.Models.Common;
 
 namespace EnergyUse.Core.Manager;
@@ -45,8 +45,8 @@ public class LibPriceRate
 
             if (rate.ExpectedPriceChange != 0)
             {
-                priceRate.Increase = 1 + (rate.ExpectedPriceChange / 100);
-                priceRate.Rate = Math.Round(rate.RateValue * priceRate.Increase, 4);                    
+                priceRate.PriceAdjustmentFactor = 1 + (rate.ExpectedPriceChange / 100);
+                priceRate.Rate = Math.Round(rate.RateValue * priceRate.PriceAdjustmentFactor, 4);
             }
             else
                 priceRate.Rate = rate.RateValue;
@@ -99,8 +99,8 @@ public class LibPriceRate
                 {
                     if (rate != null && rate.ExpectedPriceChange != 0)
                     {
-                        priceRate.Increase = 1 + (rate.ExpectedPriceChange / 100);
-                        priceRate.Rate = Math.Round(rate.RateValue * priceRate.Increase, 4);
+                        priceRate.PriceAdjustmentFactor = 1 + (rate.ExpectedPriceChange / 100);
+                        priceRate.Rate = Math.Round(rate.RateValue * priceRate.PriceAdjustmentFactor, 4);
                     }
                 }
             }

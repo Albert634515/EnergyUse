@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using EnergyUse.Core.Controllers;
 using EnergyUse.Models;
@@ -11,6 +11,8 @@ public class SettlementReportViewModel : ViewModelBase
 {
     private readonly SelectReportParametersController _controller;
     private readonly ISettingsService _settings;
+    private bool _isApplyingPredefinedPeriod;
+    private bool _isChangingAddress;
 
     public ObservableCollection<DateSelectionViewModel> DateSelections { get; } = new();
 
@@ -32,9 +34,16 @@ public class SettlementReportViewModel : ViewModelBase
                 // Adres onthouden
                 _settings.Save("LastSelectedAddress", value.Id.ToString());
 
-                // Zoals in je oorspronkelijke code:
-                setDateSelectionsForAddress(value.Id);
-                setLastSelectedPeriod(value.Id);
+                _isChangingAddress = true;
+                try
+                {
+                    setDateSelectionsForAddress(value.Id);
+                    setLastSelectedPeriod(value.Id);
+                }
+                finally
+                {
+                    _isChangingAddress = false;
+                }
             }
 
             OnPropertyChanged(nameof(IsValid));
@@ -48,7 +57,17 @@ public class SettlementReportViewModel : ViewModelBase
         set
         {
             if (SetProperty(ref _selectedPredefinedPeriod, value) && value != null)
-                applyPredefinedPeriod(value);
+            {
+                _isApplyingPredefinedPeriod = true;
+                try
+                {
+                    applyPredefinedPeriod(value);
+                }
+                finally
+                {
+                    _isApplyingPredefinedPeriod = false;
+                }
+            }
 
             OnPropertyChanged(nameof(IsValid));
         }
@@ -139,7 +158,7 @@ public class SettlementReportViewModel : ViewModelBase
                 addDateSelectionForAddress(SelectedAddress.Id);
         });
 
-        ClearPredefinedPeriodCommand = new RelayCommand(_ => SelectedPredefinedPeriod = null);
+        ClearPredefinedPeriodCommand = new RelayCommand(_ => clearPredefinedPeriodSelection());
         SelectCommand = new RelayCommand(_ => OnSelect(), _ => IsValid);
         CancelCommand = new RelayCommand(_ => OnCancel());
     }
@@ -177,6 +196,8 @@ public class SettlementReportViewModel : ViewModelBase
 
     private void setLastSelectedPeriod(long addressId)
     {
+        SelectedPredefinedPeriod = null;
+
         var key = $"{addressId}_LastPreSelectedPeriod";
         var saved = _settings.Get(key);
 
@@ -219,7 +240,7 @@ public class SettlementReportViewModel : ViewModelBase
 
     private void addDateSelectionForAddress(long addressId)
     {
-        var vm = new DateSelectionViewModel(() => OnPropertyChanged(nameof(IsValid)))
+        var vm = new DateSelectionViewModel(onDateSelectionChanged)
         {
             EnergyTypeList = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList(),
             TarifGroupsList = _controller.UnitOfWork.TariffGroupRepo.GetAll().ToList()
@@ -241,12 +262,33 @@ public class SettlementReportViewModel : ViewModelBase
 
     private void removeDateSelection(DateSelectionViewModel vm)
     {
+        clearPredefinedPeriodAfterManualChange();
         DateSelections.Remove(vm);
 
         if (DateSelections.Count == 1)
             DateSelections[0].RemoveButtonVisible = false;
 
         OnPropertyChanged(nameof(IsValid));
+    }
+
+    private void onDateSelectionChanged()
+    {
+        clearPredefinedPeriodAfterManualChange();
+        OnPropertyChanged(nameof(IsValid));
+    }
+
+    private void clearPredefinedPeriodAfterManualChange()
+    {
+        if (!_isApplyingPredefinedPeriod && !_isChangingAddress && SelectedPredefinedPeriod != null)
+            clearPredefinedPeriodSelection();
+    }
+
+    private void clearPredefinedPeriodSelection()
+    {
+        if (SelectedAddress != null)
+            _settings.Save($"{SelectedAddress.Id}_LastPreSelectedPeriod", string.Empty);
+
+        SelectedPredefinedPeriod = null;
     }
 
     private void applyPredefinedPeriod(PreDefinedPeriod period)
@@ -259,6 +301,9 @@ public class SettlementReportViewModel : ViewModelBase
         while (DateSelections.Count < list.Count)
             addDateSelectionForAddress(SelectedAddress.Id);
 
+        while (DateSelections.Count > list.Count)
+            DateSelections.RemoveAt(DateSelections.Count - 1);
+
         for (int i = 0; i < list.Count; i++)
         {
             var d = list[i];
@@ -269,9 +314,11 @@ public class SettlementReportViewModel : ViewModelBase
 
             vm.SetEnergyType(d.EnergyType.Id);
 
-            if (d.TariffGroup != null)
-                vm.SetTarifGroup(d.TariffGroup.Id);
+            vm.SetTarifGroup(d.TariffGroup?.Id ?? 0);
         }
+
+        if (DateSelections.Count == 1)
+            DateSelections[0].RemoveButtonVisible = false;
 
         OnPropertyChanged(nameof(IsValid));
     }
@@ -306,6 +353,12 @@ public class SettlementReportViewModel : ViewModelBase
                 EndRange = vm.DateTill ?? DateTime.Now,
                 TarifGroup = vm.SelectedTariffGroup?.Id ?? 0
             });
+        }
+
+        if (result.SelectedEnergyTypeList.Count > 0)
+        {
+            result.StartRange = result.SelectedEnergyTypeList.Min(x => x.StartRange);
+            result.EndRange = result.SelectedEnergyTypeList.Max(x => x.EndRange);
         }
 
         return result;

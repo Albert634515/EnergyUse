@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using EnergyUse.Core.Context;
 using EnergyUse.Models.Common;
 
@@ -31,7 +31,7 @@ public class LibSettlementData
             return settlementDataList;
 
         DateTime startRange, endRange;
-        decimal priceIncrease = 0;
+        decimal priceAdjustmentFactor = 0;
         decimal lastRate = 0;
         var vatTarifRepo = new Repositories.RepoVatTarif(_context);
 
@@ -87,8 +87,8 @@ public class LibSettlementData
                 rateUsed = rate.RateValue;
                 if (rate != null && rate.ExpectedPriceChange != 0)
                 {
-                    priceIncrease = 1 + (rate.ExpectedPriceChange / 100);
-                    rateUsed = Math.Round(rate.RateValue * priceIncrease, 4);
+                    priceAdjustmentFactor = 1 + (rate.ExpectedPriceChange / 100);
+                    rateUsed = Math.Round(rate.RateValue * priceAdjustmentFactor, 4);
                 }
             }
             else
@@ -134,7 +134,7 @@ public class LibSettlementData
                 settlementData.EndDate = periodicData.ValueXDate;
                 settlementData.CorrectionFactor = periodicData.CorrectionFactor;
                 settlementData.LastAvailableRateUsed = lastAvailableRateUsed;
-                settlementData.PriceIncrease = priceIncrease;
+                settlementData.PriceAdjustmentFactor = priceAdjustmentFactor;
                 settlementData.DataPredicted = periodicData.IsPredicted;
                 settlementData.VatTarif = vat;
                 settlementData.LastAvailableVatRateUsed = lastAvailableVatRateUsed;

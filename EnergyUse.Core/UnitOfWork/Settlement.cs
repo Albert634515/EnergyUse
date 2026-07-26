@@ -1,4 +1,4 @@
-﻿using EnergyUse.Core.Context;
+using EnergyUse.Core.Context;
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Core.Repositories;
 
@@ -13,6 +13,7 @@ public class Settlement : IUnitOfWork
     public RepoVatTarif VatTarifRepo;
     public RepoMeterReading MeterReadingRepo;
     public RepoPayment PaymentRepo;
+    public RepoPredefinedPeriodDate PredefinedPeriodDateRepo;
 
     public Settlement(string dbFileName)
     {
@@ -23,6 +24,7 @@ public class Settlement : IUnitOfWork
         VatTarifRepo = new RepoVatTarif(_context);
         MeterReadingRepo = new RepoMeterReading(_context);
         PaymentRepo = new RepoPayment(_context);
+        PredefinedPeriodDateRepo = new RepoPredefinedPeriodDate(_context);
     }
 
     public int Complete()

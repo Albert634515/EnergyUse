@@ -25,7 +25,7 @@ public class BaseController
         _libSettings = new EnergyUse.Core.Manager.LibSettings(_dbFileName);
     }
 
-    public string getDbFileName() => _dbFileName;
+    public string GetDbFileName() => _dbFileName;
 
     #region Settings
 
@@ -47,7 +47,7 @@ public class BaseController
         return settingValue;
     }
 
-    public void SaveSetting(string key, string settingValue)
+    public void SetSetting(string key, string settingValue)
     {
         if (_libSettings != null)
             _libSettings.SaveSetting(key.Trim(), settingValue);

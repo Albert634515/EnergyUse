@@ -103,7 +103,7 @@ public partial class frmNetting : Form
             RefreshNetting();
 
             var settingValue = Managers.Settings.GetSetting((ComboBox)sender);
-            _controller.SaveSetting(settingValue.Item1, settingValue.Item2);
+            _controller.SetSetting(settingValue.Item1, settingValue.Item2);
         }
     }
 

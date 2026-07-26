@@ -38,7 +38,7 @@ public class MainController : BaseController, IController
 
     #region EnergyType
 
-    public IEnumerable<Models.EnergyType> getEnergyTypesByAddressId(long addressId)
+    public IEnumerable<Models.EnergyType> GetEnergyTypesByAddressId(long addressId)
     {
         if (_unitOfWork?.AddressRepo == null)
             throw new InvalidOperationException("UnitOfWork or AddressRepo is not initialized.");

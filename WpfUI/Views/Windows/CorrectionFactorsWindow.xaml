@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfUI.Views.Windows.CorrectionFactorsWindow"
+<Window x:Class="WpfUI.Views.Windows.CorrectionFactorsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -84,9 +84,9 @@
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Start"
-                                        Binding="{Binding StartFactor, StringFormat=d}" />
+                                        Binding="{Binding StartFactor, StringFormat={}{0:dd-MM-yyyy}}" />
                     <DataGridTextColumn Header="End"
-                                        Binding="{Binding EndFactor, StringFormat=d}" />
+                                        Binding="{Binding EndFactor, StringFormat={}{0:dd-MM-yyyy}}" />
                     <DataGridTextColumn Header="Factor"
                                         Binding="{Binding Factor, StringFormat=N5}" />
                 </DataGrid.Columns>

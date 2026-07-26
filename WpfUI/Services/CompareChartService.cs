@@ -1,4 +1,4 @@
-﻿using EnergyUse.Common.Enums;
+using EnergyUse.Common.Enums;
 using EnergyUse.Common.Extensions;
 using EnergyUse.Core.Graphs.LiveCharts;
 using EnergyUse.Core.Manager;
@@ -205,7 +205,7 @@ namespace WpfUI.ViewModels
             {
                 new Axis
                 {
-                    Labels = dates.Select(d => d.ToString("dd/MM/yyyy")).ToArray(),
+                    Labels = dates.Select(d => d.ToString("dd-MM-yyyy")).ToArray(),
                     Position = AxisPosition.Start
                 }
             };

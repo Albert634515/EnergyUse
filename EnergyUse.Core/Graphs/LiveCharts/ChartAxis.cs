@@ -1,4 +1,4 @@
-﻿using EnergyUse.Common.Extensions;
+using EnergyUse.Common.Extensions;
 using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
 
@@ -30,7 +30,7 @@ public class ChartAxis
 
     public static Axis GetDateAxis(double value = 1)
     {
-        return new DateTimeAxis(TimeSpan.FromDays(value), date => date.ToString("dd/MM/yyyy"))
+        return new DateTimeAxis(TimeSpan.FromDays(value), date => date.ToString("dd-MM-yyyy"))
         {
             LabelsRotation = 20,
             Position = AxisPosition.Start,

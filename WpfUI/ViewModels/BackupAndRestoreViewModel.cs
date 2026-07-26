@@ -79,7 +79,7 @@ namespace WpfApp.ViewModels
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 BackupDirectory = dlg.SelectedPath;
-                _controller.SaveSetting("BackUpDir", dlg.SelectedPath);
+                _controller.SetSetting("BackUpDir", dlg.SelectedPath);
             }
         }
 

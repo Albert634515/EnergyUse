@@ -1,4 +1,4 @@
-﻿using EnergyUse.Models.Common;
+using EnergyUse.Models.Common;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Layout;
@@ -76,7 +76,11 @@ public class SettlementSplitByType : SettlementBase
                 document.Add(table);
                 document.Add(new Paragraph(""));
 
-                var list2 = _settlementDataList.Where(w => !(w.CostCategory.EnergySubTypeId < 3) && (w.CostCategory.EnergySubTypeId >=3 || w.CostCategory.EnergySubTypeId <= 7) && w.CostCategory.EnergySubTypeId != 5).ToList();
+                var list2 = _settlementDataList
+                    .Where(w => w.CostCategory.EnergySubTypeId >= 3
+                             && w.CostCategory.EnergySubTypeId <= 7
+                             && w.CostCategory.EnergySubTypeId != 5)
+                    .ToList();
                 table = getCostTable(item, list2, parameterSelection.ShowRates, $"Sub total {item.EnergyType.Name} return");
                 document.Add(table);
                 document.Add(new Paragraph(""));
@@ -89,14 +93,14 @@ public class SettlementSplitByType : SettlementBase
 
                 setSettlementSubTotal(energyType, _settlementDataList);
 
-                table = setTotalToTable(energyType, parameterSelection.ShowRates);
+                table = setTotalToTable(item, _settlementDataList, parameterSelection.ShowRates);
+                document.Add(table);
+
+                document.Add(new Paragraph(""));
+                table = getPricePerUnit(item, _periodicDataList, _settlementDataList);
                 document.Add(table);
             }
         } // End of loop of selected energy types
-
-        document.Add(new Paragraph(""));
-        table = getPricePerKw();
-        document.Add(table);
 
         document.Add(new Paragraph(""));
         table = getPayments(address.Id, parameterSelection.PreSelectedPeriodId, parameterSelection.StartRange, parameterSelection.EndRange);
