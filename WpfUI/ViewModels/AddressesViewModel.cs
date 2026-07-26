@@ -2,7 +2,6 @@
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
 using System.Collections.ObjectModel;
-using System.Windows;
 using System.Windows.Input;
 
 namespace WpfUI.ViewModels;
@@ -11,6 +10,7 @@ public class AddressesViewModel : ViewModelBase
 {
     private readonly AddressController _controller;
     private readonly ISettingsService _settings;
+    private readonly IDialogService _dialogService;
 
     public ObservableCollection<Address> Addresses { get; set; } = new();
     public ObservableCollection<TariffGroup> GeneralTariffs { get; set; } = new();
@@ -46,9 +46,10 @@ public class AddressesViewModel : ViewModelBase
 
     public event Action? CloseRequested;
 
-    public AddressesViewModel(ISettingsService settings)
+    public AddressesViewModel(ISettingsService settings, IDialogService dialogService)
     {
         _settings = settings;
+        _dialogService = dialogService;
 
         _controller = new AddressController(Managers.Config.GetDbFileName());
         _controller.Initialize();
@@ -82,7 +83,7 @@ public class AddressesViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Error loading addresses:\n" + ex);
+            _dialogService.Show("Error loading addresses:\n" + ex, "Error");
         }
     }
 

@@ -16,7 +16,7 @@ public partial class PaymentsWindow : Window
 
         if (!DesignerProperties.GetIsInDesignMode(this))
         {
-            var vm = new PaymentsViewModel(new SettingsService());
+            var vm = new PaymentsViewModel(new SettingsService(), new DialogService());
             vm.CloseRequested += () => Close();
             DataContext = vm;
         }

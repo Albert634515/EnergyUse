@@ -1,4 +1,5 @@
 ﻿using EnergyUse.Core.Controllers;
+using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
 using EnergyUse.Models.Common;
 using System.Collections.ObjectModel;
@@ -11,9 +12,11 @@ public class PayBackTimeViewModel : ViewModelBase
 {
     private readonly PayBackTimeController _controller;
     private readonly SettingsService _settings = new();
+    private readonly IDialogService _dialogService;
 
-    public PayBackTimeViewModel()
+    public PayBackTimeViewModel(IDialogService dialogService)
     {
+        _dialogService = dialogService;
         _controller = new PayBackTimeController(WpfUI.Managers.Config.GetDbFileName());
         _controller.Initialize();
 
@@ -259,13 +262,13 @@ public class PayBackTimeViewModel : ViewModelBase
 
         if (SelectedAddress == null)
         {
-            MessageBox.Show("Select an address");
+            _dialogService.Show("Select an address", "Information");
             return;
         }
 
         if (SelectedEnergyType == null)
         {
-            MessageBox.Show("Select an energy type");
+            _dialogService.Show("Select an energy type", "Information");
             return;
         }
 
@@ -320,19 +323,19 @@ public class PayBackTimeViewModel : ViewModelBase
     {
         if (SelectedAddress == null)
         {
-            MessageBox.Show("Select an address");
+            _dialogService.Show("Select an address", "Information");
             return false;
         }
 
         if (SelectedEnergyType == null)
         {
-            MessageBox.Show("Select an energy type");
+            _dialogService.Show("Select an energy type", "Information");
             return false;
         }
 
         if (PurchaseAmount < 0)
         {
-            MessageBox.Show("Purchase amount must be >= 0");
+            _dialogService.Show("Purchase amount must be >= 0", "Information");
             return false;
         }
 
@@ -346,7 +349,7 @@ public class PayBackTimeViewModel : ViewModelBase
 
             if (price < 0)
             {
-                MessageBox.Show($"No price per unit for year {year}");
+                _dialogService.Show($"No price per unit for year {year}", "Information");
                 return false;
             }
         }

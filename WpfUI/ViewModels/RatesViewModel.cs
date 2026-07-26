@@ -1,5 +1,6 @@
 ﻿using EnergyUse.Common.Enums;
 using EnergyUse.Core.Controllers;
+using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -11,6 +12,7 @@ namespace WpfUI.ViewModels
     {
         private readonly RateController _controller;
         private readonly Window _window;
+        private readonly IDialogService _dialogService;
 
         public ObservableCollection<EnergyType> EnergyTypes { get; } = new();
         public ObservableCollection<CostCategory> CostCategories { get; } = new();
@@ -21,9 +23,10 @@ namespace WpfUI.ViewModels
         // ⭐ Staffel ViewModel geïntegreerd
         public StaffelViewModel StaffelVM { get; } = new();
 
-        public RatesViewModel(Window window)
+        public RatesViewModel(Window window, IDialogService dialogService)
         {
             _window = window;
+            _dialogService = dialogService;
             _controller = new RateController(Managers.Config.GetDbFileName());
             _controller.Initialize();
 
@@ -306,12 +309,11 @@ namespace WpfUI.ViewModels
                 var staffelList = _controller.UnitOfWork.StaffelRepo.SelectByRateId(rate.Id);
                 if (staffelList != null && staffelList.Any())
                 {
-                    var result = MessageBox.Show(
+                    var result = _dialogService.ShowYesNo(
                         "There are still staffel records for current rate, but type is no longer of type staffel. Do you want to delete the staffel records?",
-                        "Staffel",
-                        MessageBoxButton.YesNo);
+                        "Staffel");
 
-                    if (result == MessageBoxResult.Yes)
+                    if (result)
                         _controller.UnitOfWork.StaffelRepo.DeleteByRateId(rate.Id);
                 }
             }
@@ -366,7 +368,7 @@ namespace WpfUI.ViewModels
 
             var message = "Are you sure you want to delete this rate?";
             var message2 = "Delete?";
-            if (MessageBox.Show(message, message2, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (_dialogService.ShowYesNo(message, message2))
             {
                 _controller.UnitOfWork.Delete(SelectedRate);
 
@@ -395,13 +397,13 @@ namespace WpfUI.ViewModels
         {
             if (SelectedCostCategory == null)
             {
-                MessageBox.Show("Select a category");
+                _dialogService.Show("Select a category", "Information");
                 return false;
             }
 
             if (SelectedEnergyType == null)
             {
-                MessageBox.Show("Select an energy type");
+                _dialogService.Show("Select an energy type", "Information");
                 return false;
             }
 

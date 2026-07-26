@@ -16,7 +16,7 @@ namespace WpfUI.Views.Windows
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
             // Inject SettingsService
-            _viewModel = new AddressesViewModel(new SettingsService());
+            _viewModel = new AddressesViewModel(new SettingsService(), new DialogService());
             _viewModel.CloseRequested += () => Close();
 
             DataContext = _viewModel;

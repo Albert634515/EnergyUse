@@ -10,10 +10,12 @@ public class PaymentsViewModel : ViewModelBase
 {
     private readonly PaymentsController _controller;
     private readonly ISettingsService _settings;
+    private readonly IDialogService _dialogService;
 
-    public PaymentsViewModel(ISettingsService settings)
+    public PaymentsViewModel(ISettingsService settings, IDialogService dialogService)
     {
         _settings = settings;
+        _dialogService = dialogService;
 
         _controller = new PaymentsController(Managers.Config.GetDbFileName());
         _controller.Initialize();
@@ -124,6 +126,41 @@ public class PaymentsViewModel : ViewModelBase
         SelectedPayment = Payments.FirstOrDefault();
     }
 
+    private bool validateInput()
+    {
+        if (SelectedPayment == null)
+            return false;
+
+        if (SelectedPayment.Amount <= 0)
+        {
+            _dialogService.Show("Enter a valid amount", "Invalid Input");
+            return false;
+        }
+
+        // Check if payment already exists for current month and year
+        if (isDuplicatePayment())
+        {
+            var result = _dialogService.ShowYesNo("A payment already exists for this month and year, do you want to continue?", "Duplicate Payment");
+            if (!result)
+                return false;
+        }
+
+        return true;
+    }
+
+    private bool isDuplicatePayment()
+    {
+        if (SelectedPayment == null || SelectedAddress == null || SelectedPeriod == null)
+            return false;
+
+        var currentMonth = SelectedPayment.PayDate.Month;
+        var currentYear = SelectedPayment.PayDate.Year;
+
+        return Payments.Any(p => p.Id != SelectedPayment.Id &&
+                                 p.PayDate.Month == currentMonth &&
+                                 p.PayDate.Year == currentYear);
+    }
+
     #endregion
 
     #region Commands
@@ -153,6 +190,9 @@ public class PaymentsViewModel : ViewModelBase
 
     private void savePayment()
     {
+        if (!validateInput())
+            return;
+
         _controller.UnitOfWork.Complete();
     }
 

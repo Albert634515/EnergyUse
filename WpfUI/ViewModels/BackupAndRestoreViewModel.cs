@@ -87,7 +87,7 @@ namespace WpfApp.ViewModels
         {
             if (string.IsNullOrWhiteSpace(BackupDirectory))
             {
-                System.Windows.MessageBox.Show("No backup directory selected");
+                _dialogService.Show("No backup directory selected", "Information");
                 return;
             }
 
@@ -126,7 +126,7 @@ namespace WpfApp.ViewModels
 
             if (!File.Exists(RestoreFile))
             {
-                System.Windows.MessageBox.Show("Restore file does not exist");
+                _dialogService.Show("Restore file does not exist", "Information");
                 return;
             }
 

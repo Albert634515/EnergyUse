@@ -1,6 +1,7 @@
-﻿using System.Windows.Controls;
-using EnergyUse.Models;
+﻿using EnergyUse.Models;
+using System.Windows.Controls;
 using WpfUI.Interfaces;
+using WpfUI.Services;
 using WpfUI.ViewModels;
 
 namespace WpfUI.Views.Controls
@@ -12,7 +13,7 @@ namespace WpfUI.Views.Controls
         public DataControl(Address address, EnergyType energyType)
         {
             InitializeComponent();
-            DataContext = new DataControlViewModel(address, energyType);
+            DataContext = new DataControlViewModel(address, energyType, new DialogService());
         }
 
         public void Refresh(Address address, EnergyType energyType, bool addressChanged)

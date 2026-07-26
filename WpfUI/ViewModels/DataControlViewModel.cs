@@ -1,4 +1,5 @@
-﻿using EnergyUse.Models;
+﻿using EnergyUse.Core.Interfaces;
+using EnergyUse.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -10,10 +11,12 @@ namespace WpfUI.ViewModels
     public class DataControlViewModel : ViewModelBase, IRefreshable
     {
         private readonly EnergyUse.Core.UnitOfWork.MeterReading _unitOfWork;
+        private readonly IDialogService _dialogService;
 
-        public DataControlViewModel(Address address, EnergyType energyType)
+        public DataControlViewModel(Address address, EnergyType energyType, IDialogService dialogService)
         {
             _unitOfWork = new EnergyUse.Core.UnitOfWork.MeterReading(Config.GetDbFileName());
+            _dialogService = dialogService;
 
             CurrentAddress = address;
             CurrentEnergyType = energyType;
@@ -134,7 +137,7 @@ namespace WpfUI.ViewModels
 
         private void addReading()
         {
-            MessageBox.Show("Add meter reading (WPF edit window nog te koppelen)");
+            _dialogService.Show("Add meter reading (WPF edit window nog te koppelen)", "Information");
         }
 
         private void editReading()
@@ -142,7 +145,7 @@ namespace WpfUI.ViewModels
             if (SelectedReading == null)
                 return;
 
-            MessageBox.Show("Edit meter reading (WPF edit window nog te koppelen)");
+            _dialogService.Show("Edit meter reading (WPF edit window nog te koppelen)", "Information");
         }
 
         private void deleteReading()
@@ -151,7 +154,7 @@ namespace WpfUI.ViewModels
                 return;
 
             var msg = "Are you sure you want to delete this meter reading?";
-            if (MessageBox.Show(msg, "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (_dialogService.ShowYesNo(msg, "Delete"))
             {
                 _unitOfWork.Delete(SelectedReading);
                 SetData();

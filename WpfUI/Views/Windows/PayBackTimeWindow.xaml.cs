@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using WpfUI.Services;
 using WpfUI.ViewModels;
 
 namespace WpfUI.Views.Windows
@@ -14,7 +15,7 @@ namespace WpfUI.Views.Windows
             Owner = owner;
 
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            DataContext = new PayBackTimeViewModel();
+            DataContext = new PayBackTimeViewModel(new DialogService());
         }
     }
 }
