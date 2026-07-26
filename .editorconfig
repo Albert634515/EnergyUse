@@ -1,0 +1,23 @@
+root = true
+
+[*.cs]
+
+# Private method names should start with lowercase
+dotnet_naming_rule.private_methods_should_be_lowercase.severity = silent
+dotnet_naming_rule.private_methods_should_be_lowercase.symbols = private_methods
+dotnet_naming_rule.private_methods_should_be_lowercase.style = lowercase_style
+
+dotnet_naming_symbols.private_methods.applicable_kinds = method
+dotnet_naming_symbols.private_methods.applicable_accessibilities = private
+
+dotnet_naming_style.lowercase_style.capitalization = first_word_lower
+
+# Public method names should start with uppercase
+dotnet_naming_rule.public_methods_should_be_uppercase.severity = warning
+dotnet_naming_rule.public_methods_should_be_uppercase.symbols = public_methods
+dotnet_naming_rule.public_methods_should_be_uppercase.style = uppercase_style
+
+dotnet_naming_symbols.public_methods.applicable_kinds = method
+dotnet_naming_symbols.public_methods.applicable_accessibilities = public
+
+dotnet_naming_style.uppercase_style.capitalization = first_word_upper

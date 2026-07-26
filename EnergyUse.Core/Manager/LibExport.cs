@@ -205,32 +205,30 @@ public class LibExport
     private static void ToExcel<T>(IEnumerable<T> exportResult, string exportFileName, string sheetName)
     {
         ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
-        using (ExcelPackage excelPackage = new ExcelPackage())
+        using ExcelPackage excelPackage = new();
+        ExcelWorksheet energyExport = excelPackage.Workbook.Worksheets.Add(sheetName);
+        energyExport.Cells[1, 1].LoadFromCollection(exportResult, true);
+
+        var firstResult = exportResult.FirstOrDefault();
+        List<System.Reflection.PropertyInfo> properties = firstResult.GetType().GetProperties().ToList();
+
+        // Clean up column headers
+        var totalCols = energyExport.Dimension.End.Column;
+        for (int i = 1; i <= totalCols; i++)
         {
-            ExcelWorksheet energyExport = excelPackage.Workbook.Worksheets.Add(sheetName);
-            energyExport.Cells[1, 1].LoadFromCollection(exportResult, true);
-                            
-            var firstResult = exportResult.FirstOrDefault();
-            List<System.Reflection.PropertyInfo> properties = firstResult.GetType().GetProperties().ToList();
+            if (!string.IsNullOrWhiteSpace(energyExport.Cells[1, i].Value.ToString()))
+                energyExport.Cells[1, i].Value = energyExport.Cells[1, i].Value.ToString().Replace("_", " ");
 
-            // Clean up column headers
-            var totalCols = energyExport.Dimension.End.Column;
-            for (int i = 1; i <= totalCols; i++)
-            {
-                if (!string.IsNullOrWhiteSpace(energyExport.Cells[1, i].Value.ToString()))
-                    energyExport.Cells[1, i].Value = energyExport.Cells[1, i].Value.ToString().Replace("_", " ");
+            // Format columns
+            var property = properties[i - 1];
+            if (property.PropertyType == typeof(DateTime))
+                energyExport.Column(i).Style.Numberformat.Format = "dd-mm-yyyy";
 
-                // Format columns
-                var property = properties[i-1];
-                if (property.PropertyType == typeof(DateTime))
-                    energyExport.Column(i).Style.Numberformat.Format = "dd-mm-yyyy";
-
-            }
-
-            energyExport.Cells[energyExport.Dimension.Address].AutoFitColumns();
-            excelPackage.SaveAs(exportFileName);
-
-            EnergyUse.Common.Libs.LibGeneral.OpenCreatedFile(exportFileName);
         }
+
+        energyExport.Cells[energyExport.Dimension.Address].AutoFitColumns();
+        excelPackage.SaveAs(exportFileName);
+
+        EnergyUse.Common.Libs.LibGeneral.OpenCreatedFile(exportFileName);
     }
 }

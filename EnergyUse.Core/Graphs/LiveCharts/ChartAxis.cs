@@ -10,7 +10,7 @@ public class ChartAxis
 
     public static List<Axis> GetDataAxisList()
     {
-        return new List<Axis> { GetDataAxis() };
+        return [GetDataAxis()];
     }
 
     public static Axis GetDataAxis()
@@ -25,7 +25,7 @@ public class ChartAxis
 
     public static List<Axis> GetDateAxisList(double value = 1)
     {
-        return new List<Axis> { GetDateAxis(value) };
+        return [GetDateAxis(value)];
     }
 
     public static Axis GetDateAxis(double value = 1)
@@ -41,7 +41,7 @@ public class ChartAxis
 
     public static List<Axis> GetWeekAxisList(double value = (defaultYearSpan / 53))
     {
-        return new List<Axis> { GetWeekAxis(value) };
+        return [GetWeekAxis(value)];
     }
 
     public static Axis GetWeekAxis(double value = (defaultYearSpan / 53))
@@ -57,7 +57,7 @@ public class ChartAxis
 
     public static List<Axis> GetMonthAxisList(double value = (defaultYearSpan / 12))
     {
-        return new List<Axis> { GetMonthAxis(value) };
+        return [GetMonthAxis(value)];
     }
 
     public static Axis GetMonthAxis(double value = (defaultYearSpan / 12))
@@ -71,12 +71,12 @@ public class ChartAxis
         };
     }
 
-    public static List<Axis> GetYearAxisList(double value = defaultYearSpan, string label = "Year")
+    public static List<Axis> GetYearAxisList(double value = defaultYearSpan)
     {
-        return new List<Axis> { GetYearAxis(value) };
+        return [GetYearAxis(value)];
     }
 
-    public static Axis GetYearAxis(double value = defaultYearSpan, string label = "Year")
+    public static Axis GetYearAxis(double value = defaultYearSpan)
     {
         return new DateTimeAxis(TimeSpan.FromDays(value), date => date.ToString("yyyy"))
         {

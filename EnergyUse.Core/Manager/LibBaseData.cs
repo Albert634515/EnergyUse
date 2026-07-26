@@ -1,4 +1,6 @@
-﻿namespace EnergyUse.Core.Manager;
+﻿using EnergyUse.Models;
+
+namespace EnergyUse.Core.Manager;
 
 public class LibBaseData
 {
@@ -6,12 +8,14 @@ public class LibBaseData
 
     public static Models.Address GetDemoAddress(int addressCounter = 0)
     {
-        var address = new Models.Address();
-        address.City = "Demo address";
-        address.Description = "Demo address";
-        address.PostalCode = "1234 ZZ";
-        address.Street = "Demo street";
-        address.HouseNumber = addressCounter.ToString();
+        Address address = new()
+        {
+            City = "Demo address",
+            Description = "Demo address",
+            PostalCode = "1234 ZZ",
+            Street = "Demo street",
+            HouseNumber = addressCounter.ToString()
+        };
         address.Description = "Demo address";
         if (addressCounter > 0)
             address.Description += $" {addressCounter}";
@@ -23,19 +27,25 @@ public class LibBaseData
     {
         var units = new List<Models.Unit>();
 
-        var unit = new Models.Unit();
-        unit.Id = "kWh";
-        unit.Description = "Kilowatt hour";
+        Unit unit = new()
+        {
+            Id = "kWh",
+            Description = "Kilowatt hour"
+        };
         units.Add(unit);
 
-        unit = new Models.Unit();
-        unit.Id = "m3";
-        unit.Description = "Cubic metre";
+        unit = new Models.Unit
+        {
+            Id = "m3",
+            Description = "Cubic metre"
+        };
         units.Add(unit);
 
-        unit = new Models.Unit();
-        unit.Id = "Day";
-        unit.Description = "Per Day";
+        unit = new Models.Unit
+        {
+            Id = "Day",
+            Description = "Per Day"
+        };
         units.Add(unit);
 
         return units;
@@ -45,19 +55,25 @@ public class LibBaseData
     {
         var calculationTypes = new List<Models.CalculationType>();
 
-        var calculationType = new Models.CalculationType();
-        calculationType.Id = 1;
-        calculationType.Description = "Per Unit";
+        CalculationType calculationType = new()
+        {
+            Id = 1,
+            Description = "Per Unit"
+        };
         calculationTypes.Add(calculationType);
 
-        calculationType = new Models.CalculationType();
-        calculationType.Id = 2;
-        calculationType.Description = "Percentage";
+        calculationType = new Models.CalculationType
+        {
+            Id = 2,
+            Description = "Percentage"
+        };
         calculationTypes.Add(calculationType);
 
-        calculationType = new Models.CalculationType();
-        calculationType.Id = 3;
-        calculationType.Description = "Per Day";
+        calculationType = new Models.CalculationType
+        {
+            Id = 3,
+            Description = "Per Day"
+        };
         calculationTypes.Add(calculationType);
 
         return calculationTypes;
@@ -67,29 +83,39 @@ public class LibBaseData
     {
         var energySubTypes = new List<Models.EnergySubType>();
 
-        var energySubType = new Models.EnergySubType();
-        energySubType.Id = 1;
-        energySubType.Description = "Normal";
+        EnergySubType energySubType = new()
+        {
+            Id = 1,
+            Description = "Normal"
+        };
         energySubTypes.Add(energySubType);
 
-        energySubType = new Models.EnergySubType();
-        energySubType.Id = 2;
-        energySubType.Description = "Low";
+        energySubType = new Models.EnergySubType
+        {
+            Id = 2,
+            Description = "Low"
+        };
         energySubTypes.Add(energySubType);
 
-        energySubType = new Models.EnergySubType();
-        energySubType.Id = 3;
-        energySubType.Description = "ReturnNormal";
+        energySubType = new Models.EnergySubType
+        {
+            Id = 3,
+            Description = "ReturnNormal"
+        };
         energySubTypes.Add(energySubType);
 
-        energySubType = new Models.EnergySubType();
-        energySubType.Id = 4;
-        energySubType.Description = "ReturnLow";
+        energySubType = new Models.EnergySubType
+        {
+            Id = 4,
+            Description = "ReturnLow"
+        };
         energySubTypes.Add(energySubType);
 
-        energySubType = new Models.EnergySubType();
-        energySubType.Id = 5;
-        energySubType.Description = "Other";
+        energySubType = new Models.EnergySubType
+        {
+            Id = 5,
+            Description = "Other"
+        };
         energySubTypes.Add(energySubType);
 
         return energySubTypes;
@@ -99,16 +125,20 @@ public class LibBaseData
     {
         var tariffGroups = new List<Models.TariffGroup>();
 
-        var tariffGroup = new Models.TariffGroup();
-        tariffGroup.Id = 1;
-        tariffGroup.Description = "General Tax";
-        tariffGroup.TypeId = 1;
+        var tariffGroup = new Models.TariffGroup
+        {
+            Id = 1,
+            Description = "General Tax",
+            TypeId = 1
+        };
         tariffGroups.Add(tariffGroup);
 
-        tariffGroup = new Models.TariffGroup();
-        tariffGroup.Id = 2;
-        tariffGroup.Description = "Default energy";
-        tariffGroup.TypeId = 2;
+        tariffGroup = new Models.TariffGroup
+        {
+            Id = 2,
+            Description = "Default energy",
+            TypeId = 2
+        };
         tariffGroups.Add(tariffGroup);
 
         return tariffGroups;
@@ -118,25 +148,31 @@ public class LibBaseData
     {
         var energyTypeList = new List<Models.EnergyType>();
 
-        var energyType = new Models.EnergyType();
-        energyType.Id = 1;
-        energyType.Name = "Electricity";
-        energyType.UnitId = "kWh";
-        energyType.HasNormalAndLow = hasNormalAndLow;
-        energyType.HasEnergyReturn = hasEnergyReturn;
-        energyType.DefaultType = true;
+        var energyType = new Models.EnergyType
+        {
+            Id = 1,
+            Name = "Electricity",
+            UnitId = "kWh",
+            HasNormalAndLow = hasNormalAndLow,
+            HasEnergyReturn = hasEnergyReturn,
+            DefaultType = true
+        };
         energyTypeList.Add(energyType);
 
-        energyType = new Models.EnergyType();
-        energyType.Id = 2;
-        energyType.Name = "Water";
-        energyType.UnitId = "m3";
+        energyType = new Models.EnergyType
+        {
+            Id = 2,
+            Name = "Water",
+            UnitId = "m3"
+        };
         energyTypeList.Add(energyType);
 
-        energyType = new Models.EnergyType();
-        energyType.Id = 3;
-        energyType.Name = "Gas";
-        energyType.UnitId = "m3";
+        energyType = new Models.EnergyType
+        {
+            Id = 3,
+            Name = "Gas",
+            UnitId = "m3"
+        };
         energyTypeList.Add(energyType);
 
         return energyTypeList;

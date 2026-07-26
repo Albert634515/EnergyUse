@@ -63,7 +63,7 @@ namespace WpfApp.ViewModels
 
         private void setInitialSettings()
         {
-            var setting = _controller.getSettingBackUpDir("BackUpDir");
+            var setting = _controller.GetSettingBackUpDir("BackUpDir");
             if (!string.IsNullOrWhiteSpace(setting))
                 BackupDirectory = setting;
         }
@@ -71,7 +71,7 @@ namespace WpfApp.ViewModels
         private void selectBackupDir()
         {
             var dlg = new FolderBrowserDialog();
-            var setting = _controller.getSettingBackUpDir("BackUpDirectory");
+            var setting = _controller.GetSettingBackUpDir("BackUpDirectory");
 
             if (!string.IsNullOrWhiteSpace(setting))
                 dlg.SelectedPath = setting;
@@ -105,7 +105,7 @@ namespace WpfApp.ViewModels
                 Title = WpfUI.Managers.Languages.GetResourceString("BackUpAndRestoreRestoreFile", "Restore db file")
             };
 
-            var setting = _controller.getSettingBackUpDir("RestoreDirectory");
+            var setting = _controller.GetSettingBackUpDir("RestoreDirectory");
             if (!string.IsNullOrWhiteSpace(setting))
                 dlg.InitialDirectory = setting;
 
