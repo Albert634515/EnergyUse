@@ -1,10 +1,9 @@
-﻿using System;
+﻿using EnergyUse.Core.Interfaces;
 using System.Collections.ObjectModel;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfUI.Services;
-using EnergyUse.Core.Interfaces;
-using System.Windows.Forms;
 
 namespace WpfUI.ViewModels
 {
@@ -20,19 +19,19 @@ namespace WpfUI.ViewModels
             _dialogs = dialogs;
             _lang = lang;
 
-            CloseCommand = new RelayCommand(_ => CloseWindow());
-            ResetAllCommand = new RelayCommand(_ => ResetAll());
-            SelectExportDirCommand = new RelayCommand(_ => SelectExportDirectory());
-            SelectImportDirCommand = new RelayCommand(_ => SelectImportDirectory());
+            CloseCommand = new RelayCommand(_ => closeWindow());
+            ResetAllCommand = new RelayCommand(_ => resetAll());
+            SelectExportDirCommand = new RelayCommand(_ => selectExportDirectory());
+            SelectImportDirCommand = new RelayCommand(_ => selectImportDirectory());
 
-            PickFormBackgroundColorCommand = new RelayCommand(_ => PickColor(c => FormBackgroundColor = c));
-            PickSliderColorCommand = new RelayCommand(_ => PickColor(c => SliderColor = c));
-            PickChartBackgroundColorCommand = new RelayCommand(_ => PickColor(c => ChartBackgroundColor = c));
-            PickChartLineColorCommand = new RelayCommand(_ => PickColor(c => ChartLineColor = c));
+            PickFormBackgroundColorCommand = new RelayCommand(_ => pickColor(c => FormBackgroundColor = c));
+            PickSliderColorCommand = new RelayCommand(_ => pickColor(c => SliderColor = c));
+            PickChartBackgroundColorCommand = new RelayCommand(_ => pickColor(c => ChartBackgroundColor = c));
+            PickChartLineColorCommand = new RelayCommand(_ => pickColor(c => ChartLineColor = c));
 
-            ResetColorsCommand = new RelayCommand(_ => ResetColors());
-            ResetChartCommand = new RelayCommand(_ => ResetChart());
-            ResetPredictionCommand = new RelayCommand(_ => ResetPrediction());
+            ResetColorsCommand = new RelayCommand(_ => resetColors());
+            ResetChartCommand = new RelayCommand(_ => resetChart());
+            ResetPredictionCommand = new RelayCommand(_ => resetPrediction());
 
             setSettings();
         }
@@ -98,7 +97,7 @@ namespace WpfUI.ViewModels
             {
                 _formBackgroundColor = value;
                 OnPropertyChanged(nameof(FormBackgroundColor));
-                saveColor("BackgroundColorForms", value);
+                setColor("BackgroundColorForms", value);
             }
         }
 
@@ -110,7 +109,7 @@ namespace WpfUI.ViewModels
             {
                 _sliderColor = value;
                 OnPropertyChanged(nameof(SliderColor));
-                saveColor("SliderColor", value);
+                setColor("SliderColor", value);
             }
         }
 
@@ -122,7 +121,7 @@ namespace WpfUI.ViewModels
             {
                 _chartBackgroundColor = value;
                 OnPropertyChanged(nameof(ChartBackgroundColor));
-                saveColor("BackgroundColorChart", value);
+                setColor("BackgroundColorChart", value);
             }
         }
 
@@ -134,7 +133,7 @@ namespace WpfUI.ViewModels
             {
                 _chartLineColor = value;
                 OnPropertyChanged(nameof(ChartLineColor));
-                saveColor("LineColorChart", value);
+                setColor("LineColorChart", value);
             }
         }
 
@@ -234,10 +233,10 @@ namespace WpfUI.ViewModels
 
             SelectedLanguage = _settings.Get("Language") ?? "English";
 
-            FormBackgroundColor = setColor("BackgroundColorForms");
-            SliderColor = setColor("SliderColor");
-            ChartBackgroundColor = setColor("BackgroundColorChart");
-            ChartLineColor = setColor("LineColorChart");
+            FormBackgroundColor = getColor("BackgroundColorForms");
+            SliderColor = getColor("SliderColor");
+            ChartBackgroundColor = getColor("BackgroundColorChart");
+            ChartLineColor = getColor("LineColorChart");
 
             AvgCorrectionPercentage = _settings.GetDecimal("AvgCorrectionPercentage");
             AvgCorrectionPercentageReturn = _settings.GetDecimal("AvgCorrectionPercentageReturn");
@@ -254,7 +253,7 @@ namespace WpfUI.ViewModels
             return bool.TryParse(val, out var result) ? result : defaultValue;
         }
 
-        private Brush setColor(string key)
+        private Brush getColor(string key)
         {
             var html = _settings.Get(key);
             if (string.IsNullOrWhiteSpace(html))
@@ -264,7 +263,7 @@ namespace WpfUI.ViewModels
             return new SolidColorBrush(Color.FromArgb(c.A, c.R, c.G, c.B));
         }
 
-        private void saveColor(string key, Brush? brush)
+        private void setColor(string key, Brush? brush)
         {
             if (brush is SolidColorBrush scb)
             {
@@ -274,7 +273,7 @@ namespace WpfUI.ViewModels
             }
         }
 
-        private void PickColor(Action<Brush> setter)
+        private void pickColor(Action<Brush> setter)
         {
             var dlg = new ColorDialog();
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -284,7 +283,7 @@ namespace WpfUI.ViewModels
             }
         }
 
-        private void SelectExportDirectory()
+        private void selectExportDirectory()
         {
             var folder = _dialogs.OpenFolder();
             if (folder != null)
@@ -294,7 +293,7 @@ namespace WpfUI.ViewModels
             }
         }
 
-        private void SelectImportDirectory()
+        private void selectImportDirectory()
         {
             var folder = _dialogs.OpenFolder();
             if (folder != null)
@@ -304,41 +303,41 @@ namespace WpfUI.ViewModels
             }
         }
 
-        private void ResetColors()
+        private void resetColors()
         {
             _settings.Save("BackgroundColorForms", "");
             _settings.Save("SliderColor", "");
             setSettings();
         }
 
-        private void ResetChart()
+        private void resetChart()
         {
             _settings.Save("BackgroundColorChart", "");
             _settings.Save("LineColorChart", "");
             setSettings();
         }
 
-        private void ResetPrediction()
+        private void resetPrediction()
         {
             _settings.Save("AvgCorrectionPercentage", "");
             _settings.Save("AvgCorrectionPercentageReturn", "");
             setSettings();
         }
 
-        private void ResetAll()
+        private void resetAll()
         {
             _settings.Save("ExportDirectory", "");
             _settings.Save("ImportDirectory", "");
             _settings.Save("Currency", "");
 
-            ResetColors();
-            ResetChart();
-            ResetPrediction();
+            resetColors();
+            resetChart();
+            resetPrediction();
 
             setSettings();
         }
 
-        private void CloseWindow()
+        private void closeWindow()
         {
             System.Windows.Application.Current.Windows
                 .OfType<System.Windows.Window>()

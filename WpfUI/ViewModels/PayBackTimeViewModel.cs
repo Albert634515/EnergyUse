@@ -17,8 +17,8 @@ public class PayBackTimeViewModel : ViewModelBase
         _controller = new PayBackTimeController(WpfUI.Managers.Config.GetDbFileName());
         _controller.Initialize();
 
-        CalculateCommand = new RelayCommand(async _ => await CalculateAsync(), _ => CanCalculate);
-        CloseCommand = new RelayCommand(_ => CloseWindow());
+        CalculateCommand = new RelayCommand(async _ => await calculateAsync(), _ => CanCalculate);
+        CloseCommand = new RelayCommand(_ => closeWindow());
 
         PayBackTimes = new ObservableCollection<PayBackTime>();
 
@@ -252,9 +252,9 @@ public class PayBackTimeViewModel : ViewModelBase
     // CALCULATION
     // ---------------------------------------------------------
 
-    private async Task CalculateAsync()
+    private async Task calculateAsync()
     {
-        if (!await ValidateInputAsync())
+        if (!await validateInputAsync())
             return;
 
         if (SelectedAddress == null)
@@ -316,7 +316,7 @@ public class PayBackTimeViewModel : ViewModelBase
     // VALIDATION
     // ---------------------------------------------------------
 
-    private async Task<bool> ValidateInputAsync()
+    private async Task<bool> validateInputAsync()
     {
         if (SelectedAddress == null)
         {
@@ -358,7 +358,7 @@ public class PayBackTimeViewModel : ViewModelBase
     // CLOSE WINDOW
     // ---------------------------------------------------------
 
-    private void CloseWindow()
+    private void closeWindow()
     {
         Application.Current.Windows
             .OfType<Window>()

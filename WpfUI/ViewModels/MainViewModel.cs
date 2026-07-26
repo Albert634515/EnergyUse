@@ -38,11 +38,11 @@ public class MainViewModel : ViewModelBase
         ShowLeftCompareGraphCommand = new RelayCommand(_ => setChartCompare());
         ShowLeftRatesGraphCommand = new RelayCommand(_ => setRatesControl());
 
-        PdfReportCommand = new RelayCommand(async _ => await OpenSettlementReport());
-        RateReportCommand = new RelayCommand(async _ => await OpenRateReport());
+        PdfReportCommand = new RelayCommand(async _ => await getSettlementReport());
+        RateReportCommand = new RelayCommand(async _ => await getRateReport());
         PaybackCommand = new RelayCommand(_ => new PayBackTimeWindow(Application.Current.MainWindow).ShowDialog());
-        RecalculateCommand = new RelayCommand(_ => RecalculateCurrentSelection());
-        RecalculateAllCommand = new RelayCommand(_ => RecalculateAll());
+        RecalculateCommand = new RelayCommand(_ => recalculateCurrentSelection());
+        RecalculateAllCommand = new RelayCommand(_ => recalculateAll());
 
         RefreshCommand = new RelayCommand(_ => refreshViews(false));
         CloseCommand = new RelayCommand(_ => Application.Current.Shutdown());
@@ -348,7 +348,7 @@ public class MainViewModel : ViewModelBase
 
     #region Methods
 
-    private async Task OpenSettlementReport()
+    private async Task getSettlementReport()
     {
         if (_selectedAddress == null)
             return;
@@ -381,7 +381,7 @@ public class MainViewModel : ViewModelBase
         }
     }
 
-    private async Task OpenRateReport()
+    private async Task getRateReport()
     {
         if (SelectedAddress == null)
             return;
@@ -415,12 +415,12 @@ public class MainViewModel : ViewModelBase
         }
     }
 
-    private void RecalculateCurrentSelection()
+    private void recalculateCurrentSelection()
     {
         MessageBox.Show("Recalculate nog te implementeren in WPF");
     }
 
-    private void RecalculateAll()
+    private void recalculateAll()
     {
         if (SelectedAddress == null || SelectedEnergyType == null)
             return;

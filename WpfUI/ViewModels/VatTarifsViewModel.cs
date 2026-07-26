@@ -14,12 +14,12 @@ public class VatTarifsViewModel : ViewModelBase
         _controller = new VatTariffController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
-        AddCommand = new RelayCommand(_ => Add());
-        SaveCommand = new RelayCommand(_ => Save());
-        CancelCommand = new RelayCommand(_ => Cancel());
-        DeleteCommand = new RelayCommand(_ => Delete());
-        RefreshCommand = new RelayCommand(_ => Refresh());
-        CloseCommand = new RelayCommand(_ => CloseWindow());
+        AddCommand = new RelayCommand(_ => add());
+        SaveCommand = new RelayCommand(_ => save());
+        CancelCommand = new RelayCommand(_ => cancel());
+        DeleteCommand = new RelayCommand(_ => delete());
+        RefreshCommand = new RelayCommand(_ => refresh());
+        CloseCommand = new RelayCommand(_ => closeWindow());
 
         _ = getEnergyTypes();
     }
@@ -44,8 +44,8 @@ public class VatTarifsViewModel : ViewModelBase
             {
                 _selectedEnergyType = value;
                 OnPropertyChanged();
-                LoadCostCategories();
-                LoadVatTariffs();
+                getCostCategories();
+                getVatTariffs();
             }
         }
     }
@@ -60,7 +60,7 @@ public class VatTarifsViewModel : ViewModelBase
             {
                 _selectedCostCategory = value;
                 OnPropertyChanged();
-                LoadVatTariffs();
+                getVatTariffs();
             }
         }
     }
@@ -93,7 +93,7 @@ public class VatTarifsViewModel : ViewModelBase
             EnergyTypes.Add(et);
     }
 
-    private void LoadCostCategories()
+    private void getCostCategories()
     {
         CostCategories.Clear();
 
@@ -107,7 +107,7 @@ public class VatTarifsViewModel : ViewModelBase
             CostCategories.Add(cc);
     }
 
-    private async void LoadVatTariffs()
+    private async void getVatTariffs()
     {
         VatTariffs.Clear();
 
@@ -132,7 +132,7 @@ public class VatTarifsViewModel : ViewModelBase
     public ICommand RefreshCommand { get; }
     public ICommand CloseCommand { get; }
 
-    private void Add()
+    private void add()
     {
         if (SelectedCostCategory == null)
             return;
@@ -142,19 +142,19 @@ public class VatTarifsViewModel : ViewModelBase
         SelectedVatTariff = entity;
     }
 
-    private void Save()
+    private void save()
     {
         _controller.UnitOfWork.Complete();
-        LoadVatTariffs();
+        getVatTariffs();
     }
 
-    private void Cancel()
+    private void cancel()
     {
         _controller.UnitOfWork.CancelChanges();
-        LoadVatTariffs();
+        getVatTariffs();
     }
 
-    private void Delete()
+    private void delete()
     {
         if (SelectedVatTariff == null)
             return;
@@ -163,12 +163,12 @@ public class VatTarifsViewModel : ViewModelBase
         VatTariffs.Remove(SelectedVatTariff);
     }
 
-    private void Refresh()
+    private void refresh()
     {
-        LoadVatTariffs();
+        getVatTariffs();
     }
 
-    private void CloseWindow()
+    private void closeWindow()
     {
         var window = System.Windows.Application.Current.Windows
             .OfType<System.Windows.Window>()

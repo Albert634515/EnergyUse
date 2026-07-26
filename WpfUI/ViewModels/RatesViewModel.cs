@@ -28,7 +28,7 @@ namespace WpfUI.ViewModels
             _controller.Initialize();
 
             AddRateCommand = new RelayCommand(_ => addRate(), _ => CanModify());
-            SaveRateCommand = new RelayCommand(_ => saveRate(), _ => true);
+            SaveRateCommand = new RelayCommand(_ => setRate(), _ => true);
             CancelRateCommand = new RelayCommand(_ => cancelRate(), _ => true);
             DeleteRateCommand = new RelayCommand(_ => deleteRate(), _ => SelectedRate != null);
             RefreshRatesCommand = new RelayCommand(_ => refreshRates(), _ => true);
@@ -50,7 +50,7 @@ namespace WpfUI.ViewModels
                 {
                     _selectedEnergyType = value;
                     OnPropertyChanged();
-                    _ = OnEnergyTypeChangedAsync();
+                    _ = onEnergyTypeChangedAsync();
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace WpfUI.ViewModels
                 {
                     _selectedCostCategory = value;
                     OnPropertyChanged();
-                    _ = OnCostCategoryChangedAsync();
+                    _ = onCostCategoryChangedAsync();
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace WpfUI.ViewModels
                     _ = setRateIncExLabelAsync();
 
                     // ⭐ Staffel laden
-                    StaffelVM.LoadStaffels(_selectedRate?.Id ?? 0);
+                    StaffelVM.GetStaffels(_selectedRate?.Id ?? 0);
                 }
             }
         }
@@ -212,7 +212,7 @@ namespace WpfUI.ViewModels
 
         #region Logic
 
-        private async Task OnEnergyTypeChangedAsync()
+        private async Task onEnergyTypeChangedAsync()
         {
             if (SelectedEnergyType != null)
                 getCostCategories(SelectedEnergyType.Id);
@@ -222,7 +222,7 @@ namespace WpfUI.ViewModels
             initRates();
         }
 
-        private async Task OnCostCategoryChangedAsync()
+        private async Task onCostCategoryChangedAsync()
         {
             if (SelectedCostCategory != null && SelectedEnergyType != null)
             {
@@ -325,7 +325,7 @@ namespace WpfUI.ViewModels
 
         private void addRate()
         {
-            if (!ValidateInput())
+            if (!validateInput())
                 return;
 
             if (SelectedCostCategory == null || SelectedEnergyType == null)
@@ -333,7 +333,7 @@ namespace WpfUI.ViewModels
 
             var costCategory = SelectedCostCategory;
             var energyType = SelectedEnergyType;
-            var tarifGroup = GetCurrentTarifGroup();
+            var tarifGroup = getCurrentTarifGroup();
 
             var entity = _controller.UnitOfWork.AddDefaultEntity(energyType.Id, costCategory.Id, tarifGroup.Id);
 
@@ -344,7 +344,7 @@ namespace WpfUI.ViewModels
             SelectedRate = entity;
         }
 
-        private void saveRate()
+        private void setRate()
         {
             if (SelectedRate != null)
             {
@@ -380,7 +380,7 @@ namespace WpfUI.ViewModels
 
         private void refreshRates()
         {
-            if (!ValidateInput())
+            if (!validateInput())
                 return;
 
             initRates();
@@ -391,7 +391,7 @@ namespace WpfUI.ViewModels
             _window.Close();
         }
 
-        private bool ValidateInput()
+        private bool validateInput()
         {
             if (SelectedCostCategory == null)
             {
@@ -408,7 +408,7 @@ namespace WpfUI.ViewModels
             return true;
         }
 
-        private TariffGroup GetCurrentTarifGroup()
+        private TariffGroup getCurrentTarifGroup()
         {
             var costCategory = SelectedCostCategory;
             var tarifGroup = costCategory?.TariffGroup;

@@ -24,12 +24,12 @@ namespace WpfUI.ViewModels
 
             AccumulativeYes = true;
 
-            AddCommand = new RelayCommand(_ => AddReading());
-            EditCommand = new RelayCommand(_ => EditReading());
-            DeleteCommand = new RelayCommand(_ => DeleteReading());
-            RefreshCommand = new RelayCommand(_ => LoadData());
+            AddCommand = new RelayCommand(_ => addReading());
+            EditCommand = new RelayCommand(_ => editReading());
+            DeleteCommand = new RelayCommand(_ => deleteReading());
+            RefreshCommand = new RelayCommand(_ => SetData());
 
-            LoadData();
+            SetData();
         }
 
         #region Properties
@@ -64,7 +64,7 @@ namespace WpfUI.ViewModels
             set
             {
                 if (SetProperty(ref _fromDate, value))
-                    LoadData();
+                    SetData();
             }
         }
 
@@ -75,7 +75,7 @@ namespace WpfUI.ViewModels
             set
             {
                 if (SetProperty(ref _tillDate, value))
-                    LoadData();
+                    SetData();
             }
         }
 
@@ -86,7 +86,7 @@ namespace WpfUI.ViewModels
             set
             {
                 if (SetProperty(ref _accYes, value))
-                    LoadData();
+                    SetData();
             }
         }
 
@@ -98,7 +98,7 @@ namespace WpfUI.ViewModels
                 if (value == true)
                 {
                     AccumulativeYes = false;
-                    LoadData();
+                    SetData();
                 }
             }
         }
@@ -116,7 +116,7 @@ namespace WpfUI.ViewModels
 
         #region Methods
 
-        public void LoadData()
+        public void SetData()
         {
             MeterReadings.Clear();
 
@@ -132,12 +132,12 @@ namespace WpfUI.ViewModels
                 MeterReadings.Add(item);
         }
 
-        private void AddReading()
+        private void addReading()
         {
             MessageBox.Show("Add meter reading (WPF edit window nog te koppelen)");
         }
 
-        private void EditReading()
+        private void editReading()
         {
             if (SelectedReading == null)
                 return;
@@ -145,7 +145,7 @@ namespace WpfUI.ViewModels
             MessageBox.Show("Edit meter reading (WPF edit window nog te koppelen)");
         }
 
-        private void DeleteReading()
+        private void deleteReading()
         {
             if (SelectedReading == null)
                 return;
@@ -154,7 +154,7 @@ namespace WpfUI.ViewModels
             if (MessageBox.Show(msg, "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 _unitOfWork.Delete(SelectedReading);
-                LoadData();
+                SetData();
             }
         }
 
@@ -166,7 +166,7 @@ namespace WpfUI.ViewModels
         {
             CurrentAddress = address;
             CurrentEnergyType = energyType;
-            LoadData();
+            SetData();
         }
 
         #endregion

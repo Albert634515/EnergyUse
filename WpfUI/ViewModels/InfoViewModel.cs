@@ -10,18 +10,18 @@ public class InfoWindowViewModel : ViewModelBase
 
     public InfoWindowViewModel()
     {
-        IconReferences = new ObservableCollection<InfoReferenceItem>(GetIconReferences());
-        PluginReferences = new ObservableCollection<InfoReferenceItem>(GetPluginReferences());
+        IconReferences = new ObservableCollection<InfoReferenceItem>(getIconReferences());
+        PluginReferences = new ObservableCollection<InfoReferenceItem>(getPluginReferences());
     }
 
-    private IEnumerable<InfoReferenceItem> GetIconReferences() =>
+    private IEnumerable<InfoReferenceItem> getIconReferences() =>
         new List<InfoReferenceItem>
         {
             new("Icons from FlatIcon.com", "https://www.flaticon.com"),
             new("Icons made by Pixel perfect", "https://www.flaticon.com/packs/basic-ui-30/")
         };
 
-    private IEnumerable<InfoReferenceItem> GetPluginReferences() =>
+    private IEnumerable<InfoReferenceItem> getPluginReferences() =>
         new List<InfoReferenceItem>
         {
             new("EpPlus", "https://www.epplussoftware.com/"),

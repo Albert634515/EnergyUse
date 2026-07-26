@@ -37,7 +37,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         setSettings();
 
         ResetCommand = new RelayCommand(_ => ResetChart());
-        ExportCommand = new RelayCommand(_ => ExportChart());
+        ExportCommand = new RelayCommand(_ => exportChart());
     }
 
     public void MarkLoaded()
@@ -84,7 +84,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedCompareEnergyType, value))
             {
-                SaveSetting(GetCompareSettingKey(), value?.Id.ToString() ?? "");
+                setSetting(getCompareSettingKey(), value?.Id.ToString() ?? "");
                 SafeUpdateChart();
             }
         }
@@ -141,9 +141,9 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedPeriodType, value))
             {
-                SaveSetting("DefaultChartPeriodPeriodType", value?.Key ?? "");
+                setSetting("DefaultChartPeriodPeriodType", value?.Key ?? "");
                 if (!_isLoadingSettings)
-                    LoadPeriodSettings();
+                    getPeriodSettings();
                 SafeUpdateChart();
             }
         }
@@ -157,7 +157,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         {
             if (SetProperty(ref _fromDate, value))
             {
-                SaveDate(GetPeriodSettingKey("DefaultChartPeriodPeriodStart"), value);
+                setDate(getPeriodSettingKey("DefaultChartPeriodPeriodStart"), value);
                 SafeUpdateChart();
             }
         }
@@ -171,7 +171,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         {
             if (SetProperty(ref _tillDate, value))
             {
-                SaveDate(GetPeriodSettingKey("DefaultChartPeriodPeriodEnd"), value);
+                setDate(getPeriodSettingKey("DefaultChartPeriodPeriodEnd"), value);
                 SafeUpdateChart();
             }
         }
@@ -188,7 +188,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         {
             if (SetProperty(ref _predictMissingData, value))
             {
-                SaveSetting(GetPeriodSettingKey("DefaultChartPeriodPredictMissing"), value.ToString());
+                setSetting(getPeriodSettingKey("DefaultChartPeriodPredictMissing"), value.ToString());
                 SafeUpdateChart();
             }
         }
@@ -202,7 +202,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         {
             if (SetProperty(ref _showStacked, value))
             {
-                SaveSetting(GetPeriodSettingKey("DefaultChartPeriodShowStacked"), value.ToString());
+                setSetting(getPeriodSettingKey("DefaultChartPeriodShowStacked"), value.ToString());
                 SafeUpdateChart();
             }
         }
@@ -216,7 +216,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         {
             if (SetProperty(ref _showAverage, value))
             {
-                SaveSetting(GetPeriodSettingKey("DefaultChartPeriodShowAverage"), value.ToString());
+                setSetting(getPeriodSettingKey("DefaultChartPeriodShowAverage"), value.ToString());
                 SafeUpdateChart();
             }
         }
@@ -235,7 +235,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
             if (SetProperty(ref _sbCat, value))
             {
                 if (value)
-                    SaveSetting(GetPeriodSettingKey("DefaultChartPeriodShowBy"), "DefaultChartCategoryShowBy");
+                    setSetting(getPeriodSettingKey("DefaultChartPeriodShowBy"), "DefaultChartCategoryShowBy");
                 SafeUpdateChart();
             }
         }
@@ -250,7 +250,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
             if (SetProperty(ref _sbSub, value))
             {
                 if (value)
-                    SaveSetting(GetPeriodSettingKey("DefaultChartPeriodShowBy"), "DefaultChartSubCategoryShowBy");
+                    setSetting(getPeriodSettingKey("DefaultChartPeriodShowBy"), "DefaultChartSubCategoryShowBy");
                 SafeUpdateChart();
             }
         }
@@ -265,7 +265,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
             if (SetProperty(ref _sbTot, value))
             {
                 if (value)
-                    SaveSetting(GetPeriodSettingKey("DefaultChartPeriodShowBy"), "DefaultChartTotalsShowBy");
+                    setSetting(getPeriodSettingKey("DefaultChartPeriodShowBy"), "DefaultChartTotalsShowBy");
                 SafeUpdateChart();
             }
         }
@@ -284,7 +284,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
             if (SetProperty(ref _stRate, value))
             {
                 if (value)
-                    SaveSetting(GetPeriodSettingKey("DefaultChartPeriodType"), "DefaultChartRateType");
+                    setSetting(getPeriodSettingKey("DefaultChartPeriodType"), "DefaultChartRateType");
                 SafeUpdateChart();
             }
         }
@@ -299,7 +299,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
             if (SetProperty(ref _stValue, value))
             {
                 if (value)
-                    SaveSetting(GetPeriodSettingKey("DefaultChartPeriodType"), "DefaultChartValueType");
+                    setSetting(getPeriodSettingKey("DefaultChartPeriodType"), "DefaultChartValueType");
                 SafeUpdateChart();
             }
         }
@@ -314,7 +314,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
             if (SetProperty(ref _stEff, value))
             {
                 if (value)
-                    SaveSetting(GetPeriodSettingKey("DefaultChartPeriodType"), "DefaultChartEfficiencyType");
+                    setSetting(getPeriodSettingKey("DefaultChartPeriodType"), "DefaultChartEfficiencyType");
                 SafeUpdateChart();
             }
         }
@@ -353,8 +353,8 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
             ShowStacked,
             ShowAverage,
             PredictMissingData,
-            GetShowBy(),
-            GetShowType()
+            getShowBy(),
+            getShowType()
         );
 
         ChartSeries = new ObservableCollection<ISeries>(result.Series);
@@ -368,12 +368,12 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         OnPropertyChanged(nameof(YAxes));
     }
 
-    private ShowBy GetShowBy() =>
+    private ShowBy getShowBy() =>
         ShowByCategory ? ShowBy.Category :
         ShowBySubCategory ? ShowBy.SubCategory :
         ShowBy.Total;
 
-    private ShowType GetShowType() =>
+    private ShowType getShowType() =>
         ShowTypeRate ? ShowType.Rate :
         ShowTypeValue ? ShowType.Value :
         ShowTypeEfficiency ? ShowType.Efficiency :
@@ -392,7 +392,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         SafeUpdateChart();
     }
 
-    private void ExportChart()
+    private void exportChart()
     {
         if (CurrentEnergyType == null)
             return;
@@ -408,35 +408,35 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
     {
         _isLoadingSettings = true;
         getDefaults();
-        LoadPeriodSettings();
+        getPeriodSettings();
         _isLoadingSettings = false;
     }
 
-    private void LoadPeriodSettings()
+    private void getPeriodSettings()
     {
         var wasLoadingSettings = _isLoadingSettings;
         _isLoadingSettings = true;
 
         var defaultFrom = _settings.GetDate("DefaultChartPeriodPeriodStart", DateTime.Now.AddMonths(-12));
         var defaultTill = _settings.GetDate("DefaultChartPeriodPeriodEnd", DateTime.Now);
-        FromDate = _settings.GetDate(GetPeriodSettingKey("DefaultChartPeriodPeriodStart"), defaultFrom);
-        TillDate = _settings.GetDate(GetPeriodSettingKey("DefaultChartPeriodPeriodEnd"), defaultTill);
+        FromDate = _settings.GetDate(getPeriodSettingKey("DefaultChartPeriodPeriodStart"), defaultFrom);
+        TillDate = _settings.GetDate(getPeriodSettingKey("DefaultChartPeriodPeriodEnd"), defaultTill);
 
-        ShowStacked = GetPeriodBool("DefaultChartPeriodShowStacked", GetBool("DefaultChartPeriodShowStacked", true));
-        ShowAverage = GetPeriodBool("DefaultChartPeriodShowAverage", GetBool("DefaultChartPeriodShowAverage", true));
-        PredictMissingData = GetPeriodBool("DefaultChartPeriodPredictMissing", GetBool("DefaultChartPeriodPredictMissing", true));
+        ShowStacked = getPeriodBool("DefaultChartPeriodShowStacked", getBool("DefaultChartPeriodShowStacked", true));
+        ShowAverage = getPeriodBool("DefaultChartPeriodShowAverage", getBool("DefaultChartPeriodShowAverage", true));
+        PredictMissingData = getPeriodBool("DefaultChartPeriodPredictMissing", getBool("DefaultChartPeriodPredictMissing", true));
 
-        var showBy = _settings.Get(GetPeriodSettingKey("DefaultChartPeriodShowBy"));
-        ShowByCategory = showBy == null ? GetBool("DefaultChartCategoryShowBy", true) : showBy == "DefaultChartCategoryShowBy";
+        var showBy = _settings.Get(getPeriodSettingKey("DefaultChartPeriodShowBy"));
+        ShowByCategory = showBy == null ? getBool("DefaultChartCategoryShowBy", true) : showBy == "DefaultChartCategoryShowBy";
         ShowBySubCategory = showBy == "DefaultChartSubCategoryShowBy";
         ShowByTotal = showBy == "DefaultChartTotalsShowBy";
 
-        var showType = _settings.Get(GetPeriodSettingKey("DefaultChartPeriodType"));
-        ShowTypeRate = showType == null ? GetBool("DefaultChartRateType", true) : showType == "DefaultChartRateType";
+        var showType = _settings.Get(getPeriodSettingKey("DefaultChartPeriodType"));
+        ShowTypeRate = showType == null ? getBool("DefaultChartRateType", true) : showType == "DefaultChartRateType";
         ShowTypeValue = showType == "DefaultChartValueType";
         ShowTypeEfficiency = showType == "DefaultChartEfficiencyType";
 
-        var compareId = _settings.Get(GetCompareSettingKey()) ?? _settings.Get("DefaultChartPeriodCompareWith");
+        var compareId = _settings.Get(getCompareSettingKey()) ?? _settings.Get("DefaultChartPeriodCompareWith");
         if (int.TryParse(compareId, out int id))
             SelectedCompareEnergyType = EnergyTypes.FirstOrDefault(e => e.Id == id);
 
@@ -450,31 +450,31 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
                              ?? PeriodTypes.FirstOrDefault();
     }
 
-    private string GetPeriodSettingKey(string key) =>
+    private string getPeriodSettingKey(string key) =>
         $"{key}_{SelectedPeriodType?.Key.ToUpperInvariant()}";
 
-    private string GetCompareSettingKey() =>
+    private string getCompareSettingKey() =>
         $"DefaultChartPeriodCompareWith{SelectedPeriodType?.Key.ToUpperInvariant()}";
 
-    private bool GetPeriodBool(string key, bool defaultValue)
+    private bool getPeriodBool(string key, bool defaultValue)
     {
-        var value = _settings.Get(GetPeriodSettingKey(key));
+        var value = _settings.Get(getPeriodSettingKey(key));
         return value == null ? defaultValue : value.Equals("true", StringComparison.OrdinalIgnoreCase);
     }
 
-    private void SaveSetting(string key, string value)
+    private void setSetting(string key, string value)
     {
         if (!_isLoadingSettings)
             _settings.Save(key, value);
     }
 
-    private void SaveDate(string key, DateTime value)
+    private void setDate(string key, DateTime value)
     {
         if (!_isLoadingSettings)
             _settings.SaveDate(key, value);
     }
 
-    private bool GetBool(string key, bool defaultValue)
+    private bool getBool(string key, bool defaultValue)
     {
         var v = _settings.Get(key);
         return v == null ? defaultValue : v.ToLower() == "true";

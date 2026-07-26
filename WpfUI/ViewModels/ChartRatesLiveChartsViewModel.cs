@@ -22,13 +22,13 @@ public class ChartRatesLiveChartsViewModel : ViewModelBase
         CurrentAddress = address;
         CurrentEnergyType = energyType;
 
-        LoadCostCategories();
-        InitDefaults();
+        setCostCategories();
+        initDefaults();
 
-        ResetCommand = new RelayCommand(_ => ResetChart());
-        ExportCommand = new RelayCommand(_ => ExportChart());
+        ResetCommand = new RelayCommand(_ => resetChart());
+        ExportCommand = new RelayCommand(_ => exportChart());
 
-        UpdateChart();
+        SetChart();
     }
 
     #region External
@@ -62,34 +62,34 @@ public class ChartRatesLiveChartsViewModel : ViewModelBase
     public DateTime FromDate
     {
         get => _fromDate;
-        set { if (SetProperty(ref _fromDate, value)) UpdateChart(); }
+        set { if (SetProperty(ref _fromDate, value)) SetChart(); }
     }
 
     private DateTime _tillDate;
     public DateTime TillDate
     {
         get => _tillDate;
-        set { if (SetProperty(ref _tillDate, value)) UpdateChart(); }
+        set { if (SetProperty(ref _tillDate, value)) SetChart(); }
     }
 
     public bool ShowTypeRate
     {
         get => _stRate;
-        set { if (SetProperty(ref _stRate, value)) UpdateChart(); }
+        set { if (SetProperty(ref _stRate, value)) SetChart(); }
     }
     private bool _stRate = true;
 
     public bool ShowTypeUnit
     {
         get => _stUnit;
-        set { if (SetProperty(ref _stUnit, value)) UpdateChart(); }
+        set { if (SetProperty(ref _stUnit, value)) SetChart(); }
     }
     private bool _stUnit;
 
     public bool ShowMonthlyDataPoints
     {
         get => _showMonthlyDataPoints;
-        set { if (SetProperty(ref _showMonthlyDataPoints, value)) UpdateChart(); }
+        set { if (SetProperty(ref _showMonthlyDataPoints, value)) SetChart(); }
     }
     private bool _showMonthlyDataPoints;
 
@@ -101,7 +101,7 @@ public class ChartRatesLiveChartsViewModel : ViewModelBase
     public ObservableCollection<Axis> XAxes { get; } = new();
     public ObservableCollection<Axis> YAxes { get; } = new();
 
-    public void UpdateChart()
+    public void SetChart()
     {
         if (CurrentAddress == null || CurrentEnergyType == null)
             return;
@@ -138,13 +138,13 @@ public class ChartRatesLiveChartsViewModel : ViewModelBase
     public ICommand ResetCommand { get; }
     public ICommand ExportCommand { get; }
 
-    private void ResetChart()
+    private void resetChart()
     {
-        InitDefaults();
-        UpdateChart();
+        initDefaults();
+        SetChart();
     }
 
-    private void ExportChart()
+    private void exportChart()
     {
         // optional: implement Excel export
     }
@@ -153,7 +153,7 @@ public class ChartRatesLiveChartsViewModel : ViewModelBase
 
     #region Helpers
 
-    private void LoadCostCategories()
+    private void setCostCategories()
     {
         CostCategories.Clear();
         CostCategoryOptions.Clear();
@@ -167,12 +167,12 @@ public class ChartRatesLiveChartsViewModel : ViewModelBase
             CostCategories.Add(c);
 
             var option = new CostCategoryOption(c);
-            option.SelectionChanged += (_, _) => UpdateSelectedCostCategories();
+            option.SelectionChanged += (_, _) => setSelectedCostCategories();
             CostCategoryOptions.Add(option);
         }
     }
 
-    private void InitDefaults()
+    private void initDefaults()
     {
         FromDate = DateTime.Now.AddYears(-4);
         TillDate = DateTime.Now;
@@ -182,10 +182,10 @@ public class ChartRatesLiveChartsViewModel : ViewModelBase
             option.IsSelected = true;
         _updatingCostCategorySelection = false;
 
-        UpdateSelectedCostCategories();
+        setSelectedCostCategories();
     }
 
-    private void UpdateSelectedCostCategories()
+    private void setSelectedCostCategories()
     {
         if (_updatingCostCategorySelection)
             return;
@@ -195,7 +195,7 @@ public class ChartRatesLiveChartsViewModel : ViewModelBase
             SelectedCostCategories.Add(option.Category);
 
         OnPropertyChanged(nameof(SelectedCostCategoriesText));
-        UpdateChart();
+        SetChart();
     }
 
     #endregion

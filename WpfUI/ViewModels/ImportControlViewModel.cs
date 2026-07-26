@@ -31,7 +31,7 @@ public class ImportControlViewModel : ViewModelBase
         MeterReadings = new ObservableCollection<MeterReading>();
         Meters = new ObservableCollection<Meter>();
 
-        ImportCommand = new RelayCommand(_ => setData());
+        ImportCommand = new RelayCommand(_ => SetData());
         RecalculateCommand = new RelayCommand(_ => recalculate());
         SaveCommand = new RelayCommand(_ => saveImport());
         BrowseFileCommand = new RelayCommand(_ => browseFile());
@@ -115,10 +115,10 @@ public class ImportControlViewModel : ViewModelBase
         ImportFile = _settings.GetLastUsedImportFile(getKey()) ?? "";
 
         if (!string.IsNullOrWhiteSpace(ImportFile))
-            setData();
+            SetData();
     }
 
-    public async void setData()
+    public async void SetData()
     {
         if (!validateImport())
             return;
@@ -211,7 +211,7 @@ public class ImportControlViewModel : ViewModelBase
         {
             ImportFile = file;
             _settings.SaveLastUsedImportFile(getKey(), file);
-            setData();
+            SetData();
         }
     }
 

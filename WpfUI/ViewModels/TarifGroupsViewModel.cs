@@ -45,18 +45,18 @@ namespace WpfUI.ViewModels
             _controller = new TariffGroupController(Managers.Config.GetDbFileName());
             _controller.Initialize();
 
-            AddCommand = new RelayCommand(_ => AddTariffGroup());
-            SaveCommand = new RelayCommand(_ => SaveTariffGroup());
-            CancelCommand = new RelayCommand(_ => CancelTariffGroup());
-            DeleteCommand = new RelayCommand(_ => DeleteTariffGroup(), _ => SelectedTariffGroup != null);
-            RefreshCommand = new RelayCommand(_ => LoadTariffGroups());
-            CloseCommand = new RelayCommand(_ => CloseWindow());
+            AddCommand = new RelayCommand(_ => addTariffGroup());
+            SaveCommand = new RelayCommand(_ => saveTariffGroup());
+            CancelCommand = new RelayCommand(_ => cancelTariffGroup());
+            DeleteCommand = new RelayCommand(_ => deleteTariffGroup(), _ => SelectedTariffGroup != null);
+            RefreshCommand = new RelayCommand(_ => setTariffGroups());
+            CloseCommand = new RelayCommand(_ => closeWindow());
 
-            LoadTariffGroupTypes();
-            LoadTariffGroups();
+            setTariffGroupTypes();
+            setTariffGroups();
         }
 
-        private void LoadTariffGroupTypes()
+        private void setTariffGroupTypes()
         {
             TariffGroupTypes.Clear();
             var items = Managers.SelectionItemList.GetTariffGroupTypeList();
@@ -65,7 +65,7 @@ namespace WpfUI.ViewModels
                 TariffGroupTypes.Add(item);
         }
 
-        private void LoadTariffGroups()
+        private void setTariffGroups()
         {
             TariffGroups.Clear();
 
@@ -79,7 +79,7 @@ namespace WpfUI.ViewModels
             StatusText = $"Loaded {TariffGroups.Count} tariff groups";
         }
 
-        private void AddTariffGroup()
+        private void addTariffGroup()
         {
             var caption = Managers.Languages.GetResourceString(
                 "TarifGroupNewGroup",
@@ -94,20 +94,20 @@ namespace WpfUI.ViewModels
             StatusText = "New tariff group added";
         }
 
-        private void CancelTariffGroup()
+        private void cancelTariffGroup()
         {
             _controller.UnitOfWork.CancelChanges();
-            LoadTariffGroups();
+            setTariffGroups();
             StatusText = "Changes cancelled";
         }
 
-        private void SaveTariffGroup()
+        private void saveTariffGroup()
         {
             _controller.UnitOfWork.Complete();
             StatusText = "Changes saved";
         }
 
-        private void DeleteTariffGroup()
+        private void deleteTariffGroup()
         {
             if (SelectedTariffGroup == null)
                 return;
@@ -129,7 +129,7 @@ namespace WpfUI.ViewModels
             }
         }
 
-        private void CloseWindow()
+        private void closeWindow()
         {
             if (_controller.UnitOfWork.HasChanges())
             {

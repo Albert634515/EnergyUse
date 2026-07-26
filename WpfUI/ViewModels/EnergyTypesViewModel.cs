@@ -72,18 +72,18 @@ namespace WpfUI.ViewModels
             EnergyTypes = new ObservableCollection<EnergyType>(_controller.UnitOfWork.EnergyTypeRepo.GetAll());
             Units = new ObservableCollection<Unit>(_controller.UnitOfWork.UnitRepo.GetAll());
 
-            AddCommand = new RelayCommand(_ => Add());
-            SaveCommand = new RelayCommand(_ => Save());
-            CancelCommand = new RelayCommand(_ => Cancel());
-            DeleteCommand = new RelayCommand(_ => Delete());
-            RefreshCommand = new RelayCommand(_ => Refresh());
-            CloseCommand = new RelayCommand(_ => Close());
+            AddCommand = new RelayCommand(_ => add());
+            SaveCommand = new RelayCommand(_ => save());
+            CancelCommand = new RelayCommand(_ => cancel());
+            DeleteCommand = new RelayCommand(_ => delete());
+            RefreshCommand = new RelayCommand(_ => refresh());
+            CloseCommand = new RelayCommand(_ => close());
 
             // ⭐ Selecteer eerste record bij laden
-            SelectFirstRecord();
+            selectFirstRecord();
         }
 
-        private void SelectFirstRecord()
+        private void selectFirstRecord()
         {
             if (EnergyTypes.Any())
                 SelectedEnergyType = EnergyTypes.First();
@@ -91,27 +91,27 @@ namespace WpfUI.ViewModels
                 SelectedEnergyType = null;
         }
 
-        private void Add()
+        private void add()
         {
             var entity = _controller.UnitOfWork.AddDefaultEntity("New energy type");
             EnergyTypes.Add(entity);
             SelectedEnergyType = entity;
         }
 
-        private void Save()
+        private void save()
         {
             _controller.UnitOfWork.Complete();
             StatusMessage = "Saved successfully";
         }
 
-        private void Cancel()
+        private void cancel()
         {
             _controller.UnitOfWork.CancelChanges();
             StatusMessage = "Cancelled successfully";
-            Refresh();
+            refresh();
         }
 
-        private void Delete()
+        private void delete()
         {
             if (SelectedEnergyType == null)
                 return;
@@ -120,19 +120,19 @@ namespace WpfUI.ViewModels
             EnergyTypes.Remove(SelectedEnergyType);
             StatusMessage = "Energy type deleted";
 
-            SelectFirstRecord();
+            selectFirstRecord();
         }
 
-        private void Refresh()
+        private void refresh()
         {
             EnergyTypes = new ObservableCollection<EnergyType>(_controller.UnitOfWork.EnergyTypeRepo.GetAll());
             OnPropertyChanged(nameof(EnergyTypes));
 
             // ⭐ Selecteer eerste record na refresh
-            SelectFirstRecord();
+            selectFirstRecord();
         }
 
-        private void Close()
+        private void close()
         {
             Application.Current.Windows
                 .OfType<Window>()

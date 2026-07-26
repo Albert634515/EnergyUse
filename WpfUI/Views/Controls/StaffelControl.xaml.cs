@@ -20,7 +20,7 @@ namespace WpfUI.Views.Controls
         {
             var control = (StaffelControl)d;
             if (control.DataContext is StaffelViewModel vm)
-                vm.LoadStaffels((long)e.NewValue);
+                vm.GetStaffels((long)e.NewValue);
         }
 
         public StaffelControl()

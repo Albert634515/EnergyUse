@@ -23,11 +23,11 @@ public class SetupNewFileViewModel : ViewModelBase
         _dialogService = dialogService;
 
         // Commands
-        NextCommand = new RelayCommand(_ => NextStep(), _ => CanGoNext);
-        PreviousCommand = new RelayCommand(_ => PreviousStep(), _ => CanGoPrevious);
-        CreateDbCommand = new RelayCommand(_ => Finish(), _ => CanFinish);
-        SelectFileCommand = new RelayCommand(_ => SelectFile());
-        SelectDirectoryCommand = new RelayCommand(_ => SelectDirectory());
+        NextCommand = new RelayCommand(_ => nextStep(), _ => CanGoNext);
+        PreviousCommand = new RelayCommand(_ => previousStep(), _ => CanGoPrevious);
+        CreateDbCommand = new RelayCommand(_ => finish(), _ => CanFinish);
+        SelectFileCommand = new RelayCommand(_ => selectFile());
+        SelectDirectoryCommand = new RelayCommand(_ => selectDirectory());
 
         // Load demo address
         Address = EnergyUse.Core.Manager.LibBaseData.GetDemoAddress(1);
@@ -39,12 +39,12 @@ public class SetupNewFileViewModel : ViewModelBase
 
         // Initial step
         CurrentStep = WizardStep.FileSelection;
-        LoadPageForStep();
+        setPageForStep();
 
         UpdateStepVisibility();
         UpdateStepIndicator();
-        UpdateNavigationVisibility();
-        UpdateSummary();
+        updateNavigationVisibility();
+        setSummary();
     }
 
     // ---------------------------------------------------------
@@ -66,9 +66,9 @@ public class SetupNewFileViewModel : ViewModelBase
         {
             _currentStep = value;
             OnPropertyChanged();
-            LoadPageForStep();
+            setPageForStep();
             UpdateStepIndicator();
-            UpdateNavigationVisibility();
+            updateNavigationVisibility();
         }
     }
 
@@ -125,14 +125,14 @@ public class SetupNewFileViewModel : ViewModelBase
     public Visibility NextVisible => CanGoNext && !CanFinish ? Visibility.Visible : Visibility.Collapsed;
     public Visibility FinishVisible => CanFinish ? Visibility.Visible : Visibility.Collapsed;
 
-    private void UpdateNavigationVisibility()
+    private void updateNavigationVisibility()
     {
         OnPropertyChanged(nameof(PreviousVisible));
         OnPropertyChanged(nameof(NextVisible));
         OnPropertyChanged(nameof(FinishVisible));
     }
 
-    private void NextStep()
+    private void nextStep()
     {
         if (CurrentStep == WizardStep.FileSelection)
         {
@@ -159,7 +159,7 @@ public class SetupNewFileViewModel : ViewModelBase
         }
     }
 
-    private void PreviousStep()
+    private void previousStep()
     {
         if (CurrentStep == WizardStep.Summary)
         {
@@ -196,7 +196,7 @@ public class SetupNewFileViewModel : ViewModelBase
         set { _currentPage = value; OnPropertyChanged(); }
     }
 
-    private void LoadPageForStep()
+    private void setPageForStep()
     {
         CurrentPage = CurrentStep switch
         {
@@ -218,14 +218,14 @@ public class SetupNewFileViewModel : ViewModelBase
     public string NewFilePath
     {
         get => _newFilePath;
-        set { _newFilePath = value; OnPropertyChanged(); UpdateSummary(); }
+        set { _newFilePath = value; OnPropertyChanged(); setSummary(); }
     }
 
     private string _targetDirectory = string.Empty;
     public string TargetDirectory
     {
         get => _targetDirectory;
-        set { _targetDirectory = value; OnPropertyChanged(); UpdateSummary(); }
+        set { _targetDirectory = value; OnPropertyChanged(); setSummary(); }
     }
 
     private bool _isNewFile = true;
@@ -238,7 +238,7 @@ public class SetupNewFileViewModel : ViewModelBase
             OnPropertyChanged();
             OnPropertyChanged(nameof(IsExistingFile));
             UpdateStepVisibility();
-            UpdateSummary();
+            setSummary();
         }
     }
 
@@ -250,18 +250,18 @@ public class SetupNewFileViewModel : ViewModelBase
             IsNewFile = !value;
             OnPropertyChanged();
             UpdateStepVisibility();
-            UpdateSummary();
+            setSummary();
         }
     }
 
-    private void SelectFile()
+    private void selectFile()
     {
         var file = _dialogService.SaveFile("Database file (*.db)|*.db", "Kies databasebestand");
         if (!string.IsNullOrEmpty(file))
             NewFilePath = file;
     }
 
-    private void SelectDirectory()
+    private void selectDirectory()
     {
         var folder = _dialogService.OpenFolder();
         if (!string.IsNullOrEmpty(folder))
@@ -275,14 +275,14 @@ public class SetupNewFileViewModel : ViewModelBase
     public bool AddBaseData
     {
         get => _addBaseData;
-        set { _addBaseData = value; OnPropertyChanged(); UpdateSummary(); }
+        set { _addBaseData = value; OnPropertyChanged(); setSummary(); }
     }
 
     private bool _setAsDefaultFile = true;
     public bool SetAsDefaultFileOption
     {
         get => _setAsDefaultFile;
-        set { _setAsDefaultFile = value; OnPropertyChanged(); UpdateSummary(); }
+        set { _setAsDefaultFile = value; OnPropertyChanged(); setSummary(); }
     }
 
     // ---------------------------------------------------------
@@ -292,7 +292,7 @@ public class SetupNewFileViewModel : ViewModelBase
     public Address? Address
     {
         get => _address;
-        set { _address = value; OnPropertyChanged(); UpdateSummary(); }
+        set { _address = value; OnPropertyChanged(); setSummary(); }
     }
 
     // ---------------------------------------------------------
@@ -310,7 +310,7 @@ public class SetupNewFileViewModel : ViewModelBase
         set { _summaryText = value; OnPropertyChanged(); }
     }
 
-    private void UpdateSummary()
+    private void setSummary()
     {
         var selectedEnergyTypes =
             (EnergyTypes ?? Enumerable.Empty<SelectableEnergyTypeViewModel>())
@@ -340,20 +340,20 @@ public class SetupNewFileViewModel : ViewModelBase
     // ---------------------------------------------------------
     // Create database (vervolg)
     // ---------------------------------------------------------
-    private void Finish()
+    private void finish()
     {
-        if (!CreateDatabase())
+        if (!createDatabase())
             return;
 
         RequestClose?.Invoke();
     }
 
-    private bool CreateDatabase()
+    private bool createDatabase()
     {
         var targetFile = Path.Combine(TargetDirectory ?? "", Path.GetFileName(NewFilePath) ?? "");
         var currentFile = Managers.Config.GetDbFileName()?.Trim();
 
-        if (!ValidateNewSetup())
+        if (!validateNewSetup())
             return false;
 
         try
@@ -397,7 +397,7 @@ public class SetupNewFileViewModel : ViewModelBase
         }
     }
 
-    private bool ValidateNewSetup()
+    private bool validateNewSetup()
     {
         var targetFile = Path.Combine(TargetDirectory ?? "", Path.GetFileName(NewFilePath) ?? "");
 
@@ -493,7 +493,7 @@ public class SetupNewFileViewModel : ViewModelBase
         if (_controller == null)
             return;
 
-        var categories = GetListOfNewCostCategories();
+        var categories = getListOfNewCostCategories();
         int id = 1;
 
         foreach (var c in categories)
@@ -505,7 +505,7 @@ public class SetupNewFileViewModel : ViewModelBase
         _controller.UnitOfWork.Complete();
     }
 
-    private List<CostCategory> GetListOfNewCostCategories()
+    private List<CostCategory> getListOfNewCostCategories()
     {
         if (_controller == null)
             return new List<CostCategory>();

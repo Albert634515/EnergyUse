@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfUI.Extensions;
-using WpfUI.Services;
 
 namespace WpfUI.ViewModels
 {
@@ -91,7 +90,7 @@ namespace WpfUI.ViewModels
             _controller = new CostcategoriesController(Managers.Config.GetDbFileName());
             _controller.Initialize();
 
-            _ = setEnergyTypesAsync();
+            _ = SetEnergyTypesAsync();
 
             Units = new ObservableCollection<Unit>(_controller.UnitOfWork.UnitRepo.GetAll());
             TariffGroups = new ObservableCollection<TariffGroup>(_controller.UnitOfWork.TariffGroupRepo.GetAll());
@@ -106,7 +105,7 @@ namespace WpfUI.ViewModels
             CloseCommand = new RelayCommand(_ => Close());
         }
 
-        public async Task setEnergyTypesAsync()
+        public async Task SetEnergyTypesAsync()
         {
             var energyTypes = await _controller.UnitOfWork.EnergyTypeRepo.GetAll();
             EnergyTypes = new ObservableCollection<EnergyType>(energyTypes);

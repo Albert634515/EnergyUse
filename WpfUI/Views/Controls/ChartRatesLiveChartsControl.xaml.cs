@@ -22,7 +22,7 @@ namespace WpfUI.Views.Controls
         {
             ViewModel.CurrentAddress = address;
             ViewModel.CurrentEnergyType = energyType;
-            ViewModel.UpdateChart();
+            ViewModel.SetChart();
         }
     }
 }

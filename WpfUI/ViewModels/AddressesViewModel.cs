@@ -57,7 +57,7 @@ public class AddressesViewModel : ViewModelBase
         getAddresses();
 
         AddCommand = new RelayCommand(_ => addAddress());
-        SaveCommand = new RelayCommand(_ => saveAddress());
+        SaveCommand = new RelayCommand(_ => setAddress());
         CancelCommand = new RelayCommand(_ => cancel());
         DeleteCommand = new RelayCommand(_ => deleteAddress());
         RefreshCommand = new RelayCommand(_ => getAddresses());
@@ -102,7 +102,7 @@ public class AddressesViewModel : ViewModelBase
         SelectedAddress = entity;
     }
 
-    private void saveAddress()
+    private void setAddress()
     {
         if (SelectedAddress == null)
             return;

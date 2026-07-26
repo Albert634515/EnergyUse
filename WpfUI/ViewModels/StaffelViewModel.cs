@@ -25,14 +25,14 @@ public class StaffelViewModel : ViewModelBase
     {
         _unitOfWork = new EnergyUse.Core.UnitOfWork.Staffel(Managers.Config.GetDbFileName());
 
-        AddCommand = new RelayCommand(_ => AddStaffel());
-        SaveCommand = new RelayCommand(_ => SaveStaffel());
-        CancelCommand = new RelayCommand(_ => CancelStaffel());
-        DeleteCommand = new RelayCommand(_ => DeleteStaffel(), _ => SelectedStaffel != null);
+        AddCommand = new RelayCommand(_ => addStaffel());
+        SaveCommand = new RelayCommand(_ => setStaffel());
+        CancelCommand = new RelayCommand(_ => cancelStaffel());
+        DeleteCommand = new RelayCommand(_ => deleteStaffel(), _ => SelectedStaffel != null);
         RefreshCommand = new RelayCommand(_ => refreshStaffels());
     }
 
-    public void LoadStaffels(long rateId)
+    public void GetStaffels(long rateId)
     {
         _rateId = rateId;
         Staffels.Clear();
@@ -50,7 +50,7 @@ public class StaffelViewModel : ViewModelBase
         SelectedStaffel = Staffels.FirstOrDefault();
     }
 
-    private void AddStaffel()
+    private void addStaffel()
     {
         var entity = _unitOfWork.AddDefaultEntity(_rateId);
 
@@ -61,18 +61,18 @@ public class StaffelViewModel : ViewModelBase
         SelectedStaffel = entity;
     }
 
-    private void SaveStaffel()
+    private void setStaffel()
     {
         _unitOfWork.Complete();
     }
 
-    private void CancelStaffel()
+    private void cancelStaffel()
     {
         _unitOfWork.CancelChanges();
-        LoadStaffels(_rateId);
+        GetStaffels(_rateId);
     }
 
-    private void DeleteStaffel()
+    private void deleteStaffel()
     {
         if (SelectedStaffel == null)
             return;
@@ -94,6 +94,6 @@ public class StaffelViewModel : ViewModelBase
 
     private void refreshStaffels()
     {
-        LoadStaffels(_rateId);
+        GetStaffels(_rateId);
     }
 }

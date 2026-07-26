@@ -116,8 +116,7 @@ public class PaymentsViewModel : ViewModelBase
 
         Payments.Clear();
 
-        var list = _controller.UnitOfWork.PaymentRepo
-            .SelectByAddressAndPeriod(SelectedAddress.Id, SelectedPeriod.Id);
+        var list = _controller.UnitOfWork.PaymentRepo.SelectByAddressAndPeriod(SelectedAddress.Id, SelectedPeriod.Id);
 
         foreach (var p in list)
             Payments.Add(p);

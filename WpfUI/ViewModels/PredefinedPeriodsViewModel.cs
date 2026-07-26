@@ -53,16 +53,16 @@ namespace WpfUI.ViewModels
             DatePredefinedVM.StatusCallback = msg => StatusMessage = msg;
 
             AddCommand = new RelayCommand(_ => addPeriod());
-            SaveCommand = new RelayCommand(_ => savePeriod());
+            SaveCommand = new RelayCommand(_ => setPeriod());
             CancelCommand = new RelayCommand(_ => cancelPeriod());
             DeleteCommand = new RelayCommand(_ => deletePeriod());
             RefreshCommand = new RelayCommand(_ => refreshPeriods());
             CloseCommand = new RelayCommand(_ => _window.Close());
 
-            loadPeriods();
+            setPeriods();
         }
 
-        private void loadPeriods()
+        private void setPeriods()
         {
             var list = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
             PredefinedPeriods = new ObservableCollection<EnergyUse.Models.PreDefinedPeriod>(list);
@@ -75,23 +75,23 @@ namespace WpfUI.ViewModels
         private void addPeriod()
         {
             var entity = _controller.UnitOfWork.AddDefaultEntity("New period");
-            loadPeriods();
+            setPeriods();
             SelectedPeriod = entity;
         }
 
-        private void savePeriod()
+        private void setPeriod()
         {
             DatePredefinedVM.SaveDates();
             _controller.UnitOfWork.Complete();
             StatusMessage = "Saved successfully";
-            loadPeriods();
+            setPeriods();
         }
 
         private void cancelPeriod()
         {
             _controller.UnitOfWork.CancelChanges();
             StatusMessage = "Cancelled successfully";
-            loadPeriods();
+            setPeriods();
         }
 
         private void deletePeriod()
@@ -103,13 +103,13 @@ namespace WpfUI.ViewModels
 
                 _controller.UnitOfWork.Delete(SelectedPeriod);
                 StatusMessage = "Period deleted";
-                loadPeriods();
+                setPeriods();
             }
         }
 
         private void refreshPeriods()
         {
-            loadPeriods();
+            setPeriods();
             StatusMessage = "Refreshed";
         }
     }

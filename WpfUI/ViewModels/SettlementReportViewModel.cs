@@ -143,7 +143,7 @@ public class SettlementReportViewModel : ViewModelBase
     public ICommand SelectCommand { get; }
     public ICommand CancelCommand { get; }
 
-    public event Action<bool>? CloseRequested;
+    public event Action<bool>? closeRequested;
 
     public SettlementReportViewModel(ISettingsService settings)
     {
@@ -364,6 +364,6 @@ public class SettlementReportViewModel : ViewModelBase
         return result;
     }
 
-    private void OnSelect() => CloseRequested?.Invoke(true);
-    private void OnCancel() => CloseRequested?.Invoke(false);
+    private void OnSelect() => closeRequested?.Invoke(true);
+    private void OnCancel() => closeRequested?.Invoke(false);
 }

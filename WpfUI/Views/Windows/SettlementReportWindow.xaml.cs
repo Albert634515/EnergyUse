@@ -18,7 +18,7 @@ public partial class SettlementReportWindow : Window
 
         DataContext = vm;
 
-        vm.CloseRequested += result =>
+        vm.closeRequested += result =>
         {
             DialogResult = result;
             Close();

@@ -40,7 +40,7 @@ public class MetersViewModel : ViewModelBase
         SaveCommand = new RelayCommand(_ => saveMeter());
         CancelCommand = new RelayCommand(_ => cancelMeter());
         DeleteCommand = new RelayCommand(_ => deleteMeter());
-        RefreshCommand = new RelayCommand(async _ => await getMeters());
+        RefreshCommand = new RelayCommand(async _ => await GetMeters());
         CloseCommand = new RelayCommand(_ => _window.Close());
 
         _ = initializeAsync();
@@ -49,7 +49,7 @@ public class MetersViewModel : ViewModelBase
     private async Task initializeAsync()
     {
         await getCombosAsync();
-        await getMeters();
+        await GetMeters();
     }
 
     private async Task getCombosAsync()
@@ -63,7 +63,7 @@ public class MetersViewModel : ViewModelBase
         OnPropertyChanged(nameof(Addresses));
     }
 
-    public async Task getMeters()
+    public async Task GetMeters()
     {
         var list = await _controller.UnitOfWork.MeterRepo.GetAll();
         Meters = new ObservableCollection<EnergyUse.Models.Meter>(list);
@@ -73,7 +73,7 @@ public class MetersViewModel : ViewModelBase
     private void addMeter()
     {
         var entity = _controller.UnitOfWork.AddDefaultEntity("New meter");
-        _ = getMeters();
+        _ = GetMeters();
         SelectedMeter = entity;
     }
 
@@ -82,13 +82,13 @@ public class MetersViewModel : ViewModelBase
         if (SelectedMeter != null)
             _controller.UnitOfWork.Complete();
 
-        _ = getMeters();
+        _ = GetMeters();
     }
 
     private void cancelMeter()
     {
         _controller.UnitOfWork.CancelChanges();
-        _ = getMeters();
+        _ = GetMeters();
     }
 
     private void deleteMeter()
@@ -96,7 +96,7 @@ public class MetersViewModel : ViewModelBase
         if (SelectedMeter != null)
         {
             _controller.UnitOfWork.Delete(SelectedMeter);
-            _ = getMeters();
+            _ = GetMeters();
         }
     }
 }

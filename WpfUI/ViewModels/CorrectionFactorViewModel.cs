@@ -3,7 +3,6 @@ using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using WpfUI.Services;
 
 namespace WpfUI.ViewModels;
 
@@ -27,7 +26,7 @@ public class CorrectionFactorViewModel : ViewModelBase
             if (value != null)
                 _settings.Save("LastCorrectionEnergyTypeId", value.Id.ToString());
 
-            loadCorrectionFactors();
+            setCorrectionFactors();
         }
     }
 
@@ -61,26 +60,26 @@ public class CorrectionFactorViewModel : ViewModelBase
         _controller = new CorrectionFactorController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
-        AddCommand = new RelayCommand(_ => Add());
-        SaveCommand = new RelayCommand(_ => Save());
-        CancelCommand = new RelayCommand(_ => Cancel());
-        DeleteCommand = new RelayCommand(_ => Delete());
-        RefreshCommand = new RelayCommand(_ => Refresh());
+        AddCommand = new RelayCommand(_ => add());
+        SaveCommand = new RelayCommand(_ => save());
+        CancelCommand = new RelayCommand(_ => cancel());
+        DeleteCommand = new RelayCommand(_ => delete());
+        RefreshCommand = new RelayCommand(_ => refresh());
         CloseCommand = new RelayCommand(_ => CloseRequested?.Invoke());
 
-        _ = loadEnergyTypesAsync();
+        _ = setEnergyTypesAsync();
     }
 
-    private async Task loadEnergyTypesAsync()
+    private async Task setEnergyTypesAsync()
     {
         var list = await _controller.UnitOfWork.EnergyTypeRepo.GetAll();
         EnergyTypes = new ObservableCollection<EnergyType>(list);
         OnPropertyChanged(nameof(EnergyTypes));
 
-        restoreLastEnergyType();
+        setLastEnergyType();
     }
 
-    private void restoreLastEnergyType()
+    private void setLastEnergyType()
     {
         var last = _settings.Get("LastCorrectionEnergyTypeId");
 
@@ -95,7 +94,7 @@ public class CorrectionFactorViewModel : ViewModelBase
         }
     }
 
-    private void loadCorrectionFactors()
+    private void setCorrectionFactors()
     {
         if (SelectedEnergyType == null) return;
 
@@ -110,7 +109,7 @@ public class CorrectionFactorViewModel : ViewModelBase
         SelectedCorrectionFactor = CorrectionFactors.FirstOrDefault();
     }
 
-    private void Add()
+    private void add()
     {
         if (SelectedEnergyType == null) return;
 
@@ -119,20 +118,20 @@ public class CorrectionFactorViewModel : ViewModelBase
         SelectedCorrectionFactor = entity;
     }
 
-    private void Save()
+    private void save()
     {
         _controller.UnitOfWork.Complete();
         StatusMessage = "Saved.";
         OnPropertyChanged(nameof(StatusMessage));
     }
 
-    private void Cancel()
+    private void cancel()
     {
         _controller.UnitOfWork.CancelChanges();
-        loadCorrectionFactors();
+        setCorrectionFactors();
     }
 
-    private void Delete()
+    private void delete()
     {
         if (SelectedCorrectionFactor == null) return;
 
@@ -140,5 +139,5 @@ public class CorrectionFactorViewModel : ViewModelBase
         CorrectionFactors.Remove(SelectedCorrectionFactor);
     }
 
-    private void Refresh() => loadCorrectionFactors();
+    private void refresh() => setCorrectionFactors();
 }
