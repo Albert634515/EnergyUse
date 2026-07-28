@@ -18,6 +18,7 @@ namespace WpfUI.ViewModels
         public ObservableCollection<CostCategory> CostCategories { get; } = new();
         public ObservableCollection<TariffGroup> TariffGroups { get; } = new();
         public ObservableCollection<Rate> Rates { get; } = new();
+        public ObservableCollection<RateGridRowViewModel> RateRows { get; } = new();
         public ObservableCollection<EnergyUse.Models.Common.SelectionItem> RateTypes { get; } = new();
 
         // ⭐ Staffel ViewModel geïntegreerd
@@ -106,10 +107,33 @@ namespace WpfUI.ViewModels
                             .FirstOrDefault(r => r.Id == (int)_selectedRate.RateTypeId);
                     }
 
+                    var selectedRow = RateRows
+                        .FirstOrDefault(row => ReferenceEquals(row.Rate, _selectedRate));
+                    if (_selectedRateRow != selectedRow)
+                    {
+                        _selectedRateRow = selectedRow;
+                        OnPropertyChanged(nameof(SelectedRateRow));
+                    }
+
                     _ = setRateIncExLabelAsync();
 
                     // ⭐ Staffel laden
                     StaffelVM.GetStaffels(_selectedRate?.Id ?? 0);
+                }
+            }
+        }
+
+        private RateGridRowViewModel? _selectedRateRow;
+        public RateGridRowViewModel? SelectedRateRow
+        {
+            get => _selectedRateRow;
+            set
+            {
+                if (_selectedRateRow != value)
+                {
+                    _selectedRateRow = value;
+                    OnPropertyChanged();
+                    SelectedRate = value?.Rate;
                 }
             }
         }
@@ -249,8 +273,10 @@ namespace WpfUI.ViewModels
 
         private void initRates()
         {
+            _rateRowsVersion++;
             SelectedRate = null;
             Rates.Clear();
+            RateRows.Clear();
 
             if (SelectedEnergyType == null
                 || SelectedCostCategory == null
@@ -284,6 +310,45 @@ namespace WpfUI.ViewModels
 
             if (Rates.Any())
                 SelectedRate = Rates.FirstOrDefault();
+
+            _ = rebuildRateRowsAsync();
+        }
+
+        private int _rateRowsVersion;
+
+        private async Task rebuildRateRowsAsync()
+        {
+            var version = ++_rateRowsVersion;
+            var costCategory = SelectedCostCategory;
+            var rates = Rates.ToList();
+            var selectedRate = SelectedRate;
+
+            RateRows.Clear();
+            if (costCategory == null)
+                return;
+
+            var vatTariffs = await _controller.UnitOfWork.RepoVatTarif
+                .GetByCostCategoryId(costCategory.Id);
+
+            if (version != _rateRowsVersion || SelectedCostCategory?.Id != costCategory.Id)
+                return;
+
+            foreach (var rate in rates)
+            {
+                var vatPercentage = vatTariffs
+                    .FirstOrDefault(vat =>
+                        vat.StartDate.Date <= rate.StartRate.Date &&
+                        vat.EndDate.Date >= rate.StartRate.Date)
+                    ?.Tarif;
+
+                RateRows.Add(new RateGridRowViewModel(
+                    rate,
+                    costCategory.CalculateVat,
+                    vatPercentage));
+            }
+
+            SelectedRateRow = RateRows
+                .FirstOrDefault(row => ReferenceEquals(row.Rate, selectedRate));
         }
 
         private async Task setRateIncExLabelAsync()
@@ -358,6 +423,7 @@ namespace WpfUI.ViewModels
                 Rates.Add(r);
 
             SelectedRate = entity;
+            _ = rebuildRateRowsAsync();
         }
 
         private void setRate()
@@ -369,6 +435,7 @@ namespace WpfUI.ViewModels
 
                 SelectedRate.PriceChange = _controller.GetPriceChange(SelectedRate);
                 _controller.UnitOfWork.Complete();
+                _ = rebuildRateRowsAsync();
             }
         }
 
@@ -480,6 +547,7 @@ namespace WpfUI.ViewModels
                     Rates.Add(r);
 
                 SelectedRate = Rates.FirstOrDefault();
+                _ = rebuildRateRowsAsync();
             }
         }
 

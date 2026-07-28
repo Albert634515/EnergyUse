@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:WpfUI.Views.Controls"
         Title="Energy Rates"
-        Height="800" Width="1100"
+        Height="800" Width="1254"
         ShowInTaskbar="False">
 
     <DockPanel>
@@ -134,8 +134,8 @@
 
                     <!-- RATES GRID -->
                     <DataGrid Grid.Row="0"
-                              ItemsSource="{Binding Rates}"
-                              SelectedItem="{Binding SelectedRate}"
+                              ItemsSource="{Binding RateRows}"
+                              SelectedItem="{Binding SelectedRateRow}"
                               AutoGenerateColumns="False"
                               Margin="0,0,0,10">
 
@@ -173,6 +173,10 @@
                                                 Width="0.9*"
                                                 ElementStyle="{StaticResource NumericCellStyle}"
                                                 Binding="{Binding RateValue, StringFormat=N5}" />
+                            <DataGridTextColumn Header="Price incl. VAT"
+                                                Width="0.9*"
+                                                ElementStyle="{StaticResource NumericCellStyle}"
+                                                Binding="{Binding RateIncludingVat, StringFormat=N5}" />
                             <DataGridTextColumn Header="Expected Change"
                                                 Width="0.75*"
                                                 ElementStyle="{StaticResource NumericCellStyle}"
@@ -181,6 +185,14 @@
                                                 Width="0.75*"
                                                 ElementStyle="{StaticResource NumericCellStyle}"
                                                 Binding="{Binding PriceChange, StringFormat=\{0:N2\}%}" />
+                            <DataGridTextColumn Header="Future excl. VAT"
+                                                Width="0.9*"
+                                                ElementStyle="{StaticResource NumericCellStyle}"
+                                                Binding="{Binding FutureRateExcludingVat, StringFormat=N5}" />
+                            <DataGridTextColumn Header="Future incl. VAT"
+                                                Width="0.9*"
+                                                ElementStyle="{StaticResource NumericCellStyle}"
+                                                Binding="{Binding FutureRateIncludingVat, StringFormat=N5}" />
                             <DataGridTextColumn Header="Description"
                                                 Width="2*"
                                                 Binding="{Binding Description}" />
@@ -264,7 +276,9 @@
                             <RowDefinition Height="Auto"/>
                             <!-- Price Change -->
                             <RowDefinition Height="Auto"/>
-                            <!-- Future -->
+                            <!-- Future excluding VAT -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- Future including VAT -->
                             <RowDefinition Height="Auto"/>
                             <!-- Description -->
                         </Grid.RowDefinitions>
@@ -324,17 +338,24 @@
                                  IsReadOnly="True"
                                  Style="{StaticResource DetailTextBoxStyle}"/>
 
-                        <!-- Future Price -->
-                        <TextBlock Grid.Row="6" Text="Future Price"
+                        <!-- Future Price excluding VAT -->
+                        <TextBlock Grid.Row="6" Text="Future Price excl. VAT"
                                    Style="{StaticResource DetailLabelStyle}"/>
                         <TextBlock Grid.Row="6" Grid.Column="1"
-                                   Text="{Binding SelectedRate.FutureRate}"
+                                   Text="{Binding SelectedRateRow.FutureRateExcludingVat, StringFormat=N5}"
+                                   Style="{StaticResource DetailLabelStyle}"/>
+
+                        <!-- Future Price including VAT -->
+                        <TextBlock Grid.Row="7" Text="Future Price incl. VAT"
+                                   Style="{StaticResource DetailLabelStyle}"/>
+                        <TextBlock Grid.Row="7" Grid.Column="1"
+                                   Text="{Binding SelectedRateRow.FutureRateIncludingVat, StringFormat=N5}"
                                    Style="{StaticResource DetailLabelStyle}"/>
 
                         <!-- Description -->
-                        <TextBlock Grid.Row="7" Text="Description"
+                        <TextBlock Grid.Row="8" Text="Description"
                                    Style="{StaticResource DetailLabelStyle}"/>
-                        <TextBox Grid.Row="7" Grid.Column="1"
+                        <TextBox Grid.Row="8" Grid.Column="1"
                                  Text="{Binding SelectedRate.Description}"
                                  Style="{StaticResource DetailTextBoxStyle}"/>
 
