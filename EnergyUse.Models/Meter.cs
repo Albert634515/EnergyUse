@@ -15,8 +15,8 @@ public partial class Meter
     public bool Active { get; set; }
     public DateTime ActiveFrom { get; set; }
 
-    public virtual Address Address { get; set; }
-    public virtual EnergyType EnergyType { get; set; }
+    public virtual Address? Address { get; set; }
+    public virtual EnergyType? EnergyType { get; set; }
     public virtual ICollection<MeterReading> MeterReadings { get; set; }
 
 

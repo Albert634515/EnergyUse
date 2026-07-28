@@ -2,7 +2,7 @@
 
 public class SelectedEnergyType
 {
-    public Models.EnergyType EnergyType;
+    public Models.EnergyType EnergyType = null!;
     public long TarifGroup = 0;
     public DateTime StartRange = DateTime.MinValue;
     public DateTime EndRange = DateTime.MinValue;

@@ -8,5 +8,5 @@ public partial class Staffel
     public decimal ValueTill { get; set; }
     public decimal StaffelValue { get; set; }
 
-    public virtual Rate Rate { get; set; }
+    public virtual Rate Rate { get; set; } = null!;
 }

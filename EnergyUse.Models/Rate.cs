@@ -15,15 +15,15 @@ public partial class Rate
     public long? EnergyTypeId { get; set; }
     public long? TariffGroupId { get; set; }
 
-    public virtual CostCategory CostCategory { get; set; }
-    public virtual EnergyType EnergyType { get; set; }
-    public virtual TariffGroup TariffGroup { get; set; }
+    public virtual CostCategory? CostCategory { get; set; }
+    public virtual EnergyType? EnergyType { get; set; }
+    public virtual TariffGroup? TariffGroup { get; set; }
 
-    public virtual ICollection<Staffel> Staffels { get; set; }
+    public virtual ICollection<Staffel> Staffels { get; set; } = new HashSet<Staffel>();
 
     // Read only props
-    public string EnergyTypeDescription => EnergyType.Name;
-    public string TarifGroupDescription => TariffGroup.Description;
-    public string CostCategoryDescription => CostCategory.Name;
+    public string EnergyTypeDescription => EnergyType?.Name ?? string.Empty;
+    public string TarifGroupDescription => TariffGroup?.Description ?? string.Empty;
+    public string CostCategoryDescription => CostCategory?.Name ?? string.Empty;
     public decimal FutureRate => ExpectedPriceChange == 0 ? RateValue : (1 + (ExpectedPriceChange /  100)) * RateValue;
 }

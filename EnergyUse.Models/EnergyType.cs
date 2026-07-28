@@ -5,6 +5,7 @@ public partial class EnergyType
     public EnergyType()
     {
         AdditionalCategoryAndGroupInfos = new HashSet<AdditionalCategoryAndGroupInfo>();
+        CalculatedUnitPrices = new HashSet<CalculatedUnitPrice>();
         CorrectionFactors = new HashSet<CorrectionFactor>();
         CostCategories = new HashSet<CostCategory>();
         MeterReadings = new HashSet<MeterReading>();
@@ -27,7 +28,7 @@ public partial class EnergyType
     public byte ColorB { get; set; }
 
 
-    public virtual Unit Unit { get; set; }
+    public virtual Unit? Unit { get; set; }
 
     // Readonly props
     public string UnitName

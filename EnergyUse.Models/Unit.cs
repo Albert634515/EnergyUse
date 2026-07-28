@@ -2,6 +2,12 @@
 
 public partial class Unit
 {
+    public Unit()
+    {
+        EnergyTypes = new HashSet<EnergyType>();
+        CostCategories = new HashSet<CostCategory>();
+    }
+
     public string Id { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
 

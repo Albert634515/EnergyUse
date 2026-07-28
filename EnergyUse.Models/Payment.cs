@@ -9,6 +9,6 @@ public partial class Payment
     public long AddressId { get; set; }
     public long? PreDefinedPeriodId { get; set; }
 
-    public virtual Address Address { get; set; }
-    public virtual PreDefinedPeriod PreDefinedPeriod { get; set; }
+    public virtual Address Address { get; set; } = null!;
+    public virtual PreDefinedPeriod? PreDefinedPeriod { get; set; }
 }

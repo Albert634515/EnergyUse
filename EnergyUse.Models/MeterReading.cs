@@ -19,9 +19,9 @@ namespace EnergyUse.Models
         public long? MeterId { get; set; }
         public long? EnergyTypeId { get; set; }
 
-        public virtual EnergyType EnergyType { get; set; }
+        public virtual EnergyType? EnergyType { get; set; }
 
-        public virtual Meter Meter { get; set; }
+        public virtual Meter? Meter { get; set; }
 
         public int Week => RegistrationDate.GetWeekNumber();
     }

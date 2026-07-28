@@ -28,7 +28,7 @@ public partial class frmBackUpAndRestore : Form
 
     private void frmBackUpAndRestore_Load(object sender, EventArgs e)
     {
-        var settingValue = _controller.getSettingBackUpDir(txtBackUpDir.Tag.ToString());
+        var settingValue = _controller.GetSettingBackUpDir(txtBackUpDir.Tag.ToString());
         if (!string.IsNullOrWhiteSpace(settingValue))
             txtBackUpDir.Text = settingValue;
     }
@@ -49,7 +49,7 @@ public partial class frmBackUpAndRestore : Form
     private void cmdSelectExportFile_Click(object sender, EventArgs e)
     {
         FolderBrowserDialog fbd = new FolderBrowserDialog();
-        var setting = _controller.getSettingBackUpDir("BackUpDirectory");
+        var setting = _controller.GetSettingBackUpDir("BackUpDirectory");
         if (! string.IsNullOrWhiteSpace(setting))
             fbd.SelectedPath = setting;
 
@@ -70,7 +70,7 @@ public partial class frmBackUpAndRestore : Form
         try
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            var setting = _controller.getSettingBackUpDir("RestoreDirectory");
+            var setting = _controller.GetSettingBackUpDir("RestoreDirectory");
             if (!string.IsNullOrWhiteSpace(setting))
                 openFileDialog1.InitialDirectory = setting;
 

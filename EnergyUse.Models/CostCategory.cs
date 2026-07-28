@@ -7,6 +7,7 @@ public partial class CostCategory
         AdditionalCategoryAndGroupInfos = new HashSet<AdditionalCategoryAndGroupInfo>();
         CostTypes = new HashSet<CostType>();
         Rates = new HashSet<Rate>();
+        VatTarifs = new HashSet<VatTarif>();
     }
 
     public long Id { get; set; }
@@ -29,10 +30,10 @@ public partial class CostCategory
     public byte ColorG { get; set; }
     public byte ColorB { get; set; }
 
-    public virtual Unit Unit { get; set; }
-    public virtual CalculationType CalculationType { get; set; }
-    public virtual EnergySubType EnergySubType { get; set; }
-    public virtual EnergyType EnergyType { get; set; }
+    public virtual Unit? Unit { get; set; }
+    public virtual CalculationType? CalculationType { get; set; }
+    public virtual EnergySubType? EnergySubType { get; set; }
+    public virtual EnergyType? EnergyType { get; set; }
     public virtual TariffGroup? TariffGroup { get; set; }
     public virtual ICollection<CostType> CostTypes { get; set; }
     public virtual ICollection<Rate> Rates { get; set; }

@@ -10,8 +10,8 @@ public partial class PreDefinedPeriodDate
     public long? EnergyTypeId { get; set; }
     public long? TariffGroupId { get; set; }
 
-    public virtual EnergyType EnergyType { get; set; }
-    public virtual PreDefinedPeriod PreDefinedPeriod { get; set; }
+    public virtual EnergyType? EnergyType { get; set; }
+    public virtual PreDefinedPeriod? PreDefinedPeriod { get; set; }
     public virtual TariffGroup? TariffGroup { get; set; }
     
    
