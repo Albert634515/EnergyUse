@@ -213,7 +213,7 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
                         {
                             // CalculationType== 1: Per unit
                             settlementData.ValueBaseConsumed += (periodicData.ValueYNormal + periodicData.ValueYLow);
-                            settlementData.ValueBaseProduced += 1 - (periodicData.NettingValueYReturnNormal + periodicData.NettingValueYReturnLow);
+                            settlementData.ValueBaseProduced -= periodicData.NettingValueYReturnNormal + periodicData.NettingValueYReturnLow;
                         }
                         else if (costCategory.CalculationType.Id == 3)
                         {

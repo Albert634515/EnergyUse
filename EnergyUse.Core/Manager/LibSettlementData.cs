@@ -171,7 +171,7 @@ public class LibSettlementData
                     {
                         settlementData.ValueBaseConsumed += (periodicData.ValueYNormal + periodicData.ValueYLow);
                         if ((periodicData.NettingValueYReturnNormal + periodicData.NettingValueYReturnLow) != 0)
-                            settlementData.ValueBaseProduced += 1 - (periodicData.NettingValueYReturnNormal + periodicData.NettingValueYReturnLow);
+                            settlementData.ValueBaseProduced -= periodicData.NettingValueYReturnNormal + periodicData.NettingValueYReturnLow;
                     }
                     else
                     {

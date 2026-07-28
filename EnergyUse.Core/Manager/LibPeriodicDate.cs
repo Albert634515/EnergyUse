@@ -95,6 +95,12 @@ public class LibPeriodicDate
         //Splitsen data if missing
         splitMissingPeriods();
 
+        // Missing periods can be inserted out of sequence. Rates and settlement
+        // ranges must always be calculated in chronological order.
+        _periodicDataList = _periodicDataList
+            .OrderBy(x => x.ValueX)
+            .ToList();
+
         // Add rate values
         addRateToData();
 
@@ -544,41 +550,63 @@ public class LibPeriodicDate
                 {
                     if (_parameterPeriod.EnergyType.HasNormalAndLow)
                     {
-                        if (nettingUsed)
-                        {
-                            // Take into account netting
-                            periodicDataPerDay.RateReturnLow = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.Low, _parameterPeriod.TarifGroupId).Rate;
-                            periodicDataPerDay.ValueYMonetaryReturnLow = periodicDataPerDay.NettingValueYReturnLow * periodicDataPerDay.RateReturnLow;
-
-                            var rateReturnLow = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.ReturnLow, _parameterPeriod.TarifGroupId).Rate;
-                            periodicDataPerDay.ValueYMonetaryReturnLow = (periodicDataPerDay.ValueYReturnLow - periodicDataPerDay.NettingValueYReturnLow) * rateReturnLow;
-                        }
-                        else
-                        {
-                            periodicDataPerDay.RateReturnLow = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.Low, _parameterPeriod.TarifGroupId).Rate;
-                            periodicDataPerDay.ValueYMonetaryReturnLow = periodicDataPerDay.ValueYReturnLow * periodicDataPerDay.RateReturnLow;
-                        }
+                        var rateReturnLow = libPriceRate.GetCalculatedRate(
+                            _parameterPeriod.EnergyType.Id,
+                            periodicDataPerDay.ValueX,
+                            SubEnergyType.ReturnLow,
+                            _parameterPeriod.TarifGroupId).Rate;
+                        var nettedReturnLow = nettingUsed ? periodicDataPerDay.NettingValueYReturnLow : 0;
+                        (periodicDataPerDay.RateReturnLow, periodicDataPerDay.ValueYMonetaryReturnLow) =
+                            calculateReturnRate(
+                                periodicDataPerDay.ValueYReturnLow,
+                                nettedReturnLow,
+                                periodicDataPerDay.RateLow,
+                                rateReturnLow,
+                                nettingUsed);
                     }
 
-                    if (nettingUsed)
-                    {
-                        // Take into account netting
-                        periodicDataPerDay.RateReturnNormal = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.Normal, _parameterPeriod.TarifGroupId).Rate;
-                        periodicDataPerDay.ValueYMonetaryReturnNormal = periodicDataPerDay.NettingValueYReturnNormal * periodicDataPerDay.RateReturnNormal;
-
-                        var rateReturnNormal = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.ReturnNormal, _parameterPeriod.TarifGroupId).Rate;
-                        periodicDataPerDay.ValueYMonetaryReturnNormal = (periodicDataPerDay.ValueYReturnNormal - periodicDataPerDay.NettingValueYReturnNormal) * rateReturnNormal;
-                    }
-                    else
-                    {
-                        periodicDataPerDay.RateReturnNormal = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.ReturnNormal, _parameterPeriod.TarifGroupId).Rate;
-                        periodicDataPerDay.ValueYMonetaryReturnNormal = periodicDataPerDay.ValueYReturnNormal * periodicDataPerDay.RateReturnNormal;
-                    }
+                    var rateReturnNormal = libPriceRate.GetCalculatedRate(
+                        _parameterPeriod.EnergyType.Id,
+                        periodicDataPerDay.ValueX,
+                        SubEnergyType.ReturnNormal,
+                        _parameterPeriod.TarifGroupId).Rate;
+                    var nettedReturnNormal = nettingUsed ? periodicDataPerDay.NettingValueYReturnNormal : 0;
+                    (periodicDataPerDay.RateReturnNormal, periodicDataPerDay.ValueYMonetaryReturnNormal) =
+                        calculateReturnRate(
+                            periodicDataPerDay.ValueYReturnNormal,
+                            nettedReturnNormal,
+                            periodicDataPerDay.RateNormal,
+                            rateReturnNormal,
+                            nettingUsed);
                 }
 
-                periodicDataPerDay.ValueMonetaryY = periodicDataPerDay.ValueYMonetaryLow + periodicDataPerDay.ValueYMonetaryNormal + periodicDataPerDay.ValueYMonetaryReturnNormal + periodicDataPerDay.ValueYMonetaryReturnNormal;
+                periodicDataPerDay.ValueMonetaryY =
+                    periodicDataPerDay.ValueYMonetaryLow
+                    + periodicDataPerDay.ValueYMonetaryNormal
+                    - periodicDataPerDay.ValueYMonetaryReturnLow
+                    - periodicDataPerDay.ValueYMonetaryReturnNormal;
             }
         }
+    }
+
+    private static (decimal Rate, decimal MonetaryValue) calculateReturnRate(
+        decimal returnedQuantity,
+        decimal nettedQuantity,
+        decimal deliveryRate,
+        decimal returnRate,
+        bool nettingUsed)
+    {
+        var quantity = Math.Max(0, returnedQuantity);
+        var netted = Math.Clamp(nettedQuantity, 0, quantity);
+        var notNetted = quantity - netted;
+        var positiveReturnRate = Math.Abs(returnRate);
+
+        var monetaryValue = (netted * deliveryRate) + (notNetted * positiveReturnRate);
+        var effectiveRate = quantity == 0
+            ? (nettingUsed ? deliveryRate : positiveReturnRate)
+            : monetaryValue / quantity;
+
+        return (effectiveRate, monetaryValue);
     }
 
     private async Task addMissingData()

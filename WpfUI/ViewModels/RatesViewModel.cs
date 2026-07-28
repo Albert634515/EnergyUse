@@ -191,6 +191,7 @@ namespace WpfUI.ViewModels
 
         private void getTariffGroups(CostCategory costCategory)
         {
+            SelectedTariffGroup = null;
             TariffGroups.Clear();
             var list = _controller.UnitOfWork.TarifGroupRepo.GetAll().ToList();
 
@@ -218,11 +219,18 @@ namespace WpfUI.ViewModels
         private async Task onEnergyTypeChangedAsync()
         {
             if (SelectedEnergyType != null)
+            {
+                SelectedCostCategory = null;
                 getCostCategories(SelectedEnergyType.Id);
+            }
             else
+            {
                 CostCategories.Clear();
+                SelectedCostCategory = null;
+            }
 
-            initRates();
+            if (SelectedCostCategory == null)
+                initRates();
         }
 
         private async Task onCostCategoryChangedAsync()
@@ -241,9 +249,12 @@ namespace WpfUI.ViewModels
 
         private void initRates()
         {
+            SelectedRate = null;
             Rates.Clear();
 
-            if (SelectedEnergyType == null || SelectedCostCategory == null)
+            if (SelectedEnergyType == null
+                || SelectedCostCategory == null
+                || SelectedTariffGroup == null)
                 return;
 
             var costCategory = SelectedCostCategory;
@@ -252,12 +263,15 @@ namespace WpfUI.ViewModels
 
             _controller.UnitOfWork.RateList = new System.Collections.Generic.List<Rate>();
 
-            if (costCategory != null && costCategory.TariffGroup != null && costCategory.TariffGroup.Id > 0)
+            if (costCategory.TariffGroupId > 0)
                 _controller.UnitOfWork.RateList =
                     _controller.UnitOfWork.RateRepo
-                        .SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, costCategory.TariffGroup.Id)
+                        .SelectByCostCategoryAndEnergyTypeAndTarifGroup(
+                            costCategory.Id,
+                            energyType.Id,
+                            costCategory.TariffGroupId.Value)
                         .ToList();
-            else if (costCategory != null && tarifGroup != null && tarifGroup.Id > 0)
+            else if (tarifGroup.Id > 0)
                 _controller.UnitOfWork.RateList =
                     _controller.UnitOfWork.RateRepo
                         .SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, tarifGroup.Id)
