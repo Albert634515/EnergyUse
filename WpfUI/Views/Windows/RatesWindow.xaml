@@ -139,18 +139,50 @@
                               AutoGenerateColumns="False"
                               Margin="0,0,0,10">
 
+                        <DataGrid.Resources>
+                            <Style x:Key="NumericCellStyle" TargetType="TextBlock">
+                                <Setter Property="TextAlignment" Value="Right"/>
+                                <Setter Property="Padding" Value="0,0,4,0"/>
+                            </Style>
+                        </DataGrid.Resources>
+
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}"
+                                                       TextWrapping="Wrap"
+                                                       TextAlignment="Center"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Start"
+                                                Width="*"
                                                 Binding="{Binding StartRate, StringFormat=\{0:dd-MM-yyyy\}}"/>
                             <DataGridTextColumn Header="End"
+                                                Width="*"
                                                 Binding="{Binding EndRate, StringFormat=\{0:dd-MM-yyyy\}}"/>
                             <DataGridTextColumn Header="Rate"
+                                                Width="0.9*"
+                                                ElementStyle="{StaticResource NumericCellStyle}"
                                                 Binding="{Binding RateValue, StringFormat=N5}" />
                             <DataGridTextColumn Header="Expected Change"
-                                                Binding="{Binding ExpectedPriceChange, StringFormat=N3}" />
+                                                Width="0.75*"
+                                                ElementStyle="{StaticResource NumericCellStyle}"
+                                                Binding="{Binding ExpectedPriceChange, StringFormat=\{0:N2\}%}" />
                             <DataGridTextColumn Header="Price Change"
-                                                Binding="{Binding PriceChange, StringFormat=N3}" />
+                                                Width="0.75*"
+                                                ElementStyle="{StaticResource NumericCellStyle}"
+                                                Binding="{Binding PriceChange, StringFormat=\{0:N2\}%}" />
                             <DataGridTextColumn Header="Description"
+                                                Width="2*"
                                                 Binding="{Binding Description}" />
                         </DataGrid.Columns>
                     </DataGrid>
