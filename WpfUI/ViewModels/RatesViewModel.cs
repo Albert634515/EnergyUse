@@ -364,9 +364,98 @@ namespace WpfUI.ViewModels
         {
             if (SelectedRate != null)
             {
+                if (!confirmNewRateFitsExistingRates())
+                    return;
+
                 SelectedRate.PriceChange = _controller.GetPriceChange(SelectedRate);
                 _controller.UnitOfWork.Complete();
             }
+        }
+
+        private bool confirmNewRateFitsExistingRates()
+        {
+            if (SelectedRate == null || SelectedRate.Id > 0)
+                return true;
+
+            var newStartDate = SelectedRate.StartRate.Date;
+            var newEndDate = SelectedRate.EndRate.Date;
+            var existingRates = Rates
+                .Where(rate => !ReferenceEquals(rate, SelectedRate))
+                .OrderBy(rate => rate.StartRate)
+                .ToList();
+
+            var validationMessages = new List<string>();
+
+            if (newEndDate < newStartDate)
+            {
+                validationMessages.Add("The end date is before the start date.");
+            }
+            else if (existingRates.Count > 0)
+            {
+                var overlappingRates = existingRates
+                    .Where(rate =>
+                        rate.StartRate.Date <= newEndDate &&
+                        rate.EndRate.Date >= newStartDate)
+                    .ToList();
+
+                if (overlappingRates.Count > 0)
+                {
+                    var overlappingPeriods = string.Join(
+                        Environment.NewLine,
+                        overlappingRates.Select(rate =>
+                            $"- {rate.StartRate:dd-MM-yyyy} through {rate.EndRate:dd-MM-yyyy}"));
+
+                    validationMessages.Add(
+                        $"The new rate overlaps the following existing period(s):{Environment.NewLine}" +
+                        overlappingPeriods);
+                }
+                else
+                {
+                    var previousRate = existingRates
+                        .Where(rate => rate.EndRate.Date < newStartDate)
+                        .OrderByDescending(rate => rate.EndRate)
+                        .FirstOrDefault();
+
+                    var nextRate = existingRates
+                        .Where(rate => rate.StartRate.Date > newEndDate)
+                        .OrderBy(rate => rate.StartRate)
+                        .FirstOrDefault();
+
+                    if (previousRate != null)
+                    {
+                        var expectedStartDate = previousRate.EndRate.Date.AddDays(1);
+                        if (newStartDate != expectedStartDate)
+                        {
+                            validationMessages.Add(
+                                $"The previous rate ends on {previousRate.EndRate:dd-MM-yyyy}. " +
+                                $"The expected start date is {expectedStartDate:dd-MM-yyyy}, " +
+                                $"but {newStartDate:dd-MM-yyyy} was entered.");
+                        }
+                    }
+
+                    if (nextRate != null)
+                    {
+                        var expectedEndDate = nextRate.StartRate.Date.AddDays(-1);
+                        if (newEndDate != expectedEndDate)
+                        {
+                            validationMessages.Add(
+                                $"The next rate starts on {nextRate.StartRate:dd-MM-yyyy}. " +
+                                $"The expected end date is {expectedEndDate:dd-MM-yyyy}, " +
+                                $"but {newEndDate:dd-MM-yyyy} was entered.");
+                        }
+                    }
+                }
+            }
+
+            if (validationMessages.Count == 0)
+                return true;
+
+            var message =
+                $"This new rate does not connect correctly to the existing rate periods.{Environment.NewLine}{Environment.NewLine}" +
+                $"{string.Join(Environment.NewLine + Environment.NewLine, validationMessages)}{Environment.NewLine}{Environment.NewLine}" +
+                "Do you want to save the rate anyway?";
+
+            return _dialogService.ShowYesNo(message, "Rate period warning");
         }
 
         private void cancelRate()
