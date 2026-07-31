@@ -79,8 +79,13 @@ public class LibPriceRate
 
         if (costCategory.EnergySubType.Id >= 5)
         {
-            _rates = (await _rateRepo.SelectByCostCategoryAndDate(energyTypeId, costCategory.Id, periodicData.ValueX, periodicData.ValueX, tarifGroupId)).ToList();
-            rate = _rates.Where(x => periodicData.ValueX >= x.StartRate && periodicData.ValueX <= x.EndRate).FirstOrDefault();
+            var rates = await getByCostCategoryAndDate(
+                energyTypeId,
+                costCategory.Id,
+                periodicData.ValueX,
+                periodicData.ValueX,
+                tarifGroupId);
+            rate = rates.FirstOrDefault(x => periodicData.ValueX >= x.StartRate && periodicData.ValueX <= x.EndRate);
 
             if (rate == null)
             {
@@ -120,7 +125,16 @@ public class LibPriceRate
     private List<Models.Rate> _lastRate = new();
     private async Task<Models.Rate?> getLastRateByDate(long energyTypeId, long costCategoryId, DateTime lastDate, long tarifGroupId)
     {
-        var rate = _lastRate.Where(x => x.CostCategory.Id == costCategoryId
+        var rate = _rates.Where(x => x.CostCategory.Id == costCategoryId
+                                  && x.TariffGroup.Id == tarifGroupId
+                                  && x.EnergyType.Id == energyTypeId
+                                  && x.StartRate.Date <= lastDate.Date)
+                         .OrderByDescending(o => o.StartRate)
+                         .FirstOrDefault();
+        if (rate != null)
+            return rate;
+
+        rate = _lastRate.Where(x => x.CostCategory.Id == costCategoryId
                                      && x.TariffGroup.Id == tarifGroupId
                                      && x.EnergyType.Id == energyTypeId
                                      && x.StartRate.Date <= lastDate.Date)
@@ -138,15 +152,25 @@ public class LibPriceRate
     }
 
     private List<Models.Rate> _rates = new();
+    private HashSet<string> _loadedRateKeys = new();
     private async Task<List<Models.Rate>> getByCostCategoryAndDate(long energyTypeId, long costCategoryId, DateTime startDate, DateTime endDate, long tarifGroupId)
     {
-        var rates = _rates.Where(x => x.EnergyType.Id == energyTypeId && x.CostCategory.Id == costCategoryId && x.TariffGroup.Id == tarifGroupId && (x.StartRate.Date <= endDate.Date && x.EndRate.Date >= startDate.Date)).ToList();
-        if (rates != null && rates.Count > 0)
-            return rates;
+        var key = $"{energyTypeId}:{costCategoryId}:{tarifGroupId}";
+        if (_loadedRateKeys.Add(key))
+        {
+            var rates = await _rateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(
+                costCategoryId,
+                energyTypeId,
+                tarifGroupId);
+            _rates.AddRange(rates);
+        }
 
-        rates = (await _rateRepo.SelectByCostCategoryAndDate(energyTypeId, costCategoryId, startDate, endDate, tarifGroupId)).ToList();
-        _rates.AddRange(rates);
-        return rates;
+        return _rates.Where(x => x.EnergyType.Id == energyTypeId
+                              && x.CostCategory.Id == costCategoryId
+                              && x.TariffGroup.Id == tarifGroupId
+                              && x.StartRate.Date <= endDate.Date
+                              && x.EndRate.Date >= startDate.Date)
+                     .ToList();
     }
 
     #endregion

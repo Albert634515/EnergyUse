@@ -19,6 +19,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
     private readonly ISettingsService _settings;
     private bool _isLoaded;
     private bool _isLoadingSettings;
+    private bool _suppressChartUpdates;
 
     public ChartDefaultLiveChartsViewModel(
         Address address,
@@ -48,14 +49,23 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
 
     public void SafeUpdateChart()
     {
-        if (_isLoaded)
+        if (_isLoaded && !_suppressChartUpdates)
             UpdateChart();
+    }
+
+    public void SetSelection(Address address, EnergyType energyType)
+    {
+        _suppressChartUpdates = true;
+        CurrentAddress = address;
+        CurrentEnergyType = energyType;
+        _suppressChartUpdates = false;
+        SafeUpdateChart();
     }
 
     // ---------------------------------------------------------
     // ADDRESS + ENERGYTYPE
     // ---------------------------------------------------------
-    
+
     private Address? _currentAddress;
     public Address? CurrentAddress
     {
@@ -68,7 +78,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
     {
         get => _currentEnergyType;
         set { if (SetProperty(ref _currentEnergyType, value)) SafeUpdateChart(); }
-    }    
+    }
 
     // ---------------------------------------------------------
     // COMPARE WITH

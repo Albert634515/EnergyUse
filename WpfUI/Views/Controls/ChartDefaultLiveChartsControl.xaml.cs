@@ -28,9 +28,7 @@ namespace WpfUI.Views.Controls
 
         public void Refresh(Address address, EnergyType energyType, bool addressChanged)
         {
-            ViewModel.CurrentAddress = address;
-            ViewModel.CurrentEnergyType = energyType;
-            ViewModel.SafeUpdateChart();
+            ViewModel.SetSelection(address, energyType);
         }
     }
 }

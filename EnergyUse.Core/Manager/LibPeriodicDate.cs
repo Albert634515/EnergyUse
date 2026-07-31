@@ -120,6 +120,10 @@ public class LibPeriodicDate
         {
             if (costCategory.CalculationType.Id == 1 || costCategory.CalculationType.Id == 3)
             {
+                var vatTarifs = costCategory.CalculateVat
+                    ? await _vatTarifRepo.GetByCostCategoryId(costCategory.Id)
+                    : new List<Models.VatTarif>();
+
                 //Loop data
                 foreach (PeriodicDataPerDay periodicData in _periodicDataList)
                 {
@@ -141,11 +145,16 @@ public class LibPeriodicDate
 
                     if (costCategory.CalculateVat)
                     {
-                        vatTarif = await _vatTarifRepo.GetByCostCategoryIdAndDate(costCategory.Id, periodicDate);
+                        vatTarif = vatTarifs.FirstOrDefault(x =>
+                            x.StartDate.Date <= periodicDate.Date &&
+                            x.EndDate.Date >= periodicDate.Date);
 
                         if (vatTarif == null)
                         {
-                            vatTarif = await _vatTarifRepo.GetLastTarif(costCategory.Id, periodicDate);
+                            vatTarif = vatTarifs
+                                .Where(x => x.StartDate.Date <= periodicDate.Date)
+                                .OrderByDescending(x => x.StartDate)
+                                .FirstOrDefault();
                             lastAvailableVatRateUsed = (vatTarif != null);
                         }
 
@@ -529,11 +538,8 @@ public class LibPeriodicDate
 
         foreach (PeriodicDataPerDay periodicDataPerDay in _periodicDataList)
         {
-            var nettingUsed = false;
-            // Check if there is netting is used
-            var nettingPerc = await _nettingRepo.SelectByEnergyTypeAndDate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX);
-            if (nettingPerc != null && nettingPerc.Rate != 0)
-                nettingUsed = true;
+            var netting = getNetting(periodicDataPerDay.ValueX);
+            var nettingUsed = netting != null && netting.Rate != 0;
 
             if (_parameterPeriod.ShowType == ShowType.Value)
             {
@@ -544,7 +550,7 @@ public class LibPeriodicDate
                 }
 
                 periodicDataPerDay.RateNormal = (await libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.Normal, _parameterPeriod.TarifGroupId)).Rate;
-                periodicDataPerDay.ValueYMonetaryNormal = periodicDataPerDay.ValueYNormal * periodicDataPerDay.RateNormal;                              
+                periodicDataPerDay.ValueYMonetaryNormal = periodicDataPerDay.ValueYNormal * periodicDataPerDay.RateNormal;
 
                 if (_parameterPeriod.EnergyType.HasEnergyReturn)
                 {
@@ -895,12 +901,19 @@ public class LibPeriodicDate
 
     private decimal getNettingPerc(DateTime day)
     {
-        var netting = _nettingList.Where(x => x.StartDate.Date <= day.Date && x.EndDate.Date >= day.Date).FirstOrDefault();
+        var netting = getNetting(day);
         decimal nettingPerc = 1;
         if (netting != null)
             nettingPerc = (netting.Rate / 100);
 
         return nettingPerc;
+    }
+
+    private Models.Netting? getNetting(DateTime day)
+    {
+        return _nettingList.FirstOrDefault(x =>
+            x.StartDate.Date <= day.Date &&
+            x.EndDate.Date >= day.Date);
     }
 
     #endregion
