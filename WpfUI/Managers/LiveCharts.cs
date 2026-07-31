@@ -5,10 +5,42 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using System.Collections.ObjectModel;
 
+using EnergyUse.Core.Manager;
+
 namespace WpfUI.Managers;
 
 public static class LiveChartsManager
 {
+    private static readonly Lazy<LibSettings> _settings =
+        new(() => new LibSettings(Config.GetDbFileName()));
+
+    public static Axis ApplyYAxisStyle(Axis axis)
+    {
+        var lineColor = _settings.Value.GetColorSetting("LineColorChart", System.Drawing.Color.LightGray);
+        var backgroundColor = _settings.Value.GetColorSetting("BackgroundColorChart", System.Drawing.Color.White);
+        var labelColor = _settings.Value.GetColorSetting("LabelsYColorChart", System.Drawing.Color.Black);
+        lineColor = ensureVisibleLineColor(lineColor, backgroundColor);
+
+        axis.LabelsPaint = new SolidColorPaint((uint)labelColor.ToArgb());
+        axis.SeparatorsPaint = new SolidColorPaint((uint)lineColor.ToArgb()) { StrokeThickness = 2 };
+        return axis;
+    }
+
+    private static System.Drawing.Color ensureVisibleLineColor(
+        System.Drawing.Color lineColor,
+        System.Drawing.Color backgroundColor)
+    {
+        var sameAsBackground = lineColor.R == backgroundColor.R &&
+                               lineColor.G == backgroundColor.G &&
+                               lineColor.B == backgroundColor.B;
+        if (!lineColor.IsEmpty && lineColor.A > 0 && !sameAsBackground)
+            return lineColor;
+
+        return backgroundColor.GetBrightness() < 0.5f
+            ? System.Drawing.Color.LightGray
+            : System.Drawing.Color.DarkGray;
+    }
+
     public static List<ISeries> ConvertSeriesModelsToISeries(List<SeriesModel> models)
     {
         var result = new List<ISeries>();

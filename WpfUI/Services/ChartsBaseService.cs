@@ -27,7 +27,7 @@ public abstract class ChartBaseService
         if (minZero)
             axis.MinLimit = 0;
 
-        return axis;
+        return LiveChartsManager.ApplyYAxisStyle(axis);
     }
 
     protected ShowBy ResolveShowBy(bool cat, bool sub, bool tot)

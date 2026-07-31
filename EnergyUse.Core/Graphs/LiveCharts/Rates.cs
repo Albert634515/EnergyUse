@@ -5,11 +5,24 @@ namespace EnergyUse.Core.Graphs.LiveCharts;
 public class Rates : Base
 {
     public Rates(ParameterGraph graphParameter)
+        : this(graphParameter, buildChart: true)
+    {
+    }
+
+    private Rates(ParameterGraph graphParameter, bool buildChart)
     {
         _graphParameter = graphParameter;
         _unitOfWork = new UnitOfWork.Graphs(_graphParameter.DbName);
 
-        getChart().GetAwaiter().GetResult();
+        if (buildChart)
+            getChart().GetAwaiter().GetResult();
+    }
+
+    public static async Task<Rates> CreateAsync(ParameterGraph graphParameter)
+    {
+        var chart = new Rates(graphParameter, buildChart: false);
+        await chart.getChart();
+        return chart;
     }
 
     private async Task getChart()
@@ -21,7 +34,11 @@ public class Rates : Base
             if (_graphParameter.EnergyTypeList != null && _graphParameter.EnergyTypeList.Count > 0)
             {
                 if (_graphParameter.ShowType == Common.Enums.ShowType.Unit)
-                    await getChartSeriesPerCostCategoryAndUnit(_graphParameter.EnergyTypeList, _graphParameter.From, _graphParameter.Till, 1);
+                    await getChartSeriesPerCostCategoryAndUnit(
+                        _graphParameter.EnergyTypeList,
+                        _graphParameter.From,
+                        _graphParameter.Till,
+                        _graphParameter.TarifGroupId);
                 else
                     await getChartSeriesPerCostCategory(_graphParameter.EnergyTypeList);
             }
@@ -37,6 +54,29 @@ public class Rates : Base
     private async Task getChartSeriesPerCostCategoryAndUnit(List<Models.EnergyType> energyTypes, DateTime startDate, DateTime endDate, Int64 tarifGroupId)
     {
         var typeCounter = -1;
+        var rateCache = new Dictionary<(long EnergyTypeId, long CostCategoryId, long TariffGroupId), List<Models.Rate>>();
+
+        async Task<List<Models.Rate>> getRates(long energyTypeId, long costCategoryId, long categoryTariffGroupId)
+        {
+            var key = (energyTypeId, costCategoryId, categoryTariffGroupId);
+            if (!rateCache.TryGetValue(key, out var rates))
+            {
+                rates = (await _unitOfWork!.RateRepo.SelectByCostCategoryAndDate(
+                    energyTypeId,
+                    costCategoryId,
+                    startDate,
+                    endDate,
+                    categoryTariffGroupId)).ToList();
+                rateCache[key] = rates;
+            }
+
+            return rates;
+        }
+
+        static Models.Rate? getRateForDate(IEnumerable<Models.Rate> rates, DateTime date) =>
+            rates.Where(rate => rate.StartRate.Date <= date.Date && rate.EndRate.Date >= date.Date)
+                 .OrderByDescending(rate => rate.StartRate)
+                 .FirstOrDefault();
 
         foreach (var energyType in energyTypes)
         {
@@ -45,10 +85,12 @@ public class Rates : Base
 
             // use available categories as fallback
             List<Models.CostCategory> costCategoryList = _graphParameter.CostCategoryList ?? new List<Models.CostCategory>();
-            DateTime chartStartDate = startDate;
+            DateTime chartStartDate = startDate.Day == 1
+                ? startDate.Date
+                : new DateTime(startDate.Year, startDate.Month, 1).AddMonths(1);
             DateTime chartEndDate = endDate;
 
-            while (chartStartDate.AddDays(1) <= chartEndDate)
+            while (chartStartDate <= chartEndDate)
             {
                 if (chartStartDate.Day == 1)
                 {
@@ -56,15 +98,13 @@ public class Rates : Base
                     foreach (Models.CostCategory mainCostCategory in costCategoryList)
                     {
                         string unitName = $"{mainCostCategory.Name} {mainCostCategory.Unit}";
-                        var tarifGroup = mainCostCategory.TariffGroup != null && mainCostCategory.TariffGroup.Id <= 0
-                            ? mainCostCategory.TariffGroup
-                            : _graphParameter.Address?.TariffGroup;
-                        if (tarifGroup != null)
-                            tarifGroupId = tarifGroup.Id;
+                        var categoryTariffGroupId = mainCostCategory.TariffGroup?.Id
+                                                    ?? _graphParameter.Address?.TariffGroup?.Id
+                                                    ?? tarifGroupId;
 
                         // Calculate per main category
-                        var ratesEnum = await _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyTypeId, mainCostCategory.Id, chartStartDate, chartStartDate, tarifGroupId);
-                        Models.Rate? rate = ratesEnum.FirstOrDefault();
+                        var ratesEnum = await getRates(energyTypeId, mainCostCategory.Id, categoryTariffGroupId);
+                        Models.Rate? rate = getRateForDate(ratesEnum, chartStartDate);
                         PeriodicData? periodicData;
                         if (rate != null)
                         {
@@ -90,9 +130,11 @@ public class Rates : Base
                                 unitName = $"{mainCostCategory.Name} {otherCostCategory.Unit}";
 
                                 //Toevoegen sub cat
-                                var tariffGroupIdForOther = otherCostCategory.TariffGroup?.Id ?? 0;
-                                var ratesEnum2 = await _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyTypeId, otherCostCategory.Id, chartStartDate, chartStartDate, (long)tariffGroupIdForOther);
-                                rate = ratesEnum2.FirstOrDefault();
+                                var tariffGroupIdForOther = otherCostCategory.TariffGroup?.Id
+                                                            ?? _graphParameter.Address?.TariffGroup?.Id
+                                                            ?? tarifGroupId;
+                                var ratesEnum2 = await getRates(energyTypeId, otherCostCategory.Id, tariffGroupIdForOther);
+                                rate = getRateForDate(ratesEnum2, chartStartDate);
                                 if (rate != null)
                                 {
                                     periodicData = _periodicDataList.Where(x => x.ValueXString == unitName && x.ValueXDate == chartStartDate).FirstOrDefault();
@@ -114,7 +156,7 @@ public class Rates : Base
                     }
                 }
 
-                chartStartDate = chartStartDate.AddDays(1);
+                chartStartDate = chartStartDate.AddMonths(1);
             }
 
             // Creating a list of series (now core model SeriesModel)
@@ -128,7 +170,7 @@ public class Rates : Base
                     EnergyTypeId = energyTypeId,
                     Points = GetValueListY(item),
                     ScalesYAt = typeCounter,
-                    IsLine = true,
+                    IsLine = true
                 };
 
                 _serieslist.Add(series);

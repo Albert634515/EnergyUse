@@ -152,13 +152,13 @@ namespace WpfUI.Services
             {
                 axisPosition = axisPosition == AxisPosition.End ? AxisPosition.Start : AxisPosition.End;
 
-                axes.Add(new Axis
+                axes.Add(LiveChartsManager.ApplyYAxisStyle(new Axis
                 {
                     Name = et.Unit.Description,
                     MinLimit = et.HasEnergyReturn ? null : 0,
                     Position = axisPosition,
                     TextSize = 15
-                });
+                }));
             }
 
             return axes;

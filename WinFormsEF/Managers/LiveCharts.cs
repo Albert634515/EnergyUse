@@ -369,7 +369,16 @@ public class LiveCharts
     {
         var libSettings = _libSettings.Value;
         var lineColor = libSettings.GetColorSetting("LineColorChart", Color.LightGray).ToSKColor();
+        var backgroundColor = libSettings.GetColorSetting("BackgroundColorChart", Color.White);
         var labelColor = libSettings.GetColorSetting("LabelsYColorChart", Color.Black).ToSKColor();
+
+        if (lineColor.Alpha == 0 ||
+            lineColor.Red == backgroundColor.R &&
+            lineColor.Green == backgroundColor.G &&
+            lineColor.Blue == backgroundColor.B)
+        {
+            lineColor = (backgroundColor.GetBrightness() < 0.5f ? Color.LightGray : Color.DarkGray).ToSKColor();
+        }
 
         var axis = new Axis
         {

@@ -15,6 +15,7 @@ public partial class ucChartRatesLiveCharts : UserControl
     private EnergyUse.Core.UnitOfWork.Graphs _unitOfWork { get; set; }
     private EnergyUse.Models.Address _currentAddress { get; set; }
     private EnergyUse.Models.EnergyType _currentEnergyType { get; set; }
+    private int _chartUpdateVersion;
 
     private CartesianChart _cartesianChart;
 
@@ -53,11 +54,7 @@ public partial class ucChartRatesLiveCharts : UserControl
 
     private void chkListCostCategory_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (_initSettings == true) { return; }
-
-        setCurrentCheckListBox(chkListCostCategory);
-
-        ResetChart();
+        // ItemCheck handles persisted selections and chart refreshes.
     }
 
     private void chkListCostCategory_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -71,6 +68,7 @@ public partial class ucChartRatesLiveCharts : UserControl
         // Switch on event handler
         clb.ItemCheck += chkListCostCategory_ItemCheck;
 
+        setCurrentCheckListBox(chkListCostCategory);
         SetChart();
     }
 
@@ -78,19 +76,23 @@ public partial class ucChartRatesLiveCharts : UserControl
     {
         if (_initSettings == true) { return; }
 
+        ensureValidDateRange(fromDateChanged: true);
         setCurrentDtpTag(dtpFrom);
+        SetChart();
     }
 
     private void dtpTill_ValueChanged(object sender, EventArgs e)
     {
         if (_initSettings == true) { return; }
 
+        ensureValidDateRange(fromDateChanged: false);
         setCurrentDtpTag(dtpTill);
+        SetChart();
     }
 
     private void rbType_CheckedChanged(object sender, EventArgs e)
     {
-        if (_initSettings == true) { return; }
+        if (_initSettings == true || sender is RadioButton radioButton && !radioButton.Checked) { return; }
 
         _initSettings = true;
         setCostCategory(_currentEnergyType);
@@ -103,7 +105,7 @@ public partial class ucChartRatesLiveCharts : UserControl
 
     #region Methods
 
-    public void SetChart()
+    public async void SetChart()
     {
         if (_currentEnergyType != null)
         {
@@ -115,25 +117,35 @@ public partial class ucChartRatesLiveCharts : UserControl
             graphParameter.From = dtpFrom.Value;
             graphParameter.Till = dtpTill.Value;
             graphParameter.CostCategoryList = getSelectedCostCategories();
-            graphParameter.TarifGroupId = 1;
+            graphParameter.TarifGroupId = _currentAddress?.TariffGroup?.Id ?? 1;
 
             Cursor.Current = Cursors.WaitCursor;
-            if (rbUnit.Checked)
-                getChartSeriesPerCostCategoryAndUnit(graphParameter);
-            else
-                getChartSeriesPerCostCategory(graphParameter);
-            Cursor.Current = Cursors.Default;
+            var updateVersion = ++_chartUpdateVersion;
+            try
+            {
+                var chartRates = await EnergyUse.Core.Graphs.LiveCharts.Rates.CreateAsync(graphParameter);
+                if (updateVersion != _chartUpdateVersion)
+                    return;
+
+                _chartRates = chartRates;
+                addChart(Period.Day, _chartRates.GetSeries());
+            }
+            finally
+            {
+                if (updateVersion == _chartUpdateVersion)
+                    Cursor.Current = Cursors.Default;
+            }
         }
     }
 
     private void addChart(Period periodType, List<ISeries> serieslist)
     {
+        panel1.Controls.Clear();
         if (serieslist == null || serieslist.Count == 0)
             return;
 
         string title = Managers.Languages.GetResourceString("ChartRatesTitle", "Rates");
 
-        panel1.Controls.Clear();
         _cartesianChart = Managers.LiveCharts.GetDefaultChart(periodType, serieslist, title, !_currentEnergyType.HasEnergyReturn);
 
         panel1.Controls.Add(_cartesianChart);
@@ -147,22 +159,6 @@ public partial class ucChartRatesLiveCharts : UserControl
 
         var serieslist = Managers.LiveCharts.ConvertSeriesModelsToISeries(seriesModels);
         addChart(periodType, serieslist);
-    }
-
-    private void getChartSeriesPerCostCategory(ParameterGraph graphParameter)
-    {
-        _chartRates = new EnergyUse.Core.Graphs.LiveCharts.Rates(graphParameter);
-
-        // Convert core SeriesModel -> ISeries via overload
-        addChart(Period.Day, _chartRates.GetSeries());
-    }
-
-    private void getChartSeriesPerCostCategoryAndUnit(ParameterGraph graphParameter)
-    {
-        _chartRates = new EnergyUse.Core.Graphs.LiveCharts.Rates(graphParameter);
-
-        // Convert core SeriesModel -> ISeries via overload
-        addChart(Period.Day, _chartRates.GetSeries());
     }
 
     private List<EnergyUse.Models.CostCategory> getSelectedCostCategories()
@@ -196,14 +192,13 @@ public partial class ucChartRatesLiveCharts : UserControl
 
     private void setCostCategory(EnergyUse.Models.EnergyType energyType)
     {
-        var currentSettingId = chkListCostCategory.Tag.ToString();
+        var currentSettingId = getCategorySettingId(energyType.Id);
         var setting = getCurrentSetting(currentSettingId);
+        var fromLegacySetting = setting == null;
+        setting ??= getCurrentSetting(chkListCostCategory.Tag.ToString());
         List<EnergyUse.Models.CostCategory> costCategories = new();
         if (energyType != null)
             costCategories = _unitOfWork.CostCategoryRepo.SelectByEnergyTypeId(energyType.Id).GetAwaiter().GetResult().ToList();
-
-        if (rbUnit.Checked)
-            costCategories = costCategories.Where(x => x.EnergySubType.Id >= 1 && x.EnergySubType.Id <= 4).ToList();
 
         chkListCostCategory.Items.Clear();
         foreach (var costCategory in costCategories)
@@ -215,6 +210,15 @@ public partial class ucChartRatesLiveCharts : UserControl
             chkListCostCategory.Items.Add(costCategory, categoryChecked);
         }
 
+        if (fromLegacySetting && chkListCostCategory.CheckedItems.Count == 0)
+        {
+            for (var index = 0; index < chkListCostCategory.Items.Count; index++)
+                chkListCostCategory.SetItemChecked(index, true);
+        }
+
+        if (fromLegacySetting)
+            setCurrentCheckListBox(chkListCostCategory);
+
         ((ListBox)chkListCostCategory).DisplayMember = "Name";
     }
 
@@ -222,7 +226,15 @@ public partial class ucChartRatesLiveCharts : UserControl
     {
         if (_initSettings) { return; }
 
-        setDefaultPeriodSettings();
+        _initSettings = true;
+        try
+        {
+            setDefaultPeriodSettings();
+        }
+        finally
+        {
+            _initSettings = false;
+        }
 
         SetChart();
     }
@@ -239,6 +251,7 @@ public partial class ucChartRatesLiveCharts : UserControl
 
         dtpFrom.Value = currentDateFrom;
         dtpTill.Value = currentDateTill;
+        ensureValidDateRange(fromDateChanged: true);
     }
 
     private DateTime getCurrentDateByDatePicker(DateTimePicker dateTimePicker)
@@ -260,13 +273,38 @@ public partial class ucChartRatesLiveCharts : UserControl
 
     private void setCurrentCheckListBox(CheckedListBox chkListCostCategory)
     {
-        var currentSettingId = chkListCostCategory.Tag.ToString();
+        var currentSettingId = getCategorySettingId(_currentEnergyType.Id);
         var currentValue = string.Empty;
         var selectedCostCategories = getSelectedCostCategories();
         foreach (var costCategory in selectedCostCategories)
             currentValue += $"{costCategory.Id};";
 
         setCurrentSetting(currentSettingId, currentValue);
+    }
+
+    private string getCategorySettingId(long energyTypeId) =>
+        $"{chkListCostCategory.Tag}{energyTypeId}";
+
+    private void ensureValidDateRange(bool fromDateChanged)
+    {
+        if (dtpFrom.Value.Date <= dtpTill.Value.Date)
+            return;
+
+        var wasInitializing = _initSettings;
+        _initSettings = true;
+        try
+        {
+            if (fromDateChanged)
+                dtpTill.Value = dtpFrom.Value;
+            else
+                dtpFrom.Value = dtpTill.Value;
+        }
+        finally
+        {
+            _initSettings = wasInitializing;
+        }
+
+        setCurrentDtpTag(fromDateChanged ? dtpTill : dtpFrom);
     }
 
     private void setCurrentDtpTag(DateTimePicker dtp)

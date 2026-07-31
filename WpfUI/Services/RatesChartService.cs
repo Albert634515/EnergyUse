@@ -14,7 +14,7 @@ namespace WpfUI.Services;
 
 public class RatesChartService : ChartBaseService
 {
-    public RatesChartResult BuildChart(
+    public async Task<RatesChartResult> BuildChartAsync(
         Address address,
         EnergyType energyType,
         IEnumerable<CostCategory> costCategories,
@@ -36,17 +36,17 @@ public class RatesChartService : ChartBaseService
             TarifGroupId = address?.TariffGroup?.Id ?? 1
         };
 
-        var chart = new Rates(p);
+        var chart = await Rates.CreateAsync(p);
 
         var series = ConvertSeries(chart.GetSeries());
 
         var xAxis = new Axis
         {
-            Labeler = value => new DateTime((long)value).ToString("dd-MM")
+            Labeler = value => new DateTime((long)value).ToString("dd-MM-yyyy")
         };
         var yAxis = CreateYAxis(energyType.Unit.Description, !energyType.HasEnergyReturn);
 
-        return new RatesChartResult(series, new List<Axis> { xAxis }, new List<Axis> { yAxis });
+        return new RatesChartResult(chart, series, new List<Axis> { xAxis }, new List<Axis> { yAxis });
     }
 
     public void ExportToExcel(EnergyType energyType, Rates chart)
@@ -69,6 +69,7 @@ public class RatesChartService : ChartBaseService
 }
 
 public record RatesChartResult(
+    Rates Chart,
     List<ISeries> Series,
     List<Axis> XAxes,
     List<Axis> YAxes);

@@ -13,6 +13,7 @@ using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WpfUI.Managers;
 using WpfUI.Models;
 using WpfUI.Services;
 
@@ -117,7 +118,8 @@ namespace WpfUI.ViewModels
                     break;
             }
 
-            result.YAxes.Add(new Axis { MinLimit = energyType.HasEnergyReturn ? null : 0 });
+            result.YAxes.Add(LiveChartsManager.ApplyYAxisStyle(
+                new Axis { MinLimit = energyType.HasEnergyReturn ? null : 0 }));
 
             result.Labels = compare.GetResultLabelsPerPeriod(energyType);
             result.ExportData = compare.GetDataList();
