@@ -9,10 +9,10 @@ public class Rates : Base
         _graphParameter = graphParameter;
         _unitOfWork = new UnitOfWork.Graphs(_graphParameter.DbName);
 
-        getChart();
+        getChart().GetAwaiter().GetResult();
     }
 
-    private void getChart()
+    private async Task getChart()
     {
         try
         {
@@ -21,9 +21,9 @@ public class Rates : Base
             if (_graphParameter.EnergyTypeList != null && _graphParameter.EnergyTypeList.Count > 0)
             {
                 if (_graphParameter.ShowType == Common.Enums.ShowType.Unit)
-                    getChartSeriesPerCostCategoryAndUnit(_graphParameter.EnergyTypeList, _graphParameter.From, _graphParameter.Till, 1);
+                    await getChartSeriesPerCostCategoryAndUnit(_graphParameter.EnergyTypeList, _graphParameter.From, _graphParameter.Till, 1);
                 else
-                    getChartSeriesPerCostCategory(_graphParameter.EnergyTypeList);
+                    await getChartSeriesPerCostCategory(_graphParameter.EnergyTypeList);
             }
         }
         catch (Exception)
@@ -34,7 +34,7 @@ public class Rates : Base
 
     #region GetChartSeriesPerCostCategoryAndUnit
 
-    private void getChartSeriesPerCostCategoryAndUnit(List<Models.EnergyType> energyTypes, DateTime startDate, DateTime endDate, Int64 tarifGroupId)
+    private async Task getChartSeriesPerCostCategoryAndUnit(List<Models.EnergyType> energyTypes, DateTime startDate, DateTime endDate, Int64 tarifGroupId)
     {
         var typeCounter = -1;
 
@@ -63,7 +63,7 @@ public class Rates : Base
                             tarifGroupId = tarifGroup.Id;
 
                         // Calculate per main category
-                        var ratesEnum = _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyTypeId, mainCostCategory.Id, chartStartDate, chartStartDate, tarifGroupId) ?? Enumerable.Empty<Models.Rate>();
+                        var ratesEnum = await _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyTypeId, mainCostCategory.Id, chartStartDate, chartStartDate, tarifGroupId);
                         Models.Rate? rate = ratesEnum.FirstOrDefault();
                         PeriodicData? periodicData;
                         if (rate != null)
@@ -91,7 +91,7 @@ public class Rates : Base
 
                                 //Toevoegen sub cat
                                 var tariffGroupIdForOther = otherCostCategory.TariffGroup?.Id ?? 0;
-                                var ratesEnum2 = _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyTypeId, otherCostCategory.Id, chartStartDate, chartStartDate, (long)tariffGroupIdForOther) ?? Enumerable.Empty<Models.Rate>();
+                                var ratesEnum2 = await _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyTypeId, otherCostCategory.Id, chartStartDate, chartStartDate, (long)tariffGroupIdForOther);
                                 rate = ratesEnum2.FirstOrDefault();
                                 if (rate != null)
                                 {
@@ -140,7 +140,7 @@ public class Rates : Base
 
     #region GetChartSeriesPerCostCategory
 
-    private void getChartSeriesPerCostCategory(List<Models.EnergyType> energyTypes)
+    private async Task getChartSeriesPerCostCategory(List<Models.EnergyType> energyTypes)
     {
         var typeCounter = -1;
 
@@ -161,7 +161,7 @@ public class Rates : Base
                 if (tarifGroup != null)
                     tarifGroupId = tarifGroup.Id;
 
-                var rateList = _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyType.Id, costCategory.Id, _graphParameter.From, _graphParameter.Till, tarifGroupId) ?? Enumerable.Empty<Models.Rate>();
+                var rateList = await _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyType.Id, costCategory.Id, _graphParameter.From, _graphParameter.Till, tarifGroupId);
                 foreach (Models.Rate rate in rateList.OrderBy(rate => rate.StartRate))
                 {
                     if (_graphParameter.ShowMonthlyDataPoints)

@@ -119,15 +119,15 @@ namespace WpfUI.ViewModels
 
         #region Methods
 
-        public void SetData()
+        public async void SetData()
         {
             MeterReadings.Clear();
 
             if (CurrentAddress == null || CurrentEnergyType == null)
                 return;
 
-            var list = _unitOfWork.MeterReadingRepo
-                .SelectByRange(FromDate, TillDate, CurrentEnergyType.Id, CurrentAddress.Id)
+            var list = (await _unitOfWork.MeterReadingRepo
+                .SelectByRange(FromDate, TillDate, CurrentEnergyType.Id, CurrentAddress.Id))
                 .OrderByDescending(x => x.RegistrationDate)
                 .ToList();
 

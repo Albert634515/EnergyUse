@@ -21,11 +21,12 @@ public class RepoNetting : RepoGeneral<Models.Netting>
                              .ToListAsync();
     }
 
-    public Models.Netting? SelectByEnergyTypeAndDate(long energyTypeId, DateTime nettingDate)
+    public async Task<Models.Netting?> SelectByEnergyTypeAndDate(long energyTypeId, DateTime nettingDate, CancellationToken cancellationToken = default)
     {
-        return _context.Nettings
+        return await _context.Nettings
                        .Include(e => e.EnergyType)
                        .Where(x => x.EnergyTypeId == energyTypeId && x.StartDate.Date <= nettingDate.Date && x.EndDate.Date >= nettingDate.Date)
-                       .FirstOrDefault();
+                       .FirstOrDefaultAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 }

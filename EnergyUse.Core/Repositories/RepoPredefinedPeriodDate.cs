@@ -12,12 +12,14 @@ public class RepoPredefinedPeriodDate : RepoGeneral<Models.PreDefinedPeriodDate>
         _context = dbContext;
     }
 
-    public IEnumerable<Models.PreDefinedPeriodDate> GetByPeriodId(long periodId)
+    public async Task<IEnumerable<Models.PreDefinedPeriodDate>> GetByPeriodId(long periodId, CancellationToken cancellationToken = default)
     {
-        return _context.PreDefinedPeriodDates
+        return await _context.PreDefinedPeriodDates
             .Include(e => e.EnergyType)
             .Include(t => t.TariffGroup)
             .Include(p => p.PreDefinedPeriod)
-            .Where(a => a.PreDefinedPeriodId == periodId);
+            .Where(a => a.PreDefinedPeriodId == periodId)
+            .ToListAsync(cancellationToken)
+            .ConfigureAwait(false);
     }
 }

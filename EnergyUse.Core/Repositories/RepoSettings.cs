@@ -1,5 +1,7 @@
 ﻿using EnergyUse.Core.Context;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace EnergyUse.Core.Repositories;
 
 public class RepoSettings : RepoGeneral<Models.Setting>
@@ -11,10 +13,10 @@ public class RepoSettings : RepoGeneral<Models.Setting>
         _context = dbContext;
     }
 
-    public Models.Setting? GetByKey(string key)
+    public async Task<Models.Setting?> GetByKey(string key, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.Setting>()
-                       .Where(s => s.Key == key)
-                       .FirstOrDefault();
+        return await _context.Set<Models.Setting>()
+                             .FirstOrDefaultAsync(s => s.Key == key, cancellationToken)
+                             .ConfigureAwait(false);
     }
 }

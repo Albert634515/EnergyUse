@@ -32,7 +32,7 @@ public partial class frmExport : Form
 
     private void setComboAddresses()
     {
-        var addressList = _controller.UnitOfWork.AddressRepo.GetAll();
+        var addressList = _controller.UnitOfWork.AddressRepo.GetAll().GetAwaiter().GetResult();
         bsAddresses.DataSource = addressList;
         cmbAddress.DataSource = bsAddresses;
 
@@ -51,7 +51,7 @@ public partial class frmExport : Form
         if (cmbAddress.SelectedIndex > -1)
         {
             address = (EnergyUse.Models.Address)cmbAddress.SelectedItem;
-            energyTypes = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(address.Id).ToList();
+            energyTypes = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(address.Id).GetAwaiter().GetResult().ToList();
             bsEnergyTypes.DataSource = energyTypes;
             cboEnergyType.DataSource = bsEnergyTypes;
 

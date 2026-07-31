@@ -29,7 +29,7 @@ public partial class frmPreDefinedPeriod : Form
 
     private void setPreDefinedPeriods()
     {
-        _controller.UnitOfWork.PreDefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
+        _controller.UnitOfWork.PreDefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().GetAwaiter().GetResult().ToList();
         bsPreDefinedPeriod.DataSource = _controller.UnitOfWork.PreDefinedPeriods;
     }
 

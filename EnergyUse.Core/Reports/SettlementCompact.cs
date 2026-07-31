@@ -1,4 +1,4 @@
-using EnergyUse.Models.Common;
+﻿using EnergyUse.Models.Common;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Layout;
@@ -21,7 +21,7 @@ public class SettlementCompact : SettlementBase
 
         var dest = System.IO.Path.GetTempPath();
         var fileName = $"SettlementCompact_{DateTime.Now:yyyyMMddHHmmss}.pdf";
-        Models.Address address = _unitOfWork.AddressRepo.Get(parameterSelection.AddressId);
+        Models.Address address = await _unitOfWork.AddressRepo.Get(parameterSelection.AddressId);
         PdfWriter writer = new(System.IO.Path.Combine(dest, fileName));
         PdfDocument pdf = new(writer);
         pdf.SetDefaultPageSize(PageSize.A4);
@@ -55,7 +55,7 @@ public class SettlementCompact : SettlementBase
             parameterPeriod.QuantityReduction = 1;
 
             List<PeriodicData> periodicData = await LibPeriodicDate.GetRangeAsync(parameterPeriod);
-            List<SettlementData> settlementDataList = _unitOfWork.CostCategoriesRepo.MapCostCategories(periodicData);
+            List<SettlementData> settlementDataList = await _unitOfWork.CostCategoriesRepo.MapCostCategories(periodicData);
             if (parameterSelection.ShowRates == false)
                 settlementDataList = mergeSettlementData(settlementDataList);
 
@@ -67,7 +67,7 @@ public class SettlementCompact : SettlementBase
             else
             {
                 table = new Table(_pointColumnWidths);
-                GetSectionHeader(table, getSectionHeaderText(item, address));
+                GetSectionHeader(table, await getSectionHeaderText(item, address));
                 document.Add(table);
                 document.Add(new Paragraph(""));
 
@@ -85,7 +85,7 @@ public class SettlementCompact : SettlementBase
        
         document.Add(new Paragraph(""));
 
-        table = getPayments(address.Id, parameterSelection.PreSelectedPeriodId, parameterSelection.StartRange, parameterSelection.EndRange);
+        table = await getPayments(address.Id, parameterSelection.PreSelectedPeriodId, parameterSelection.StartRange, parameterSelection.EndRange);
         document.Add(table);
 
         document.Close();

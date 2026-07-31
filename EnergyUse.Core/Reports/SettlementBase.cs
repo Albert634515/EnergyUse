@@ -1,4 +1,4 @@
-using EnergyUse.Models.Common;
+﻿using EnergyUse.Models.Common;
 using iText.Kernel.Font;
 using iText.Layout.Element;
 
@@ -389,51 +389,51 @@ public class SettlementBase : ReportBase
         return new Paragraph(headerText);
     }
 
-    internal string getSectionHeaderText(SelectedEnergyType item, Models.Address address)
+    internal async Task<string> getSectionHeaderText(SelectedEnergyType item, Models.Address address)
     {
         var headerText = string.Empty;
 
         headerText += $"{item.EnergyType.Name}";
         headerText += $", range: {Environment.NewLine}";
 
-        headerText += $" Normal: {getMeterPositionRange(item, address.Id, Common.Enums.SubEnergyType.Normal)}";
+        headerText += $" Normal: {await getMeterPositionRange(item, address.Id, Common.Enums.SubEnergyType.Normal)}";
         if (item.EnergyType.HasNormalAndLow)
         {
-            headerText += $", low: {getMeterPositionRange(item, address.Id, Common.Enums.SubEnergyType.Low)}";
+            headerText += $", low: {await getMeterPositionRange(item, address.Id, Common.Enums.SubEnergyType.Low)}";
         }
 
         if (item.EnergyType.HasEnergyReturn)
         {
             headerText += $"{Environment.NewLine}";
-            headerText += $" Return normal: {getMeterPositionRange(item, address.Id, Common.Enums.SubEnergyType.ReturnNormal)}";
+            headerText += $" Return normal: {await getMeterPositionRange(item, address.Id, Common.Enums.SubEnergyType.ReturnNormal)}";
 
             if (item.EnergyType.HasNormalAndLow)
             {
-                headerText += $", return low: {getMeterPositionRange(item, address.Id, Common.Enums.SubEnergyType.ReturnLow)}";
+                headerText += $", return low: {await getMeterPositionRange(item, address.Id, Common.Enums.SubEnergyType.ReturnLow)}";
             }
         }
 
         return headerText;
     }
 
-    private string getMeterPositionRange(SelectedEnergyType item, long addressId, Common.Enums.SubEnergyType subEnergyType)
+    private async Task<string> getMeterPositionRange(SelectedEnergyType item, long addressId, Common.Enums.SubEnergyType subEnergyType)
     {
         var positionRange = string.Empty;
 
-        decimal position = getMeterPosition(item.StartRange, item.EnergyType.Id, addressId, subEnergyType);
+        decimal position = await getMeterPosition(item.StartRange, item.EnergyType.Id, addressId, subEnergyType);
         positionRange += $"{(position < 0 ? $"?" : $"{position}")}";
 
-        position = getMeterPosition(item.EndRange, item.EnergyType.Id, addressId, subEnergyType);
+        position = await getMeterPosition(item.EndRange, item.EnergyType.Id, addressId, subEnergyType);
         positionRange += $" - {(position < 0 ? $"?" : $"{position}")}";
 
         return positionRange;
     }
 
-    private decimal getMeterPosition(DateTime registrationDate, long energyTypeId, long addressId, Common.Enums.SubEnergyType subEnergyType)
+    private async Task<decimal> getMeterPosition(DateTime registrationDate, long energyTypeId, long addressId, Common.Enums.SubEnergyType subEnergyType)
     {
         decimal position = -1;
 
-        var meterReading = _unitOfWork.MeterReadingRepo.SelectRow(registrationDate, energyTypeId, addressId);
+        var meterReading = await _unitOfWork.MeterReadingRepo.SelectRow(registrationDate, energyTypeId, addressId);
         if (meterReading != null)
         {
             position = subEnergyType switch
@@ -450,7 +450,7 @@ public class SettlementBase : ReportBase
         return position;
     }
 
-    internal Table getPayments(long addressId, long periodId, DateTime startRange, DateTime endRange)
+    internal async Task<Table> getPayments(long addressId, long periodId, DateTime startRange, DateTime endRange)
     {
         Table table = new(_pointColumnWidths);
         table.SetKeepTogether(true);
@@ -465,8 +465,8 @@ public class SettlementBase : ReportBase
 
         if (periodId > 0)
         {
-            payments = _unitOfWork.PaymentRepo.SelectByAddressAndPeriod(addressId, periodId).ToList();
-            var predefinedPeriodDates = _unitOfWork.PredefinedPeriodDateRepo.GetByPeriodId(periodId).ToList();
+            payments = (await _unitOfWork.PaymentRepo.SelectByAddressAndPeriod(addressId, periodId)).ToList();
+            var predefinedPeriodDates = (await _unitOfWork.PredefinedPeriodDateRepo.GetByPeriodId(periodId)).ToList();
 
             if (predefinedPeriodDates.Count > 0)
             {
@@ -483,7 +483,7 @@ public class SettlementBase : ReportBase
             }
         }
         else
-            payments = _unitOfWork.PaymentRepo.SelectByAddressAndRange(addressId, startRange, endRange).ToList();
+            payments = (await _unitOfWork.PaymentRepo.SelectByAddressAndRange(addressId, startRange, endRange)).ToList();
 
         if (payments.Count == 0)
         {

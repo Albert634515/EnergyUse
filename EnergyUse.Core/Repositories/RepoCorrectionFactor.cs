@@ -12,27 +12,31 @@ public class RepoCorrectionFactor : RepoGeneral<Models.CorrectionFactor>
         _context = dbContext;
     }
 
-    public IEnumerable<Models.CorrectionFactor> SelectByEnergyType(long energyTypeId)
+    public async Task<IEnumerable<Models.CorrectionFactor>> SelectByEnergyType(long energyTypeId, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.CorrectionFactor>()
-                       .Include(s => s.EnergyType)
-                       .Where(w=> w.EnergyTypeId == energyTypeId).ToList();
+        return await _context.Set<Models.CorrectionFactor>()
+                             .Include(s => s.EnergyType)
+                             .Where(w => w.EnergyTypeId == energyTypeId)
+                             .ToListAsync(cancellationToken)
+                             .ConfigureAwait(false);
     }
 
-    public IEnumerable<Models.CorrectionFactor> SelectByRange(DateTime startRange, DateTime endRange, long energyTypeId)
+    public async Task<IEnumerable<Models.CorrectionFactor>> SelectByRange(DateTime startRange, DateTime endRange, long energyTypeId, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.CorrectionFactor>()
+        return await _context.Set<Models.CorrectionFactor>()
                        .Include(s => s.EnergyType)
                        .Where(w => w.EnergyTypeId == energyTypeId && (w.StartFactor.Date <= endRange.Date || w.EndFactor.Date <= startRange.Date))
                        .OrderBy(o => o.StartFactor)
-                       .ToList();
+                       .ToListAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 
-    public Models.CorrectionFactor? SelectLastRow(long energyTypeId)
+    public async Task<Models.CorrectionFactor?> SelectLastRow(long energyTypeId, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.CorrectionFactor>()
+        return await _context.Set<Models.CorrectionFactor>()
                        .Where(w => w.EnergyTypeId == energyTypeId)
                        .OrderByDescending(o => o.StartFactor)
-                       .FirstOrDefault();
+                       .FirstOrDefaultAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 }

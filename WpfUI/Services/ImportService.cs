@@ -40,8 +40,8 @@ namespace WpfUI.Services
             var minDate = imported.Min(x => x.RegistrationDate);
             var maxDate = imported.Max(x => x.RegistrationDate);
 
-            uow.meterReadings = uow.MeterReadingRepo
-                .SelectByRange(minDate.AddDays(-7), maxDate, energyType.Id, address.Id)
+            uow.meterReadings = (await uow.MeterReadingRepo
+                .SelectByRange(minDate.AddDays(-7), maxDate, energyType.Id, address.Id))
                 .ToList();
 
             var meterList = (await uow.MeterRepo
@@ -59,8 +59,8 @@ namespace WpfUI.Services
                     .OrderBy(m => m.ActiveFrom)
                     .LastOrDefault();
 
-                var existing = uow.MeterReadingRepo
-                    .SelectByExists(importedReading.RegistrationDate.Date, importedReading.EnergyType.Id, meter.Id)
+                var existing = (await uow.MeterReadingRepo
+                    .SelectByExists(importedReading.RegistrationDate.Date, importedReading.EnergyType.Id, meter.Id))
                     .FirstOrDefault();
 
                 if (importedReading.RegistrationDate.Date == meter.ActiveFrom.Date)

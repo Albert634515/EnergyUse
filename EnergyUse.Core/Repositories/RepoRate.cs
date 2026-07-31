@@ -12,43 +12,47 @@ public class RepoRate : RepoGeneral<Models.Rate>
         _context = dbContext;
     }
 
-    public Models.Rate? SelectById(long rateId)
+    public async Task<Models.Rate?> SelectById(long rateId, CancellationToken cancellationToken = default)
     {
-        return _context.Rates
+        return await _context.Rates
                        .Include(c => c.CostCategory)
                        .Include(t => t.TariffGroup)
                        .Include(e => e.EnergyType)
-                       .Where(x => x.Id == rateId)
-                       .FirstOrDefault();
+                       .FirstOrDefaultAsync(x => x.Id == rateId, cancellationToken)
+                       .ConfigureAwait(false);
     }
 
-    public IEnumerable<Models.Rate> SelectByCostCategoryAndEnergyTypeAndTarifGroup(long costCategoryId, long energyTypeId, long tarifGroupId)
+    public async Task<IEnumerable<Models.Rate>> SelectByCostCategoryAndEnergyTypeAndTarifGroup(long costCategoryId, long energyTypeId, long tarifGroupId, CancellationToken cancellationToken = default)
     {
-        return _context.Rates
+        return await _context.Rates
                        .Include(c => c.CostCategory)
                        .Include(t => t.TariffGroup)
                        .Include(e => e.EnergyType)
                        .Where(x => x.CostCategoryId == costCategoryId 
                                 && x.EnergyTypeId == energyTypeId 
                                 && x.TariffGroupId == tarifGroupId)
-                       .OrderBy(o => o.StartRate);
+                       .OrderBy(o => o.StartRate)
+                       .ToListAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 
-    public IEnumerable<Models.Rate> SelectByCostCategoryAndDate(long energyTypeId, long costCategoryId, DateTime startDate, DateTime endDate, long tarifGroupId)
+    public async Task<IEnumerable<Models.Rate>> SelectByCostCategoryAndDate(long energyTypeId, long costCategoryId, DateTime startDate, DateTime endDate, long tarifGroupId, CancellationToken cancellationToken = default)
     {
-        return _context.Rates
+        return await _context.Rates
             .Include(c => c.CostCategory)
             .Include(t => t.TariffGroup)
             .Include(e => e.EnergyType)
             .Where(x => x.EnergyTypeId == energyTypeId 
                      && x.CostCategoryId == costCategoryId 
                      && x.TariffGroupId == tarifGroupId 
-                     && (x.StartRate.Date <= endDate.Date && x.EndRate.Date >= startDate.Date));
+                     && (x.StartRate.Date <= endDate.Date && x.EndRate.Date >= startDate.Date))
+            .ToListAsync(cancellationToken)
+            .ConfigureAwait(false);
     }
 
-    public Models.Rate? SelectLastRateByDate(long energyTypeId, long costCategoryId, DateTime lastDate, long tarifGroupId)
+    public async Task<Models.Rate?> SelectLastRateByDate(long energyTypeId, long costCategoryId, DateTime lastDate, long tarifGroupId, CancellationToken cancellationToken = default)
     {
-        return _context.Rates
+        return await _context.Rates
             .Include(c => c.CostCategory)
             .Include(t => t.TariffGroup)
             .Include(e => e.EnergyType)
@@ -56,19 +60,23 @@ public class RepoRate : RepoGeneral<Models.Rate>
                      && x.TariffGroupId == tarifGroupId
                      && x.EnergyTypeId == energyTypeId
                      && x.StartRate.Date <= lastDate.Date)
-             .OrderByDescending(o=> o.StartRate).FirstOrDefault();
+             .OrderByDescending(o=> o.StartRate)
+             .FirstOrDefaultAsync(cancellationToken)
+             .ConfigureAwait(false);
     }
 
-    public Models.Rate? SelectLastRate(long energyTypeId, long costCategoryId, long tarifGroupId)
+    public async Task<Models.Rate?> SelectLastRate(long energyTypeId, long costCategoryId, long tarifGroupId, CancellationToken cancellationToken = default)
     {
-        return _context.Rates
+        return await _context.Rates
             .Include(c => c.CostCategory)
             .Include(t => t.TariffGroup)
             .Include(e => e.EnergyType)
             .Where(x => x.CostCategoryId == costCategoryId
                      && x.TariffGroupId == tarifGroupId
                      && x.EnergyTypeId == energyTypeId)
-             .OrderByDescending(o => o.StartRate).FirstOrDefault();
+             .OrderByDescending(o => o.StartRate)
+             .FirstOrDefaultAsync(cancellationToken)
+             .ConfigureAwait(false);
     }
 
 }

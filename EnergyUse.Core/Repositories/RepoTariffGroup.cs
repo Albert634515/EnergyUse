@@ -1,5 +1,7 @@
 ﻿using EnergyUse.Core.Context;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace EnergyUse.Core.Repositories;
 
 public class RepoTariffGroup : RepoGeneral<Models.TariffGroup>
@@ -11,17 +13,17 @@ public class RepoTariffGroup : RepoGeneral<Models.TariffGroup>
         _context = dbContext;
     }
 
-    public Models.TariffGroup? SelectByDescription(string description)
+    public async Task<Models.TariffGroup?> SelectByDescription(string description, CancellationToken cancellationToken = default)
     {
-        return _context.TariffGroups
-                       .Where(s => s.Description == description)
-                       .FirstOrDefault();
+        return await _context.TariffGroups
+                             .FirstOrDefaultAsync(s => s.Description == description, cancellationToken)
+                             .ConfigureAwait(false);
     }
 
-    public Models.TariffGroup? SelectById(long id)
+    public async Task<Models.TariffGroup?> SelectById(long id, CancellationToken cancellationToken = default)
     {
-        return _context.TariffGroups
-                       .Where(s => s.Id == id)
-                       .FirstOrDefault();
+        return await _context.TariffGroups
+                             .FirstOrDefaultAsync(s => s.Id == id, cancellationToken)
+                             .ConfigureAwait(false);
     }
 }

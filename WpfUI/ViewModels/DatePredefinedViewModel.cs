@@ -52,7 +52,7 @@ namespace WpfUI.ViewModels
             _ = setEnergyTypesAsync();
         }
 
-        public void SetDates(long periodId)
+        public async void SetDates(long periodId)
         {
             _currentPeriodId = periodId;
 
@@ -62,7 +62,7 @@ namespace WpfUI.ViewModels
                 return;
             }
 
-            var list = _controller.UnitOfWorkPd.PreDefinedPeriodDateRepo.GetByPeriodId(periodId).ToList();
+            var list = (await _controller.UnitOfWorkPd.PreDefinedPeriodDateRepo.GetByPeriodId(periodId)).ToList();
 
             Dates = new ObservableCollection<PreDefinedPeriodDate>(list);
             OnPropertyChanged(nameof(Dates));
@@ -113,10 +113,10 @@ namespace WpfUI.ViewModels
             StatusCallback?.Invoke("Date deleted");
         }
 
-        public void DeleteByPeriodId(long periodId)
+        public async void DeleteByPeriodId(long periodId)
         {
-            var datesToDelete = _controller.UnitOfWorkPd.PreDefinedPeriodDateRepo
-                .GetByPeriodId(periodId)
+            var datesToDelete = (await _controller.UnitOfWorkPd.PreDefinedPeriodDateRepo
+                .GetByPeriodId(periodId))
                 .ToList();
 
             if (datesToDelete.Count == 0)
@@ -133,9 +133,9 @@ namespace WpfUI.ViewModels
             StatusCallback?.Invoke("Dates deleted");
         }
 
-        private void setTariffGroups()
+        private async void setTariffGroups()
         {
-            var list = _controller.UnitOfWorkPd.TarifGroupRepo.GetAll().ToList();
+            var list = (await _controller.UnitOfWorkPd.TarifGroupRepo.GetAll()).ToList();
             TariffGroups = new ObservableCollection<TariffGroup>(list);
             OnPropertyChanged(nameof(TariffGroups));
         }

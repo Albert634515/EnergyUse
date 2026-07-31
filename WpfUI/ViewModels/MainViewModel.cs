@@ -123,14 +123,14 @@ public class MainViewModel : ViewModelBase
                 ?? Addresses.FirstOrDefault();
     }
 
-    private void setEnergyTypes()
+    private async void setEnergyTypes()
     {
         EnergyTypes.Clear();
 
         if (SelectedAddress == null)
             return;
 
-        var list = _controller.GetEnergyTypesByAddressId(SelectedAddress.Id);
+        var list = await _controller.GetEnergyTypesByAddressId(SelectedAddress.Id);
         foreach (var e in list)
             EnergyTypes.Add(e);
 
@@ -301,7 +301,7 @@ public class MainViewModel : ViewModelBase
         if (!double.TryParse(saved, NumberStyles.Float, CultureInfo.InvariantCulture, out var width))
             width = 360;
 
-        LeftWidth = new GridLength(width, GridUnitType.Pixel);
+        SetProperty(ref _leftWidth, new GridLength(width, GridUnitType.Pixel), nameof(LeftWidth));
     }
 
     #endregion
@@ -399,7 +399,7 @@ public class MainViewModel : ViewModelBase
         {
             Mouse.OverrideCursor = Cursors.Wait;
 
-            var fileName = _controller.GetRatingReportPdf(SelectedAddress, parameters);
+            var fileName = await _controller.GetRatingReportPdf(SelectedAddress, parameters);
 
             if (!string.IsNullOrWhiteSpace(fileName))
             {

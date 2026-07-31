@@ -12,9 +12,12 @@ public class RepoEnergyType : RepoGeneral<Models.EnergyType>
         _context = dbContext;
     }
 
-    public Models.EnergyType? Get(int id)
+    public async Task<Models.EnergyType?> Get(int id, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.EnergyType>().Include(s => s.Unit).Where(s => s.Id == id).FirstOrDefault();
+        return await _context.Set<Models.EnergyType>()
+                             .Include(s => s.Unit)
+                             .FirstOrDefaultAsync(s => s.Id == id, cancellationToken)
+                             .ConfigureAwait(false);
     }
 
     public async Task<IEnumerable<Models.EnergyType>> GetAll(CancellationToken cancellationToken = default)
@@ -25,27 +28,31 @@ public class RepoEnergyType : RepoGeneral<Models.EnergyType>
                        .ConfigureAwait(false); 
     }
 
-    public Models.EnergyType? SelectByName(string energyTypeName)
+    public async Task<Models.EnergyType?> SelectByName(string energyTypeName, CancellationToken cancellationToken = default)
     {
-        return _context.EnergyTypes
+        return await _context.EnergyTypes
                        .Where(s => s.Name == energyTypeName)
                        .AsNoTracking()
-                       .FirstOrDefault();
+                       .FirstOrDefaultAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 
-    public IEnumerable<Models.EnergyType> SelectByAddressId(long addressId)
+    public async Task<IEnumerable<Models.EnergyType>> SelectByAddressId(long addressId, CancellationToken cancellationToken = default)
     {
-        var energyTypes = _context.Meters
+        var energyTypes = await _context.Meters
                        .Include(a => a.Address)
                        .Where(m => m.Address.Id == addressId)
                        .Select(s => s.EnergyType.Id)
-                       .ToList();
+                       .ToListAsync(cancellationToken)
+                       .ConfigureAwait(false);
 
         if (energyTypes.Count == 0)
             energyTypes.Add(0);
 
-        return _context.Set<Models.EnergyType>()
+        return await _context.Set<Models.EnergyType>()
                        .Include(s => s.Unit)
-                       .Where(x => energyTypes.Contains(x.Id));
+                       .Where(x => energyTypes.Contains(x.Id))
+                       .ToListAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 }

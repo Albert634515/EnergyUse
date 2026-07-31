@@ -15,10 +15,10 @@ public class LibEpplus
         _context = new EnergyUseContext(dbFileName);
     }
 
-    public void ExportMeterReadings(string exportFileName, Models.EnergyType eneryType, long addressId)
+    public async Task ExportMeterReadings(string exportFileName, Models.EnergyType eneryType, long addressId)
     {
         var meterReadingRepo = new EnergyUse.Core.Repositories.RepoMeterReading(_context);
-        List<EnergyUse.Models.MeterReading> meterReadings = meterReadingRepo.SelectByEnergyIdAndAddressId(eneryType.Id, addressId).ToList();
+        List<EnergyUse.Models.MeterReading> meterReadings = (await meterReadingRepo.SelectByEnergyIdAndAddressId(eneryType.Id, addressId)).ToList();
         if (meterReadings.Count == 0)
         {
             throw new Exception("No data to export");
@@ -27,10 +27,10 @@ public class LibEpplus
         createExportFile(meterReadings, exportFileName, eneryType);
     }
 
-    public void ExportMeterReadings(string exportFileName, Models.EnergyType eneryType, long addressId, DateTime startRange, DateTime endRange)
+    public async Task ExportMeterReadings(string exportFileName, Models.EnergyType eneryType, long addressId, DateTime startRange, DateTime endRange)
     {
         var meterReadingRepo = new Repositories.RepoMeterReading(_context);
-        List<Models.MeterReading> meterReadings = meterReadingRepo.SelectByRange(startRange, endRange, eneryType.Id, addressId).ToList();
+        List<Models.MeterReading> meterReadings = (await meterReadingRepo.SelectByRange(startRange, endRange, eneryType.Id, addressId)).ToList();
         if (meterReadings.Count == 0)
         {
             throw new Exception("No data to export");

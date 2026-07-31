@@ -38,22 +38,22 @@ public class MainController : BaseController, IController
 
     #region EnergyType
 
-    public IEnumerable<Models.EnergyType> GetEnergyTypesByAddressId(long addressId)
+    public async Task<IEnumerable<Models.EnergyType>> GetEnergyTypesByAddressId(long addressId)
     {
         if (_unitOfWork?.AddressRepo == null)
             throw new InvalidOperationException("UnitOfWork or AddressRepo is not initialized.");
 
-        return _unitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList();
+        return (await _unitOfWork.EnergyTypeRepo.SelectByAddressId(addressId)).ToList();
     }
 
     #endregion
 
     #region MeterReadings
 
-    public void RecalculateReadingsDiffPreviousDay(DateTime startRange, DateTime endRange, long energyTypeId, long addressId)
+    public async Task RecalculateReadingsDiffPreviousDay(DateTime startRange, DateTime endRange, long energyTypeId, long addressId)
     {
         var libMeterReading = new EnergyUse.Core.Manager.LibMeterReading(_dbFileName);
-        libMeterReading.RecalculateReadingsDiffPreviousDay(DateTime.MinValue, DateTime.MinValue, energyTypeId, addressId);
+        await libMeterReading.RecalculateReadingsDiffPreviousDay(DateTime.MinValue, DateTime.MinValue, energyTypeId, addressId);
     }
 
     #endregion
@@ -91,10 +91,10 @@ public class MainController : BaseController, IController
         }
     }
 
-    public string GetRatingReportPdf(Models.Address address, ParameterSelection parameterSelection)
+    public async Task<string> GetRatingReportPdf(Models.Address address, ParameterSelection parameterSelection)
     {
         var LibSettlement = new EnergyUse.Core.Reports.RatingReport(_dbFileName);
-        var fileName = LibSettlement.GetRatingReportPdf(address, parameterSelection);
+        var fileName = await LibSettlement.GetRatingReportPdf(address, parameterSelection);
 
         return fileName;
     }

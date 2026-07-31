@@ -24,19 +24,26 @@ public class RepoGeneral<TEntity> : IRepository<TEntity> where TEntity : class
         _context.AddRange(entities);
     }
 
-    public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+    public async Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
     {
-        return _context.Set<TEntity>().Where(predicate);
+        return await _context.Set<TEntity>()
+                             .Where(predicate)
+                             .ToListAsync(cancellationToken)
+                             .ConfigureAwait(false);
     }
 
-    public TEntity Get<T>(T id)
+    public async Task<TEntity?> Get<T>(T id, CancellationToken cancellationToken = default)
     {
-        return _context.Set<TEntity>().Find(id);
+        return await _context.Set<TEntity>()
+                             .FindAsync([id], cancellationToken)
+                             .ConfigureAwait(false);
     }
 
-    public IEnumerable<TEntity> GetAll()
+    public async Task<IEnumerable<TEntity>> GetAll(CancellationToken cancellationToken = default)
     {
-        return _context.Set<TEntity>().ToList();
+        return await _context.Set<TEntity>()
+                             .ToListAsync(cancellationToken)
+                             .ConfigureAwait(false);
     }
 
     public void Remove(TEntity entity)

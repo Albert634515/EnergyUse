@@ -50,7 +50,7 @@ public partial class frmPayBackTime : Form
         if (cmbAddress.SelectedIndex > -1)
         {
             address = (EnergyUse.Models.Address)cmbAddress.SelectedItem;
-            energyTypes = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(address.Id).ToList();
+            energyTypes = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(address.Id).GetAwaiter().GetResult().ToList();
             energyTypes = energyTypes.Where(x => x.HasEnergyReturn == true).ToList();
             bsEnergyTypes.DataSource = energyTypes;
 

@@ -93,14 +93,14 @@ public class VatTarifsViewModel : ViewModelBase
             EnergyTypes.Add(et);
     }
 
-    private void getCostCategories()
+    private async void getCostCategories()
     {
         CostCategories.Clear();
 
         if (SelectedEnergyType == null)
             return;
 
-        var list = _controller.UnitOfWork.CostCategoryRepo
+        var list = await _controller.UnitOfWork.CostCategoryRepo
             .SelectByEnergyTypeIdVatCalculated(SelectedEnergyType.Id);
 
         foreach (var cc in list)

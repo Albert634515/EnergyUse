@@ -91,9 +91,9 @@ public class PaymentsViewModel : ViewModelBase
             SelectedAddress = Addresses.FirstOrDefault(x => x.DefaultAddress == true);
     }
 
-    private void setPeriods()
+    private async void setPeriods()
     {
-        var list = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll();
+        var list = await _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll();
         PreDefinedPeriods.Clear();
         foreach (var p in list)
             PreDefinedPeriods.Add(p);
@@ -111,14 +111,14 @@ public class PaymentsViewModel : ViewModelBase
         }
     }
 
-    private void setPayments()
+    private async void setPayments()
     {
         if (SelectedAddress == null || SelectedPeriod == null)
             return;
 
         Payments.Clear();
 
-        var list = _controller.UnitOfWork.PaymentRepo.SelectByAddressAndPeriod(SelectedAddress.Id, SelectedPeriod.Id);
+        var list = await _controller.UnitOfWork.PaymentRepo.SelectByAddressAndPeriod(SelectedAddress.Id, SelectedPeriod.Id);
 
         foreach (var p in list)
             Payments.Add(p);

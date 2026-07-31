@@ -1,4 +1,4 @@
-using EnergyUse.Core.Controllers;
+﻿using EnergyUse.Core.Controllers;
 using EnergyUse.Models;
 using System.Data;
 using WinFormsEF.Views;
@@ -401,7 +401,7 @@ public partial class MainForm : Form
         }
 
         Cursor.Current = Cursors.WaitCursor; ;
-        var fileName = _controller.GetRatingReportPdf(address, parameterSelection);
+        var fileName = _controller.GetRatingReportPdf(address, parameterSelection).GetAwaiter().GetResult();
         Cursor.Current = Cursors.Default;
 
         if (!string.IsNullOrWhiteSpace(fileName))
@@ -431,7 +431,7 @@ public partial class MainForm : Form
         var address = (Address)CboAddress.SelectedItem;
         if (address != null)
         {
-            var energyTypes = _controller.GetEnergyTypesByAddressId(address.Id);
+            var energyTypes = _controller.GetEnergyTypesByAddressId(address.Id).GetAwaiter().GetResult();
 
             bsEnergyTypes.DataSource = energyTypes;
             bsEnergyTypes.ResetBindings(false);

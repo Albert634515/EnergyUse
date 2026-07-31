@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using EnergyUse.Core.Controllers;
 using EnergyUse.Models;
@@ -169,7 +169,7 @@ public class SettlementReportViewModel : ViewModelBase
         OnPropertyChanged(nameof(AddressList));
 
         // Eerst predefined periods laden
-        PredefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
+        PredefinedPeriods = (await _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll()).ToList();
         OnPropertyChanged(nameof(PredefinedPeriods));
 
         // Dan report types
@@ -231,7 +231,7 @@ public class SettlementReportViewModel : ViewModelBase
         if (saved != null && int.TryParse(saved, out int count))
             return count;
 
-        var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList();
+        var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).GetAwaiter().GetResult().ToList();
         int newCount = energyTypes.Count;
 
         _settings.Save(key, newCount.ToString());
@@ -242,8 +242,8 @@ public class SettlementReportViewModel : ViewModelBase
     {
         var vm = new DateSelectionViewModel(onDateSelectionChanged)
         {
-            EnergyTypeList = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList(),
-            TarifGroupsList = _controller.UnitOfWork.TariffGroupRepo.GetAll().ToList()
+            EnergyTypeList = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).GetAwaiter().GetResult().ToList(),
+            TarifGroupsList = _controller.UnitOfWork.TariffGroupRepo.GetAll().GetAwaiter().GetResult().ToList()
         };
 
         vm.SetTarifGroups();
@@ -296,7 +296,7 @@ public class SettlementReportViewModel : ViewModelBase
         if (SelectedAddress == null)
             return;
 
-        var list = _controller.UnitOfWork.PreDefinedPeriodDateRepo.GetByPeriodId(period.Id).ToList();
+        var list = _controller.UnitOfWork.PreDefinedPeriodDateRepo.GetByPeriodId(period.Id).GetAwaiter().GetResult().ToList();
 
         while (DateSelections.Count < list.Count)
             addDateSelectionForAddress(SelectedAddress.Id);

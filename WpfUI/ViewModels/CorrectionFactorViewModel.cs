@@ -94,12 +94,12 @@ public class CorrectionFactorViewModel : ViewModelBase
         }
     }
 
-    private void setCorrectionFactors()
+    private async void setCorrectionFactors()
     {
         if (SelectedEnergyType == null) return;
 
-        var list = _controller.UnitOfWork.CorrectionFactorRepo
-                                         .SelectByEnergyType(SelectedEnergyType.Id)
+        var list = (await _controller.UnitOfWork.CorrectionFactorRepo
+                                         .SelectByEnergyType(SelectedEnergyType.Id))
                                          .ToList();
 
         CorrectionFactors = new ObservableCollection<CorrectionFactor>(list);
@@ -109,11 +109,11 @@ public class CorrectionFactorViewModel : ViewModelBase
         SelectedCorrectionFactor = CorrectionFactors.FirstOrDefault();
     }
 
-    private void add()
+    private async void add()
     {
         if (SelectedEnergyType == null) return;
 
-        var entity = _controller.UnitOfWork.AddDefaultEntity(SelectedEnergyType.Id);
+        var entity = await _controller.UnitOfWork.AddDefaultEntity(SelectedEnergyType.Id);
         CorrectionFactors.Add(entity);
         SelectedCorrectionFactor = entity;
     }

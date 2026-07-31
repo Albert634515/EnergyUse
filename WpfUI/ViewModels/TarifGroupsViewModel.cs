@@ -65,12 +65,12 @@ namespace WpfUI.ViewModels
                 TariffGroupTypes.Add(item);
         }
 
-        private void setTariffGroups()
+        private async void setTariffGroups()
         {
             TariffGroups.Clear();
 
             _controller.UnitOfWork.TariffGroups =
-                _controller.UnitOfWork.TariffGroupRepo.GetAll().ToList();
+                (await _controller.UnitOfWork.TariffGroupRepo.GetAll()).ToList();
 
             foreach (var tg in _controller.UnitOfWork.TariffGroups)
                 TariffGroups.Add(tg);

@@ -31,12 +31,12 @@ public class AddressController : BaseController, IController
         return UnitOfWork.Addresses;
     }
 
-    public List<Models.TariffGroup> GetTariffGroups(int typeId)
+    public async Task<List<Models.TariffGroup>> GetTariffGroups(int typeId)
     {
         if (UnitOfWork?.AddressRepo == null)
             throw new InvalidOperationException("UnitOfWork or AddressRepo is not initialized.");
 
-        var tariffGroupList = UnitOfWork.RepoTariffGroupRepo.GetAll().ToList();
+        var tariffGroupList = (await UnitOfWork.RepoTariffGroupRepo.GetAll()).ToList();
         tariffGroupList = tariffGroupList.Where(x => x.TypeId == typeId).ToList();
         return tariffGroupList;
     }

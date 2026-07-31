@@ -37,7 +37,7 @@ public partial class FrmRates : Form
 
     private void setCostCategories(long eneryTypeId)
     {
-        var costCategories = _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeId(eneryTypeId).ToList();
+        var costCategories = _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeId(eneryTypeId).GetAwaiter().GetResult().ToList();
         bsCostCategories.DataSource = costCategories;
         CboCostCategory.DataSource = costCategories;
 
@@ -55,7 +55,7 @@ public partial class FrmRates : Form
     private void setComboTarifGroups()
     {
         var costCategorie = (EnergyUse.Models.CostCategory)CboCostCategory.SelectedItem;
-        var tarifGroups = _controller.UnitOfWork.TarifGroupRepo.GetAll().ToList();
+        var tarifGroups = _controller.UnitOfWork.TarifGroupRepo.GetAll().GetAwaiter().GetResult().ToList();
         if (costCategorie != null && costCategorie.TariffGroup != null && costCategorie.TariffGroup.Id > 0)
             tarifGroups = tarifGroups.Where(t => t.Id == costCategorie.TariffGroup.Id).ToList();
 
@@ -223,7 +223,7 @@ public partial class FrmRates : Form
         //if rate != staffel, check staffel exist and ask to delete
         if (rateType != RateType.Staffel && rate != null)
         {
-            var staffelList = _controller.UnitOfWork.StaffelRepo.SelectByRateId(rate.Id);
+            var staffelList = _controller.UnitOfWork.StaffelRepo.SelectByRateId(rate.Id).GetAwaiter().GetResult();
             if (staffelList != null && staffelList.Any())
             {
                 if (MessageBox.Show("", "There are still staffel records for current rate, but type is no longer of type staffel. Do you want to delete the staffel records?", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -253,9 +253,9 @@ public partial class FrmRates : Form
         _controller.UnitOfWork.RateList = new List<EnergyUse.Models.Rate>();
 
         if (costCategory != null && costCategory.TariffGroup != null && costCategory.TariffGroup.Id > 0)
-            _controller.UnitOfWork.RateList = _controller.UnitOfWork.RateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, costCategory.TariffGroup.Id).ToList();
+            _controller.UnitOfWork.RateList = _controller.UnitOfWork.RateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, costCategory.TariffGroup.Id).GetAwaiter().GetResult().ToList();
         else if (costCategory != null && tarifGroup != null && tarifGroup.Id > 0)
-            _controller.UnitOfWork.RateList = _controller.UnitOfWork.RateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, tarifGroup.Id).ToList();
+            _controller.UnitOfWork.RateList = _controller.UnitOfWork.RateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, tarifGroup.Id).GetAwaiter().GetResult().ToList();
 
         _controller.UnitOfWork.SetListSorted();
         bsRates.DataSource = _controller.UnitOfWork.RateList;
@@ -322,7 +322,7 @@ public partial class FrmRates : Form
         EnergyUse.Models.EnergyType energyType = (EnergyUse.Models.EnergyType)CboEnergyType.SelectedItem;
         var tarifGroup = getCurrentTarifGroup();
 
-        EnergyUse.Models.Rate entity = _controller.UnitOfWork.AddDefaultEntity(energyType.Id, costCategory.Id, tarifGroup.Id);
+        EnergyUse.Models.Rate entity = _controller.UnitOfWork.AddDefaultEntity(energyType.Id, costCategory.Id, tarifGroup.Id).GetAwaiter().GetResult();
 
         bsRates.DataSource = _controller.UnitOfWork.RateList;
         bsRates.ResetBindings(false);
@@ -336,7 +336,7 @@ public partial class FrmRates : Form
         DgRates.Focus();
 
         var rate = (EnergyUse.Models.Rate)bsRates.Current;
-        rate.PriceChange = _controller.GetPriceChange(rate);
+        rate.PriceChange = _controller.GetPriceChange(rate).GetAwaiter().GetResult();
 
         _controller.UnitOfWork.Complete();
     }

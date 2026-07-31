@@ -1,4 +1,4 @@
-using EnergyUse.Models.Common;
+﻿using EnergyUse.Models.Common;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Layout;
@@ -21,7 +21,7 @@ public class SettlementSplitByType : SettlementBase
 
         var dest = System.IO.Path.GetTempPath();
         var fileName = $"SettlementSplitByType_{DateTime.Now:yyyyMMddHHmmss}.pdf";
-        Models.Address address = _unitOfWork.AddressRepo.Get(parameterSelection.AddressId);
+        Models.Address address = await _unitOfWork.AddressRepo.Get(parameterSelection.AddressId);
         PdfWriter writer = new(System.IO.Path.Combine(dest, fileName));
         PdfDocument pdf = new(writer);
         pdf.SetDefaultPageSize(PageSize.A4);
@@ -55,7 +55,7 @@ public class SettlementSplitByType : SettlementBase
             parameterPeriod.QuantityReduction = 1;
 
             _periodicDataList = await LibPeriodicDate.GetRangeAsync(parameterPeriod);
-            _settlementDataList = _unitOfWork.CostCategoriesRepo.MapCostCategories(_periodicDataList);
+            _settlementDataList = await _unitOfWork.CostCategoriesRepo.MapCostCategories(_periodicDataList);
             if (parameterSelection.ShowRates == false)
                 _settlementDataList = mergeSettlementData(_settlementDataList);
 
@@ -67,7 +67,7 @@ public class SettlementSplitByType : SettlementBase
             else
             {
                 table = new Table(_pointColumnWidths);
-                GetSectionHeader(table, getSectionHeaderText(item, address));
+                GetSectionHeader(table, await getSectionHeaderText(item, address));
                 document.Add(table);
                 document.Add(new Paragraph(""));
 
@@ -103,7 +103,7 @@ public class SettlementSplitByType : SettlementBase
         } // End of loop of selected energy types
 
         document.Add(new Paragraph(""));
-        table = getPayments(address.Id, parameterSelection.PreSelectedPeriodId, parameterSelection.StartRange, parameterSelection.EndRange);
+        table = await getPayments(address.Id, parameterSelection.PreSelectedPeriodId, parameterSelection.StartRange, parameterSelection.EndRange);
         document.Add(table);
 
         document.Close();

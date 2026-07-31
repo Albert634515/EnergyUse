@@ -24,7 +24,7 @@ public class Base
 
     #region AddPointAndSeries
 
-    internal void AddColumnSeriesToList(ChartSeriesType serieType, long energyTypeId, int scalesYAt, bool showStacked = false)
+    internal Task AddColumnSeriesToList(ChartSeriesType serieType, long energyTypeId, int scalesYAt, bool showStacked = false)
     {
         var serieName = GetSeriesKey(serieType, energyTypeId);
 
@@ -46,6 +46,8 @@ public class Base
 
             _serieslist.Add(series);
         }
+
+        return Task.CompletedTask;
     }
 
     internal void AddLineSeriesToList(ChartSeriesType serieType, long energyTypeId, int scalesYAt)
@@ -67,7 +69,7 @@ public class Base
         }
     }
 
-    internal void AddLineSeriesAvgToList(ChartSeriesType serieType, long energyTypeId, int scalesYAt)
+    internal Task AddLineSeriesAvgToList(ChartSeriesType serieType, long energyTypeId, int scalesYAt)
     {
         var serieName = GetSeriesKey(serieType, energyTypeId);
 
@@ -86,6 +88,8 @@ public class Base
             };
             _serieslist.Add(series);
         }
+
+        return Task.CompletedTask;
     }
 
     internal void AddDataPoint(

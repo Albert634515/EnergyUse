@@ -200,7 +200,7 @@ public partial class ucChartRatesLiveCharts : UserControl
         var setting = getCurrentSetting(currentSettingId);
         List<EnergyUse.Models.CostCategory> costCategories = new();
         if (energyType != null)
-            costCategories = _unitOfWork.CostCategoryRepo.SelectByEnergyTypeId(energyType.Id).ToList();
+            costCategories = _unitOfWork.CostCategoryRepo.SelectByEnergyTypeId(energyType.Id).GetAwaiter().GetResult().ToList();
 
         if (rbUnit.Checked)
             costCategories = costCategories.Where(x => x.EnergySubType.Id >= 1 && x.EnergySubType.Id <= 4).ToList();

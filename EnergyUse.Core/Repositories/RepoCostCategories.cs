@@ -1,4 +1,4 @@
-using EnergyUse.Core.Context;
+﻿using EnergyUse.Core.Context;
 using EnergyUse.Models.Common;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,74 +13,82 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
         _context = dbContext;
     }
 
-    public Models.CostCategory? Get(long costCategoryId)
+    public async Task<Models.CostCategory?> Get(long costCategoryId, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.CostCategory>()
+        return await _context.Set<Models.CostCategory>()
                        .Include(e => e.EnergyType)
                        .Include(t => t.TariffGroup)
                        .Include(s => s.EnergySubType)
                        .Include(c => c.CalculationType)
-                       .Where(w => w.Id == costCategoryId)
-                       .FirstOrDefault();
+                       .FirstOrDefaultAsync(w => w.Id == costCategoryId, cancellationToken)
+                       .ConfigureAwait(false);
     }
 
-    public IEnumerable<Models.CostCategory> SelectByEnergyTypeAndUntit(long energyTypeId, string unitId)
+    public async Task<IEnumerable<Models.CostCategory>> SelectByEnergyTypeAndUntit(long energyTypeId, string unitId, CancellationToken cancellationToken = default)
     {
-        var categoryList = _context.Set<Models.Rate>()
-                                   .Include(c => c.CostCategory)
-                                   .Where(w => w.EnergyTypeId == energyTypeId)
-                                   .Select(s => s.CostCategory.Id).ToList();
+        var categoryList = await _context.Set<Models.Rate>()
+                                         .Where(w => w.EnergyTypeId == energyTypeId)
+                                         .Select(s => s.CostCategory.Id)
+                                         .ToListAsync(cancellationToken)
+                                         .ConfigureAwait(false);
 
         if (categoryList.Count == 0)
             categoryList.Add(0);
 
-        return _context.Set<Models.CostCategory>()
+        return await _context.Set<Models.CostCategory>()
                        .Include(e => e.EnergyType)
                        .Include(t => t.TariffGroup)
                        .Include(s => s.EnergySubType)
                        .Include(c => c.CalculationType)
                        .Include(u => u.Unit)
                        .Where(w => w.EnergyType.Id == energyTypeId && w.Unit.Id == unitId && categoryList.Contains(w.Id))
-                       .OrderBy(o => o.SortOrder);
+                       .OrderBy(o => o.SortOrder)
+                       .ToListAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 
-    public IEnumerable<Models.CostCategory> SelectByEnergyType(long energytypeid)
+    public async Task<IEnumerable<Models.CostCategory>> SelectByEnergyType(long energytypeid, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.CostCategory>()
+        return await _context.Set<Models.CostCategory>()
                        .Include(e => e.EnergyType)
                        .Include(t => t.TariffGroup)
                        .Include(s => s.EnergySubType)
                        .Include(c => c.CalculationType)
                        .Where(w => w.EnergyType.Id == energytypeid)
-                       .OrderBy(o => o.EnergySubType.Id).ThenBy(t => t.SortOrder);
+                       .OrderBy(o => o.EnergySubType.Id).ThenBy(t => t.SortOrder)
+                       .ToListAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 
-    public Models.CostCategory? SelectByEnergyTypeAndSubType(long energyTypeId, Common.Enums.SubEnergyType subEnergyType)
+    public async Task<Models.CostCategory?> SelectByEnergyTypeAndSubType(long energyTypeId, Common.Enums.SubEnergyType subEnergyType, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.CostCategory>()
+        return await _context.Set<Models.CostCategory>()
                        .Include(e => e.EnergyType)
                        .Include(t => t.TariffGroup)
                        .Include(s => s.EnergySubType)
                        .Include(c => c.CalculationType)
                        .Where(w => w.EnergyType.Id == energyTypeId && w.EnergySubType.Id == (int)subEnergyType)
                        .OrderBy(o => o.SortOrder)
-                       .FirstOrDefault();
+                       .FirstOrDefaultAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 
-    public IEnumerable<Models.CostCategory> SelectByEnergyTypeId(long energyTypeId)
+    public async Task<IEnumerable<Models.CostCategory>> SelectByEnergyTypeId(long energyTypeId, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.CostCategory>()
+        return await _context.Set<Models.CostCategory>()
                        .Include(e => e.EnergyType)
                        .Include(t => t.TariffGroup)
                        .Include(s => s.EnergySubType)
                        .Include(c => c.CalculationType)
                        .Where(w => w.EnergyType.Id == energyTypeId)
-                       .OrderBy(o => o.EnergyType.Id).ThenBy(o => o.SortOrder);
+                       .OrderBy(o => o.EnergyType.Id).ThenBy(o => o.SortOrder)
+                       .ToListAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 
-    public IEnumerable<Models.CostCategory> SelectByEnergyTypeAndRange(long energyTypeId, DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<Models.CostCategory>> SelectByEnergyTypeAndRange(long energyTypeId, DateTime startDate, DateTime endDate, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.CostCategory>()
+        return await _context.Set<Models.CostCategory>()
                        .Include(e => e.EnergyType)
                        .Include(t => t.TariffGroup)
                        .Include(s => s.EnergySubType)
@@ -88,18 +96,22 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
                        .Where(w => w.EnergyType.Id == energyTypeId
                                 && (w.Start == null || w.Start.Value.Date <= endDate.Date)
                                 && (w.End == null || w.End.Value.Date >= startDate.Date))
-                       .OrderBy(o => o.EnergyType.Id).ThenBy(o => o.SortOrder);
+                       .OrderBy(o => o.EnergyType.Id).ThenBy(o => o.SortOrder)
+                       .ToListAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 
-    public IEnumerable<Models.CostCategory> SelectByEnergyTypeIdVatCalculated(long energyTypeId)
+    public async Task<IEnumerable<Models.CostCategory>> SelectByEnergyTypeIdVatCalculated(long energyTypeId, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.CostCategory>()
+        return await _context.Set<Models.CostCategory>()
                        .Include(e => e.EnergyType)
                        .Include(t => t.TariffGroup)
                        .Include(s => s.EnergySubType)
                        .Include(c => c.CalculationType)
                        .Where(w => w.EnergyTypeId == energyTypeId && w.CalculateVat)
-                       .OrderBy(o => o.EnergyType.Id).ThenBy(o => o.SortOrder);
+                       .OrderBy(o => o.EnergyType.Id).ThenBy(o => o.SortOrder)
+                       .ToListAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 
     public Models.CostCategory GetDefault(long energyTypeId)
@@ -115,7 +127,7 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
 
     #region Mappers
 
-    public List<SettlementData> MapCostCategories(List<PeriodicData> periodicDataList)
+    public async Task<List<SettlementData>> MapCostCategories(List<PeriodicData> periodicDataList, CancellationToken cancellationToken = default)
     {
         List<SettlementData> settlementDatas = new();
         SettlementData? settlementData = null;
@@ -125,7 +137,7 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
         {
             foreach (var otherCost in periodicData.OtherCosts)
             {
-                var costCategory = Get(otherCost.CostCategoryId);                
+                var costCategory = await Get(otherCost.CostCategoryId, cancellationToken).ConfigureAwait(false);
 
                 if (costCategory is null)
                     throw new Exception($"Cost category {otherCost.CostCategoryId} not found");

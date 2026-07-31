@@ -31,13 +31,13 @@ public partial class frmEnergyTypes : Form
 
     private void setEnergyTypes()
     {
-        _controller.UnitOfWork.EnergyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().ToList();
+        _controller.UnitOfWork.EnergyTypes = _controller.UnitOfWork.EnergyTypeRepo.GetAll().GetAwaiter().GetResult().ToList();
         bsEnergyTypes.DataSource = _controller.UnitOfWork.EnergyTypes;
     }
 
     private void setUnitList()
     {
-        _controller.UnitOfWork.Units = _controller.UnitOfWork.UnitRepo.GetAll().ToList();
+        _controller.UnitOfWork.Units = _controller.UnitOfWork.UnitRepo.GetAll().GetAwaiter().GetResult().ToList();
         bsUnits.DataSource = _controller.UnitOfWork.Units;
     }
 

@@ -33,7 +33,7 @@ public partial class frmCalculatedUnitPrice : Form
 
     private void setComboTarifGroups()
     {
-        var tarifGroups = _controller.UnitOfWork.TarifGroupRepo.GetAll().ToList();
+        var tarifGroups = _controller.UnitOfWork.TarifGroupRepo.GetAll().GetAwaiter().GetResult().ToList();
         bsTarifGroups.DataSource = tarifGroups;
 
         cboTarifGroup.SelectedIndex = -1;

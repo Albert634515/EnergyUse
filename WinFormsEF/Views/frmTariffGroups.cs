@@ -91,7 +91,7 @@ public partial class frmTariffGroups : Form
 
     private void setTarifGroups()
     {
-        _controller.UnitOfWork.TariffGroups = _controller.UnitOfWork.TariffGroupRepo.GetAll().ToList();
+        _controller.UnitOfWork.TariffGroups = _controller.UnitOfWork.TariffGroupRepo.GetAll().GetAwaiter().GetResult().ToList();
 
         BsTarifGroups.DataSource = _controller.UnitOfWork.TariffGroups;
         BsTarifGroups.ResetBindings(false);

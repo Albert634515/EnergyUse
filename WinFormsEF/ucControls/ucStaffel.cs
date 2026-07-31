@@ -23,7 +23,7 @@ public partial class ucStaffel : UserControl
         _unitOfWork.Staffels = new List<EnergyUse.Models.Staffel>();
 
         if (_rateId > 0)
-            _unitOfWork.Staffels = _unitOfWork.StaffelRepo.SelectByRateId(_rateId).ToList();
+            _unitOfWork.Staffels = _unitOfWork.StaffelRepo.SelectByRateId(_rateId).GetAwaiter().GetResult().ToList();
 
         _unitOfWork.SetListSorted();
         BsStaffel.DataSource = _unitOfWork.Staffels;

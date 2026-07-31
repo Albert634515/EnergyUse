@@ -69,7 +69,7 @@ public partial class frmSelectReportParameters : Form
 
     private void setPreSelectePeriods()
     {
-        _preDefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
+        _preDefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().GetAwaiter().GetResult().ToList();
 
         preSelectedPeriodComboBox.DataSource = _preDefinedPeriods;
         preSelectedPeriodComboBox.DisplayMember = "Description";
@@ -249,7 +249,7 @@ public partial class frmSelectReportParameters : Form
         int dateSelectionCount = libSettings.GetNumberOfEnergyTypesOnReport(addressId);
         if (dateSelectionCount == 0)
         {
-            var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList();
+            var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).GetAwaiter().GetResult().ToList();
             dateSelectionCount = energyTypes.Count;
             libSettings.SaveSetting($"NumberOfEnergyTypesOnReport_A{addressId}", dateSelectionCount.ToString());
         }
@@ -285,8 +285,8 @@ public partial class frmSelectReportParameters : Form
     private ucControls.ucDateSelection setDateSelectionLine(int lineCount, long addressId, Point location)
     {
         ucControls.ucDateSelection ucDateSelection = new ucControls.ucDateSelection();
-        ucDateSelection.EnergyTypeList = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).ToList();
-        ucDateSelection.TarifGroupsList = _controller.UnitOfWork.TariffGroupRepo.GetAll().ToList();
+        ucDateSelection.EnergyTypeList = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).GetAwaiter().GetResult().ToList();
+        ucDateSelection.TarifGroupsList = _controller.UnitOfWork.TariffGroupRepo.GetAll().GetAwaiter().GetResult().ToList();
         ucDateSelection.SetTarifGroups();
 
         ucDateSelection.Name = getDateSelectionKey(lineCount, addressId);
@@ -393,7 +393,7 @@ public partial class frmSelectReportParameters : Form
             return;
 
         preDefinedPeriod = (EnergyUse.Models.PreDefinedPeriod)preSelectedPeriodComboBox.SelectedItem;
-        preDefinedPeriodDateList = _controller.UnitOfWork.PreDefinedPeriodDateRepo.GetByPeriodId(preDefinedPeriod.Id).ToList();
+        preDefinedPeriodDateList = _controller.UnitOfWork.PreDefinedPeriodDateRepo.GetByPeriodId(preDefinedPeriod.Id).GetAwaiter().GetResult().ToList();
 
         foreach (var preDefinedPeriodDate in preDefinedPeriodDateList)
         {

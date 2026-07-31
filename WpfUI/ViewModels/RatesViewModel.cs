@@ -84,7 +84,7 @@ namespace WpfUI.ViewModels
                 {
                     _selectedTariffGroup = value;
                     OnPropertyChanged();
-                    initRates();
+                    _ = initRates();
                 }
             }
         }
@@ -205,19 +205,19 @@ namespace WpfUI.ViewModels
                 EnergyTypes.Add(e);
         }
 
-        private void getCostCategories(long energyTypeId)
+        private async Task getCostCategories(long energyTypeId)
         {
             CostCategories.Clear();
-            var list = _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeId(energyTypeId).ToList();
+            var list = (await _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeId(energyTypeId)).ToList();
             foreach (var c in list)
                 CostCategories.Add(c);
         }
 
-        private void getTariffGroups(CostCategory costCategory)
+        private async Task getTariffGroups(CostCategory costCategory)
         {
             SelectedTariffGroup = null;
             TariffGroups.Clear();
-            var list = _controller.UnitOfWork.TarifGroupRepo.GetAll().ToList();
+            var list = (await _controller.UnitOfWork.TarifGroupRepo.GetAll()).ToList();
 
             if (costCategory?.TariffGroup != null && costCategory.TariffGroup.Id > 0)
                 list = list.Where(t => t.Id == costCategory.TariffGroup.Id).ToList();
@@ -245,7 +245,7 @@ namespace WpfUI.ViewModels
             if (SelectedEnergyType != null)
             {
                 SelectedCostCategory = null;
-                getCostCategories(SelectedEnergyType.Id);
+                await getCostCategories(SelectedEnergyType.Id);
             }
             else
             {
@@ -254,24 +254,24 @@ namespace WpfUI.ViewModels
             }
 
             if (SelectedCostCategory == null)
-                initRates();
+                await initRates();
         }
 
         private async Task onCostCategoryChangedAsync()
         {
             if (SelectedCostCategory != null && SelectedEnergyType != null)
             {
-                getTariffGroups(SelectedCostCategory);
-                initRates();
+                await getTariffGroups(SelectedCostCategory);
+                await initRates();
             }
             else
             {
                 TariffGroups.Clear();
-                initRates();
+                await initRates();
             }
         }
 
-        private void initRates()
+    private async Task initRates()
         {
             _rateRowsVersion++;
             SelectedRate = null;
@@ -291,16 +291,16 @@ namespace WpfUI.ViewModels
 
             if (costCategory.TariffGroupId > 0)
                 _controller.UnitOfWork.RateList =
-                    _controller.UnitOfWork.RateRepo
+                    (await _controller.UnitOfWork.RateRepo
                         .SelectByCostCategoryAndEnergyTypeAndTarifGroup(
                             costCategory.Id,
                             energyType.Id,
-                            costCategory.TariffGroupId.Value)
+                            costCategory.TariffGroupId.Value))
                         .ToList();
             else if (tarifGroup.Id > 0)
                 _controller.UnitOfWork.RateList =
-                    _controller.UnitOfWork.RateRepo
-                        .SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, tarifGroup.Id)
+                    (await _controller.UnitOfWork.RateRepo
+                        .SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, tarifGroup.Id))
                         .ToList();
 
             _controller.UnitOfWork.SetListSorted();
@@ -375,7 +375,7 @@ namespace WpfUI.ViewModels
             }
         }
 
-        private void changeRateType()
+        private async void changeRateType()
         {
             if (SelectedRate == null || SelectedRateType == null)
                 return;
@@ -385,7 +385,7 @@ namespace WpfUI.ViewModels
 
             if (rateType != RateType.Staffel && rate != null)
             {
-                var staffelList = _controller.UnitOfWork.StaffelRepo.SelectByRateId(rate.Id);
+                var staffelList = await _controller.UnitOfWork.StaffelRepo.SelectByRateId(rate.Id);
                 if (staffelList != null && staffelList.Any())
                 {
                     var result = _dialogService.ShowYesNo(
@@ -393,7 +393,7 @@ namespace WpfUI.ViewModels
                         "Staffel");
 
                     if (result)
-                        _controller.UnitOfWork.StaffelRepo.DeleteByRateId(rate.Id);
+                        await _controller.UnitOfWork.StaffelRepo.DeleteByRateId(rate.Id);
                 }
             }
 
@@ -404,7 +404,7 @@ namespace WpfUI.ViewModels
 
         #region Commands Logic
 
-        private void addRate()
+        private async void addRate()
         {
             if (!validateInput())
                 return;
@@ -416,7 +416,7 @@ namespace WpfUI.ViewModels
             var energyType = SelectedEnergyType;
             var tarifGroup = getCurrentTarifGroup();
 
-            var entity = _controller.UnitOfWork.AddDefaultEntity(energyType.Id, costCategory.Id, tarifGroup.Id);
+            var entity = await _controller.UnitOfWork.AddDefaultEntity(energyType.Id, costCategory.Id, tarifGroup.Id);
 
             Rates.Clear();
             foreach (var r in _controller.UnitOfWork.RateList)
@@ -426,14 +426,14 @@ namespace WpfUI.ViewModels
             _ = rebuildRateRowsAsync();
         }
 
-        private void setRate()
+        private async void setRate()
         {
             if (SelectedRate != null)
             {
                 if (!confirmNewRateFitsExistingRates())
                     return;
 
-                SelectedRate.PriceChange = _controller.GetPriceChange(SelectedRate);
+                SelectedRate.PriceChange = await _controller.GetPriceChange(SelectedRate);
                 _controller.UnitOfWork.Complete();
                 _ = rebuildRateRowsAsync();
             }
@@ -528,7 +528,7 @@ namespace WpfUI.ViewModels
         private void cancelRate()
         {
             _controller.UnitOfWork.CancelChanges();
-            initRates();
+            _ = initRates();
         }
 
         private void deleteRate()
@@ -556,7 +556,7 @@ namespace WpfUI.ViewModels
             if (!validateInput())
                 return;
 
-            initRates();
+            _ = initRates();
         }
 
         private void close()

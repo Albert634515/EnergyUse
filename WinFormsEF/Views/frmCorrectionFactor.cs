@@ -34,7 +34,7 @@ public partial class frmCorrectionFactor : Form
 
     private void LoadCorrectionFactors(long energyTypeId)
     {
-        _controller.UnitOfWork.CorrectionFactors = _controller.UnitOfWork.CorrectionFactorRepo.SelectByEnergyType(energyTypeId).ToList();
+        _controller.UnitOfWork.CorrectionFactors = _controller.UnitOfWork.CorrectionFactorRepo.SelectByEnergyType(energyTypeId).GetAwaiter().GetResult().ToList();
         bsCorrectionFactors.DataSource = _controller.UnitOfWork.CorrectionFactors;
     }
 
@@ -100,7 +100,7 @@ public partial class frmCorrectionFactor : Form
 
     private void addCorrectionFactor()
     {
-        var entity = _controller.UnitOfWork.AddDefaultEntity(getCurrentEnergyType().Id);
+        var entity = _controller.UnitOfWork.AddDefaultEntity(getCurrentEnergyType().Id).GetAwaiter().GetResult();
        
         bsCorrectionFactors.DataSource = _controller.UnitOfWork.CorrectionFactors;
         bsCorrectionFactors.ResetBindings(false);

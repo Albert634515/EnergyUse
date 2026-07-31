@@ -47,7 +47,7 @@ public partial class frmImport : Form
         address = (EnergyUse.Models.Address)cmbAddress.SelectedItem;
         if (address != null)
         {
-            energyTypes = _unitOfWork.EnergyTypeRepo.SelectByAddressId(address.Id).ToList();
+            energyTypes = _unitOfWork.EnergyTypeRepo.SelectByAddressId(address.Id).GetAwaiter().GetResult().ToList();
             bsEnergyTypes.DataSource = energyTypes;
 
             var energyType = energyTypes.Where(x => x.DefaultType == true).FirstOrDefault();

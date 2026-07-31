@@ -153,13 +153,13 @@ public class ChartRatesLiveChartsViewModel : ViewModelBase
 
     #region Helpers
 
-    private void setCostCategories()
+    private async void setCostCategories()
     {
         CostCategories.Clear();
         CostCategoryOptions.Clear();
 
-        var list = _unitOfWork.CostCategoryRepo
-            .SelectByEnergyTypeId(CurrentEnergyType.Id)
+        var list = (await _unitOfWork.CostCategoryRepo
+            .SelectByEnergyTypeId(CurrentEnergyType.Id))
             .ToList();
 
         foreach (var c in list)

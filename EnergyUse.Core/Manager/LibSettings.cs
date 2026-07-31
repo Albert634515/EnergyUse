@@ -144,13 +144,13 @@ public class LibSettings
     public Models.Setting? GetSetting(string key)
     {
         var repo = new Repositories.RepoSettings(_context);
-        return repo.GetByKey(key);
+        return repo.GetByKey(key).GetAwaiter().GetResult();
     }
 
     public void SaveSetting(string settingTag, string newSettingValue)
     {
         var repo = new Repositories.RepoSettings(_context);
-        var setting = repo.GetByKey(settingTag);
+        var setting = repo.GetByKey(settingTag).GetAwaiter().GetResult();
 
         if (setting == null || setting.Id == 0)
         {
@@ -176,7 +176,7 @@ public class LibSettings
     public void SaveColorSetting(string settingTag, Color newColor)
     {
         var repo = new Repositories.RepoSettings(_context);
-        var setting = repo.GetByKey(settingTag);
+        var setting = repo.GetByKey(settingTag).GetAwaiter().GetResult();
 
         string html = ColorTranslator.ToHtml(newColor);
 
@@ -200,7 +200,7 @@ public class LibSettings
     public void DeleteSetting(string settingTag)
     {
         var repo = new Repositories.RepoSettings(_context);
-        var setting = repo.GetByKey(settingTag);
+        var setting = repo.GetByKey(settingTag).GetAwaiter().GetResult();
 
         if (setting == null)
             return;

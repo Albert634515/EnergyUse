@@ -92,10 +92,10 @@ namespace WpfUI.ViewModels
 
             _ = SetEnergyTypesAsync();
 
-            Units = new ObservableCollection<Unit>(_controller.UnitOfWork.UnitRepo.GetAll());
-            TariffGroups = new ObservableCollection<TariffGroup>(_controller.UnitOfWork.TariffGroupRepo.GetAll());
-            EnergySubTypes = new ObservableCollection<EnergySubType>(_controller.UnitOfWork.EnergySubTypeRepo.GetAll());
-            CalculationTypes = new ObservableCollection<CalculationType>(_controller.UnitOfWork.CalculationTypeRepo.GetAll());
+            Units = new ObservableCollection<Unit>(_controller.UnitOfWork.UnitRepo.GetAll().GetAwaiter().GetResult());
+            TariffGroups = new ObservableCollection<TariffGroup>(_controller.UnitOfWork.TariffGroupRepo.GetAll().GetAwaiter().GetResult());
+            EnergySubTypes = new ObservableCollection<EnergySubType>(_controller.UnitOfWork.EnergySubTypeRepo.GetAll().GetAwaiter().GetResult());
+            CalculationTypes = new ObservableCollection<CalculationType>(_controller.UnitOfWork.CalculationTypeRepo.GetAll().GetAwaiter().GetResult());
 
             AddCommand = new RelayCommand(_ => add());
             SaveCommand = new RelayCommand(_ => save());
@@ -116,13 +116,13 @@ namespace WpfUI.ViewModels
                                  ?? EnergyTypes.FirstOrDefault();
         }
 
-        private void setCostCategories()
+        private async void setCostCategories()
         {
             if (SelectedEnergyType == null)
                 return;
 
-            var list = _controller.UnitOfWork.CostCategoryRepo
-                                             .SelectByEnergyTypeId(SelectedEnergyType.Id)
+            var list = (await _controller.UnitOfWork.CostCategoryRepo
+                                             .SelectByEnergyTypeId(SelectedEnergyType.Id))
                                              .ToList();
 
             CostCategories = new ObservableCollection<CostCategory>(list);

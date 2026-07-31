@@ -21,16 +21,16 @@ public class LibMeterReading
     /// <param name="startRange">Start of calculation range</param>
     /// <param name="endRange">End of calculation range</param>
     /// <param name="energyTypeId">Energy type id</param>
-    public void RecalculateReadingsDiffPreviousDay(DateTime startRange, DateTime endRange, long energyTypeId, long addressId)
+    public async Task RecalculateReadingsDiffPreviousDay(DateTime startRange, DateTime endRange, long energyTypeId, long addressId)
     {
         List<Models.MeterReading> meterReadings;
         Models.MeterReading? lastMeterReading;
 
         var repoMeterReading = new Repositories.RepoMeterReading(_context);
         if (startRange == DateTime.MinValue || endRange == DateTime.MinValue)
-            meterReadings = repoMeterReading.SelectByEnergyIdAndAddressId(energyTypeId, addressId).ToList();
+            meterReadings = (await repoMeterReading.SelectByEnergyIdAndAddressId(energyTypeId, addressId)).ToList();
         else
-            meterReadings = repoMeterReading.SelectByRange(startRange.AddDays(-1), endRange.AddDays(1), energyTypeId, addressId).ToList();
+            meterReadings = (await repoMeterReading.SelectByRange(startRange.AddDays(-1), endRange.AddDays(1), energyTypeId, addressId)).ToList();
 
         if (meterReadings.Count > 0)
         {
@@ -65,14 +65,14 @@ public class LibMeterReading
         }
     }
 
-    public void RecalculateReadingsDiffPreviousDay(ref List<Models.MeterReading> meterReadings)
+    public async Task<List<Models.MeterReading>> RecalculateReadingsDiffPreviousDay(List<Models.MeterReading> meterReadings)
     {
         var repoMeterReading = new Repositories.RepoMeterReading(_context);
 
         if (meterReadings.Count > 0)
         {
             var firstMeterReading = meterReadings.OrderBy(o => o.RegistrationDate).FirstOrDefault();
-            var lastMeterReading = repoMeterReading.SelectLastRowFromDate(firstMeterReading.RegistrationDate, firstMeterReading.EnergyType.Id, firstMeterReading.Meter.Address.Id);
+            var lastMeterReading = await repoMeterReading.SelectLastRowFromDate(firstMeterReading.RegistrationDate, firstMeterReading.EnergyType.Id, firstMeterReading.Meter.Address.Id);
             if (lastMeterReading == null)
                 lastMeterReading = firstMeterReading;
 
@@ -88,6 +88,7 @@ public class LibMeterReading
         }
 
         //Refactor, add save
+        return meterReadings;
     }
 
     public void CalculateDiff(ref Models.MeterReading meterReading, Models.MeterReading lastMeterReading)

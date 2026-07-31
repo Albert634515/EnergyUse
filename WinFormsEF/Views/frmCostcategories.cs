@@ -197,7 +197,7 @@ public partial class frmCostcategories : Form
         _controller.UnitOfWork.CostCategories = new List<EnergyUse.Models.CostCategory>();
 
         if (energyTypeId > 0)
-            _controller.UnitOfWork.CostCategories = _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeId(energyTypeId).ToList();
+            _controller.UnitOfWork.CostCategories = _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeId(energyTypeId).GetAwaiter().GetResult().ToList();
 
         bsCostCategories.DataSource = _controller.UnitOfWork.CostCategories;
         bsCostCategories.ResetBindings(false);

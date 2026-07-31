@@ -75,7 +75,9 @@ public class PayBackTimeController : BaseController, IController
             periodicData = await _libPeriodicDate.GetRangeAsync(parameterPeriod);
         }
 
-        var costCategories = UnitOfWork?.CostCategoryRepo.MapCostCategories(periodicData);
+        var costCategories = UnitOfWork == null
+            ? null
+            : await UnitOfWork.CostCategoryRepo.MapCostCategories(periodicData);
         if (costCategories == null)
             return payBackTime;
 

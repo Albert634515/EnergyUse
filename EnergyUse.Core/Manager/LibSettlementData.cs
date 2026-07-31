@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using EnergyUse.Core.Context;
 using EnergyUse.Models.Common;
 
@@ -67,13 +67,13 @@ public class LibSettlementData
             }
 
             //Get tarif rate
-            (var rate, bool lastAvailableRateUsed) = getRate(energyTypeId, costCategory, periodicData, tarifGroupId);
+            (var rate, bool lastAvailableRateUsed) = await getRate(energyTypeId, costCategory, periodicData, tarifGroupId);
 
             Models.Staffel? staffel = null;
             if (rate.RateTypeId == 2)
             {
                 // Get staffel, TODO could be multiple staffel if streshold is exceeded
-                staffel = getStaffel(rate.Id, periodicData.ValueX);
+                staffel = await getStaffel(rate.Id, periodicData.ValueX);
 
                 // For now overrule rate value with staffel value
                 if (staffel != null)
@@ -218,20 +218,20 @@ public class LibSettlementData
         return settlementDataList;
     }
 
-    private Tuple<Models.Rate, bool> getRate(long energyTypeId, Models.CostCategory costCategory, PeriodicData periodicData, long tarifGroupId)
+    private async Task<Tuple<Models.Rate, bool>> getRate(long energyTypeId, Models.CostCategory costCategory, PeriodicData periodicData, long tarifGroupId)
     {
         var rate = new Models.Rate();
         var lastAvailableRateUsed = false;
 
         if (costCategory.EnergySubType.Id >= 5)
         {
-            _rates = _rateRepo.SelectByCostCategoryAndDate(energyTypeId, costCategory.Id, periodicData.ValueXDate, periodicData.ValueXDate, tarifGroupId).ToList();
+            _rates = (await _rateRepo.SelectByCostCategoryAndDate(energyTypeId, costCategory.Id, periodicData.ValueXDate, periodicData.ValueXDate, tarifGroupId)).ToList();
             rate = _rates.Where(x => periodicData.ValueXDate >= x.StartRate && periodicData.ValueXDate <= x.EndRate).FirstOrDefault();
 
             if (rate == null)
             {
                 rate = new Models.Rate();
-                rate = _rateRepo.SelectLastRateByDate(energyTypeId, costCategory.Id, periodicData.ValueXDate, tarifGroupId);
+                rate = await _rateRepo.SelectLastRateByDate(energyTypeId, costCategory.Id, periodicData.ValueXDate, tarifGroupId);
 
                 if (rate != null && rate.EndRate < periodicData.ValueXDate)
                     lastAvailableRateUsed = true;
@@ -243,8 +243,8 @@ public class LibSettlementData
         return new Tuple<Models.Rate, bool>(rate, lastAvailableRateUsed);
     }
 
-    private Models.Staffel? getStaffel(long rateId, long maxRange)
+    private async Task<Models.Staffel?> getStaffel(long rateId, long maxRange)
     {
-        return _rateStaffelRepo.SelectByRateIdAndRange(rateId, maxRange).FirstOrDefault();
+        return (await _rateStaffelRepo.SelectByRateIdAndRange(rateId, maxRange)).FirstOrDefault();
     }
 }

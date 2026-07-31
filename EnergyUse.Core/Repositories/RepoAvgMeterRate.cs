@@ -1,6 +1,5 @@
 ﻿using EnergyUse.Core.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace EnergyUse.Core.Repositories;
 

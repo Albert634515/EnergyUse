@@ -43,10 +43,10 @@ public class CorrectionFactor : IUnitOfWork
         CorrectionFactors.Remove(entity);
     }
 
-    public Models.CorrectionFactor AddDefaultEntity(long energyTypeId)
+    public async Task<Models.CorrectionFactor> AddDefaultEntity(long energyTypeId)
     {
         var entity = new Models.CorrectionFactor();
-        var lastRow = CorrectionFactorRepo.SelectLastRow(energyTypeId);
+        var lastRow = await CorrectionFactorRepo.SelectLastRow(energyTypeId);
 
         entity.Factor = 0;
         entity.EnergyTypeId = energyTypeId;

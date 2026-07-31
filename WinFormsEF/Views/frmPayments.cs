@@ -43,7 +43,7 @@ public partial class frmPayments : Form
 
     private void setPreSelectePeriods()
     {
-        var PreDefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
+        var PreDefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().GetAwaiter().GetResult().ToList();
 
         CboPreSelectedPeriods.DataSource = PreDefinedPeriods;
         CboPreSelectedPeriods.DisplayMember = "Description";
@@ -110,7 +110,7 @@ public partial class frmPayments : Form
 
         _controller.UnitOfWork.Payments = new List<EnergyUse.Models.Payment>();
 
-        _controller.UnitOfWork.Payments = _controller.UnitOfWork.PaymentRepo.SelectByAddressAndPeriod(address.Id, preDefinedPeriod.Id).ToList();
+        _controller.UnitOfWork.Payments = _controller.UnitOfWork.PaymentRepo.SelectByAddressAndPeriod(address.Id, preDefinedPeriod.Id).GetAwaiter().GetResult().ToList();
 
         _controller.UnitOfWork.SetListSorted();
         bsPayments.DataSource = _controller.UnitOfWork.Payments;

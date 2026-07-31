@@ -205,7 +205,7 @@ public partial class ucImport : UserControl
 
         var firstMeterReading = importedMeterReadings.OrderBy(o => o.RegistrationDate).FirstOrDefault();
         if (firstMeterReading != null)
-            lastMeterReading = _unitOfWork.MeterReadingRepo.SelectLastRowFromDate(firstMeterReading.RegistrationDate, firstMeterReading.EnergyType.Id, CurrentAddress.Id);
+            lastMeterReading = await _unitOfWork.MeterReadingRepo.SelectLastRowFromDate(firstMeterReading.RegistrationDate, firstMeterReading.EnergyType.Id, CurrentAddress.Id);
 
         lastMeterReading ??= firstMeterReading;
 
@@ -213,12 +213,12 @@ public partial class ucImport : UserControl
         var minNewRange = importedMeterReadings.Min(m => m.RegistrationDate);
         var maxNewRange = importedMeterReadings.Max(m => m.RegistrationDate);
 
-        _unitOfWork.meterReadings = _unitOfWork.MeterReadingRepo.SelectByRange(minNewRange.AddDays(-7), maxNewRange, CurrentEnergyType.Id, CurrentAddress.Id).ToList();
+        _unitOfWork.meterReadings = (await _unitOfWork.MeterReadingRepo.SelectByRange(minNewRange.AddDays(-7), maxNewRange, CurrentEnergyType.Id, CurrentAddress.Id)).ToList();
 
         foreach (EnergyUse.Models.MeterReading importedReading in importedMeterReadings.OrderBy(o => o.RegistrationDate))
         {
             EnergyUse.Models.Meter meter = meterlist.Where(w => w.ActiveFrom.Date <= importedReading.RegistrationDate.Date).OrderBy(o => o.ActiveFrom.Date).LastOrDefault();
-            EnergyUse.Models.MeterReading existingMeterReading = _unitOfWork.MeterReadingRepo.SelectByExists(importedReading.RegistrationDate.Date, importedReading.EnergyType.Id, meter.Id).FirstOrDefault();
+            EnergyUse.Models.MeterReading existingMeterReading = (await _unitOfWork.MeterReadingRepo.SelectByExists(importedReading.RegistrationDate.Date, importedReading.EnergyType.Id, meter.Id)).FirstOrDefault();
                             
             // Als datum gelijk aan start meter datum dan is er geen vorige reading, dus een reset
             if (importedReading.RegistrationDate == meter.ActiveFrom.Date)

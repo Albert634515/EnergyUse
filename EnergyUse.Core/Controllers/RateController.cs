@@ -27,7 +27,7 @@ public class RateController : BaseController, IController
 
     #region Methods
 
-    public decimal GetPriceChange(EnergyUse.Models.Rate rate)
+    public async Task<decimal> GetPriceChange(EnergyUse.Models.Rate rate)
     {
         decimal priceChange = 0;
 
@@ -36,7 +36,7 @@ public class RateController : BaseController, IController
             throw new InvalidOperationException("UnitOfWork or RateRepo is not initialized.");
         }
 
-        var previousRate = UnitOfWork.RateRepo.SelectLastRateByDate(rate.EnergyType.Id, rate.CostCategory.Id, rate.StartRate.AddDays(-1), rate.TariffGroup.Id);
+        var previousRate = await UnitOfWork.RateRepo.SelectLastRateByDate(rate.EnergyType.Id, rate.CostCategory.Id, rate.StartRate.AddDays(-1), rate.TariffGroup.Id);
         if (previousRate != null && previousRate.Id > 0)
             priceChange = Math.Round(((rate.RateValue - previousRate.RateValue) / previousRate.RateValue) * 100, 2);
 

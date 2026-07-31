@@ -1,4 +1,4 @@
-using EnergyUse.Common.Enums;
+﻿using EnergyUse.Common.Enums;
 using EnergyUse.Common.Extensions;
 using EnergyUse.Common.Libs;
 using EnergyUse.Core.Context;
@@ -57,10 +57,10 @@ public class LibPeriodicDate
         _parameterPeriod = parameterPeriod;
         _meterReading = new();
         _periodicDataList = new();
-        _lastrow = getLastRow();
+        _lastrow = await getLastRow();
 
-        setAvgCorrectionFactor();
-        setCorrectionFactorData();
+        await setAvgCorrectionFactor();
+        await setCorrectionFactorData();
         await setNettingData();
 
         await getPeriodicDataAsync();
@@ -68,9 +68,9 @@ public class LibPeriodicDate
         return getData();
     }
 
-    private Models.MeterReading getLastRow()
+    private async Task<Models.MeterReading> getLastRow()
     {
-        var lastRow = _meterReadingRepo.SelectLastRow(_parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId);
+        var lastRow = await _meterReadingRepo.SelectLastRow(_parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId);
         if (lastRow == null)
         {
             lastRow = new Models.MeterReading
@@ -85,7 +85,7 @@ public class LibPeriodicDate
     private async Task getPeriodicDataAsync()
     {
         //Retrieve data per day
-        _meterReading = _meterReadingRepo.SelectByRange(_parameterPeriod.StartRange, _parameterPeriod.EndRange, _parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId, _parameterPeriod.Month, _parameterPeriod.Week, _parameterPeriod.Day).ToList();
+        _meterReading = (await _meterReadingRepo.SelectByRange(_parameterPeriod.StartRange, _parameterPeriod.EndRange, _parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId, _parameterPeriod.Month, _parameterPeriod.Week, _parameterPeriod.Day)).ToList();
 
         convertReadingToPeriodicData();
 
@@ -102,7 +102,7 @@ public class LibPeriodicDate
             .ToList();
 
         // Add rate values
-        addRateToData();
+        await addRateToData();
 
         // Add addital cost data
         await addCost();
@@ -113,7 +113,7 @@ public class LibPeriodicDate
     /// </summary>
     private async Task addCost()
     {
-        var costCategoryList = _costCategoriesRepo.SelectByEnergyTypeAndRange(_parameterPeriod.EnergyType.Id, _parameterPeriod.StartRange, _parameterPeriod.EndRange);
+        var costCategoryList = await _costCategoriesRepo.SelectByEnergyTypeAndRange(_parameterPeriod.EnergyType.Id, _parameterPeriod.StartRange, _parameterPeriod.EndRange);
         var libPriceRate = new LibPriceRate(_dbFileName);
 
         foreach (var costCategory in costCategoryList)
@@ -153,7 +153,7 @@ public class LibPeriodicDate
                             vat = vatTarif.Tarif;
                     }
 
-                    PriceRate? priceRate = getPriceRate(libPriceRate, costCategory, periodicData, tarifGroupId);
+                    PriceRate? priceRate = await getPriceRate(libPriceRate, costCategory, periodicData, tarifGroupId);
 
                     if (priceRate != null && priceRate.RateTypeId == 2)
                     {
@@ -161,7 +161,7 @@ public class LibPeriodicDate
                         // - Set Initial staffel value cache for previouse period
                         // - Set staffel cache
                         // - Set staffel value
-                        setInitialStaffel(priceRate.RateId, costCategory.EnergySubTypeId.GetValueOrDefault());
+                        await setInitialStaffel(priceRate.RateId, costCategory.EnergySubTypeId.GetValueOrDefault());
                         var staffels = getStaffel(priceRate.RateId, periodicData, costCategory.EnergySubTypeId.GetValueOrDefault());
 
                         // For now overrule rate value with staffel value
@@ -200,38 +200,38 @@ public class LibPeriodicDate
         }
     }
 
-    private PriceRate? getPriceRate(LibPriceRate libPriceRate, Models.CostCategory costCategory, PeriodicDataPerDay periodicData, long tarifGroupId)
+    private async Task<PriceRate?> getPriceRate(LibPriceRate libPriceRate, Models.CostCategory costCategory, PeriodicDataPerDay periodicData, long tarifGroupId)
     {
         PriceRate? priceRate = null;
         switch (costCategory.EnergySubType.Id)
         {
             case 1:
                 //Normal
-                priceRate = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.Normal, tarifGroupId);
+                priceRate = await libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.Normal, tarifGroupId);
                 break;
             case 2:
                 //low
-                priceRate = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.Low, tarifGroupId);
+                priceRate = await libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.Low, tarifGroupId);
                 break;
             case 3:
                 //return normal
-                priceRate = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.ReturnNormal, tarifGroupId);
+                priceRate = await libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.ReturnNormal, tarifGroupId);
                 break;
             case 4:
                 //return low
-                priceRate = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.ReturnLow, tarifGroupId);
+                priceRate = await libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.ReturnLow, tarifGroupId);
                 break;
             case 5:
                 //Other
-                priceRate = libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
+                priceRate = await libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
                 break;
             case 6:
                 // Return cost normal
-                priceRate = libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
+                priceRate = await libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
                 break;
             case 7:
                 // Return low normal
-                priceRate = libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
+                priceRate = await libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
                 break;
         }
 
@@ -315,14 +315,14 @@ public class LibPeriodicDate
     /// - set data for period before current range
     /// </summary>
     /// <param name="rateId"></param>
-    private void setInitialStaffel(long rateId, long energySubTypeId)
+    private async Task setInitialStaffel(long rateId, long energySubTypeId)
     {
         // Check if staffel is already set
         if (_periodStaffelList.Where(w => w.RateId == rateId).Any())
             return;
 
-        var priceRate = _rateRepo.SelectById(rateId);
-        var staffels = _staffelRepo.SelectByRateId(rateId);
+        var priceRate = await _rateRepo.SelectById(rateId);
+        var staffels = await _staffelRepo.SelectByRateId(rateId);
         _periodStaffelList = new List<Models.Common.PeriodStaffel>();
 
         foreach (var staffel in staffels)
@@ -342,7 +342,7 @@ public class LibPeriodicDate
         if (_parameterPeriod.StartRange > priceRate.StartRate)
         {
             // Get period date for range to fill intial staffels
-            var meterReadings = _meterReadingRepo.SelectByRange(priceRate.StartRate, _parameterPeriod.StartRange, _parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId, _parameterPeriod.Month, _parameterPeriod.Week, _parameterPeriod.Day).ToList();
+            var meterReadings = await _meterReadingRepo.SelectByRange(priceRate.StartRate, _parameterPeriod.StartRange, _parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId, _parameterPeriod.Month, _parameterPeriod.Week, _parameterPeriod.Day);
 
             // Get period date for range to fill intial staffels
             decimal leftOver = -1;
@@ -523,7 +523,7 @@ public class LibPeriodicDate
         return new Tuple<int, DateTime, string>(labelX, labelXDate, labelXString);
     }
 
-    private void addRateToData()
+    private async Task addRateToData()
     {
         var libPriceRate = new LibPriceRate(_dbFileName);
 
@@ -531,7 +531,7 @@ public class LibPeriodicDate
         {
             var nettingUsed = false;
             // Check if there is netting is used
-            var nettingPerc = _nettingRepo.SelectByEnergyTypeAndDate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX);
+            var nettingPerc = await _nettingRepo.SelectByEnergyTypeAndDate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX);
             if (nettingPerc != null && nettingPerc.Rate != 0)
                 nettingUsed = true;
 
@@ -539,22 +539,22 @@ public class LibPeriodicDate
             {
                 if (_parameterPeriod.EnergyType.HasNormalAndLow)
                 {
-                    periodicDataPerDay.RateLow = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.Low, _parameterPeriod.TarifGroupId).Rate;
+                    periodicDataPerDay.RateLow = (await libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.Low, _parameterPeriod.TarifGroupId)).Rate;
                     periodicDataPerDay.ValueYMonetaryLow = periodicDataPerDay.ValueYLow * periodicDataPerDay.RateLow;
                 }
 
-                periodicDataPerDay.RateNormal = libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.Normal, _parameterPeriod.TarifGroupId).Rate;
+                periodicDataPerDay.RateNormal = (await libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.Normal, _parameterPeriod.TarifGroupId)).Rate;
                 periodicDataPerDay.ValueYMonetaryNormal = periodicDataPerDay.ValueYNormal * periodicDataPerDay.RateNormal;                              
 
                 if (_parameterPeriod.EnergyType.HasEnergyReturn)
                 {
                     if (_parameterPeriod.EnergyType.HasNormalAndLow)
                     {
-                        var rateReturnLow = libPriceRate.GetCalculatedRate(
+                        var rateReturnLow = (await libPriceRate.GetCalculatedRate(
                             _parameterPeriod.EnergyType.Id,
                             periodicDataPerDay.ValueX,
                             SubEnergyType.ReturnLow,
-                            _parameterPeriod.TarifGroupId).Rate;
+                            _parameterPeriod.TarifGroupId)).Rate;
                         var nettedReturnLow = nettingUsed ? periodicDataPerDay.NettingValueYReturnLow : 0;
                         (periodicDataPerDay.RateReturnLow, periodicDataPerDay.ValueYMonetaryReturnLow) =
                             calculateReturnRate(
@@ -565,11 +565,11 @@ public class LibPeriodicDate
                                 nettingUsed);
                     }
 
-                    var rateReturnNormal = libPriceRate.GetCalculatedRate(
+                    var rateReturnNormal = (await libPriceRate.GetCalculatedRate(
                         _parameterPeriod.EnergyType.Id,
                         periodicDataPerDay.ValueX,
                         SubEnergyType.ReturnNormal,
-                        _parameterPeriod.TarifGroupId).Rate;
+                        _parameterPeriod.TarifGroupId)).Rate;
                     var nettedReturnNormal = nettingUsed ? periodicDataPerDay.NettingValueYReturnNormal : 0;
                     (periodicDataPerDay.RateReturnNormal, periodicDataPerDay.ValueYMonetaryReturnNormal) =
                         calculateReturnRate(
@@ -617,7 +617,7 @@ public class LibPeriodicDate
         // Add dataprediction for missing data
         if (_parameterPeriod.PredictMissingData)
         {
-            removeLastEmptyDay();
+            await removeLastEmptyDay();
 
             DateTime lastDate;
             if (_periodicDataList.Count > 0)
@@ -648,7 +648,7 @@ public class LibPeriodicDate
 
                     // If not avg is found try general avg
                     if (avgMeterRate == null)
-                        avgMeterRate = getAvgGeneral();
+                        avgMeterRate = await getAvgGeneral();
 
                     if (avgMeterRate != null)
                     {
@@ -691,11 +691,11 @@ public class LibPeriodicDate
     /// Last data in data set usualy does not have any calculated data
     /// Data is calculate from last day minus previous day
     /// </summary>
-    private void removeLastEmptyDay()
+    private async Task removeLastEmptyDay()
     {
         if (_periodicDataList != null && _periodicDataList.Count > 0)
         {
-            _lastrow = _meterReadingRepo.SelectLastRow(_parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId);
+            _lastrow = await _meterReadingRepo.SelectLastRow(_parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId);
             if (_lastrow == null)
                 return;
 
@@ -708,7 +708,7 @@ public class LibPeriodicDate
 
     private async Task<List<AvgMeterRate>> getAvgByPeriodList(long energyTypeId, long addressId)
     {
-        var setting = _settingsRepo.GetByKey("UseAllDataForAvg");
+        var setting = await _settingsRepo.GetByKey("UseAllDataForAvg");
         if (setting != null && setting.KeyValue == "Yes")
         {
             return (await _avgRepo.SelectByAddressAndEnergyTypePerPeriod(energyTypeId, addressId)).ToList();
@@ -717,7 +717,7 @@ public class LibPeriodicDate
         {
             // Calculate averageFrom
             var defaultFromValue = DateTime.Now.AddYears(-2);
-            setting = _settingsRepo.GetByKey("AvgDateFromDate");
+            setting = await _settingsRepo.GetByKey("AvgDateFromDate");
             if (setting != null && !string.IsNullOrWhiteSpace(setting.KeyValue))
             {
                 defaultFromValue = DateTime.ParseExact(setting.KeyValue, "yyyyMMdd", CultureInfo.InvariantCulture);
@@ -727,17 +727,16 @@ public class LibPeriodicDate
         }
     }
 
-    private AvgMeterRate? getAvgGeneral()
+    private async Task<AvgMeterRate?> getAvgGeneral()
     {
         if (_avgGeneral == null)
         {
-            // Await the asynchronous method to resolve the Task and get the result
-            _avgGeneral = _avgRepo.SelectGeneralAvgByAddressAndEnergyType(
+            _avgGeneral = await _avgRepo.SelectGeneralAvgByAddressAndEnergyType(
                 _parameterPeriod.EnergyType.Id,
                 _parameterPeriod.AddressId,
                 _avgCorrectionPercentage,
                 _avgCorrectionPercentageReturn
-            ).Result; // Use .Result to get the result of the Task synchronously
+            );
         }
 
         return _avgGeneral;
@@ -841,10 +840,10 @@ public class LibPeriodicDate
     }
 
     private List<Models.CorrectionFactor> _correctionFactors;
-    private void setCorrectionFactorData()
+    private async Task setCorrectionFactorData()
     {
         var correctionFactorRepo = new Repositories.RepoCorrectionFactor(_context);
-        _correctionFactors = correctionFactorRepo.SelectByRange(_parameterPeriod.StartRange, _parameterPeriod.EndRange, _parameterPeriod.EnergyType.Id).ToList();
+        _correctionFactors = (await correctionFactorRepo.SelectByRange(_parameterPeriod.StartRange, _parameterPeriod.EndRange, _parameterPeriod.EnergyType.Id)).ToList();
     }
 
     private decimal getCorrectionFactor(DateTime day)
@@ -866,9 +865,9 @@ public class LibPeriodicDate
     /// <summary>
     /// Set correction factor to correct avg to correct season effect of season data not available
     /// </summary>
-    private void setAvgCorrectionFactor()
+    private async Task setAvgCorrectionFactor()
     {
-        var avgCorrectionPerc = _settingsRepo.GetByKey("AvgCorrectionPercentage");
+        var avgCorrectionPerc = await _settingsRepo.GetByKey("AvgCorrectionPercentage");
         if (avgCorrectionPerc != null && avgCorrectionPerc.KeyValue.IsNumeric())
         {
             decimal.TryParse(avgCorrectionPerc.KeyValue, out _avgCorrectionPercentage);
@@ -876,7 +875,7 @@ public class LibPeriodicDate
                 _avgCorrectionPercentage = 1;
         }
 
-        var avgCorrectionPercReturn = _settingsRepo.GetByKey("AvgCorrectionPercentageReturn");
+        var avgCorrectionPercReturn = await _settingsRepo.GetByKey("AvgCorrectionPercentageReturn");
         if (avgCorrectionPercReturn != null && avgCorrectionPercReturn.KeyValue.IsNumeric())
         {
             decimal.TryParse(avgCorrectionPercReturn.KeyValue, out _avgCorrectionPercentageReturn);

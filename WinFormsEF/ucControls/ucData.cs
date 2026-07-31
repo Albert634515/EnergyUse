@@ -260,7 +260,7 @@ public partial class ucData : UserControl
         _unitOfWork.MeterReadings = new List<EnergyUse.Models.MeterReading>();
 
         if (CurrentEnergyType != null)
-            _unitOfWork.MeterReadings = _unitOfWork.MeterReadingRepo.SelectByRange(dtpFrom.Value, dtpTill.Value, CurrentEnergyType.Id, CurrentAddress.Id).ToList();
+            _unitOfWork.MeterReadings = _unitOfWork.MeterReadingRepo.SelectByRange(dtpFrom.Value, dtpTill.Value, CurrentEnergyType.Id, CurrentAddress.Id).GetAwaiter().GetResult().ToList();
 
         bsMeterReadings.DataSource = _unitOfWork.MeterReadings.OrderByDescending(o => o.RegistrationDate).ToList();
         bsMeterReadings.ResetBindings(false);

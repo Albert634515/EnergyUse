@@ -32,7 +32,7 @@ public class StaffelViewModel : ViewModelBase
         RefreshCommand = new RelayCommand(_ => refreshStaffels());
     }
 
-    public void GetStaffels(long rateId)
+    public async void GetStaffels(long rateId)
     {
         _rateId = rateId;
         Staffels.Clear();
@@ -40,7 +40,7 @@ public class StaffelViewModel : ViewModelBase
         _unitOfWork.Staffels = new List<Staffel>();
 
         if (_rateId > 0)
-            _unitOfWork.Staffels = _unitOfWork.StaffelRepo.SelectByRateId(_rateId).ToList();
+            _unitOfWork.Staffels = (await _unitOfWork.StaffelRepo.SelectByRateId(_rateId)).ToList();
 
         _unitOfWork.SetListSorted();
 

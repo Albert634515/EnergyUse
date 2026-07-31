@@ -50,8 +50,8 @@ public class MeterReading : IUnitOfWork
     public async Task<Models.MeterReading> AddDefaultEntity(long addressId, long energyTypeId)
     {
         var defaultMeter = await MeterRepo.SelectDefaultMeterByAddress(addressId, energyTypeId);
-        var energyType = EnergyTypeRepo.Get(energyTypeId);
-        var entity = MeterReadingRepo.GetDefaultReading(energyType, defaultMeter);
+        var energyType = await EnergyTypeRepo.Get(energyTypeId);
+        var entity = await MeterReadingRepo.GetDefaultReading(energyType, defaultMeter);
 
         MeterReadingRepo.Add(entity);
         MeterReadings.Add(entity);

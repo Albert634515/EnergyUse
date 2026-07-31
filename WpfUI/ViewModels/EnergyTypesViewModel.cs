@@ -69,8 +69,8 @@ namespace WpfUI.ViewModels
             _controller = new EnergyTypesController(Managers.Config.GetDbFileName());
             _controller.Initialize();
 
-            EnergyTypes = new ObservableCollection<EnergyType>(_controller.UnitOfWork.EnergyTypeRepo.GetAll());
-            Units = new ObservableCollection<Unit>(_controller.UnitOfWork.UnitRepo.GetAll());
+            EnergyTypes = new ObservableCollection<EnergyType>(_controller.UnitOfWork.EnergyTypeRepo.GetAll().GetAwaiter().GetResult());
+            Units = new ObservableCollection<Unit>(_controller.UnitOfWork.UnitRepo.GetAll().GetAwaiter().GetResult());
 
             AddCommand = new RelayCommand(_ => add());
             SaveCommand = new RelayCommand(_ => save());
@@ -123,9 +123,9 @@ namespace WpfUI.ViewModels
             selectFirstRecord();
         }
 
-        private void refresh()
+        private async void refresh()
         {
-            EnergyTypes = new ObservableCollection<EnergyType>(_controller.UnitOfWork.EnergyTypeRepo.GetAll());
+            EnergyTypes = new ObservableCollection<EnergyType>(await _controller.UnitOfWork.EnergyTypeRepo.GetAll());
             OnPropertyChanged(nameof(EnergyTypes));
 
             // ⭐ Selecteer eerste record na refresh

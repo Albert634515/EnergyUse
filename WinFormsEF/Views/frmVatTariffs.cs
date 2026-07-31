@@ -41,7 +41,7 @@ public partial class frmVatTariffs : Form
 
     private void LoadCostCategories(long eneryTypeId)
     {
-        var costCategories = _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeIdVatCalculated(eneryTypeId).ToList();
+        var costCategories = _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeIdVatCalculated(eneryTypeId).GetAwaiter().GetResult().ToList();
         bsCostCategories.DataSource = costCategories;
         CboCostCategory.DataSource = costCategories;
 

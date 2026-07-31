@@ -63,7 +63,7 @@ public class Rate : IUnitOfWork
         RateList.Remove(rate);
     }
 
-    public Models.Rate AddDefaultEntity(long energyTypeId, long costCategoryId, long tarifGroupId)
+    public async Task<Models.Rate> AddDefaultEntity(long energyTypeId, long costCategoryId, long tarifGroupId)
     {
         var entity = new Models.Rate();
         entity.RateTypeId = (int)Common.Enums.RateType.FixedPrice;
@@ -74,7 +74,7 @@ public class Rate : IUnitOfWork
         entity.EndRate = DateTime.Now.Date;
         entity.RateValue = 0;
 
-        Models.Rate? lastEntity = RateRepo.SelectLastRate(energyTypeId, costCategoryId, tarifGroupId);
+        Models.Rate? lastEntity = await RateRepo.SelectLastRate(energyTypeId, costCategoryId, tarifGroupId);
         if (lastEntity != null)
         {
             entity.StartRate = lastEntity.EndRate.AddDays(1);

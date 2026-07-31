@@ -26,7 +26,7 @@ public partial class ucDatePredefined : UserControl
 
     private void setTarifGroups()
     {
-        bsTarifGroups.DataSource = _unitOfWork.TarifGroupRepo.GetAll().ToList();
+        bsTarifGroups.DataSource = _unitOfWork.TarifGroupRepo.GetAll().GetAwaiter().GetResult().ToList();
         cboTarifGroup.SelectedIndex = -1;
     }
 
@@ -34,7 +34,7 @@ public partial class ucDatePredefined : UserControl
     {
         _currentId = preDefinedPeriodId;
 
-        _predefinedPeriodDates = _unitOfWork.PreDefinedPeriodDateRepo.GetByPeriodId(preDefinedPeriodId).ToList();
+        _predefinedPeriodDates = _unitOfWork.PreDefinedPeriodDateRepo.GetByPeriodId(preDefinedPeriodId).GetAwaiter().GetResult().ToList();
         bsPreDefinedPeriodDates.DataSource = _predefinedPeriodDates;
     }
 

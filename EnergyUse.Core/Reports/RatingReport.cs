@@ -28,7 +28,7 @@ public class RatingReport : ReportBase
         _context = new EnergyUseContext(dbFileName);
         _unitOfWork = new UnitOfWork.RatingReport(_dbFileName);
     }
-    public string GetRatingReportPdf(Models.Address address, ParameterSelection parameterSelection)
+    public async Task<string> GetRatingReportPdf(Models.Address address, ParameterSelection parameterSelection)
     {
         Table table;
         DateTime startRange, endRange;
@@ -54,7 +54,7 @@ public class RatingReport : ReportBase
             startRange = item.StartRange;
             endRange = item.EndRange;
                             
-            var costCategoryList = _unitOfWork.CostCategoriesRepo.SelectByEnergyTypeAndRange(energyType.Id, startRange, endRange);
+            var costCategoryList = await _unitOfWork.CostCategoriesRepo.SelectByEnergyTypeAndRange(energyType.Id, startRange, endRange);
             foreach (Models.CostCategory costCategory in costCategoryList)
             {
                 long tarifGroupId = 0;
@@ -66,9 +66,9 @@ public class RatingReport : ReportBase
                 if (tarifGroupId == 0)
                     tarifGroupId = item.TarifGroup;
 
-                GetRateTableHeader(table, costCategory, tarifGroupId);
+                await GetRateTableHeader(table, costCategory, tarifGroupId);
 
-                var rates = _unitOfWork.RateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, tarifGroupId);
+                var rates = await _unitOfWork.RateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, tarifGroupId);
                 foreach (Models.Rate rate in rates) 
                 {                        
                     GetRateTable(table, rate);
@@ -100,9 +100,9 @@ public class RatingReport : ReportBase
         return new Paragraph(headerText);
     }
 
-    private void GetRateTableHeader(Table table, Models.CostCategory costCategory, long tariffGroupId)
+    private async Task GetRateTableHeader(Table table, Models.CostCategory costCategory, long tariffGroupId)
     {
-        var tarifGroup = _unitOfWork.TariffGroupRepo.Get(tariffGroupId);
+        var tarifGroup = await _unitOfWork.TariffGroupRepo.Get(tariffGroupId);
         var range = "";
         if (costCategory.Start.HasValue)
             range += $" from {costCategory.Start.Value.ToString("dd-MM-yyyy")}";

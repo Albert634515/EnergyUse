@@ -1,4 +1,4 @@
-using EnergyUse.Core.Context;
+﻿using EnergyUse.Core.Context;
 using EnergyUse.Models.Common;
 
 namespace EnergyUse.Core.Manager;
@@ -28,18 +28,18 @@ public class LibPriceRate
     /// <param name="costDate"></param>
     /// <param name="subEnergyType"></param>
     /// <returns>Db.Rate class</returns>
-    public PriceRate GetCalculatedRate(long energyTypeId, DateTime costDate, Common.Enums.SubEnergyType subEnergyType, long tarifGroupId)
+    public async Task<PriceRate> GetCalculatedRate(long energyTypeId, DateTime costDate, Common.Enums.SubEnergyType subEnergyType, long tarifGroupId)
     {
         Models.Rate? rate = null;
         var priceRate = new PriceRate();
 
         var rateRepo = new Repositories.RepoRate(_context);
 
-        var costCategory = getCostCategory(energyTypeId, subEnergyType);
-        List<Models.Rate> rates = getByCostCategoryAndDate(energyTypeId, costCategory.Id, costDate, costDate, tarifGroupId);
+        var costCategory = await getCostCategory(energyTypeId, subEnergyType);
+        List<Models.Rate> rates = await getByCostCategoryAndDate(energyTypeId, costCategory.Id, costDate, costDate, tarifGroupId);
         if (rates == null || rates.Count == 0)
         {
-            rate = getLastRateByDate(energyTypeId, costCategory.Id, costDate, tarifGroupId);
+            rate = await getLastRateByDate(energyTypeId, costCategory.Id, costDate, tarifGroupId);
             if (rate == null)
                 rate = new Models.Rate();
 
@@ -59,7 +59,7 @@ public class LibPriceRate
         {
             rate = rates.Where(x => x.StartRate.Date <= costDate.Date && x.EndRate.Date >= costDate.Date).FirstOrDefault();
             if (rate == null)
-                rate = getLastRateByDate(energyTypeId, costCategory.Id, costDate, tarifGroupId);
+                rate = await getLastRateByDate(energyTypeId, costCategory.Id, costDate, tarifGroupId);
 
             if (rate != null)
             {
@@ -72,20 +72,20 @@ public class LibPriceRate
         return priceRate;
     }
 
-    public PriceRate GetRate(long energyTypeId, Models.CostCategory costCategory, PeriodicDataPerDay periodicData, long tarifGroupId)
+    public async Task<PriceRate> GetRate(long energyTypeId, Models.CostCategory costCategory, PeriodicDataPerDay periodicData, long tarifGroupId)
     {
         var rate = new Models.Rate();
         var priceRate = new PriceRate();
 
         if (costCategory.EnergySubType.Id >= 5)
         {
-            _rates = _rateRepo.SelectByCostCategoryAndDate(energyTypeId, costCategory.Id, periodicData.ValueX, periodicData.ValueX, tarifGroupId).ToList();
+            _rates = (await _rateRepo.SelectByCostCategoryAndDate(energyTypeId, costCategory.Id, periodicData.ValueX, periodicData.ValueX, tarifGroupId)).ToList();
             rate = _rates.Where(x => periodicData.ValueX >= x.StartRate && periodicData.ValueX <= x.EndRate).FirstOrDefault();
 
             if (rate == null)
             {
                 rate = new Models.Rate();
-                rate = _rateRepo.SelectLastRateByDate(energyTypeId, costCategory.Id, periodicData.ValueX, tarifGroupId);
+                rate = await _rateRepo.SelectLastRateByDate(energyTypeId, costCategory.Id, periodicData.ValueX, tarifGroupId);
 
                 if (rate != null && rate.EndRate < periodicData.ValueX)
                     priceRate.LastRateUsed = true;
@@ -118,7 +118,7 @@ public class LibPriceRate
 
 
     private List<Models.Rate> _lastRate = new();
-    private Models.Rate? getLastRateByDate(long energyTypeId, long costCategoryId, DateTime lastDate, long tarifGroupId)
+    private async Task<Models.Rate?> getLastRateByDate(long energyTypeId, long costCategoryId, DateTime lastDate, long tarifGroupId)
     {
         var rate = _lastRate.Where(x => x.CostCategory.Id == costCategoryId
                                      && x.TariffGroup.Id == tarifGroupId
@@ -129,7 +129,7 @@ public class LibPriceRate
             return rate;
         else
         {
-            rate = _rateRepo.SelectLastRateByDate(energyTypeId, costCategoryId, lastDate, tarifGroupId);
+            rate = await _rateRepo.SelectLastRateByDate(energyTypeId, costCategoryId, lastDate, tarifGroupId);
             if (rate != null)
                 _lastRate.Add(rate);
 
@@ -138,13 +138,13 @@ public class LibPriceRate
     }
 
     private List<Models.Rate> _rates = new();
-    private List<Models.Rate> getByCostCategoryAndDate(long energyTypeId, long costCategoryId, DateTime startDate, DateTime endDate, long tarifGroupId)
+    private async Task<List<Models.Rate>> getByCostCategoryAndDate(long energyTypeId, long costCategoryId, DateTime startDate, DateTime endDate, long tarifGroupId)
     {
         var rates = _rates.Where(x => x.EnergyType.Id == energyTypeId && x.CostCategory.Id == costCategoryId && x.TariffGroup.Id == tarifGroupId && (x.StartRate.Date <= endDate.Date && x.EndRate.Date >= startDate.Date)).ToList();
         if (rates != null && rates.Count > 0)
             return rates;
 
-        rates = _rateRepo.SelectByCostCategoryAndDate(energyTypeId, costCategoryId, startDate, endDate, tarifGroupId).ToList();
+        rates = (await _rateRepo.SelectByCostCategoryAndDate(energyTypeId, costCategoryId, startDate, endDate, tarifGroupId)).ToList();
         _rates.AddRange(rates);
         return rates;
     }
@@ -155,12 +155,12 @@ public class LibPriceRate
 
     private Dictionary<string, Models.CostCategory> _costCategories = new();
 
-    private Models.CostCategory getCostCategory(long energyTypeId, Common.Enums.SubEnergyType subEnergyType)
+    private async Task<Models.CostCategory> getCostCategory(long energyTypeId, Common.Enums.SubEnergyType subEnergyType)
     {
         var key = $"{energyTypeId}{subEnergyType}";
         if (!_costCategories.ContainsKey(key))
         {
-            var costCategory = _costCategoryRepo.SelectByEnergyTypeAndSubType(energyTypeId, subEnergyType);
+            var costCategory = await _costCategoryRepo.SelectByEnergyTypeAndSubType(energyTypeId, subEnergyType);
             if (costCategory != null)
                 _costCategories.Add(key, costCategory);
         }

@@ -62,9 +62,9 @@ namespace WpfUI.ViewModels
             setPeriods();
         }
 
-        private void setPeriods()
+        private async void setPeriods()
         {
-            var list = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().ToList();
+            var list = (await _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll()).ToList();
             PredefinedPeriods = new ObservableCollection<EnergyUse.Models.PreDefinedPeriod>(list);
             OnPropertyChanged(nameof(PredefinedPeriods));
 

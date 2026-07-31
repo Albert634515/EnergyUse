@@ -94,27 +94,27 @@ public class Compare : Base
 
             if (_graphParameter.ShowType != ShowType.Efficiency)
             {
-                AddColumnSeriesToList(ChartSeriesType.Normal, energyType.Id, typeCounter, _graphParameter.ShowStacked);
+                await AddColumnSeriesToList(ChartSeriesType.Normal, energyType.Id, typeCounter, _graphParameter.ShowStacked);
                 if (HasPredictedData())
-                    AddColumnSeriesToList(ChartSeriesType.NormalPredicted, energyType.Id, typeCounter, _graphParameter.ShowStacked);
+                    await AddColumnSeriesToList(ChartSeriesType.NormalPredicted, energyType.Id, typeCounter, _graphParameter.ShowStacked);
 
                 if (energyType != null && energyType.HasNormalAndLow)
                 {
-                    AddColumnSeriesToList(ChartSeriesType.Low, energyType.Id, typeCounter, _graphParameter.ShowStacked);
+                    await AddColumnSeriesToList(ChartSeriesType.Low, energyType.Id, typeCounter, _graphParameter.ShowStacked);
                     if (HasPredictedData())
-                        AddColumnSeriesToList(ChartSeriesType.LowPredicted, energyType.Id, typeCounter, _graphParameter.ShowStacked);
+                        await AddColumnSeriesToList(ChartSeriesType.LowPredicted, energyType.Id, typeCounter, _graphParameter.ShowStacked);
                 }
             }
 
             if (energyType != null && energyType.HasEnergyReturn)
             {
-                AddColumnSeriesToList(ChartSeriesType.ReturnLow, energyType.Id, typeCounter, _graphParameter.ShowStacked);
-                AddColumnSeriesToList(ChartSeriesType.ReturnNormal, energyType.Id, typeCounter, _graphParameter.ShowStacked);
+                await AddColumnSeriesToList(ChartSeriesType.ReturnLow, energyType.Id, typeCounter, _graphParameter.ShowStacked);
+                await AddColumnSeriesToList(ChartSeriesType.ReturnNormal, energyType.Id, typeCounter, _graphParameter.ShowStacked);
 
                 if (HasPredictedData())
                 {
-                    AddColumnSeriesToList(ChartSeriesType.ReturnLowPredicted, energyType.Id, typeCounter, _graphParameter.ShowStacked);
-                    AddColumnSeriesToList(ChartSeriesType.ReturnNormalPredicted, energyType.Id, typeCounter, _graphParameter.ShowStacked);
+                    await AddColumnSeriesToList(ChartSeriesType.ReturnLowPredicted, energyType.Id, typeCounter, _graphParameter.ShowStacked);
+                    await AddColumnSeriesToList(ChartSeriesType.ReturnNormalPredicted, energyType.Id, typeCounter, _graphParameter.ShowStacked);
                 }
             }
 
@@ -208,15 +208,15 @@ public class Compare : Base
 
             if (_graphParameter.ShowType != ShowType.Efficiency)
             {
-                AddColumnSeriesToList(ChartSeriesType.Consumed, energyType.Id, typeCounter, _graphParameter.ShowStacked);
+                await AddColumnSeriesToList(ChartSeriesType.Consumed, energyType.Id, typeCounter, _graphParameter.ShowStacked);
                 if (HasPredictedData())
-                    AddColumnSeriesToList(ChartSeriesType.ConsumedPredicted, energyType.Id, typeCounter, _graphParameter.ShowStacked);
+                    await AddColumnSeriesToList(ChartSeriesType.ConsumedPredicted, energyType.Id, typeCounter, _graphParameter.ShowStacked);
             }
             if (energyType != null && energyType.HasEnergyReturn)
             {
-                AddColumnSeriesToList(ChartSeriesType.Produced, energyType.Id, typeCounter, _graphParameter.ShowStacked);
+                await AddColumnSeriesToList(ChartSeriesType.Produced, energyType.Id, typeCounter, _graphParameter.ShowStacked);
                 if (HasPredictedData())
-                    AddColumnSeriesToList(ChartSeriesType.ProducedPredicted, energyType.Id, typeCounter, _graphParameter.ShowStacked);
+                    await AddColumnSeriesToList(ChartSeriesType.ProducedPredicted, energyType.Id, typeCounter, _graphParameter.ShowStacked);
             }
 
             if (energyType != null && _graphParameter.ShowType != ShowType.Efficiency)
@@ -296,8 +296,8 @@ public class Compare : Base
                 }
             }
 
-            AddColumnSeriesToList(ChartSeriesType.Total, energyType.Id, typeCounter, _graphParameter.ShowStacked);
-            AddColumnSeriesToList(ChartSeriesType.TotalPredicted, energyType.Id, typeCounter, _graphParameter.ShowStacked);
+            await AddColumnSeriesToList(ChartSeriesType.Total, energyType.Id, typeCounter, _graphParameter.ShowStacked);
+            await AddColumnSeriesToList(ChartSeriesType.TotalPredicted, energyType.Id, typeCounter, _graphParameter.ShowStacked);
 
             if (_graphParameter.ShowType != ShowType.Efficiency)
                 AddLineSeriesToList(ChartSeriesType.GrossValue, energyType.Id, typeCounter);

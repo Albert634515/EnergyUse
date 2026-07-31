@@ -12,26 +12,32 @@ public class RepoStaffel : RepoGeneral<Models.Staffel>
         _context = dbContext;
     }
 
-    public IEnumerable<Models.Staffel> SelectByRateId(long rateId)
+    public async Task<IEnumerable<Models.Staffel>> SelectByRateId(long rateId, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.Staffel>()
+        return await _context.Set<Models.Staffel>()
                        .Include(p => p.Rate)
-                       .Where(w => w.RateId == rateId);
+                       .Where(w => w.RateId == rateId)
+                       .ToListAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 
-    public IEnumerable<Models.Staffel> SelectByRateIdAndRange(long rateId, long maxRange)
+    public async Task<IEnumerable<Models.Staffel>> SelectByRateIdAndRange(long rateId, long maxRange, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.Staffel>()
+        return await _context.Set<Models.Staffel>()
                        .Include(p => p.Rate)
                        .Where(w => w.RateId == rateId 
                                 && w.ValueFrom <= maxRange
-                                && w.ValueTill >= maxRange);
+                                && w.ValueTill >= maxRange)
+                       .ToListAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 
-    public int DeleteByRateId(long rateId)
+    public async Task<int> DeleteByRateId(long rateId, CancellationToken cancellationToken = default)
     {
-        return _context.Set<Models.Staffel>()
+        return await _context.Set<Models.Staffel>()
                        .Include(p => p.Rate)
-                       .Where(w => w.RateId == rateId).ExecuteDelete();
+                       .Where(w => w.RateId == rateId)
+                       .ExecuteDeleteAsync(cancellationToken)
+                       .ConfigureAwait(false);
     }
 }

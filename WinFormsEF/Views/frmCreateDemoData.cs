@@ -26,7 +26,7 @@ public partial class frmCreateDemoData : Form
 
     private void setComboSourceAddresses()
     {
-        var addressList = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
+        var addressList = _controller.UnitOfWork.AddressRepo.GetAll().GetAwaiter().GetResult().ToList();
         cboSourceAddress.DataSource = addressList;
         cboSourceAddress.DisplayMember = "Description";
         cboSourceAddress.ValueMember = "Id";
@@ -36,7 +36,7 @@ public partial class frmCreateDemoData : Form
 
     private void setComboTargetAddresses()
     {
-        var addressList = _controller.UnitOfWork.AddressRepo.GetAll().ToList();
+        var addressList = _controller.UnitOfWork.AddressRepo.GetAll().GetAwaiter().GetResult().ToList();
         cboTargetAddress.DataSource = addressList;
         cboTargetAddress.DisplayMember = "Description";
         cboTargetAddress.ValueMember = "Id";

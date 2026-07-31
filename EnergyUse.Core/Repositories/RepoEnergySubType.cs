@@ -12,11 +12,18 @@ public class RepoEnergySubType : RepoGeneral<Models.EnergySubType>
         _context = dbContext;
     }
 
-    public Models.EnergySubType? SelectByDescription(string description)
+    public async Task<IEnumerable<Models.EnergySubType>> GetAll(CancellationToken cancellationToken = default)
     {
-        return _context.EnergySubTypes
-                       .Where(s => s.Description == description)
-                       .AsNoTracking()
-                       .FirstOrDefault();
+        return await _context.EnergySubTypes
+                             .ToListAsync(cancellationToken)
+                             .ConfigureAwait(false);
+    }
+
+    public async Task<Models.EnergySubType?> SelectByDescription(string description, CancellationToken cancellationToken = default)
+    {
+        return await _context.EnergySubTypes
+                             .AsNoTracking()
+                             .FirstOrDefaultAsync(s => s.Description == description, cancellationToken)
+                             .ConfigureAwait(false);
     }
 }

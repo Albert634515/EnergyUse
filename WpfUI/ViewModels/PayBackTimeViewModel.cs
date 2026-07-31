@@ -218,13 +218,13 @@ public class PayBackTimeViewModel : ViewModelBase
             SelectedAddress = list.FirstOrDefault(x => x.DefaultAddress == true) ?? list.FirstOrDefault();
     }
 
-    private void setEnergyTypes()
+    private async void setEnergyTypes()
     {
         if (SelectedAddress == null)
             return;
 
-        var list = _controller.UnitOfWork.EnergyTypeRepo
-            .SelectByAddressId(SelectedAddress.Id)
+        var list = (await _controller.UnitOfWork.EnergyTypeRepo
+            .SelectByAddressId(SelectedAddress.Id))
             .Where(x => x.HasEnergyReturn)
             .ToList();
 

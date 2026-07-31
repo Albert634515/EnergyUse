@@ -90,10 +90,10 @@ public class AddressesViewModel : ViewModelBase
     private void getTariffs()
     {
         GeneralTariffs = new ObservableCollection<TariffGroup>(
-            _controller.GetTariffGroups((int)EnergyUse.Common.Enums.TariffGroupType.GeneralCosts));
+            _controller.GetTariffGroups((int)EnergyUse.Common.Enums.TariffGroupType.GeneralCosts).GetAwaiter().GetResult());
 
         EnergyTariffs = new ObservableCollection<TariffGroup>(
-            _controller.GetTariffGroups((int)EnergyUse.Common.Enums.TariffGroupType.EnergyCosts));
+            _controller.GetTariffGroups((int)EnergyUse.Common.Enums.TariffGroupType.EnergyCosts).GetAwaiter().GetResult());
     }
 
     private void addAddress()
