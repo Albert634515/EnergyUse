@@ -123,15 +123,22 @@ public class ImportControlViewModel : ViewModelBase
         if (!validateImport())
             return;
 
-        var result = await _importService.ImportAsync(ImportFile,
-                                                        CurrentAddress!,
-                                                        CurrentEnergyType!,
-                                                        SelectedMeter!,
-                                                        _uow);
+        try
+        {
+            var result = await _importService.ImportAsync(ImportFile,
+                                                            CurrentAddress!,
+                                                            CurrentEnergyType!,
+                                                            SelectedMeter!,
+                                                            _uow);
 
-        MeterReadings.Clear();
-        foreach (var r in result)
-            MeterReadings.Add(r);
+            MeterReadings.Clear();
+            foreach (var r in result)
+                MeterReadings.Add(r);
+        }
+        catch (Exception ex)
+        {
+            _dialog.Show(ex.Message, "Import");
+        }
     }
 
     private bool validateImport()
@@ -169,18 +176,14 @@ public class ImportControlViewModel : ViewModelBase
         return true;
     }
 
-    private void recalculate()
+    private async void recalculate()
     {
-        if (_uow.meterReadings == null || _uow.meterReadings.Count == 0 || CurrentEnergyType == null || CurrentAddress ==null)
+        if (_uow.meterReadings == null || _uow.meterReadings.Count == 0 || CurrentEnergyType == null || CurrentAddress == null)
             return;
 
         var lib = new LibMeterReading(Config.GetDbFileName());
 
-        lib.RecalculateReadingsDiffPreviousDay(
-            _uow.meterReadings.Min(m => m.RegistrationDate),
-            _uow.meterReadings.Max(m => m.RegistrationDate),
-            CurrentEnergyType.Id,
-            CurrentAddress.Id);
+        _uow.meterReadings = await lib.RecalculateReadingsDiffPreviousDay(_uow.meterReadings);
 
         MeterReadings.Clear();
         foreach (var r in _uow.meterReadings.OrderByDescending(x => x.RegistrationDate))
@@ -193,10 +196,10 @@ public class ImportControlViewModel : ViewModelBase
             return;
 
         foreach (var r in _uow.meterReadings.Where(x => x.Id == null))
-        {
             _uow.MeterReadingRepo.Add(r);
+
+        if (_uow.HasChanges())
             _uow.Complete();
-        }
 
         _dialog.Show("Data has been saved", "Import");
     }
@@ -204,7 +207,7 @@ public class ImportControlViewModel : ViewModelBase
     private void browseFile()
     {
         var file = _dialog.OpenFile(
-            "CSV files (*.csv)|*.csv|Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*",
+            "CSV files (*.csv)|*.csv",
             "Select import file");
 
         if (file != null)

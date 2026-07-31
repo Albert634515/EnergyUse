@@ -2,6 +2,7 @@
 using EnergyUse.Core.Manager;
 using EnergyUse.Models;
 using System.Globalization;
+using System.IO;
 using WpfUI.Managers;
 
 namespace WpfUI.Services
@@ -50,7 +51,11 @@ namespace WpfUI.Services
                 .ToList();
 
             var libMeterReading = new LibMeterReading(_db);
-            MeterReading lastReading = null;
+            var firstImportedReading = imported.MinBy(x => x.RegistrationDate)!;
+            MeterReading? lastReading = await uow.MeterReadingRepo.SelectLastRowFromDate(
+                firstImportedReading.RegistrationDate,
+                energyType.Id,
+                address.Id);
 
             foreach (var importedReading in imported.OrderBy(x => x.RegistrationDate))
             {
@@ -59,16 +64,20 @@ namespace WpfUI.Services
                     .OrderBy(m => m.ActiveFrom)
                     .LastOrDefault();
 
+                if (meter == null)
+                {
+                    throw new InvalidDataException(
+                        $"No meter is active on {importedReading.RegistrationDate:yyyy-MM-dd}.");
+                }
+
                 var existing = (await uow.MeterReadingRepo
-                    .SelectByExists(importedReading.RegistrationDate.Date, importedReading.EnergyType.Id, meter.Id))
+                    .SelectByExists(importedReading.RegistrationDate.Date, energyType.Id, meter.Id))
                     .FirstOrDefault();
 
-                if (importedReading.RegistrationDate.Date == meter.ActiveFrom.Date)
+                if (importedReading.RegistrationDate.Date == meter.ActiveFrom.Date ||
+                    lastReading?.MeterId != meter.Id)
                 {
-                    if (existing != null && existing.Id != null)
-                        lastReading = new MeterReading();
-                    else
-                        existing = null;
+                    lastReading = null;
                 }
 
                 if (existing == null)

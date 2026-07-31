@@ -67,19 +67,17 @@ public class LibMeterReading
 
     public async Task<List<Models.MeterReading>> RecalculateReadingsDiffPreviousDay(List<Models.MeterReading> meterReadings)
     {
-        var repoMeterReading = new Repositories.RepoMeterReading(_context);
-
         if (meterReadings.Count > 0)
         {
-            var firstMeterReading = meterReadings.OrderBy(o => o.RegistrationDate).FirstOrDefault();
-            var lastMeterReading = await repoMeterReading.SelectLastRowFromDate(firstMeterReading.RegistrationDate, firstMeterReading.EnergyType.Id, firstMeterReading.Meter.Address.Id);
-            if (lastMeterReading == null)
-                lastMeterReading = firstMeterReading;
+            Models.MeterReading? lastMeterReading = null;
+            meterReadings = meterReadings.OrderBy(o => o.RegistrationDate).ToList();
 
-            meterReadings = meterReadings.OrderByDescending(o => o.RegistrationDate).ToList();
             foreach (var meterReading in meterReadings)
             {
                 var currentReading = meterReading;
+
+                if (lastMeterReading?.MeterId != currentReading.MeterId)
+                    lastMeterReading = null;
 
                 CalculateDiff(ref currentReading, lastMeterReading);
 
@@ -87,11 +85,10 @@ public class LibMeterReading
             }
         }
 
-        //Refactor, add save
-        return meterReadings;
+        return await Task.FromResult(meterReadings);
     }
 
-    public void CalculateDiff(ref Models.MeterReading meterReading, Models.MeterReading lastMeterReading)
+    public void CalculateDiff(ref Models.MeterReading meterReading, Models.MeterReading? lastMeterReading)
     {
         meterReading.DeltaLow = 0;
         meterReading.DeltaNormal = 0;
