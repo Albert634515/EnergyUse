@@ -18,7 +18,8 @@ namespace WpfUI.Views.Controls
             DataContext = new ChartCompareLiveChartsViewModel(
                 address,
                 energyType,
-                languageService);
+                languageService,
+                new SettingsService());
         }
     }
 }

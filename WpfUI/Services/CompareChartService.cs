@@ -117,7 +117,7 @@ namespace WpfUI.ViewModels
                     break;
             }
 
-            result.YAxes.Add(new Axis { MinLimit = 0 });
+            result.YAxes.Add(new Axis { MinLimit = energyType.HasEnergyReturn ? null : 0 });
 
             result.Labels = compare.GetResultLabelsPerPeriod(energyType);
             result.ExportData = compare.GetDataList();
@@ -226,33 +226,7 @@ namespace WpfUI.ViewModels
             foreach (var sm in models)
             {
                 var points = sm.Points.Select(dp => new ObservablePoint(xSelector(dp), dp.Value)).ToList();
-
-                if (sm.IsLine)
-                {
-                    list.Add(new LineSeries<ObservablePoint>
-                    {
-                        Values = points,
-                        Name = sm.Name,
-                        LineSmoothness = 0
-                    });
-                }
-                else if (sm.IsStacked && showStacked)
-                {
-                    list.Add(new StackedColumnSeries<ObservablePoint>
-                    {
-                        Values = points,
-                        Name = sm.Name,
-                        StackGroup = 0
-                    });
-                }
-                else
-                {
-                    list.Add(new ColumnSeries<ObservablePoint>
-                    {
-                        Values = points,
-                        Name = sm.Name
-                    });
-                }
+                addCategoricalSeries(list, sm, points, showStacked);
             }
 
             return list;
@@ -290,32 +264,7 @@ namespace WpfUI.ViewModels
                     }
                 }
 
-                if (sm.IsLine)
-                {
-                    list.Add(new LineSeries<ObservablePoint>
-                    {
-                        Values = points,
-                        Name = sm.Name,
-                        LineSmoothness = 0
-                    });
-                }
-                else if (sm.IsStacked && showStacked)
-                {
-                    list.Add(new StackedColumnSeries<ObservablePoint>
-                    {
-                        Values = points,
-                        Name = sm.Name,
-                        StackGroup = 0
-                    });
-                }
-                else
-                {
-                    list.Add(new ColumnSeries<ObservablePoint>
-                    {
-                        Values = points,
-                        Name = sm.Name
-                    });
-                }
+                addCategoricalSeries(list, sm, points, showStacked);
             }
 
             return list;
@@ -353,32 +302,7 @@ namespace WpfUI.ViewModels
                     }
                 }
 
-                if (sm.IsLine)
-                {
-                    list.Add(new LineSeries<ObservablePoint>
-                    {
-                        Values = points,
-                        Name = sm.Name,
-                        LineSmoothness = 0
-                    });
-                }
-                else if (sm.IsStacked && showStacked)
-                {
-                    list.Add(new StackedColumnSeries<ObservablePoint>
-                    {
-                        Values = points,
-                        Name = sm.Name,
-                        StackGroup = 0
-                    });
-                }
-                else
-                {
-                    list.Add(new ColumnSeries<ObservablePoint>
-                    {
-                        Values = points,
-                        Name = sm.Name
-                    });
-                }
+                addCategoricalSeries(list, sm, points, showStacked);
             }
 
             return list;
@@ -410,35 +334,58 @@ namespace WpfUI.ViewModels
                         points.Add(new ObservablePoint(indexMap[dt], 0));
                 }
 
-                if (sm.IsLine)
-                {
-                    list.Add(new LineSeries<ObservablePoint>
-                    {
-                        Values = points,
-                        Name = sm.Name,
-                        LineSmoothness = 0
-                    });
-                }
-                else if (sm.IsStacked && showStacked)
-                {
-                    list.Add(new StackedColumnSeries<ObservablePoint>
-                    {
-                        Values = points,
-                        Name = sm.Name,
-                        StackGroup = 0
-                    });
-                }
-                else
-                {
-                    list.Add(new ColumnSeries<ObservablePoint>
-                    {
-                        Values = points,
-                        Name = sm.Name
-                    });
-                }
+                addCategoricalSeries(list, sm, points, showStacked);
             }
 
             return list;
+        }
+
+        private static void addCategoricalSeries(
+            List<ISeries> target,
+            SeriesModel model,
+            List<ObservablePoint> points,
+            bool showStacked)
+        {
+            var color = model.Color.IsEmpty
+                ? SKColors.SlateGray
+                : new SKColor(model.Color.R, model.Color.G, model.Color.B, model.Color.A);
+
+            if (model.IsLine)
+            {
+                var stroke = new SolidColorPaint(color) { StrokeThickness = 2 };
+                target.Add(new LineSeries<ObservablePoint>
+                {
+                    Values = points,
+                    Name = model.Name,
+                    ScalesYAt = model.ScalesYAt,
+                    LineSmoothness = 0,
+                    Stroke = stroke,
+                    GeometryStroke = stroke,
+                    GeometryFill = new SolidColorPaint(SKColors.White),
+                    Fill = null
+                });
+            }
+            else if (model.IsStacked && showStacked)
+            {
+                target.Add(new StackedColumnSeries<ObservablePoint>
+                {
+                    Values = points,
+                    Name = model.Name,
+                    ScalesYAt = model.ScalesYAt,
+                    StackGroup = 0,
+                    Fill = new SolidColorPaint(color)
+                });
+            }
+            else
+            {
+                target.Add(new ColumnSeries<ObservablePoint>
+                {
+                    Values = points,
+                    Name = model.Name,
+                    ScalesYAt = model.ScalesYAt,
+                    Fill = new SolidColorPaint(color)
+                });
+            }
         }
 
         private static DateTime SafeDate(int year, int month, int day)

@@ -1,5 +1,6 @@
 ﻿using EnergyUse.Common.Enums;
 using EnergyUse.Models;
+using EnergyUse.Core.Interfaces;
 using EnergyUse.Models.Common;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
@@ -13,7 +14,15 @@ namespace WpfUI.ViewModels;
 
 public class ChartCompareLiveChartsViewModel : ViewModelBase
 {
+    private const string PeriodTypeSettingKey = "ChartComparePeriodType";
+    private const string StartYearSettingKey = "ChartCompareStartYear";
+    private const string EndYearSettingKey = "ChartCompareEndYear";
+    private const string NumberSettingKey = "ChartCompareNumbers";
+    private const string DaySettingKey = "ChartCompareNumbers2";
     private readonly CompareChartService _service;
+    private readonly ISettingsService _settings;
+    private bool _suppressChartUpdates;
+    private bool _isLoadingPeriodSettings;
 
     public Address? CurrentAddress { get; }
     public EnergyType? CurrentEnergyType { get; }
@@ -27,10 +36,17 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
     private int _lastSelectedWeek = 1;      // ← jouw keuze A
     private int _lastSelectedMonth = DateTime.Now.Month;
 
-    public ChartCompareLiveChartsViewModel(Address address, EnergyType energyType, ILanguageService languageService)
+    public ChartCompareLiveChartsViewModel(
+        Address address,
+        EnergyType energyType,
+        ILanguageService languageService,
+        ISettingsService settings)
     {
+        _suppressChartUpdates = true;
+
         CurrentAddress = address;
         CurrentEnergyType = energyType;
+        _settings = settings;
 
         _service = new CompareChartService(languageService);
 
@@ -40,7 +56,10 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         ResetCommand = new RelayCommand(_ => ResetChart());
         ExportCommand = new RelayCommand(_ => ExportChart(), _ => _exportData.Any());
 
-        ResetChart();
+        ResetChart(restoreSavedPeriod: true);
+
+        _suppressChartUpdates = false;
+        UpdateChart();
     }
 
     // ---------------------------------------------------------
@@ -90,40 +109,62 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedPeriodType, value))
             {
-                updateNumberList();   // ← BELANGRIJK
+                if (value != null)
+                    _settings.Save(PeriodTypeSettingKey, value.Key);
 
-                ApplyPeriodChange();
-                UpdateChart();
+                var shouldUpdate = !_suppressChartUpdates;
+                runWithoutChartUpdate(() =>
+                {
+                    updateNumberList();   // ← BELANGRIJK
+                    ApplyPeriodChange();
+                });
+
+                if (shouldUpdate)
+                    UpdateChart();
             }
         }
     }
 
     private void ApplyPeriodChange()
     {
-        switch (PeriodKey)
+        _isLoadingPeriodSettings = true;
+        try
         {
-            case "DAY":
-                SelectedNumber = _lastSelectedMonth;
-                updateDayList();
-                SelectedDay = _lastSelectedDay;
-                break;
+            var savedStartYear = getSavedSelection(StartYearSettingKey, DateTime.Now.Year - 1, Years);
+            var savedEndYear = getSavedSelection(EndYearSettingKey, DateTime.Now.Year, Years);
+            if (savedStartYear > savedEndYear)
+                savedEndYear = savedStartYear;
 
-            case "WEEK":
-                if (_lastSelectedWeek <= 0)
-                    _lastSelectedWeek = 1;   // ← jouw keuze A
-                SelectedNumber = _lastSelectedWeek;
-                SelectedDay = 0;
-                break;
+            StartYear = savedStartYear;
+            EndYear = savedEndYear;
 
-            case "MONTH":
-                SelectedNumber = _lastSelectedMonth;
-                SelectedDay = 0;
-                break;
+            switch (PeriodKey)
+            {
+                case "DAY":
+                    SelectedNumber = getSavedSelection(NumberSettingKey, _lastSelectedMonth, NumberList);
+                    updateDayList();
+                    SelectedDay = getSavedSelection(DaySettingKey, _lastSelectedDay, DayList);
+                    break;
 
-            case "YEAR":
-                SelectedNumber = 0;
-                SelectedDay = 0;
-                break;
+                case "WEEK":
+                    SelectedNumber = getSavedSelection(NumberSettingKey, _lastSelectedWeek, NumberList);
+                    SelectedDay = 0;
+                    break;
+
+                case "MONTH":
+                    SelectedNumber = getSavedSelection(NumberSettingKey, _lastSelectedMonth, NumberList);
+                    SelectedDay = 0;
+                    break;
+
+                case "YEAR":
+                    SelectedNumber = 0;
+                    SelectedDay = 0;
+                    break;
+            }
+        }
+        finally
+        {
+            _isLoadingPeriodSettings = false;
         }
 
         OnPropertyChanged(nameof(IsNumberVisible));
@@ -146,14 +187,36 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
     public int StartYear
     {
         get => _startYear;
-        set { if (SetProperty(ref _startYear, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _startYear, value))
+            {
+                savePeriodSelection(StartYearSettingKey, value);
+
+                if (EndYear != 0 && value > EndYear)
+                    runWithoutChartUpdate(() => EndYear = value);
+
+                UpdateChart();
+            }
+        }
     }
 
     private int _endYear;
     public int EndYear
     {
         get => _endYear;
-        set { if (SetProperty(ref _endYear, value)) UpdateChart(); }
+        set
+        {
+            if (SetProperty(ref _endYear, value))
+            {
+                savePeriodSelection(EndYearSettingKey, value);
+
+                if (StartYear != 0 && value < StartYear)
+                    runWithoutChartUpdate(() => StartYear = value);
+
+                UpdateChart();
+            }
+        }
     }
 
     private int _selectedNumber;
@@ -162,6 +225,9 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         get => _selectedNumber;
         set
         {
+            if (PeriodKey == "WEEK" && value <= 0)
+                value = 1;
+
             if (SetProperty(ref _selectedNumber, value))
             {
                 if (PeriodKey == "DAY")
@@ -171,15 +237,12 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
                 }
 
                 if (PeriodKey == "WEEK")
-                {
-                    if (value <= 0)
-                        value = 1;   // ← nooit week 0
                     _lastSelectedWeek = value;
-                }
 
                 if (PeriodKey == "MONTH")
                     _lastSelectedMonth = value;
 
+                savePeriodSelection(NumberSettingKey, value);
                 UpdateChart();
             }
         }
@@ -196,9 +259,24 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
                 if (PeriodKey == "DAY")
                     _lastSelectedDay = value;
 
+                savePeriodSelection(DaySettingKey, value);
                 UpdateChart();
             }
         }
+    }
+
+    private int getSavedSelection(string settingKey, int defaultValue, IEnumerable<int> availableValues)
+    {
+        var savedValue = _settings.Get($"{settingKey}{PeriodKey}");
+        return int.TryParse(savedValue, out var value) && availableValues.Contains(value)
+            ? value
+            : defaultValue;
+    }
+
+    private void savePeriodSelection(string settingKey, int value)
+    {
+        if (!_isLoadingPeriodSettings && !string.IsNullOrWhiteSpace(PeriodKey))
+            _settings.Save($"{settingKey}{PeriodKey}", value.ToString());
     }
 
     private bool _predict = true;
@@ -219,42 +297,42 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
     public bool ShowByCategory
     {
         get => _sbCat;
-        set { if (SetProperty(ref _sbCat, value)) UpdateChart(); }
+        set { if (SetProperty(ref _sbCat, value) && value) UpdateChart(); }
     }
 
     private bool _sbSub;
     public bool ShowBySubCategory
     {
         get => _sbSub;
-        set { if (SetProperty(ref _sbSub, value)) UpdateChart(); }
+        set { if (SetProperty(ref _sbSub, value) && value) UpdateChart(); }
     }
 
     private bool _sbTot;
     public bool ShowByTotal
     {
         get => _sbTot;
-        set { if (SetProperty(ref _sbTot, value)) UpdateChart(); }
+        set { if (SetProperty(ref _sbTot, value) && value) UpdateChart(); }
     }
 
     private bool _stRate = true;
     public bool ShowTypeRate
     {
         get => _stRate;
-        set { if (SetProperty(ref _stRate, value)) UpdateChart(); }
+        set { if (SetProperty(ref _stRate, value) && value) UpdateChart(); }
     }
 
     private bool _stValue;
     public bool ShowTypeValue
     {
         get => _stValue;
-        set { if (SetProperty(ref _stValue, value)) UpdateChart(); }
+        set { if (SetProperty(ref _stValue, value) && value) UpdateChart(); }
     }
 
     private bool _stEff;
     public bool ShowTypeEfficiency
     {
         get => _stEff;
-        set { if (SetProperty(ref _stEff, value)) UpdateChart(); }
+        set { if (SetProperty(ref _stEff, value) && value) UpdateChart(); }
     }
 
     public bool IsEfficiencyVisible => CurrentEnergyType?.HasEnergyReturn ?? false;
@@ -268,6 +346,9 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
 
     public void UpdateChart()
     {
+        if (_suppressChartUpdates)
+            return;
+
         if (SelectedPeriodType == null || CurrentAddress == null || CurrentEnergyType == null)
             return;
 
@@ -318,7 +399,7 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
         ShowTypeRate ? ShowType.Rate :
         ShowTypeValue ? ShowType.Value :
         ShowTypeEfficiency ? ShowType.Efficiency :
-        ShowType.Rate;
+        ShowType.Unknown;
 
     // ---------------------------------------------------------
     // COMMANDS
@@ -326,21 +407,31 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
     public ICommand ResetCommand { get; }
     public ICommand ExportCommand { get; }
 
-    private void ResetChart()
+    private void ResetChart(bool restoreSavedPeriod = false)
     {
-        PredictMissingData = true;
-        ShowStacked = true;
-        ShowByCategory = true;
-        ShowBySubCategory = false;
-        ShowByTotal = false;
-        ShowTypeRate = true;
-        ShowTypeValue = false;
-        ShowTypeEfficiency = false;
+        var shouldUpdate = !_suppressChartUpdates;
+        runWithoutChartUpdate(() =>
+        {
+            PredictMissingData = true;
+            ShowStacked = true;
+            ShowByCategory = true;
+            ShowBySubCategory = false;
+            ShowByTotal = false;
+            ShowTypeRate = true;
+            ShowTypeValue = false;
+            ShowTypeEfficiency = false;
 
-        if (PeriodTypes.Any())
-            SelectedPeriodType = PeriodTypes.FirstOrDefault();
+            if (PeriodTypes.Any())
+            {
+                var savedPeriod = restoreSavedPeriod ? _settings.Get(PeriodTypeSettingKey) : null;
+                SelectedPeriodType = PeriodTypes.FirstOrDefault(x =>
+                                         string.Equals(x.Key, savedPeriod, StringComparison.OrdinalIgnoreCase))
+                                     ?? PeriodTypes.FirstOrDefault();
+            }
+        });
 
-        UpdateChart();
+        if (shouldUpdate)
+            UpdateChart();
     }
 
     private void ExportChart()
@@ -353,6 +444,20 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
     // ---------------------------------------------------------
     // HELPERS
     // ---------------------------------------------------------
+    private void runWithoutChartUpdate(Action action)
+    {
+        var wasSuppressed = _suppressChartUpdates;
+        _suppressChartUpdates = true;
+        try
+        {
+            action();
+        }
+        finally
+        {
+            _suppressChartUpdates = wasSuppressed;
+        }
+    }
+
     private void setPeriodTypes(ILanguageService languageService)
     {
         var service = new SelectionItemService(languageService);

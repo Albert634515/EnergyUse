@@ -59,7 +59,7 @@ public partial class ucChartCompareLiveCharts : UserControl
         if (_initSettings) { return; }
 
         _initSettings = true;
-        setNumberCombo();
+        setDefaultPeriodSettings();
         setCurrentComboValue(CboPeriodType);
         _initSettings = false;
         SetChart();
@@ -69,7 +69,8 @@ public partial class ucChartCompareLiveCharts : UserControl
     {
         if (_initSettings) { return; }
 
-        setCurrentComboValue(cboStartYear, CboPeriodType.Text);
+        ensureValidYearRange(startYearChanged: true);
+        setCurrentComboValue(cboStartYear, getSelectedPeriodType().ToString());
         SetChart();
     }
 
@@ -77,7 +78,8 @@ public partial class ucChartCompareLiveCharts : UserControl
     {
         if (_initSettings) { return; }
 
-        setCurrentComboValue(cboEndYear, CboPeriodType.Text);
+        ensureValidYearRange(startYearChanged: false);
+        setCurrentComboValue(cboEndYear, getSelectedPeriodType().ToString());
         SetChart();
     }
 
@@ -85,7 +87,7 @@ public partial class ucChartCompareLiveCharts : UserControl
     {
         if (_initSettings) { return; }
 
-        setCurrentComboValue(cboNumbers, CboPeriodType.Text);
+        setCurrentComboValue(cboNumbers, getSelectedPeriodType().ToString());
 
         string periodType = CboPeriodType.Text;
 
@@ -99,14 +101,14 @@ public partial class ucChartCompareLiveCharts : UserControl
     {
         if (_initSettings) { return; }
 
-        setCurrentComboValue(cboNumbers2, CboPeriodType.Text);
+        setCurrentComboValue(cboNumbers2, getSelectedPeriodType().ToString());
         SetChart();
     }
 
 
     private void rateRadioButton_CheckedChanged(object sender, EventArgs e)
     {
-        if (_initSettings) { return; }
+        if (_initSettings || !RateRadioButton.Checked) { return; }
 
         setCurrentPanelValue(TypePanel, RateRadioButton);
         SetChart();
@@ -114,7 +116,7 @@ public partial class ucChartCompareLiveCharts : UserControl
 
     private void valueRadioButton_CheckedChanged(object sender, EventArgs e)
     {
-        if (_initSettings) { return; }
+        if (_initSettings || !ValueRadioButton.Checked) { return; }
 
         setCurrentPanelValue(TypePanel, ValueRadioButton);
         SetChart();
@@ -122,7 +124,7 @@ public partial class ucChartCompareLiveCharts : UserControl
 
     private void efficiencyRadioButton_CheckedChanged(object sender, EventArgs e)
     {
-        if (_initSettings) { return; }
+        if (_initSettings || !EfficiencyRadioButton.Checked) { return; }
 
         setCurrentPanelValue(TypePanel, EfficiencyRadioButton);
         SetChart();
@@ -130,7 +132,7 @@ public partial class ucChartCompareLiveCharts : UserControl
 
     private void categoryRadioButton_CheckedChanged(object sender, EventArgs e)
     {
-        if (_initSettings) { return; }
+        if (_initSettings || !CategoryRadioButton.Checked) { return; }
 
         setCurrentPanelValue(ShowByPanel, CategoryRadioButton);
         SetChart();
@@ -138,7 +140,7 @@ public partial class ucChartCompareLiveCharts : UserControl
 
     private void SubCategoryRadioButton_CheckedChanged(object sender, EventArgs e)
     {
-        if (_initSettings) { return; }
+        if (_initSettings || !SubCategoryRadioButton.Checked) { return; }
 
         setCurrentPanelValue(ShowByPanel, SubCategoryRadioButton);
         SetChart();
@@ -146,7 +148,7 @@ public partial class ucChartCompareLiveCharts : UserControl
 
     private void TotalsRadioButton_CheckedChanged(object sender, EventArgs e)
     {
-        if (_initSettings) { return; }
+        if (_initSettings || !TotalsRadioButton.Checked) { return; }
 
         setCurrentPanelValue(ShowByPanel, TotalsRadioButton);
         SetChart();
@@ -264,8 +266,6 @@ public partial class ucChartCompareLiveCharts : UserControl
 
     public void SetChart()
     {
-        int daysInMonth;
-
         if (_initSettings == true) return;
 
         if (cboEndYear.SelectedIndex == -1 || cboStartYear.SelectedIndex == -1)
@@ -273,8 +273,6 @@ public partial class ucChartCompareLiveCharts : UserControl
 
         try
         {
-            daysInMonth = DateTime.DaysInMonth((int)cboEndYear.SelectedItem, DateTime.Now.Month);
-
             ParameterGraph graphParameter = new();
             graphParameter.Address = _currentAddress;
             graphParameter.EnergyTypeList = new() { _currentEnergyType };
@@ -287,7 +285,7 @@ public partial class ucChartCompareLiveCharts : UserControl
             graphParameter.ShowBy = getSelectedShowBy();
             graphParameter.ShowType = getSelectedShowType();
             graphParameter.From = new DateTime((int)cboStartYear.SelectedItem, 1, 1);
-            graphParameter.Till = new DateTime((int)cboEndYear.SelectedItem, 12, daysInMonth);
+            graphParameter.Till = new DateTime((int)cboEndYear.SelectedItem, 12, 31);
 
 
             if (_currentAddress != null)
@@ -334,24 +332,36 @@ public partial class ucChartCompareLiveCharts : UserControl
     {
         _currentEnergyType = energyType;
 
-        setDefaultEnergyTypeSettings();
+        _initSettings = true;
+        try
+        {
+            setDefaultEnergyTypeSettings();
+        }
+        finally
+        {
+            _initSettings = false;
+        }
+
         ResetChart();
     }
 
     public void ResetChart()
     {
         _initSettings = true;
-
-        setComboPeriodTypes(getCurrentSettingValue(CboPeriodType.Tag.ToString()));
-        setNumberCombo();
-        setDefaultPeriodSettings();
-
-        _initSettings = false;
-
-        setDefaultPanelTypeValue();
-        setDefaultPanelShowByValue();
-        setDefaultCheckBoxSetting(chkPredictMissingData);
-        setDefaultCheckBoxSetting(chkShowStacked);
+        try
+        {
+            setComboPeriodTypes(getCurrentSettingValue(CboPeriodType.Tag.ToString()));
+            setNumberCombo();
+            setDefaultPeriodSettings();
+            setDefaultPanelTypeValue();
+            setDefaultPanelShowByValue();
+            setDefaultCheckBoxSetting(chkPredictMissingData);
+            setDefaultCheckBoxSetting(chkShowStacked);
+        }
+        finally
+        {
+            _initSettings = false;
+        }
 
         SetChart();
     }
@@ -410,7 +420,11 @@ public partial class ucChartCompareLiveCharts : UserControl
         if (currentValue == null)
             currentValue = "Year";
 
-        CboPeriodType.SelectedIndex = CboPeriodType.FindString(currentValue);
+        var selectedIndex = periodTypes.FindIndex(x =>
+            string.Equals(x.Key, currentValue, StringComparison.OrdinalIgnoreCase));
+        CboPeriodType.SelectedIndex = selectedIndex >= 0
+            ? selectedIndex
+            : CboPeriodType.FindString(currentValue);
     }
 
     private void setNumberCombo()
@@ -612,6 +626,32 @@ public partial class ucChartCompareLiveCharts : UserControl
         setComboToDefault(cboEndYear);
         setComboToDefault(cboNumbers);
         setComboToDefault(cboNumbers2);
+        ensureValidYearRange(startYearChanged: true);
+    }
+
+    private void ensureValidYearRange(bool startYearChanged)
+    {
+        if (cboStartYear.SelectedItem is not int startYear ||
+            cboEndYear.SelectedItem is not int endYear ||
+            startYear <= endYear)
+            return;
+
+        var wasInitializing = _initSettings;
+        _initSettings = true;
+        try
+        {
+            if (startYearChanged)
+                cboEndYear.SelectedItem = startYear;
+            else
+                cboStartYear.SelectedItem = endYear;
+        }
+        finally
+        {
+            _initSettings = wasInitializing;
+        }
+
+        var periodType = getSelectedPeriodType().ToString();
+        setCurrentComboValue(startYearChanged ? cboEndYear : cboStartYear, periodType);
     }
 
     private void setDefaultCheckBoxSetting(CheckBox checkBox)
@@ -630,7 +670,11 @@ public partial class ucChartCompareLiveCharts : UserControl
     {
         if (comboBox.Visible)
         {
-            var currentSetting = getCurrentSettingValue($"{comboBox.Tag.ToString()}{CboPeriodType.Text.ToUpper()}");
+            var periodKey = getSelectedPeriodType().ToString().ToUpperInvariant();
+            var currentSetting = getCurrentSettingValue($"{comboBox.Tag.ToString()}{periodKey}");
+            if (string.IsNullOrWhiteSpace(currentSetting))
+                currentSetting = getCurrentSettingValue($"{comboBox.Tag.ToString()}{CboPeriodType.Text.ToUpperInvariant()}");
+
             if (!string.IsNullOrWhiteSpace(currentSetting))
                 comboBox.SelectedIndex = comboBox.FindString(currentSetting);
         }
@@ -652,8 +696,11 @@ public partial class ucChartCompareLiveCharts : UserControl
     /// <param name="combobox">Current combo box</param>
     private void setCurrentComboValue(ComboBox combobox, string periodType = "")
     {
-        var currentSettingId = $"{combobox.Tag.ToString()}{periodType.ToUpper()}";
-        var currentValue = combobox.Text.ToUpper();
+        var currentSettingId = $"{combobox.Tag.ToString()}{periodType.ToUpperInvariant()}";
+        var currentValue = ReferenceEquals(combobox, CboPeriodType)
+                           && combobox.SelectedItem is SelectionItem selectedPeriod
+            ? selectedPeriod.Key
+            : combobox.Text.ToUpper();
 
         if (!string.IsNullOrWhiteSpace(currentValue))
             setCurrentSetting(currentSettingId, currentValue);

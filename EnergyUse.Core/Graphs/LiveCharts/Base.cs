@@ -402,22 +402,11 @@ public class Base
             TarifGroupId = _graphParameter.TarifGroupId,
             Month = _graphParameter.Month,
             Week = _graphParameter.Week,
-            Day = _graphParameter.Day
+            Day = _graphParameter.Day,
+            StartRange = _graphParameter.From,
+            EndRange = _graphParameter.Till,
+            SetMiddleOfYear = compare
         };
-
-        if (compare == false)
-        {
-            parameterPeriod.StartRange = _graphParameter.From;
-            parameterPeriod.EndRange = _graphParameter.Till;
-            parameterPeriod.SetMiddleOfYear = false;
-        }
-        else
-        {
-            int daysInMonth = DateTime.DaysInMonth(_graphParameter.YearEnd, DateTime.Now.Month);
-            parameterPeriod.StartRange = new DateTime(_graphParameter.YearStart, 1, 1);
-            parameterPeriod.EndRange = new DateTime(_graphParameter.YearEnd, 12, daysInMonth);
-            parameterPeriod.SetMiddleOfYear = true;
-        }
 
         return parameterPeriod;
     }
@@ -435,7 +424,7 @@ public class Base
 
         var libSettings = new LibSettings(_graphParameter.DbName);
         Color color = libSettings.GetChartColor(colorKey);
-       
+
         if (isPredicted)
             color = ChangeColorBrightness(color, 40.45E-2f);
 

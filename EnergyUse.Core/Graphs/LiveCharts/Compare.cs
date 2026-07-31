@@ -175,34 +175,34 @@ public class Compare : Base
                 if (_graphParameter.ShowType == ShowType.Rate && periodicData.IsPredicted == false)
                 {
                     _datePoints[consumedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYLow + periodicData.ValueYNormal, 2)));
-                    _datePoints[producedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYReturnLow + periodicData.ValueYReturnNormal, 2)));
+                    _datePoints[producedKey].Add(new DatePoint(periodicData.ValueXDate, getNegativeReturnValue(periodicData.ValueYReturnLow + periodicData.ValueYReturnNormal)));
                     _datePoints[grossKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueY, 2)));
                 }
                 else if (_graphParameter.ShowType == ShowType.Rate && periodicData.IsPredicted == true)
                 {
                     _datePoints[consumedPredictedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYLow + periodicData.ValueYNormal, 2)));
-                    _datePoints[producedPredictedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYReturnLow + periodicData.ValueYReturnNormal, 2)));
+                    _datePoints[producedPredictedKey].Add(new DatePoint(periodicData.ValueXDate, getNegativeReturnValue(periodicData.ValueYReturnLow + periodicData.ValueYReturnNormal)));
                     _datePoints[grossKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueY, 2)));
                 }
                 else if (_graphParameter.ShowType == ShowType.Value && periodicData.IsPredicted == false)
                 {
                     _datePoints[consumedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYMonetaryLow + periodicData.ValueYMonetaryNormal, 2)));
-                    _datePoints[producedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYMonetaryReturnLow + periodicData.ValueYMonetaryReturnNormal, 2)));
+                    _datePoints[producedKey].Add(new DatePoint(periodicData.ValueXDate, getNegativeReturnValue(periodicData.ValueYMonetaryReturnLow + periodicData.ValueYMonetaryReturnNormal)));
                     _datePoints[grossKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueMonetaryY, 2)));
                 }
                 else if (_graphParameter.ShowType == ShowType.Value && periodicData.IsPredicted == true)
                 {
                     _datePoints[consumedPredictedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYMonetaryLow + periodicData.ValueYMonetaryNormal, 2)));
-                    _datePoints[producedPredictedKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueYMonetaryReturnLow + periodicData.ValueYMonetaryReturnNormal, 2)));
+                    _datePoints[producedPredictedKey].Add(new DatePoint(periodicData.ValueXDate, getNegativeReturnValue(periodicData.ValueYMonetaryReturnLow + periodicData.ValueYMonetaryReturnNormal)));
                     _datePoints[grossKey].Add(new DatePoint(periodicData.ValueXDate, (double)Math.Round(periodicData.ValueMonetaryY, 2)));
                 }
                 else if (_graphParameter.ShowType == ShowType.Efficiency && periodicData.IsPredicted == false)
                 {
-                    _datePoints[producedKey].Add(new DatePoint(periodicData.ValueXDate, (double)_libPeriodicDate!.GetEfficiencyTotal(periodicData, _graphParameter.Address.TotalCapacity)));
+                    _datePoints[producedKey].Add(new DatePoint(periodicData.ValueXDate, getNegativeReturnValue(_libPeriodicDate!.GetEfficiencyTotal(periodicData, _graphParameter.Address.TotalCapacity))));
                 }
                 else if (_graphParameter.ShowType == ShowType.Efficiency && periodicData.IsPredicted == true)
                 {
-                    _datePoints[producedPredictedKey].Add(new DatePoint(periodicData.ValueXDate, (double)_libPeriodicDate!.GetEfficiencyTotal(periodicData, _graphParameter.Address.TotalCapacity)));
+                    _datePoints[producedPredictedKey].Add(new DatePoint(periodicData.ValueXDate, getNegativeReturnValue(_libPeriodicDate!.GetEfficiencyTotal(periodicData, _graphParameter.Address.TotalCapacity))));
                 }
             }
 
@@ -242,6 +242,11 @@ public class Compare : Base
                 _datePoints.Add(GetSeriesKey(ChartSeriesType.ProducedPredicted, energyTypeId), new List<DatePoint>());
             }
         }
+    }
+
+    private static double getNegativeReturnValue(decimal value)
+    {
+        return -(double)Math.Abs(Math.Round(value, 2));
     }
 
     #endregion
