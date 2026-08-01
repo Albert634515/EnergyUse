@@ -11,4 +11,12 @@ public class RepoPreDefinedPeriod : RepoGeneral<Models.PreDefinedPeriod>
     {
         _context = dbContext;
     }
+
+    public async Task<IEnumerable<Models.PreDefinedPeriod>> GetAllWithDates(CancellationToken cancellationToken = default)
+    {
+        return await _context.PreDefinedPeriods
+            .Include(period => period.PreDefinedPeriodDates)
+            .ToListAsync(cancellationToken)
+            .ConfigureAwait(false);
+    }
 }

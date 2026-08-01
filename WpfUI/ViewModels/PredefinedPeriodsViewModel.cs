@@ -64,18 +64,22 @@ namespace WpfUI.ViewModels
 
         private async void setPeriods()
         {
-            var list = (await _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll()).ToList();
+            var list = (await _controller.UnitOfWork.PreDefinedPeriodRepo.GetAllWithDates())
+                .OrderByDescending(period => period.EndDate)
+                .ThenByDescending(period => period.StartDate)
+                .ThenByDescending(period => period.Id)
+                .ToList();
             PredefinedPeriods = new ObservableCollection<EnergyUse.Models.PreDefinedPeriod>(list);
             OnPropertyChanged(nameof(PredefinedPeriods));
 
             if (PredefinedPeriods.Any())
-                SelectedPeriod = PredefinedPeriods.LastOrDefault();
+                SelectedPeriod = PredefinedPeriods.FirstOrDefault();
         }
 
         private void addPeriod()
         {
             var entity = _controller.UnitOfWork.AddDefaultEntity("New period");
-            setPeriods();
+            PredefinedPeriods.Insert(0, entity);
             SelectedPeriod = entity;
         }
 

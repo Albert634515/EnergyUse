@@ -7,19 +7,34 @@
         <!-- TOOLBAR -->
         <ToolBar DockPanel.Dock="Top">
             <Button Command="{Binding AddCommand}">
-                <Image Source="/Resources/add_24x24.png" Width="20"/>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/add_24x24.png" Width="20"/>
+                    <TextBlock Text="Add" Margin="5 0 0 0"/>
+                </StackPanel>
             </Button>
             <Button Command="{Binding SaveCommand}">
-                <Image Source="/Resources/tick-mark_24x24.png" Width="20"/>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/tick-mark_24x24.png" Width="20"/>
+                    <TextBlock Text="Save" Margin="5 0 0 0"/>
+                </StackPanel>
             </Button>
             <Button Command="{Binding CancelCommand}">
-                <Image Source="/Resources/clear_24x24.png" Width="20"/>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/clear_24x24.png" Width="20"/>
+                    <TextBlock Text="Cancel" Margin="5 0 0 0"/>
+                </StackPanel>
             </Button>
             <Button Command="{Binding DeleteCommand}">
-                <Image Source="/Resources/delete_24x24.png" Width="20"/>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/delete_24x24.png" Width="20"/>
+                    <TextBlock Text="Delete" Margin="5 0 0 0"/>
+                </StackPanel>
             </Button>
             <Button Command="{Binding RefreshCommand}">
-                <Image Source="/Resources/clock_24x24.png" Width="20"/>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/clock_24x24.png" Width="20"/>
+                    <TextBlock Text="Refresh" Margin="5 0 0 0"/>
+                </StackPanel>
             </Button>
         </ToolBar>
 
@@ -40,11 +55,11 @@
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Start"
-                                        Binding="{Binding StartDate}"
+                                        Binding="{Binding StartDate, StringFormat=\{0:dd-MM-yyyy\}}"
                                         Width="120"/>
 
                     <DataGridTextColumn Header="End"
-                                        Binding="{Binding EndDate}"
+                                        Binding="{Binding EndDate, StringFormat=\{0:dd-MM-yyyy\}}"
                                         Width="120"/>
 
                     <DataGridTextColumn Header="Energy Type"

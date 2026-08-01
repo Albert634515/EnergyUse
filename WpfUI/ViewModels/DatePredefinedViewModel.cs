@@ -62,7 +62,11 @@ namespace WpfUI.ViewModels
                 return;
             }
 
-            var list = (await _controller.UnitOfWorkPd.PreDefinedPeriodDateRepo.GetByPeriodId(periodId)).ToList();
+            var list = (await _controller.UnitOfWorkPd.PreDefinedPeriodDateRepo.GetByPeriodId(periodId))
+                .OrderByDescending(date => date.EndDate)
+                .ThenByDescending(date => date.StartDate)
+                .ThenByDescending(date => date.Id)
+                .ToList();
 
             Dates = new ObservableCollection<PreDefinedPeriodDate>(list);
             OnPropertyChanged(nameof(Dates));
@@ -76,15 +80,24 @@ namespace WpfUI.ViewModels
             if (_currentPeriodId <= 0)
                 return;
 
+            var previousDate = Dates
+                .OrderByDescending(date => date.EndDate)
+                .ThenByDescending(date => date.StartDate)
+                .FirstOrDefault();
+
             var entity = new PreDefinedPeriodDate
             {
                 PreDefinedPeriodId = _currentPeriodId,
-                StartDate = DateTime.Now.Date,
-                EndDate = DateTime.Now.Date.AddYears(1)
+                StartDate = previousDate?.StartDate.AddYears(1) ?? DateTime.Now.Date,
+                EndDate = previousDate?.EndDate.AddYears(1) ?? DateTime.Now.Date.AddYears(1),
+                EnergyTypeId = previousDate?.EnergyTypeId,
+                TariffGroupId = previousDate?.TariffGroupId,
+                EnergyType = previousDate?.EnergyType,
+                TariffGroup = previousDate?.TariffGroup
             };
 
             _controller.UnitOfWorkPd.PreDefinedPeriodDateRepo.Add(entity);
-            Dates.Add(entity);
+            Dates.Insert(0, entity);
             SelectedDate = entity;
         }
 
