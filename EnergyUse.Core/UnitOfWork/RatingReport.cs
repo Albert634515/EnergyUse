@@ -11,6 +11,7 @@ public class RatingReport : IUnitOfWork
     public RepoCostCategories CostCategoriesRepo;
     public RepoRate RateRepo;
     public RepoTariffGroup TariffGroupRepo;
+    public RepoVatTarif VatTariffRepo;
 
     public RatingReport(string dbFileName)
     {
@@ -19,6 +20,7 @@ public class RatingReport : IUnitOfWork
         CostCategoriesRepo = new RepoCostCategories(_context);
         RateRepo = new RepoRate(_context);
         TariffGroupRepo = new RepoTariffGroup(_context);
+        VatTariffRepo = new RepoVatTarif(_context);
     }
 
     public int Complete()
@@ -36,6 +38,7 @@ public class RatingReport : IUnitOfWork
         CostCategoriesRepo.RejectChanges();
         RateRepo.RejectChanges();
         TariffGroupRepo.RejectChanges();
+        VatTariffRepo.RejectChanges();
     }
 
     public void Dispose()

@@ -16,7 +16,7 @@ public class RatingReport : ReportBase
     private readonly string _dbFileName;
     private readonly UnitOfWork.RatingReport _unitOfWork;
 
-    private static float[] _pointColumnWidths = { 115F, 115F, 60F, 75F, 75F };
+    private static float[] _pointColumnWidths = { 115F, 115F, 60F, 75F, 75F, 75F };
 
     #endregion
 
@@ -66,9 +66,15 @@ public class RatingReport : ReportBase
                 await GetRateTableHeader(table, costCategory, tarifGroupId);
 
                 var rates = await _unitOfWork.RateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, tarifGroupId);
-                foreach (Models.Rate rate in rates) 
-                {                        
-                    GetRateTable(table, rate);
+                var vatTariffs = await _unitOfWork.VatTariffRepo.GetByCostCategoryId(costCategory.Id);
+                foreach (Models.Rate rate in rates)
+                {
+                    var vatPercentage = vatTariffs
+                        .FirstOrDefault(vat => vat.StartDate.Date <= rate.StartRate.Date &&
+                                               vat.EndDate.Date >= rate.StartRate.Date)
+                        ?.Tarif;
+
+                    GetRateTable(table, rate, costCategory.CalculateVat, vatPercentage);
                 }
 
                 document.Add(table);
@@ -79,11 +85,16 @@ public class RatingReport : ReportBase
         return System.IO.Path.Combine(dest, fileName);
     }
 
-    private void GetRateTable(Table table, Rate rate)
+    private void GetRateTable(Table table, Rate rate, bool storedPriceExcludesVat, decimal? vatPercentage)
     {
+        decimal? rateIncludingVat = storedPriceExcludesVat
+            ? vatPercentage.HasValue ? rate.RateValue * (1 + vatPercentage.Value / 100) : null
+            : rate.RateValue;
+
         table.AddCell(GetNormalText(rate.StartRate.ToString("dd-MM-yyyy"), 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddCell(GetNormalText(rate.EndRate.ToString("dd-MM-yyyy"), 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddCell(GetNormalText(rate.RateValue.ToString()));
+        table.AddCell(GetNormalText(rateIncludingVat?.ToString("##0.00000") ?? ""));
         table.AddCell(GetNormalText(rate.PriceChange.ToString()));
         table.AddCell(GetNormalText(rate.ExpectedPriceChange.ToString()));
     }
@@ -107,11 +118,12 @@ public class RatingReport : ReportBase
         if (costCategory.End.HasValue)
             range += $"-{costCategory.End.Value.ToString("dd-MM-yyyy")}";
 
-        table.AddHeaderCell(GetBoldTextGrey($"{costCategory.Name}{range}, tariff group: {tarifGroup.Description}", 1, 5, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddHeaderCell(GetBoldTextGrey($"{costCategory.Name}{range}, tariff group: {tarifGroup.Description}", 1, 6, iText.Layout.Properties.TextAlignment.LEFT));
 
         table.AddHeaderCell(GetBoldText("From", 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddHeaderCell(GetBoldText("Till", 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddHeaderCell(GetBoldText("Rate"));
+        table.AddHeaderCell(GetBoldText("Rate incl. VAT"));
         table.AddHeaderCell(GetBoldText("Price change"));
         table.AddHeaderCell(GetBoldText("Expected change"));
     }
