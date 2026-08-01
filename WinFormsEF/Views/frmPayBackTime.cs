@@ -165,16 +165,18 @@ public partial class frmPayBackTime : Form
     {
         DataGridViewRow row = dgPayBackTime.Rows[e.RowIndex];
         decimal roi = (decimal)row.Cells["ReturnOnInvestmentTotal"].Value;
+        DateTime startPeriod = (DateTime)row.Cells["StartPeriod"].Value;
+        bool isFuturePeriod = startPeriod.Date > DateTime.Today;
 
         if (roi < 0)
         {
-            e.CellStyle.BackColor = Color.Red;
-            e.CellStyle.ForeColor = Color.White;
+            e.CellStyle.BackColor = isFuturePeriod ? Color.FromArgb(255, 204, 128) : Color.Red;
+            e.CellStyle.ForeColor = isFuturePeriod ? Color.Black : Color.White;
         }
         else if (roi > 0)
         {
-            e.CellStyle.BackColor = Color.Green;
-            e.CellStyle.ForeColor = Color.White;
+            e.CellStyle.BackColor = isFuturePeriod ? Color.LightGreen : Color.Green;
+            e.CellStyle.ForeColor = isFuturePeriod ? Color.Black : Color.White;
         }
         else
         {

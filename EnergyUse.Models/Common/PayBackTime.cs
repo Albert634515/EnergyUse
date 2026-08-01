@@ -23,12 +23,14 @@ public class PayBackTime
     public decimal ReturnOnInvestmentTotal { get; set; } = 0.0m;
     public decimal Return { get; set; } = 0.0m;
 
+    public bool IsFuturePeriod => StartPeriod.Date > DateTime.Today;
+
     public string RoiColor =>
-            ReturnOnInvestmentTotal < 0 ? "Red" :
-            ReturnOnInvestmentTotal > 0 ? "Green" :
+            ReturnOnInvestmentTotal < 0 ? IsFuturePeriod ? "#FFFFCC80" : "Red" :
+            ReturnOnInvestmentTotal > 0 ? IsFuturePeriod ? "LightGreen" : "Green" :
             "White";
 
     public string RoiForeground =>
-        ReturnOnInvestmentTotal == 0 ? "Black" : "White";
+        ReturnOnInvestmentTotal == 0 || IsFuturePeriod ? "Black" : "White";
 
 }
