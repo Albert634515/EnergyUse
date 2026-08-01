@@ -40,7 +40,8 @@ namespace WpfUI
             base.OnStartup(e);
 
             var startup = new StartupService();
-            startup.Initialize();
+            if (!startup.Initialize())
+                return;
 
             var main = new MainWindow();
             main.Show();

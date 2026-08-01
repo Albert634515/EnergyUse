@@ -102,7 +102,9 @@
         </StackPanel>
 
         <!-- Opties -->
-        <StackPanel Grid.Row="4" Margin="0,35,0,0">
+        <StackPanel Grid.Row="4"
+                    Margin="0,35,0,0"
+                    Visibility="{Binding FileOptionsVisible}">
             <CheckBox Content="Voeg basisgegevens toe"
                       FontSize="16"
                       IsChecked="{Binding AddBaseData}" />

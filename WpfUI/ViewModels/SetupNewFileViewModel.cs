@@ -77,11 +77,13 @@ public class SetupNewFileViewModel : ViewModelBase
     // ---------------------------------------------------------
     public Visibility Step2Visible => IsNewFile ? Visibility.Visible : Visibility.Collapsed;
     public Visibility Step3Visible => IsNewFile ? Visibility.Visible : Visibility.Collapsed;
+    public Visibility FileOptionsVisible => IsNewFile ? Visibility.Visible : Visibility.Collapsed;
 
     private void UpdateStepVisibility()
     {
         OnPropertyChanged(nameof(Step2Visible));
         OnPropertyChanged(nameof(Step3Visible));
+        OnPropertyChanged(nameof(FileOptionsVisible));
     }
 
     // ---------------------------------------------------------

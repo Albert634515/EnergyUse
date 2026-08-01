@@ -6,19 +6,19 @@ namespace WpfUI.Services
 {
     public class StartupService
     {
-        public void Initialize()
+        public bool Initialize()
         {
-            ValidateDatabase();
+            return ValidateDatabase();
         }
 
-        private void ValidateDatabase()
+        private bool ValidateDatabase()
         {
             var sourceDb = Config.GetDbFileName();
 
             if (string.IsNullOrWhiteSpace(sourceDb))
             {
                 RunSetup();
-                return;
+                return HasValidDatabase();
             }
 
             if (!File.Exists(sourceDb))
@@ -30,21 +30,26 @@ namespace WpfUI.Services
 
                 MessageBox.Show(message, "Database Missing", MessageBoxButton.OK, MessageBoxImage.Warning);
                 RunSetup();
-                return;
+                return HasValidDatabase();
             }
 
-            // Re-check after setup
-            sourceDb = Config.GetDbFileName();
-            if (string.IsNullOrWhiteSpace(sourceDb) || !File.Exists(sourceDb))
-            {
-                var message = Languages.GetResourceString(
-                    "MainErrorDbNotSetup",
-                    "Database not set up or not accessible, application will be closed."
-                );
+            return true;
+        }
 
-                MessageBox.Show(message, "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                Application.Current.Shutdown();
-            }
+        private static bool HasValidDatabase()
+        {
+            var sourceDb = Config.GetDbFileName();
+            if (!string.IsNullOrWhiteSpace(sourceDb) && File.Exists(sourceDb))
+                return true;
+
+            var message = Languages.GetResourceString(
+                "MainErrorDbNotSetup",
+                "Database not set up or not accessible, application will be closed."
+            );
+
+            MessageBox.Show(message, "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            Application.Current.Shutdown();
+            return false;
         }
 
         private void RunSetup()

@@ -159,6 +159,8 @@ public partial class FrmSetupNewFile : Form
     {
         LblAddBaseData.Visible = !RbExistingFile.Checked;
         ChkAddBaseData.Visible = !RbExistingFile.Checked;
+        LblSetAsDefaultFile.Visible = !RbExistingFile.Checked;
+        ChkSetAsDefaultFile.Visible = !RbExistingFile.Checked;
 
         LblSetupNewFile.Visible = !RbExistingFile.Checked;
         lblSetupFile.Visible = RbExistingFile.Checked;
