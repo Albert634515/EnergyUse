@@ -256,7 +256,25 @@
     <value>6</value>
   </data>
   <data name="descriptionDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
-    <value>300</value>
+    <value>250</value>
+  </data>
+  <data name="startDateDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="startDateDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="startDateDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="endDateDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="endDateDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="endDateDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>125</value>
   </data>
   <data name="dgPeriods.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 71</value>
@@ -265,7 +283,7 @@
     <value>51</value>
   </data>
   <data name="dgPeriods.Size" type="System.Drawing.Size, System.Drawing">
-    <value>389, 188</value>
+    <value>590, 188</value>
   </data>
   <data name="dgPeriods.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>

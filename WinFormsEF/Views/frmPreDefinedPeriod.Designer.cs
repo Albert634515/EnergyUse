@@ -43,6 +43,8 @@
             dgPeriods = new DataGridView();
             idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            startDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            endDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             label1 = new Label();
             ucDatePredefined1 = new ucControls.ucDatePredefined();
             toolStrip1.SuspendLayout();
@@ -67,6 +69,7 @@
             // 
             tsbAddPredefinedPeriods.Image = WinFormsUI.Properties.Resources.add_24x24;
             resources.ApplyResources(tsbAddPredefinedPeriods, "tsbAddPredefinedPeriods");
+            tsbAddPredefinedPeriods.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             tsbAddPredefinedPeriods.Name = "tsbAddPredefinedPeriods";
             tsbAddPredefinedPeriods.Click += tsbAddPredefinedPeriods_Click;
             // 
@@ -74,6 +77,7 @@
             // 
             tsbSavePredefinedPeriod.Image = WinFormsUI.Properties.Resources.tick_mark_24x24;
             resources.ApplyResources(tsbSavePredefinedPeriod, "tsbSavePredefinedPeriod");
+            tsbSavePredefinedPeriod.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             tsbSavePredefinedPeriod.Name = "tsbSavePredefinedPeriod";
             tsbSavePredefinedPeriod.Click += tsbSavePredefinedPeriod_Click;
             // 
@@ -81,6 +85,7 @@
             // 
             tbsCancel.Image = WinFormsUI.Properties.Resources.clear_24x24;
             resources.ApplyResources(tbsCancel, "tbsCancel");
+            tbsCancel.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             tbsCancel.Name = "tbsCancel";
             tbsCancel.Click += tbsCancel_Click;
             // 
@@ -88,6 +93,7 @@
             // 
             tsbDeletePredefinedPeriods.Image = WinFormsUI.Properties.Resources.delete_24x24;
             resources.ApplyResources(tsbDeletePredefinedPeriods, "tsbDeletePredefinedPeriods");
+            tsbDeletePredefinedPeriods.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             tsbDeletePredefinedPeriods.Name = "tsbDeletePredefinedPeriods";
             tsbDeletePredefinedPeriods.Click += tsbDeletePredefinedPeriods_Click;
             // 
@@ -95,6 +101,7 @@
             // 
             tsbRefeshPredefinedPeriods.Image = WinFormsUI.Properties.Resources.clock_24x24;
             resources.ApplyResources(tsbRefeshPredefinedPeriods, "tsbRefeshPredefinedPeriods");
+            tsbRefeshPredefinedPeriods.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             tsbRefeshPredefinedPeriods.Name = "tsbRefeshPredefinedPeriods";
             tsbRefeshPredefinedPeriods.Click += tsbRefeshPredefinedPeriods_Click;
             // 
@@ -103,6 +110,7 @@
             tbsClosePredefinedPeriods.Alignment = ToolStripItemAlignment.Right;
             tbsClosePredefinedPeriods.Image = WinFormsUI.Properties.Resources.crossed_24x24;
             resources.ApplyResources(tbsClosePredefinedPeriods, "tbsClosePredefinedPeriods");
+            tbsClosePredefinedPeriods.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             tbsClosePredefinedPeriods.Name = "tbsClosePredefinedPeriods";
             tbsClosePredefinedPeriods.Click += tbsClosePredefinedPeriods_Click;
             // 
@@ -117,7 +125,7 @@
             dgPeriods.AllowUserToDeleteRows = false;
             dgPeriods.AutoGenerateColumns = false;
             dgPeriods.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgPeriods.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, descriptionDataGridViewTextBoxColumn });
+            dgPeriods.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, descriptionDataGridViewTextBoxColumn, startDateDataGridViewTextBoxColumn, endDateDataGridViewTextBoxColumn });
             dgPeriods.DataSource = bsPreDefinedPeriod;
             resources.ApplyResources(dgPeriods, "dgPeriods");
             dgPeriods.Name = "dgPeriods";
@@ -133,6 +141,22 @@
             descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
             resources.ApplyResources(descriptionDataGridViewTextBoxColumn, "descriptionDataGridViewTextBoxColumn");
             descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
+            //
+            // startDateDataGridViewTextBoxColumn
+            //
+            startDateDataGridViewTextBoxColumn.DataPropertyName = "StartDate";
+            startDateDataGridViewTextBoxColumn.DefaultCellStyle.Format = "dd-MM-yyyy";
+            resources.ApplyResources(startDateDataGridViewTextBoxColumn, "startDateDataGridViewTextBoxColumn");
+            startDateDataGridViewTextBoxColumn.Name = "startDateDataGridViewTextBoxColumn";
+            startDateDataGridViewTextBoxColumn.ReadOnly = true;
+            //
+            // endDateDataGridViewTextBoxColumn
+            //
+            endDateDataGridViewTextBoxColumn.DataPropertyName = "EndDate";
+            endDateDataGridViewTextBoxColumn.DefaultCellStyle.Format = "dd-MM-yyyy";
+            resources.ApplyResources(endDateDataGridViewTextBoxColumn, "endDateDataGridViewTextBoxColumn");
+            endDateDataGridViewTextBoxColumn.Name = "endDateDataGridViewTextBoxColumn";
+            endDateDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // label1
             // 
@@ -182,5 +206,7 @@
         private ToolStripButton tbsCancel;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn startDateDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn endDateDataGridViewTextBoxColumn;
     }
 }

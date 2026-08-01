@@ -74,6 +74,7 @@
             // 
             tsbAddPredefinedPeriods.Image = WinFormsUI.Properties.Resources.add_24x24;
             resources.ApplyResources(tsbAddPredefinedPeriods, "tsbAddPredefinedPeriods");
+            tsbAddPredefinedPeriods.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             tsbAddPredefinedPeriods.Name = "tsbAddPredefinedPeriods";
             tsbAddPredefinedPeriods.Click += tsbAddPredefinedPeriods_Click;
             // 
@@ -81,6 +82,7 @@
             // 
             tsbSavePredefinedPeriod.Image = WinFormsUI.Properties.Resources.tick_mark_24x24;
             resources.ApplyResources(tsbSavePredefinedPeriod, "tsbSavePredefinedPeriod");
+            tsbSavePredefinedPeriod.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             tsbSavePredefinedPeriod.Name = "tsbSavePredefinedPeriod";
             tsbSavePredefinedPeriod.Click += tsbSavePredefinedPeriod_Click;
             // 
@@ -88,6 +90,7 @@
             // 
             tbsCancel.Image = WinFormsUI.Properties.Resources.clear_24x24;
             resources.ApplyResources(tbsCancel, "tbsCancel");
+            tbsCancel.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             tbsCancel.Name = "tbsCancel";
             tbsCancel.Click += tbsCancel_Click;
             // 
@@ -95,6 +98,7 @@
             // 
             tsbDeletePredefinedPeriods.Image = WinFormsUI.Properties.Resources.delete_24x24;
             resources.ApplyResources(tsbDeletePredefinedPeriods, "tsbDeletePredefinedPeriods");
+            tsbDeletePredefinedPeriods.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             tsbDeletePredefinedPeriods.Name = "tsbDeletePredefinedPeriods";
             tsbDeletePredefinedPeriods.Click += tsbDeletePredefinedPeriods_Click;
             // 
@@ -102,6 +106,7 @@
             // 
             tsbRefeshPredefinedPeriods.Image = WinFormsUI.Properties.Resources.clock_24x24;
             resources.ApplyResources(tsbRefeshPredefinedPeriods, "tsbRefeshPredefinedPeriods");
+            tsbRefeshPredefinedPeriods.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             tsbRefeshPredefinedPeriods.Name = "tsbRefeshPredefinedPeriods";
             tsbRefeshPredefinedPeriods.Click += tsbRefeshPredefinedPeriods_Click;
             // 
@@ -123,12 +128,14 @@
             // startDateDataGridViewTextBoxColumn
             // 
             startDateDataGridViewTextBoxColumn.DataPropertyName = "StartDate";
+            startDateDataGridViewTextBoxColumn.DefaultCellStyle.Format = "dd-MM-yyyy";
             resources.ApplyResources(startDateDataGridViewTextBoxColumn, "startDateDataGridViewTextBoxColumn");
             startDateDataGridViewTextBoxColumn.Name = "startDateDataGridViewTextBoxColumn";
             // 
             // endDateDataGridViewTextBoxColumn
             // 
             endDateDataGridViewTextBoxColumn.DataPropertyName = "EndDate";
+            endDateDataGridViewTextBoxColumn.DefaultCellStyle.Format = "dd-MM-yyyy";
             resources.ApplyResources(endDateDataGridViewTextBoxColumn, "endDateDataGridViewTextBoxColumn");
             endDateDataGridViewTextBoxColumn.Name = "endDateDataGridViewTextBoxColumn";
             // 

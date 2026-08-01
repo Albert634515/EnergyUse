@@ -34,7 +34,14 @@ public partial class ucDatePredefined : UserControl
     {
         _currentId = preDefinedPeriodId;
 
-        _predefinedPeriodDates = _unitOfWork.PreDefinedPeriodDateRepo.GetByPeriodId(preDefinedPeriodId).GetAwaiter().GetResult().ToList();
+        _predefinedPeriodDates = _unitOfWork.PreDefinedPeriodDateRepo
+            .GetByPeriodId(preDefinedPeriodId)
+            .GetAwaiter()
+            .GetResult()
+            .OrderByDescending(date => date.EndDate)
+            .ThenByDescending(date => date.StartDate)
+            .ThenByDescending(date => date.Id)
+            .ToList();
         bsPreDefinedPeriodDates.DataSource = _predefinedPeriodDates;
     }
 
@@ -83,13 +90,24 @@ public partial class ucDatePredefined : UserControl
         if (_currentId <= 0)
             return;
 
-        var entity = new EnergyUse.Models.PreDefinedPeriodDate();
-        entity.PreDefinedPeriodId = _currentId;
-        entity.StartDate = DateTime.Now.Date;
-        entity.EndDate = DateTime.Now.Date.AddYears(1);
+        var previousDate = _predefinedPeriodDates
+            .OrderByDescending(date => date.EndDate)
+            .ThenByDescending(date => date.StartDate)
+            .FirstOrDefault();
+
+        var entity = new EnergyUse.Models.PreDefinedPeriodDate
+        {
+            PreDefinedPeriodId = _currentId,
+            StartDate = previousDate?.StartDate.AddYears(1) ?? DateTime.Now.Date,
+            EndDate = previousDate?.EndDate.AddYears(1) ?? DateTime.Now.Date.AddYears(1),
+            EnergyTypeId = previousDate?.EnergyTypeId,
+            TariffGroupId = previousDate?.TariffGroupId,
+            EnergyType = previousDate?.EnergyType,
+            TariffGroup = previousDate?.TariffGroup
+        };
         _unitOfWork.PreDefinedPeriodDateRepo.Add(entity);
 
-        _predefinedPeriodDates.Add(entity);
+        _predefinedPeriodDates.Insert(0, entity);
         bsPreDefinedPeriodDates.DataSource = _predefinedPeriodDates;
         bsPreDefinedPeriodDates.ResetBindings(false);
 

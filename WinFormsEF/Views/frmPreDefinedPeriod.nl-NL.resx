@@ -97,6 +97,12 @@
   <data name="descriptionDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
     <value>Omschrijving</value>
   </data>
+  <data name="startDateDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Begindatum</value>
+  </data>
+  <data name="endDateDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>Einddatum</value>
+  </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>397, 20</value>
   </data>

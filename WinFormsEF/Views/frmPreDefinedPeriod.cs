@@ -29,7 +29,14 @@ public partial class frmPreDefinedPeriod : Form
 
     private void setPreDefinedPeriods()
     {
-        _controller.UnitOfWork.PreDefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo.GetAll().GetAwaiter().GetResult().ToList();
+        _controller.UnitOfWork.PreDefinedPeriods = _controller.UnitOfWork.PreDefinedPeriodRepo
+            .GetAllWithDates()
+            .GetAwaiter()
+            .GetResult()
+            .OrderByDescending(period => period.EndDate)
+            .ThenByDescending(period => period.StartDate)
+            .ThenByDescending(period => period.Id)
+            .ToList();
         bsPreDefinedPeriod.DataSource = _controller.UnitOfWork.PreDefinedPeriods;
     }
 
@@ -105,6 +112,9 @@ public partial class frmPreDefinedPeriod : Form
     private void addPredefinedPeriod()
     {
         var entity = _controller.UnitOfWork.AddDefaultEntity(Managers.Languages.GetResourceString("Newperiod", "New period"));
+
+        _controller.UnitOfWork.PreDefinedPeriods.Remove(entity);
+        _controller.UnitOfWork.PreDefinedPeriods.Insert(0, entity);
 
         bsPreDefinedPeriod.DataSource = _controller.UnitOfWork.PreDefinedPeriods;
         bsPreDefinedPeriod.ResetBindings(false);
