@@ -72,31 +72,31 @@ public class MainController : BaseController, IController
 
     #region Report
 
-    public async Task<string> GetSettlementPdfAsync(ParameterSelection parameterSelection)
+    public async Task<string> GetReportPdfAsync(ParameterSelection parameterSelection)
     {
         if (parameterSelection == null) return string.Empty;
 
-        if (parameterSelection.ReportType == EnergyUse.Common.Enums.ReportType.SettlementCompact)
+        switch (parameterSelection.ReportType)
         {
-            var LibSettlement = new EnergyUse.Core.Reports.SettlementCompact(_dbFileName);
-            return await LibSettlement.GetSettlementPdfAsync(parameterSelection);
-        } else if (parameterSelection.ReportType == EnergyUse.Common.Enums.ReportType.SettlementSplitByType)
-        {
-            var LibSettlement = new EnergyUse.Core.Reports.SettlementSplitByType(_dbFileName);
-            return await LibSettlement.GetSettlementPdfAsync(parameterSelection);
-        }
-        else
-        {
-            throw new Exception("Unknown report type");
-        }
-    }
+            case EnergyUse.Common.Enums.ReportType.SettlementCompact:
+                var compactReport = new EnergyUse.Core.Reports.SettlementCompact(_dbFileName);
+                return await compactReport.GetSettlementPdfAsync(parameterSelection);
 
-    public async Task<string> GetRatingReportPdf(Models.Address address, ParameterSelection parameterSelection)
-    {
-        var LibSettlement = new EnergyUse.Core.Reports.RatingReport(_dbFileName);
-        var fileName = await LibSettlement.GetRatingReportPdf(address, parameterSelection);
+            case EnergyUse.Common.Enums.ReportType.SettlementSplitByType:
+                var splitReport = new EnergyUse.Core.Reports.SettlementSplitByType(_dbFileName);
+                return await splitReport.GetSettlementPdfAsync(parameterSelection);
 
-        return fileName;
+            case EnergyUse.Common.Enums.ReportType.Rates:
+                var address = await _unitOfWork.AddressRepo.Get(parameterSelection.AddressId);
+                if (address is null)
+                    throw new InvalidOperationException($"Address with ID {parameterSelection.AddressId} was not found.");
+
+                var rateReport = new EnergyUse.Core.Reports.RatingReport(_dbFileName);
+                return await rateReport.GetRatingReportPdf(address, parameterSelection);
+
+            default:
+                throw new InvalidOperationException($"Unknown report type: {parameterSelection.ReportType}.");
+        }
     }
 
     #endregion

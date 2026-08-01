@@ -380,7 +380,7 @@ public partial class MainForm : Form
         }
 
         Cursor.Current = Cursors.WaitCursor;
-        var fileName = await _controller.GetSettlementPdfAsync(parameterSelection);
+        var fileName = await _controller.GetReportPdfAsync(parameterSelection);
         Cursor.Current = Cursors.Default;
 
         if (!string.IsNullOrWhiteSpace(fileName))
@@ -401,7 +401,7 @@ public partial class MainForm : Form
         }
 
         Cursor.Current = Cursors.WaitCursor; ;
-        var fileName = _controller.GetRatingReportPdf(address, parameterSelection).GetAwaiter().GetResult();
+        var fileName = _controller.GetReportPdfAsync(parameterSelection).GetAwaiter().GetResult();
         Cursor.Current = Cursors.Default;
 
         if (!string.IsNullOrWhiteSpace(fileName))

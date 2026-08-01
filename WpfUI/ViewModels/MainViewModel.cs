@@ -365,7 +365,7 @@ public class MainViewModel : ViewModelBase
         {
             Mouse.OverrideCursor = Cursors.Wait;
 
-            var fileName = await _controller.GetSettlementPdfAsync(parameters);
+            var fileName = await _controller.GetReportPdfAsync(parameters);
 
             if (!string.IsNullOrWhiteSpace(fileName))
             {
@@ -399,7 +399,7 @@ public class MainViewModel : ViewModelBase
         {
             Mouse.OverrideCursor = Cursors.Wait;
 
-            var fileName = await _controller.GetRatingReportPdf(SelectedAddress, parameters);
+            var fileName = await _controller.GetReportPdfAsync(parameters);
 
             if (!string.IsNullOrWhiteSpace(fileName))
             {

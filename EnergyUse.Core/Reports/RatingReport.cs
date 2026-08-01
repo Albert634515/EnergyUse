@@ -1,5 +1,4 @@
-﻿using EnergyUse.Core.Context;
-using EnergyUse.Models;
+﻿using EnergyUse.Models;
 using EnergyUse.Models.Common;
 using iText.Kernel.Colors;
 using iText.Kernel.Font;
@@ -14,9 +13,8 @@ public class RatingReport : ReportBase
 {
     #region Properties
 
-    private readonly EnergyUseContext _context;
     private readonly string _dbFileName;
-    private static UnitOfWork.RatingReport _unitOfWork;
+    private readonly UnitOfWork.RatingReport _unitOfWork;
 
     private static float[] _pointColumnWidths = { 115F, 115F, 60F, 75F, 75F };
 
@@ -25,7 +23,6 @@ public class RatingReport : ReportBase
     public RatingReport(string dbFileName)
     {
         _dbFileName = dbFileName;
-        _context = new EnergyUseContext(dbFileName);
         _unitOfWork = new UnitOfWork.RatingReport(_dbFileName);
     }
     public async Task<string> GetRatingReportPdf(Models.Address address, ParameterSelection parameterSelection)
@@ -35,12 +32,12 @@ public class RatingReport : ReportBase
         Models.EnergyType energyType;
 
         var dest = System.IO.Path.GetTempPath();
-        var fileName = $"RatingReport_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+        var fileName = $"RatingReport_{DateTime.Now:yyyyMMddHHmmssfff}_{Guid.NewGuid():N}.pdf";
 
-        PdfWriter writer = new PdfWriter(System.IO.Path.Combine(dest, fileName));
-        PdfDocument pdf = new PdfDocument(writer);
+        using PdfWriter writer = new PdfWriter(System.IO.Path.Combine(dest, fileName));
+        using PdfDocument pdf = new PdfDocument(writer);
         pdf.SetDefaultPageSize(PageSize.A4);
-        Document document = new Document(pdf);
+        using Document document = new Document(pdf);
         var isFirstPage = true;
         foreach (SelectedEnergyType item in parameterSelection.SelectedEnergyTypeList)
         {
@@ -79,18 +76,16 @@ public class RatingReport : ReportBase
             }                
         }
 
-        document.Close();
-
         return System.IO.Path.Combine(dest, fileName);
     }
 
     private void GetRateTable(Table table, Rate rate)
     {
-        table.AddHeaderCell(GetNormalText(rate.StartRate.ToString("dd-MM-yyyy"), 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
-        table.AddHeaderCell(GetNormalText(rate.EndRate.ToString("dd-MM-yyyy"), 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
-        table.AddHeaderCell(GetNormalText(rate.RateValue.ToString()));
-        table.AddHeaderCell(GetNormalText(rate.PriceChange.ToString()));
-        table.AddHeaderCell(GetNormalText(rate.ExpectedPriceChange.ToString()));
+        table.AddCell(GetNormalText(rate.StartRate.ToString("dd-MM-yyyy"), 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddCell(GetNormalText(rate.EndRate.ToString("dd-MM-yyyy"), 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddCell(GetNormalText(rate.RateValue.ToString()));
+        table.AddCell(GetNormalText(rate.PriceChange.ToString()));
+        table.AddCell(GetNormalText(rate.ExpectedPriceChange.ToString()));
     }
 
     private static Paragraph GetHeaderParagraph(SelectedEnergyType item, Models.Address address)
@@ -103,6 +98,9 @@ public class RatingReport : ReportBase
     private async Task GetRateTableHeader(Table table, Models.CostCategory costCategory, long tariffGroupId)
     {
         var tarifGroup = await _unitOfWork.TariffGroupRepo.Get(tariffGroupId);
+        if (tarifGroup is null)
+            throw new InvalidOperationException($"Tariff group with ID {tariffGroupId} was not found.");
+
         var range = "";
         if (costCategory.Start.HasValue)
             range += $" from {costCategory.Start.Value.ToString("dd-MM-yyyy")}";
