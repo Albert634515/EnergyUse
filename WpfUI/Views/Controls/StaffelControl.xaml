@@ -4,10 +4,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:WpfUI.Views.Controls"
+             xmlns:converters="clr-namespace:WpfUI.Converters"
              mc:Ignorable="d"
              Height="350">
 
     <DockPanel>
+
+        <DockPanel.Resources>
+            <converters:DecimalInputConverter x:Key="DecimalInputConverter"/>
+        </DockPanel.Resources>
 
         <!-- Toolbar -->
         <ToolBar DockPanel.Dock="Top">
@@ -25,9 +30,18 @@
                   Margin="5">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Value From" Binding="{Binding ValueFrom}" />
-                <DataGridTextColumn Header="Value Till" Binding="{Binding ValueTill}" />
-                <DataGridTextColumn Header="Rate" Binding="{Binding StaffelValue}" />
+                <DataGridTextColumn Header="Value From"
+                                    Binding="{Binding ValueFrom,
+                                                      Converter={StaticResource DecimalInputConverter},
+                                                      UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Value Till"
+                                    Binding="{Binding ValueTill,
+                                                      Converter={StaticResource DecimalInputConverter},
+                                                      UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Rate"
+                                    Binding="{Binding StaffelValue,
+                                                      Converter={StaticResource DecimalInputConverter},
+                                                      UpdateSourceTrigger=PropertyChanged}" />
             </DataGrid.Columns>
 
         </DataGrid>

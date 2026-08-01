@@ -2,11 +2,16 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:WpfUI.Views.Controls"
+        xmlns:converters="clr-namespace:WpfUI.Converters"
         Title="Energy Rates"
         Height="800" Width="1254"
         ShowInTaskbar="False">
 
     <DockPanel>
+
+        <DockPanel.Resources>
+            <converters:DecimalInputConverter x:Key="DecimalInputConverter"/>
+        </DockPanel.Resources>
 
         <!-- Toolbar -->
         <ToolBar DockPanel.Dock="Top">
@@ -310,7 +315,9 @@
                         <TextBlock Grid.Row="3" Text="Rate"
                                    Style="{StaticResource DetailLabelStyle}"/>
                         <TextBox Grid.Row="3" Grid.Column="1"
-                                 Text="{Binding SelectedRate.RateValue, UpdateSourceTrigger=PropertyChanged}">
+                                 Text="{Binding SelectedRate.RateValue,
+                                                Converter={StaticResource DecimalInputConverter},
+                                                UpdateSourceTrigger=PropertyChanged}">
                             <TextBox.Style>
                                 <Style TargetType="TextBox" BasedOn="{StaticResource DetailTextBoxStyle}">
                                     <Setter Property="Visibility" Value="Visible"/>
@@ -327,7 +334,9 @@
                         <TextBlock Grid.Row="4" Text="Expected Price Change"
                                    Style="{StaticResource DetailLabelStyle}"/>
                         <TextBox Grid.Row="4" Grid.Column="1"
-                                 Text="{Binding SelectedRate.ExpectedPriceChange, UpdateSourceTrigger=PropertyChanged}"
+                                 Text="{Binding SelectedRate.ExpectedPriceChange,
+                                                Converter={StaticResource DecimalInputConverter},
+                                                UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource DetailTextBoxStyle}"/>
 
                         <!-- Price Change -->
