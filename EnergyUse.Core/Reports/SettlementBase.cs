@@ -12,7 +12,8 @@ public class SettlementBase : ReportBase
     internal readonly string _dbFileName;
     internal readonly UnitOfWork.Settlement _unitOfWork;
 
-    internal static readonly float[] _pointColumnWidths = [250F, 115F, 115F, 60F, 75F, 110F, 90F, 110F];
+    internal static readonly float[] _pointColumnWidths = [220F, 130F, 130F, 60F, 75F, 110F, 90F, 110F];
+    internal static readonly float[] _costColumnWidthsWithoutRates = [295F, 130F, 130F, 60F, 110F, 90F, 110F];
     internal List<SettlementData> _settlementDataList = new();
     internal List<SettlementSubTotal> _settlementSubTotalList = new();
     internal List<PeriodicData> _periodicDataList = new();
@@ -82,7 +83,10 @@ public class SettlementBase : ReportBase
     internal Table getCostTable(SelectedEnergyType item, List<SettlementData> settlementDataList, bool showRates, string subTotalText)
     {
         _footerTextsList = new List<FooterText>();
-        var table = new Table(_pointColumnWidths);
+        var columnWidths = showRates ? _pointColumnWidths : _costColumnWidthsWithoutRates;
+        var table = new Table(iText.Layout.Properties.UnitValue.CreatePercentArray(columnWidths))
+            .UseAllAvailableWidth()
+            .SetFixedLayout();
 
         getCategoryTableHeader(table, showRates);
         foreach (SettlementData settlementData in settlementDataList)
@@ -143,7 +147,7 @@ public class SettlementBase : ReportBase
             var roundedValue = roundMoney(settlementData.Value);
             var roundedVat = roundMoney(settlementData.VatAmount);
 
-            table.AddCell(GetNormalText(settlementData.Description, 1, showRates ? 1 : 2, iText.Layout.Properties.TextAlignment.LEFT, footerText));
+            table.AddCell(GetNormalText(settlementData.Description, 1, 1, iText.Layout.Properties.TextAlignment.LEFT, footerText));
             table.AddCell(GetNormalText(settlementData.StartDate.ToString("dd-MM-yyyy"), 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
             table.AddCell(GetNormalText(settlementData.EndDate.ToString("dd-MM-yyyy"), 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
             table.AddCell(GetNormalText(Math.Round(settlementData.ValueBase, 2).ToString()));
@@ -162,7 +166,7 @@ public class SettlementBase : ReportBase
 
         // Add Footer to table
         if (_footerTextsList.Count > 0)
-            table.AddFooterCell(getFooterText(_footerTextsList, 1, 8));
+            table.AddFooterCell(getFooterText(_footerTextsList, 1, showRates ? 8 : 7));
 
         // Add sub Footer to table
         var settlementSubTotal = new SettlementSubTotal();
@@ -178,7 +182,7 @@ public class SettlementBase : ReportBase
 
     internal void getCategoryTableHeader(Table table, bool showRates)
     {
-        table.AddHeaderCell(GetBoldText("Description", 1, showRates ? 1 : 2, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddHeaderCell(GetBoldText("Description", 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddHeaderCell(GetBoldText("From", 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddHeaderCell(GetBoldText("Till", 1, 1, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddHeaderCell(GetBoldText("Unit"));
@@ -199,7 +203,7 @@ public class SettlementBase : ReportBase
     /// <param name="rowDescription"></param>
     private void setSettlementSubTotal(Table table, SettlementSubTotal settlementSubTotal, string rowDescription, bool showRates)
     {
-        table.AddFooterCell(GetBoldTextGrey(rowDescription, 1, showRates ? 5 : 5, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddFooterCell(GetBoldTextGrey(rowDescription, 1, showRates ? 5 : 4, iText.Layout.Properties.TextAlignment.LEFT));
         table.AddFooterCell(GetBoldTextGrey(Math.Round(settlementSubTotal.TotalValue, 2).ToString()));
         table.AddFooterCell(GetBoldTextGrey(Math.Round(settlementSubTotal.TotalVat, 2).ToString()));
         table.AddFooterCell(GetBoldTextGrey(Math.Round(settlementSubTotal.TotalValue + settlementSubTotal.TotalVat, 2).ToString()));
@@ -485,16 +489,28 @@ public class SettlementBase : ReportBase
         else
             payments = (await _unitOfWork.PaymentRepo.SelectByAddressAndRange(addressId, startRange, endRange)).ToList();
 
+        var totalToPay = Math.Round(_settlementSubTotalList.Sum(x => x.TotalValue + x.TotalVat), 2);
+        var totalPaid = (decimal)payments.Sum(s => s.Amount);
+        var toBePaid = totalToPay - totalPaid;
+
         if (payments.Count == 0)
         {
             table.AddCell(GetNormalText("No payments", 1, 8, iText.Layout.Properties.TextAlignment.LEFT));
+
+            if (totalToPay != 0)
+            {
+                table.AddFooterCell(GetBoldText("To be paid", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
+                table.AddFooterCell(GetBoldText(toBePaid.ToString("#0.00"), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
+            }
+
+            if (monthsLeft > 0)
+            {
+                table.AddFooterCell(GetBoldText($"Avg per month left, ({toBePaid}/{monthsLeft})", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
+                table.AddFooterCell(GetBoldText(Math.Round(toBePaid / monthsLeft, 2).ToString("#0.00"), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
+            }
         }
         else
         {
-            var totalToPay = Math.Round(_settlementSubTotalList.Sum(x => x.TotalValue + x.TotalVat), 2);
-            var total = (decimal)payments.Sum(s => s.Amount);
-            var toBePaid = totalToPay - total;
-
             foreach (var payment in payments)
             {
                 table.AddCell(GetNormalText(payment.PayDate.ToString("dd-MM-yyyy"), 1, 2, iText.Layout.Properties.TextAlignment.LEFT));
@@ -504,7 +520,7 @@ public class SettlementBase : ReportBase
 
             // Add Footer                
             table.AddFooterCell(GetBoldTextGrey("Total paid", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
-            table.AddFooterCell(GetBoldTextGrey(Math.Round(total, 2).ToString("#0.00"), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
+            table.AddFooterCell(GetBoldTextGrey(Math.Round(totalPaid, 2).ToString("#0.00"), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
 
             if (totalToPay != 0)
             {

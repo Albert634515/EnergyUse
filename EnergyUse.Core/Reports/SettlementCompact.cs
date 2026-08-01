@@ -20,12 +20,15 @@ public class SettlementCompact : SettlementBase
         Models.EnergyType energyType;
 
         var dest = System.IO.Path.GetTempPath();
-        var fileName = $"SettlementCompact_{DateTime.Now:yyyyMMddHHmmss}.pdf";
-        Models.Address address = await _unitOfWork.AddressRepo.Get(parameterSelection.AddressId);
-        PdfWriter writer = new(System.IO.Path.Combine(dest, fileName));
-        PdfDocument pdf = new(writer);
+        var fileName = $"SettlementCompact_{DateTime.Now:yyyyMMddHHmmssfff}_{Guid.NewGuid():N}.pdf";
+        Models.Address? address = await _unitOfWork.AddressRepo.Get(parameterSelection.AddressId);
+        if (address is null)
+            throw new InvalidOperationException($"Address with ID {parameterSelection.AddressId} was not found.");
+
+        using PdfWriter writer = new(System.IO.Path.Combine(dest, fileName));
+        using PdfDocument pdf = new(writer);
         pdf.SetDefaultPageSize(PageSize.A4);
-        Document document = new(pdf);
+        using Document document = new(pdf);
 
         var isFirstPage = true;
         var LibPeriodicDate = new Manager.LibPeriodicDate(_dbFileName);
@@ -87,8 +90,6 @@ public class SettlementCompact : SettlementBase
 
         table = await getPayments(address.Id, parameterSelection.PreSelectedPeriodId, parameterSelection.StartRange, parameterSelection.EndRange);
         document.Add(table);
-
-        document.Close();
 
         return System.IO.Path.Combine(dest, fileName);
     }     
