@@ -228,7 +228,7 @@ public class SettlementReportViewModel : ViewModelBase
         var key = $"NumberOfEnergyTypesOnReport_A{addressId}";
         var saved = _settings.Get(key);
 
-        if (saved != null && int.TryParse(saved, out int count))
+        if (saved != null && int.TryParse(saved, out int count) && count > 0)
             return count;
 
         var energyTypes = _controller.UnitOfWork.EnergyTypeRepo.SelectByAddressId(addressId).GetAwaiter().GetResult().ToList();
@@ -248,6 +248,9 @@ public class SettlementReportViewModel : ViewModelBase
 
         vm.SetTarifGroups();
         vm.SetDefaultEnergyType();
+
+        if (SelectedAddress?.DefaultTariffGroupId is long defaultTariffGroupId)
+            vm.SetTarifGroup(defaultTariffGroupId);
 
         vm.RemoveButtonVisible = DateSelections.Count > 0;
         vm.RemoveCommand = new RelayCommand(_ => removeDateSelection(vm));
