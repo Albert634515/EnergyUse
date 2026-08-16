@@ -16,8 +16,8 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="220"/>
-                <ColumnDefinition Width="165"/>
-                <ColumnDefinition Width="240"/>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="210"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="95"/>
             </Grid.ColumnDefinitions>
@@ -62,7 +62,7 @@
                 <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding TillDate}" Width="130" Margin="0,5,0,0"/>
             </Grid>
 
-            <CheckBox Grid.Row="1" Grid.Column="3" Content="Punten per maand" IsChecked="{Binding ShowMonthlyDataPoints}" VerticalAlignment="Center"/>
+            <CheckBox Grid.Row="1" Grid.Column="3" Content="Show monthly data points" IsChecked="{Binding ShowMonthlyDataPoints}" VerticalAlignment="Center"/>
 
             <StackPanel Grid.Row="1" Grid.Column="4" VerticalAlignment="Top" HorizontalAlignment="Right">
                 <Button Content="Reset" Width="90" Command="{Binding ResetCommand}" Margin="0,0,0,5"/>

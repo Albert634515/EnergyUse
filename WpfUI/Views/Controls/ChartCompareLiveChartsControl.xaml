@@ -17,38 +17,46 @@
         <!-- Filters en opties, overeenkomstig met de Usage-grafiek. -->
         <Grid Grid.Row="0" Margin="0,0,0,10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="170"/>
-                <ColumnDefinition Width="165"/>
-                <ColumnDefinition Width="300"/>
-                <ColumnDefinition Width="180"/>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="335"/>
+                <ColumnDefinition Width="161"/>
                 <ColumnDefinition Width="95"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
-                    <TextBlock Text="Periode:" Width="60" VerticalAlignment="Center"/>
-                    <ComboBox Width="110" ItemsSource="{Binding PeriodTypes}" SelectedItem="{Binding SelectedPeriodType}" DisplayMemberPath="Description"/>
+                    <TextBlock Text="Period:" Width="55" VerticalAlignment="Center"/>
+                    <ComboBox Width="100" ItemsSource="{Binding PeriodTypes}" SelectedItem="{Binding SelectedPeriodType}" DisplayMemberPath="Description"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding IsNumberVisible, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <TextBlock Text="{Binding NumberLabel}" Width="60" VerticalAlignment="Center"/>
-                    <ComboBox Width="110" ItemsSource="{Binding NumberList}" SelectedItem="{Binding SelectedNumber}"/>
+                    <TextBlock Text="{Binding NumberLabel}" Width="55" VerticalAlignment="Center"/>
+                    <ComboBox Width="100" ItemsSource="{Binding NumberList}" SelectedItem="{Binding SelectedNumber}"/>
                 </StackPanel>
             </StackPanel>
 
             <StackPanel Grid.Column="1">
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
-                    <TextBlock Text="Startjaar:" Width="70" VerticalAlignment="Center"/>
-                    <ComboBox Width="90" ItemsSource="{Binding Years}" SelectedItem="{Binding StartYear}"/>
+                    <TextBlock Text="Start year:" Width="70" VerticalAlignment="Center"/>
+                    <ComboBox Width="80" ItemsSource="{Binding Years}" SelectedItem="{Binding StartYear}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Eindjaar:" Width="70" VerticalAlignment="Center"/>
-                    <ComboBox Width="90" ItemsSource="{Binding Years}" SelectedItem="{Binding EndYear}"/>
+                    <TextBlock Text="End year:" Width="70" VerticalAlignment="Center"/>
+                    <ComboBox Width="80" ItemsSource="{Binding Years}" SelectedItem="{Binding EndYear}"/>
                 </StackPanel>
             </StackPanel>
 
             <Grid Grid.Column="2">
-                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
-                <Grid.ColumnDefinitions><ColumnDefinition Width="80"/><ColumnDefinition Width="80"/><ColumnDefinition Width="80"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" VerticalAlignment="Center"/>
                 <RadioButton Grid.Row="0" Grid.Column="1" Content="Rate" GroupName="CompareShowType" IsChecked="{Binding ShowTypeRate}" Margin="0,0,0,6"/>
@@ -56,14 +64,14 @@
                 <RadioButton Grid.Row="0" Grid.Column="3" Content="Efficiency" GroupName="CompareShowType" IsChecked="{Binding ShowTypeEfficiency}" Margin="0,0,0,6"
                              Visibility="{Binding IsEfficiencyVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="Weergave:" VerticalAlignment="Center"/>
-                <RadioButton Grid.Row="1" Grid.Column="1" Content="Categorie" GroupName="CompareShowBy" IsChecked="{Binding ShowByCategory}"/>
-                <RadioButton Grid.Row="1" Grid.Column="2" Content="Subcategorie" GroupName="CompareShowBy" IsChecked="{Binding ShowBySubCategory}"/>
-                <RadioButton Grid.Row="1" Grid.Column="3" Content="Totaal" GroupName="CompareShowBy" IsChecked="{Binding ShowByTotal}"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Display:" VerticalAlignment="Center"/>
+                <RadioButton Grid.Row="1" Grid.Column="1" Content="Category" GroupName="CompareShowBy" IsChecked="{Binding ShowByCategory}"/>
+                <RadioButton Grid.Row="1" Grid.Column="2" Content="Subcategory" GroupName="CompareShowBy" IsChecked="{Binding ShowBySubCategory}"/>
+                <RadioButton Grid.Row="1" Grid.Column="3" Content="Total" GroupName="CompareShowBy" IsChecked="{Binding ShowByTotal}"/>
             </Grid>
 
             <StackPanel Grid.Column="3">
-                <CheckBox Content="Voorspel ontbrekende data" IsChecked="{Binding PredictMissingData}" Margin="0,0,0,6"/>
+                <CheckBox Content="Predict missing data" IsChecked="{Binding PredictMissingData}" Margin="0,0,0,6"/>
                 <CheckBox Content="Stacked" IsChecked="{Binding ShowStacked}"/>
             </StackPanel>
 
@@ -75,9 +83,15 @@
 
         <!-- Labels -->
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,10">
-            <Border DataContext="{Binding ConsumptionLabel}" Background="{Binding BackColor}" Visibility="{Binding Visible, Converter={StaticResource BoolToVisibilityConverter}}" Padding="6" CornerRadius="4" Margin="0,0,12,0"><TextBlock Text="{Binding Text}" Foreground="{Binding ForeColor}"/></Border>
-            <Border DataContext="{Binding ProductionLabel}" Background="{Binding BackColor}" Visibility="{Binding Visible, Converter={StaticResource BoolToVisibilityConverter}}" Padding="6" CornerRadius="4" Margin="0,0,12,0"><TextBlock Text="{Binding Text}" Foreground="{Binding ForeColor}"/></Border>
-            <Border DataContext="{Binding NettoLabel}" Background="{Binding BackColor}" Visibility="{Binding Visible, Converter={StaticResource BoolToVisibilityConverter}}" Padding="6" CornerRadius="4"><TextBlock Text="{Binding Text}" Foreground="{Binding ForeColor}"/></Border>
+            <Border DataContext="{Binding ConsumptionLabel}" Background="{Binding BackColor}" Visibility="{Binding Visible, Converter={StaticResource BoolToVisibilityConverter}}" Padding="6" CornerRadius="4" Margin="0,0,12,0">
+                <TextBlock Text="{Binding Text}" Foreground="{Binding ForeColor}"/>
+            </Border>
+            <Border DataContext="{Binding ProductionLabel}" Background="{Binding BackColor}" Visibility="{Binding Visible, Converter={StaticResource BoolToVisibilityConverter}}" Padding="6" CornerRadius="4" Margin="0,0,12,0">
+                <TextBlock Text="{Binding Text}" Foreground="{Binding ForeColor}"/>
+            </Border>
+            <Border DataContext="{Binding NettoLabel}" Background="{Binding BackColor}" Visibility="{Binding Visible, Converter={StaticResource BoolToVisibilityConverter}}" Padding="6" CornerRadius="4">
+                <TextBlock Text="{Binding Text}" Foreground="{Binding ForeColor}"/>
+            </Border>
         </StackPanel>
 
         <!-- CHART -->

@@ -23,31 +23,31 @@
         <Grid Grid.Row="0" Margin="0,0,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="215"/>
-                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="190"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="95"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
-                    <TextBlock Text="Periode:" Width="60" VerticalAlignment="Center"/>
+                    <TextBlock Text="Period:" Width="60" VerticalAlignment="Center"/>
                     <ComboBox Width="145" ItemsSource="{Binding PeriodTypes}" SelectedItem="{Binding SelectedPeriodType}" DisplayMemberPath="Description"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Vergelijk met:" Width="90" VerticalAlignment="Center"/>
+                    <TextBlock Text="Compare with:" Width="90" VerticalAlignment="Center"/>
                     <ComboBox Width="115" ItemsSource="{Binding EnergyTypes}" SelectedItem="{Binding SelectedCompareEnergyType}" DisplayMemberPath="Name"/>
                 </StackPanel>
             </StackPanel>
 
             <StackPanel Grid.Column="1">
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
-                    <TextBlock Text="Van:" Width="45" VerticalAlignment="Center"/>
-                    <DatePicker Width="130" SelectedDate="{Binding FromDate}"/>
+                    <TextBlock Text="From:" Width="45" VerticalAlignment="Center"/>
+                    <DatePicker Width="120" SelectedDate="{Binding FromDate}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Tot:" Width="45" VerticalAlignment="Center"/>
-                    <DatePicker Width="130" SelectedDate="{Binding TillDate}"/>
+                    <TextBlock Text="Till:" Width="45" VerticalAlignment="Center"/>
+                    <DatePicker Width="120" SelectedDate="{Binding TillDate}"/>
                 </StackPanel>
             </StackPanel>
 
@@ -69,16 +69,16 @@
                 <RadioButton Grid.Row="0" Grid.Column="3" Content="Efficiency" IsChecked="{Binding ShowTypeEfficiency}"
                              GroupName="ShowType" Margin="0,0,0,6" Visibility="{Binding IsEfficiencyVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="Weergave:" VerticalAlignment="Center"/>
-                <RadioButton Grid.Row="1" Grid.Column="1" Content="Categorie" GroupName="ShowBy" IsChecked="{Binding ShowByCategory}"/>
-                <RadioButton Grid.Row="1" Grid.Column="2" Content="Subcategorie" GroupName="ShowBy" IsChecked="{Binding ShowBySubCategory}"/>
-                <RadioButton Grid.Row="1" Grid.Column="3" Content="Totaal" GroupName="ShowBy" IsChecked="{Binding ShowByTotal}"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Display:" VerticalAlignment="Center"/>
+                <RadioButton Grid.Row="1" Grid.Column="1" Content="Category" GroupName="ShowBy" IsChecked="{Binding ShowByCategory}"/>
+                <RadioButton Grid.Row="1" Grid.Column="2" Content="Subcategory" GroupName="ShowBy" IsChecked="{Binding ShowBySubCategory}"/>
+                <RadioButton Grid.Row="1" Grid.Column="3" Content="Total" GroupName="ShowBy" IsChecked="{Binding ShowByTotal}"/>
             </Grid>
 
             <StackPanel Grid.Column="3">
-                <CheckBox Content="Voorspel ontbrekende data" IsChecked="{Binding PredictMissingData}" Margin="0,0,0,5"/>
+                <CheckBox Content="Predict missing data" IsChecked="{Binding PredictMissingData}" Margin="0,0,0,5"/>
                 <CheckBox Content="Stacked" IsChecked="{Binding ShowStacked}" Margin="0,0,0,5"/>
-                <CheckBox Content="Gemiddelde lijn" IsChecked="{Binding ShowAverage}"/>
+                <CheckBox Content="Average line" IsChecked="{Binding ShowAverage}"/>
             </StackPanel>
 
             <StackPanel Grid.Column="4">
