@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:WpfUI.Views.Controls"
         Title="Payback Time"
-        Height="800" Width="1200"
+        Height="744" Width="1303"
         ShowInTaskbar="False">
 
     <Window.Resources>
@@ -148,25 +148,25 @@
                 <DataGrid.Columns>
 
                     <DataGridTextColumn Header="Period" Width="50" Binding="{Binding PeriodId}"/>
-                    <DataGridTextColumn Header="Start" Width="80" Binding="{Binding StartPeriod, StringFormat={}{0:dd-MM-yyyy}}"/>
-                    <DataGridTextColumn Header="End" Width="80" Binding="{Binding EndPeriod, StringFormat={}{0:dd-MM-yyyy}}"/>
+                    <DataGridTextColumn Header="Start" Width="78" Binding="{Binding StartPeriod, StringFormat={}{0:dd-MM-yyyy}}"/>
+                    <DataGridTextColumn Header="End" Width="78" Binding="{Binding EndPeriod, StringFormat={}{0:dd-MM-yyyy}}"/>
 
                     <DataGridTextColumn Header="Produced" Binding="{Binding ValueProduced, StringFormat=N2}"/>
                     <DataGridTextColumn Header="Consumed" Binding="{Binding ValueConsumed, StringFormat=N2}"/>
 
-                    <DataGridTextColumn Header="Estimate Direct Used" Width="100" Binding="{Binding EstimateDirectUsed, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="Estimate Direct Used perc." Width="90" Binding="{Binding EstimateDirectUsedPercentage, StringFormat=N0}"/>
-                    <DataGridTextColumn Header="Monetary Produced" Width="100" Binding="{Binding MonetaryValueProduced, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="Produced Est. Direct Used" Width="100" Binding="{Binding ValueProducedEstimateDirectUsed, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="Monetary Consumed" Width="100" Binding="{Binding MonetaryValueConsumed, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Estimate Direct Used" Width="80" Binding="{Binding EstimateDirectUsed, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Estimate Direct Used perc." Width="80" Binding="{Binding EstimateDirectUsedPercentage, StringFormat=N0}"/>
+                    <DataGridTextColumn Header="Monetary Produced" Width="80" Binding="{Binding MonetaryValueProduced, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Produced Est. Direct Used" Width="80" Binding="{Binding ValueProducedEstimateDirectUsed, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Monetary Consumed" Width="80" Binding="{Binding MonetaryValueConsumed, StringFormat=N2}"/>
 
-                    <DataGridTextColumn Header="Netto Produced" Width="100" Binding="{Binding NettoProduced, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="Other Cost Produced" Width="100" Binding="{Binding OtherCostProduced, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="Other Cost Consumed" Width="100" Binding="{Binding OtherCostConsumed, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Netto Produced" Width="80" Binding="{Binding NettoProduced, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Other Cost Produced" Width="80" Binding="{Binding OtherCostProduced, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Other Cost Consumed" Width="80" Binding="{Binding OtherCostConsumed, StringFormat=N2}"/>
 
-                    <DataGridTextColumn Header="Total Cost" Width="70" Binding="{Binding TotalCost, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="ROI" Width="70" Binding="{Binding ReturnOnInvestment, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="ROI Total" Width="80" Binding="{Binding ReturnOnInvestmentTotal, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Total Cost" Width="60" Binding="{Binding TotalCost, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="ROI" Width="60" Binding="{Binding ReturnOnInvestment, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="ROI Total" Width="70" Binding="{Binding ReturnOnInvestmentTotal, StringFormat=N2}"/>
                     <DataGridTextColumn Header="Return" Width="60" Binding="{Binding Return, StringFormat=N2}"/>
 
                 </DataGrid.Columns>
