@@ -54,13 +54,25 @@
                       Margin="0,0,10,0">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Start"
-                                        Binding="{Binding StartDate, StringFormat=\{0:dd-MM-yyyy\}}"
-                                        Width="120"/>
+                    <DataGridTemplateColumn Header="Start" Width="140">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding StartDate,
+                                                                   Mode=TwoWay,
+                                                                   UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                    <DataGridTextColumn Header="End"
-                                        Binding="{Binding EndDate, StringFormat=\{0:dd-MM-yyyy\}}"
-                                        Width="120"/>
+                    <DataGridTemplateColumn Header="End" Width="140">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding EndDate,
+                                                                   Mode=TwoWay,
+                                                                   UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
                     <DataGridTextColumn Header="Energy Type"
                                         Binding="{Binding EnergyTypeName}"
@@ -92,7 +104,9 @@
                            Margin="0,0,10,5"
                            VerticalAlignment="Center"/>
 
-                <DatePicker SelectedDate="{Binding SelectedDate.StartDate, Mode=TwoWay}"
+                <DatePicker SelectedDate="{Binding SelectedDate.StartDate,
+                                                   Mode=TwoWay,
+                                                   UpdateSourceTrigger=PropertyChanged}"
                             Grid.Row="0" Grid.Column="1"
                             Margin="0,0,0,5"/>
 
@@ -102,7 +116,9 @@
                            Margin="0,0,10,5"
                            VerticalAlignment="Center"/>
 
-                <DatePicker SelectedDate="{Binding SelectedDate.EndDate, Mode=TwoWay}"
+                <DatePicker SelectedDate="{Binding SelectedDate.EndDate,
+                                                   Mode=TwoWay,
+                                                   UpdateSourceTrigger=PropertyChanged}"
                             Grid.Row="1" Grid.Column="1"
                             Margin="0,0,0,5"/>
 

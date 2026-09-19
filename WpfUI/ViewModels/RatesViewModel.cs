@@ -1,4 +1,4 @@
-﻿using EnergyUse.Common.Enums;
+using EnergyUse.Common.Enums;
 using EnergyUse.Core.Controllers;
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
@@ -101,11 +101,9 @@ namespace WpfUI.ViewModels
                     OnPropertyChanged();
 
                     // ⭐ Koppel RateType aan RateTypes lijst
-                    if (_selectedRate != null)
-                    {
-                        SelectedRateType = RateTypes
-                            .FirstOrDefault(r => r.Id == (int)_selectedRate.RateTypeId);
-                    }
+                    SelectedRateType = _selectedRate == null
+                        ? null
+                        : RateTypes.FirstOrDefault(r => r.Id == _selectedRate.RateTypeId);
 
                     var selectedRow = RateRows
                         .FirstOrDefault(row => ReferenceEquals(row.Rate, _selectedRate));

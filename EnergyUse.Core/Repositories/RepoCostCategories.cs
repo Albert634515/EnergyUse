@@ -1,4 +1,4 @@
-﻿using EnergyUse.Core.Context;
+using EnergyUse.Core.Context;
 using EnergyUse.Models.Common;
 using Microsoft.EntityFrameworkCore;
 
@@ -144,24 +144,27 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
 
                 var categoryRate = otherCost.Rate;
 
-                switch (costCategory.EnergySubType.Id)
+                if (otherCost.Quantity is null)
                 {
-                    case 1:
-                        //Normal
-                        categoryRate = periodicData.RateNormal;
-                        break;
-                    case 2:
-                        //low
-                        categoryRate = periodicData.RateLow;
-                        break;
-                    case 3:
-                        //return normal
-                        categoryRate = periodicData.RateReturnNormal;
-                        break;
-                    case 4:
-                        //return low
-                        categoryRate = periodicData.RateReturnLow;
-                        break;
+                    switch (costCategory.EnergySubType.Id)
+                    {
+                        case 1:
+                            //Normal
+                            categoryRate = periodicData.RateNormal;
+                            break;
+                        case 2:
+                            //low
+                            categoryRate = periodicData.RateLow;
+                            break;
+                        case 3:
+                            //return normal
+                            categoryRate = periodicData.RateReturnNormal;
+                            break;
+                        case 4:
+                            //return low
+                            categoryRate = periodicData.RateReturnLow;
+                            break;
+                    }
                 }
                 
                 //if (costCategory.EnergySubType.Id > 4 && categoryRate < 0)
@@ -200,7 +203,14 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
                     settlementData.EndDate = periodicData.ValueXDate;
                 }
 
-                switch (costCategory.EnergySubType.Id)
+                if (otherCost.Quantity is not null)
+                {
+                    if (costCategory.EnergySubType.Id is 3 or 4 or 6 or 7)
+                        settlementData.ValueBaseProduced -= otherCost.Quantity.Value;
+                    else
+                        settlementData.ValueBaseConsumed += otherCost.Quantity.Value;
+                }
+                else switch (costCategory.EnergySubType.Id)
                 {
                     case 1:
                         //Normal

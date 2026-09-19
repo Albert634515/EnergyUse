@@ -1,4 +1,4 @@
-﻿using EnergyUse.Models;
+using EnergyUse.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -10,7 +10,12 @@ public class StaffelViewModel : ViewModelBase
     private readonly EnergyUse.Core.UnitOfWork.Staffel _unitOfWork;
 
     public ObservableCollection<Staffel> Staffels { get; } = new();
-    public Staffel? SelectedStaffel { get; set; }
+    private Staffel? _selectedStaffel;
+    public Staffel? SelectedStaffel
+    {
+        get => _selectedStaffel;
+        set => SetProperty(ref _selectedStaffel, value);
+    }
 
     private long _rateId;
 
@@ -25,8 +30,8 @@ public class StaffelViewModel : ViewModelBase
     {
         _unitOfWork = new EnergyUse.Core.UnitOfWork.Staffel(Managers.Config.GetDbFileName());
 
-        AddCommand = new RelayCommand(_ => addStaffel());
-        SaveCommand = new RelayCommand(_ => setStaffel());
+        AddCommand = new RelayCommand(_ => addStaffel(), _ => _rateId > 0);
+        SaveCommand = new RelayCommand(_ => setStaffel(), _ => _rateId > 0);
         CancelCommand = new RelayCommand(_ => cancelStaffel());
         DeleteCommand = new RelayCommand(_ => deleteStaffel(), _ => SelectedStaffel != null);
         RefreshCommand = new RelayCommand(_ => refreshStaffels());
@@ -48,6 +53,7 @@ public class StaffelViewModel : ViewModelBase
             Staffels.Add(s);
 
         SelectedStaffel = Staffels.FirstOrDefault();
+        CommandManager.InvalidateRequerySuggested();
     }
 
     private void addStaffel()
@@ -63,7 +69,16 @@ public class StaffelViewModel : ViewModelBase
 
     private void setStaffel()
     {
+        var validationMessage = validateStaffels();
+        if (validationMessage is not null)
+        {
+            MessageBox.Show(validationMessage, "Invalid staffel", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
         _unitOfWork.Complete();
+        _unitOfWork.SetListSorted();
+        synchronizeStaffels();
     }
 
     private void cancelStaffel()
@@ -95,5 +110,36 @@ public class StaffelViewModel : ViewModelBase
     private void refreshStaffels()
     {
         GetStaffels(_rateId);
+    }
+
+    private string? validateStaffels()
+    {
+        var orderedStaffels = Staffels.OrderBy(x => x.ValueFrom).ToList();
+        if (orderedStaffels.Count == 0)
+            return "Add at least one staffel row.";
+
+        if (orderedStaffels[0].ValueFrom != 0)
+            return "The first staffel must start at 0.";
+
+        for (var index = 0; index < orderedStaffels.Count; index++)
+        {
+            var staffel = orderedStaffels[index];
+            if (staffel.ValueFrom < 0 || staffel.ValueTill <= staffel.ValueFrom)
+                return "Each staffel must have a non-negative start and an end greater than its start.";
+
+            if (index > 0 && staffel.ValueFrom != orderedStaffels[index - 1].ValueTill)
+                return "Staffel ranges must connect without gaps or overlap.";
+        }
+
+        return null;
+    }
+
+    private void synchronizeStaffels()
+    {
+        var selectedStaffel = SelectedStaffel;
+        Staffels.Clear();
+        foreach (var staffel in _unitOfWork.Staffels)
+            Staffels.Add(staffel);
+        SelectedStaffel = selectedStaffel;
     }
 }

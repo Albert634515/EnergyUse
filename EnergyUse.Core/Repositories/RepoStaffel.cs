@@ -1,4 +1,4 @@
-﻿using EnergyUse.Core.Context;
+using EnergyUse.Core.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace EnergyUse.Core.Repositories;
@@ -27,7 +27,8 @@ public class RepoStaffel : RepoGeneral<Models.Staffel>
                        .Include(p => p.Rate)
                        .Where(w => w.RateId == rateId 
                                 && w.ValueFrom <= maxRange
-                                && w.ValueTill >= maxRange)
+                                && w.ValueTill > maxRange)
+                       .OrderBy(w => w.ValueFrom)
                        .ToListAsync(cancellationToken)
                        .ConfigureAwait(false);
     }

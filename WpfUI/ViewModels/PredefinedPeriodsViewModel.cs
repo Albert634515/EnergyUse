@@ -85,7 +85,9 @@ namespace WpfUI.ViewModels
 
         private void setPeriod()
         {
-            DatePredefinedVM.SaveDates();
+            if (!DatePredefinedVM.SaveDates())
+                return;
+
             _controller.UnitOfWork.Complete();
             StatusMessage = "Saved successfully";
             setPeriods();

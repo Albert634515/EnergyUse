@@ -101,10 +101,19 @@ namespace WpfUI.ViewModels
             SelectedDate = entity;
         }
 
-        public void SaveDates()
+        public bool SaveDates()
         {
+            var invalidDate = Dates.FirstOrDefault(date => date.EndDate.Date < date.StartDate.Date);
+            if (invalidDate is not null)
+            {
+                SelectedDate = invalidDate;
+                StatusCallback?.Invoke("The end date must be on or after the start date");
+                return false;
+            }
+
             _controller.UnitOfWorkPd.Complete();
             StatusCallback?.Invoke("Dates saved");
+            return true;
         }
 
         public void CancelDates()

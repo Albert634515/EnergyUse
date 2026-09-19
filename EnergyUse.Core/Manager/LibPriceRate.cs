@@ -1,4 +1,4 @@
-﻿using EnergyUse.Core.Context;
+using EnergyUse.Core.Context;
 using EnergyUse.Models.Common;
 
 namespace EnergyUse.Core.Manager;
@@ -114,6 +114,8 @@ public class LibPriceRate
                 priceRate.Rate = rate.RateValue;
                 priceRate.RateId = rate.Id;
             }
+
+            priceRate.RateTypeId = rate.RateTypeId;
         }
 
         return priceRate;

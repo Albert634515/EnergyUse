@@ -81,10 +81,10 @@
                           CanUserAddRows="False"
                           Margin="0 10 0 0">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="60"/>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
-                        <DataGridTextColumn Header="Sort Order" Binding="{Binding SortOrder}" Width="100"/>
-                        <DataGridTextColumn Header="Unit" Binding="{Binding UnitName}" Width="120"/>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Collapsed"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*"/>
+                        <DataGridTextColumn Header="Sort" Binding="{Binding SortOrder}" Width="60"/>
+                        <DataGridTextColumn Header="Unit" Binding="{Binding UnitName}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
 

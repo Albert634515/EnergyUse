@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WpfUI.Views.Controls.StaffelControl"
+<UserControl x:Class="WpfUI.Views.Controls.StaffelControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -16,29 +16,56 @@
 
         <!-- Toolbar -->
         <ToolBar DockPanel.Dock="Top">
-            <Button Content="Add" Command="{Binding AddCommand}" />
-            <Button Content="Save" Command="{Binding SaveCommand}" />
-            <Button Content="Cancel" Command="{Binding CancelCommand}" />
-            <Button Content="Delete" Command="{Binding DeleteCommand}" />
-            <Button Content="Refresh" Command="{Binding RefreshCommand}" />
+            <Button Command="{Binding AddCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/add_24x24.png"/>
+                    <TextBlock Text="Add" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding SaveCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/tick-mark_24x24.png"/>
+                    <TextBlock Text="Save" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding CancelCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/clear_24x24.png"/>
+                    <TextBlock Text="Cancel" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding DeleteCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/delete_24x24.png"/>
+                    <TextBlock Text="Delete" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding RefreshCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/clock_24x24.png"/>
+                    <TextBlock Text="Refresh" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
         </ToolBar>
 
         <!-- DataGrid -->
         <DataGrid ItemsSource="{Binding Staffels}"
                   SelectedItem="{Binding SelectedStaffel}"
                   AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
                   Margin="5">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Value From"
+                <DataGridTextColumn Header="Value From" Width="*"
                                     Binding="{Binding ValueFrom,
                                                       Converter={StaticResource DecimalInputConverter},
                                                       UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="Value Till"
+                <DataGridTextColumn Header="Value Till" Width="*"
                                     Binding="{Binding ValueTill,
                                                       Converter={StaticResource DecimalInputConverter},
                                                       UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="Rate"
+                <DataGridTextColumn Header="Rate" Width="*"
                                     Binding="{Binding StaffelValue,
                                                       Converter={StaticResource DecimalInputConverter},
                                                       UpdateSourceTrigger=PropertyChanged}" />

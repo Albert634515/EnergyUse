@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfUI.Views.Windows.RatesWindow"
+<Window x:Class="WpfUI.Views.Windows.RatesWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:WpfUI.Views.Controls"
@@ -131,9 +131,9 @@
                 <!-- LEFT SIDE -->
                 <Grid Grid.Column="0" Margin="0,0,10,0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <!-- Rates -->
                         <RowDefinition Height="*"/>
+                        <!-- Rates -->
+                        <RowDefinition Height="Auto"/>
                         <!-- Staffel -->
                     </Grid.RowDefinitions>
 
@@ -206,20 +206,17 @@
 
                     <!-- STAFFEL GRID -->
                     <GroupBox Grid.Row="1" Header="Staffel">
-                        <controls:StaffelControl DataContext="{Binding StaffelVM}">
-                            <controls:StaffelControl.Style>
-                                <Style TargetType="controls:StaffelControl">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.IsStaffel,
-                                                               RelativeSource={RelativeSource AncestorType=Window}}"
-                                                     Value="True">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </controls:StaffelControl.Style>
-                        </controls:StaffelControl>
+                        <GroupBox.Style>
+                            <Style TargetType="GroupBox">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsStaffel}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </GroupBox.Style>
+                        <controls:StaffelControl DataContext="{Binding StaffelVM}"/>
                     </GroupBox>
                 </Grid>
 
@@ -312,8 +309,17 @@
                                     Style="{StaticResource DetailDatePickerStyle}"/>
 
                         <!-- Rate -->
-                        <TextBlock Grid.Row="3" Text="Rate"
-                                   Style="{StaticResource DetailLabelStyle}"/>
+                        <TextBlock Grid.Row="3" Text="Rate">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource DetailLabelStyle}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsStaffel}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                         <TextBox Grid.Row="3" Grid.Column="1"
                                  Text="{Binding SelectedRate.RateValue,
                                                 Converter={StaticResource DecimalInputConverter},
@@ -365,7 +371,8 @@
                         <TextBlock Grid.Row="8" Text="Description"
                                    Style="{StaticResource DetailLabelStyle}"/>
                         <TextBox Grid.Row="8" Grid.Column="1"
-                                 Text="{Binding SelectedRate.Description}"
+                                 Text="{Binding SelectedRate.Description,
+                                                UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource DetailTextBoxStyle}"/>
 
                     </Grid>

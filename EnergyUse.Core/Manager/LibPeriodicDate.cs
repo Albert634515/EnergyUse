@@ -1,4 +1,4 @@
-﻿using EnergyUse.Common.Enums;
+using EnergyUse.Common.Enums;
 using EnergyUse.Common.Extensions;
 using EnergyUse.Common.Libs;
 using EnergyUse.Core.Context;
@@ -33,7 +33,7 @@ public class LibPeriodicDate
     private decimal _avgCorrectionPercentageReturn = 1;
     private Models.MeterReading _lastrow;
     private List<Models.Rate> _rates = new();
-    private List<Models.Common.PeriodStaffel> _periodStaffelList = new List<Models.Common.PeriodStaffel>();
+    private readonly Dictionary<(long RateId, long EnergySubTypeId), StaffelState> _staffelStates = new();
 
     #endregion
 
@@ -57,6 +57,7 @@ public class LibPeriodicDate
         _parameterPeriod = parameterPeriod;
         _meterReading = new();
         _periodicDataList = new();
+        _staffelStates.Clear();
         _lastrow = await getLastRow();
 
         await setAvgCorrectionFactor();
@@ -164,25 +165,7 @@ public class LibPeriodicDate
 
                     PriceRate? priceRate = await getPriceRate(libPriceRate, costCategory, periodicData, tarifGroupId);
 
-                    if (priceRate != null && priceRate.RateTypeId == 2)
-                    {
-                        //Calculate staffel
-                        // - Set Initial staffel value cache for previouse period
-                        // - Set staffel cache
-                        // - Set staffel value
-                        await setInitialStaffel(priceRate.RateId, costCategory.EnergySubTypeId.GetValueOrDefault());
-                        var staffels = getStaffel(priceRate.RateId, periodicData, costCategory.EnergySubTypeId.GetValueOrDefault());
-
-                        // For now overrule rate value with staffel value
-                        if (staffels != null && staffels.Count > 0)
-                        {
-                            // Convert staffel to other costs
-                        }
-                    }
-
-                    //If there is no cost record create it
-                    // Zoek laatste record, kijk of tarief gelijk is anders nieuwe maken en toevoegen
-                    OtherCost otherCost = new()
+                    var otherCost = new OtherCost
                     {
                         CostCategoryId = costCategory.Id,
                         CorrectionFactor = periodicData.CorrectionFactor,
@@ -203,7 +186,35 @@ public class LibPeriodicDate
                         otherCost.VatRateId = vatTarif.Id;
                     }
 
-                    periodicData.OtherCosts.Add(otherCost);
+                    if (priceRate?.RateTypeId == (int)RateType.Staffel
+                        && costCategory.CalculationType.Id == 1)
+                    {
+                        var portions = await getStaffelPortions(
+                            priceRate,
+                            periodicData,
+                            costCategory.EnergySubTypeId.GetValueOrDefault());
+
+                        foreach (var portion in portions)
+                        {
+                            periodicData.OtherCosts.Add(new OtherCost
+                            {
+                                CostCategoryId = otherCost.CostCategoryId,
+                                CorrectionFactor = otherCost.CorrectionFactor,
+                                LastAvailableRateUsed = otherCost.LastAvailableRateUsed,
+                                LastAvailableVatRateUsed = otherCost.LastAvailableVatRateUsed,
+                                PriceAdjustmentFactor = otherCost.PriceAdjustmentFactor,
+                                RateId = otherCost.RateId,
+                                Rate = portion.Rate,
+                                VatTarif = otherCost.VatTarif,
+                                VatRateId = otherCost.VatRateId,
+                                Quantity = portion.Quantity
+                            });
+                        }
+                    }
+                    else
+                    {
+                        periodicData.OtherCosts.Add(otherCost);
+                    }
                 }
             }
         }
@@ -319,168 +330,110 @@ public class LibPeriodicDate
         return periodicDataList;
     }
 
-    /// <summary>
-    /// Pre fill staffel cache
-    /// - set data for period before current range
-    /// </summary>
-    /// <param name="rateId"></param>
-    private async Task setInitialStaffel(long rateId, long energySubTypeId)
+    private async Task<List<StaffelPortion>> getStaffelPortions(
+        PriceRate priceRate,
+        PeriodicDataPerDay periodicData,
+        long energySubTypeId)
     {
-        // Check if staffel is already set
-        if (_periodStaffelList.Where(w => w.RateId == rateId).Any())
-            return;
+        var state = await getStaffelState(priceRate.RateId, energySubTypeId);
+        var remaining = getStaffelQuantity(periodicData, energySubTypeId);
+        var portions = new List<StaffelPortion>();
 
-        var priceRate = await _rateRepo.SelectById(rateId);
-        var staffels = await _staffelRepo.SelectByRateId(rateId);
-        _periodStaffelList = new List<Models.Common.PeriodStaffel>();
-
-        foreach (var staffel in staffels)
+        while (remaining > 0)
         {
-            // set staffels for current period in staffel cache
-            var periodStaffel = new Models.Common.PeriodStaffel();
-            periodStaffel.RateId = rateId;
-            periodStaffel.StartRange = priceRate.StartRate;
-            periodStaffel.EndRange = priceRate.EndRate;
-            periodStaffel.EnergySubTypeId = energySubTypeId;
-            _periodStaffelList.Add(periodStaffel);
-        }
+            var staffel = state.Staffels.FirstOrDefault(x =>
+                x.ValueFrom <= state.Used && state.Used < x.ValueTill);
 
-        // Prefill staffel values with values for period before current range
-        // Start range is priceRate.start - End range is _parameterPeriod.startRange
-        DateTime currentDate = priceRate.StartRate;
-        if (_parameterPeriod.StartRange > priceRate.StartRate)
-        {
-            // Get period date for range to fill intial staffels
-            var meterReadings = await _meterReadingRepo.SelectByRange(priceRate.StartRate, _parameterPeriod.StartRange, _parameterPeriod.EnergyType.Id, _parameterPeriod.AddressId, _parameterPeriod.Month, _parameterPeriod.Week, _parameterPeriod.Day);
-
-            // Get period date for range to fill intial staffels
-            decimal leftOver = -1;
-            foreach (var meaterReading in meterReadings)
+            if (staffel is null)
             {
-                do
-                {
-                    leftOver = getInitialStaffel(rateId, meaterReading, energySubTypeId);
-                } while (leftOver == 0);
+                var nextStaffel = state.Staffels.FirstOrDefault(x => x.ValueFrom > state.Used);
+                var quantity = nextStaffel is null
+                    ? remaining
+                    : Math.Min(remaining, nextStaffel.ValueFrom - state.Used);
+
+                portions.Add(new StaffelPortion(priceRate.Rate, quantity));
+                state.Used += quantity;
+                remaining -= quantity;
+                continue;
             }
+
+            var quantityInStaffel = Math.Min(remaining, staffel.ValueTill - state.Used);
+            portions.Add(new StaffelPortion(staffel.StaffelValue, quantityInStaffel));
+            state.Used += quantityInStaffel;
+            remaining -= quantityInStaffel;
         }
+
+        return portions;
     }
 
-    private decimal getInitialStaffel(long rateId, Models.MeterReading meterReading, long energySubTypeId)
+    private async Task<StaffelState> getStaffelState(long rateId, long energySubTypeId)
     {
-        decimal leftOver = 0;
+        var key = (rateId, energySubTypeId);
+        if (_staffelStates.TryGetValue(key, out var state))
+            return state;
 
-        // Look up staffel
-        var periodStaffel = _periodStaffelList.Where(w => w.RateId == rateId
-                                                       && w.EndRange <= meterReading.RegistrationDate
-                                                       && w.StartRange >= meterReading.RegistrationDate
-                                                       && w.Value <= w.MaxLevel
-                                                       && w.EnergySubTypeId == energySubTypeId).FirstOrDefault();
-        if (periodStaffel != null)
+        var rate = await _rateRepo.SelectById(rateId);
+        var staffels = (await _staffelRepo.SelectByRateId(rateId))
+            .Where(x => x.ValueTill > x.ValueFrom)
+            .OrderBy(x => x.ValueFrom)
+            .ToList();
+
+        var used = 0m;
+        if (rate is not null && _parameterPeriod.StartRange.Date > rate.StartRate.Date)
         {
-            decimal value = 0;
-            switch (energySubTypeId)
-            {
-                case 1:
-                    //Normal
-                    value = meterReading.DeltaNormal;
-                    break;
-                case 2:
-                    //low
-                    value = meterReading.DeltaLow;
-                    break;
-                case 3:
-                    //return normal
-                    value = meterReading.ReturnDeliveryDeltaNormal;
-                    break;
-                case 4:
-                    //return low
-                    value = meterReading.ReturnDeliveryDeltaLow;
-                    break;
-                case 5:
-                    //Other
-                    value = meterReading.DeltaNormal + meterReading.DeltaLow + meterReading.ReturnDeliveryDeltaNormal + meterReading.ReturnDeliveryDeltaLow;
-                    break;
-                case 6:
-                    // Return cost normal
-                    value = meterReading.ReturnDeliveryDeltaNormal;
-                    break;
-                case 7:
-                    // Return low normal
-                    value = meterReading.ReturnDeliveryDeltaLow;
-                    break;
-            }
+            var meterReadings = await _meterReadingRepo.SelectByRange(
+                rate.StartRate,
+                _parameterPeriod.StartRange.AddDays(-1),
+                _parameterPeriod.EnergyType.Id,
+                _parameterPeriod.AddressId);
 
-            if (periodStaffel.MaxLevel > periodStaffel.Value + value)
-            {
-                leftOver = periodStaffel.MaxLevel - periodStaffel.Value;
-                periodStaffel.Value = periodStaffel.MaxLevel;
-
-                var newPeriodStaffel = new Models.Common.PeriodStaffel();
-                newPeriodStaffel.RateId = periodStaffel.RateId;
-                newPeriodStaffel.StartRange = periodStaffel.EndRange;
-                newPeriodStaffel.EndRange = meterReading.RegistrationDate;
-                newPeriodStaffel.Value = leftOver;
-                _periodStaffelList.Add(newPeriodStaffel);
-            }
-            else
-            {
-                periodStaffel.Value += value;
-                leftOver = 0;
-            }
+            used = meterReadings.Sum(x => getStaffelQuantity(x, energySubTypeId));
         }
 
-        return leftOver;
+        state = new StaffelState(staffels, used);
+        _staffelStates.Add(key, state);
+        return state;
     }
 
-    private List<Models.Staffel> getStaffel(long rateId, PeriodicDataPerDay pdPerD, long energySubTypeId)
+    private static decimal getStaffelQuantity(PeriodicDataPerDay periodicData, long energySubTypeId)
     {
-        var staffels = new List<Models.Staffel>();
-
-        // Look up staffel
-        var periodStaffel = _periodStaffelList.Where(w => w.RateId == rateId
-                                                       && w.EndRange <= pdPerD.ValueX
-                                                       && w.StartRange >= pdPerD.ValueX
-                                                       && w.Value <= w.MaxLevel
-                                                       && w.EnergySubTypeId == energySubTypeId).FirstOrDefault();
-        if (periodStaffel != null)
+        return Math.Max(0, energySubTypeId switch
         {
-            decimal value = 0;
-            switch (energySubTypeId)
-            {
-                case 1:
-                    //Normal
-                    value = pdPerD.ValueYNormal;
-                    break;
-                case 2:
-                    //low
-                    value = pdPerD.ValueYLow;
-                    break;
-                case 3:
-                    //return normal
-                    value = pdPerD.ValueYReturnNormal;
-                    break;
-                case 4:
-                    //return low
-                    value = pdPerD.ValueYReturnLow;
-                    break;
-                case 5:
-                    //Other
-                    value = pdPerD.ValueYNormal + pdPerD.ValueYLow + pdPerD.ValueYReturnNormal + pdPerD.ValueYReturnLow;
-                    break;
-                case 6:
-                    // Return cost normal
-                    value = pdPerD.ValueYReturnNormal;
-                    break;
-                case 7:
-                    // Return low normal
-                    value = pdPerD.ValueYReturnLow;
-                    break;
-            }
-        }
-
-        return staffels;
-
+            1 => periodicData.ValueYNormal,
+            2 => periodicData.ValueYLow,
+            3 => periodicData.ValueYReturnNormal,
+            4 => periodicData.ValueYReturnLow,
+            5 => periodicData.ValueYNormal + periodicData.ValueYLow
+                 - periodicData.NettingValueYReturnNormal - periodicData.NettingValueYReturnLow,
+            6 => periodicData.ValueYReturnNormal,
+            7 => periodicData.ValueYReturnLow,
+            _ => 0
+        });
     }
+
+    private static decimal getStaffelQuantity(Models.MeterReading meterReading, long energySubTypeId)
+    {
+        return Math.Max(0, energySubTypeId switch
+        {
+            1 => meterReading.DeltaNormal,
+            2 => meterReading.DeltaLow,
+            3 => meterReading.ReturnDeliveryDeltaNormal,
+            4 => meterReading.ReturnDeliveryDeltaLow,
+            5 => meterReading.DeltaNormal + meterReading.DeltaLow
+                 - meterReading.ReturnDeliveryDeltaNormal - meterReading.ReturnDeliveryDeltaLow,
+            6 => meterReading.ReturnDeliveryDeltaNormal,
+            7 => meterReading.ReturnDeliveryDeltaLow,
+            _ => 0
+        });
+    }
+
+    private sealed class StaffelState(List<Models.Staffel> staffels, decimal used)
+    {
+        public List<Models.Staffel> Staffels { get; } = staffels;
+        public decimal Used { get; set; } = used;
+    }
+
+    private sealed record StaffelPortion(decimal Rate, decimal Quantity);
 
     private Tuple<int, DateTime, string> GetLabels(PeriodicDataPerDay periodicDataPerDay)
     {
