@@ -354,6 +354,12 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
         if (SelectedCompareEnergyType != null && SelectedCompareEnergyType.Id != CurrentEnergyType.Id)
             energyTypes.Add(SelectedCompareEnergyType);
 
+        var showType = getShowType();
+        // WPF unchecks the old radio button before checking the new one.
+        // Do not rebuild the chart during that temporary state.
+        if (showType == ShowType.Unknown)
+            return;
+
         var result = _service.BuildChart(
             CurrentAddress,
             energyTypes,
@@ -364,7 +370,7 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
             ShowAverage,
             PredictMissingData,
             getShowBy(),
-            getShowType()
+            showType
         );
 
         ChartSeries = new ObservableCollection<ISeries>(result.Series);

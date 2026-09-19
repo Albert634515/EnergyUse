@@ -41,7 +41,7 @@
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="7.5.1" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WinForms" Version="2.0.5" />
-    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.12" />
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.13" />
   </ItemGroup>
 
 
