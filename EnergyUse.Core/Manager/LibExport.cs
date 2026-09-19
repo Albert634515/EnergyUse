@@ -204,7 +204,7 @@ public class LibExport
 
     private static void ToExcel<T>(IEnumerable<T> exportResult, string exportFileName, string sheetName)
     {
-        ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+        ExcelPackage.License.SetNonCommercialPersonal("Albert634515");
         using ExcelPackage excelPackage = new();
         ExcelWorksheet energyExport = excelPackage.Workbook.Worksheets.Add(sheetName);
         energyExport.Cells[1, 1].LoadFromCollection(exportResult, true);

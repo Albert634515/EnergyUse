@@ -44,7 +44,7 @@ public class LibEpplus
         FileInfo file = new FileInfo(exportFileName);
         if (file.Exists) file.Delete();
 
-        ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+        ExcelPackage.License.SetNonCommercialPersonal("Albert634515");
         using (ExcelPackage excelPackage = new ExcelPackage())
         {
             ExcelWorksheet hoja = excelPackage.Workbook.Worksheets.Add("MeterReadings");
@@ -112,7 +112,7 @@ public class LibEpplus
         {
             FileInfo file = new(fileName);
 
-            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            ExcelPackage.License.SetNonCommercialPersonal("Albert634515");
 
             //create a new Excel package
             using (ExcelPackage excelPackage = new ExcelPackage())
