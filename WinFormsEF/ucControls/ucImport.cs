@@ -175,7 +175,11 @@ public partial class ucImport : UserControl
     private void saveImport()
     {
         foreach (var meterReading in _unitOfWork.meterReadings.Where(meterReading => meterReading.Id == null))
+        {
+            meterReading.EnergyType = null;
+            meterReading.Meter = null;
             _unitOfWork.MeterReadingRepo.Add(meterReading);
+        }
 
         if (_unitOfWork.HasChanges())
             _ = _unitOfWork.Complete();
@@ -256,7 +260,7 @@ public partial class ucImport : UserControl
 
         var firstMeterReading = importedMeterReadings.OrderBy(o => o.RegistrationDate).FirstOrDefault();
         if (firstMeterReading != null)
-            lastMeterReading = await _unitOfWork.MeterReadingRepo.SelectLastRowFromDate(firstMeterReading.RegistrationDate, firstMeterReading.EnergyType.Id, CurrentAddress.Id);
+            lastMeterReading = await _unitOfWork.MeterReadingRepo.SelectLastRowFromDate(firstMeterReading.RegistrationDate, CurrentEnergyType.Id, CurrentAddress.Id);
 
         lastMeterReading ??= firstMeterReading;
 
@@ -269,7 +273,7 @@ public partial class ucImport : UserControl
         foreach (EnergyUse.Models.MeterReading importedReading in importedMeterReadings.OrderBy(o => o.RegistrationDate))
         {
             EnergyUse.Models.Meter meter = meterByDate[importedReading.RegistrationDate.Date];
-            EnergyUse.Models.MeterReading existingMeterReading = (await _unitOfWork.MeterReadingRepo.SelectByExists(importedReading.RegistrationDate.Date, importedReading.EnergyType.Id, meter.Id)).FirstOrDefault();
+            EnergyUse.Models.MeterReading existingMeterReading = (await _unitOfWork.MeterReadingRepo.SelectByExists(importedReading.RegistrationDate.Date, CurrentEnergyType.Id, meter.Id)).FirstOrDefault();
 
             // Als datum gelijk aan start meter datum dan is er geen vorige reading, dus een reset
             if (importedReading.RegistrationDate.Date == meter.ActiveFrom.Date ||

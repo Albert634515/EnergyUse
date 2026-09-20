@@ -277,7 +277,11 @@ public class ImportControlViewModel : ViewModelBase
             return;
 
         foreach (var r in _uow.meterReadings.Where(x => x.Id == null))
+        {
+            r.EnergyType = null;
+            r.Meter = null;
             _uow.MeterReadingRepo.Add(r);
+        }
 
         if (_uow.HasChanges())
             _uow.Complete();

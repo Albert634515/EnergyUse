@@ -132,7 +132,7 @@ public class LibEpplus
 
                     meterReading = new Models.MeterReading();
                     meterReading.Id = 0;
-                    meterReading.EnergyType = energyType;
+                    meterReading.EnergyTypeId = energyType.Id;
                     meterReading.RegistrationDate = Convert.ToDateTime(worksheet.Cells[rowNum, 1].Value);
                     meterReading.RateNormal = Convert.ToDecimal(worksheet.Cells[rowNum, 2].Value);
                     meterReading.RateLow = Convert.ToDecimal(worksheet.Cells[rowNum, 3].Value);
@@ -140,10 +140,8 @@ public class LibEpplus
                     meterReading.ReturnDeliveryLow = Convert.ToDecimal(worksheet.Cells[rowNum, 5].Value);
 
                     if (meter != null)
-                    {
-                        meterReading.Meter = new Models.Meter();
-                        meterReading.Meter.Id = meter.Id;
-                    }
+                        meterReading.MeterId = meter.Id;
+
                     meterReadings.Add(meterReading);
                 }
             }
