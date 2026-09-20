@@ -53,7 +53,7 @@ public class MainController : BaseController, IController
     public async Task RecalculateReadingsDiffPreviousDay(DateTime startRange, DateTime endRange, long energyTypeId, long addressId)
     {
         var libMeterReading = new EnergyUse.Core.Manager.LibMeterReading(_dbFileName);
-        await libMeterReading.RecalculateReadingsDiffPreviousDay(DateTime.MinValue, DateTime.MinValue, energyTypeId, addressId);
+        await libMeterReading.RecalculateReadingsDiffPreviousDay(startRange, endRange, energyTypeId, addressId);
     }
 
     #endregion

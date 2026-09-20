@@ -288,7 +288,7 @@ public partial class MainForm : Form
         }
     }
 
-    private void recalculateAllToolStripMenuItem_Click(object sender, EventArgs e)
+    private async void recalculateAllToolStripMenuItem_Click(object sender, EventArgs e)
     {
         EnergyUse.Models.Address address = (EnergyUse.Models.Address)CboAddress.SelectedItem;
         EnergyUse.Models.EnergyType energyType = (EnergyUse.Models.EnergyType)CboEnergyType.SelectedItem;
@@ -299,10 +299,20 @@ public partial class MainForm : Form
 
         if (MessageBox.Show(this, message, message2, MessageBoxButtons.YesNo) == DialogResult.Yes)
         {
-            Cursor.Current = Cursors.WaitCursor;
-            _controller.RecalculateReadingsDiffPreviousDay(DateTime.MinValue, DateTime.MinValue, energyType.Id, address.Id);
-            RefreshPanel(splitContainer1.Panel1, false, false);
-            Cursor.Current = Cursors.Default;
+            try
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                await _controller.RecalculateReadingsDiffPreviousDay(DateTime.MinValue, DateTime.MinValue, energyType.Id, address.Id);
+                RefreshPanel(splitContainer1.Panel1, false, false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, message2, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
         }
     }
 

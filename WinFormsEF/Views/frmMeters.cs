@@ -110,6 +110,19 @@ public partial class frmMeters : Form
         // Set focus on grid to force valdition and update of bindingsource form interfaces
         dgMeters.Focus();
 
+        if (bsMeters.Current is EnergyUse.Models.Meter meter &&
+            meter.ActiveTill.HasValue &&
+            meter.ActiveTill.Value.Date < meter.ActiveFrom.Date)
+        {
+            MessageBox.Show(
+                this,
+                "Active till cannot be earlier than active from.",
+                "Meter",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning);
+            return;
+        }
+
         _controller.UnitOfWork.Complete();
     }
 

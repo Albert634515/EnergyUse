@@ -38,16 +38,38 @@ namespace WpfUI.Services
                 .Select(g => g.First())
                 .ToList();
 
+            var meterList = (await uow.MeterRepo
+                .SelectByAddressAndEnergyType(address.Id, energyType.Id))
+                .OrderByDescending(x => x.ActiveFrom)
+                .ToList();
+            var meterByDate = new Dictionary<DateTime, Meter>();
+
+            foreach (var importedReading in imported)
+            {
+                var registrationDate = importedReading.RegistrationDate.Date;
+                var matchingMeters = meterList
+                    .Where(m => m.ActiveFrom.Date <= registrationDate
+                             && (m.ActiveTill == null || m.ActiveTill.Value.Date >= registrationDate))
+                    .ToList();
+
+                if (matchingMeters.Count == 0)
+                    throw new InvalidDataException(getMissingMeterMessage(meterList, energyType, registrationDate));
+
+                if (matchingMeters.Count > 1)
+                {
+                    throw new InvalidDataException(
+                        $"Multiple meters are active for {energyType.Name} on {registrationDate:yyyy-MM-dd}. " +
+                        "Correct the meter periods before importing data.");
+                }
+
+                meterByDate[registrationDate] = matchingMeters[0];
+            }
+
             var minDate = imported.Min(x => x.RegistrationDate);
             var maxDate = imported.Max(x => x.RegistrationDate);
 
             uow.meterReadings = (await uow.MeterReadingRepo
                 .SelectByRange(minDate.AddDays(-7), maxDate, energyType.Id, address.Id))
-                .ToList();
-
-            var meterList = (await uow.MeterRepo
-                .SelectByAddressAndEnergyType(address.Id, energyType.Id))
-                .OrderByDescending(x => x.ActiveFrom)
                 .ToList();
 
             var libMeterReading = new LibMeterReading(_db);
@@ -59,16 +81,7 @@ namespace WpfUI.Services
 
             foreach (var importedReading in imported.OrderBy(x => x.RegistrationDate))
             {
-                var meter = meterList
-                    .Where(m => m.ActiveFrom.Date <= importedReading.RegistrationDate.Date)
-                    .OrderBy(m => m.ActiveFrom)
-                    .LastOrDefault();
-
-                if (meter == null)
-                {
-                    throw new InvalidDataException(
-                        $"No meter is active on {importedReading.RegistrationDate:yyyy-MM-dd}.");
-                }
+                var meter = meterByDate[importedReading.RegistrationDate.Date];
 
                 var existing = (await uow.MeterReadingRepo
                     .SelectByExists(importedReading.RegistrationDate.Date, energyType.Id, meter.Id))
@@ -117,6 +130,22 @@ namespace WpfUI.Services
             return uow.meterReadings
                 .OrderByDescending(x => x.RegistrationDate)
                 .ToList();
+        }
+
+        private static string getMissingMeterMessage(List<Meter> meters, EnergyType energyType, DateTime registrationDate)
+        {
+            var previousMeter = meters
+                .Where(meter => meter.ActiveFrom.Date <= registrationDate)
+                .OrderByDescending(meter => meter.ActiveFrom)
+                .FirstOrDefault();
+
+            if (previousMeter?.ActiveTill is DateTime activeTill && activeTill.Date < registrationDate)
+            {
+                return $"Meter '{previousMeter.Description}' was closed on {activeTill:yyyy-MM-dd}. " +
+                       $"No meter is available for {energyType.Name} on {registrationDate:yyyy-MM-dd}.";
+            }
+
+            return $"No meter is available for {energyType.Name} on {registrationDate:yyyy-MM-dd}.";
         }
     }
 }

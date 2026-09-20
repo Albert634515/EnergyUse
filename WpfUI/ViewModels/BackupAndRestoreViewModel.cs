@@ -1,4 +1,4 @@
-﻿using EnergyUse.Core.Controllers;
+using EnergyUse.Core.Controllers;
 using EnergyUse.Core.Interfaces;
 using System.IO;
 using System.Windows.Forms;
@@ -16,6 +16,7 @@ namespace WpfApp.ViewModels
             _controller = new BackUpAndRestoreController(WpfUI.Managers.Config.GetDbFileName());
             _controller.Initialize();
             _dialogService = dialogService;
+            SourceFile = _controller.GetSourceDbFile();
 
             setInitialSettings();
 
@@ -33,6 +34,8 @@ namespace WpfApp.ViewModels
             get => _backupDirectory;
             set { _backupDirectory = value; OnPropertyChanged(); }
         }
+
+        public string SourceFile { get; }
 
         private string _restoreFile = string.Empty;
         public string RestoreFile
@@ -91,8 +94,7 @@ namespace WpfApp.ViewModels
                 return;
             }
 
-            var sourceFile = _controller.GetSourceDbFile();
-            _controller.CreateBackUpFile(BackupDirectory, sourceFile);
+            _controller.CreateBackUpFile(BackupDirectory, SourceFile);
 
             _dialogService.Show("Backup created", "Backup created");
         }

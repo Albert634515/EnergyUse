@@ -19,11 +19,23 @@ public class RepoMeterReading : RepoGeneral<Models.MeterReading>
                 .Include(e => e.EnergyType)
                 .Include(t => t.Meter)
                 .Include(a => a.Meter.Address)
-                .Where(n => n.Meter.Id == meterId 
+                .Where(n => n.Meter.Id == meterId
                          && n.EnergyType.Id == energyTypeId
                          && n.RegistrationDate.Date == registrationDate.Date)
                 .ToListAsync(cancellationToken)
                 .ConfigureAwait(false);
+    }
+
+    public async Task<IEnumerable<Models.MeterReading>> SelectByMeterId(long meterId, CancellationToken cancellationToken = default)
+    {
+        return await _context.MeterReadings
+            .Include(e => e.EnergyType)
+            .Include(t => t.Meter)
+            .Include(a => a.Meter.Address)
+            .Where(reading => reading.MeterId == meterId)
+            .OrderBy(reading => reading.RegistrationDate)
+            .ToListAsync(cancellationToken)
+            .ConfigureAwait(false);
     }
 
 
@@ -32,9 +44,9 @@ public class RepoMeterReading : RepoGeneral<Models.MeterReading>
         var meterReadingList = _context.MeterReadings
             .Include(t => t.Meter)
             .Include(a => a.Meter.Address)
-            .Where(n => n.EnergyType.Id == energyTypeId 
-                     && n.Meter.Address.Id == addressId 
-                     && n.RegistrationDate.Date >= startRange.Date 
+            .Where(n => n.EnergyType.Id == energyTypeId
+                     && n.Meter.Address.Id == addressId
+                     && n.RegistrationDate.Date >= startRange.Date
                      && n.RegistrationDate.Date <= endRange.Date)
             .OrderBy(o => o.RegistrationDate);
 
@@ -112,15 +124,30 @@ public class RepoMeterReading : RepoGeneral<Models.MeterReading>
             .ConfigureAwait(false);
     }
 
+    public async Task<Models.MeterReading?> SelectRow(DateTime registrationDate, long energyTypeId, long addressId, long meterId, CancellationToken cancellationToken = default)
+    {
+        return await _context.MeterReadings
+            .Include(e => e.EnergyType)
+            .Include(t => t.Meter)
+            .Include(a => a.Meter.Address)
+            .Where(n => n.EnergyType.Id == energyTypeId
+                     && n.Meter.Address.Id == addressId
+                     && n.Meter.Id == meterId
+                     && n.RegistrationDate.Date <= registrationDate.Date)
+            .OrderByDescending(o => o.RegistrationDate)
+            .FirstOrDefaultAsync(cancellationToken)
+            .ConfigureAwait(false);
+    }
+
     public async Task<long?> GetLastId(CancellationToken cancellationToken = default)
     {
-       return await _context.MeterReadings
-                      .AsNoTracking()
-                      .Include(e => e.EnergyType)
-                      .Include(t => t.Meter)
-                      .Include(a => a.Meter.Address)
-                      .MaxAsync(o => o.Id, cancellationToken)
-                      .ConfigureAwait(false);
+        return await _context.MeterReadings
+                       .AsNoTracking()
+                       .Include(e => e.EnergyType)
+                       .Include(t => t.Meter)
+                       .Include(a => a.Meter.Address)
+                       .MaxAsync(o => o.Id, cancellationToken)
+                       .ConfigureAwait(false);
     }
 
     public async Task<Models.MeterReading> GetDefaultReading(EnergyUse.Models.EnergyType energyType, EnergyUse.Models.Meter meter, CancellationToken cancellationToken = default)

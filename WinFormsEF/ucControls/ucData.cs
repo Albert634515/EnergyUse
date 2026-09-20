@@ -268,7 +268,7 @@ public partial class ucData : UserControl
         showHideColumns();
     }
 
-    public void RecalculateCurrentSelection()
+    public async void RecalculateCurrentSelection()
     {
         if (CurrentAddress == null)
             return;
@@ -280,7 +280,7 @@ public partial class ucData : UserControl
         if (MessageBox.Show(this, message, Managers.Languages.GetResourceString("MainRecalculateAll", "Recalculate all"), MessageBoxButtons.YesNo) == DialogResult.Yes)
         {
             EnergyUse.Core.Manager.LibMeterReading libMeterReading = new EnergyUse.Core.Manager.LibMeterReading(Managers.Config.GetDbFileName());
-            libMeterReading.RecalculateReadingsDiffPreviousDay(dtpFrom.Value, dtpTill.Value, CurrentEnergyType.Id, CurrentAddress.Id);
+            await libMeterReading.RecalculateReadingsDiffPreviousDay(dtpFrom.Value, dtpTill.Value, CurrentEnergyType.Id, CurrentAddress.Id);
             RefreshMeterReadingList();
         }
     }

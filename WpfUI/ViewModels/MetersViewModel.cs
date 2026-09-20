@@ -79,8 +79,21 @@ public class MetersViewModel : ViewModelBase
 
     private void saveMeter()
     {
-        if (SelectedMeter != null)
-            _controller.UnitOfWork.Complete();
+        if (SelectedMeter == null)
+            return;
+
+        if (SelectedMeter.ActiveTill.HasValue &&
+            SelectedMeter.ActiveTill.Value.Date < SelectedMeter.ActiveFrom.Date)
+        {
+            MessageBox.Show(
+                "Active till cannot be earlier than active from.",
+                "Meter",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+            return;
+        }
+
+        _controller.UnitOfWork.Complete();
 
         _ = GetMeters();
     }

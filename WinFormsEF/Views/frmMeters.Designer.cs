@@ -44,6 +44,7 @@
             descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             numberDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             activeDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
+            activeTillDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             bsMeters = new BindingSource(components);
             gbMeter = new GroupBox();
             dtpFrom = new DateTimePicker();
@@ -131,7 +132,7 @@
             resources.ApplyResources(dgMeters, "dgMeters");
             dgMeters.AutoGenerateColumns = false;
             dgMeters.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgMeters.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, descriptionDataGridViewTextBoxColumn, numberDataGridViewTextBoxColumn, activeDataGridViewCheckBoxColumn });
+            dgMeters.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, descriptionDataGridViewTextBoxColumn, numberDataGridViewTextBoxColumn, activeDataGridViewCheckBoxColumn, activeTillDataGridViewTextBoxColumn });
             dgMeters.DataSource = bsMeters;
             dgMeters.Name = "dgMeters";
             // 
@@ -158,6 +159,13 @@
             activeDataGridViewCheckBoxColumn.DataPropertyName = "Active";
             resources.ApplyResources(activeDataGridViewCheckBoxColumn, "activeDataGridViewCheckBoxColumn");
             activeDataGridViewCheckBoxColumn.Name = "activeDataGridViewCheckBoxColumn";
+            //
+            // activeTillDataGridViewTextBoxColumn
+            //
+            activeTillDataGridViewTextBoxColumn.DataPropertyName = "ActiveTill";
+            activeTillDataGridViewTextBoxColumn.HeaderText = "Active till";
+            activeTillDataGridViewTextBoxColumn.Name = "activeTillDataGridViewTextBoxColumn";
+            activeTillDataGridViewTextBoxColumn.Width = 90;
             // 
             // bsMeters
             // 
@@ -320,6 +328,7 @@
         private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn numberDataGridViewTextBoxColumn;
         private DataGridViewCheckBoxColumn activeDataGridViewCheckBoxColumn;
+        private DataGridViewTextBoxColumn activeTillDataGridViewTextBoxColumn;
         private DateTimePicker dtpFrom;
         private Label lblRange;
     }

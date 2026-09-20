@@ -1,4 +1,4 @@
-﻿using EnergyUse.Core.Interfaces;
+using EnergyUse.Core.Interfaces;
 
 namespace EnergyUse.Core.Controllers;
 
@@ -41,11 +41,7 @@ public class BackUpAndRestoreController : BaseController, IController
 
     public string GetSourceDbFile()
     {
-        string dbFile;
-
-        dbFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "EnergyUse.db");
-
-        return dbFile;
+        return _dbFileName;
     }
 
     private string getDefaultBackUpDir()
@@ -58,7 +54,9 @@ public class BackUpAndRestoreController : BaseController, IController
         if (!Directory.Exists(targetPath))
             Directory.CreateDirectory(targetPath);
 
-        var fileName = $"EnergyUse_{DateTime.Now.ToString("yyyyMMddHHmmss")}.db";
+        var sourceFileName = Path.GetFileNameWithoutExtension(sourceFile);
+        var sourceFileExtension = Path.GetExtension(sourceFile);
+        var fileName = $"{sourceFileName}_{DateTime.Now:yyyyMMddHHmmss}{sourceFileExtension}";
         var destFile = Path.Combine(targetPath, fileName);
         File.Copy(sourceFile, destFile, true);
     }

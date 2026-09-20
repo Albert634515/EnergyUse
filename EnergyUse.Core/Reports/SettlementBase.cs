@@ -6,6 +6,8 @@ namespace EnergyUse.Core.Reports;
 
 public class SettlementBase : ReportBase
 {
+    internal sealed record MeterPeriod(SelectedEnergyType Selection, Models.Meter Meter);
+
     #region Properties
 
     //private readonly EnergyUseContext _context;
@@ -386,58 +388,62 @@ public class SettlementBase : ReportBase
         return subTotalName;
     }
 
-    internal static Paragraph getHeaderParagraph(SelectedEnergyType item, Models.Address address)
+    internal static Paragraph getHeaderParagraph(SelectedEnergyType item, Models.Address address, Models.Meter meter)
     {
-        var headerText = $"Settlement period: {item.StartRange:dd-MM-yyyy} - {item.EndRange:dd-MM-yyyy}";
+        var meterName = string.IsNullOrWhiteSpace(meter.Number)
+            ? meter.Description
+            : $"{meter.Description} ({meter.Number})";
+        var headerText = $"Settlement period: {item.StartRange:dd-MM-yyyy} - {item.EndRange:dd-MM-yyyy}" +
+                         $"{Environment.NewLine}Meter: {meterName}";
 
         return new Paragraph(headerText);
     }
 
-    internal async Task<string> getSectionHeaderText(SelectedEnergyType item, Models.Address address)
+    internal async Task<string> getSectionHeaderText(SelectedEnergyType item, Models.Address address, Models.Meter meter)
     {
         var headerText = string.Empty;
 
         headerText += $"{item.EnergyType.Name}";
         headerText += $", range: {Environment.NewLine}";
 
-        headerText += $" Normal: {await getMeterPositionRange(item, address.Id, Common.Enums.SubEnergyType.Normal)}";
+        headerText += $" Normal: {await getMeterPositionRange(item, address.Id, meter.Id, Common.Enums.SubEnergyType.Normal)}";
         if (item.EnergyType.HasNormalAndLow)
         {
-            headerText += $", low: {await getMeterPositionRange(item, address.Id, Common.Enums.SubEnergyType.Low)}";
+            headerText += $", low: {await getMeterPositionRange(item, address.Id, meter.Id, Common.Enums.SubEnergyType.Low)}";
         }
 
         if (item.EnergyType.HasEnergyReturn)
         {
             headerText += $"{Environment.NewLine}";
-            headerText += $" Return normal: {await getMeterPositionRange(item, address.Id, Common.Enums.SubEnergyType.ReturnNormal)}";
+            headerText += $" Return normal: {await getMeterPositionRange(item, address.Id, meter.Id, Common.Enums.SubEnergyType.ReturnNormal)}";
 
             if (item.EnergyType.HasNormalAndLow)
             {
-                headerText += $", return low: {await getMeterPositionRange(item, address.Id, Common.Enums.SubEnergyType.ReturnLow)}";
+                headerText += $", return low: {await getMeterPositionRange(item, address.Id, meter.Id, Common.Enums.SubEnergyType.ReturnLow)}";
             }
         }
 
         return headerText;
     }
 
-    private async Task<string> getMeterPositionRange(SelectedEnergyType item, long addressId, Common.Enums.SubEnergyType subEnergyType)
+    private async Task<string> getMeterPositionRange(SelectedEnergyType item, long addressId, long meterId, Common.Enums.SubEnergyType subEnergyType)
     {
         var positionRange = string.Empty;
 
-        decimal position = await getMeterPosition(item.StartRange, item.EnergyType.Id, addressId, subEnergyType);
+        decimal position = await getMeterPosition(item.StartRange, item.EnergyType.Id, addressId, meterId, subEnergyType);
         positionRange += $"{(position < 0 ? $"?" : $"{position}")}";
 
-        position = await getMeterPosition(item.EndRange, item.EnergyType.Id, addressId, subEnergyType);
+        position = await getMeterPosition(item.EndRange, item.EnergyType.Id, addressId, meterId, subEnergyType);
         positionRange += $" - {(position < 0 ? $"?" : $"{position}")}";
 
         return positionRange;
     }
 
-    private async Task<decimal> getMeterPosition(DateTime registrationDate, long energyTypeId, long addressId, Common.Enums.SubEnergyType subEnergyType)
+    private async Task<decimal> getMeterPosition(DateTime registrationDate, long energyTypeId, long addressId, long meterId, Common.Enums.SubEnergyType subEnergyType)
     {
         decimal position = -1;
 
-        var meterReading = await _unitOfWork.MeterReadingRepo.SelectRow(registrationDate, energyTypeId, addressId);
+        var meterReading = await _unitOfWork.MeterReadingRepo.SelectRow(registrationDate, energyTypeId, addressId, meterId);
         if (meterReading != null)
         {
             position = subEnergyType switch
@@ -452,6 +458,40 @@ public class SettlementBase : ReportBase
         }
 
         return position;
+    }
+
+    internal async Task<List<MeterPeriod>> getMeterPeriods(SelectedEnergyType item, long addressId)
+    {
+        var meters = (await _unitOfWork.MeterRepo.SelectOverlappingPeriod(
+                addressId,
+                item.EnergyType.Id,
+                item.StartRange,
+                item.EndRange))
+            .ToList();
+
+        if (meters.Count == 0)
+        {
+            throw new InvalidOperationException(
+                $"No meter is available for {item.EnergyType.Name} in the selected period " +
+                $"{item.StartRange:dd-MM-yyyy} - {item.EndRange:dd-MM-yyyy}.");
+        }
+
+        if (meters.Count > 1)
+        {
+            throw new InvalidOperationException(
+                $"The selected period {item.StartRange:dd-MM-yyyy} - {item.EndRange:dd-MM-yyyy} for " +
+                $"{item.EnergyType.Name} overlaps multiple meters.");
+        }
+
+        var meter = meters[0];
+        if (item.StartRange.Date < meter.ActiveFrom.Date ||
+            (meter.ActiveTill.HasValue && item.EndRange.Date > meter.ActiveTill.Value.Date))
+        {
+            throw new InvalidOperationException(
+                $"The selected period for {item.EnergyType.Name} must be within meter '{meter.Description}'.");
+        }
+
+        return [new MeterPeriod(item, meter)];
     }
 
     internal async Task<Table> getPayments(long addressId, long periodId, DateTime startRange, DateTime endRange)

@@ -14,6 +14,7 @@ public partial class Meter
     public long? AddressId { get; set; }
     public bool Active { get; set; }
     public DateTime ActiveFrom { get; set; }
+    public DateTime? ActiveTill { get; set; }
 
     public virtual Address? Address { get; set; }
     public virtual EnergyType? EnergyType { get; set; }

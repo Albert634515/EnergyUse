@@ -29,12 +29,34 @@ public class RepoMeter : RepoGeneral<Models.Meter>
                              .ToListAsync();
     }
 
-    public async Task<Models.Meter?> SelectDefaultMeterByAddress(long addressId, long energyTypeId)
+    public async Task<IEnumerable<Models.Meter>> SelectOverlappingPeriod(long addressId, long energyTypeId, DateTime startDate, DateTime endDate)
     {
+        var start = startDate.Date;
+        var end = endDate.Date;
+
         return await _context.Meters
                              .Include(e => e.EnergyType)
                              .Include(a => a.Address)
-                             .Where(n => n.EnergyType.Id == energyTypeId && n.Address.Id == addressId && n.Active == true)
+                             .Where(m => m.AddressId == addressId
+                                      && m.EnergyTypeId == energyTypeId
+                                      && m.ActiveFrom <= end
+                                      && (m.ActiveTill == null || m.ActiveTill >= start))
+                             .OrderBy(m => m.ActiveFrom)
+                             .ToListAsync();
+    }
+
+    public async Task<Models.Meter?> SelectDefaultMeterByAddress(long addressId, long energyTypeId)
+    {
+        var today = DateTime.Today;
+
+        return await _context.Meters
+                             .Include(e => e.EnergyType)
+                             .Include(a => a.Address)
+                             .Where(n => n.EnergyType.Id == energyTypeId
+                                      && n.Address.Id == addressId
+                                      && n.Active == true
+                                      && n.ActiveFrom <= today
+                                      && (n.ActiveTill == null || n.ActiveTill >= today))
                              .FirstOrDefaultAsync();
     }
 }

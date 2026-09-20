@@ -11,6 +11,7 @@ public partial class ucImport : UserControl
     private EnergyUse.Core.UnitOfWork.Import _unitOfWork;
     private EnergyUse.Models.Address CurrentAddress { get; set; }
     private EnergyUse.Models.EnergyType CurrentEnergyType { get; set; }
+    private bool _isFillingMeters;
 
     #endregion
 
@@ -52,7 +53,7 @@ public partial class ucImport : UserControl
 
     #region ButtonEvents
 
-    private void cmdSelectImportFile_Click(object sender, EventArgs e)
+    private async void cmdSelectImportFile_Click(object sender, EventArgs e)
     {
         try
         {
@@ -71,7 +72,7 @@ public partial class ucImport : UserControl
                 TxtImportFile.Text = openFileDialog1.FileName;                    
                 libSettings.SetLastUsedImportFile(TxtImportFile.Text, getKeyForLastImportFile());
                 Cursor.Current = Cursors.WaitCursor;
-                importCurrentFile();
+                await importCurrentFile();
                 Cursor.Current = Cursors.Default;
             }
         }
@@ -85,23 +86,50 @@ public partial class ucImport : UserControl
 
     #region Events
 
-    private void CboMeters_SelectedIndexChanged(object sender, EventArgs e)
+    private async void CboMeters_SelectionChangeCommitted(object sender, EventArgs e)
     {
-        if (CboMeters.SelectedIndex > -1)
+        if (_isFillingMeters)
+            return;
+
+        await loadSelectedMeterData();
+    }
+
+    private async Task loadSelectedMeterData()
+    {
+        clearImportPreview();
+
+        if (CboMeters.SelectedItem is not EnergyUse.Models.Meter selectedMeter)
         {
-            var libSettings = new LibSettings(Managers.Config.GetDbFileName());
-            string lastUsedImportFile = libSettings.GetLastUsedImportFile(getKeyForLastImportFile());
-            if (!string.IsNullOrWhiteSpace(lastUsedImportFile))
+            TxtImportFile.Text = string.Empty;
+            return;
+        }
+
+        var libSettings = new LibSettings(Managers.Config.GetDbFileName());
+        string lastUsedImportFile = libSettings.GetLastUsedImportFile(getKeyForLastImportFile());
+        TxtImportFile.Text = lastUsedImportFile ?? string.Empty;
+
+        try
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            var readings = (await _unitOfWork.MeterReadingRepo.SelectByMeterId(selectedMeter.Id)).ToList();
+
+            if (CboMeters.SelectedItem is not EnergyUse.Models.Meter currentMeter ||
+                currentMeter.Id != selectedMeter.Id)
             {
-                TxtImportFile.Text = lastUsedImportFile;
-
-                if (validateImport() == false)
-                    return;
-
-                Cursor.Current = Cursors.WaitCursor;
-                importCurrentFile();
-                Cursor.Current = Cursors.Default;
+                return;
             }
+
+            _unitOfWork.meterReadings = readings;
+            await mergeCsvDataForSelectedMeter(selectedMeter);
+            showReadingsForSelectedMeter();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(this, ex.Message, "Import", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        finally
+        {
+            Cursor.Current = Cursors.Default;
         }
     }
 
@@ -132,45 +160,41 @@ public partial class ucImport : UserControl
     public void LoadData(EnergyUse.Models.Address selectedAddress, EnergyUse.Models.EnergyType selectedEnergyType)
     {
         ResetSelection(selectedAddress, selectedEnergyType);
-
-        if (selectedAddress != null && selectedEnergyType != null)
-            LoadData();
     }
 
-    public void LoadData()
+    public async void LoadData()
     {
         if (validateImport() == false)
             return;
 
         Cursor.Current = Cursors.WaitCursor;
-        importCurrentFile();
+        await importCurrentFile();
         Cursor.Current = Cursors.Default;
     }
 
     private void saveImport()
     {
         foreach (var meterReading in _unitOfWork.meterReadings.Where(meterReading => meterReading.Id == null))
-        {
             _unitOfWork.MeterReadingRepo.Add(meterReading);
+
+        if (_unitOfWork.HasChanges())
             _ = _unitOfWork.Complete();
-        }
 
         var message = Managers.Languages.GetResourceString("DataSaved", "Data has been saved");
         MessageBox.Show(this, message);
     }
 
-    private void recalculate()
+    private async void recalculate()
     {
         Cursor.Current = Cursors.WaitCursor;
 
         if (_unitOfWork.meterReadings.Count > 0)
         {
             var libMeterReading = new LibMeterReading(Managers.Config.GetDbFileName());
-            libMeterReading.RecalculateReadingsDiffPreviousDay(_unitOfWork.meterReadings.Min(m => m.RegistrationDate), _unitOfWork.meterReadings.Max(m => m.RegistrationDate), CurrentEnergyType.Id, CurrentAddress.Id);
+            await libMeterReading.RecalculateReadingsDiffPreviousDay(_unitOfWork.meterReadings.Min(m => m.RegistrationDate), _unitOfWork.meterReadings.Max(m => m.RegistrationDate), CurrentEnergyType.Id, CurrentAddress.Id);
         }
 
-        bsMeterReading.DataSource = _unitOfWork.meterReadings;
-        bsMeterReading.ResetBindings(false);
+        showReadingsForSelectedMeter();
 
         Cursor.Current = Cursors.Default;
     }
@@ -185,7 +209,7 @@ public partial class ucImport : UserControl
         return fileKey;
     }
 
-    private async void importCurrentFile()
+    private async Task importCurrentFile()
     {
         if (_unitOfWork == null || CurrentEnergyType == null)
             return;
@@ -203,6 +227,33 @@ public partial class ucImport : UserControl
         if (importedMeterReadings.Count == 0)
             return;
 
+        var meterByDate = new Dictionary<DateTime, EnergyUse.Models.Meter>();
+        foreach (var importedReading in importedMeterReadings)
+        {
+            var registrationDate = importedReading.RegistrationDate.Date;
+            var matchingMeters = meterlist
+                .Where(meter => meter.ActiveFrom.Date <= registrationDate
+                             && (meter.ActiveTill == null || meter.ActiveTill.Value.Date >= registrationDate))
+                .ToList();
+
+            if (matchingMeters.Count == 0)
+            {
+                MessageBox.Show(this, getMissingMeterMessage(meterlist, CurrentEnergyType, registrationDate));
+                return;
+            }
+
+            if (matchingMeters.Count > 1)
+            {
+                MessageBox.Show(
+                    this,
+                    $"Multiple meters are active for {CurrentEnergyType.Name} on {registrationDate:yyyy-MM-dd}. " +
+                    "Correct the meter periods before importing data.");
+                return;
+            }
+
+            meterByDate[registrationDate] = matchingMeters[0];
+        }
+
         var firstMeterReading = importedMeterReadings.OrderBy(o => o.RegistrationDate).FirstOrDefault();
         if (firstMeterReading != null)
             lastMeterReading = await _unitOfWork.MeterReadingRepo.SelectLastRowFromDate(firstMeterReading.RegistrationDate, firstMeterReading.EnergyType.Id, CurrentAddress.Id);
@@ -217,19 +268,20 @@ public partial class ucImport : UserControl
 
         foreach (EnergyUse.Models.MeterReading importedReading in importedMeterReadings.OrderBy(o => o.RegistrationDate))
         {
-            EnergyUse.Models.Meter meter = meterlist.Where(w => w.ActiveFrom.Date <= importedReading.RegistrationDate.Date).OrderBy(o => o.ActiveFrom.Date).LastOrDefault();
+            EnergyUse.Models.Meter meter = meterByDate[importedReading.RegistrationDate.Date];
             EnergyUse.Models.MeterReading existingMeterReading = (await _unitOfWork.MeterReadingRepo.SelectByExists(importedReading.RegistrationDate.Date, importedReading.EnergyType.Id, meter.Id)).FirstOrDefault();
-                            
+
             // Als datum gelijk aan start meter datum dan is er geen vorige reading, dus een reset
-            if (importedReading.RegistrationDate == meter.ActiveFrom.Date)
+            if (importedReading.RegistrationDate.Date == meter.ActiveFrom.Date ||
+                lastMeterReading?.MeterId != meter.Id)
             {
                 //New meter
-                if (existingMeterReading.Id == 0)
+                if (existingMeterReading == null || existingMeterReading.Id == 0)
                     existingMeterReading = null;
                 else
                 {
                     //Bestaand record alleen vorige record resetten
-                    lastMeterReading = new EnergyUse.Models.MeterReading();
+                    lastMeterReading = null;
                 }
             }
 
@@ -268,8 +320,98 @@ public partial class ucImport : UserControl
             }
         }
 
-        bsMeterReading.DataSource = _unitOfWork.meterReadings.OrderByDescending(o => o.RegistrationDate);
+        if (CboMeters.SelectedItem is EnergyUse.Models.Meter selectedMeter &&
+            selectedMeter.Id == currentMeter.Id)
+        {
+            showReadingsForSelectedMeter();
+        }
+    }
+
+    private static string getMissingMeterMessage(
+        List<EnergyUse.Models.Meter> meters,
+        EnergyUse.Models.EnergyType energyType,
+        DateTime registrationDate)
+    {
+        var previousMeter = meters
+            .Where(meter => meter.ActiveFrom.Date <= registrationDate)
+            .OrderByDescending(meter => meter.ActiveFrom)
+            .FirstOrDefault();
+
+        if (previousMeter?.ActiveTill is DateTime activeTill && activeTill.Date < registrationDate)
+        {
+            return $"Meter '{previousMeter.Description}' was closed on {activeTill:yyyy-MM-dd}. " +
+                   $"No meter is available for {energyType.Name} on {registrationDate:yyyy-MM-dd}.";
+        }
+
+        return $"No meter is available for {energyType.Name} on {registrationDate:yyyy-MM-dd}.";
+    }
+
+    private void clearImportPreview()
+    {
+        _unitOfWork.CancelChanges();
+        _unitOfWork.meterReadings = new List<EnergyUse.Models.MeterReading>();
+        bsMeterReading.DataSource = _unitOfWork.meterReadings;
         bsMeterReading.ResetBindings(false);
+    }
+
+    private void showReadingsForSelectedMeter()
+    {
+        if (CboMeters.SelectedItem is not EnergyUse.Models.Meter selectedMeter)
+        {
+            bsMeterReading.DataSource = new List<EnergyUse.Models.MeterReading>();
+        }
+        else
+        {
+            bsMeterReading.DataSource = _unitOfWork.meterReadings
+                .Where(reading => reading.MeterId == selectedMeter.Id)
+                .OrderByDescending(reading => reading.RegistrationDate)
+                .ToList();
+        }
+
+        bsMeterReading.ResetBindings(false);
+    }
+
+    private async Task mergeCsvDataForSelectedMeter(EnergyUse.Models.Meter selectedMeter)
+    {
+        if (string.IsNullOrWhiteSpace(TxtImportFile.Text) || !File.Exists(TxtImportFile.Text))
+            return;
+
+        var importedReadings = getImportedData(TxtImportFile.Text, CurrentEnergyType, selectedMeter)
+            .Where(reading => reading.RegistrationDate.Date >= selectedMeter.ActiveFrom.Date
+                           && (selectedMeter.ActiveTill == null ||
+                               reading.RegistrationDate.Date <= selectedMeter.ActiveTill.Value.Date))
+            .OrderBy(reading => reading.RegistrationDate)
+            .ToList();
+
+        foreach (var importedReading in importedReadings)
+        {
+            var existingReading = _unitOfWork.meterReadings.FirstOrDefault(reading =>
+                reading.MeterId == selectedMeter.Id &&
+                reading.RegistrationDate.Date == importedReading.RegistrationDate.Date);
+
+            if (existingReading == null)
+            {
+                importedReading.Id = null;
+                importedReading.MeterId = selectedMeter.Id;
+                importedReading.EnergyTypeId = CurrentEnergyType.Id;
+                importedReading.WeekNo = ISOWeek.GetWeekOfYear(importedReading.RegistrationDate);
+                _unitOfWork.meterReadings.Add(importedReading);
+                continue;
+            }
+
+            existingReading.RateNormal = importedReading.RateNormal;
+            existingReading.RateLow = importedReading.RateLow;
+            existingReading.ReturnDeliveryLow = importedReading.ReturnDeliveryLow;
+            existingReading.ReturnDeliveryNormal = importedReading.ReturnDeliveryNormal;
+            existingReading.WeekNo = ISOWeek.GetWeekOfYear(existingReading.RegistrationDate);
+        }
+
+        if (_unitOfWork.meterReadings.Count > 0)
+        {
+            var libMeterReading = new LibMeterReading(Managers.Config.GetDbFileName());
+            _unitOfWork.meterReadings = await libMeterReading
+                .RecalculateReadingsDiffPreviousDay(_unitOfWork.meterReadings);
+        }
     }
 
     private List<EnergyUse.Models.MeterReading> getImportedData(string fileName, EnergyUse.Models.EnergyType energyType, EnergyUse.Models.Meter meter)
@@ -295,16 +437,11 @@ public partial class ucImport : UserControl
         CurrentAddress = selectedAddress;
         CurrentEnergyType = selectedEnergyType;
 
-        _unitOfWork.meterReadings = new List<EnergyUse.Models.MeterReading>();
-        bsMeterReading.DataSource = _unitOfWork.meterReadings;
-        bsMeterReading.ResetBindings(false);
+        clearImportPreview();
+        TxtImportFile.Text = string.Empty;
 
         showHideColumns();
         fillMeterCombo();
-
-        var libSettings = new LibSettings(Managers.Config.GetDbFileName());
-        TxtImportFile.Text = libSettings.GetLastUsedImportFile(getKeyForLastImportFile());
-        importCurrentFile();
     }
 
     private async void fillMeterCombo()
@@ -315,15 +452,25 @@ public partial class ucImport : UserControl
         if (CurrentEnergyType != null && CurrentAddress != null)
         {
             meters = (await _unitOfWork.MeterRepo.SelectByAddressAndEnergyType(CurrentAddress.Id, CurrentEnergyType.Id)).ToList();
-            bsMeter.DataSource = meters;
             defaultMeter = meters.Where(x => x.Active == true).FirstOrDefault();
             defaultMeter ??= meters.FirstOrDefault();
         }
 
-        CboMeters.SelectedIndex = -1;
+        _isFillingMeters = true;
+        try
+        {
+            bsMeter.DataSource = meters;
+            CboMeters.SelectedIndex = -1;
 
-        if (defaultMeter != null)
-            CboMeters.SelectedItem = defaultMeter;                
+            if (defaultMeter != null)
+                CboMeters.SelectedItem = defaultMeter;
+        }
+        finally
+        {
+            _isFillingMeters = false;
+        }
+
+        await loadSelectedMeterData();
     }
 
     private void showHideColumns()

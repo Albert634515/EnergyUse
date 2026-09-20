@@ -13,6 +13,7 @@ public class SelectParameter : IUnitOfWork
     public RepoTariffGroup TariffGroupRepo;
     public RepoPreDefinedPeriod PreDefinedPeriodRepo;
     public RepoPredefinedPeriodDate PreDefinedPeriodDateRepo;
+    public RepoMeter MeterRepo;
 
     public SelectParameter(string dbFileName)
     {
@@ -23,6 +24,7 @@ public class SelectParameter : IUnitOfWork
         TariffGroupRepo = new RepoTariffGroup(_context);
         PreDefinedPeriodRepo = new RepoPreDefinedPeriod(_context);
         PreDefinedPeriodDateRepo = new RepoPredefinedPeriodDate(_context);
+        MeterRepo = new RepoMeter(_context);
     }
 
     public int Complete()
@@ -42,6 +44,7 @@ public class SelectParameter : IUnitOfWork
         TariffGroupRepo.RejectChanges();
         PreDefinedPeriodRepo.RejectChanges();
         PreDefinedPeriodDateRepo.RejectChanges();
+        MeterRepo.RejectChanges();
     }
 
     public void Dispose()

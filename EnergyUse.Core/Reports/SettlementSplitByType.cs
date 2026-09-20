@@ -21,7 +21,9 @@ public class SettlementSplitByType : SettlementBase
 
         var dest = System.IO.Path.GetTempPath();
         var fileName = $"SettlementSplitByType_{DateTime.Now:yyyyMMddHHmmss}.pdf";
-        Models.Address address = await _unitOfWork.AddressRepo.Get(parameterSelection.AddressId);
+        Models.Address? address = await _unitOfWork.AddressRepo.Get(parameterSelection.AddressId);
+        if (address is null)
+            throw new InvalidOperationException($"Address with ID {parameterSelection.AddressId} was not found.");
         PdfWriter writer = new(System.IO.Path.Combine(dest, fileName));
         PdfDocument pdf = new(writer);
         pdf.SetDefaultPageSize(PageSize.A4);
@@ -31,74 +33,92 @@ public class SettlementSplitByType : SettlementBase
         var LibPeriodicDate = new Manager.LibPeriodicDate(_dbFileName);
         _settlementSubTotalList = new List<SettlementSubTotal>();
 
-        foreach (SelectedEnergyType item in parameterSelection.SelectedEnergyTypeList)
+        foreach (SelectedEnergyType selectedItem in parameterSelection.SelectedEnergyTypeList)
         {
-            //Header 
-            if (!isFirstPage)
-                document.Add(new AreaBreak());
-            document.Add(getHeaderParagraph(item, address));
-
-            isFirstPage = false;
-            energyType = item.EnergyType;
-            startRange = item.StartRange;
-            endRange = item.EndRange;
-
-            ParameterPeriod parameterPeriod = new();
-            parameterPeriod.EnergyType = energyType;
-            parameterPeriod.AddressId = address.Id;
-            parameterPeriod.StartRange = startRange;
-            parameterPeriod.EndRange = endRange;
-            parameterPeriod.ShowType = Common.Enums.ShowType.Value;
-            parameterPeriod.PeriodType = Common.Enums.Period.SettlementDay;
-            parameterPeriod.PredictMissingData = parameterSelection.PredictMissingData;
-            parameterPeriod.TarifGroupId = item.TarifGroup;
-            parameterPeriod.QuantityReduction = 1;
-
-            _periodicDataList = await LibPeriodicDate.GetRangeAsync(parameterPeriod);
-            _settlementDataList = await _unitOfWork.CostCategoriesRepo.MapCostCategories(_periodicDataList);
-            if (parameterSelection.ShowRates == false)
-                _settlementDataList = mergeSettlementData(_settlementDataList);
-
-            if (_periodicDataList.Count == 0)
+            var meterPeriods = await getMeterPeriods(selectedItem, address.Id);
+            if (meterPeriods.Count == 0)
             {
-                document.Add(new Paragraph($"No data found for energy type {energyType.Name}"));
-                document.Add(new Paragraph("\n"));
+                if (!isFirstPage)
+                    document.Add(new AreaBreak());
+                document.Add(new Paragraph(
+                    $"Settlement period: {selectedItem.StartRange:dd-MM-yyyy} - {selectedItem.EndRange:dd-MM-yyyy}"));
+                document.Add(new Paragraph($"No meter found for energy type {selectedItem.EnergyType.Name}"));
+                isFirstPage = false;
+                continue;
             }
-            else
+
+            foreach (var meterPeriod in meterPeriods)
             {
-                table = new Table(_pointColumnWidths);
-                GetSectionHeader(table, await getSectionHeaderText(item, address));
-                document.Add(table);
-                document.Add(new Paragraph(""));
+                var item = meterPeriod.Selection;
+                var meter = meterPeriod.Meter;
 
-                var list1 = _settlementDataList.Where(w => w.CostCategory.EnergySubTypeId < 3 || w.CostCategory.EnergySubTypeId > 7).ToList();
-                table = getCostTable(item, list1, parameterSelection.ShowRates, $"Sub total {item.EnergyType.Name}");
-                document.Add(table);
-                document.Add(new Paragraph(""));
+                //Header
+                if (!isFirstPage)
+                    document.Add(new AreaBreak());
+                document.Add(getHeaderParagraph(item, address, meter));
 
-                var list2 = _settlementDataList
-                    .Where(w => w.CostCategory.EnergySubTypeId >= 3
-                             && w.CostCategory.EnergySubTypeId <= 7
-                             && w.CostCategory.EnergySubTypeId != 5)
-                    .ToList();
-                table = getCostTable(item, list2, parameterSelection.ShowRates, $"Sub total {item.EnergyType.Name} return");
-                document.Add(table);
-                document.Add(new Paragraph(""));
+                isFirstPage = false;
+                energyType = item.EnergyType;
+                startRange = item.StartRange;
+                endRange = item.EndRange;
 
-                var list3 = _settlementDataList.Where(w => w.CostCategory.EnergySubTypeId == 5).ToList();
-                table = getCostTable(item, list3, parameterSelection.ShowRates, $"Sub total {item.EnergyType.Name} cost");
-                document.Add(table);
+                ParameterPeriod parameterPeriod = new();
+                parameterPeriod.EnergyType = energyType;
+                parameterPeriod.AddressId = address.Id;
+                parameterPeriod.StartRange = startRange;
+                parameterPeriod.EndRange = endRange;
+                parameterPeriod.ShowType = Common.Enums.ShowType.Value;
+                parameterPeriod.PeriodType = Common.Enums.Period.SettlementDay;
+                parameterPeriod.PredictMissingData = parameterSelection.PredictMissingData;
+                parameterPeriod.TarifGroupId = item.TarifGroup;
+                parameterPeriod.QuantityReduction = 1;
 
-                document.Add(new Paragraph(""));
+                _periodicDataList = await LibPeriodicDate.GetRangeAsync(parameterPeriod);
+                _settlementDataList = await _unitOfWork.CostCategoriesRepo.MapCostCategories(_periodicDataList);
+                if (parameterSelection.ShowRates == false)
+                    _settlementDataList = mergeSettlementData(_settlementDataList);
 
-                setSettlementSubTotal(energyType, _settlementDataList);
+                if (_periodicDataList.Count == 0)
+                {
+                    document.Add(new Paragraph($"No data found for energy type {energyType.Name}"));
+                    document.Add(new Paragraph("\n"));
+                }
+                else
+                {
+                    table = new Table(_pointColumnWidths);
+                    GetSectionHeader(table, await getSectionHeaderText(item, address, meter));
+                    document.Add(table);
+                    document.Add(new Paragraph(""));
 
-                table = setTotalToTable(item, _settlementDataList, parameterSelection.ShowRates);
-                document.Add(table);
+                    var list1 = _settlementDataList.Where(w => w.CostCategory.EnergySubTypeId < 3 || w.CostCategory.EnergySubTypeId > 7).ToList();
+                    table = getCostTable(item, list1, parameterSelection.ShowRates, $"Sub total {item.EnergyType.Name}");
+                    document.Add(table);
+                    document.Add(new Paragraph(""));
 
-                document.Add(new Paragraph(""));
-                table = getPricePerUnit(item, _periodicDataList, _settlementDataList);
-                document.Add(table);
+                    var list2 = _settlementDataList
+                        .Where(w => w.CostCategory.EnergySubTypeId >= 3
+                                 && w.CostCategory.EnergySubTypeId <= 7
+                                 && w.CostCategory.EnergySubTypeId != 5)
+                        .ToList();
+                    table = getCostTable(item, list2, parameterSelection.ShowRates, $"Sub total {item.EnergyType.Name} return");
+                    document.Add(table);
+                    document.Add(new Paragraph(""));
+
+                    var list3 = _settlementDataList.Where(w => w.CostCategory.EnergySubTypeId == 5).ToList();
+                    table = getCostTable(item, list3, parameterSelection.ShowRates, $"Sub total {item.EnergyType.Name} cost");
+                    document.Add(table);
+
+                    document.Add(new Paragraph(""));
+
+                    setSettlementSubTotal(energyType, _settlementDataList);
+
+                    table = setTotalToTable(item, _settlementDataList, parameterSelection.ShowRates);
+                    document.Add(table);
+
+                    document.Add(new Paragraph(""));
+                    table = getPricePerUnit(item, _periodicDataList, _settlementDataList);
+                    document.Add(table);
+                }
             }
         } // End of loop of selected energy types
 

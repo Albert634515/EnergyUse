@@ -4,6 +4,7 @@ using EnergyUse.Core.Controllers;
 using EnergyUse.Models;
 using EnergyUse.Models.Common;
 using EnergyUse.Core.Interfaces;
+using System.Windows;
 
 namespace WpfUI.ViewModels;
 
@@ -367,6 +368,65 @@ public class SettlementReportViewModel : ViewModelBase
         return result;
     }
 
-    private void OnSelect() => closeRequested?.Invoke(true);
+    private async void OnSelect()
+    {
+        var meterPeriodError = await getMeterPeriodError();
+        if (meterPeriodError != null)
+        {
+            MessageBox.Show(
+                meterPeriodError,
+                "Settlement report",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+            return;
+        }
+
+        closeRequested?.Invoke(true);
+    }
+
+    private async Task<string?> getMeterPeriodError()
+    {
+        if (SelectedAddress == null)
+            return "Please select an address.";
+
+        foreach (var selection in DateSelections.Where(selection => selection.IsValid()))
+        {
+            var start = selection.DateFrom!.Value.Date;
+            var end = selection.DateTill!.Value.Date;
+            var energyType = selection.SelectedEnergyType!;
+            var meters = (await _controller.UnitOfWork.MeterRepo.SelectOverlappingPeriod(
+                    SelectedAddress.Id,
+                    energyType.Id,
+                    start,
+                    end))
+                .ToList();
+
+            if (meters.Count == 0)
+            {
+                return $"No meter is available for {energyType.Name} in the selected period " +
+                       $"{start:dd-MM-yyyy} - {end:dd-MM-yyyy}.";
+            }
+
+            if (meters.Count > 1)
+            {
+                return $"The selected period {start:dd-MM-yyyy} - {end:dd-MM-yyyy} for " +
+                       $"{energyType.Name} overlaps multiple meters. Select a period within one meter.";
+            }
+
+            var meter = meters[0];
+            if (start < meter.ActiveFrom.Date ||
+                (meter.ActiveTill.HasValue && end > meter.ActiveTill.Value.Date))
+            {
+                var activeTill = meter.ActiveTill.HasValue
+                    ? meter.ActiveTill.Value.ToString("dd-MM-yyyy")
+                    : "no end date";
+                return $"The selected period for {energyType.Name} must be within meter " +
+                       $"'{meter.Description}' ({meter.ActiveFrom:dd-MM-yyyy} - {activeTill}).";
+            }
+        }
+
+        return null;
+    }
+
     private void OnCancel() => closeRequested?.Invoke(false);
 }

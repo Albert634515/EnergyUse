@@ -207,6 +207,7 @@
             resources.ApplyResources(CboMeters, "CboMeters");
             CboMeters.Name = "CboMeters";
             CboMeters.ValueMember = "Id";
+            CboMeters.SelectionChangeCommitted += CboMeters_SelectionChangeCommitted;
             // 
             // bsMeter
             // 

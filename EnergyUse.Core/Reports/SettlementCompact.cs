@@ -34,63 +34,81 @@ public class SettlementCompact : SettlementBase
         var LibPeriodicDate = new Manager.LibPeriodicDate(_dbFileName);
         _settlementSubTotalList = new List<SettlementSubTotal>();
 
-        foreach (SelectedEnergyType item in parameterSelection.SelectedEnergyTypeList)
+        foreach (SelectedEnergyType selectedItem in parameterSelection.SelectedEnergyTypeList)
         {
-            //Header 
-            if (!isFirstPage)
-                document.Add(new AreaBreak());
-            document.Add(getHeaderParagraph(item, address));
-
-            isFirstPage = false;
-            energyType = item.EnergyType;
-            startRange = item.StartRange;
-            endRange = item.EndRange;
-
-            ParameterPeriod parameterPeriod = new();
-            parameterPeriod.EnergyType = energyType;
-            parameterPeriod.AddressId = address.Id;
-            parameterPeriod.StartRange = startRange;
-            parameterPeriod.EndRange = endRange;
-            parameterPeriod.ShowType = Common.Enums.ShowType.Value;
-            parameterPeriod.PeriodType = Common.Enums.Period.SettlementDay;
-            parameterPeriod.PredictMissingData = parameterSelection.PredictMissingData;
-            parameterPeriod.TarifGroupId = item.TarifGroup;
-            parameterPeriod.QuantityReduction = 1;
-
-            List<PeriodicData> periodicData = await LibPeriodicDate.GetRangeAsync(parameterPeriod);
-            List<SettlementData> settlementDataList = await _unitOfWork.CostCategoriesRepo.MapCostCategories(periodicData);
-            if (parameterSelection.ShowRates == false)
-                settlementDataList = mergeSettlementData(settlementDataList);
-
-            if (periodicData.Count == 0)
+            var meterPeriods = await getMeterPeriods(selectedItem, address.Id);
+            if (meterPeriods.Count == 0)
             {
-                document.Add(new Paragraph($"No data found for energy type {energyType.Name}"));
-                document.Add(new Paragraph("\n"));
+                if (!isFirstPage)
+                    document.Add(new AreaBreak());
+                document.Add(new Paragraph(
+                    $"Settlement period: {selectedItem.StartRange:dd-MM-yyyy} - {selectedItem.EndRange:dd-MM-yyyy}"));
+                document.Add(new Paragraph($"No meter found for energy type {selectedItem.EnergyType.Name}"));
+                isFirstPage = false;
+                continue;
             }
-            else
+
+            foreach (var meterPeriod in meterPeriods)
             {
-                table = new Table(_pointColumnWidths);
-                GetSectionHeader(table, await getSectionHeaderText(item, address));
-                document.Add(table);
-                document.Add(new Paragraph(""));
+                var item = meterPeriod.Selection;
+                var meter = meterPeriod.Meter;
 
-                table = getCostTable(item, settlementDataList, parameterSelection.ShowRates, $"Sub total {item.EnergyType.Name}");
-                document.Add(table);
+                //Header
+                if (!isFirstPage)
+                    document.Add(new AreaBreak());
+                document.Add(getHeaderParagraph(item, address, meter));
 
-                document.Add(new Paragraph(""));
+                isFirstPage = false;
+                energyType = item.EnergyType;
+                startRange = item.StartRange;
+                endRange = item.EndRange;
 
-                setSettlementSubTotal(energyType, settlementDataList);
+                ParameterPeriod parameterPeriod = new();
+                parameterPeriod.EnergyType = energyType;
+                parameterPeriod.AddressId = address.Id;
+                parameterPeriod.StartRange = startRange;
+                parameterPeriod.EndRange = endRange;
+                parameterPeriod.ShowType = Common.Enums.ShowType.Value;
+                parameterPeriod.PeriodType = Common.Enums.Period.SettlementDay;
+                parameterPeriod.PredictMissingData = parameterSelection.PredictMissingData;
+                parameterPeriod.TarifGroupId = item.TarifGroup;
+                parameterPeriod.QuantityReduction = 1;
 
-                table = setTotalToTable(item, settlementDataList, parameterSelection.ShowRates);
-                document.Add(table);
+                List<PeriodicData> periodicData = await LibPeriodicDate.GetRangeAsync(parameterPeriod);
+                List<SettlementData> settlementDataList = await _unitOfWork.CostCategoriesRepo.MapCostCategories(periodicData);
+                if (parameterSelection.ShowRates == false)
+                    settlementDataList = mergeSettlementData(settlementDataList);
+
+                if (periodicData.Count == 0)
+                {
+                    document.Add(new Paragraph($"No data found for energy type {energyType.Name}"));
+                    document.Add(new Paragraph("\n"));
+                }
+                else
+                {
+                    table = new Table(_pointColumnWidths);
+                    GetSectionHeader(table, await getSectionHeaderText(item, address, meter));
+                    document.Add(table);
+                    document.Add(new Paragraph(""));
+
+                    table = getCostTable(item, settlementDataList, parameterSelection.ShowRates, $"Sub total {item.EnergyType.Name}");
+                    document.Add(table);
+
+                    document.Add(new Paragraph(""));
+
+                    setSettlementSubTotal(energyType, settlementDataList);
+
+                    table = setTotalToTable(item, settlementDataList, parameterSelection.ShowRates);
+                    document.Add(table);
+                }
             }
-        } // End of loop of selected energy types     
-       
+        } // End of loop of selected energy types
+
         document.Add(new Paragraph(""));
 
         table = await getPayments(address.Id, parameterSelection.PreSelectedPeriodId, parameterSelection.StartRange, parameterSelection.EndRange);
         document.Add(table);
 
         return System.IO.Path.Combine(dest, fileName);
-    }     
+    }
 }

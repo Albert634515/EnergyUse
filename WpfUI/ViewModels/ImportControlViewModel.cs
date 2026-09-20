@@ -51,7 +51,8 @@ public class ImportControlViewModel : ViewModelBase
             if (SetProperty(ref _selectedMeter, value))
             {
                 _settings.Save("LastSelectedMeter", value?.Id.ToString() ?? "");
-                setLastUsedFileAndAutoImport();
+                clearImportPreview();
+                loadSelectedMeterData();
             }
         }
     }
@@ -76,9 +77,11 @@ public class ImportControlViewModel : ViewModelBase
         CurrentAddress = address;
         CurrentEnergyType = energyType;
 
-        MeterReadings.Clear();
+        _selectedMeter = null;
+        OnPropertyChanged(nameof(SelectedMeter));
+        clearImportPreview();
+        ImportFile = string.Empty;
         setMeters();
-        setLastUsedFileAndAutoImport();
     }
 
     private async void setMeters()
@@ -107,15 +110,88 @@ public class ImportControlViewModel : ViewModelBase
         }
     }
 
-    private void setLastUsedFileAndAutoImport()
+    private async void loadSelectedMeterData()
     {
         if (SelectedMeter == null)
+        {
+            ImportFile = string.Empty;
             return;
+        }
 
+        var selectedMeter = SelectedMeter;
         ImportFile = _settings.GetLastUsedImportFile(getKey()) ?? "";
 
-        if (!string.IsNullOrWhiteSpace(ImportFile))
-            SetData();
+        try
+        {
+            var readings = (await _uow.MeterReadingRepo.SelectByMeterId(selectedMeter.Id)).ToList();
+
+            if (SelectedMeter?.Id != selectedMeter.Id)
+                return;
+
+            _uow.meterReadings = readings;
+            await mergeCsvDataForSelectedMeter(selectedMeter);
+            MeterReadings.Clear();
+            foreach (var reading in _uow.meterReadings.OrderByDescending(reading => reading.RegistrationDate))
+                MeterReadings.Add(reading);
+        }
+        catch (Exception ex)
+        {
+            _dialog.Show(ex.Message, "Import");
+        }
+    }
+
+    private void clearImportPreview()
+    {
+        _uow.CancelChanges();
+        _uow.meterReadings = new List<MeterReading>();
+        MeterReadings.Clear();
+    }
+
+    private async Task mergeCsvDataForSelectedMeter(Meter selectedMeter)
+    {
+        if (CurrentEnergyType == null || string.IsNullOrWhiteSpace(ImportFile) || !File.Exists(ImportFile))
+            return;
+
+        var libEpplus = new LibEpplus(Config.GetDbFileName());
+        var importedReadings = libEpplus.ImportFromCsvFile(ImportFile, CurrentEnergyType, selectedMeter)
+            .OrderByDescending(reading => reading.RegistrationDate)
+            .GroupBy(reading => reading.RegistrationDate.Date)
+            .Select(group => group.First())
+            .Where(reading => reading.RegistrationDate.Date >= selectedMeter.ActiveFrom.Date
+                           && (selectedMeter.ActiveTill == null ||
+                               reading.RegistrationDate.Date <= selectedMeter.ActiveTill.Value.Date))
+            .OrderBy(reading => reading.RegistrationDate)
+            .ToList();
+
+        foreach (var importedReading in importedReadings)
+        {
+            var existingReading = _uow.meterReadings.FirstOrDefault(reading =>
+                reading.MeterId == selectedMeter.Id &&
+                reading.RegistrationDate.Date == importedReading.RegistrationDate.Date);
+
+            if (existingReading == null)
+            {
+                importedReading.Id = null;
+                importedReading.MeterId = selectedMeter.Id;
+                importedReading.EnergyTypeId = CurrentEnergyType.Id;
+                importedReading.WeekNo = System.Globalization.ISOWeek.GetWeekOfYear(importedReading.RegistrationDate);
+                _uow.meterReadings.Add(importedReading);
+                continue;
+            }
+
+            existingReading.RateNormal = importedReading.RateNormal;
+            existingReading.RateLow = importedReading.RateLow;
+            existingReading.ReturnDeliveryLow = importedReading.ReturnDeliveryLow;
+            existingReading.ReturnDeliveryNormal = importedReading.ReturnDeliveryNormal;
+            existingReading.WeekNo = System.Globalization.ISOWeek.GetWeekOfYear(existingReading.RegistrationDate);
+        }
+
+        if (_uow.meterReadings.Count > 0)
+        {
+            var libMeterReading = new LibMeterReading(Config.GetDbFileName());
+            _uow.meterReadings = await libMeterReading
+                .RecalculateReadingsDiffPreviousDay(_uow.meterReadings);
+        }
     }
 
     public async void SetData()
@@ -123,16 +199,21 @@ public class ImportControlViewModel : ViewModelBase
         if (!validateImport())
             return;
 
+        var selectedMeter = SelectedMeter!;
+
         try
         {
             var result = await _importService.ImportAsync(ImportFile,
                                                             CurrentAddress!,
                                                             CurrentEnergyType!,
-                                                            SelectedMeter!,
+                                                            selectedMeter,
                                                             _uow);
 
+            if (SelectedMeter?.Id != selectedMeter.Id)
+                return;
+
             MeterReadings.Clear();
-            foreach (var r in result)
+            foreach (var r in result.Where(reading => reading.MeterId == selectedMeter.Id))
                 MeterReadings.Add(r);
         }
         catch (Exception ex)

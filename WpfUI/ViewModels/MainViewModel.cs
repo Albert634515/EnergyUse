@@ -420,7 +420,7 @@ public class MainViewModel : ViewModelBase
         MessageBox.Show("Recalculate nog te implementeren in WPF");
     }
 
-    private void recalculateAll()
+    private async void recalculateAll()
     {
         if (SelectedAddress == null || SelectedEnergyType == null)
             return;
@@ -428,13 +428,20 @@ public class MainViewModel : ViewModelBase
         var msg = $"Wil je alle data opnieuw berekenen voor energietype '{SelectedEnergyType.Name}'?";
         if (MessageBox.Show(msg, "Alles herberekenen", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
         {
-            _controller.RecalculateReadingsDiffPreviousDay(
-                                                            DateTime.MinValue,
-                                                            DateTime.MinValue,
-                                                            SelectedEnergyType.Id,
-                                                            SelectedAddress.Id);
+            try
+            {
+                await _controller.RecalculateReadingsDiffPreviousDay(
+                    DateTime.MinValue,
+                    DateTime.MinValue,
+                    SelectedEnergyType.Id,
+                    SelectedAddress.Id);
 
-            refreshViews(false);
+                refreshViews(false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Alles herberekenen", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 

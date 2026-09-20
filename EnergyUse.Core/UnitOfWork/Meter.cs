@@ -25,7 +25,41 @@ public class Meter : IUnitOfWork
 
     public int Complete()
     {
+        closePreviousMeters();
         return _context.SaveChanges();
+    }
+
+    private void closePreviousMeters()
+    {
+        var newMeters = _context.ChangeTracker
+            .Entries<Models.Meter>()
+            .Where(entry => entry.State == Microsoft.EntityFrameworkCore.EntityState.Added)
+            .Select(entry => entry.Entity)
+            .OrderBy(meter => meter.ActiveFrom)
+            .ToList();
+
+        foreach (var newMeter in newMeters)
+        {
+            if (!newMeter.AddressId.HasValue ||
+                !newMeter.EnergyTypeId.HasValue ||
+                newMeter.ActiveFrom == DateTime.MinValue)
+            {
+                continue;
+            }
+
+            var previousMeter = _context.Meters
+                .Where(meter => meter.AddressId == newMeter.AddressId
+                             && meter.EnergyTypeId == newMeter.EnergyTypeId
+                             && meter.ActiveFrom < newMeter.ActiveFrom)
+                .OrderByDescending(meter => meter.ActiveFrom)
+                .FirstOrDefault();
+
+            if (previousMeter == null)
+                continue;
+
+            previousMeter.ActiveTill = newMeter.ActiveFrom.Date.AddDays(-1);
+            previousMeter.Active = false;
+        }
     }
 
     public bool HasChanges()

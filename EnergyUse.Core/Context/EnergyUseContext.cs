@@ -165,6 +165,7 @@ public partial class EnergyUseContext : DbContext
             entity.Property(p => p.Description).HasColumnType("VARCHAR (50)");
             entity.Property(p => p.Number).HasColumnType("VARCHAR (50)");
             entity.Property(p => p.ActiveFrom).HasColumnType("DATE");
+            entity.Property(p => p.ActiveTill).HasColumnType("DATE");
 
             entity.HasOne(h => h.Address).WithMany(p => p.Meters).HasForeignKey(d => d.AddressId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne(h => h.EnergyType).WithMany(p => p.Meters).HasForeignKey(d => d.EnergyTypeId).OnDelete(DeleteBehavior.NoAction);

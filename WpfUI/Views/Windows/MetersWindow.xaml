@@ -53,6 +53,7 @@
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="200"/>
                     <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="120"/>
                     <DataGridCheckBoxColumn Header="Active" Binding="{Binding Active}" Width="80"/>
+                    <DataGridTextColumn Header="Active till" Binding="{Binding ActiveTill, StringFormat=d}" Width="100"/>
                 </DataGrid.Columns>
             </DataGrid>
 
@@ -65,6 +66,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -108,6 +110,11 @@
                     <TextBlock Text="Active from" Grid.Row="5" Grid.Column="0"/>
                     <DatePicker Grid.Row="5" Grid.Column="1" Margin="5"
                                 SelectedDate="{Binding SelectedMeter.ActiveFrom, Mode=TwoWay}"/>
+
+                    <!-- Active Till -->
+                    <TextBlock Text="Active till" Grid.Row="6" Grid.Column="0"/>
+                    <DatePicker Grid.Row="6" Grid.Column="1" Margin="5"
+                                SelectedDate="{Binding SelectedMeter.ActiveTill, Mode=TwoWay}"/>
                 </Grid>
             </GroupBox>
 

@@ -11,6 +11,7 @@ public class Settlement : IUnitOfWork
     public RepoAddress AddressRepo;
     public RepoCostCategories CostCategoriesRepo;
     public RepoVatTarif VatTarifRepo;
+    public RepoMeter MeterRepo;
     public RepoMeterReading MeterReadingRepo;
     public RepoPayment PaymentRepo;
     public RepoPredefinedPeriodDate PredefinedPeriodDateRepo;
@@ -22,6 +23,7 @@ public class Settlement : IUnitOfWork
         AddressRepo = new RepoAddress(_context);
         CostCategoriesRepo = new RepoCostCategories(_context);
         VatTarifRepo = new RepoVatTarif(_context);
+        MeterRepo = new RepoMeter(_context);
         MeterReadingRepo = new RepoMeterReading(_context);
         PaymentRepo = new RepoPayment(_context);
         PredefinedPeriodDateRepo = new RepoPredefinedPeriodDate(_context);

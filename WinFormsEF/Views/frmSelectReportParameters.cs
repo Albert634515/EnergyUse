@@ -207,6 +207,47 @@ public partial class frmSelectReportParameters : Form
                         ucDateSelection.cboTarifGroups.Focus();
                         return false;
                     }
+
+                    var meters = _controller.UnitOfWork.MeterRepo
+                        .SelectOverlappingPeriod(address.Id, energyType.Id, startDate, endDate)
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+
+                    if (meters.Count == 0)
+                    {
+                        MessageBox.Show(
+                            this,
+                            $"No meter is available for {energyType.Name} in the selected period " +
+                            $"{startDate:dd-MM-yyyy} - {endDate:dd-MM-yyyy}.");
+                        ucDateSelection.dtpFrom.Focus();
+                        return false;
+                    }
+
+                    if (meters.Count > 1)
+                    {
+                        MessageBox.Show(
+                            this,
+                            $"The selected period {startDate:dd-MM-yyyy} - {endDate:dd-MM-yyyy} for " +
+                            $"{energyType.Name} overlaps multiple meters. Select a period within one meter.");
+                        ucDateSelection.dtpFrom.Focus();
+                        return false;
+                    }
+
+                    var meter = meters[0];
+                    if (startDate.Date < meter.ActiveFrom.Date ||
+                        (meter.ActiveTill.HasValue && endDate.Date > meter.ActiveTill.Value.Date))
+                    {
+                        var activeTill = meter.ActiveTill.HasValue
+                            ? meter.ActiveTill.Value.ToString("dd-MM-yyyy")
+                            : "no end date";
+                        MessageBox.Show(
+                            this,
+                            $"The selected period for {energyType.Name} must be within meter " +
+                            $"'{meter.Description}' ({meter.ActiveFrom:dd-MM-yyyy} - {activeTill}).");
+                        ucDateSelection.dtpFrom.Focus();
+                        return false;
+                    }
                 }
             }
         }
