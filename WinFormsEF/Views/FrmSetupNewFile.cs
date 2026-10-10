@@ -370,9 +370,6 @@ public partial class FrmSetupNewFile : Form
         var energyTypeElectricity = _controller.UnitOfWork.EnergyTypeRepo.SelectByName("Electricity");
         var energySubType = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Normal");
         var energySubTypeOther = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Other");
-        var tarifGroupDefault = _controller.UnitOfWork.TarifGroupRepo.SelectById((long)TariffGroupType.EnergyCosts);
-        var tarifGroupGeneral = _controller.UnitOfWork.TarifGroupRepo.SelectById((long)TariffGroupType.GeneralCosts);
-
         CostCategory costCategory;
         if (energyTypeElectricity != null)
         {
@@ -383,7 +380,7 @@ public partial class FrmSetupNewFile : Form
             costCategory.EnergyTypeId = energyTypeElectricity.Id;
             costCategory.EnergySubTypeId = energySubType.Id;
             costCategory.UnitId = "kWh";
-            costCategory.TariffGroupId = tarifGroupDefault.Id;
+            costCategory.TariffGroupTypeId = (int)TariffGroupType.EnergyCosts;
             costCategories.Add(costCategory);
 
             energySubType = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Low");
@@ -394,7 +391,7 @@ public partial class FrmSetupNewFile : Form
             costCategory.EnergyTypeId = energyTypeElectricity.Id;
             costCategory.EnergySubTypeId = energySubType.Id;
             costCategory.UnitId = "kWh";
-            costCategory.TariffGroupId = tarifGroupDefault.Id;
+            costCategory.TariffGroupTypeId = (int)TariffGroupType.EnergyCosts;
             costCategories.Add(costCategory);
 
             energySubType = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("ReturnNormal");
@@ -405,7 +402,7 @@ public partial class FrmSetupNewFile : Form
             costCategory.EnergyTypeId = energyTypeElectricity.Id;
             costCategory.EnergySubTypeId = energySubType.Id;
             costCategory.UnitId = "kWh";
-            costCategory.TariffGroupId = tarifGroupDefault.Id;
+            costCategory.TariffGroupTypeId = (int)TariffGroupType.EnergyCosts;
             costCategories.Add(costCategory);
 
             energySubType = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("ReturnLow");
@@ -416,7 +413,7 @@ public partial class FrmSetupNewFile : Form
             costCategory.EnergyTypeId = energyTypeElectricity.Id;
             costCategory.EnergySubTypeId = energySubType.Id;
             costCategory.UnitId = "kWh";
-            costCategory.TariffGroupId = tarifGroupDefault.Id;
+            costCategory.TariffGroupTypeId = (int)TariffGroupType.EnergyCosts;
             costCategories.Add(costCategory);
 
             costCategory = new CostCategory();
@@ -426,7 +423,7 @@ public partial class FrmSetupNewFile : Form
             costCategory.EnergyTypeId = energyTypeElectricity.Id;
             costCategory.EnergySubTypeId = energySubTypeOther.Id;
             costCategory.UnitId = "Day";
-            costCategory.TariffGroupId = tarifGroupGeneral.Id;
+            costCategory.TariffGroupTypeId = (int)TariffGroupType.GeneralCosts;
             costCategory.CalculateVat = true;
             costCategories.Add(costCategory);
 
@@ -437,7 +434,7 @@ public partial class FrmSetupNewFile : Form
             costCategory.EnergyTypeId = energyTypeElectricity.Id;
             costCategory.EnergySubTypeId = energySubTypeOther.Id;
             costCategory.UnitId = "Day";
-            costCategory.TariffGroupId = tarifGroupGeneral.Id;
+            costCategory.TariffGroupTypeId = (int)TariffGroupType.GeneralCosts;
             costCategory.CalculateVat = true;
             costCategories.Add(costCategory);
 
@@ -448,7 +445,7 @@ public partial class FrmSetupNewFile : Form
             costCategory.EnergyTypeId = energyTypeElectricity.Id;
             costCategory.EnergySubTypeId = energySubTypeOther.Id;
             costCategory.UnitId = "Day";
-            costCategory.TariffGroupId = tarifGroupGeneral.Id;
+            costCategory.TariffGroupTypeId = (int)TariffGroupType.GeneralCosts;
             costCategory.CalculateVat = true;
             costCategories.Add(costCategory);
 
@@ -459,7 +456,7 @@ public partial class FrmSetupNewFile : Form
             costCategory.EnergyTypeId = energyTypeElectricity.Id;
             costCategory.EnergySubTypeId = energySubTypeOther.Id;
             costCategory.UnitId = "kWh";
-            costCategory.TariffGroupId = tarifGroupGeneral.Id;
+            costCategory.TariffGroupTypeId = (int)TariffGroupType.GeneralCosts;
             costCategory.CalculateVat = true;
             costCategory.CanNotBeNegative = true;
             costCategory.NotCalculateOverReturn = true;
@@ -477,7 +474,7 @@ public partial class FrmSetupNewFile : Form
             costCategory.EnergyTypeId = energyTypeGas.Id;
             costCategory.EnergySubTypeId = energySubType.Id;
             costCategory.UnitId = "m3";
-            costCategory.TariffGroupId = tarifGroupDefault.Id;
+            costCategory.TariffGroupTypeId = (int)TariffGroupType.EnergyCosts;
             costCategory.CalculateVat = true;
             costCategories.Add(costCategory);
 
@@ -488,7 +485,7 @@ public partial class FrmSetupNewFile : Form
             costCategory.EnergyTypeId = energyTypeGas.Id;
             costCategory.EnergySubTypeId = energySubTypeOther.Id;
             costCategory.UnitId = "Day";
-            costCategory.TariffGroupId = tarifGroupGeneral.Id;
+            costCategory.TariffGroupTypeId = (int)TariffGroupType.GeneralCosts;
             costCategory.CalculateVat = true;
             costCategories.Add(costCategory);
 
@@ -499,7 +496,7 @@ public partial class FrmSetupNewFile : Form
             costCategory.EnergyTypeId = energyTypeGas.Id;
             costCategory.EnergySubTypeId = energySubTypeOther.Id;
             costCategory.UnitId = "Day";
-            costCategory.TariffGroupId = tarifGroupGeneral.Id;
+            costCategory.TariffGroupTypeId = (int)TariffGroupType.GeneralCosts;
             costCategory.CalculateVat = true;
             costCategories.Add(costCategory);
 
@@ -510,7 +507,7 @@ public partial class FrmSetupNewFile : Form
             costCategory.EnergyTypeId = energyTypeGas.Id;
             costCategory.EnergySubTypeId = energySubTypeOther.Id;
             costCategory.UnitId = "m3";
-            costCategory.TariffGroupId = tarifGroupGeneral.Id;
+            costCategory.TariffGroupTypeId = (int)TariffGroupType.GeneralCosts;
             costCategory.CalculateVat = true;
             costCategories.Add(costCategory);
 
@@ -521,7 +518,7 @@ public partial class FrmSetupNewFile : Form
             costCategory.EnergyTypeId = energyTypeGas.Id;
             costCategory.EnergySubTypeId = energySubTypeOther.Id;
             costCategory.UnitId = "m3";
-            costCategory.TariffGroupId = tarifGroupGeneral.Id;
+            costCategory.TariffGroupTypeId = (int)TariffGroupType.GeneralCosts;
             costCategory.CalculateVat = true;
             costCategories.Add(costCategory);
 
@@ -532,7 +529,7 @@ public partial class FrmSetupNewFile : Form
             costCategory.EnergyTypeId = energyTypeGas.Id;
             costCategory.EnergySubTypeId = energySubTypeOther.Id;
             costCategory.UnitId = "kWh";
-            costCategory.TariffGroupId = tarifGroupGeneral.Id;
+            costCategory.TariffGroupTypeId = (int)TariffGroupType.GeneralCosts;
             costCategory.CalculateVat = true;
             costCategory.CanNotBeNegative = true;
             costCategory.NotCalculateOverReturn = true;
@@ -550,7 +547,7 @@ public partial class FrmSetupNewFile : Form
             costCategory.EnergyTypeId = energyTypeWater.Id;
             costCategory.EnergySubTypeId = energySubType.Id;
             costCategory.UnitId = "m3";
-            costCategory.TariffGroupId = tarifGroupDefault.Id;
+            costCategory.TariffGroupTypeId = (int)TariffGroupType.EnergyCosts;
             costCategory.CalculateVat = true;
             costCategories.Add(costCategory);
         }

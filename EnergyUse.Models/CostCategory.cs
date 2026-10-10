@@ -17,11 +17,11 @@ public partial class CostCategory
     public bool CanNotBeNegative { get; set; }
     public bool NotCalculateOverReturn { get; set; }
 
-    public long? CalculationTypeId { get; set; }
+    public long CalculationTypeId { get; set; } = 1;
     public long? EnergyTypeId { get; set; }
-    public long? EnergySubTypeId { get; set; }
+    public long EnergySubTypeId { get; set; } = 5;
+    public int TariffGroupTypeId { get; set; } = 2;
     public string? UnitId { get; set; }
-    public long? TariffGroupId { get; set; }
     public DateTime? Start { get; set; }
     public DateTime? End { get; set; }
 
@@ -31,10 +31,9 @@ public partial class CostCategory
     public byte ColorB { get; set; }
 
     public virtual Unit? Unit { get; set; }
-    public virtual CalculationType? CalculationType { get; set; }
-    public virtual EnergySubType? EnergySubType { get; set; }
+    public virtual CalculationType CalculationType { get; set; } = null!;
+    public virtual EnergySubType EnergySubType { get; set; } = null!;
     public virtual EnergyType? EnergyType { get; set; }
-    public virtual TariffGroup? TariffGroup { get; set; }
     public virtual ICollection<CostType> CostTypes { get; set; }
     public virtual ICollection<Rate> Rates { get; set; }
     public virtual ICollection<VatTarif> VatTarifs { get; set; }

@@ -86,6 +86,9 @@ public partial class EnergyUseContext : DbContext
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.CalculateVat).HasColumnType("BOOLEAN").HasDefaultValueSql("True");
             entity.Property(e => e.CanNotBeNegative).HasColumnType("BOOLEAN").HasDefaultValueSql("False");
+            entity.Property(e => e.CalculationTypeId).IsRequired();
+            entity.Property(e => e.EnergySubTypeId).IsRequired();
+            entity.Property(e => e.TariffGroupTypeId).IsRequired();
             entity.Property(e => e.Name).HasColumnType("VARCHAR (50)");
             entity.Property(e => e.NotCalculateOverReturn).HasColumnType("BOOLEAN").HasDefaultValueSql("False");
             entity.Property(e => e.SortOrder).HasColumnType("INTEGER (3)");
@@ -99,10 +102,9 @@ public partial class EnergyUseContext : DbContext
             entity.Property(e => e.ColorG).HasColumnType("INTEGER").HasDefaultValue(0);
             entity.Property(e => e.ColorB).HasColumnType("INTEGER").HasDefaultValue(0);
 
-            entity.HasOne(d => d.CalculationType).WithMany(p => p.CostCategories).HasForeignKey(d => d.CalculationTypeId).OnDelete(DeleteBehavior.NoAction);
-            entity.HasOne(d => d.EnergySubType).WithMany(p => p.CostCategories).HasForeignKey(d => d.EnergySubTypeId).OnDelete(DeleteBehavior.NoAction);
+            entity.HasOne(d => d.CalculationType).WithMany(p => p.CostCategories).HasForeignKey(d => d.CalculationTypeId).IsRequired().OnDelete(DeleteBehavior.NoAction);
+            entity.HasOne(d => d.EnergySubType).WithMany(p => p.CostCategories).HasForeignKey(d => d.EnergySubTypeId).IsRequired().OnDelete(DeleteBehavior.NoAction);
             entity.HasOne(d => d.EnergyType).WithMany(p => p.CostCategories).HasForeignKey(d => d.EnergyTypeId).OnDelete(DeleteBehavior.NoAction);
-            entity.HasOne(d => d.TariffGroup).WithMany(p => p.CostCategories).HasForeignKey(d => d.TariffGroupId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne(d => d.Unit).WithMany(p => p.CostCategories).HasForeignKey(d => d.UnitId).OnDelete(DeleteBehavior.NoAction);
 
             entity.HasIndex(i => i.EnergyTypeId, "CC_EnergyTypeId");

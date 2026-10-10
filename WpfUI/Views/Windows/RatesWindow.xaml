@@ -17,42 +17,42 @@
         <ToolBar DockPanel.Dock="Top">
             <Button Command="{Binding AddRateCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/add_24x24.png"/>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/WpfUI;component/Resources/add_24x24.png"/>
                     <TextBlock Text="Add" Margin="5 0 0 0"/>
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding SaveRateCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/tick-mark_24x24.png"/>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/WpfUI;component/Resources/tick-mark_24x24.png"/>
                     <TextBlock Text="Save" Margin="5 0 0 0"/>
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding CancelRateCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/clear_24x24.png"/>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/WpfUI;component/Resources/clear_24x24.png"/>
                     <TextBlock Text="Cancel" Margin="5 0 0 0"/>
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding DeleteRateCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/delete_24x24.png"/>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/WpfUI;component/Resources/delete_24x24.png"/>
                     <TextBlock Text="Delete" Margin="5 0 0 0"/>
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding RefreshRatesCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/clock_24x24.png"/>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/WpfUI;component/Resources/clock_24x24.png"/>
                     <TextBlock Text="Refresh" Margin="5 0 0 0"/>
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding CloseCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20" Source="pack://application:,,,/WpfUI;component/Resources/crossed_24x24.png"/>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/WpfUI;component/Resources/crossed_24x24.png"/>
                     <TextBlock Text="Close" Margin="5 0 0 0"/>
                 </StackPanel>
             </Button>
@@ -78,10 +78,19 @@
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
 
                 <StackPanel Margin="0,0,20,0">
+                    <TextBlock Text="Tariff Group"/>
+                    <ComboBox ItemsSource="{Binding TariffGroups}"
+                              SelectedItem="{Binding SelectedTariffGroup}"
+                              DisplayMemberPath="Description"
+                              Width="180"/>
+                </StackPanel>
+
+                <StackPanel Margin="0,0,20,0">
                     <TextBlock Text="Energy Type"/>
                     <ComboBox ItemsSource="{Binding EnergyTypes}"
                               SelectedItem="{Binding SelectedEnergyType}"
                               DisplayMemberPath="Name"
+                              IsEnabled="{Binding CanSelectEnergyType}"
                               Width="180"/>
                 </StackPanel>
 
@@ -90,32 +99,9 @@
                     <ComboBox ItemsSource="{Binding CostCategories}"
                               SelectedItem="{Binding SelectedCostCategory}"
                               DisplayMemberPath="Name"
+                              IsEnabled="{Binding CanSelectCostCategory}"
                               Width="180"/>
                 </StackPanel>
-
-                <StackPanel Margin="0,0,20,0">
-                    <TextBlock Text="Tariff Group"/>
-                    <ComboBox ItemsSource="{Binding TariffGroups}"
-                              SelectedItem="{Binding SelectedTariffGroup}"
-                              DisplayMemberPath="Description"
-                              Width="180"/>
-                </StackPanel>
-
-                <TextBlock Text="{Binding AlwaysCalculatedWithText}"
-                           VerticalAlignment="Bottom"
-                           Margin="20,0,0,0"
-                           FontStyle="Italic">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsAlwaysCalculatedWithVisible}" Value="True">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
 
             </StackPanel>
 
@@ -268,6 +254,8 @@
                             <RowDefinition Height="Auto"/>
                             <!-- Rate Type -->
                             <RowDefinition Height="Auto"/>
+                            <!-- Tariff Group -->
+                            <RowDefinition Height="Auto"/>
                             <!-- Start -->
                             <RowDefinition Height="Auto"/>
                             <!-- End -->
@@ -294,22 +282,32 @@
                                   DisplayMemberPath="Description"
                                   Style="{StaticResource DetailComboBoxStyle}"/>
 
-                        <!-- Start Date -->
-                        <TextBlock Grid.Row="1" Text="Start Date"
+                        <!-- Tariff Group -->
+                        <TextBlock Grid.Row="1" Text="Tariff Group"
                                    Style="{StaticResource DetailLabelStyle}"/>
-                        <DatePicker Grid.Row="1" Grid.Column="1"
+                        <ComboBox Grid.Row="1" Grid.Column="1"
+                                  ItemsSource="{Binding ApplicableRateTariffGroups}"
+                                  SelectedValuePath="Id"
+                                  SelectedValue="{Binding SelectedRate.TariffGroupId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  DisplayMemberPath="Description"
+                                  Style="{StaticResource DetailComboBoxStyle}"/>
+
+                        <!-- Start Date -->
+                        <TextBlock Grid.Row="2" Text="Start Date"
+                                   Style="{StaticResource DetailLabelStyle}"/>
+                        <DatePicker Grid.Row="2" Grid.Column="1"
                                     SelectedDate="{Binding SelectedRate.StartRate}"
                                     Style="{StaticResource DetailDatePickerStyle}"/>
 
                         <!-- End Date -->
-                        <TextBlock Grid.Row="2" Text="End Date"
+                        <TextBlock Grid.Row="3" Text="End Date"
                                    Style="{StaticResource DetailLabelStyle}"/>
-                        <DatePicker Grid.Row="2" Grid.Column="1"
+                        <DatePicker Grid.Row="3" Grid.Column="1"
                                     SelectedDate="{Binding SelectedRate.EndRate}"
                                     Style="{StaticResource DetailDatePickerStyle}"/>
 
                         <!-- Rate -->
-                        <TextBlock Grid.Row="3" Text="Rate">
+                        <TextBlock Grid.Row="4" Text="Rate">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock" BasedOn="{StaticResource DetailLabelStyle}">
                                     <Style.Triggers>
@@ -320,7 +318,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBox Grid.Row="3" Grid.Column="1"
+                        <TextBox Grid.Row="4" Grid.Column="1"
                                  Text="{Binding SelectedRate.RateValue,
                                                 Converter={StaticResource DecimalInputConverter},
                                                 UpdateSourceTrigger=PropertyChanged}">
@@ -337,40 +335,40 @@
                         </TextBox>
 
                         <!-- Expected Price Change -->
-                        <TextBlock Grid.Row="4" Text="Expected Price Change"
+                        <TextBlock Grid.Row="5" Text="Expected Price Change"
                                    Style="{StaticResource DetailLabelStyle}"/>
-                        <TextBox Grid.Row="4" Grid.Column="1"
+                        <TextBox Grid.Row="5" Grid.Column="1"
                                  Text="{Binding SelectedRate.ExpectedPriceChange,
                                                 Converter={StaticResource DecimalInputConverter},
                                                 UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource DetailTextBoxStyle}"/>
 
                         <!-- Price Change -->
-                        <TextBlock Grid.Row="5" Text="Price Change"
+                        <TextBlock Grid.Row="6" Text="Price Change"
                                    Style="{StaticResource DetailLabelStyle}"/>
-                        <TextBox Grid.Row="5" Grid.Column="1"
+                        <TextBox Grid.Row="6" Grid.Column="1"
                                  Text="{Binding SelectedRate.PriceChange}"
                                  IsReadOnly="True"
                                  Style="{StaticResource DetailTextBoxStyle}"/>
 
                         <!-- Future Price excluding VAT -->
-                        <TextBlock Grid.Row="6" Text="Future Price excl. VAT"
+                        <TextBlock Grid.Row="7" Text="Future Price excl. VAT"
                                    Style="{StaticResource DetailLabelStyle}"/>
-                        <TextBlock Grid.Row="6" Grid.Column="1"
+                        <TextBlock Grid.Row="7" Grid.Column="1"
                                    Text="{Binding SelectedRateRow.FutureRateExcludingVat, StringFormat=N5}"
                                    Style="{StaticResource DetailLabelStyle}"/>
 
                         <!-- Future Price including VAT -->
-                        <TextBlock Grid.Row="7" Text="Future Price incl. VAT"
+                        <TextBlock Grid.Row="8" Text="Future Price incl. VAT"
                                    Style="{StaticResource DetailLabelStyle}"/>
-                        <TextBlock Grid.Row="7" Grid.Column="1"
+                        <TextBlock Grid.Row="8" Grid.Column="1"
                                    Text="{Binding SelectedRateRow.FutureRateIncludingVat, StringFormat=N5}"
                                    Style="{StaticResource DetailLabelStyle}"/>
 
                         <!-- Description -->
-                        <TextBlock Grid.Row="8" Text="Description"
+                        <TextBlock Grid.Row="9" Text="Description"
                                    Style="{StaticResource DetailLabelStyle}"/>
-                        <TextBox Grid.Row="8" Grid.Column="1"
+                        <TextBox Grid.Row="9" Grid.Column="1"
                                  Text="{Binding SelectedRate.Description,
                                                 UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource DetailTextBoxStyle}"/>

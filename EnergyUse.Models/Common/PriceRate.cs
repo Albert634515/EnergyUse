@@ -7,4 +7,6 @@ public class PriceRate
     public long RateId { get; set; }
     public long RateTypeId { get; set; }
     public bool LastRateUsed { get; set; }
+    public DateTime StartRate { get; set; } = DateTime.MinValue;
+    public DateTime EndRate { get; set; } = DateTime.MinValue;
 }

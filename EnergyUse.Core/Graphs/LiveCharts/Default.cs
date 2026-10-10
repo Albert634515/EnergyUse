@@ -163,7 +163,7 @@ public class Default : Base
 
     private void resetDataPointsPeriod()
     {
-        _datePoints = new Dictionary<string, List<DatePoint>>();
+        _datePoints = [];
 
         foreach (var energyType in _graphParameter.EnergyTypeList)
         {

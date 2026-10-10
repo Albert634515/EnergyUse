@@ -56,8 +56,8 @@ public partial class FrmRates : Form
     {
         var costCategorie = (EnergyUse.Models.CostCategory)CboCostCategory.SelectedItem;
         var tarifGroups = _controller.UnitOfWork.TarifGroupRepo.GetAll().GetAwaiter().GetResult().ToList();
-        if (costCategorie != null && costCategorie.TariffGroup != null && costCategorie.TariffGroup.Id > 0)
-            tarifGroups = tarifGroups.Where(t => t.Id == costCategorie.TariffGroup.Id).ToList();
+        if (costCategorie != null)
+            tarifGroups = tarifGroups.Where(t => t.TypeId == costCategorie.TariffGroupTypeId).ToList();
 
         bsTarifGroups.DataSource = tarifGroups;
 
@@ -101,15 +101,13 @@ public partial class FrmRates : Form
         {
             var costCategory = (EnergyUse.Models.CostCategory)CboCostCategory.SelectedItem;
 
-            LblTarifGroup.Visible = (costCategory.TariffGroup == null || costCategory.TariffGroup.Id == 0);
-            CboTarifGroup.Visible = LblTarifGroup.Visible;
-
-            if (costCategory.TariffGroup == null || costCategory.TariffGroup.Id == 0)
-                CboTarifGroup.SelectedIndex = -1;
+            LblTarifGroup.Visible = true;
+            CboTarifGroup.Visible = true;
+            setComboTarifGroups();
 
             initAdditionalCategoryAndGroupInfo();
             initRates();
-            setLabelAlwaysCalculatedWith(costCategory.TariffGroup);
+            AlwaysCalculatedWithLabel.Visible = false;
         }
     }
 
@@ -198,20 +196,6 @@ public partial class FrmRates : Form
         }
     }
 
-    private void setLabelAlwaysCalculatedWith(EnergyUse.Models.TariffGroup tarifGroup)
-    {
-        AlwaysCalculatedWithLabel.Visible = false;
-
-        if (tarifGroup != null && tarifGroup.Id > 0)
-        {
-            var message = Managers.Languages.GetResourceString("RatesAlwaysCalculatedWith", "Category is always calculated with tarif group: %s");
-            message = message.Replace("%s", tarifGroup.Description);
-
-            AlwaysCalculatedWithLabel.Visible = true;
-            AlwaysCalculatedWithLabel.Text = message;
-        }
-    }
-
     private void changeRateType()
     {
         var rateType = RateType.UnKnown;
@@ -252,9 +236,7 @@ public partial class FrmRates : Form
 
         _controller.UnitOfWork.RateList = new List<EnergyUse.Models.Rate>();
 
-        if (costCategory != null && costCategory.TariffGroup != null && costCategory.TariffGroup.Id > 0)
-            _controller.UnitOfWork.RateList = _controller.UnitOfWork.RateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, costCategory.TariffGroup.Id).GetAwaiter().GetResult().ToList();
-        else if (costCategory != null && tarifGroup != null && tarifGroup.Id > 0)
+        if (costCategory != null && tarifGroup != null && tarifGroup.Id > 0)
             _controller.UnitOfWork.RateList = _controller.UnitOfWork.RateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, tarifGroup.Id).GetAwaiter().GetResult().ToList();
 
         _controller.UnitOfWork.SetListSorted();
@@ -349,15 +331,8 @@ public partial class FrmRates : Form
 
     private EnergyUse.Models.TariffGroup getCurrentTarifGroup()
     {
-        var costCategory = (EnergyUse.Models.CostCategory)CboCostCategory.SelectedItem;
-        var tarifGroup = costCategory.TariffGroup;
-        if (costCategory.TariffGroup == null || tarifGroup.Id <= 0)
-        {
-            tarifGroup = (EnergyUse.Models.TariffGroup)CboTarifGroup.SelectedItem;
-            tarifGroup ??= new EnergyUse.Models.TariffGroup();
-        }
-
-        return tarifGroup;
+        return (EnergyUse.Models.TariffGroup)CboTarifGroup.SelectedItem
+            ?? new EnergyUse.Models.TariffGroup();
     }
 
     private void deleteRate()

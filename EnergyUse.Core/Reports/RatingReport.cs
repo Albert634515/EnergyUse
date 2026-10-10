@@ -1,5 +1,6 @@
 ﻿using EnergyUse.Models;
 using EnergyUse.Models.Common;
+using EnergyUse.Common.Enums;
 using iText.Kernel.Colors;
 using iText.Kernel.Font;
 using iText.Kernel.Geom;
@@ -54,14 +55,18 @@ public class RatingReport : ReportBase
             var costCategoryList = await _unitOfWork.CostCategoriesRepo.SelectByEnergyTypeAndRange(energyType.Id, startRange, endRange);
             foreach (Models.CostCategory costCategory in costCategoryList)
             {
-                long tarifGroupId = 0;
                 table = new Table(_pointColumnWidths);
                 table.SetKeepTogether(true);
 
-                if (costCategory.TariffGroupId.HasValue)
-                    tarifGroupId = costCategory.TariffGroupId.Value;
-                if (tarifGroupId == 0)
-                    tarifGroupId = item.TarifGroup;
+                var tarifGroupId = costCategory.TariffGroupTypeId switch
+                {
+                    (int)TariffGroupType.GeneralCosts => address.GeneralTariffGroupId,
+                    (int)TariffGroupType.EnergyCosts => item.TarifGroup > 0
+                        ? item.TarifGroup
+                        : address.DefaultTariffGroupId,
+                    _ => null
+                } ?? throw new InvalidOperationException(
+                    $"No tariff group is configured for cost category '{costCategory.Name}'.");
 
                 await GetRateTableHeader(table, costCategory, tarifGroupId);
 

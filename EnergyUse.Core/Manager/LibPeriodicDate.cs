@@ -5,6 +5,7 @@ using EnergyUse.Core.Context;
 using EnergyUse.Core.UnitOfWork;
 using EnergyUse.Models;
 using EnergyUse.Models.Common;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 namespace EnergyUse.Core.Manager;
@@ -28,6 +29,7 @@ public class LibPeriodicDate
     private List<PeriodicDataPerDay> _periodicDataList = new();
 
     private ParameterPeriod _parameterPeriod;
+    private Models.Address? _address;
     private AvgMeterRate? _avgGeneral;
     private decimal _avgCorrectionPercentage = 1;
     private decimal _avgCorrectionPercentageReturn = 1;
@@ -55,6 +57,9 @@ public class LibPeriodicDate
     public async Task<List<PeriodicData>> GetRangeAsync(ParameterPeriod parameterPeriod)
     {
         _parameterPeriod = parameterPeriod;
+        _address = await _context.Addresses
+            .AsNoTracking()
+            .FirstOrDefaultAsync(address => address.Id == parameterPeriod.AddressId);
         _meterReading = new();
         _periodicDataList = new();
         _staffelStates.Clear();
@@ -105,8 +110,15 @@ public class LibPeriodicDate
         // Add rate values
         await addRateToData();
 
+        // Settlement costs must also be calculated for calendar days without meter data.
+        addSettlementCostDays();
+
         // Add addital cost data
         await addCost();
+
+        _periodicDataList = _periodicDataList
+            .OrderBy(x => x.ValueX)
+            .ToList();
     }
 
     /// <summary>
@@ -119,7 +131,8 @@ public class LibPeriodicDate
 
         foreach (var costCategory in costCategoryList)
         {
-            if (costCategory.CalculationType.Id == 1 || costCategory.CalculationType.Id == 3)
+            var calculationTypeId = costCategory.CalculationTypeId;
+            if (calculationTypeId >= 1 && calculationTypeId <= 6)
             {
                 var vatTarifs = costCategory.CalculateVat
                     ? await _vatTarifRepo.GetByCostCategoryId(costCategory.Id)
@@ -128,10 +141,11 @@ public class LibPeriodicDate
                 //Loop data
                 foreach (PeriodicDataPerDay periodicData in _periodicDataList)
                 {
+                    if (periodicData.IsCostOnly && calculationTypeId is 1 or 2)
+                        continue;
+
                     var periodicDate = periodicData.ValueX;
-                    var tarifGroupId = _parameterPeriod.TarifGroupId;
-                    if (costCategory.TariffGroupId.HasValue && costCategory.TariffGroupId > 0)
-                        tarifGroupId = costCategory.TariffGroupId.Value;
+                    var tarifGroupId = getTariffGroupId(costCategory);
 
                     if (costCategory.Start > periodicDate)
                         continue;
@@ -168,7 +182,7 @@ public class LibPeriodicDate
                     var otherCost = new OtherCost
                     {
                         CostCategoryId = costCategory.Id,
-                        CorrectionFactor = periodicData.CorrectionFactor,
+                        CorrectionFactor = calculationTypeId >= 3 ? 0 : periodicData.CorrectionFactor,
                         LastAvailableRateUsed = priceRate?.LastRateUsed ?? false,
                         LastAvailableVatRateUsed = lastAvailableVatRateUsed
                     };
@@ -178,7 +192,11 @@ public class LibPeriodicDate
                         otherCost.RateId = priceRate.RateId;
                         otherCost.Rate = priceRate.Rate;
                         otherCost.PriceAdjustmentFactor = priceRate.PriceAdjustmentFactor;
+                        otherCost.Quantity = getCalculationQuantity(calculationTypeId, periodicData, priceRate);
                     }
+
+                    if (otherCost.Quantity == 0 && calculationTypeId == 6)
+                        continue;
 
                     if (vatTarif is not null)
                     {
@@ -187,12 +205,12 @@ public class LibPeriodicDate
                     }
 
                     if (priceRate?.RateTypeId == (int)RateType.Staffel
-                        && costCategory.CalculationType.Id == 1)
+                        && calculationTypeId == 1)
                     {
                         var portions = await getStaffelPortions(
                             priceRate,
                             periodicData,
-                            costCategory.EnergySubTypeId.GetValueOrDefault());
+                            costCategory.EnergySubTypeId);
 
                         foreach (var portion in portions)
                         {
@@ -218,6 +236,82 @@ public class LibPeriodicDate
                 }
             }
         }
+    }
+
+    private long getTariffGroupId(Models.CostCategory costCategory)
+    {
+        long? tariffGroupId = costCategory.TariffGroupTypeId switch
+        {
+            (int)TariffGroupType.GeneralCosts => _address?.GeneralTariffGroupId,
+            (int)TariffGroupType.EnergyCosts => _parameterPeriod.TarifGroupId > 0
+                ? _parameterPeriod.TarifGroupId
+                : _address?.DefaultTariffGroupId,
+            _ => null
+        };
+
+        return tariffGroupId ?? throw new InvalidOperationException(
+            $"No tariff group is configured for cost category '{costCategory.Name}' " +
+            $"with tariff group type {costCategory.TariffGroupTypeId}.");
+    }
+
+    private void addSettlementCostDays()
+    {
+        if (_parameterPeriod.PeriodType != Period.SettlementDay
+            || _parameterPeriod.StartRange == DateTime.MinValue
+            || _parameterPeriod.EndRange < _parameterPeriod.StartRange)
+        {
+            return;
+        }
+
+        var existingDates = _periodicDataList
+            .Select(x => x.ValueX.Date)
+            .ToHashSet();
+
+        for (var date = _parameterPeriod.StartRange.Date;
+             date <= _parameterPeriod.EndRange.Date;
+             date = date.AddDays(1))
+        {
+            if (existingDates.Contains(date))
+                continue;
+
+            _periodicDataList.Add(new PeriodicDataPerDay
+            {
+                ValueX = date,
+                ValueWeek = date.GetWeekNumber(),
+                CorrectionFactor = 1,
+                IsCostOnly = true
+            });
+        }
+    }
+
+    private static decimal? getCalculationQuantity(
+        long calculationTypeId,
+        PeriodicDataPerDay periodicData,
+        PriceRate priceRate)
+    {
+        return calculationTypeId switch
+        {
+            1 => null,
+            2 => periodicData.ValueMonetaryY,
+            3 => 1m,
+            4 => 1m / DateTime.DaysInMonth(periodicData.ValueX.Year, periodicData.ValueX.Month),
+            5 => 1m / (DateTime.IsLeapYear(periodicData.ValueX.Year) ? 366m : 365m),
+            6 => getContractPeriodQuantity(priceRate),
+            _ => null
+        };
+    }
+
+    private static decimal getContractPeriodQuantity(PriceRate priceRate)
+    {
+        if (priceRate.LastRateUsed
+            || priceRate.StartRate == DateTime.MinValue
+            || priceRate.EndRate < priceRate.StartRate)
+        {
+            return 0;
+        }
+
+        var contractDayCount = (priceRate.EndRate.Date - priceRate.StartRate.Date).Days + 1;
+        return contractDayCount > 0 ? 1m / contractDayCount : 0;
     }
 
     private async Task<PriceRate?> getPriceRate(LibPriceRate libPriceRate, Models.CostCategory costCategory, PeriodicDataPerDay periodicData, long tarifGroupId)

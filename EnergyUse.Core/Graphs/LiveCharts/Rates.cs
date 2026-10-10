@@ -98,9 +98,7 @@ public class Rates : Base
                     foreach (Models.CostCategory mainCostCategory in costCategoryList)
                     {
                         string unitName = $"{mainCostCategory.Name} {mainCostCategory.Unit}";
-                        var categoryTariffGroupId = mainCostCategory.TariffGroup?.Id
-                                                    ?? _graphParameter.Address?.TariffGroup?.Id
-                                                    ?? tarifGroupId;
+                        var categoryTariffGroupId = getTariffGroupId(mainCostCategory, tarifGroupId);
 
                         // Calculate per main category
                         var ratesEnum = await getRates(energyTypeId, mainCostCategory.Id, categoryTariffGroupId);
@@ -130,9 +128,7 @@ public class Rates : Base
                                 unitName = $"{mainCostCategory.Name} {otherCostCategory.Unit}";
 
                                 //Toevoegen sub cat
-                                var tariffGroupIdForOther = otherCostCategory.TariffGroup?.Id
-                                                            ?? _graphParameter.Address?.TariffGroup?.Id
-                                                            ?? tarifGroupId;
+                                var tariffGroupIdForOther = getTariffGroupId(otherCostCategory, tarifGroupId);
                                 var ratesEnum2 = await getRates(energyTypeId, otherCostCategory.Id, tariffGroupIdForOther);
                                 rate = getRateForDate(ratesEnum2, chartStartDate);
                                 if (rate != null)
@@ -195,13 +191,8 @@ public class Rates : Base
 
             foreach (Models.CostCategory costCategory in costCategories)
             {
-                long tarifGroupId = 0;
                 Models.Rate? lastRate = null;
-                var address = _graphParameter.Address ?? new Models.Address();
-
-                var tarifGroup = costCategory.TariffGroup ?? address.TariffGroup;
-                if (tarifGroup != null)
-                    tarifGroupId = tarifGroup.Id;
+                var tarifGroupId = getTariffGroupId(costCategory, _graphParameter.TarifGroupId);
 
                 var rateList = await _unitOfWork.RateRepo.SelectByCostCategoryAndDate(energyType.Id, costCategory.Id, _graphParameter.From, _graphParameter.Till, tarifGroupId);
                 foreach (Models.Rate rate in rateList.OrderBy(rate => rate.StartRate))
@@ -260,6 +251,21 @@ public class Rates : Base
         }
 
         _periodicDataList.Add(periodicData);
+    }
+
+    private long getTariffGroupId(Models.CostCategory costCategory, long selectedTariffGroupId)
+    {
+        long? tariffGroupId = costCategory.TariffGroupTypeId switch
+        {
+            (int)Common.Enums.TariffGroupType.GeneralCosts => _graphParameter.Address?.GeneralTariffGroupId,
+            (int)Common.Enums.TariffGroupType.EnergyCosts => selectedTariffGroupId > 0
+                ? selectedTariffGroupId
+                : _graphParameter.Address?.DefaultTariffGroupId,
+            _ => null
+        };
+
+        return tariffGroupId ?? throw new InvalidOperationException(
+            $"No tariff group is configured for cost category '{costCategory.Name}'.");
     }
 
     private static IEnumerable<DateTime> GetMonthlyPointDates(Models.Rate rate, DateTime from, DateTime till)

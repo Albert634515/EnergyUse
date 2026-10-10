@@ -36,8 +36,19 @@ public class RateController : BaseController, IController
             throw new InvalidOperationException("UnitOfWork or RateRepo is not initialized.");
         }
 
-        var previousRate = await UnitOfWork.RateRepo.SelectLastRateByDate(rate.EnergyType.Id, rate.CostCategory.Id, rate.StartRate.AddDays(-1), rate.TariffGroup.Id);
-        if (previousRate != null && previousRate.Id > 0)
+        if (!rate.EnergyTypeId.HasValue
+            || !rate.CostCategoryId.HasValue
+            || !rate.TariffGroupId.HasValue)
+        {
+            return priceChange;
+        }
+
+        var previousRate = await UnitOfWork.RateRepo.SelectLastRateByDate(
+            rate.EnergyTypeId.Value,
+            rate.CostCategoryId.Value,
+            rate.StartRate.AddDays(-1),
+            rate.TariffGroupId.Value);
+        if (previousRate != null && previousRate.Id > 0 && previousRate.RateValue != 0)
             priceChange = Math.Round(((rate.RateValue - previousRate.RateValue) / previousRate.RateValue) * 100, 2);
 
         return priceChange;

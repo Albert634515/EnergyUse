@@ -154,9 +154,9 @@ public partial class MainForm : Form
         frmPayBackTime.ShowDialog();
     }
 
-    private void tsbPdfReport_Click(object sender, EventArgs e)
+    private async void tsbPdfReport_Click(object sender, EventArgs e)
     {
-        getSettlementReportAsync();
+        await getSettlementReportAsync();
     }
 
     private void rateReportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -355,9 +355,9 @@ public partial class MainForm : Form
 
     #region Reports
 
-    private void settlementToolStripMenuItem_Click(object sender, EventArgs e)
+    private async void settlementToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        getSettlementReportAsync();
+        await getSettlementReportAsync();
     }
 
     #endregion

@@ -13,7 +13,8 @@ public class OtherCost
     public decimal CorrectionFactor { get; set; }
     public decimal MaxStaffel { get; set; }
     /// <summary>
-    /// Exact quantity priced by this cost record when a usage period crosses a staffel boundary.
+    /// Exact quantity priced by this cost record. This is used for staffel portions
+    /// and for the accrued part of day, month, year, contract and percentage costs.
     /// </summary>
     public decimal? Quantity { get; set; }
 }

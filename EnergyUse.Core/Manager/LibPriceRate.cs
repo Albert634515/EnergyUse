@@ -54,6 +54,8 @@ public class LibPriceRate
             priceRate.LastRateUsed = true;
             priceRate.RateId = rate.Id;
             priceRate.RateTypeId = rate.RateTypeId;
+            priceRate.StartRate = rate.StartRate;
+            priceRate.EndRate = rate.EndRate;
         }
         else
         {
@@ -66,6 +68,8 @@ public class LibPriceRate
                 priceRate.Rate = rate.RateValue;
                 priceRate.RateId = rate.Id;
                 priceRate.RateTypeId = rate.RateTypeId;
+                priceRate.StartRate = rate.StartRate;
+                priceRate.EndRate = rate.EndRate;
             }
         }
 
@@ -99,6 +103,8 @@ public class LibPriceRate
 
                 priceRate.Rate = rate.RateValue;
                 priceRate.RateId = rate.Id;
+                priceRate.StartRate = rate.StartRate;
+                priceRate.EndRate = rate.EndRate;
 
                 if (priceRate.LastRateUsed)
                 {
@@ -113,6 +119,8 @@ public class LibPriceRate
             {
                 priceRate.Rate = rate.RateValue;
                 priceRate.RateId = rate.Id;
+                priceRate.StartRate = rate.StartRate;
+                priceRate.EndRate = rate.EndRate;
             }
 
             priceRate.RateTypeId = rate.RateTypeId;

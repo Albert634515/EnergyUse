@@ -38,7 +38,6 @@ namespace WpfUI.ViewModels
             RefreshRatesCommand = new RelayCommand(_ => refreshRates(), _ => true);
             CloseCommand = new RelayCommand(_ => close(), _ => true);
 
-            getEnergyTypes();
             getRateTypes();
         }
 
@@ -54,6 +53,7 @@ namespace WpfUI.ViewModels
                 {
                     _selectedEnergyType = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(CanSelectCostCategory));
                     _ = onEnergyTypeChangedAsync();
                 }
             }
@@ -69,6 +69,7 @@ namespace WpfUI.ViewModels
                 {
                     _selectedCostCategory = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(ApplicableRateTariffGroups));
                     _ = onCostCategoryChangedAsync();
                 }
             }
@@ -84,10 +85,17 @@ namespace WpfUI.ViewModels
                 {
                     _selectedTariffGroup = value;
                     OnPropertyChanged();
-                    _ = initRates();
+                    OnPropertyChanged(nameof(CanSelectEnergyType));
+                    _ = onTariffGroupChangedAsync();
                 }
             }
         }
+
+        public bool CanSelectEnergyType => SelectedTariffGroup != null;
+        public bool CanSelectCostCategory => SelectedEnergyType != null;
+        public IEnumerable<TariffGroup> ApplicableRateTariffGroups => SelectedCostCategory == null
+            ? Enumerable.Empty<TariffGroup>()
+            : TariffGroups.Where(group => group.TypeId == SelectedCostCategory.TariffGroupTypeId);
 
         private Rate? _selectedRate;
         public Rate? SelectedRate
@@ -166,20 +174,6 @@ namespace WpfUI.ViewModels
             set { _rateTaxInfoText = value; OnPropertyChanged(); }
         }
 
-        private string _alwaysCalculatedWithText = string.Empty;
-        public string AlwaysCalculatedWithText
-        {
-            get => _alwaysCalculatedWithText;
-            set { _alwaysCalculatedWithText = value; OnPropertyChanged(); }
-        }
-
-        private bool _isAlwaysCalculatedWithVisible;
-        public bool IsAlwaysCalculatedWithVisible
-        {
-            get => _isAlwaysCalculatedWithVisible;
-            set { _isAlwaysCalculatedWithVisible = value; OnPropertyChanged(); }
-        }
-
         #endregion
 
         #region Commands
@@ -195,35 +189,52 @@ namespace WpfUI.ViewModels
 
         #region Initialization
 
-        private async void getEnergyTypes()
+        public async Task InitializeAsync()
         {
+            if (TariffGroups.Count > 0)
+                return;
+
+            var tariffGroups = await _controller.UnitOfWork.TarifGroupRepo.GetAll();
+            foreach (var tariffGroup in tariffGroups.OrderBy(group => group.Description))
+                TariffGroups.Add(tariffGroup);
+        }
+
+        private async Task getEnergyTypes(long tariffGroupId)
+        {
+            var costCategories = await _controller.UnitOfWork.CostCategoryRepo.GetAll();
+            var tariffGroupTypeId = SelectedTariffGroup?.TypeId;
+            var applicableEnergyTypeIds = costCategories
+                .Where(category => category.EnergyTypeId.HasValue
+                    && category.TariffGroupTypeId == tariffGroupTypeId)
+                .Select(category => category.EnergyTypeId.GetValueOrDefault())
+                .ToHashSet();
+
+            var energyTypes = await _controller.UnitOfWork.EnergyTypeRepo.GetAll();
+            if (SelectedTariffGroup?.Id != tariffGroupId)
+                return;
+
             EnergyTypes.Clear();
-            var list = await _controller.UnitOfWork.EnergyTypeRepo.GetAll();
-            foreach (var e in list)
-                EnergyTypes.Add(e);
+            foreach (var energyType in energyTypes
+                .Where(type => applicableEnergyTypeIds.Contains(type.Id))
+                .OrderBy(type => type.Name))
+            {
+                EnergyTypes.Add(energyType);
+            }
         }
 
-        private async Task getCostCategories(long energyTypeId)
+        private async Task getCostCategories(long energyTypeId, long tariffGroupId)
         {
+            var costCategories = await _controller.UnitOfWork.CostCategoryRepo
+                .SelectByEnergyTypeId(energyTypeId);
+            if (SelectedTariffGroup?.Id != tariffGroupId || SelectedEnergyType?.Id != energyTypeId)
+                return;
+
             CostCategories.Clear();
-            var list = (await _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeId(energyTypeId)).ToList();
-            foreach (var c in list)
-                CostCategories.Add(c);
-        }
-
-        private async Task getTariffGroups(CostCategory costCategory)
-        {
-            SelectedTariffGroup = null;
-            TariffGroups.Clear();
-            var list = (await _controller.UnitOfWork.TarifGroupRepo.GetAll()).ToList();
-
-            if (costCategory?.TariffGroup != null && costCategory.TariffGroup.Id > 0)
-                list = list.Where(t => t.Id == costCategory.TariffGroup.Id).ToList();
-
-            foreach (var t in list)
-                TariffGroups.Add(t);
-
-            setLabelAlwaysCalculatedWith(costCategory?.TariffGroup);
+            foreach (var category in costCategories.Where(category =>
+                category.TariffGroupTypeId == SelectedTariffGroup?.TypeId))
+            {
+                CostCategories.Add(category);
+            }
         }
 
         private void getRateTypes()
@@ -238,38 +249,38 @@ namespace WpfUI.ViewModels
 
         #region Logic
 
+        private async Task onTariffGroupChangedAsync()
+        {
+            SelectedEnergyType = null;
+            EnergyTypes.Clear();
+            SelectedCostCategory = null;
+            CostCategories.Clear();
+
+            if (SelectedTariffGroup != null)
+                await getEnergyTypes(SelectedTariffGroup.Id);
+
+            await initRates();
+        }
+
         private async Task onEnergyTypeChangedAsync()
         {
-            if (SelectedEnergyType != null)
+            SelectedCostCategory = null;
+            CostCategories.Clear();
+
+            if (SelectedEnergyType != null && SelectedTariffGroup != null)
             {
-                SelectedCostCategory = null;
-                await getCostCategories(SelectedEnergyType.Id);
-            }
-            else
-            {
-                CostCategories.Clear();
-                SelectedCostCategory = null;
+                await getCostCategories(SelectedEnergyType.Id, SelectedTariffGroup.Id);
             }
 
-            if (SelectedCostCategory == null)
-                await initRates();
+            await initRates();
         }
 
         private async Task onCostCategoryChangedAsync()
         {
-            if (SelectedCostCategory != null && SelectedEnergyType != null)
-            {
-                await getTariffGroups(SelectedCostCategory);
-                await initRates();
-            }
-            else
-            {
-                TariffGroups.Clear();
-                await initRates();
-            }
+            await initRates();
         }
 
-    private async Task initRates()
+        private async Task initRates()
         {
             _rateRowsVersion++;
             SelectedRate = null;
@@ -287,15 +298,7 @@ namespace WpfUI.ViewModels
 
             _controller.UnitOfWork.RateList = new System.Collections.Generic.List<Rate>();
 
-            if (costCategory.TariffGroupId > 0)
-                _controller.UnitOfWork.RateList =
-                    (await _controller.UnitOfWork.RateRepo
-                        .SelectByCostCategoryAndEnergyTypeAndTarifGroup(
-                            costCategory.Id,
-                            energyType.Id,
-                            costCategory.TariffGroupId.Value))
-                        .ToList();
-            else if (tarifGroup.Id > 0)
+            if (tarifGroup.Id > 0)
                 _controller.UnitOfWork.RateList =
                     (await _controller.UnitOfWork.RateRepo
                         .SelectByCostCategoryAndEnergyTypeAndTarifGroup(costCategory.Id, energyType.Id, tarifGroup.Id))
@@ -361,18 +364,6 @@ namespace WpfUI.ViewModels
                 RateTaxInfoText = rateTaxInfo.RateIncTax.ToString();
         }
 
-        private void setLabelAlwaysCalculatedWith(TariffGroup? tarifGroup)
-        {
-            IsAlwaysCalculatedWithVisible = false;
-            AlwaysCalculatedWithText = string.Empty;
-
-            if (tarifGroup != null && tarifGroup.Id > 0)
-            {
-                AlwaysCalculatedWithText = $"Category is always calculated with tarif group: {tarifGroup.Description}";
-                IsAlwaysCalculatedWithVisible = true;
-            }
-        }
-
         private async void changeRateType()
         {
             if (SelectedRate == null || SelectedRateType == null)
@@ -433,7 +424,7 @@ namespace WpfUI.ViewModels
 
                 SelectedRate.PriceChange = await _controller.GetPriceChange(SelectedRate);
                 _controller.UnitOfWork.Complete();
-                _ = rebuildRateRowsAsync();
+                await initRates();
             }
         }
 
@@ -564,9 +555,9 @@ namespace WpfUI.ViewModels
 
         private bool validateInput()
         {
-            if (SelectedCostCategory == null)
+            if (SelectedTariffGroup == null)
             {
-                _dialogService.Show("Select a category", "Information");
+                _dialogService.Show("Select a tariff group", "Information");
                 return false;
             }
 
@@ -576,21 +567,23 @@ namespace WpfUI.ViewModels
                 return false;
             }
 
+            if (SelectedCostCategory == null)
+            {
+                _dialogService.Show("Select a category", "Information");
+                return false;
+            }
+
             return true;
         }
 
         private TariffGroup getCurrentTarifGroup()
         {
-            var costCategory = SelectedCostCategory;
-            var tarifGroup = costCategory?.TariffGroup;
-            if (tarifGroup == null || tarifGroup.Id <= 0)
-            {
-                tarifGroup = SelectedTariffGroup ?? new TariffGroup();
-            }
-            return tarifGroup;
+            return SelectedTariffGroup ?? new TariffGroup();
         }
 
-        private bool CanModify() => SelectedEnergyType != null && SelectedCostCategory != null;
+        private bool CanModify() => SelectedTariffGroup != null
+            && SelectedEnergyType != null
+            && SelectedCostCategory != null;
 
         #endregion
     }

@@ -12,7 +12,6 @@ public class CostCategory : IUnitOfWork
     public RepoEnergySubType EnergySubTypeRepo;
     public RepoCostCategories CostCategoryRepo;
     public RepoCalculationType CalculationTypeRepo;
-    public RepoTariffGroup TariffGroupRepo;
     public RepoUnit UnitRepo;
     public RepoVatTarif VatTarifRepo;
 
@@ -26,7 +25,6 @@ public class CostCategory : IUnitOfWork
         EnergySubTypeRepo = new RepoEnergySubType(_context);
         CostCategoryRepo = new RepoCostCategories(_context);
         CalculationTypeRepo = new RepoCalculationType(_context);
-        TariffGroupRepo = new RepoTariffGroup(_context);
         UnitRepo = new RepoUnit(_context);
         VatTarifRepo = new RepoVatTarif(_context);
     }
@@ -47,7 +45,6 @@ public class CostCategory : IUnitOfWork
         EnergySubTypeRepo.RejectChanges();
         CostCategoryRepo.RejectChanges();
         CalculationTypeRepo.RejectChanges();
-        TariffGroupRepo.RejectChanges();
         UnitRepo.RejectChanges();
         VatTarifRepo.RejectChanges();
     }
@@ -60,11 +57,23 @@ public class CostCategory : IUnitOfWork
 
     public Models.CostCategory AddDefaultEntity(string defaultDescription, long energyTypeId)
     {
-        var entity = new Models.CostCategory();
-        entity.Name = defaultDescription;
-        entity.EnergyTypeId = energyTypeId;
-        entity.Start = DateTime.Now.Date;
-        entity.End = DateTime.Now.AddYears(100).Date;
+        var defaultCalculationType = _context.CalculationTypes.Find(1L)
+            ?? throw new InvalidOperationException("Default calculation type 'Per Unit' was not found.");
+        var defaultEnergySubType = _context.EnergySubTypes.Find(5L)
+            ?? throw new InvalidOperationException("Default energy subtype 'Other' was not found.");
+
+        var entity = new Models.CostCategory
+        {
+            Name = defaultDescription,
+            CalculationTypeId = defaultCalculationType.Id,
+            CalculationType = defaultCalculationType,
+            EnergyTypeId = energyTypeId,
+            EnergySubTypeId = defaultEnergySubType.Id,
+            EnergySubType = defaultEnergySubType,
+            TariffGroupTypeId = (int)Common.Enums.TariffGroupType.EnergyCosts,
+            Start = DateTime.Now.Date,
+            End = DateTime.Now.AddYears(100).Date
+        };
 
         CostCategoryRepo.Add(entity);
         CostCategories.Add(entity);

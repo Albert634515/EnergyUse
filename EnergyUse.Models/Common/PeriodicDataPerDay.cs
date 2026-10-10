@@ -5,6 +5,7 @@ public class PeriodicDataPerDay
     public DateTime ValueX { get; set; } = DateTime.MinValue;
     public int ValueWeek { get; set; } = 0;
     public bool IsPredicted { get; set; } = false;
+    public bool IsCostOnly { get; set; } = false;
 
     // Values of used energy
     public decimal ValueY { get; set; } = 0.0m;

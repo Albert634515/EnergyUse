@@ -24,9 +24,8 @@
 
                 <Button Command="{Binding SaveCommand}" ToolTip="Save">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/WpfUI;component/Resources/tick_mark_24x24.png"
-                               Width="16" Height="16" Margin="0,0,4,0"/>
-                        <TextBlock Text="Save"/>
+                        <Image Width="16" Height="16" Source="pack://application:,,,/WpfUI;component/Resources/tick-mark_24x24.png"/>
+                        <TextBlock Text="Save" Margin="5 0 0 0"/>
                     </StackPanel>
                 </Button>
 

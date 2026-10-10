@@ -316,9 +316,8 @@ public class SettlementReportViewModel : ViewModelBase
             vm.DateFrom = d.StartDate;
             vm.DateTill = d.EndDate;
 
-            vm.SetEnergyType(d.EnergyType.Id);
-
-            vm.SetTarifGroup(d.TariffGroup?.Id ?? 0);
+            vm.SetEnergyType(d.EnergyTypeId ?? 0);
+            vm.SetTarifGroup(d.TariffGroupId ?? 0);
         }
 
         if (DateSelections.Count == 1)

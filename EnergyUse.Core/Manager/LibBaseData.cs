@@ -76,6 +76,27 @@ public class LibBaseData
         };
         calculationTypes.Add(calculationType);
 
+        calculationType = new Models.CalculationType
+        {
+            Id = 4,
+            Description = "Per Month"
+        };
+        calculationTypes.Add(calculationType);
+
+        calculationType = new Models.CalculationType
+        {
+            Id = 5,
+            Description = "Per Year"
+        };
+        calculationTypes.Add(calculationType);
+
+        calculationType = new Models.CalculationType
+        {
+            Id = 6,
+            Description = "Per Contract Period"
+        };
+        calculationTypes.Add(calculationType);
+
         return calculationTypes;
     }
 

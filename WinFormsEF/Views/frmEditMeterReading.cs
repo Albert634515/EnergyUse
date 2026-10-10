@@ -29,27 +29,32 @@ public partial class frmEditMeterReading : Form
         _CurrentEnergyType = currentEnergyType;
         _meterAddressId = meterReadingId;
 
-        initializeForm();
+        Shown += frmEditMeterReading_Shown;
     }
 
-    private void initializeForm()
+    private async void frmEditMeterReading_Shown(object sender, EventArgs e)
     {
-        setMeters();
-        setCurrentDataSource(_CurrentEnergyType, _CurrentAddressId, _meterAddressId);
+        await initializeFormAsync();
     }
 
-    private async void setMeters()
+    private async Task initializeFormAsync()
+    {
+        await setMetersAsync();
+        await setCurrentDataSourceAsync(_CurrentEnergyType, _CurrentAddressId, _meterAddressId);
+    }
+
+    private async Task setMetersAsync()
     {
         bsMeters.DataSource = (await _controller.UnitOfWork.MeterRepo.SelectByAddressAndEnergyType(_CurrentAddressId, _CurrentEnergyType.Id)).ToList();
         cboMeters.SelectedIndex = -1;
     }
 
-    private async void setCurrentDataSource(EnergyUse.Models.EnergyType currentEnergyType, long addressId, long meterReadingId)
+    private async Task setCurrentDataSourceAsync(EnergyUse.Models.EnergyType currentEnergyType, long addressId, long meterReadingId)
     {
         if (meterReadingId == 0)
             await _controller.UnitOfWork.AddDefaultEntity(addressId, currentEnergyType.Id);
         else
-            _controller.UnitOfWork.MeterReadingRepo.Get(meterReadingId);
+            await _controller.UnitOfWork.MeterReadingRepo.Get(meterReadingId);
 
         bsMeterReading.DataSource = _controller.UnitOfWork.MeterReadings;
         bsMeterReading.ResetBindings(false);

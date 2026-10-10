@@ -12,7 +12,9 @@ namespace WpfUI.Views.Windows
             Owner = owner;
 
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            DataContext = new RatesViewModel(this, new DialogService());
+            var viewModel = new RatesViewModel(this, new DialogService());
+            DataContext = viewModel;
+            Loaded += async (_, _) => await viewModel.InitializeAsync();
         }
     }
 }

@@ -19,6 +19,7 @@ public class SettlementData
         }
     }
     public decimal CorrectionFactor { get; set; } = 0.0m;
+    public long RateId { get; set; } = 0;
     public decimal Rate { get; set; } = 0.0m;
     public bool LastAvailableRateUsed { get; set; } = false;
     public decimal Value { get; set; } = 0.0m;

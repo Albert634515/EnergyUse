@@ -24,9 +24,9 @@ public partial class ucDatePredefined : UserControl
         bsEnergyTypes.DataSource = list.ToList();
     }
 
-    private void setTarifGroups()
+    private async Task setTarifGroupsAsync()
     {
-        bsTarifGroups.DataSource = _unitOfWork.TarifGroupRepo.GetAll().GetAwaiter().GetResult().ToList();
+        bsTarifGroups.DataSource = (await _unitOfWork.TarifGroupRepo.GetAll()).ToList();
         cboTarifGroup.SelectedIndex = -1;
     }
 
@@ -158,7 +158,7 @@ public partial class ucDatePredefined : UserControl
         }
     }
 
-    public void setBaseFormSettings()
+    public async Task SetBaseFormSettingsAsync()
     {
         _unitOfWork = new EnergyUse.Core.UnitOfWork.PredefinedPeriodDate(Managers.Config.GetDbFileName());
 
@@ -166,8 +166,8 @@ public partial class ucDatePredefined : UserControl
         if (BackColor != Color.Empty)
             dgPredefinedPeriodDates.BackgroundColor = BackColor;
 
-        setEnergyTypes();
-        setTarifGroups();
+        await setEnergyTypes();
+        await setTarifGroupsAsync();
     }
 
 

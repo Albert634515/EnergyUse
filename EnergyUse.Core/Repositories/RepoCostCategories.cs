@@ -17,7 +17,6 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
     {
         return await _context.Set<Models.CostCategory>()
                        .Include(e => e.EnergyType)
-                       .Include(t => t.TariffGroup)
                        .Include(s => s.EnergySubType)
                        .Include(c => c.CalculationType)
                        .FirstOrDefaultAsync(w => w.Id == costCategoryId, cancellationToken)
@@ -37,7 +36,6 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
 
         return await _context.Set<Models.CostCategory>()
                        .Include(e => e.EnergyType)
-                       .Include(t => t.TariffGroup)
                        .Include(s => s.EnergySubType)
                        .Include(c => c.CalculationType)
                        .Include(u => u.Unit)
@@ -51,7 +49,6 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
     {
         return await _context.Set<Models.CostCategory>()
                        .Include(e => e.EnergyType)
-                       .Include(t => t.TariffGroup)
                        .Include(s => s.EnergySubType)
                        .Include(c => c.CalculationType)
                        .Where(w => w.EnergyType.Id == energytypeid)
@@ -64,7 +61,6 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
     {
         return await _context.Set<Models.CostCategory>()
                        .Include(e => e.EnergyType)
-                       .Include(t => t.TariffGroup)
                        .Include(s => s.EnergySubType)
                        .Include(c => c.CalculationType)
                        .Where(w => w.EnergyType.Id == energyTypeId && w.EnergySubType.Id == (int)subEnergyType)
@@ -77,7 +73,6 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
     {
         return await _context.Set<Models.CostCategory>()
                        .Include(e => e.EnergyType)
-                       .Include(t => t.TariffGroup)
                        .Include(s => s.EnergySubType)
                        .Include(c => c.CalculationType)
                        .Where(w => w.EnergyType.Id == energyTypeId)
@@ -90,7 +85,6 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
     {
         return await _context.Set<Models.CostCategory>()
                        .Include(e => e.EnergyType)
-                       .Include(t => t.TariffGroup)
                        .Include(s => s.EnergySubType)
                        .Include(c => c.CalculationType)
                        .Where(w => w.EnergyType.Id == energyTypeId
@@ -105,7 +99,6 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
     {
         return await _context.Set<Models.CostCategory>()
                        .Include(e => e.EnergyType)
-                       .Include(t => t.TariffGroup)
                        .Include(s => s.EnergySubType)
                        .Include(c => c.CalculationType)
                        .Where(w => w.EnergyTypeId == energyTypeId && w.CalculateVat)
@@ -131,7 +124,6 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
     {
         List<SettlementData> settlementDatas = new();
         SettlementData? settlementData = null;
-        decimal lastRate = 0;
 
         foreach (var periodicData in periodicDataList)
         {
@@ -142,6 +134,7 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
                 if (costCategory is null)
                     throw new Exception($"Cost category {otherCost.CostCategoryId} not found");
 
+                var calculationTypeId = costCategory.CalculationTypeId;
                 var categoryRate = otherCost.Rate;
 
                 if (otherCost.Quantity is null)
@@ -175,8 +168,11 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
                                                      && x.LastAvailableVatRateUsed == otherCost.LastAvailableVatRateUsed
                                                      && x.DataPredicted == periodicData.IsPredicted
                                                      && x.VatTarif == otherCost.VatTarif
+                                                     && x.RateId == otherCost.RateId
                                                      && x.Rate == categoryRate
-                                                     && x.CostCategory.Id == otherCost.CostCategoryId);
+                                                     && x.CostCategory.Id == otherCost.CostCategoryId
+                                                     && (x.EndDate.Date == periodicData.ValueXDate.Date
+                                                         || x.EndDate.Date.AddDays(1) == periodicData.ValueXDate.Date));
 
                 if (settlementData is null)
                 {
@@ -191,6 +187,7 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
                         PriceAdjustmentFactor = otherCost.PriceAdjustmentFactor,
                         DataPredicted = periodicData.IsPredicted,
                         VatTarif = otherCost.VatTarif,
+                        RateId = otherCost.RateId,
                         Rate = categoryRate,
                         StartDate = periodicData.ValueXDate,
                         EndDate = periodicData.ValueXDate
@@ -231,13 +228,13 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
                     case 5:
                         //Other
 
-                        if (costCategory.CalculationType.Id == 1)
+                        if (calculationTypeId == 1)
                         {
                             // CalculationType== 1: Per unit
                             settlementData.ValueBaseConsumed += (periodicData.ValueYNormal + periodicData.ValueYLow);
                             settlementData.ValueBaseProduced -= periodicData.NettingValueYReturnNormal + periodicData.NettingValueYReturnLow;
                         }
-                        else if (costCategory.CalculationType.Id == 3)
+                        else if (calculationTypeId == 3)
                         {
                             // CalculationType== 3: Per day
                         }
@@ -257,19 +254,11 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
                         break;
                 }
 
-                lastRate = settlementData.Rate;
-                settlementData.Value = settlementData.ValueBase * settlementData.Rate;
+                settlementData.Value = calculationTypeId == 2
+                    ? settlementData.ValueBase * settlementData.Rate / 100m
+                    : settlementData.ValueBase * settlementData.Rate;
                 if (costCategory.CanNotBeNegative && settlementData.Value < 0)
                     settlementData.Value = 0;
-
-                if (costCategory.CalculationType.Id == 3)
-                {
-                    var dayDiff = (settlementData.EndDate - settlementData.StartDate).Days + 1;
-                    dayDiff = (dayDiff == 0) ? 1 : dayDiff;
-
-                    settlementData.ValueBaseConsumed = dayDiff;
-                    settlementData.Value = (settlementData.Rate * dayDiff);
-                }
 
                 settlementData.VatAmount = settlementData.Value * (settlementData.VatTarif / 100);
             }

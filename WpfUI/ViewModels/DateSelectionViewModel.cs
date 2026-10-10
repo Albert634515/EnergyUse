@@ -44,7 +44,7 @@ public class DateSelectionViewModel : ViewModelBase
     public TariffGroup? SelectedTariffGroup
     {
         get => _selectedTariffGroup;
-        set { SetProperty(ref _selectedTariffGroup, value); NotifyChanged(); }
+        set { SetProperty(ref _selectedTariffGroup, value); }
     }
 
     private DateTime? _dateFrom;

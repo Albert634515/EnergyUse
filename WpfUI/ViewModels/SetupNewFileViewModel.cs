@@ -258,7 +258,10 @@ public class SetupNewFileViewModel : ViewModelBase
 
     private void selectFile()
     {
-        var file = _dialogService.SaveFile("Database file (*.db)|*.db", "Kies databasebestand");
+        var file = IsNewFile
+            ? _dialogService.SaveFile("Database file (*.db)|*.db", "Kies databasebestand")
+            : _dialogService.OpenFile("Database file (*.db)|*.db", "Kies bestaand databasebestand");
+
         if (!string.IsNullOrEmpty(file))
             NewFilePath = file;
     }
@@ -352,23 +355,25 @@ public class SetupNewFileViewModel : ViewModelBase
 
     private bool createDatabase()
     {
-        var targetFile = Path.Combine(TargetDirectory ?? "", Path.GetFileName(NewFilePath) ?? "");
+        var targetFile = getTargetFile();
         var currentFile = Managers.Config.GetDbFileName()?.Trim();
 
-        if (!validateNewSetup())
+        if (!validateNewSetup(targetFile))
             return false;
 
         try
         {
-            var folder = Path.GetDirectoryName(targetFile);
-            if (folder == null)
-                return false;
-
-            if (!Directory.Exists(folder))
-                Directory.CreateDirectory(folder);
-
             if (IsNewFile)
             {
+                var folder = Path.GetDirectoryName(targetFile);
+                if (string.IsNullOrWhiteSpace(folder))
+                {
+                    StatusMessage = "Selecteer een geldige doelmap.";
+                    return false;
+                }
+
+                Directory.CreateDirectory(folder);
+
                 Managers.Config.SetDbFileName(targetFile);
                 _controller = new SetupNewFileController(targetFile);
                 _controller.UnitOfWork = new EnergyUse.Core.UnitOfWork.SetupNewFile(targetFile);
@@ -389,7 +394,9 @@ public class SetupNewFileViewModel : ViewModelBase
             else
                 setAsDefaultFile(targetFile);
 
-            StatusMessage = "Database succesvol aangemaakt.";
+            StatusMessage = IsNewFile
+                ? "Database succesvol aangemaakt."
+                : "Database succesvol ingesteld.";
             return true;
         }
         catch (Exception ex)
@@ -399,9 +406,17 @@ public class SetupNewFileViewModel : ViewModelBase
         }
     }
 
-    private bool validateNewSetup()
+    private string getTargetFile()
     {
-        var targetFile = Path.Combine(TargetDirectory ?? "", Path.GetFileName(NewFilePath) ?? "");
+        var selectedFile = NewFilePath.Trim();
+        if (IsExistingFile || string.IsNullOrWhiteSpace(TargetDirectory))
+            return selectedFile;
+
+        return Path.Combine(TargetDirectory.Trim(), Path.GetFileName(selectedFile));
+    }
+
+    private bool validateNewSetup(string targetFile)
+    {
 
         if (IsNewFile && string.IsNullOrWhiteSpace(targetFile))
         {
@@ -423,8 +438,8 @@ public class SetupNewFileViewModel : ViewModelBase
 
         if (IsExistingFile && !File.Exists(targetFile))
         {
-            if (!_dialogService.ShowYesNo("Bestand bestaat niet. Doorgaan?", "Niet gevonden"))
-                return false;
+            StatusMessage = "Het geselecteerde databasebestand bestaat niet of is niet toegankelijk.";
+            return false;
         }
 
         return true;
@@ -518,9 +533,6 @@ public class SetupNewFileViewModel : ViewModelBase
         var calTypePd = _controller.UnitOfWork.CalculationTypeRepo.SelectByDescription("Per Day");
         var energySubType = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Normal");
         var energySubTypeOther = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Other");
-        var tarifGroupDefault = _controller.UnitOfWork.TarifGroupRepo.SelectById((long)TariffGroupType.EnergyCosts);
-        var tarifGroupGeneral = _controller.UnitOfWork.TarifGroupRepo.SelectById((long)TariffGroupType.GeneralCosts);
-
         // ELECTRICITY
         var electricity = _controller.UnitOfWork.EnergyTypeRepo.SelectByName("Electricity");
         if (electricity != null)
@@ -533,7 +545,7 @@ public class SetupNewFileViewModel : ViewModelBase
                 EnergyTypeId = electricity.Id,
                 EnergySubTypeId = energySubType.Id,
                 UnitId = "kWh",
-                TariffGroupId = tarifGroupDefault.Id
+                TariffGroupTypeId = (int)TariffGroupType.EnergyCosts
             });
 
             var low = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("Low");
@@ -545,7 +557,7 @@ public class SetupNewFileViewModel : ViewModelBase
                 EnergyTypeId = electricity.Id,
                 EnergySubTypeId = low.Id,
                 UnitId = "kWh",
-                TariffGroupId = tarifGroupDefault.Id
+                TariffGroupTypeId = (int)TariffGroupType.EnergyCosts
             });
 
             var retNorm = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("ReturnNormal");
@@ -557,7 +569,7 @@ public class SetupNewFileViewModel : ViewModelBase
                 EnergyTypeId = electricity.Id,
                 EnergySubTypeId = retNorm.Id,
                 UnitId = "kWh",
-                TariffGroupId = tarifGroupDefault.Id
+                TariffGroupTypeId = (int)TariffGroupType.EnergyCosts
             });
 
             var retLow = _controller.UnitOfWork.EnergySubTypeRepo.SelectByDescription("ReturnLow");
@@ -569,7 +581,7 @@ public class SetupNewFileViewModel : ViewModelBase
                 EnergyTypeId = electricity.Id,
                 EnergySubTypeId = retLow.Id,
                 UnitId = "kWh",
-                TariffGroupId = tarifGroupDefault.Id
+                TariffGroupTypeId = (int)TariffGroupType.EnergyCosts
             });
 
             costCategories.Add(new CostCategory
@@ -580,7 +592,7 @@ public class SetupNewFileViewModel : ViewModelBase
                 EnergyTypeId = electricity.Id,
                 EnergySubTypeId = energySubTypeOther.Id,
                 UnitId = "Day",
-                TariffGroupId = tarifGroupGeneral.Id,
+                TariffGroupTypeId = (int)TariffGroupType.GeneralCosts,
                 CalculateVat = true
             });
 
@@ -592,7 +604,7 @@ public class SetupNewFileViewModel : ViewModelBase
                 EnergyTypeId = electricity.Id,
                 EnergySubTypeId = energySubTypeOther.Id,
                 UnitId = "Day",
-                TariffGroupId = tarifGroupGeneral.Id,
+                TariffGroupTypeId = (int)TariffGroupType.GeneralCosts,
                 CalculateVat = true
             });
 
@@ -604,7 +616,7 @@ public class SetupNewFileViewModel : ViewModelBase
                 EnergyTypeId = electricity.Id,
                 EnergySubTypeId = energySubTypeOther.Id,
                 UnitId = "Day",
-                TariffGroupId = tarifGroupGeneral.Id,
+                TariffGroupTypeId = (int)TariffGroupType.GeneralCosts,
                 CalculateVat = true
             });
 
@@ -616,7 +628,7 @@ public class SetupNewFileViewModel : ViewModelBase
                 EnergyTypeId = electricity.Id,
                 EnergySubTypeId = energySubTypeOther.Id,
                 UnitId = "kWh",
-                TariffGroupId = tarifGroupGeneral.Id,
+                TariffGroupTypeId = (int)TariffGroupType.GeneralCosts,
                 CalculateVat = true,
                 CanNotBeNegative = true,
                 NotCalculateOverReturn = true
@@ -635,7 +647,7 @@ public class SetupNewFileViewModel : ViewModelBase
                 EnergyTypeId = gas.Id,
                 EnergySubTypeId = energySubType.Id,
                 UnitId = "m3",
-                TariffGroupId = tarifGroupDefault.Id,
+                TariffGroupTypeId = (int)TariffGroupType.EnergyCosts,
                 CalculateVat = true
             });
 
@@ -647,7 +659,7 @@ public class SetupNewFileViewModel : ViewModelBase
                 EnergyTypeId = gas.Id,
                 EnergySubTypeId = energySubTypeOther.Id,
                 UnitId = "Day",
-                TariffGroupId = tarifGroupGeneral.Id,
+                TariffGroupTypeId = (int)TariffGroupType.GeneralCosts,
                 CalculateVat = true
             });
 
@@ -659,7 +671,7 @@ public class SetupNewFileViewModel : ViewModelBase
                 EnergyTypeId = gas.Id,
                 EnergySubTypeId = energySubTypeOther.Id,
                 UnitId = "Day",
-                TariffGroupId = tarifGroupGeneral.Id,
+                TariffGroupTypeId = (int)TariffGroupType.GeneralCosts,
                 CalculateVat = true
             });
 
@@ -671,7 +683,7 @@ public class SetupNewFileViewModel : ViewModelBase
                 EnergyTypeId = gas.Id,
                 EnergySubTypeId = energySubTypeOther.Id,
                 UnitId = "m3",
-                TariffGroupId = tarifGroupGeneral.Id,
+                TariffGroupTypeId = (int)TariffGroupType.GeneralCosts,
                 CalculateVat = true
             });
         }
@@ -688,7 +700,7 @@ public class SetupNewFileViewModel : ViewModelBase
                 EnergyTypeId = water.Id,
                 EnergySubTypeId = energySubType.Id,
                 UnitId = "m3",
-                TariffGroupId = tarifGroupDefault.Id,
+                TariffGroupTypeId = (int)TariffGroupType.EnergyCosts,
                 CalculateVat = true
             });
         }

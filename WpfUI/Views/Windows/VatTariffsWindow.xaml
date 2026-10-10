@@ -15,29 +15,29 @@
         <ToolBar DockPanel.Dock="Top" Height="40">
 
             <Button Command="{Binding AddCommand}" ToolTip="Add">
-                <Image Source="/Resources/add_24x24.png"/>
+                <Image Source="/Resources/add_24x24.png" Margin="0,0,4,0"/>
             </Button>
 
             <Button Command="{Binding SaveCommand}" ToolTip="Save">
-                <Image Source="/Resources/save_24x24.png"/>
+                <Image Source="/Resources/save_24x24.png" Margin="0,0,4,0"/>
             </Button>
 
             <Button Command="{Binding CancelCommand}" ToolTip="Cancel">
-                <Image Source="/Resources/clear_24x24.png"/>
+                <Image Source="/Resources/clear_24x24.png" Margin="0,0,4,0"/>
             </Button>
 
             <Button Command="{Binding DeleteCommand}" ToolTip="Delete">
-                <Image Source="/Resources/delete_24x24.png"/>
+                <Image Source="/Resources/delete_24x24.png" Margin="0,0,4,0"/>
             </Button>
 
             <Button Command="{Binding RefreshCommand}" ToolTip="Refresh">
-                <Image Source="/Resources/clock_24x24.png"/>
+                <Image Source="/Resources/clock_24x24.png" Margin="0,0,4,0"/>
             </Button>
 
             <Separator/>
 
             <Button Command="{Binding CloseCommand}" ToolTip="Close">
-                <Image Source="/Resources/crossed_24x24.png"/>
+                <Image Source="/Resources/crossed_24x24.png" Margin="0,0,4,0"/>
             </Button>
 
         </ToolBar>

@@ -28,7 +28,7 @@ public partial class frmCostcategories : Form
         bsEnergyTypes.DataSource = _controller.UnitOfWork.EnergyTypeRepo.GetAll();
         bsCalculationType.DataSource = _controller.UnitOfWork.CalculationTypeRepo.GetAll();
         bsEnergySubType.DataSource = _controller.UnitOfWork.EnergySubTypeRepo.GetAll();
-        bsTariffGroups.DataSource = _controller.UnitOfWork.TariffGroupRepo.GetAll();
+        bsTariffGroups.DataSource = Managers.SelectionItemList.GetTariffGroupTypeList();
         bsUnits.DataSource = _controller.UnitOfWork.UnitRepo.GetAll();
 
         cboCalculationType.SelectedIndex = -1;

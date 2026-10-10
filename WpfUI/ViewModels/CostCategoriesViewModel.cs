@@ -18,7 +18,7 @@ namespace WpfUI.ViewModels
         public ObservableCollection<CostCategory> CostCategories { get; private set; } = [];
 
         public ObservableCollection<Unit> Units { get; }
-        public ObservableCollection<TariffGroup> TariffGroups { get; }
+        public ObservableCollection<EnergyUse.Models.Common.SelectionItem> TariffGroupTypes { get; }
         public ObservableCollection<EnergySubType> EnergySubTypes { get; }
         public ObservableCollection<CalculationType> CalculationTypes { get; }
 
@@ -93,7 +93,8 @@ namespace WpfUI.ViewModels
             _ = SetEnergyTypesAsync();
 
             Units = new ObservableCollection<Unit>(_controller.UnitOfWork.UnitRepo.GetAll().GetAwaiter().GetResult());
-            TariffGroups = new ObservableCollection<TariffGroup>(_controller.UnitOfWork.TariffGroupRepo.GetAll().GetAwaiter().GetResult());
+            TariffGroupTypes = new ObservableCollection<EnergyUse.Models.Common.SelectionItem>(
+                Managers.SelectionItemList.GetTariffGroupTypeList());
             EnergySubTypes = new ObservableCollection<EnergySubType>(_controller.UnitOfWork.EnergySubTypeRepo.GetAll().GetAwaiter().GetResult());
             CalculationTypes = new ObservableCollection<CalculationType>(_controller.UnitOfWork.CalculationTypeRepo.GetAll().GetAwaiter().GetResult());
 

@@ -19,8 +19,13 @@ public partial class frmCalculatedUnitPrice : Form
 
         InitializeComponent();
         setBaseFormSettings();
-        _ = setComboEnergyTypesAsync();
-        setComboTarifGroups();
+        Shown += frmCalculatedUnitPrice_Shown;
+    }
+
+    private async void frmCalculatedUnitPrice_Shown(object sender, EventArgs e)
+    {
+        await setComboEnergyTypesAsync();
+        await setComboTarifGroupsAsync();
     }
 
     private async Task setComboEnergyTypesAsync()
@@ -31,9 +36,9 @@ public partial class frmCalculatedUnitPrice : Form
         cboEnergyType.SelectedIndex = -1;
     }
 
-    private void setComboTarifGroups()
+    private async Task setComboTarifGroupsAsync()
     {
-        var tarifGroups = _controller.UnitOfWork.TarifGroupRepo.GetAll().GetAwaiter().GetResult().ToList();
+        var tarifGroups = (await _controller.UnitOfWork.TarifGroupRepo.GetAll()).ToList();
         bsTarifGroups.DataSource = tarifGroups;
 
         cboTarifGroup.SelectedIndex = -1;
@@ -51,23 +56,23 @@ public partial class frmCalculatedUnitPrice : Form
             e.Cancel = Managers.GeneralDialogs.WarningUnsavedChanges(this);
     }
 
-    private void cboEnergyType_SelectedIndexChanged(object sender, EventArgs e)
+    private async void cboEnergyType_SelectedIndexChanged(object sender, EventArgs e)
     {
-        initCalculatedUnitPrice();
+        await initCalculatedUnitPriceAsync();
     }
 
-    private void cboTarifGroup_SelectedIndexChanged(object sender, EventArgs e)
+    private async void cboTarifGroup_SelectedIndexChanged(object sender, EventArgs e)
     {
-        initCalculatedUnitPrice();
+        await initCalculatedUnitPriceAsync();
     }
 
     #endregion
 
     #region Toolbar
 
-    private void tsbAdd_Click(object sender, EventArgs e)
+    private async void tsbAdd_Click(object sender, EventArgs e)
     {
-        addCalculatedUnitPriceAsync();
+        await addCalculatedUnitPriceAsync();
     }
 
     private void tsbSave_Click(object sender, EventArgs e)
@@ -85,9 +90,9 @@ public partial class frmCalculatedUnitPrice : Form
         deleteCalculatedUnitPrice();
     }
 
-    private void tsbRefresh_Click(object sender, EventArgs e)
+    private async void tsbRefresh_Click(object sender, EventArgs e)
     {
-        refreshCalculatedUnitPrice();
+        await refreshCalculatedUnitPriceAsync();
     }
 
     private void tsbClose_Click(object sender, EventArgs e)
@@ -95,7 +100,7 @@ public partial class frmCalculatedUnitPrice : Form
         closeCalculatedUnitPrice();
     }
 
-    private async void initCalculatedUnitPrice()
+    private async Task initCalculatedUnitPriceAsync()
     {
         var energyType = (EnergyUse.Models.EnergyType)cboEnergyType.SelectedItem;
         var tarifGroup = (EnergyUse.Models.TariffGroup)cboTarifGroup.SelectedItem;
@@ -155,12 +160,12 @@ public partial class frmCalculatedUnitPrice : Form
         }
     }
 
-    private void refreshCalculatedUnitPrice()
+    private async Task refreshCalculatedUnitPriceAsync()
     {
         if (!validateInput())
             return;
 
-        initCalculatedUnitPrice();
+        await initCalculatedUnitPriceAsync();
     }
 
     private void closeCalculatedUnitPrice()

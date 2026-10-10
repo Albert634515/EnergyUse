@@ -297,7 +297,7 @@
             // 
             // cboTariffGroup
             // 
-            cboTariffGroup.DataBindings.Add(new Binding("SelectedValue", bsCostCategories, "TariffGroupId", true));
+            cboTariffGroup.DataBindings.Add(new Binding("SelectedValue", bsCostCategories, "TariffGroupTypeId", true));
             cboTariffGroup.DataSource = bsTariffGroups;
             cboTariffGroup.DisplayMember = "Description";
             cboTariffGroup.FormattingEnabled = true;
@@ -307,7 +307,7 @@
             // 
             // bsTariffGroups
             // 
-            bsTariffGroups.DataSource = typeof(EnergyUse.Models.TariffGroup);
+            bsTariffGroups.DataSource = typeof(EnergyUse.Models.Common.SelectionItem);
             // 
             // cboUnit
             // 

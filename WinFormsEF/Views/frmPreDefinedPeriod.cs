@@ -15,15 +15,20 @@ public partial class frmPreDefinedPeriod : Form
     public frmPreDefinedPeriod()
     {
         InitializeComponent();
-        initializeForm();
+        Shown += frmPreDefinedPeriod_Shown;
     }
 
-    private void initializeForm()
+    private async void frmPreDefinedPeriod_Shown(object sender, EventArgs e)
+    {
+        await initializeFormAsync();
+    }
+
+    private async Task initializeFormAsync()
     {
         _controller = new PreDefinedPeriodController(Managers.Config.GetDbFileName());
         _controller.Initialize();
 
-        setBaseFormSettings();
+        await setBaseFormSettingsAsync();
         setPreDefinedPeriods();
     }
 
@@ -164,13 +169,13 @@ public partial class frmPreDefinedPeriod : Form
             ucDatePredefined1.SetPredefinedPeriodDates(preDefinedPeriodId);
     }
 
-    private void setBaseFormSettings()
+    private async Task setBaseFormSettingsAsync()
     {
         Managers.Settings.SetBaseFormSettings(this);
         if (this.BackColor != Color.Empty)
             dgPeriods.BackgroundColor = this.BackColor;
 
-        ucDatePredefined1.setBaseFormSettings();
+        await ucDatePredefined1.SetBaseFormSettingsAsync();
     }
 
     #endregion
