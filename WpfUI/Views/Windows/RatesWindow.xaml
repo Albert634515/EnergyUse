@@ -96,7 +96,7 @@
 
                 <StackPanel Margin="0,0,20,0">
                     <TextBlock Text="Cost Category"/>
-                    <ComboBox ItemsSource="{Binding CostCategories}"
+                    <ComboBox x:Name="CostCategoryCombo" ItemsSource="{Binding CostCategories}"
                               SelectedItem="{Binding SelectedCostCategory}"
                               DisplayMemberPath="Name"
                               IsEnabled="{Binding CanSelectCostCategory}"
@@ -128,6 +128,9 @@
                               ItemsSource="{Binding RateRows}"
                               SelectedItem="{Binding SelectedRateRow}"
                               AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
                               Margin="0,0,0,10">
 
                         <DataGrid.Resources>
@@ -136,6 +139,28 @@
                                 <Setter Property="Padding" Value="0,0,4,0"/>
                             </Style>
                         </DataGrid.Resources>
+
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="ToolTip" Value="{Binding ValidationError}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasValidationError}" Value="True">
+                                        <Setter Property="Background" Value="MistyRose"/>
+                                        <Setter Property="Foreground" Value="DarkRed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasValidationError}" Value="True">
+                                        <Setter Property="Background" Value="MistyRose"/>
+                                        <Setter Property="Foreground" Value="DarkRed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.CellStyle>
 
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
@@ -156,37 +181,37 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Start"
                                                 Width="*"
-                                                Binding="{Binding StartRate, StringFormat=\{0:dd-MM-yyyy\}}"/>
+                                                Binding="{Binding StartRate, Mode=OneWay, StringFormat=\{0:dd-MM-yyyy\}}"/>
                             <DataGridTextColumn Header="End"
                                                 Width="*"
-                                                Binding="{Binding EndRate, StringFormat=\{0:dd-MM-yyyy\}}"/>
+                                                Binding="{Binding EndRate, Mode=OneWay, StringFormat=\{0:dd-MM-yyyy\}}"/>
                             <DataGridTextColumn Header="Rate"
                                                 Width="0.9*"
                                                 ElementStyle="{StaticResource NumericCellStyle}"
-                                                Binding="{Binding RateValue, StringFormat=N5}" />
+                                                Binding="{Binding RateValue, Mode=OneWay, StringFormat=N5}" />
                             <DataGridTextColumn Header="Price incl. VAT"
                                                 Width="0.9*"
                                                 ElementStyle="{StaticResource NumericCellStyle}"
-                                                Binding="{Binding RateIncludingVat, StringFormat=N5}" />
+                                                Binding="{Binding RateIncludingVat, Mode=OneWay, StringFormat=N5}" />
                             <DataGridTextColumn Header="Expected Change"
                                                 Width="0.75*"
                                                 ElementStyle="{StaticResource NumericCellStyle}"
-                                                Binding="{Binding ExpectedPriceChange, StringFormat=\{0:N2\}%}" />
+                                                Binding="{Binding ExpectedPriceChange, Mode=OneWay, StringFormat=\{0:N2\}%}" />
                             <DataGridTextColumn Header="Price Change"
                                                 Width="0.75*"
                                                 ElementStyle="{StaticResource NumericCellStyle}"
-                                                Binding="{Binding PriceChange, StringFormat=\{0:N2\}%}" />
+                                                Binding="{Binding PriceChange, Mode=OneWay, StringFormat=\{0:N2\}%}" />
                             <DataGridTextColumn Header="Future excl. VAT"
                                                 Width="0.9*"
                                                 ElementStyle="{StaticResource NumericCellStyle}"
-                                                Binding="{Binding FutureRateExcludingVat, StringFormat=N5}" />
+                                                Binding="{Binding FutureRateExcludingVat, Mode=OneWay, StringFormat=N5}" />
                             <DataGridTextColumn Header="Future incl. VAT"
                                                 Width="0.9*"
                                                 ElementStyle="{StaticResource NumericCellStyle}"
-                                                Binding="{Binding FutureRateIncludingVat, StringFormat=N5}" />
+                                                Binding="{Binding FutureRateIncludingVat, Mode=OneWay, StringFormat=N5}" />
                             <DataGridTextColumn Header="Description"
                                                 Width="2*"
-                                                Binding="{Binding Description}" />
+                                                Binding="{Binding Description, Mode=OneWay}" />
                         </DataGrid.Columns>
                     </DataGrid>
 

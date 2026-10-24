@@ -258,9 +258,9 @@ public partial class ucChartDefaultLiveCharts : UserControl
                 getChartSeriesPerPeriodBySubTotal(graphParameter);
 
         }
-        catch (Exception)
+        catch (EnergyUse.Core.Manager.RateValidationException ex)
         {
-            throw;
+            MessageBox.Show(ex.Message, "Tariefcontrole", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         finally
         {

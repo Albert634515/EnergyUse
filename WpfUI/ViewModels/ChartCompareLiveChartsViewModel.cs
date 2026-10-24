@@ -346,6 +346,21 @@ public class ChartCompareLiveChartsViewModel : ViewModelBase
 
     public void UpdateChart()
     {
+        try
+        {
+            updateChart();
+        }
+        catch (EnergyUse.Core.Manager.RateValidationException ex)
+        {
+            ChartSeries.Clear();
+            _exportData.Clear();
+            System.Windows.MessageBox.Show(ex.Message, "Tariefcontrole",
+                System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+        }
+    }
+
+    private void updateChart()
+    {
         if (_suppressChartUpdates)
             return;
 

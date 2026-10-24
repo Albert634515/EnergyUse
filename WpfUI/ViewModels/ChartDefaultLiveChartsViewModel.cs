@@ -343,6 +343,20 @@ public class ChartDefaultLiveChartsViewModel : ViewModelBase
 
     public void UpdateChart()
     {
+        try
+        {
+            updateChart();
+        }
+        catch (EnergyUse.Core.Manager.RateValidationException ex)
+        {
+            ChartSeries.Clear();
+            System.Windows.MessageBox.Show(ex.Message, "Tariefcontrole",
+                System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+        }
+    }
+
+    private void updateChart()
+    {
         if (!_isLoaded) return;
 
         if (CurrentAddress == null || CurrentEnergyType == null || SelectedPeriodType == null)

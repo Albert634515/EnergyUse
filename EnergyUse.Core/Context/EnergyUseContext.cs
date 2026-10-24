@@ -15,7 +15,8 @@ public partial class EnergyUseContext : DbContext
 
         // Start with a clean database
         //Database.EnsureDeleted();
-        Database.EnsureCreated();
+        var created = Database.EnsureCreated();
+        TariffGroupCostCategorySchema.EnsureCreated(this, created);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -305,6 +306,13 @@ public partial class EnergyUseContext : DbContext
             entity.HasIndex(i => i.Id, "TG_ID").IsUnique();
         });
 
+        modelBuilder.Entity<TariffGroupCostCategory>(entity =>
+        {
+            entity.HasKey(e => new { e.TariffGroupId, e.CostCategoryId });
+            entity.HasOne(e => e.TariffGroup).WithMany().HasForeignKey(e => e.TariffGroupId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(e => e.CostCategory).WithMany().HasForeignKey(e => e.CostCategoryId).OnDelete(DeleteBehavior.Cascade);
+        });
+
         modelBuilder.Entity<Unit>(entity =>
         {
             entity.HasKey(r => r.Id);
@@ -349,6 +357,7 @@ public partial class EnergyUseContext : DbContext
     public DbSet<Rate> Rates { get; set; }
     public DbSet<Setting> Settings { get; set; }
     public DbSet<TariffGroup> TariffGroups { get; set; }
+    public DbSet<TariffGroupCostCategory> TariffGroupCostCategories { get; set; }
     public DbSet<Unit> Units { get; set; }
     public DbSet<VatTarif> VatTarifs { get; set; }
     public DbSet<Staffel> Staffels { get; set; }

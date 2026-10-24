@@ -310,9 +310,9 @@ public partial class ucChartCompareLiveCharts : UserControl
                     getChartSeriesPerPeriodByTotal(graphParameter);
             }
         }
-        catch (Exception)
+        catch (EnergyUse.Core.Manager.RateValidationException ex)
         {
-            throw;
+            MessageBox.Show(ex.Message, "Tariefcontrole", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         finally
         {

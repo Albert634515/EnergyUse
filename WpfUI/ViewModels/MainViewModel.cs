@@ -375,6 +375,10 @@ public class MainViewModel : ViewModelBase
                 });
             }
         }
+        catch (EnergyUse.Core.Manager.RateValidationException ex)
+        {
+            MessageBox.Show(ex.Message, "Tariefcontrole", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
         finally
         {
             Mouse.OverrideCursor = null;

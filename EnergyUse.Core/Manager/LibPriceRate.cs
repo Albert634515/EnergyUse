@@ -3,207 +3,56 @@ using EnergyUse.Models.Common;
 
 namespace EnergyUse.Core.Manager;
 
-public class LibPriceRate
+public sealed class LibPriceRate : IDisposable
 {
-    #region Properties
-
     private readonly EnergyUseContext _context;
-    private Repositories.RepoRate _rateRepo;
-    private Repositories.RepoCostCategories _costCategoryRepo;
-
-    #endregion  
+    private readonly Repositories.RepoRate _rateRepo;
+    private readonly Repositories.RepoCostCategories _costCategoryRepo;
+    private readonly Dictionary<(long EnergyTypeId, long CostCategoryId, long TariffGroupId), List<Models.Rate>> _rates = new();
 
     public LibPriceRate(string dbFileName)
     {
         _context = new EnergyUseContext(dbFileName);
-
         _rateRepo = new Repositories.RepoRate(_context);
         _costCategoryRepo = new Repositories.RepoCostCategories(_context);
     }
 
-    /// <summary>
-    /// Calculate cost per 1 item
-    /// </summary>
-    /// <param name="energyTypeId"></param>
-    /// <param name="costDate"></param>
-    /// <param name="subEnergyType"></param>
-    /// <returns>Db.Rate class</returns>
-    public async Task<PriceRate> GetCalculatedRate(long energyTypeId, DateTime costDate, Common.Enums.SubEnergyType subEnergyType, long tarifGroupId)
+    public async Task<PriceRate> GetCalculatedRate(long energyTypeId, DateTime costDate,
+        Common.Enums.SubEnergyType subEnergyType, long tarifGroupId)
     {
-        Models.Rate? rate = null;
-        var priceRate = new PriceRate();
+        var categories = (await _costCategoryRepo.SelectByEnergyTypeAndRange(energyTypeId, costDate.Date, costDate.Date))
+            .Where(category => category.EnergySubTypeId == (long)subEnergyType && category.CalculationTypeId == 1)
+            .ToList();
+        if (categories.Count == 0)
+            throw new RateValidationException($"No cost category for energy type {energyTypeId}, subtype {subEnergyType}, on {costDate:dd-MM-yyyy}.");
 
-        var rateRepo = new Repositories.RepoRate(_context);
-
-        var costCategory = await getCostCategory(energyTypeId, subEnergyType);
-        List<Models.Rate> rates = await getByCostCategoryAndDate(energyTypeId, costCategory.Id, costDate, costDate, tarifGroupId);
-        if (rates == null || rates.Count == 0)
+        var total = new PriceRate();
+        foreach (var category in categories)
         {
-            rate = await getLastRateByDate(energyTypeId, costCategory.Id, costDate, tarifGroupId);
-            if (rate == null)
-                rate = new Models.Rate();
-
-            if (rate.ExpectedPriceChange != 0)
-            {
-                priceRate.PriceAdjustmentFactor = 1 + (rate.ExpectedPriceChange / 100);
-                priceRate.Rate = Math.Round(rate.RateValue * priceRate.PriceAdjustmentFactor, 4);
-            }
-            else
-                priceRate.Rate = rate.RateValue;
-
-            priceRate.LastRateUsed = true;
-            priceRate.RateId = rate.Id;
-            priceRate.RateTypeId = rate.RateTypeId;
-            priceRate.StartRate = rate.StartRate;
-            priceRate.EndRate = rate.EndRate;
+            var rate = await GetRate(energyTypeId, category, costDate, tarifGroupId);
+            total.Rate += rate.Rate;
+            total.LastRateUsed |= rate.LastRateUsed;
         }
-        else
-        {
-            rate = rates.Where(x => x.StartRate.Date <= costDate.Date && x.EndRate.Date >= costDate.Date).FirstOrDefault();
-            if (rate == null)
-                rate = await getLastRateByDate(energyTypeId, costCategory.Id, costDate, tarifGroupId);
-
-            if (rate != null)
-            {
-                priceRate.Rate = rate.RateValue;
-                priceRate.RateId = rate.Id;
-                priceRate.RateTypeId = rate.RateTypeId;
-                priceRate.StartRate = rate.StartRate;
-                priceRate.EndRate = rate.EndRate;
-            }
-        }
-
-        return priceRate;
+        return total;
     }
 
-    public async Task<PriceRate> GetRate(long energyTypeId, Models.CostCategory costCategory, PeriodicDataPerDay periodicData, long tarifGroupId)
+    public Task<PriceRate> GetRate(long energyTypeId, Models.CostCategory costCategory,
+        PeriodicDataPerDay periodicData, long tarifGroupId)
+        => GetRate(energyTypeId, costCategory, periodicData.ValueX, tarifGroupId);
+
+    public async Task<PriceRate> GetRate(long energyTypeId, Models.CostCategory costCategory,
+        DateTime costDate, long tarifGroupId)
     {
-        var rate = new Models.Rate();
-        var priceRate = new PriceRate();
-
-        if (costCategory.EnergySubType.Id >= 5)
+        var key = (energyTypeId, costCategory.Id, tarifGroupId);
+        if (!_rates.TryGetValue(key, out var rates))
         {
-            var rates = await getByCostCategoryAndDate(
-                energyTypeId,
-                costCategory.Id,
-                periodicData.ValueX,
-                periodicData.ValueX,
-                tarifGroupId);
-            rate = rates.FirstOrDefault(x => periodicData.ValueX >= x.StartRate && periodicData.ValueX <= x.EndRate);
-
-            if (rate == null)
-            {
-                rate = new Models.Rate();
-                rate = await _rateRepo.SelectLastRateByDate(energyTypeId, costCategory.Id, periodicData.ValueX, tarifGroupId);
-
-                if (rate != null && rate.EndRate < periodicData.ValueX)
-                    priceRate.LastRateUsed = true;
-                else
-                    rate = new Models.Rate();
-
-                priceRate.Rate = rate.RateValue;
-                priceRate.RateId = rate.Id;
-                priceRate.StartRate = rate.StartRate;
-                priceRate.EndRate = rate.EndRate;
-
-                if (priceRate.LastRateUsed)
-                {
-                    if (rate != null && rate.ExpectedPriceChange != 0)
-                    {
-                        priceRate.PriceAdjustmentFactor = 1 + (rate.ExpectedPriceChange / 100);
-                        priceRate.Rate = Math.Round(rate.RateValue * priceRate.PriceAdjustmentFactor, 4);
-                    }
-                }
-            }
-            else
-            {
-                priceRate.Rate = rate.RateValue;
-                priceRate.RateId = rate.Id;
-                priceRate.StartRate = rate.StartRate;
-                priceRate.EndRate = rate.EndRate;
-            }
-
-            priceRate.RateTypeId = rate.RateTypeId;
+            rates = (await _rateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(
+                costCategory.Id, energyTypeId, tarifGroupId)).ToList();
+            _rates.Add(key, rates);
         }
 
-        return priceRate;
+        return RateSelection.Select(rates, energyTypeId, costCategory.Id, costCategory.Name, costDate, tarifGroupId);
     }
 
-    #region Rate
-
-
-    private List<Models.Rate> _lastRate = new();
-    private async Task<Models.Rate?> getLastRateByDate(long energyTypeId, long costCategoryId, DateTime lastDate, long tarifGroupId)
-    {
-        var rate = _rates.Where(x => x.CostCategory.Id == costCategoryId
-                                  && x.TariffGroup.Id == tarifGroupId
-                                  && x.EnergyType.Id == energyTypeId
-                                  && x.StartRate.Date <= lastDate.Date)
-                         .OrderByDescending(o => o.StartRate)
-                         .FirstOrDefault();
-        if (rate != null)
-            return rate;
-
-        rate = _lastRate.Where(x => x.CostCategory.Id == costCategoryId
-                                     && x.TariffGroup.Id == tarifGroupId
-                                     && x.EnergyType.Id == energyTypeId
-                                     && x.StartRate.Date <= lastDate.Date)
-                                     .OrderByDescending(o => o.StartRate).FirstOrDefault();
-        if (rate != null)
-            return rate;
-        else
-        {
-            rate = await _rateRepo.SelectLastRateByDate(energyTypeId, costCategoryId, lastDate, tarifGroupId);
-            if (rate != null)
-                _lastRate.Add(rate);
-
-            return rate;
-        }
-    }
-
-    private List<Models.Rate> _rates = new();
-    private HashSet<string> _loadedRateKeys = new();
-    private async Task<List<Models.Rate>> getByCostCategoryAndDate(long energyTypeId, long costCategoryId, DateTime startDate, DateTime endDate, long tarifGroupId)
-    {
-        var key = $"{energyTypeId}:{costCategoryId}:{tarifGroupId}";
-        if (_loadedRateKeys.Add(key))
-        {
-            var rates = await _rateRepo.SelectByCostCategoryAndEnergyTypeAndTarifGroup(
-                costCategoryId,
-                energyTypeId,
-                tarifGroupId);
-            _rates.AddRange(rates);
-        }
-
-        return _rates.Where(x => x.EnergyType.Id == energyTypeId
-                              && x.CostCategory.Id == costCategoryId
-                              && x.TariffGroup.Id == tarifGroupId
-                              && x.StartRate.Date <= endDate.Date
-                              && x.EndRate.Date >= startDate.Date)
-                     .ToList();
-    }
-
-    #endregion
-
-    #region CostCategory
-
-    private Dictionary<string, Models.CostCategory> _costCategories = new();
-
-    private async Task<Models.CostCategory> getCostCategory(long energyTypeId, Common.Enums.SubEnergyType subEnergyType)
-    {
-        var key = $"{energyTypeId}{subEnergyType}";
-        if (!_costCategories.ContainsKey(key))
-        {
-            var costCategory = await _costCategoryRepo.SelectByEnergyTypeAndSubType(energyTypeId, subEnergyType);
-            if (costCategory != null)
-                _costCategories.Add(key, costCategory);
-        }
-
-        if (_costCategories.ContainsKey(key))
-            return _costCategories[key];
-        else
-            return new Models.CostCategory();
-    }
-
-    #endregion
+    public void Dispose() => _context.Dispose();
 }

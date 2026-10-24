@@ -1,4 +1,4 @@
-using EnergyUse.Core.Context;
+﻿using EnergyUse.Core.Context;
 using EnergyUse.Models.Common;
 using Microsoft.EntityFrameworkCore;
 
@@ -118,6 +118,22 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
         return costCategory;
     }
 
+    public async Task<List<Models.CostCategory>> SelectByTariffGroup(long tariffGroupId, long? energyTypeId = null)
+    {
+        return await _context.CostCategories
+            .Where(category => (!energyTypeId.HasValue || category.EnergyTypeId == energyTypeId)
+                && _context.TariffGroupCostCategories.Any(link => link.TariffGroupId == tariffGroupId
+                    && link.CostCategoryId == category.Id))
+            .OrderBy(category => category.SortOrder).ThenBy(category => category.Name)
+            .ToListAsync().ConfigureAwait(false);
+    }
+
+    public async Task<List<long>> GetAllowedTariffGroupIds(long costCategoryId)
+    {
+        return await _context.TariffGroupCostCategories.Where(link => link.CostCategoryId == costCategoryId)
+            .Select(link => link.TariffGroupId).ToListAsync().ConfigureAwait(false);
+    }
+
     #region Mappers
 
     public async Task<List<SettlementData>> MapCostCategories(List<PeriodicData> periodicDataList, CancellationToken cancellationToken = default)
@@ -136,32 +152,6 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
 
                 var calculationTypeId = costCategory.CalculationTypeId;
                 var categoryRate = otherCost.Rate;
-
-                if (otherCost.Quantity is null)
-                {
-                    switch (costCategory.EnergySubType.Id)
-                    {
-                        case 1:
-                            //Normal
-                            categoryRate = periodicData.RateNormal;
-                            break;
-                        case 2:
-                            //low
-                            categoryRate = periodicData.RateLow;
-                            break;
-                        case 3:
-                            //return normal
-                            categoryRate = periodicData.RateReturnNormal;
-                            break;
-                        case 4:
-                            //return low
-                            categoryRate = periodicData.RateReturnLow;
-                            break;
-                    }
-                }
-                
-                //if (costCategory.EnergySubType.Id > 4 && categoryRate < 0)
-                //    categoryRate = Math.Abs(categoryRate);
 
                 settlementData = settlementDatas.LastOrDefault(x => x.CorrectionFactor == periodicData.CorrectionFactor
                                                      && x.LastAvailableRateUsed == otherCost.LastAvailableRateUsed
@@ -259,9 +249,16 @@ public class RepoCostCategories : RepoGeneral<Models.CostCategory>
                     : settlementData.ValueBase * settlementData.Rate;
                 if (costCategory.CanNotBeNegative && settlementData.Value < 0)
                     settlementData.Value = 0;
-
-                settlementData.VatAmount = settlementData.Value * (settlementData.VatTarif / 100);
             }
+        }
+
+        // Round once after accumulating each complete line. VAT uses its rounded net amount.
+        foreach (var line in settlementDatas)
+        {
+            line.Value = Math.Round(line.Value, 2, MidpointRounding.AwayFromZero);
+            line.VatAmount = line.CostCategory.CalculateVat
+                ? Math.Round(line.Value * line.VatTarif / 100m, 2, MidpointRounding.AwayFromZero)
+                : 0m;
         }
 
         settlementDatas = settlementDatas.OrderBy(o => o.CostCategory.SortOrder).ToList();

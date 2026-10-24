@@ -1,4 +1,4 @@
-using EnergyUse.Common.Enums;
+﻿using EnergyUse.Common.Enums;
 using EnergyUse.Core.Controllers;
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
@@ -68,6 +68,8 @@ namespace WpfUI.ViewModels
                 if (_selectedCostCategory != value)
                 {
                     _selectedCostCategory = value;
+                    _allowedRateTariffGroupIds = value == null ? new() : _controller.UnitOfWork.CostCategoryRepo
+                        .GetAllowedTariffGroupIds(value.Id).GetAwaiter().GetResult().ToHashSet();
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(ApplicableRateTariffGroups));
                     _ = onCostCategoryChangedAsync();
@@ -93,9 +95,9 @@ namespace WpfUI.ViewModels
 
         public bool CanSelectEnergyType => SelectedTariffGroup != null;
         public bool CanSelectCostCategory => SelectedEnergyType != null;
-        public IEnumerable<TariffGroup> ApplicableRateTariffGroups => SelectedCostCategory == null
-            ? Enumerable.Empty<TariffGroup>()
-            : TariffGroups.Where(group => group.TypeId == SelectedCostCategory.TariffGroupTypeId);
+        private HashSet<long> _allowedRateTariffGroupIds = new();
+        public IEnumerable<TariffGroup> ApplicableRateTariffGroups =>
+            TariffGroups.Where(group => _allowedRateTariffGroupIds.Contains(group.Id));
 
         private Rate? _selectedRate;
         public Rate? SelectedRate
@@ -201,11 +203,9 @@ namespace WpfUI.ViewModels
 
         private async Task getEnergyTypes(long tariffGroupId)
         {
-            var costCategories = await _controller.UnitOfWork.CostCategoryRepo.GetAll();
-            var tariffGroupTypeId = SelectedTariffGroup?.TypeId;
+            var costCategories = await _controller.UnitOfWork.CostCategoryRepo.SelectByTariffGroup(tariffGroupId);
             var applicableEnergyTypeIds = costCategories
-                .Where(category => category.EnergyTypeId.HasValue
-                    && category.TariffGroupTypeId == tariffGroupTypeId)
+                .Where(category => category.EnergyTypeId.HasValue)
                 .Select(category => category.EnergyTypeId.GetValueOrDefault())
                 .ToHashSet();
 
@@ -225,16 +225,23 @@ namespace WpfUI.ViewModels
         private async Task getCostCategories(long energyTypeId, long tariffGroupId)
         {
             var costCategories = await _controller.UnitOfWork.CostCategoryRepo
-                .SelectByEnergyTypeId(energyTypeId);
+                .SelectByTariffGroup(tariffGroupId, energyTypeId);
             if (SelectedTariffGroup?.Id != tariffGroupId || SelectedEnergyType?.Id != energyTypeId)
                 return;
 
-            CostCategories.Clear();
-            foreach (var category in costCategories.Where(category =>
-                category.TariffGroupTypeId == SelectedTariffGroup?.TypeId))
+            var allowedIds = costCategories.Select(category => category.Id).ToHashSet();
+            foreach (var category in CostCategories.Where(category => !allowedIds.Contains(category.Id)).ToList())
+                CostCategories.Remove(category);
+            foreach (var category in costCategories.Where(category => CostCategories.All(existing => existing.Id != category.Id)))
             {
                 CostCategories.Add(category);
             }
+        }
+
+        public async Task RefreshCostCategoriesAsync()
+        {
+            if (SelectedTariffGroup != null && SelectedEnergyType != null)
+                await getCostCategories(SelectedEnergyType.Id, SelectedTariffGroup.Id);
         }
 
         private void getRateTypes()
@@ -334,6 +341,7 @@ namespace WpfUI.ViewModels
             if (version != _rateRowsVersion || SelectedCostCategory?.Id != costCategory.Id)
                 return;
 
+            var validationErrors = RateController.ValidateRates(rates);
             foreach (var rate in rates)
             {
                 var vatPercentage = vatTariffs
@@ -345,7 +353,10 @@ namespace WpfUI.ViewModels
                 RateRows.Add(new RateGridRowViewModel(
                     rate,
                     costCategory.CalculateVat,
-                    vatPercentage));
+                    vatPercentage)
+                {
+                    ValidationError = validationErrors.GetValueOrDefault(rate, string.Empty)
+                });
             }
 
             SelectedRateRow = RateRows
@@ -417,101 +428,39 @@ namespace WpfUI.ViewModels
 
         private async void setRate()
         {
-            if (SelectedRate != null)
+            var selectedRate = SelectedRate;
+            if (selectedRate != null)
             {
-                if (!confirmNewRateFitsExistingRates())
+                if (!await confirmRateFitsExistingRatesAsync(selectedRate)
+                    || !ReferenceEquals(SelectedRate, selectedRate))
                     return;
 
-                SelectedRate.PriceChange = await _controller.GetPriceChange(SelectedRate);
+                selectedRate.PriceChange = await _controller.GetPriceChange(selectedRate);
                 _controller.UnitOfWork.Complete();
                 await initRates();
             }
         }
 
-        private bool confirmNewRateFitsExistingRates()
+        private async Task<bool> confirmRateFitsExistingRatesAsync(Rate selectedRate)
         {
-            if (SelectedRate == null || SelectedRate.Id > 0)
+            var errors = await _controller.GetRateValidationErrorsAsync(Rates.Append(selectedRate));
+            foreach (var row in RateRows)
+                row.RefreshValidation(errors.GetValueOrDefault(row.Rate, string.Empty));
+
+            if (errors.Count == 0)
                 return true;
 
-            var newStartDate = SelectedRate.StartRate.Date;
-            var newEndDate = SelectedRate.EndRate.Date;
-            var existingRates = Rates
-                .Where(rate => !ReferenceEquals(rate, SelectedRate))
-                .OrderBy(rate => rate.StartRate)
-                .ToList();
-
-            var validationMessages = new List<string>();
-
-            if (newEndDate < newStartDate)
+            var details = string.Join(Environment.NewLine + Environment.NewLine, errors.Select(item =>
+                $"Rate {item.Key.Id}: {item.Key.StartRate:dd-MM-yyyy} through {item.Key.EndRate:dd-MM-yyyy}{Environment.NewLine}{item.Value}"));
+            if (errors.Values.Any(error => error.Contains("This cost category is not allowed")))
             {
-                validationMessages.Add("The end date is before the start date.");
+                _dialogService.Show(details, "Rate validation");
+                return false;
             }
-            else if (existingRates.Count > 0)
-            {
-                var overlappingRates = existingRates
-                    .Where(rate =>
-                        rate.StartRate.Date <= newEndDate &&
-                        rate.EndRate.Date >= newStartDate)
-                    .ToList();
-
-                if (overlappingRates.Count > 0)
-                {
-                    var overlappingPeriods = string.Join(
-                        Environment.NewLine,
-                        overlappingRates.Select(rate =>
-                            $"- {rate.StartRate:dd-MM-yyyy} through {rate.EndRate:dd-MM-yyyy}"));
-
-                    validationMessages.Add(
-                        $"The new rate overlaps the following existing period(s):{Environment.NewLine}" +
-                        overlappingPeriods);
-                }
-                else
-                {
-                    var previousRate = existingRates
-                        .Where(rate => rate.EndRate.Date < newStartDate)
-                        .OrderByDescending(rate => rate.EndRate)
-                        .FirstOrDefault();
-
-                    var nextRate = existingRates
-                        .Where(rate => rate.StartRate.Date > newEndDate)
-                        .OrderBy(rate => rate.StartRate)
-                        .FirstOrDefault();
-
-                    if (previousRate != null)
-                    {
-                        var expectedStartDate = previousRate.EndRate.Date.AddDays(1);
-                        if (newStartDate != expectedStartDate)
-                        {
-                            validationMessages.Add(
-                                $"The previous rate ends on {previousRate.EndRate:dd-MM-yyyy}. " +
-                                $"The expected start date is {expectedStartDate:dd-MM-yyyy}, " +
-                                $"but {newStartDate:dd-MM-yyyy} was entered.");
-                        }
-                    }
-
-                    if (nextRate != null)
-                    {
-                        var expectedEndDate = nextRate.StartRate.Date.AddDays(-1);
-                        if (newEndDate != expectedEndDate)
-                        {
-                            validationMessages.Add(
-                                $"The next rate starts on {nextRate.StartRate:dd-MM-yyyy}. " +
-                                $"The expected end date is {expectedEndDate:dd-MM-yyyy}, " +
-                                $"but {newEndDate:dd-MM-yyyy} was entered.");
-                        }
-                    }
-                }
-            }
-
-            if (validationMessages.Count == 0)
-                return true;
-
-            var message =
-                $"This new rate does not connect correctly to the existing rate periods.{Environment.NewLine}{Environment.NewLine}" +
-                $"{string.Join(Environment.NewLine + Environment.NewLine, validationMessages)}{Environment.NewLine}{Environment.NewLine}" +
-                "Do you want to save the rate anyway?";
-
-            return _dialogService.ShowYesNo(message, "Rate period warning");
+            return _dialogService.ShowYesNo(
+                $"The red rows contain rate validation errors.{Environment.NewLine}{Environment.NewLine}" +
+                $"{details}{Environment.NewLine}{Environment.NewLine}Do you want to save the rates anyway?",
+                "Rate validation");
         }
 
         private void cancelRate()
@@ -540,12 +489,10 @@ namespace WpfUI.ViewModels
             }
         }
 
-        private void refreshRates()
+        private async void refreshRates()
         {
-            if (!validateInput())
-                return;
-
-            _ = initRates();
+            await RefreshCostCategoriesAsync();
+            await initRates();
         }
 
         private void close()

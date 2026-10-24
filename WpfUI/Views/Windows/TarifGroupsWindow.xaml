@@ -132,6 +132,16 @@
                     <TextBox Grid.Row="1" Grid.Column="1"
                              Text="{Binding SelectedTariffGroup.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Margin="0,0,0,4"/>
+                    <GroupBox Grid.Row="2" Grid.ColumnSpan="2" Header="Allowed cost categories" Margin="0,8,0,0">
+                        <ListBox ItemsSource="{Binding CostCategories}" BorderThickness="0"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="4"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </GroupBox>
                 </Grid>
             </GroupBox>
         </Grid>

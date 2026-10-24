@@ -15,6 +15,7 @@ namespace WpfUI.Views.Windows
             var viewModel = new RatesViewModel(this, new DialogService());
             DataContext = viewModel;
             Loaded += async (_, _) => await viewModel.InitializeAsync();
+            CostCategoryCombo.DropDownOpened += async (_, _) => await viewModel.RefreshCostCategoriesAsync();
         }
     }
 }

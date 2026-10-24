@@ -10,7 +10,7 @@ using System.Globalization;
 
 namespace EnergyUse.Core.Manager;
 
-public class LibPeriodicDate
+public class LibPeriodicDate : IDisposable
 {
     #region Properties
 
@@ -53,6 +53,8 @@ public class LibPeriodicDate
         _staffelRepo = new Repositories.RepoStaffel(_context);
         _nettingRepo = new Repositories.RepoNetting(_context);
     }
+
+    public void Dispose() => _context.Dispose();
 
     public async Task<List<PeriodicData>> GetRangeAsync(ParameterPeriod parameterPeriod)
     {
@@ -107,14 +109,17 @@ public class LibPeriodicDate
             .OrderBy(x => x.ValueX)
             .ToList();
 
-        // Add rate values
-        await addRateToData();
+        // Consumption and efficiency graphs do not require price rates.
+        if (_parameterPeriod.ShowType is ShowType.Value or ShowType.AvgValue
+            || _parameterPeriod.PeriodType == Period.SettlementDay)
+        {
+            await addRateToData();
 
-        // Settlement costs must also be calculated for calendar days without meter data.
-        addSettlementCostDays();
+            // Settlement costs must also be calculated for calendar days without meter data.
+            addSettlementCostDays();
 
-        // Add addital cost data
-        await addCost();
+            await addCost();
+        }
 
         _periodicDataList = _periodicDataList
             .OrderBy(x => x.ValueX)
@@ -126,11 +131,21 @@ public class LibPeriodicDate
     /// </summary>
     private async Task addCost()
     {
-        var costCategoryList = await _costCategoriesRepo.SelectByEnergyTypeAndRange(_parameterPeriod.EnergyType.Id, _parameterPeriod.StartRange, _parameterPeriod.EndRange);
-        var libPriceRate = new LibPriceRate(_dbFileName);
+        var costCategoryList = (await _costCategoriesRepo.SelectByEnergyTypeAndRange(_parameterPeriod.EnergyType.Id, _parameterPeriod.StartRange, _parameterPeriod.EndRange)).ToList();
+        using var libPriceRate = new LibPriceRate(_dbFileName);
 
         foreach (var costCategory in costCategoryList)
         {
+            // Validate the entire settlement period, including days without readings.
+            if (_parameterPeriod.PeriodType == Period.SettlementDay)
+            {
+                for (var date = _parameterPeriod.StartRange.Date; date <= _parameterPeriod.EndRange.Date; date = date.AddDays(1))
+                {
+                    if ((!costCategory.Start.HasValue || date >= costCategory.Start.Value.Date)
+                        && (!costCategory.End.HasValue || date <= costCategory.End.Value.Date))
+                        await libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, date, getTariffGroupId(costCategory));
+                }
+            }
             var calculationTypeId = costCategory.CalculationTypeId;
             if (calculationTypeId >= 1 && calculationTypeId <= 6)
             {
@@ -147,10 +162,10 @@ public class LibPeriodicDate
                     var periodicDate = periodicData.ValueX;
                     var tarifGroupId = getTariffGroupId(costCategory);
 
-                    if (costCategory.Start > periodicDate)
+                    if (costCategory.Start.HasValue && costCategory.Start.Value.Date > periodicDate.Date)
                         continue;
 
-                    if (costCategory.End < periodicDate)
+                    if (costCategory.End.HasValue && costCategory.End.Value.Date < periodicDate.Date)
                         continue;
 
                     bool lastAvailableVatRateUsed = false;
@@ -177,7 +192,7 @@ public class LibPeriodicDate
                             vat = vatTarif.Tarif;
                     }
 
-                    PriceRate? priceRate = await getPriceRate(libPriceRate, costCategory, periodicData, tarifGroupId);
+                    PriceRate? priceRate = await getPriceRate(libPriceRate, costCategoryList, costCategory, periodicData, tarifGroupId);
 
                     var otherCost = new OtherCost
                     {
@@ -314,41 +329,38 @@ public class LibPeriodicDate
         return contractDayCount > 0 ? 1m / contractDayCount : 0;
     }
 
-    private async Task<PriceRate?> getPriceRate(LibPriceRate libPriceRate, Models.CostCategory costCategory, PeriodicDataPerDay periodicData, long tarifGroupId)
+    private async Task<PriceRate> getPriceRate(LibPriceRate libPriceRate, List<Models.CostCategory> categories, Models.CostCategory costCategory, PeriodicDataPerDay periodicData, long tarifGroupId)
     {
-        PriceRate? priceRate = null;
-        switch (costCategory.EnergySubType.Id)
+        var priceRate = await libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
+        if (costCategory.CalculationTypeId == 1 && costCategory.EnergySubTypeId is 3 or 4)
         {
-            case 1:
-                //Normal
-                priceRate = await libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.Normal, tarifGroupId);
-                break;
-            case 2:
-                //low
-                priceRate = await libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.Low, tarifGroupId);
-                break;
-            case 3:
-                //return normal
-                priceRate = await libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.ReturnNormal, tarifGroupId);
-                break;
-            case 4:
-                //return low
-                priceRate = await libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicData.ValueX, SubEnergyType.ReturnLow, tarifGroupId);
-                break;
-            case 5:
-                //Other
-                priceRate = await libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
-                break;
-            case 6:
-                // Return cost normal
-                priceRate = await libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
-                break;
-            case 7:
-                // Return low normal
-                priceRate = await libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, periodicData, tarifGroupId);
-                break;
+            var low = costCategory.EnergySubTypeId == 4;
+            var netting = getNetting(periodicData.ValueX);
+            var nettingUsed = netting != null && netting.Rate != 0;
+            var deliveryRate = low ? periodicData.RateLow : periodicData.RateNormal;
+            if (nettingUsed)
+            {
+                // Share the netted delivery credit across return components, so it is credited once.
+                var returnCategories = categories.Where(category => category.CalculationTypeId == 1
+                    && category.EnergySubTypeId == costCategory.EnergySubTypeId
+                    && (!category.Start.HasValue || category.Start.Value.Date <= periodicData.ValueX.Date)
+                    && (!category.End.HasValue || category.End.Value.Date >= periodicData.ValueX.Date)).ToList();
+                var totalReturnRate = 0m;
+                foreach (var category in returnCategories)
+                    totalReturnRate += Math.Abs((await libPriceRate.GetRate(_parameterPeriod.EnergyType.Id,
+                        category, periodicData, getTariffGroupId(category))).Rate);
+                var share = totalReturnRate == 0m
+                    ? 1m / returnCategories.Count
+                    : Math.Abs(priceRate.Rate) / totalReturnRate;
+                deliveryRate *= share;
+            }
+            (priceRate.Rate, _) = calculateReturnRate(
+                low ? periodicData.ValueYReturnLow : periodicData.ValueYReturnNormal,
+                nettingUsed ? (low ? periodicData.NettingValueYReturnLow : periodicData.NettingValueYReturnNormal) : 0,
+                deliveryRate,
+                priceRate.Rate,
+                nettingUsed);
         }
-
         return priceRate;
     }
 
@@ -581,33 +593,32 @@ public class LibPeriodicDate
 
     private async Task addRateToData()
     {
-        var libPriceRate = new LibPriceRate(_dbFileName);
+        using var libPriceRate = new LibPriceRate(_dbFileName);
+        var categories = (await _costCategoriesRepo.SelectByEnergyTypeAndRange(
+            _parameterPeriod.EnergyType.Id, _parameterPeriod.StartRange, _parameterPeriod.EndRange)).ToList();
 
         foreach (PeriodicDataPerDay periodicDataPerDay in _periodicDataList)
         {
             var netting = getNetting(periodicDataPerDay.ValueX);
             var nettingUsed = netting != null && netting.Rate != 0;
 
-            if (_parameterPeriod.ShowType == ShowType.Value)
+            if (_parameterPeriod.ShowType is ShowType.Value or ShowType.AvgValue
+                || _parameterPeriod.PeriodType == Period.SettlementDay)
             {
                 if (_parameterPeriod.EnergyType.HasNormalAndLow)
                 {
-                    periodicDataPerDay.RateLow = (await libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.Low, _parameterPeriod.TarifGroupId)).Rate;
+                    periodicDataPerDay.RateLow = (await getSubtypeRate(libPriceRate, categories, periodicDataPerDay.ValueX, SubEnergyType.Low)).Rate;
                     periodicDataPerDay.ValueYMonetaryLow = periodicDataPerDay.ValueYLow * periodicDataPerDay.RateLow;
                 }
 
-                periodicDataPerDay.RateNormal = (await libPriceRate.GetCalculatedRate(_parameterPeriod.EnergyType.Id, periodicDataPerDay.ValueX, SubEnergyType.Normal, _parameterPeriod.TarifGroupId)).Rate;
+                periodicDataPerDay.RateNormal = (await getSubtypeRate(libPriceRate, categories, periodicDataPerDay.ValueX, SubEnergyType.Normal)).Rate;
                 periodicDataPerDay.ValueYMonetaryNormal = periodicDataPerDay.ValueYNormal * periodicDataPerDay.RateNormal;
 
                 if (_parameterPeriod.EnergyType.HasEnergyReturn)
                 {
                     if (_parameterPeriod.EnergyType.HasNormalAndLow)
                     {
-                        var rateReturnLow = (await libPriceRate.GetCalculatedRate(
-                            _parameterPeriod.EnergyType.Id,
-                            periodicDataPerDay.ValueX,
-                            SubEnergyType.ReturnLow,
-                            _parameterPeriod.TarifGroupId)).Rate;
+                        var rateReturnLow = (await getSubtypeRate(libPriceRate, categories, periodicDataPerDay.ValueX, SubEnergyType.ReturnLow)).Rate;
                         var nettedReturnLow = nettingUsed ? periodicDataPerDay.NettingValueYReturnLow : 0;
                         (periodicDataPerDay.RateReturnLow, periodicDataPerDay.ValueYMonetaryReturnLow) =
                             calculateReturnRate(
@@ -618,11 +629,7 @@ public class LibPeriodicDate
                                 nettingUsed);
                     }
 
-                    var rateReturnNormal = (await libPriceRate.GetCalculatedRate(
-                        _parameterPeriod.EnergyType.Id,
-                        periodicDataPerDay.ValueX,
-                        SubEnergyType.ReturnNormal,
-                        _parameterPeriod.TarifGroupId)).Rate;
+                    var rateReturnNormal = (await getSubtypeRate(libPriceRate, categories, periodicDataPerDay.ValueX, SubEnergyType.ReturnNormal)).Rate;
                     var nettedReturnNormal = nettingUsed ? periodicDataPerDay.NettingValueYReturnNormal : 0;
                     (periodicDataPerDay.RateReturnNormal, periodicDataPerDay.ValueYMonetaryReturnNormal) =
                         calculateReturnRate(
@@ -640,6 +647,24 @@ public class LibPeriodicDate
                     - periodicDataPerDay.ValueYMonetaryReturnNormal;
             }
         }
+    }
+
+    private async Task<PriceRate> getSubtypeRate(LibPriceRate priceRates, List<Models.CostCategory> categories,
+        DateTime date, SubEnergyType subtype)
+    {
+        var result = new PriceRate();
+        foreach (var category in categories.Where(category => category.CalculationTypeId == 1
+            && category.EnergySubTypeId == (long)subtype
+            && (!category.Start.HasValue || category.Start.Value.Date <= date.Date)
+            && (!category.End.HasValue || category.End.Value.Date >= date.Date)))
+        {
+            var rate = await priceRates.GetRate(_parameterPeriod.EnergyType.Id, category, date, getTariffGroupId(category));
+            result.Rate += subtype is SubEnergyType.ReturnNormal or SubEnergyType.ReturnLow
+                ? Math.Abs(rate.Rate)
+                : rate.Rate;
+            result.LastRateUsed |= rate.LastRateUsed;
+        }
+        return result;
     }
 
     private static (decimal Rate, decimal MonetaryValue) calculateReturnRate(

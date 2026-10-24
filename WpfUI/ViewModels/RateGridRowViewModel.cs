@@ -2,7 +2,7 @@ using EnergyUse.Models;
 
 namespace WpfUI.ViewModels;
 
-public sealed class RateGridRowViewModel
+public sealed class RateGridRowViewModel : ViewModelBase
 {
     public RateGridRowViewModel(Rate rate, bool storedPriceExcludesVat, decimal? vatPercentage)
     {
@@ -34,6 +34,28 @@ public sealed class RateGridRowViewModel
     }
 
     public Rate Rate { get; }
+    private string _validationError = string.Empty;
+    public string ValidationError
+    {
+        get => _validationError;
+        set
+        {
+            if (SetProperty(ref _validationError, value))
+                OnPropertyChanged(nameof(HasValidationError));
+        }
+    }
+    public bool HasValidationError => !string.IsNullOrWhiteSpace(ValidationError);
+
+    public void RefreshValidation(string error)
+    {
+        ValidationError = error;
+        OnPropertyChanged(nameof(StartRate));
+        OnPropertyChanged(nameof(EndRate));
+        OnPropertyChanged(nameof(RateValue));
+        OnPropertyChanged(nameof(ExpectedPriceChange));
+        OnPropertyChanged(nameof(PriceChange));
+        OnPropertyChanged(nameof(Description));
+    }
     public DateTime StartRate => Rate.StartRate;
     public DateTime EndRate => Rate.EndRate;
     public decimal RateValue => Rate.RateValue;

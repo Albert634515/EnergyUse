@@ -7,6 +7,8 @@ public partial class frmTariffGroups : Form
     #region FormProperties
 
     private TariffGroupController _controller;
+    private readonly CheckedListBox _costCategories = new();
+    private bool _loadingCategories;
 
     #endregion
 
@@ -25,7 +27,46 @@ public partial class frmTariffGroups : Form
 
         setBaseFormSettings();
         setTariffGroupTypeCombo("");
+        var categoryGroup = new GroupBox
+        {
+            Text = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "nl"
+                ? "Toegestane kostencategorieën" : "Allowed cost categories",
+            Location = new Point(12, 105),
+            Size = new Size(gbCostCategory.ClientSize.Width - 24, gbCostCategory.ClientSize.Height - 117),
+            Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
+        };
+        _costCategories.Dock = DockStyle.Fill;
+        _costCategories.CheckOnClick = true;
+        _costCategories.DisplayMember = "Name";
+        _costCategories.FormattingEnabled = true;
+        _costCategories.Format += (_, e) =>
+        {
+            if (e.ListItem is EnergyUse.Models.CostCategory category)
+                e.Value = $"{category.EnergyType?.Name}: {category.Name}";
+        };
+        categoryGroup.Controls.Add(_costCategories);
+        gbCostCategory.Controls.Add(categoryGroup);
+        BsTarifGroups.CurrentChanged += (_, _) => setCostCategories();
+        _costCategories.ItemCheck += (_, e) =>
+        {
+            if (!_loadingCategories && BsTarifGroups.Current is EnergyUse.Models.TariffGroup group
+                && _costCategories.Items[e.Index] is EnergyUse.Models.CostCategory category)
+                _controller.UnitOfWork.SetCostCategoryAllowed(group, category.Id, e.NewValue == CheckState.Checked);
+        };
         setTarifGroups();
+    }
+
+    private void setCostCategories()
+    {
+        _loadingCategories = true;
+        try
+        {
+            _costCategories.Items.Clear();
+            if (BsTarifGroups.Current is EnergyUse.Models.TariffGroup group)
+                foreach (var category in _controller.UnitOfWork.CostCategories)
+                    _costCategories.Items.Add(category, _controller.UnitOfWork.IsCostCategoryAllowed(group, category.Id));
+        }
+        finally { _loadingCategories = false; }
     }
 
     private void setTariffGroupTypeCombo(string currentValue)

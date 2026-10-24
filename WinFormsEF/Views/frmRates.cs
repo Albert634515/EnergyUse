@@ -23,10 +23,26 @@ public partial class FrmRates : Form
     {
         _controller = new RateController(Managers.Config.GetDbFileName());
         _controller.Initialize();
+        CboCostCategory.DropDown += (_, _) =>
+        {
+            var groupId = (CboTarifGroup.SelectedItem as EnergyUse.Models.TariffGroup)?.Id ?? 0;
+            var energyId = (CboEnergyType.SelectedItem as EnergyUse.Models.EnergyType)?.Id ?? 0;
+            var allowed = _controller.UnitOfWork.CostCategoryRepo.SelectByTariffGroup(groupId, energyId).GetAwaiter().GetResult();
+            if (allowed.Select(category => category.Id).SequenceEqual(
+                CboCostCategory.Items.Cast<EnergyUse.Models.CostCategory>().Select(category => category.Id)))
+                return;
+            var categoryId = (CboCostCategory.SelectedItem as EnergyUse.Models.CostCategory)?.Id;
+            setCostCategories(energyId);
+            if (categoryId.HasValue)
+                CboCostCategory.SelectedValue = categoryId.Value;
+        };
+        DgRates.DataBindingComplete += (_, _) => colourRateValidationRows();
 
         setBaseFormSettings();
         setComboEnergyTypes();
         setComboTarifGroups();
+        CboTarifGroup.Visible = true;
+        LblTarifGroup.Visible = true;
         setComboRateTypes();
     }
 
@@ -37,7 +53,8 @@ public partial class FrmRates : Form
 
     private void setCostCategories(long eneryTypeId)
     {
-        var costCategories = _controller.UnitOfWork.CostCategoryRepo.SelectByEnergyTypeId(eneryTypeId).GetAwaiter().GetResult().ToList();
+        var groupId = (CboTarifGroup.SelectedItem as EnergyUse.Models.TariffGroup)?.Id ?? 0;
+        var costCategories = _controller.UnitOfWork.CostCategoryRepo.SelectByTariffGroup(groupId, eneryTypeId).GetAwaiter().GetResult();
         bsCostCategories.DataSource = costCategories;
         CboCostCategory.DataSource = costCategories;
 
@@ -54,10 +71,7 @@ public partial class FrmRates : Form
 
     private void setComboTarifGroups()
     {
-        var costCategorie = (EnergyUse.Models.CostCategory)CboCostCategory.SelectedItem;
         var tarifGroups = _controller.UnitOfWork.TarifGroupRepo.GetAll().GetAwaiter().GetResult().ToList();
-        if (costCategorie != null)
-            tarifGroups = tarifGroups.Where(t => t.TypeId == costCategorie.TariffGroupTypeId).ToList();
 
         bsTarifGroups.DataSource = tarifGroups;
 
@@ -103,7 +117,6 @@ public partial class FrmRates : Form
 
             LblTarifGroup.Visible = true;
             CboTarifGroup.Visible = true;
-            setComboTarifGroups();
 
             initAdditionalCategoryAndGroupInfo();
             initRates();
@@ -113,6 +126,7 @@ public partial class FrmRates : Form
 
     private void CboTarifGroup_SelectedIndexChanged(object sender, EventArgs e)
     {
+        setCostCategories((CboEnergyType.SelectedItem as EnergyUse.Models.EnergyType)?.Id ?? 0);
         initAdditionalCategoryAndGroupInfo();
         initRates();
     }
@@ -317,15 +331,66 @@ public partial class FrmRates : Form
         // Set focus on grid to force valdition and update of bindingsource form interfaces
         DgRates.Focus();
 
-        var rate = (EnergyUse.Models.Rate)bsRates.Current;
+        if (!Validate())
+            return;
+
+        bsRates.EndEdit();
+        if (bsRates.Current is not EnergyUse.Models.Rate rate)
+            return;
+
+        if (!confirmRatesAreValid())
+            return;
+
         rate.PriceChange = _controller.GetPriceChange(rate).GetAwaiter().GetResult();
 
         _controller.UnitOfWork.Complete();
     }
 
+    private bool confirmRatesAreValid()
+    {
+        var errors = _controller.GetRateValidationErrorsAsync(_controller.UnitOfWork.RateList)
+            .GetAwaiter().GetResult();
+        colourRateValidationRows(errors);
+        if (errors.Count == 0)
+            return true;
+
+        var details = string.Join(Environment.NewLine + Environment.NewLine, errors.Select(item =>
+            $"Rate {item.Key.Id}: {item.Key.StartRate:dd-MM-yyyy} through {item.Key.EndRate:dd-MM-yyyy}{Environment.NewLine}{item.Value}"));
+        if (errors.Values.Any(error => error.Contains("This cost category is not allowed")))
+        {
+            MessageBox.Show(details, "Rate validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return false;
+        }
+        return MessageBox.Show(
+            $"The red rows contain rate validation errors.{Environment.NewLine}{Environment.NewLine}" +
+            $"{details}{Environment.NewLine}{Environment.NewLine}Do you want to save the rates anyway?",
+            "Rate validation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+            MessageBoxDefaultButton.Button2) == DialogResult.Yes;
+    }
+
+    private void colourRateValidationRows(Dictionary<EnergyUse.Models.Rate, string> errors = null)
+    {
+        errors ??= RateController.ValidateRates(_controller.UnitOfWork.RateList);
+        foreach (DataGridViewRow row in DgRates.Rows)
+        {
+            var error = row.DataBoundItem is EnergyUse.Models.Rate rate
+                ? errors.GetValueOrDefault(rate, string.Empty)
+                : string.Empty;
+            var invalid = !string.IsNullOrWhiteSpace(error);
+            row.DefaultCellStyle.BackColor = invalid ? Color.MistyRose : Color.Empty;
+            row.DefaultCellStyle.ForeColor = invalid ? Color.DarkRed : Color.Empty;
+            row.DefaultCellStyle.SelectionBackColor = invalid ? Color.LightCoral : Color.Empty;
+            row.DefaultCellStyle.SelectionForeColor = invalid ? Color.DarkRed : Color.Empty;
+            row.ErrorText = error;
+            foreach (DataGridViewCell cell in row.Cells)
+                cell.ToolTipText = error;
+        }
+    }
+
     private void cancelRate()
     {
         _controller.UnitOfWork.CancelChanges();
+        bsRates.ResetBindings(false);
     }
 
 

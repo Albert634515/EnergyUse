@@ -12,6 +12,7 @@ namespace WpfUI.ViewModels
         private readonly TariffGroupController _controller;
         private readonly IDialogService _dialogService;
 
+        public ObservableCollection<SelectableCostCategoryViewModel> CostCategories { get; } = new();
         public ObservableCollection<TariffGroup> TariffGroups { get; } = new();
         public ObservableCollection<SelectionItem> TariffGroupTypes { get; } = new();
 
@@ -19,7 +20,11 @@ namespace WpfUI.ViewModels
         public TariffGroup? SelectedTariffGroup
         {
             get => _selectedTariffGroup;
-            set => SetProperty(ref _selectedTariffGroup, value);
+            set
+            {
+                SetProperty(ref _selectedTariffGroup, value);
+                setCostCategories();
+            }
         }
 
         private string _statusText = string.Empty;
@@ -54,6 +59,17 @@ namespace WpfUI.ViewModels
 
             setTariffGroupTypes();
             setTariffGroups();
+        }
+
+        private void setCostCategories()
+        {
+            CostCategories.Clear();
+            var group = SelectedTariffGroup;
+            if (group == null) return;
+            foreach (var category in _controller.UnitOfWork.CostCategories)
+                CostCategories.Add(new SelectableCostCategoryViewModel(category,
+                    $"{category.EnergyType?.Name}: {category.Name}", _controller.UnitOfWork.IsCostCategoryAllowed(group, category.Id),
+                    allowed => _controller.UnitOfWork.SetCostCategoryAllowed(group, category.Id, allowed)));
         }
 
         private void setTariffGroupTypes()

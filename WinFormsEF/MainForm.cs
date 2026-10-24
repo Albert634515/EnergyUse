@@ -389,12 +389,21 @@ public partial class MainForm : Form
                 parameterSelection = frmSelectParameters.GetSelectedParameters();
         }
 
-        Cursor.Current = Cursors.WaitCursor;
-        var fileName = await _controller.GetReportPdfAsync(parameterSelection);
-        Cursor.Current = Cursors.Default;
-
-        if (!string.IsNullOrWhiteSpace(fileName))
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(fileName) { UseShellExecute = true });
+        try
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            var fileName = await _controller.GetReportPdfAsync(parameterSelection);
+            if (!string.IsNullOrWhiteSpace(fileName))
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(fileName) { UseShellExecute = true });
+        }
+        catch (EnergyUse.Core.Manager.RateValidationException ex)
+        {
+            MessageBox.Show(ex.Message, "Tariefcontrole", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        finally
+        {
+            Cursor.Current = Cursors.Default;
+        }
     }
 
     private void getRateReport()
