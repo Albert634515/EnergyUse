@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="8.7.0">
+    <PackageReference Include="EPPlus" Version="8.7.2">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
     <PackageReference Include="itext" Version="9.7.0" />
