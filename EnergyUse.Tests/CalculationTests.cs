@@ -126,6 +126,84 @@ public class CalculationTests
     }
 
     [Theory]
+    [InlineData(Period.Day, 6)]
+    [InlineData(Period.SettlementDay, 6)]
+    [InlineData(Period.Day, 1)]
+    [InlineData(Period.SettlementDay, 1)]
+    public async Task CalculationSkipsCategoriesAssignedOnlyToAnotherTariffGroup(Period period, long calculationType)
+    {
+        using var db = new TestDatabase();
+        db.AddRate(1, 0.25m);
+        var other = db.AddCategory(2, calculationType, calculationType == 1 ? 1 : 5);
+        other.Start = day;
+        db.Context.TariffGroupCostCategories.Remove(
+            db.Context.TariffGroupCostCategories.Single(link => link.CostCategoryId == 2));
+        db.Context.TariffGroupCostCategories.Add(new TariffGroupCostCategory
+        {
+            TariffGroupId = 2, CostCategoryId = 2
+        });
+        db.Context.Rates.Add(new Rate { EnergyTypeId = 1, CostCategoryId = 2, TariffGroupId = 2,
+            StartRate = day, EndRate = day.AddYears(1), RateValue = 160m });
+        db.Context.SaveChanges();
+        db.AddReading(10m, 0m);
+        var parameters = db.Parameters(day, day);
+        parameters.PeriodType = period;
+
+        using var calculation = new LibPeriodicDate(db.Path);
+        var periodic = await calculation.GetRangeAsync(parameters);
+        Assert.Equal(2.50m, periodic.Sum(item => item.ValueMonetaryY));
+        Assert.All(periodic, item => Assert.All(item.OtherCosts, cost => Assert.Equal(1, cost.CostCategoryId)));
+        using var prices = new LibPriceRate(db.Path);
+        Assert.Equal(0.25m, (await prices.GetCalculatedRate(1, day, SubEnergyType.Normal, 1)).Rate);
+    }
+
+    [Fact]
+    public async Task UncheckingCategoryExcludesItEvenWhenItsRateStillExists()
+    {
+        using var db = new TestDatabase();
+        db.AddRate(1, 0.25m);
+        db.AddCategory(2, 1, 1);
+        db.AddRate(2, 9m);
+        db.Context.TariffGroupCostCategories.Remove(
+            db.Context.TariffGroupCostCategories.Single(link => link.CostCategoryId == 2));
+        db.Context.SaveChanges();
+        db.AddReading(10m, 0m);
+
+        using var calculation = new LibPeriodicDate(db.Path);
+        var periodic = await calculation.GetRangeAsync(db.Parameters(day, day));
+        Assert.Equal(2.50m, periodic.Sum(item => item.ValueMonetaryY));
+        Assert.Equal(1, Assert.Single(Assert.Single(periodic).OtherCosts).CostCategoryId);
+        using var prices = new LibPriceRate(db.Path);
+        Assert.Equal(0.25m, (await prices.GetCalculatedRate(1, day, SubEnergyType.Normal, 1)).Rate);
+    }
+
+    [Fact]
+    public async Task GeneralCostsUseTheAddressesGeneralTariffGroupForCategorySelection()
+    {
+        using var db = new TestDatabase();
+        db.AddRate(1, 0.25m);
+        var general = db.AddCategory(2, 3, 5);
+        general.TariffGroupTypeId = (int)TariffGroupType.GeneralCosts;
+        db.Context.Addresses.Single().GeneralTariffGroupId = 2;
+        db.Context.TariffGroupCostCategories.Remove(
+            db.Context.TariffGroupCostCategories.Single(link => link.CostCategoryId == 2));
+        db.Context.TariffGroupCostCategories.Add(new TariffGroupCostCategory
+        {
+            TariffGroupId = 2, CostCategoryId = 2
+        });
+        db.Context.Rates.Add(new Rate { EnergyTypeId = 1, CostCategoryId = 2, TariffGroupId = 2,
+            StartRate = day, EndRate = day, RateValue = 1m });
+        db.Context.SaveChanges();
+        db.AddReading(10m, 0m);
+
+        using var calculation = new LibPeriodicDate(db.Path);
+        var periodic = await calculation.GetRangeAsync(db.Parameters(day, day));
+        var lines = await new RepoCostCategories(db.Context).MapCostCategories(periodic);
+        Assert.Equal(2.50m, lines.Single(line => line.CostCategory.Id == 1).Value);
+        Assert.Equal(1m, lines.Single(line => line.CostCategory.Id == 2).Value);
+    }
+
+    [Theory]
     [InlineData(0, "-0.40")]
     [InlineData(50, "-0.80")]
     [InlineData(100, "-1.20")]
@@ -565,6 +643,10 @@ public class CalculationTests
             var category = new CostCategory { Id = id, Name = $"Category {id}", EnergyTypeId = 1,
                 CalculationTypeId = calculationTypeId, EnergySubTypeId = subtypeId, TariffGroupTypeId = 2 };
             Context.CostCategories.Add(category);
+            Context.TariffGroupCostCategories.Add(new TariffGroupCostCategory
+            {
+                TariffGroupId = 1, CostCategoryId = id
+            });
             Context.SaveChanges();
             return category;
         }

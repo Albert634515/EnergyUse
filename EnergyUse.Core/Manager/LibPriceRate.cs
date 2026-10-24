@@ -20,8 +20,10 @@ public sealed class LibPriceRate : IDisposable
     public async Task<PriceRate> GetCalculatedRate(long energyTypeId, DateTime costDate,
         Common.Enums.SubEnergyType subEnergyType, long tarifGroupId)
     {
-        var categories = (await _costCategoryRepo.SelectByEnergyTypeAndRange(energyTypeId, costDate.Date, costDate.Date))
-            .Where(category => category.EnergySubTypeId == (long)subEnergyType && category.CalculationTypeId == 1)
+        var categories = (await _costCategoryRepo.SelectByTariffGroup(tarifGroupId, energyTypeId))
+            .Where(category => category.EnergySubTypeId == (long)subEnergyType && category.CalculationTypeId == 1
+                && (!category.Start.HasValue || category.Start.Value.Date <= costDate.Date)
+                && (!category.End.HasValue || category.End.Value.Date >= costDate.Date))
             .ToList();
         if (categories.Count == 0)
             throw new RateValidationException($"No cost category for energy type {energyTypeId}, subtype {subEnergyType}, on {costDate:dd-MM-yyyy}.");

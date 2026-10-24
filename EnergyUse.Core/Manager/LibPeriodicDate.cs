@@ -296,6 +296,23 @@ public class LibPeriodicDate : IDisposable
         }
     }
 
+    private async Task<List<Models.CostCategory>> getCostCategories()
+    {
+        var categories = await _costCategoriesRepo.SelectByEnergyTypeAndRange(
+            _parameterPeriod.EnergyType.Id, _parameterPeriod.StartRange, _parameterPeriod.EndRange);
+        var energyTariffGroupId = _parameterPeriod.TarifGroupId > 0
+            ? _parameterPeriod.TarifGroupId
+            : _address?.DefaultTariffGroupId;
+        var generalTariffGroupId = _address?.GeneralTariffGroupId;
+        var links = await _context.TariffGroupCostCategories.AsNoTracking()
+            .Where(link => link.TariffGroupId == energyTariffGroupId
+                || link.TariffGroupId == generalTariffGroupId)
+            .ToListAsync();
+        var allowed = links.Select(link => (link.TariffGroupId, link.CostCategoryId)).ToHashSet();
+
+        return categories.Where(category => allowed.Contains((getTariffGroupId(category), category.Id))).ToList();
+    }
+
     private long getTariffGroupId(Models.CostCategory costCategory)
     {
         long? tariffGroupId = costCategory.TariffGroupTypeId switch
@@ -637,8 +654,7 @@ public class LibPeriodicDate : IDisposable
     private async Task addRateToData()
     {
         using var libPriceRate = new LibPriceRate(_dbFileName);
-        var categories = (await _costCategoriesRepo.SelectByEnergyTypeAndRange(
-            _parameterPeriod.EnergyType.Id, _parameterPeriod.StartRange, _parameterPeriod.EndRange)).ToList();
+        var categories = await getCostCategories();
 
         foreach (PeriodicDataPerDay periodicDataPerDay in _periodicDataList)
         {
