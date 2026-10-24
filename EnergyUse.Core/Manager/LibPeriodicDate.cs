@@ -174,7 +174,7 @@ public class LibPeriodicDate : IDisposable
     /// </summary>
     private async Task addCost()
     {
-        var costCategoryList = (await _costCategoriesRepo.SelectByEnergyTypeAndRange(_parameterPeriod.EnergyType.Id, _parameterPeriod.StartRange, _parameterPeriod.EndRange)).ToList();
+        var costCategoryList = await getCostCategories();
         using var libPriceRate = new LibPriceRate(_dbFileName);
 
         foreach (var costCategory in costCategoryList)
