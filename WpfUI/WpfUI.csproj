@@ -46,11 +46,10 @@
     <PackageReference Include="Extended.Wpf.Toolkit" Version="5.1.2" />
     <PackageReference Include="LiveChartsCore" Version="2.0.5" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.5" />
-    <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
-    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.13" />
   </ItemGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
     <ProjectReference Include="..\EnergyUse.Common\EnergyUse.Common.csproj" />
     <ProjectReference Include="..\EnergyUse.Core\EnergyUse.Core.csproj" />
     <ProjectReference Include="..\EnergyUse.Models\EnergyUse.Models.csproj" />
