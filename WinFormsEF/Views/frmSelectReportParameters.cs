@@ -45,6 +45,7 @@ public partial class frmSelectReportParameters : Form
         setEnergyTypeLists(CurrentAddress);
 
         _controller.InitSettings = false;
+        setSelectionPeriods();
     }
 
     private async void setComboAddresses()
@@ -96,13 +97,20 @@ public partial class frmSelectReportParameters : Form
 
     private void cmbAddress_SelectedIndexChanged(object sender, EventArgs e)
     {
+        if (_controller == null || _controller.InitSettings)
+            return;
+
         var address = getSelectedAddress();
-        setEnergyTypeLists(address);
         setEnergyTypeSelections(address.Id);
+        setEnergyTypeLists(address);
+        setSelectionPeriods();
     }
 
     private void cboPreSelectedPeriods_SelectedIndexChanged(object sender, EventArgs e)
     {
+        if (_controller == null || _controller.InitSettings)
+            return;
+
         setSelectionPeriods();
     }
 
@@ -257,10 +265,17 @@ public partial class frmSelectReportParameters : Form
 
     private void clearEnergyTypeSelections()
     {
-        foreach (var ds in this.Controls.OfType<ucControls.ucDateSelection>())
-            this.Controls.Remove(ds);
+        var removedHeight = 0;
+        foreach (var ds in this.Controls.OfType<ucControls.ucDateSelection>().ToList())
+        {
+            removedHeight += ds.Height;
+            Controls.Remove(ds);
+            ds.Dispose();
+        }
 
         _selectionLineCount = 0;
+        Height -= removedHeight;
+        setLocationAddRemoveButton(-removedHeight);
     }
 
     private void setEnergyTypeSelections(long addressId)
@@ -279,7 +294,6 @@ public partial class frmSelectReportParameters : Form
         for (int i = 1; i <= dateSelectionCount; i++)
         {
             ucDateSelection = setDateSelectionLine(i, addressId, location);
-            setSelectionPeriods();
             location.Y += ucDateSelection.Height;
         }
     }
@@ -315,12 +329,10 @@ public partial class frmSelectReportParameters : Form
         ucDateSelectionLast = (ucControls.ucDateSelection)FindControl(this, lastdateSelectionName);
         location = parametersGroupBox.Location;
         location.X -= 5;
-        location.Y = ucDateSelectionLast.Location.Y;
+        location.Y = ucDateSelectionLast?.Bottom ?? parametersGroupBox.Bottom;
 
-        if (ucDateSelectionLast != null)
-        {
+        if (address != null)
             setDateSelectionLine(_selectionLineCount + 1, address.Id, location);
-        }
     }
 
     private ucControls.ucDateSelection setDateSelectionLine(int lineCount, long addressId, Point location)
@@ -331,7 +343,9 @@ public partial class frmSelectReportParameters : Form
         ucDateSelection.SetTarifGroups();
 
         ucDateSelection.Name = getDateSelectionKey(lineCount, addressId);
-        location.Y += ucDateSelection.Height;
+        ucDateSelection.TabIndex = lineCount;
+        location.Y = Controls.OfType<ucControls.ucDateSelection>()
+            .Select(row => row.Bottom).DefaultIfEmpty(parametersGroupBox.Bottom).Max() + 8;
         ucDateSelection.Location = location;
         ucDateSelection.SetEnergyTypes(addressId);
         ucDateSelection.cmdRemove.Click += new System.EventHandler(this.cmdRemove_Click);
@@ -354,6 +368,21 @@ public partial class frmSelectReportParameters : Form
         return ucDateSelection;
     }
 
+    protected override void OnLayout(LayoutEventArgs levent)
+    {
+        base.OnLayout(levent);
+        if (parametersGroupBox == null)
+            return;
+
+        // Reposition after font/DPI scaling as well as after adding a selection.
+        var top = parametersGroupBox.Bottom + 8;
+        foreach (var row in Controls.OfType<ucControls.ucDateSelection>().OrderBy(row => row.TabIndex))
+        {
+            row.Location = new Point(parametersGroupBox.Left, top);
+            top = row.Bottom + 8;
+        }
+    }
+
     private void removeDateSelectionLine()
     {
         ucControls.ucDateSelection ucDateSelectionLast;
@@ -367,10 +396,11 @@ public partial class frmSelectReportParameters : Form
         Height -= ucDateSelectionLast.Height;
         _selectionLineCount--;
 
-        if (_selectionLineCount != 1)
+        if (_selectionLineCount > 0)
         {
+            lastdateSelectionName = getLastSelectedKey();
             ucDateSelectionLast = (ucControls.ucDateSelection)FindControl(this, lastdateSelectionName);
-            ucDateSelectionLast.SetRemoveButtonVisibilty(true);
+            ucDateSelectionLast?.SetRemoveButtonVisibilty(_selectionLineCount > 1);
         }
     }
 
@@ -436,6 +466,12 @@ public partial class frmSelectReportParameters : Form
         preDefinedPeriod = (EnergyUse.Models.PreDefinedPeriod)preSelectedPeriodComboBox.SelectedItem;
         preDefinedPeriodDateList = _controller.UnitOfWork.PreDefinedPeriodDateRepo.GetByPeriodId(preDefinedPeriod.Id).GetAwaiter().GetResult().ToList();
 
+        if (address.Id == 0)
+            return;
+
+        while (_selectionLineCount < preDefinedPeriodDateList.Count)
+            addDateSelectionLine();
+
         foreach (var preDefinedPeriodDate in preDefinedPeriodDateList)
         {
             ucControls.ucDateSelection ucDateSelection = this.Controls.Find(getDateSelectionKey(lineCount, address.Id), true).FirstOrDefault() as ucControls.ucDateSelection;
@@ -443,7 +479,7 @@ public partial class frmSelectReportParameters : Form
             {
                 ucDateSelection.dtpFrom.Value = preDefinedPeriodDate.StartDate;
                 ucDateSelection.dtpTill.Value = preDefinedPeriodDate.EndDate;
-                ucDateSelection.SetEnergyType(preDefinedPeriodDate.EnergyType.Id);
+                ucDateSelection.SetEnergyType(preDefinedPeriodDate.EnergyTypeId ?? 0);
 
                 if (preDefinedPeriodDate.TariffGroup != null && preDefinedPeriodDate.TariffGroup.Id > 0)
                     ucDateSelection.SetTarifGroup(preDefinedPeriodDate.TariffGroup.Id);

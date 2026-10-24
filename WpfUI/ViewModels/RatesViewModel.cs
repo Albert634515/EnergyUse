@@ -197,7 +197,7 @@ namespace WpfUI.ViewModels
                 return;
 
             var tariffGroups = await _controller.UnitOfWork.TarifGroupRepo.GetAll();
-            foreach (var tariffGroup in tariffGroups.OrderBy(group => group.Description))
+            foreach (var tariffGroup in tariffGroups.OrderBy(group => group.Description, StringComparer.CurrentCultureIgnoreCase))
                 TariffGroups.Add(tariffGroup);
         }
 
@@ -216,7 +216,7 @@ namespace WpfUI.ViewModels
             EnergyTypes.Clear();
             foreach (var energyType in energyTypes
                 .Where(type => applicableEnergyTypeIds.Contains(type.Id))
-                .OrderBy(type => type.Name))
+                .OrderBy(type => type.Name, StringComparer.CurrentCultureIgnoreCase))
             {
                 EnergyTypes.Add(energyType);
             }
@@ -236,6 +236,15 @@ namespace WpfUI.ViewModels
             {
                 CostCategories.Add(category);
             }
+
+            var sortedCategories = CostCategories
+                .OrderBy(category => category.Name, StringComparer.CurrentCultureIgnoreCase).ToList();
+            for (var index = 0; index < sortedCategories.Count; index++)
+            {
+                var currentIndex = CostCategories.IndexOf(sortedCategories[index]);
+                if (currentIndex != index)
+                    CostCategories.Move(currentIndex, index);
+            }
         }
 
         public async Task RefreshCostCategoriesAsync()
@@ -248,7 +257,7 @@ namespace WpfUI.ViewModels
         {
             RateTypes.Clear();
             var list = Managers.SelectionItemList.GetRateTypeList();
-            foreach (var r in list)
+            foreach (var r in list.OrderBy(item => item.Description, StringComparer.CurrentCultureIgnoreCase))
                 RateTypes.Add(r);
         }
 
