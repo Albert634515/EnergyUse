@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:uc="clr-namespace:WpfUI.Views.Controls"
         Title="Predefined Periods"
-        Width="900" Height="750"
+        Width="1301" Height="750"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False">
 
