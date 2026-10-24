@@ -16,7 +16,6 @@ public class SettlementSplitByType : SettlementBase
     public async Task<string> GetSettlementPdfAsync(ParameterSelection parameterSelection)
     {
         Table table;
-        DateTime startRange, endRange;
         Models.EnergyType energyType;
 
         var dest = System.IO.Path.GetTempPath();
@@ -56,22 +55,12 @@ public class SettlementSplitByType : SettlementBase
                 if (!isFirstPage)
                     document.Add(new AreaBreak());
                 document.Add(getHeaderParagraph(item, address, meter));
+                document.Add(await getMeterReadingSummary(item, address.Id, meter.Id));
 
                 isFirstPage = false;
                 energyType = item.EnergyType;
-                startRange = item.StartRange;
-                endRange = item.EndRange;
 
-                ParameterPeriod parameterPeriod = new();
-                parameterPeriod.EnergyType = energyType;
-                parameterPeriod.AddressId = address.Id;
-                parameterPeriod.StartRange = startRange;
-                parameterPeriod.EndRange = endRange;
-                parameterPeriod.ShowType = Common.Enums.ShowType.Value;
-                parameterPeriod.PeriodType = Common.Enums.Period.SettlementDay;
-                parameterPeriod.PredictMissingData = parameterSelection.PredictMissingData;
-                parameterPeriod.TarifGroupId = item.TarifGroup;
-                parameterPeriod.QuantityReduction = 1;
+                var parameterPeriod = getCalculationPeriod(item, address.Id, parameterSelection.PredictMissingData);
 
                 _periodicDataList = await LibPeriodicDate.GetRangeAsync(parameterPeriod);
                 _settlementDataList = await _unitOfWork.CostCategoriesRepo.MapCostCategories(_periodicDataList);
@@ -86,7 +75,7 @@ public class SettlementSplitByType : SettlementBase
                 else
                 {
                     table = new Table(_pointColumnWidths);
-                    GetSectionHeader(table, await getSectionHeaderText(item, address, meter));
+                    GetSectionHeader(table, item.EnergyType.Name);
                     document.Add(table);
                     document.Add(new Paragraph(""));
 

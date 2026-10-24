@@ -29,6 +29,27 @@ public class SettlementBase : ReportBase
         _unitOfWork = new UnitOfWork.Settlement(_dbFileName);
     }
 
+    internal static ParameterPeriod getCalculationPeriod(SelectedEnergyType item, long addressId, bool predictMissingData)
+    {
+        if (item.EndRange.Date <= item.StartRange.Date)
+            throw new ArgumentException("The settlement end reading must be after the start reading.");
+
+        // Daily deltas belong to the interval from this reading to the next one.
+        // The end reading closes the period; its delta belongs to the next period.
+        return new ParameterPeriod
+        {
+            EnergyType = item.EnergyType,
+            AddressId = addressId,
+            StartRange = item.StartRange.Date,
+            EndRange = item.EndRange.Date.AddDays(-1),
+            ShowType = Common.Enums.ShowType.Value,
+            PeriodType = Common.Enums.Period.SettlementDay,
+            PredictMissingData = predictMissingData,
+            TarifGroupId = item.TarifGroup,
+            QuantityReduction = 1
+        };
+    }
+
     internal List<SettlementData> mergeSettlementData(List<SettlementData> settlementDataList)
     {
         var mergeSettlementData = new List<SettlementData>();
@@ -399,65 +420,44 @@ public class SettlementBase : ReportBase
         return new Paragraph(headerText);
     }
 
-    internal async Task<string> getSectionHeaderText(SelectedEnergyType item, Models.Address address, Models.Meter meter)
+    internal async Task<Table> getMeterReadingSummary(SelectedEnergyType item, long addressId, long meterId)
     {
-        var headerText = string.Empty;
+        var startReading = await _unitOfWork.MeterReadingRepo.SelectRow(
+            item.StartRange, item.EnergyType.Id, addressId, meterId);
+        var endReading = await _unitOfWork.MeterReadingRepo.SelectRow(
+            item.EndRange, item.EnergyType.Id, addressId, meterId);
+        var table = new Table(iText.Layout.Properties.UnitValue.CreatePercentArray(new float[] { 50, 25, 25 }))
+            .UseAllAvailableWidth()
+            .SetFixedLayout()
+            .SetKeepTogether(true)
+            .SetMarginBottom(10);
 
-        headerText += $"{item.EnergyType.Name}";
-        headerText += $", range: {Environment.NewLine}";
+        table.AddHeaderCell(GetBoldTextGrey(
+            $"Standen notaperiode: {item.StartRange:dd-MM-yyyy} - {item.EndRange:dd-MM-yyyy}",
+            1, 3, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddHeaderCell(GetBoldText("Telwerk", cellAlignment: iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddHeaderCell(GetBoldText("Beginstand"));
+        table.AddHeaderCell(GetBoldText("Eindstand"));
 
-        headerText += $" Normal: {await getMeterPositionRange(item, address.Id, meter.Id, Common.Enums.SubEnergyType.Normal)}";
+        addReading("Levering normaal", startReading?.RateNormal, endReading?.RateNormal);
         if (item.EnergyType.HasNormalAndLow)
-        {
-            headerText += $", low: {await getMeterPositionRange(item, address.Id, meter.Id, Common.Enums.SubEnergyType.Low)}";
-        }
-
+            addReading("Levering dal", startReading?.RateLow, endReading?.RateLow);
         if (item.EnergyType.HasEnergyReturn)
         {
-            headerText += $"{Environment.NewLine}";
-            headerText += $" Return normal: {await getMeterPositionRange(item, address.Id, meter.Id, Common.Enums.SubEnergyType.ReturnNormal)}";
-
+            addReading("Teruglevering normaal", startReading?.ReturnDeliveryNormal, endReading?.ReturnDeliveryNormal);
             if (item.EnergyType.HasNormalAndLow)
-            {
-                headerText += $", return low: {await getMeterPositionRange(item, address.Id, meter.Id, Common.Enums.SubEnergyType.ReturnLow)}";
-            }
+                addReading("Teruglevering dal", startReading?.ReturnDeliveryLow, endReading?.ReturnDeliveryLow);
         }
 
-        return headerText;
-    }
+        return table;
 
-    private async Task<string> getMeterPositionRange(SelectedEnergyType item, long addressId, long meterId, Common.Enums.SubEnergyType subEnergyType)
-    {
-        var positionRange = string.Empty;
-
-        decimal position = await getMeterPosition(item.StartRange, item.EnergyType.Id, addressId, meterId, subEnergyType);
-        positionRange += $"{(position < 0 ? $"?" : $"{position}")}";
-
-        position = await getMeterPosition(item.EndRange, item.EnergyType.Id, addressId, meterId, subEnergyType);
-        positionRange += $" - {(position < 0 ? $"?" : $"{position}")}";
-
-        return positionRange;
-    }
-
-    private async Task<decimal> getMeterPosition(DateTime registrationDate, long energyTypeId, long addressId, long meterId, Common.Enums.SubEnergyType subEnergyType)
-    {
-        decimal position = -1;
-
-        var meterReading = await _unitOfWork.MeterReadingRepo.SelectRow(registrationDate, energyTypeId, addressId, meterId);
-        if (meterReading != null)
+        void addReading(string description, decimal? start, decimal? end)
         {
-            position = subEnergyType switch
-            {
-                Common.Enums.SubEnergyType.Normal => meterReading.RateNormal,
-                Common.Enums.SubEnergyType.Low => meterReading.RateLow,
-                Common.Enums.SubEnergyType.ReturnNormal => meterReading.ReturnDeliveryNormal,
-                Common.Enums.SubEnergyType.ReturnLow => meterReading.ReturnDeliveryLow,
-                Common.Enums.SubEnergyType.Other => -1,
-                _ => -1,
-            };
+            var culture = System.Globalization.CultureInfo.GetCultureInfo("nl-NL");
+            table.AddCell(GetNormalText(description, cellAlignment: iText.Layout.Properties.TextAlignment.LEFT));
+            table.AddCell(GetNormalText(start?.ToString("#,##0.###", culture) ?? "?"));
+            table.AddCell(GetNormalText(end?.ToString("#,##0.###", culture) ?? "?"));
         }
-
-        return position;
     }
 
     internal async Task<List<MeterPeriod>> getMeterPeriods(SelectedEnergyType item, long addressId)
@@ -515,7 +515,7 @@ public class SettlementBase : ReportBase
             if (predefinedPeriodDates.Count > 0)
             {
                 var periodStart = predefinedPeriodDates.Min(x => x.StartDate);
-                var periodEnd = predefinedPeriodDates.Max(x => x.EndDate);
+                var periodEnd = predefinedPeriodDates.Max(x => x.EndDate).Date.AddDays(-1);
                 var predefinedMonthCount = getCalendarMonthCount(periodStart, periodEnd);
                 var paidMonthCount = payments
                     .Where(p => p.PayDate >= periodStart && p.PayDate <= periodEnd)
@@ -527,7 +527,9 @@ public class SettlementBase : ReportBase
             }
         }
         else
-            payments = (await _unitOfWork.PaymentRepo.SelectByAddressAndRange(addressId, startRange, endRange)).ToList();
+            payments = (await _unitOfWork.PaymentRepo.SelectByAddressAndRange(addressId, startRange, endRange.Date.AddTicks(-1))).ToList();
+
+        payments = payments.OrderBy(payment => payment.PayDate).ToList();
 
         var totalToPay = roundMoney(_settlementSubTotalList.Sum(x => x.TotalValue + x.TotalVat));
         var totalPaid = (decimal)payments.Sum(s => s.Amount);
@@ -585,36 +587,44 @@ public class SettlementBase : ReportBase
         Table table = new(_pointColumnWidths);
         table.SetKeepTogether(true);
         var unit = string.IsNullOrWhiteSpace(item.EnergyType.UnitId) ? "unit" : item.EnergyType.UnitId;
-        GetSectionHeader(table, $"Price per {unit}");
+        GetSectionHeader(table, $"Cost per {unit}");
 
         var totalUnits = periodicDataList.Sum(x => x.ValueYLow + x.ValueYNormal);
-        var totalCost = settlementDataList.Sum(x => roundMoney(x.Value) + roundMoney(x.VatAmount));
-        var pricePerUnit = divideOrZero(totalCost, totalUnits);
+        table.AddHeaderCell(GetBoldText("Description", 1, 6, iText.Layout.Properties.TextAlignment.LEFT));
+        table.AddHeaderCell(GetBoldText("Excl. VAT"));
+        table.AddHeaderCell(GetBoldText("Incl. VAT"));
 
-        table.AddCell(GetNormalText("Price", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
-        table.AddCell(GetNormalText(formatUnitPrice(pricePerUnit, totalUnits), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
+        addPriceRow("Actual cost after all charges and credits", settlementDataList);
+        addPriceRow("Cost excluding return", settlementDataList
+            .Where(x => x.CostCategory.EnergySubTypeId is not 3 and not 4 and not 6 and not 7));
+        addPriceRow("Variable delivery cost", settlementDataList
+            .Where(x => x.CostCategory.CalculationTypeId == 1
+                     && (x.CostCategory.EnergySubTypeId is 1 or 2
+                         || (x.CostCategory.EnergySubTypeId == 5 && x.CostCategory.UnitId == item.EnergyType.UnitId))));
 
-        var totalCostExReturn = settlementDataList
-            .Where(w => w.CostCategory.EnergySubTypeId is not 3 and not 4 and not 6 and not 7)
-            .Sum(x => roundMoney(x.Value) + roundMoney(x.VatAmount));
-        var pricePerUnitExReturn = divideOrZero(totalCostExReturn, totalUnits);
-        table.AddCell(GetNormalText("Price excluding return", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
-        table.AddCell(GetNormalText(formatUnitPrice(pricePerUnitExReturn, totalUnits), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
-
-        var variableCost = settlementDataList
-            .Where(w => w.CostCategory.EnergySubTypeId is 1 or 2
-                     || (w.CostCategory.EnergySubTypeId == 5 && w.CostCategory.UnitId == item.EnergyType.UnitId))
-            .Sum(x => roundMoney(x.Value) + roundMoney(x.VatAmount));
-        var variablePricePerUnit = divideOrZero(variableCost, totalUnits);
-        table.AddCell(GetNormalText($"Variable cost per {unit}", 1, 7, iText.Layout.Properties.TextAlignment.LEFT));
-        table.AddCell(GetNormalText(formatUnitPrice(variablePricePerUnit, totalUnits), 1, 1, iText.Layout.Properties.TextAlignment.RIGHT));
+        table.AddCell(GetNormalText(
+            $"Actual cost: all period charges minus all credits, including netting, divided by {totalUnits:#,##0.###} {unit} supplied. " +
+            (totalUnits <= 0 ? "No consumption: price per unit is N/A. " : "") +
+            "Excluding return: no return credits or return costs. " +
+            "Variable: delivery and per-unit taxes, excluding fixed and return costs.",
+            1, 8, iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(6));
 
         return table;
+
+        void addPriceRow(string description, IEnumerable<SettlementData> costs)
+        {
+            var lines = costs.ToList();
+            var netCost = lines.Sum(x => roundMoney(x.Value));
+            var vat = lines.Sum(x => roundMoney(x.VatAmount));
+            table.AddCell(GetNormalText(description, 1, 6, iText.Layout.Properties.TextAlignment.LEFT));
+            table.AddCell(GetNormalText(formatUnitPrice(divideOrZero(netCost, totalUnits), totalUnits)));
+            table.AddCell(GetNormalText(formatUnitPrice(divideOrZero(netCost + vat, totalUnits), totalUnits)));
+        }
     }
 
     private static decimal divideOrZero(decimal numerator, decimal denominator)
     {
-        return denominator == 0 ? 0 : Math.Round(numerator / denominator, 5);
+        return denominator <= 0 ? 0 : Math.Round(numerator / denominator, 5);
     }
 
     private static decimal roundMoney(decimal value)
@@ -624,7 +634,7 @@ public class SettlementBase : ReportBase
 
     private static string formatUnitPrice(decimal price, decimal totalUnits)
     {
-        return totalUnits == 0 ? "N/A" : price.ToString("##0.00000");
+        return totalUnits <= 0 ? "N/A" : price.ToString("##0.00000");
     }
 
     private static int getCalendarMonthCount(DateTime startRange, DateTime endRange)
@@ -640,7 +650,7 @@ public class SettlementBase : ReportBase
         if (startRange == DateTime.MinValue || endRange == DateTime.MinValue || endRange < startRange)
             return 1;
 
-        var endExclusive = endRange.Date.AddDays(1);
+        var endExclusive = endRange.Date;
         var wholeMonths = ((endExclusive.Year - startRange.Year) * 12) + endExclusive.Month - startRange.Month;
         var anchor = startRange.Date.AddMonths(wholeMonths);
 

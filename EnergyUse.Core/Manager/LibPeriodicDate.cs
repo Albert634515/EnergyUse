@@ -109,6 +109,8 @@ public class LibPeriodicDate : IDisposable
             .OrderBy(x => x.ValueX)
             .ToList();
 
+        limitSettlementNetting();
+
         // Consumption and efficiency graphs do not require price rates.
         if (_parameterPeriod.ShowType is ShowType.Value or ShowType.AvgValue
             || _parameterPeriod.PeriodType == Period.SettlementDay)
@@ -124,6 +126,47 @@ public class LibPeriodicDate : IDisposable
         _periodicDataList = _periodicDataList
             .OrderBy(x => x.ValueX)
             .ToList();
+    }
+
+    private void limitSettlementNetting()
+    {
+        if (_parameterPeriod.PeriodType != Period.SettlementDay)
+            return;
+
+        // Rebuild after splitting missing days and adding predictions, so every
+        // quantity used for return credits and energy tax has the same basis.
+        foreach (var day in _periodicDataList)
+        {
+            day.NettingPercentage = Math.Clamp(getNettingPerc(day.ValueX), 0m, 1m);
+            day.NettingValueYReturnNormal = Math.Max(0m, day.ValueYReturnNormal) * day.NettingPercentage;
+            day.NettingValueYReturnLow = Math.Max(0m, day.ValueYReturnLow) * day.NettingPercentage;
+        }
+
+        var eligibleLeft = _periodicDataList.Sum(day => day.NettingValueYReturnNormal + day.NettingValueYReturnLow);
+        var nettingLeft = Math.Max(0m, _periodicDataList.Sum(day => day.ValueYNormal + day.ValueYLow));
+        if (eligibleLeft <= nettingLeft)
+            return;
+
+        // Share the period's allowance proportionally over all eligible returns,
+        // across both registers and dates, without favouring a particular rate.
+        foreach (var day in _periodicDataList)
+        {
+            day.NettingValueYReturnNormal = allocate(day.NettingValueYReturnNormal);
+            day.NettingValueYReturnLow = allocate(day.NettingValueYReturnLow);
+        }
+
+        decimal allocate(decimal eligible)
+        {
+            if (eligible == 0m)
+                return 0m;
+
+            var allocated = eligible == eligibleLeft
+                ? nettingLeft
+                : Math.Min(nettingLeft, nettingLeft * eligible / eligibleLeft);
+            eligibleLeft -= eligible;
+            nettingLeft -= allocated;
+            return allocated;
+        }
     }
 
     /// <summary>

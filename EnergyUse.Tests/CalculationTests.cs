@@ -168,6 +168,95 @@ public class CalculationTests
         Assert.Equal(2.10m, Math.Round(periodic.Sum(item => item.ValueMonetaryY), 2, MidpointRounding.AwayFromZero));
     }
 
+    [Theory]
+    [InlineData(10, 4, 100, 4, "1.20")]
+    [InlineData(10, 10, 100, 10, "3.00")]
+    [InlineData(10, 20, 100, 10, "4.00")]
+    [InlineData(0, 20, 100, 0, "2.00")]
+    [InlineData(10, 40, 50, 10, "6.00")]
+    [InlineData(10, 20, 0, 0, "2.00")]
+    public async Task SettlementCapsNettedReturnsAndTaxCreditAtPeriodConsumption(
+        int consumed, int returned, int percentage, int expectedNetted, string expectedCredit)
+    {
+        using var db = new TestDatabase();
+        db.Context.EnergyTypes.Single(type => type.Id == 1).HasEnergyReturn = true;
+        db.AddCategory(2, 1, 3);
+        db.AddCategory(3, 1, 5);
+        db.AddRate(1, 0.30m);
+        db.AddRate(2, 0.10m);
+        db.AddRate(3, 0.10m);
+        db.AddReading(consumed, returned);
+        db.Context.Nettings.Add(new Netting { EnergyTypeId = 1, StartDate = day, EndDate = day, Rate = percentage });
+        db.Context.SaveChanges();
+
+        using var calculation = new LibPeriodicDate(db.Path);
+        var periodic = await calculation.GetRangeAsync(db.Parameters(day, day));
+        var lines = await new RepoCostCategories(db.Context).MapCostCategories(periodic);
+        Assert.Equal(expectedNetted, periodic.Sum(item => item.NettingValueYReturnNormal));
+        Assert.Equal(-decimal.Parse(expectedCredit, System.Globalization.CultureInfo.InvariantCulture),
+            lines.Single(line => line.CostCategory.Id == 2).Value);
+        Assert.Equal((consumed - expectedNetted) * 0.10m, lines.Single(line => line.CostCategory.Id == 3).Value);
+    }
+
+    [Fact]
+    public async Task SettlementSharesOneNettingLimitAcrossNormalAndLowRegisters()
+    {
+        using var db = new TestDatabase();
+        var energy = db.Context.EnergyTypes.Single(type => type.Id == 1);
+        energy.HasNormalAndLow = true;
+        energy.HasEnergyReturn = true;
+        db.AddCategory(2, 1, 2);
+        db.AddCategory(3, 1, 3);
+        db.AddCategory(4, 1, 4);
+        db.Context.EnergySubTypes.Add(new EnergySubType { Id = 6, Description = "Return delivery cost normal" });
+        db.Context.SaveChanges();
+        db.AddCategory(5, 1, 6);
+        db.AddRate(1, 0.30m);
+        db.AddRate(2, 0.40m);
+        db.AddRate(3, 0.10m);
+        db.AddRate(4, 0.20m);
+        db.AddRate(5, -0.05m);
+        db.AddReading(10m, 8m);
+        db.Context.MeterReadings.Single().ReturnDeliveryDeltaLow = 12m;
+        db.Context.Nettings.Add(new Netting { EnergyTypeId = 1, StartDate = day, EndDate = day, Rate = 100m });
+        db.Context.SaveChanges();
+
+        using var calculation = new LibPeriodicDate(db.Path);
+        var periodic = Assert.Single(await calculation.GetRangeAsync(db.Parameters(day, day)));
+        var lines = await new RepoCostCategories(db.Context).MapCostCategories([periodic]);
+        Assert.Equal(4m, periodic.NettingValueYReturnNormal);
+        Assert.Equal(6m, periodic.NettingValueYReturnLow);
+        Assert.Equal(-1.60m, lines.Single(line => line.CostCategory.Id == 3).Value);
+        Assert.Equal(-3.60m, lines.Single(line => line.CostCategory.Id == 4).Value);
+        Assert.Equal(0.40m, lines.Single(line => line.CostCategory.Id == 5).Value);
+    }
+
+    [Fact]
+    public async Task SettlementUsesConsumptionFromTheWholePeriodAndResetsAllowanceOnReuse()
+    {
+        using var db = new TestDatabase();
+        db.Context.EnergyTypes.Single(type => type.Id == 1).HasEnergyReturn = true;
+        db.AddCategory(2, 1, 3);
+        db.AddRate(1, 0.30m, day, day.AddDays(1));
+        db.AddRate(2, 0.10m, day, day.AddDays(1));
+        db.AddReading(0m, 20m);
+        db.Context.MeterReadings.Add(new MeterReading
+        {
+            MeterId = 1, EnergyTypeId = 1, RegistrationDate = day.AddDays(1), DeltaNormal = 10m
+        });
+        db.Context.Nettings.Add(new Netting { EnergyTypeId = 1, StartDate = day, EndDate = day.AddDays(1), Rate = 100m });
+        db.Context.SaveChanges();
+
+        using var calculation = new LibPeriodicDate(db.Path);
+        var periodic = await calculation.GetRangeAsync(db.Parameters(day, day.AddDays(1)));
+        Assert.Equal(10m, periodic.Sum(item => item.NettingValueYReturnNormal));
+        var lines = await new RepoCostCategories(db.Context).MapCostCategories(periodic);
+        Assert.Equal(-4m, lines.Where(line => line.CostCategory.Id == 2).Sum(line => line.Value));
+
+        var returnDayOnly = await calculation.GetRangeAsync(db.Parameters(day, day));
+        Assert.Equal(0m, returnDayOnly.Sum(item => item.NettingValueYReturnNormal));
+    }
+
     [Fact]
     public async Task HistoricalEstimateIsVisibleOnSettlementLine()
     {
@@ -338,6 +427,112 @@ public class CalculationTests
                 new OtherCost { CostCategoryId = 1, RateId = 2, Rate = 0.335m, Quantity = 1m }] }]);
         Assert.Equal(2, lines.Count);
         Assert.Equal(0.68m, lines.Sum(line => line.Value));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task SettlementReportsExcludeTheClosingReadingDeltaAndChargeOnlyOneDay(bool splitByType)
+    {
+        using var db = new TestDatabase();
+        db.AddCategory(2, 3, 5);
+        db.AddRate(1, 0.25m, day, day.AddDays(1));
+        db.AddRate(2, 1m, day, day.AddDays(1));
+        db.AddReading(10m, 0m);
+        var start = db.Context.MeterReadings.Single();
+        start.RateNormal = 100m;
+        db.Context.MeterReadings.Add(new MeterReading
+        {
+            MeterId = 1, EnergyTypeId = 1, RegistrationDate = day.AddDays(1),
+            RateNormal = 110m, DeltaNormal = 99m
+        });
+        db.Context.SaveChanges();
+        var selection = new SelectedEnergyType
+        {
+            EnergyType = db.Context.EnergyTypes.Single(type => type.Id == 1),
+            TarifGroup = 1, StartRange = day, EndRange = day.AddDays(1)
+        };
+        var parameters = new ParameterSelection
+        {
+            AddressId = 1, StartRange = selection.StartRange, EndRange = selection.EndRange,
+            ShowRates = true, SelectedEnergyTypeList = [selection]
+        };
+
+        var path = splitByType
+            ? await new EnergyUse.Core.Reports.SettlementSplitByType(db.Path).GetSettlementPdfAsync(parameters)
+            : await new EnergyUse.Core.Reports.SettlementCompact(db.Path).GetSettlementPdfAsync(parameters);
+        try
+        {
+            using var pdf = new iText.Kernel.Pdf.PdfDocument(new iText.Kernel.Pdf.PdfReader(path));
+            var text = string.Join("\n", Enumerable.Range(1, pdf.GetNumberOfPages())
+                .Select(number => iText.Kernel.Pdf.Canvas.Parser.PdfTextExtractor.GetTextFromPage(pdf.GetPage(number))));
+            Assert.Contains(3.50m.ToString("##0.00"), text);
+            Assert.DoesNotContain(99m.ToString("##0.00"), text);
+            Assert.Contains("100", text);
+            Assert.Contains("110", text);
+        }
+        finally
+        {
+            System.IO.File.Delete(path);
+        }
+    }
+
+    [Fact]
+    public void AnnualSettlementHas365CostDaysAndKeepsTheClosingReadingOutsideCalculation()
+    {
+        var period = EnergyUse.Core.Reports.SettlementBase.getCalculationPeriod(new SelectedEnergyType
+        {
+            EnergyType = new EnergyType { Id = 1 },
+            StartRange = new DateTime(2025, 10, 1), EndRange = new DateTime(2026, 10, 1)
+        }, 4, false);
+        Assert.Equal(new DateTime(2026, 9, 30), period.EndRange);
+        Assert.Equal(365, (period.EndRange - period.StartRange).Days + 1);
+    }
+
+    [Theory]
+    [InlineData(100)]
+    [InlineData(0)]
+    public void UnitPricesIncludeAllChargesAndCreditsPerSuppliedUnitWithActualVat(int suppliedUnits)
+    {
+        using var db = new TestDatabase();
+        var report = new EnergyUse.Core.Reports.SettlementBase(db.Path);
+        var table = report.getPricePerUnit(new SelectedEnergyType
+        {
+            EnergyType = new EnergyType { UnitId = "kWh" }
+        }, [new PeriodicData
+        {
+            ValueYNormal = suppliedUnits * 0.6m, ValueYLow = suppliedUnits * 0.4m,
+            ValueYReturnNormal = 40m
+        }], [
+            cost(1, 1, 200m, 42m),
+            cost(2, 1, 50m, 0m),
+            cost(3, 1, -40m, -8.4m),
+            cost(6, 1, 10m, 2.1m),
+            cost(5, 1, 30m, 6.3m),
+            cost(5, 3, 100m, 21m),
+            cost(5, 3, -20m, -4.2m)
+        ]);
+
+        decimal[] expectedExVat = [3.3m, 3.6m, 2.8m];
+        decimal[] expectedIncVat = [3.888m, 4.251m, 3.283m];
+        for (var row = 0; row < 3; row++)
+        {
+            Assert.Equal(suppliedUnits == 0 ? "N/A" : expectedExVat[row].ToString("##0.00000"), textAt(row, 6));
+            Assert.Equal(suppliedUnits == 0 ? "N/A" : expectedIncVat[row].ToString("##0.00000"), textAt(row, 7));
+        }
+
+        string textAt(int row, int column) => string.Concat(table.GetCell(row, column).GetChildren()
+            .OfType<iText.Layout.Element.Paragraph>().SelectMany(paragraph => paragraph.GetChildren())
+            .OfType<iText.Layout.Element.Text>().Select(text => text.GetText()));
+
+        static SettlementData cost(long subtype, long calculation, decimal net, decimal vat) => new()
+        {
+            Value = net, VatAmount = vat,
+            CostCategory = new CostCategory
+            {
+                EnergySubTypeId = subtype, CalculationTypeId = calculation, UnitId = "kWh"
+            }
+        };
     }
 
     private static PriceRate select(IEnumerable<Rate> rates) => RateSelection.Select(rates, 1, 1, "Delivery", day, 1);
