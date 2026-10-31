@@ -179,6 +179,9 @@ public class LibPeriodicDate : IDisposable
 
         foreach (var costCategory in costCategoryList)
         {
+            var vatTarifs = costCategory.CalculateVat
+                ? await _vatTarifRepo.GetByCostCategoryId(costCategory.Id)
+                : new List<Models.VatTarif>();
             // Validate the entire settlement period, including days without readings.
             if (_parameterPeriod.PeriodType == Period.SettlementDay)
             {
@@ -186,15 +189,16 @@ public class LibPeriodicDate : IDisposable
                 {
                     if ((!costCategory.Start.HasValue || date >= costCategory.Start.Value.Date)
                         && (!costCategory.End.HasValue || date <= costCategory.End.Value.Date))
+                    {
                         await libPriceRate.GetRate(_parameterPeriod.EnergyType.Id, costCategory, date, getTariffGroupId(costCategory));
+                        if (costCategory.CalculateVat)
+                            VatRateSelection.Select(vatTarifs, costCategory, date);
+                    }
                 }
             }
             var calculationTypeId = costCategory.CalculationTypeId;
             if (calculationTypeId >= 1 && calculationTypeId <= 6)
             {
-                var vatTarifs = costCategory.CalculateVat
-                    ? await _vatTarifRepo.GetByCostCategoryId(costCategory.Id)
-                    : new List<Models.VatTarif>();
 
                 //Loop data
                 foreach (PeriodicDataPerDay periodicData in _periodicDataList)
@@ -218,21 +222,8 @@ public class LibPeriodicDate : IDisposable
 
                     if (costCategory.CalculateVat)
                     {
-                        vatTarif = vatTarifs.FirstOrDefault(x =>
-                            x.StartDate.Date <= periodicDate.Date &&
-                            x.EndDate.Date >= periodicDate.Date);
-
-                        if (vatTarif == null)
-                        {
-                            vatTarif = vatTarifs
-                                .Where(x => x.StartDate.Date <= periodicDate.Date)
-                                .OrderByDescending(x => x.StartDate)
-                                .FirstOrDefault();
-                            lastAvailableVatRateUsed = (vatTarif != null);
-                        }
-
-                        if (vatTarif is not null)
-                            vat = vatTarif.Tarif;
+                        vatTarif = VatRateSelection.Select(vatTarifs, costCategory, periodicDate);
+                        vat = vatTarif.Tarif;
                     }
 
                     PriceRate? priceRate = await getPriceRate(libPriceRate, costCategoryList, costCategory, periodicData, tarifGroupId);

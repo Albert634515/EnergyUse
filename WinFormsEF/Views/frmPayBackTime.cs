@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using EnergyUse.Common.Extensions;
 using EnergyUse.Core.Controllers;
 using EnergyUse.Models.Common;
@@ -19,6 +19,11 @@ public partial class frmPayBackTime : Form
     public frmPayBackTime()
     {
         InitializeComponent();
+        dgPayBackTime.Columns.Insert(3, new DataGridViewTextBoxColumn
+        {
+            Name = "TariffGroups", DataPropertyName = nameof(PayBackTime.TariffGroups),
+            HeaderText = "Tariff groups", Width = 250, ReadOnly = true
+        });
         initializeForm();
     }
 
@@ -191,17 +196,26 @@ public partial class frmPayBackTime : Form
 
     private async void tsbCalculate_Click(object sender, EventArgs e)
     {
-        if (!await validateInputAsync())
-            return;
+        try
+        {
+            if (!await validateInputAsync())
+                return;
 
-        Cursor.Current = Cursors.WaitCursor;
-
-        EnergyUse.Models.Address address = (EnergyUse.Models.Address)cmbAddress.SelectedItem;
-        EnergyUse.Models.EnergyType energyType = (EnergyUse.Models.EnergyType)cboEnergyType.SelectedItem;
-
-        await calculatePayBackTimeAsync(energyType, address);
-
-        Cursor.Current = Cursors.Default;
+            Cursor.Current = Cursors.WaitCursor;
+            EnergyUse.Models.Address address = (EnergyUse.Models.Address)cmbAddress.SelectedItem;
+            EnergyUse.Models.EnergyType energyType = (EnergyUse.Models.EnergyType)cboEnergyType.SelectedItem;
+            await calculatePayBackTimeAsync(energyType, address);
+        }
+        catch (EnergyUse.Core.Manager.RateValidationException error)
+        {
+            MessageBox.Show(this, error.Message);
+        }
+        finally
+        {
+            Cursor.Current = Cursors.Default;
+            toolStripProgressBar1.Visible = false;
+            toolStripStatusLabel1.Visible = false;
+        }
     }
 
     private void tsbClose_Click(object sender, EventArgs e)
@@ -300,12 +314,12 @@ public partial class frmPayBackTime : Form
         EnergyUse.Models.Address address = (EnergyUse.Models.Address)cmbAddress.SelectedItem;
         EnergyUse.Models.EnergyType energyType = (EnergyUse.Models.EnergyType)cboEnergyType.SelectedItem;
 
-        int startYear = dtpPurchaseDate.Value.Year;
-        int endYear = dtpPurchaseDate.Value.Year + (int)nudMaxYears.Value;
-        for (int i = startYear; i <= endYear; i++)
+        var periods = await _controller.GetTariffPeriodsAsync(dtpPurchaseDate.Value,
+            dtpPurchaseDate.Value.AddYears((int)nudMaxYears.Value).AddDays(-1), address, energyType.Id);
+        foreach (var period in periods)
+        for (int i = period.StartDate.Year; i <= period.EndDate.Year; i++)
         {
-            var defaultTarifGroupId = address.DefaultTariffGroupId ?? 0;
-            var pricePerUnit = await _controller.GetPricePerUnitPerYear(i, defaultTarifGroupId, energyType.Id);
+            var pricePerUnit = await _controller.GetPricePerUnitPerYear(i, period.TariffGroupId, energyType.Id);
             if (pricePerUnit < 0)
             {
                 var message = Managers.Languages.GetResourceString("PayBackTimeNoPricePerUnit", "There is no price unit for year %s");

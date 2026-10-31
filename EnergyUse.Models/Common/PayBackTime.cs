@@ -5,6 +5,7 @@ public class PayBackTime
     public int PeriodId { get; set; } = 0;
     public DateTime StartPeriod { get; set; } = DateTime.MinValue;
     public DateTime EndPeriod { get; set; } = DateTime.MinValue;
+    public string TariffGroups { get; set; } = string.Empty;
     public decimal MonetaryValueProduced { get; set; } = 0.0m;
     public decimal ValueProduced { get; set; } = 0.0m;
     public decimal NettoProduced { get; set; } = 0.0m;

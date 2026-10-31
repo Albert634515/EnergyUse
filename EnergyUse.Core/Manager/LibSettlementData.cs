@@ -34,6 +34,9 @@ public class LibSettlementData
         decimal priceAdjustmentFactor = 0;
         decimal lastRate = 0;
         var vatTarifRepo = new Repositories.RepoVatTarif(_context);
+        var vatTarifs = costCategory.CalculateVat
+            ? await vatTarifRepo.GetByCostCategoryId(costCategory.Id)
+            : new List<Models.VatTarif>();
 
         //Loop data
         foreach (PeriodicData periodicData in periodicDataList)
@@ -54,16 +57,8 @@ public class LibSettlementData
 
             if (costCategory.CalculateVat)
             {
-                vatTarif = await vatTarifRepo.GetByCostCategoryIdAndDate(costCategory.Id, periodicData.ValueXDate);
-
-                if (vatTarif == null)
-                {
-                    vatTarif = await vatTarifRepo.GetLastTarif(costCategory.Id, periodicData.ValueXDate);
-                    lastAvailableVatRateUsed = (vatTarif != null);
-                }
-
-                if (vatTarif is not null)
-                    vat = vatTarif.Tarif;
+                vatTarif = VatRateSelection.Select(vatTarifs, costCategory, periodicData.ValueXDate);
+                vat = vatTarif.Tarif;
             }
 
             //Get tarif rate

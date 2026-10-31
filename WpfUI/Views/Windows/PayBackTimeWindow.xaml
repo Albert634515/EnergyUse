@@ -150,6 +150,7 @@
                     <DataGridTextColumn Header="Period" Width="50" Binding="{Binding PeriodId}"/>
                     <DataGridTextColumn Header="Start" Width="78" Binding="{Binding StartPeriod, StringFormat={}{0:dd-MM-yyyy}}"/>
                     <DataGridTextColumn Header="End" Width="78" Binding="{Binding EndPeriod, StringFormat={}{0:dd-MM-yyyy}}"/>
+                    <DataGridTextColumn Header="Tariff groups" Width="250" Binding="{Binding TariffGroups}"/>
 
                     <DataGridTextColumn Header="Produced" Binding="{Binding ValueProduced, StringFormat=N2}"/>
                     <DataGridTextColumn Header="Consumed" Binding="{Binding ValueConsumed, StringFormat=N2}"/>

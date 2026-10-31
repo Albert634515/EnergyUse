@@ -127,7 +127,7 @@ public partial class EnergyUseContext : DbContext
             entity.Property(e => e.Year).HasColumnType("NUMERIC (4)").IsRequired();
 
             entity.HasOne(d => d.EnergyType).WithMany(p => p.CalculatedUnitPrices).HasForeignKey(d => d.EnergyTypeId).OnDelete(DeleteBehavior.NoAction);
-            entity.HasOne(d => d.TariffGroup).WithMany(p => p.CalculatedUnitPrices).HasForeignKey(d => d.EnergyTypeId).OnDelete(DeleteBehavior.NoAction);
+            entity.HasOne(d => d.TariffGroup).WithMany(p => p.CalculatedUnitPrices).HasForeignKey(d => d.TariffGroupId).OnDelete(DeleteBehavior.NoAction);
 
             entity.HasIndex(i => i.Id, "CU_ID");
         });

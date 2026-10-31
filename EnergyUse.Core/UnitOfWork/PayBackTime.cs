@@ -12,6 +12,8 @@ public class PayBackTime : IUnitOfWork
     public RepoAddress AddressRepo;
     public RepoCostCategories CostCategoryRepo;
     public RepoCalculatedUnitPrice CalculatedUnitPriceRepo;
+    public RepoPredefinedPeriodDate PreDefinedPeriodDateRepo;
+    public RepoTariffGroup TariffGroupRepo;
 
     public PayBackTime(string dbFileName)
     {
@@ -21,6 +23,8 @@ public class PayBackTime : IUnitOfWork
         AddressRepo = new RepoAddress(_context);
         CostCategoryRepo = new RepoCostCategories(_context);
         CalculatedUnitPriceRepo = new RepoCalculatedUnitPrice(_context);
+        PreDefinedPeriodDateRepo = new RepoPredefinedPeriodDate(_context);
+        TariffGroupRepo = new RepoTariffGroup(_context);
     }
 
     public int Complete()

@@ -613,6 +613,64 @@ public class CalculationTests
         };
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task MissingOrOverlappingVatOnDayWithoutReadingsStopsSettlement(bool overlap)
+    {
+        using var db = new TestDatabase();
+        db.Category.CalculateVat = true;
+        db.AddRate(1, 1m);
+        db.Context.VatTarifs.RemoveRange(db.Context.VatTarifs);
+        db.Context.VatTarifs.Add(new VatTarif { Id = 101, CostCategoryId = 1,
+            StartDate = day.AddDays(-10), EndDate = overlap ? day : day.AddDays(-1), Tarif = 21m });
+        if (overlap)
+            db.Context.VatTarifs.Add(new VatTarif { Id = 102, CostCategoryId = 1,
+                StartDate = day, EndDate = day.AddDays(10), Tarif = 21m });
+        db.Context.SaveChanges();
+        using var calculation = new LibPeriodicDate(db.Path);
+        var error = await Assert.ThrowsAsync<RateValidationException>(() => calculation.GetRangeAsync(db.Parameters(day, day)));
+        Assert.Contains(overlap ? "Overlapping VAT" : "Missing VAT", error.Message);
+        Assert.Contains("Category 1", error.Message);
+        Assert.Contains(day.ToString("dd-MM-yyyy"), error.Message);
+        if (overlap)
+        {
+            Assert.Contains("101", error.Message);
+            Assert.Contains("102", error.Message);
+        }
+    }
+
+    [Fact]
+    public void VatSelectionAllowsExplicitZeroAndIgnoresOtherCategories()
+    {
+        var category = new CostCategory { Id = 1, Name = "Delivery" };
+        var zero = new VatTarif { Id = 1, CostCategoryId = 1,
+            StartDate = day, EndDate = day, Tarif = 0m };
+        var other = new VatTarif { Id = 2, CostCategoryId = 2,
+            StartDate = day, EndDate = day, Tarif = 21m };
+        Assert.Same(zero, VatRateSelection.Select([zero, other], category, day.AddHours(12)));
+        Assert.Throws<RateValidationException>(() => VatRateSelection.Select([other], category, day));
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(21)]
+    public async Task ValidVatIsAppliedToSettlement(int percentage)
+    {
+        using var db = new TestDatabase();
+        db.Category.CalculateVat = true;
+        db.Category.CalculationTypeId = 3;
+        db.Context.VatTarifs.RemoveRange(db.Context.VatTarifs);
+        db.Context.VatTarifs.Add(new VatTarif { CostCategoryId = 1,
+            StartDate = day, EndDate = day, Tarif = percentage });
+        db.AddRate(1, 10m);
+        using var calculation = new LibPeriodicDate(db.Path);
+        var periodic = await calculation.GetRangeAsync(db.Parameters(day, day));
+        var line = Assert.Single(await new RepoCostCategories(db.Context).MapCostCategories(periodic));
+        Assert.Equal(10m, line.Value);
+        Assert.Equal(percentage / 10m, line.VatAmount);
+    }
+
     private static PriceRate select(IEnumerable<Rate> rates) => RateSelection.Select(rates, 1, 1, "Delivery", day, 1);
 
     private static Rate rate(long id, decimal value, DateTime start, DateTime end) => new()
@@ -641,8 +699,11 @@ public class CalculationTests
         public CostCategory AddCategory(long id, long calculationTypeId, long subtypeId)
         {
             var category = new CostCategory { Id = id, Name = $"Category {id}", EnergyTypeId = 1,
-                CalculationTypeId = calculationTypeId, EnergySubTypeId = subtypeId, TariffGroupTypeId = 2 };
+                CalculationTypeId = calculationTypeId, EnergySubTypeId = subtypeId, TariffGroupTypeId = 2,
+                CalculateVat = true };
             Context.CostCategories.Add(category);
+            Context.VatTarifs.Add(new VatTarif { CostCategoryId = id,
+                StartDate = new DateTime(1900, 1, 1), EndDate = new DateTime(2100, 12, 31), Tarif = 0m });
             Context.TariffGroupCostCategories.Add(new TariffGroupCostCategory
             {
                 TariffGroupId = 1, CostCategoryId = id

@@ -1,4 +1,4 @@
-﻿using EnergyUse.Core.Controllers;
+using EnergyUse.Core.Controllers;
 using EnergyUse.Core.Interfaces;
 using EnergyUse.Models;
 using EnergyUse.Models.Common;
@@ -20,7 +20,7 @@ public class PayBackTimeViewModel : ViewModelBase
         _controller = new PayBackTimeController(WpfUI.Managers.Config.GetDbFileName());
         _controller.Initialize();
 
-        CalculateCommand = new RelayCommand(async _ => await calculateAsync(), _ => CanCalculate);
+        CalculateCommand = new RelayCommand(async _ => await calculateSafelyAsync(), _ => CanCalculate);
         CloseCommand = new RelayCommand(_ => closeWindow());
 
         PayBackTimes = new ObservableCollection<PayBackTime>();
@@ -255,6 +255,22 @@ public class PayBackTimeViewModel : ViewModelBase
     // CALCULATION
     // ---------------------------------------------------------
 
+    private async Task calculateSafelyAsync()
+    {
+        try
+        {
+            await calculateAsync();
+        }
+        catch (EnergyUse.Core.Manager.RateValidationException error)
+        {
+            _dialogService.Show(error.Message, "Information");
+        }
+        finally
+        {
+            IsProgressVisible = false;
+        }
+    }
+
     private async Task calculateAsync()
     {
         if (!await validateInputAsync())
@@ -339,13 +355,13 @@ public class PayBackTimeViewModel : ViewModelBase
             return false;
         }
 
-        int startYear = PurchaseDate.Year;
-        int endYear = PurchaseDate.Year + MaxYears;
+        var periods = await _controller.GetTariffPeriodsAsync(PurchaseDate,
+            PurchaseDate.AddYears(MaxYears).AddDays(-1), SelectedAddress, SelectedEnergyType.Id);
 
-        for (int year = startYear; year <= endYear; year++)
+        foreach (var period in periods)
+        for (int year = period.StartDate.Year; year <= period.EndDate.Year; year++)
         {
-            var defaultTariffGroupId = SelectedAddress.DefaultTariffGroupId ?? 0;
-            var price = await _controller.GetPricePerUnitPerYear(year, defaultTariffGroupId, SelectedEnergyType.Id);
+            var price = await _controller.GetPricePerUnitPerYear(year, period.TariffGroupId, SelectedEnergyType.Id);
 
             if (price < 0)
             {
