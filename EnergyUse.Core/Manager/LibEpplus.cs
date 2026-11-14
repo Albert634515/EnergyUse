@@ -96,6 +96,9 @@ public class LibEpplus
 
 
     public List<Models.MeterReading> ImportFromCsvFile(string fileName, Models.EnergyType energyType, Models.Meter meter)
+        => ReadCsvFile(fileName, energyType, meter);
+
+    public static List<Models.MeterReading> ReadCsvFile(string fileName, Models.EnergyType energyType, Models.Meter meter)
     {
         List<Models.MeterReading> meterReadings = new();
         Models.MeterReading meterReading;
@@ -106,12 +109,11 @@ public class LibEpplus
         format.Culture = new CultureInfo(Thread.CurrentThread.CurrentCulture.ToString());
         format.Culture.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
         format.Encoding = new UTF8Encoding();
+        format.EOL = "\n";
 
         //read the CSV file from disk
         if (File.Exists(fileName))
         {
-            FileInfo file = new(fileName);
-
             ExcelPackage.License.SetNonCommercialPersonal("Albert634515");
 
             //create a new Excel package
@@ -121,28 +123,41 @@ public class LibEpplus
                 ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Sheet 1");
 
                 //load the CSV data into cell A1
-                worksheet.Cells["A1"].LoadFromText(file, format);
+                var csv = File.ReadAllText(fileName, Encoding.UTF8).Replace("\r\n", "\n").Replace('\r', '\n');
+                worksheet.Cells["A1"].LoadFromText(csv, format);
 
+                if (worksheet.Dimension == null)
+                    return meterReadings;
                 for (var rowNum = 2; rowNum <= worksheet.Dimension.End.Row; rowNum++)
                 {
                     var row = worksheet.Cells[string.Format("{0}:{0}", rowNum)];
                     // just an example, you want to know if all cells of this row are empty
                     bool allEmpty = row.All(c => string.IsNullOrWhiteSpace(c.Text));
-                    if (allEmpty) break;
+                    if (allEmpty) continue;
 
-                    meterReading = new Models.MeterReading();
-                    meterReading.Id = 0;
-                    meterReading.EnergyTypeId = energyType.Id;
-                    meterReading.RegistrationDate = Convert.ToDateTime(worksheet.Cells[rowNum, 1].Value);
-                    meterReading.RateNormal = Convert.ToDecimal(worksheet.Cells[rowNum, 2].Value);
-                    meterReading.RateLow = Convert.ToDecimal(worksheet.Cells[rowNum, 3].Value);
-                    meterReading.ReturnDeliveryNormal = Convert.ToDecimal(worksheet.Cells[rowNum, 4].Value);
-                    meterReading.ReturnDeliveryLow = Convert.ToDecimal(worksheet.Cells[rowNum, 5].Value);
+                    try
+                    {
+                        if (string.IsNullOrWhiteSpace(worksheet.Cells[rowNum, 1].Text) ||
+                            string.IsNullOrWhiteSpace(worksheet.Cells[rowNum, 2].Text))
+                            throw new FormatException("Date and normal reading are required.");
+                        meterReading = new Import.CsvMeterReading { SourceRow = rowNum };
+                        meterReading.Id = 0;
+                        meterReading.EnergyTypeId = energyType.Id;
+                        meterReading.RegistrationDate = Convert.ToDateTime(worksheet.Cells[rowNum, 1].Value);
+                        meterReading.RateNormal = Convert.ToDecimal(worksheet.Cells[rowNum, 2].Value);
+                        meterReading.RateLow = Convert.ToDecimal(worksheet.Cells[rowNum, 3].Value);
+                        meterReading.ReturnDeliveryNormal = Convert.ToDecimal(worksheet.Cells[rowNum, 4].Value);
+                        meterReading.ReturnDeliveryLow = Convert.ToDecimal(worksheet.Cells[rowNum, 5].Value);
 
-                    if (meter != null)
-                        meterReading.MeterId = meter.Id;
+                        if (meter != null)
+                            meterReading.MeterId = meter.Id;
 
-                    meterReadings.Add(meterReading);
+                        meterReadings.Add(meterReading);
+                    }
+                    catch (Exception ex) when (ex is FormatException or InvalidCastException or OverflowException)
+                    {
+                        throw new InvalidDataException($"Invalid CSV data on source row {rowNum}: {ex.Message}", ex);
+                    }
                 }
             }
         }

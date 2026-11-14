@@ -13,3 +13,5 @@ Coverage includes missing/overlapping rates, inclusive calendar dates, category 
 Quantities and unit prices retain decimal precision. Each completed settlement line is rounded to two decimals with MidpointRounding.AwayFromZero. VAT is calculated from that rounded net amount and rounded by the same rule. Reports sum these completed lines, including when details are merged.
 
 Database backup tests cover committed WAL data, standalone backups, unique filenames, restoration with open connections, optional safety backups, invalid or incompatible files, invalid foreign keys, missing files, same-file restoration, locked destinations, failed safety backups, staging cleanup, and older databases without the tariff/category join table.
+
+Import tests cover preview isolation, new/changed/unchanged classification, explicit conflict choices, visible repeated source rows, idempotent reimport, skipped changes, existing database duplicates, missing/overlapping meter periods, meter replacements, historical delta recalculation, stale preview rejection, transaction rollback, negative counters, blank CSV rows, source row numbers, and malformed CSV values.
