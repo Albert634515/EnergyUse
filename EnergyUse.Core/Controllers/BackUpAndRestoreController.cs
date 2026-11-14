@@ -46,19 +46,19 @@ public class BackUpAndRestoreController : BaseController, IController
 
     private string getDefaultBackUpDir()
     {
-        return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BackUp");
+        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "EnergyUse", "BackUp");
     }
 
-    public void CreateBackUpFile(string targetPath, string sourceFile)
+    public string CreateBackUpFile(string targetPath, string sourceFile)
     {
-        if (!Directory.Exists(targetPath))
-            Directory.CreateDirectory(targetPath);
+        return Manager.DatabaseBackup.Create(sourceFile, targetPath);
+    }
 
-        var sourceFileName = Path.GetFileNameWithoutExtension(sourceFile);
-        var sourceFileExtension = Path.GetExtension(sourceFile);
-        var fileName = $"{sourceFileName}_{DateTime.Now:yyyyMMddHHmmss}{sourceFileExtension}";
-        var destFile = Path.Combine(targetPath, fileName);
-        File.Copy(sourceFile, destFile, true);
+    public string? RestoreBackUpFile(string sourceFile, bool backupBeforeRestore, string backupDirectory)
+    {
+        if (backupBeforeRestore)
+            ArgumentException.ThrowIfNullOrWhiteSpace(backupDirectory);
+        return Manager.DatabaseBackup.Restore(sourceFile, _dbFileName, backupBeforeRestore ? backupDirectory : null);
     }
 
     #endregion

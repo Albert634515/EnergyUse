@@ -73,8 +73,8 @@ namespace WpfApp.ViewModels
 
         private void selectBackupDir()
         {
-            var dlg = new FolderBrowserDialog();
-            var setting = _controller.GetSettingBackUpDir("BackUpDirectory");
+            using var dlg = new FolderBrowserDialog();
+            var setting = _controller.GetSettingBackUpDir("BackUpDir");
 
             if (!string.IsNullOrWhiteSpace(setting))
                 dlg.SelectedPath = setting;
@@ -94,16 +94,22 @@ namespace WpfApp.ViewModels
                 return;
             }
 
-            _controller.CreateBackUpFile(BackupDirectory, SourceFile);
-
-            _dialogService.Show("Backup created", "Backup created");
+            try
+            {
+                var file = _controller.CreateBackUpFile(BackupDirectory, SourceFile);
+                _dialogService.Show($"Back-up gemaakt:\n{file}", "Back-up");
+            }
+            catch (Exception ex)
+            {
+                _dialogService.Show($"Back-up maken is mislukt.\n{ex.Message}", "Back-up");
+            }
         }
 
         private void selectRestoreFile()
         {
             var dlg = new Microsoft.Win32.OpenFileDialog
             {
-                Filter = "Database files|*.db",
+                Filter = "SQLite databases|*.db;*.sqlite;*.sqlite3|Alle bestanden|*.*",
                 Title = WpfUI.Managers.Languages.GetResourceString("BackUpAndRestoreRestoreFile", "Restore db file")
             };
 
@@ -117,9 +123,6 @@ namespace WpfApp.ViewModels
 
         private void restoreBackup()
         {
-            if (BackupBeforeRestore)
-                createBackup();
-
             if (string.IsNullOrWhiteSpace(RestoreFile))
             {
                 _dialogService.Show("No restore file selected", "No restore file");
@@ -132,7 +135,27 @@ namespace WpfApp.ViewModels
                 return;
             }
 
-            // TODO: implement restore logic
+            if (!_dialogService.ShowYesNo(
+                "Herstel vervangt alle opgeslagen gegevens in de huidige database. " +
+                "Niet-opgeslagen wijzigingen gaan verloren. Na herstel sluit de app; start deze daarna opnieuw.\n\nDoorgaan?",
+                "Back-up herstellen"))
+                return;
+
+            try
+            {
+                var safetyBackup = _controller.RestoreBackUpFile(RestoreFile, BackupBeforeRestore, BackupDirectory);
+                var message = "De database is hersteld. Start de app opnieuw.";
+                if (safetyBackup != null)
+                    message += $"\nBack-up van de vorige gegevens:\n{safetyBackup}";
+                _dialogService.Show(message, "Herstel voltooid");
+            }
+            catch (Exception ex)
+            {
+                _dialogService.Show($"Herstel is mislukt.\n{ex.Message}", "Back-up herstellen");
+                return;
+            }
+
+            System.Windows.Application.Current.Shutdown();
         }
 
         #endregion

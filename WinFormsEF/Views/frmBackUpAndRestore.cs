@@ -1,5 +1,4 @@
 ﻿using EnergyUse.Core.Controllers;
-using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace WinFormsEF.Views;
 
@@ -49,7 +48,7 @@ public partial class frmBackUpAndRestore : Form
     private void cmdSelectExportFile_Click(object sender, EventArgs e)
     {
         FolderBrowserDialog fbd = new FolderBrowserDialog();
-        var setting = _controller.GetSettingBackUpDir("BackUpDirectory");
+        var setting = _controller.GetSettingBackUpDir(txtBackUpDir.Tag.ToString());
         if (! string.IsNullOrWhiteSpace(setting))
             fbd.SelectedPath = setting;
 
@@ -75,7 +74,7 @@ public partial class frmBackUpAndRestore : Form
                 openFileDialog1.InitialDirectory = setting;
 
             openFileDialog1.Title = Managers.Languages.GetResourceString("BackUpAndRestoreRestoreFile", "Restore db file");
-            openFileDialog1.Filter = "Database files|*.db";
+            openFileDialog1.Filter = "SQLite databases|*.db;*.sqlite;*.sqlite3|All files|*.*";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -90,9 +89,6 @@ public partial class frmBackUpAndRestore : Form
 
     private void cmdRestoreBackUp_Click(object sender, EventArgs e)
     {
-        if (chkBackUpBeforeRestore.Checked)
-            createBackUpFile(this, txtBackUpDir.Text.Trim());
-
         restoreBackUpFile(this, txtRestoreFile.Text);
     }
 
@@ -102,9 +98,6 @@ public partial class frmBackUpAndRestore : Form
 
     private void createBackUpFile(IWin32Window owner, string backupDir)
     {
-        if (string.IsNullOrWhiteSpace(backupDir))
-            throw new Exception("No back-up directory");
-
         var targetPath = backupDir;
         var sourceFile = _controller.GetSourceDbFile();
         string message;
@@ -116,10 +109,16 @@ public partial class frmBackUpAndRestore : Form
             return;
         }
 
-        _controller.CreateBackUpFile(targetPath, sourceFile);
-
-        message = Managers.Languages.GetResourceString("BackUpAndRestoreCreated", "Back-up created");
-        MessageBox.Show(this, message);
+        try
+        {
+            var file = _controller.CreateBackUpFile(targetPath, sourceFile);
+            message = Managers.Languages.GetResourceString("BackUpAndRestoreCreated", "Back-up created");
+            MessageBox.Show(owner, $"{message}\n{file}");
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(owner, $"Backup failed.\n{ex.Message}", "Backup");
+        }
     }
 
     private void restoreBackUpFile(IWin32Window owner, string restoreFile)
@@ -138,7 +137,27 @@ public partial class frmBackUpAndRestore : Form
             return;
         }
 
-        //Todo restore file
+        if (MessageBox.Show(owner,
+            "Restoring replaces all saved data in the current database. Unsaved changes will be lost. " +
+            "The app will close after restoration; please start it again.\n\nContinue?",
+            "Restore backup", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+            return;
+
+        try
+        {
+            var safetyBackup = _controller.RestoreBackUpFile(restoreFile, chkBackUpBeforeRestore.Checked, txtBackUpDir.Text.Trim());
+            var message = "Database restored. Please start the app again.";
+            if (safetyBackup != null)
+                message += $"\nBackup of the previous data:\n{safetyBackup}";
+            MessageBox.Show(owner, message, "Restore completed");
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(owner, $"Restore failed.\n{ex.Message}", "Restore backup");
+            return;
+        }
+
+        Application.Exit();
     }
 
     private void setBaseFormSettings()

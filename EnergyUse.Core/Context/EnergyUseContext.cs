@@ -7,7 +7,11 @@ public partial class EnergyUseContext : DbContext
 {
     private readonly string _dbFileName;
 
-    public EnergyUseContext(string dbFileName) : base()
+    public EnergyUseContext(string dbFileName) : this(dbFileName, true)
+    {
+    }
+
+    internal EnergyUseContext(string dbFileName, bool initializeDatabase) : base()
     {
         //_dbFileName = "c:\\Temp\\EnergyUse_test.sqlite";
         //_dbFileName = "c:\\Temp\\EnergyUse.db";
@@ -15,8 +19,11 @@ public partial class EnergyUseContext : DbContext
 
         // Start with a clean database
         //Database.EnsureDeleted();
-        var created = Database.EnsureCreated();
-        TariffGroupCostCategorySchema.EnsureCreated(this, created);
+        if (initializeDatabase)
+        {
+            var created = Database.EnsureCreated();
+            TariffGroupCostCategorySchema.EnsureCreated(this, created);
+        }
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
