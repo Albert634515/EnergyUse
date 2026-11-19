@@ -94,6 +94,8 @@ public class ImportControlViewModel : ViewModelBase
             foreach (var meter in list) Meters.Add(meter);
             long.TryParse(_settings.Get("LastSelectedMeter"), out var savedId);
             SelectedMeter = Meters.FirstOrDefault(m => m.Id == savedId) ?? Meters.FirstOrDefault(m => m.Active) ?? Meters.FirstOrDefault();
+            if (SelectedMeter != null && File.Exists(ImportFile))
+                await prepareAsync();
         }
         catch (Exception ex) { _dialog.Show(ex.Message, "Import"); }
     }

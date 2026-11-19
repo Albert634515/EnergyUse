@@ -204,6 +204,54 @@ public class MeterReadingImportTests : IDisposable
         Assert.Contains("2", Assert.Throws<InvalidDataException>(() => LibEpplus.ReadCsvFile(file, new EnergyType(), new Meter())).Message);
     }
 
+    [Theory]
+    [InlineData("\n", false)]
+    [InlineData("\r\n", false)]
+    [InlineData("\r", false)]
+    [InlineData("\n", true)]
+    [InlineData("\r\n", true)]
+    [InlineData("\r", true)]
+    public async Task CsvImportsEveryReadingWithOrWithoutHeader(string newline, bool hasHeader)
+    {
+        var lines = new[]
+        {
+            "2026-11-18;6158;5481;6137;2515",
+            "2026-11-17;6141;5477;6137;2515",
+            "2026-11-16;6120;5471;6137;2515",
+            "2026-11-15;6120;5450;6137;2515",
+            "2026-11-14;6120;5438;6137;2513",
+            "2026-11-13;6113;5433;6131;2513",
+            "2026-11-12;6098;5430;6129;2513"
+        };
+        var file = Path.Combine(_directory, "readings.txt");
+        var content = string.Join(newline, lines);
+        if (hasHeader) content = "OpnameDatum;StandNormaal;StandDal;TerugleveringNormaal;TerugleveringDal" + newline + content;
+        File.WriteAllText(file, content);
+        var source = LibEpplus.ReadCsvFile(file, new EnergyType { Id = 1 }, new Meter { Id = 1 });
+        Assert.Equal(7, source.Count);
+        Assert.Equal(new DateTime(2026, 11, 18), source[0].RegistrationDate);
+        Assert.Equal(6158m, source[0].RateNormal);
+        Assert.Equal(5481m, source[0].RateLow);
+        Assert.Equal(6137m, source[0].ReturnDeliveryNormal);
+        Assert.Equal(2515m, source[0].ReturnDeliveryLow);
+        var preview = await prepare(source.ToArray());
+        Assert.Equal(7, preview.SourceCount);
+        Assert.Equal(hasHeader ? "2" : "1", preview.Rows.Last().SourceRows);
+        Assert.Equal(7, await importer.SaveAsync(preview));
+        using var verify = new EnergyUseContext(database);
+        Assert.Equal(7, verify.MeterReadings.Count());
+        Assert.Equal(6158m, verify.MeterReadings.Single(r => r.RegistrationDate == new DateTime(2026, 11, 18)).RateNormal);
+    }
+
+    [Fact]
+    public void CsvReportsMalformedFirstDataRowInsteadOfSkippingIt()
+    {
+        var file = Path.Combine(_directory, "invalid.csv");
+        File.WriteAllText(file, "2026-11-18;invalid;5481;6137;2515\n2026-11-17;6141;5477;6137;2515");
+        var error = Assert.Throws<InvalidDataException>(() => LibEpplus.ReadCsvFile(file, new EnergyType(), new Meter()));
+        Assert.Contains("source row 1:", error.Message);
+    }
+
     [Fact]
     public async Task RecalculationPreservesUnrelatedHistoricalDeltas()
     {

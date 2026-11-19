@@ -71,7 +71,7 @@
             <Label Content="Meter:" VerticalAlignment="Center"/>
 
             <ComboBox Grid.Column="1"
-                      Margin="10 0"
+                      Margin="10,0,-142,0"
                       ItemsSource="{Binding Meters}"
                       SelectedItem="{Binding SelectedMeter}"
                       DisplayMemberPath="Description"

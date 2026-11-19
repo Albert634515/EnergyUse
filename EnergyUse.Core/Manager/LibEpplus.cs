@@ -128,12 +128,23 @@ public class LibEpplus
 
                 if (worksheet.Dimension == null)
                     return meterReadings;
-                for (var rowNum = 2; rowNum <= worksheet.Dimension.End.Row; rowNum++)
+                var firstNonEmptyRow = true;
+                for (var rowNum = 1; rowNum <= worksheet.Dimension.End.Row; rowNum++)
                 {
                     var row = worksheet.Cells[string.Format("{0}:{0}", rowNum)];
                     // just an example, you want to know if all cells of this row are empty
                     bool allEmpty = row.All(c => string.IsNullOrWhiteSpace(c.Text));
                     if (allEmpty) continue;
+
+                    // A header is optional; never discard the first meter reading.
+                    var dateColumn = worksheet.Cells[rowNum, 1].Text.Trim();
+                    var isHeader = firstNonEmptyRow &&
+                        (dateColumn.Equals("Date", StringComparison.OrdinalIgnoreCase) ||
+                         dateColumn.Equals("RegistrationDate", StringComparison.OrdinalIgnoreCase) ||
+                         dateColumn.Equals("OpnameDatum", StringComparison.OrdinalIgnoreCase) ||
+                         dateColumn.Equals("Datum", StringComparison.OrdinalIgnoreCase));
+                    firstNonEmptyRow = false;
+                    if (isHeader) continue;
 
                     try
                     {
